@@ -9,12 +9,13 @@ class Mario{
 
 		Mario();
 		void mover(Movimiento* unMovimiento);
-		int obtenerPosicion();
+		int obtenerPosicionX();
+		int obtenerPosicionY();
 		~Mario();
 
 	private:
 
-		int posicionX;
+		Posicion* posicion;
 		int puntos;
 
 

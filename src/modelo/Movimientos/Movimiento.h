@@ -1,10 +1,13 @@
 
-
+#include "../Posicion.h"
 
 class Movimiento{
     public:
-		virtual int mover(int posicionActual)=0;
+		virtual void mover(Posicion* posicionActual)=0;
 		virtual ~Movimiento(){};
+
+    protected:
+		int movimiento;
 
 };
 
@@ -14,14 +17,13 @@ class MovimientoDerecha : public Movimiento{
 			this->movimiento = movimiento;
 		}
 
-        int mover(int posicionActual)override{
-            return posicionActual + this->movimiento;
+        void mover(Posicion* posicionActual)override{
+             posicionActual->moverHorizontal(this->movimiento);
         }
 
         ~MovimientoDerecha(){
         }
-    private:
-        int movimiento;
+
 };
 
 class MovimientoIzquierda : public Movimiento{
@@ -30,13 +32,12 @@ class MovimientoIzquierda : public Movimiento{
 			this->movimiento = movimiento;
 		}
 
-        int mover(int posicionActual)override{
-            return posicionActual - this->movimiento;
+		void mover(Posicion* posicionActual)override{
+			posicionActual->moverHorizontal(-1 * this->movimiento);
         }
 
         ~MovimientoIzquierda(){
         }
-    private:
-        int movimiento;
+
 };
 

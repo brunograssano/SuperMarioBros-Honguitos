@@ -31,11 +31,11 @@ void test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(){
 	Mario* mario = new Mario();
 	MovimientoDerecha* movimiento = new MovimientoDerecha(5);
 
-	int posicion = mario->obtenerPosicion();
+	int posicion = mario->obtenerPosicionX();
 
 	mario->mover(movimiento);
 
-	ASSERT(mario->obtenerPosicion(),posicion+5,"Mario se mueve a derecha");
+	ASSERT(mario->obtenerPosicionX(),posicion+5,"Mario se mueve a derecha");
 
 	delete mario;
 	delete movimiento;
@@ -46,11 +46,11 @@ void test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(){
 	Mario* mario = new Mario();
 	MovimientoIzquierda* movimiento = new MovimientoIzquierda(5);
 
-	int posicion = mario->obtenerPosicion();
+	int posicion = mario->obtenerPosicionX();
 
 	mario->mover(movimiento);
 
-	ASSERT(mario->obtenerPosicion(),posicion-5,"Mario se mueve a izquierda");
+	ASSERT(mario->obtenerPosicionX(),posicion-5,"Mario se mueve a izquierda");
 
 	delete mario;
 	delete movimiento;

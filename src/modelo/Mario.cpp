@@ -1,24 +1,28 @@
 #include "Mario.h"
 
-
+const int COORDENADA_X_DEFAULT = 20;
+const int COORDENADA_Y_DEFAULT = 550;
 
 Mario::Mario(){
-	this->posicionX = 0;
+	this->posicion = new Posicion(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);
 	this->puntos=0;
 }
 
 
 void Mario::mover(Movimiento* unMovimiento){
-	posicionX=unMovimiento->mover(posicionX);
-
-
+	unMovimiento->mover(this->posicion);
 }
 
-int Mario::obtenerPosicion(){
-	return posicionX;
+int Mario::obtenerPosicionX(){
+	return posicion->obtenerPosX();
+}
+
+int Mario::obtenerPosicionY(){
+	return posicion->obtenerPosY();
 }
 
 
 Mario::~Mario(){
+	delete this->posicion;
 }
 

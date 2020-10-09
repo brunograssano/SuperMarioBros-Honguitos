@@ -1,7 +1,7 @@
 #include "Mario.h"
 
 const int COORDENADA_X_DEFAULT = 20;
-const int COORDENADA_Y_DEFAULT = 550;
+const int COORDENADA_Y_DEFAULT = 20;
 
 Mario::Mario(){
 	this->posicion = new Posicion(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);

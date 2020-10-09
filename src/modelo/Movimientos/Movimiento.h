@@ -41,3 +41,32 @@ class MovimientoIzquierda : public Movimiento{
 
 };
 
+class MovimientoArriba : public Movimiento{
+    public:
+		MovimientoArriba(int movimiento){
+			this->movimiento = movimiento;
+		}
+
+		void mover(Posicion* posicionActual)override{
+			posicionActual->moverVertical(this->movimiento);
+        }
+
+        ~MovimientoArriba(){
+        }
+
+};
+
+class MovimientoAbajo : public Movimiento{
+    public:
+		MovimientoAbajo(int movimiento){
+			this->movimiento = movimiento;
+		}
+
+		void mover(Posicion* posicionActual)override{
+			posicionActual->moverVertical(-1 * this->movimiento);
+        }
+
+        ~MovimientoAbajo(){
+        }
+
+};

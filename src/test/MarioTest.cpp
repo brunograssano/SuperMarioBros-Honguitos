@@ -56,11 +56,43 @@ void test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(){
 	delete movimiento;
 }
 
+void test03CuandoPedisAMarioQueSalteSeQuedaArriba(){
+
+	Mario* mario = new Mario();
+	MovimientoArriba* movimiento = new MovimientoArriba(50);
+
+	int posicion = mario->obtenerPosicionY();
+
+	mario->mover(movimiento);
+
+	ASSERT(mario->obtenerPosicionY(),posicion+50,"Mario salta y queda arriba: ");
+
+	delete mario;
+	delete movimiento;
+}
+
+void test04CuandoMarioSeMueveParaAbajoBaja(){
+
+	Mario* mario = new Mario();
+	MovimientoAbajo* movimiento = new MovimientoAbajo(30);
+
+	int posicion = mario->obtenerPosicionY();
+
+	mario->mover(movimiento);
+
+	ASSERT(mario->obtenerPosicionY(),posicion-30,"Mario puede bajar: ");
+
+	delete mario;
+	delete movimiento;
+}
+
 int main(){
 	pruebasPasadas = 0;
 	pruebasTotales = 0;
 	test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve();
 	test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve();
+	test03CuandoPedisAMarioQueSalteSeQuedaArriba();
+	test04CuandoMarioSeMueveParaAbajoBaja();
 
 	cout << "Pasaron " << pruebasPasadas << " pruebas de "<< pruebasTotales <<endl;
 	return 0;

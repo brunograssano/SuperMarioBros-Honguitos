@@ -1,3 +1,5 @@
+#ifndef SRC_MODELO_MOVIMIENTOS_MOVIMIENTO_H_
+#define SRC_MODELO_MOVIMIENTOS_MOVIMIENTO_H_
 
 #include "../Posicion.h"
 
@@ -70,3 +72,4 @@ class MovimientoAbajo : public Movimiento{
         }
 
 };
+#endif /* SRC_MODELO_MOVIMIENTOS_MOVIMIENTO_H_ */

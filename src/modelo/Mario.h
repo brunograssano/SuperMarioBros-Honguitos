@@ -15,7 +15,7 @@ class Mario{
 
 	private:
 
-		Posicion* posicion;
+		PosicionMovil* posicion;
 		int puntos;
 
 

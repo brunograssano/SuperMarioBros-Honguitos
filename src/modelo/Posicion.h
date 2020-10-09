@@ -6,19 +6,6 @@ class Posicion{
 
 	public:
 
-		Posicion(int coordenadaX,int coordenadaY){
-			this->posicionX=coordenadaX;
-			this->posicionY=coordenadaY;
-		};
-
-		void moverHorizontal(int cantidadAMover){
-			this->posicionX+=cantidadAMover;
-		};
-
-		void moverVertical(int cantidadAMover){
-			this->posicionY+=cantidadAMover;
-		};
-
 		int obtenerPosX(){
 			return this->posicionX;
 		}
@@ -27,9 +14,7 @@ class Posicion{
 			return this->posicionY;
 		}
 
-		~Posicion(){};
-
-	private:
+	protected:
 
 		int posicionX;
 		int posicionY;
@@ -38,5 +23,36 @@ class Posicion{
 };
 
 
+class PosicionMovil : public Posicion{
+
+	public:
+
+		PosicionMovil(int coordenadaX,int coordenadaY){
+			this->posicionX=coordenadaX;
+			this->posicionY=coordenadaY;
+		}
+
+		void moverHorizontal(int cantidadAMover){
+			this->posicionX+=cantidadAMover;
+		}
+
+		void moverVertical(int cantidadAMover){
+			this->posicionY+=cantidadAMover;
+		}
+
+		~PosicionMovil(){}
+
+};
+
+class PosicionFija : public Posicion{
+
+	public:
+
+		PosicionFija(int coordenadaX,int coordenadaY){
+			this->posicionX=coordenadaX;
+			this->posicionY=coordenadaY;
+		}
+
+};
 
 #endif /* SRC_MODELO_POSICION_H_ */

@@ -5,7 +5,7 @@
 
 class Movimiento{
     public:
-		virtual void mover(Posicion* posicionActual)=0;
+		virtual void mover(PosicionMovil* posicionActual)=0;
 		virtual ~Movimiento(){};
 
     protected:
@@ -19,7 +19,7 @@ class MovimientoDerecha : public Movimiento{
 			this->movimiento = movimiento;
 		}
 
-        void mover(Posicion* posicionActual)override{
+        void mover(PosicionMovil* posicionActual)override{
              posicionActual->moverHorizontal(this->movimiento);
         }
 
@@ -34,7 +34,7 @@ class MovimientoIzquierda : public Movimiento{
 			this->movimiento = movimiento;
 		}
 
-		void mover(Posicion* posicionActual)override{
+		void mover(PosicionMovil* posicionActual)override{
 			posicionActual->moverHorizontal(-1 * this->movimiento);
         }
 
@@ -49,7 +49,7 @@ class MovimientoArriba : public Movimiento{
 			this->movimiento = movimiento;
 		}
 
-		void mover(Posicion* posicionActual)override{
+		void mover(PosicionMovil* posicionActual)override{
 			posicionActual->moverVertical(this->movimiento);
         }
 
@@ -64,7 +64,7 @@ class MovimientoAbajo : public Movimiento{
 			this->movimiento = movimiento;
 		}
 
-		void mover(Posicion* posicionActual)override{
+		void mover(PosicionMovil* posicionActual)override{
 			posicionActual->moverVertical(-1 * this->movimiento);
         }
 

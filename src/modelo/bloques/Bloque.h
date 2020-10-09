@@ -20,7 +20,6 @@ class Bloque{
 			return this->posicion->obtenerPosY();
 		}
 
-
     protected:
     	Posicion* posicion;
 };
@@ -28,7 +27,7 @@ class Bloque{
 class Sorpresa : public Bloque{
     public:
 		Sorpresa(int coordenadaX, int coordenadaY){
-			this->posicion = new Posicion(coordenadaX, coordenadaY);
+			this->posicion = new PosicionFija(coordenadaX, coordenadaY);
 		}
 
         ~Sorpresa(){
@@ -40,7 +39,7 @@ class Sorpresa : public Bloque{
 class Ladrillo : public Bloque {
 	public:
 		Ladrillo(int coordenadaX, int coordenadaY){
-			this->posicion = new Posicion(coordenadaX, coordenadaY);
+			this->posicion = new PosicionFija(coordenadaX, coordenadaY);
 		}
 
 		~Ladrillo(){
@@ -53,15 +52,19 @@ class Plataforma : public Bloque {
 		Plataforma(){
 		}
 
-		void agregarBloque(Bloque bloque){
+		void agregarBloque(Bloque* bloque){
 			bloques.push_back(bloque);
+		}
+
+		list<Bloque*> obtenerBloques(){
+			return this->bloques;
 		}
 
 		~Plataforma(){
 			bloques.clear();
 		}
 	private:
-		list<Bloque> bloques;
+		list<Bloque*> bloques;
 };
 
 

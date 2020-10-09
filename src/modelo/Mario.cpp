@@ -4,7 +4,7 @@ const int COORDENADA_X_DEFAULT = 20;
 const int COORDENADA_Y_DEFAULT = 20;
 
 Mario::Mario(){
-	this->posicion = new Posicion(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);
+	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);
 	this->puntos=0;
 }
 

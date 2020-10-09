@@ -1,4 +1,6 @@
+
 //#include <SDL.h>
+/*
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
@@ -40,7 +42,7 @@ SDL_Window* inicializarSDL(SDL_Window *ventanaPrincipal) {
 	}
 	return ventanaPrincipal;
 }
-/*
+
 int main( int argc, char* args[] ){
 
 	SDL_Window* ventanaPrincipal = NULL;

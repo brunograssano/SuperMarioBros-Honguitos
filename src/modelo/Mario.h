@@ -11,12 +11,18 @@ class Mario{
 		void mover(Movimiento* unMovimiento);
 		int obtenerPosicionX();
 		int obtenerPosicionY();
+		int obtenerPuntos();
+		void agregarPuntos(int unosPuntos);
+		int obtenerMonedas();
+		void agregarMoneda();
+
 		~Mario();
 
 	private:
 
 		PosicionMovil* posicion;
 		int puntos;
+		int cantidadMonedas;
 
 
 };

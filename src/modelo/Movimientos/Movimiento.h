@@ -5,7 +5,7 @@
 
 class Movimiento{
     public:
-		virtual void mover(PosicionMovil* posicionActual)=0;
+		virtual void mover(PosicionMovil* posicionActual){};
 		virtual ~Movimiento(){};
 
     protected:

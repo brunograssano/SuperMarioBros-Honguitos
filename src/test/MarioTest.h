@@ -16,6 +16,9 @@ class MarioTest{
 		void test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(Assert* testSuite);
 		void test03CuandoPedisAMarioQueSalteSeQuedaArriba(Assert* testSuite);
 		void test04CuandoMarioSeMueveParaAbajoBaja(Assert* testSuite);
+		void test05MarioEmpiezaConCeroMonedas(Assert* testSuite);
+		void test06MarioEmpiezaConCeroPuntos(Assert* testSuite);
+		void test07MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite);
 };
 
 

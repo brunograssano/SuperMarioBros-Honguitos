@@ -26,7 +26,7 @@ SDL_Window* inicializarSDL(SDL_Window *ventanaPrincipal) {
 			superficieVentana = SDL_GetWindowSurface( ventanaPrincipal ); //Agarramos la superficie de la ventana principal
 
 
-			SDL_Surface* imagenDeFondo = SDL_LoadBMP( "../resources/fondo_inicio.bmp" );
+			SDL_Surface* imagenDeFondo = SDL_LoadBMP( "./resources/fondo_inicio.bmp" );
 		    if( imagenDeFondo == NULL ){
 		        printf( "No se pudo cargar la imagen! %s\n", SDL_GetError() );
 		    }
@@ -40,7 +40,7 @@ SDL_Window* inicializarSDL(SDL_Window *ventanaPrincipal) {
 	}
 	return ventanaPrincipal;
 }
-
+/*
 int main( int argc, char* args[] ){
 
 	SDL_Window* ventanaPrincipal = NULL;
@@ -54,4 +54,4 @@ int main( int argc, char* args[] ){
 	SDL_Quit();
 
 	return 0;
-}
+}*/

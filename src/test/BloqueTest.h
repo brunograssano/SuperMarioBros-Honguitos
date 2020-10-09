@@ -1,12 +1,13 @@
 #ifndef SRC_TEST_BLOQUETEST_H_
 #define SRC_TEST_BLOQUETEST_H_
+
 using namespace std;
 #include <iostream>
 #include <string>
 
 #include <stdio.h>
 
-#include "../modelo/bloques/Bloque.h"
+#include "../modelo/Bloques/Bloque.h"
 #include "Assert.h"
 
 

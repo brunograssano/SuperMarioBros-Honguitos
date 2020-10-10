@@ -16,14 +16,23 @@ class Mario{
 		int obtenerMonedas();
 		void agregarMoneda();
 
+		void moveraArriba();
+		void moveraAbajo();
+		void aceleraraIzquierda();
+		void aceleraraDerecha();
+
+		void actualizarPosicion();
+
 		~Mario();
 
 	private:
-
+		void actualizarVelocidad();
+		void aplicarCoeficienteDeRozamiento();
 		PosicionMovil* posicion;
+		float velocidadX = 0;
+		float aceleracionX = 0;
 		int puntos;
 		int cantidadMonedas;
-
 
 };
 

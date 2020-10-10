@@ -16,7 +16,7 @@ class Posicion{
 
 	protected:
 
-		int posicionX;
+		float posicionX;
 		int posicionY;
 
 
@@ -33,6 +33,10 @@ class PosicionMovil : public Posicion{
 		}
 
 		void moverHorizontal(int cantidadAMover){
+			this->posicionX+=(float)cantidadAMover;
+		}
+
+		void moverHorizontal(float cantidadAMover){
 			this->posicionX+=cantidadAMover;
 		}
 

@@ -2,15 +2,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
+using namespace std;
+#include <iostream>
 #include <string>
-#include "modelo/Mario.h"
-#include "modelo/Movimientos/Movimiento.h"
+#include "../modelo/Mario.h"
+#include "../modelo/Movimientos/Movimiento.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
-
-
 
 
 //Starts up SDL
@@ -131,15 +131,14 @@ SDL_Surface* loadSurface( std::string path )
 			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
 		}
 
-		//Me deshago de la Surface vieja
+		//Me deshago de la Surface viejo
 		SDL_FreeSurface( loadedSurface );
 	}
 
 	return optimizedSurface;
 }
 
-int main( int argc, char* args[] )
-{
+int main(int argc, char* args[]){
 	//Inicializa SDL y crea una ventana
 	if( !init() ){
 		printf( "Ha fallado la inicializacion de SDL\n" );
@@ -183,14 +182,20 @@ int main( int argc, char* args[] )
 
 	}
 
-	// Si se comnezo: comenzar == true; si se quiteo: quit == true
+	// Si se comenzo: comenzar == true; si se quiteo: quit == true
 
 
 	Mario* mario = new Mario();
 	gPNGSurface = loadSurface( "./resources/marioElduro.png" );
 	SDL_Rect rectanguloMario = { mario->obtenerPosicionX(), mario->obtenerPosicionY(), 40, 80};
 
+	SDL_Renderer* gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_Surface* surfaceMario = loadSurface("./resources/marioElduro.png");
+	SDL_Texture* textureMario = SDL_CreateTextureFromSurface( gRenderer, surfaceMario );
+	SDL_FreeSurface( surfaceMario );
 	//SDL_Rect rectanguloMario = SDL_FillRect(gPNGSurface, NULL, SDL_MapRGB(gPNGSurface->format, 0, 0, 0));
+
 
 	while(!quit){
 		//Handle events on queue
@@ -204,11 +209,11 @@ int main( int argc, char* args[] )
 				Movimiento* movimiento;
 				switch(e.key.keysym.sym){
 					case SDLK_UP:
-						movimiento = new MovimientoArriba(50);
+						movimiento = new MovimientoAbajo(50);
 						mario->mover(movimiento);
 					break;
 					case SDLK_DOWN:
-						movimiento = new MovimientoAbajo(20);
+						movimiento = new MovimientoArriba(20);
 						mario->mover(movimiento);
 					break;
 
@@ -223,19 +228,23 @@ int main( int argc, char* args[] )
 					break;
 
 					default:
+
 					break;
 				}
 				delete movimiento;
 				rectanguloMario.x = mario->obtenerPosicionX();
 				rectanguloMario.y = mario->obtenerPosicionY();
-
 			}
 		}
-		//Apply the PNG image
-		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &rectanguloMario);
 
-		//Update the surface
-		SDL_UpdateWindowSurface(gWindow);
+		SDL_RenderClear( gRenderer );
+
+		//Render texture to screen
+		SDL_RenderCopy( gRenderer, textureMario, NULL, NULL);
+
+		//Update screen
+		SDL_RenderPresent( gRenderer );
+
 	}
 
 	//Liberar recursos y cerrar SDL

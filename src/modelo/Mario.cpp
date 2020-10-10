@@ -1,7 +1,19 @@
 #include "Mario.h"
+#include <cmath>
 
 const int COORDENADA_X_DEFAULT = 20;
 const int COORDENADA_Y_DEFAULT = 20;
+
+const int MOVIMIENTO_X_DEFAULT = 5;
+const int MOVIMIENTO_Y_DEFAULT = 5;
+
+const float PASO_ACELERACION_HORIZONTAL = 5;
+const float COEFICIENTE_SOBREACELERACION_HORIZONTAL = 2;
+const float MAXIMA_ACELERACION_HORIZONTAL = 25;
+
+const float MAXIMA_VELOCIDAD_HORIZONTAL = 150;
+
+const float COEFICIENTE_DE_TIEMPO = 0.15;
 
 Mario::Mario(){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);
@@ -37,6 +49,58 @@ int Mario::obtenerMonedas(){
 void Mario::agregarMoneda(){
 	cantidadMonedas++;
 }
+
+void Mario::moveraArriba(){
+	this->posicion->moverVertical(MOVIMIENTO_Y_DEFAULT);
+}
+void Mario::moveraAbajo(){
+	this->posicion->moverVertical(-1*MOVIMIENTO_Y_DEFAULT);
+}
+
+void Mario::aceleraraIzquierda(){
+	if(this->aceleracionX < 1e-7 && this->aceleracionX > -1e-7){
+		this->aceleracionX = -1*PASO_ACELERACION_HORIZONTAL;
+	}else if(this->aceleracionX > 0){
+		this->aceleracionX = 0;
+	}else{
+		this->aceleracionX *= COEFICIENTE_SOBREACELERACION_HORIZONTAL;
+		if(this->aceleracionX > -1*MAXIMA_ACELERACION_HORIZONTAL){
+			this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL;
+		}
+	}
+}
+void Mario::aceleraraDerecha(){
+	if(this->aceleracionX < 1e-7 && this->aceleracionX > -1e-7){
+		this->aceleracionX = PASO_ACELERACION_HORIZONTAL;
+	}else if(this->aceleracionX < 0){
+		this->aceleracionX = 0;
+	}else{
+		this->aceleracionX *= COEFICIENTE_SOBREACELERACION_HORIZONTAL;
+		if(this->aceleracionX < MAXIMA_ACELERACION_HORIZONTAL){
+			this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL;
+		}
+	}
+}
+
+void Mario::aplicarCoeficienteDeRozamiento(){
+}
+
+void Mario::actualizarVelocidad(){
+	this->velocidadX += this->aceleracionX*0.016;
+	if(this->velocidadX > MAXIMA_VELOCIDAD_HORIZONTAL){
+		this->velocidadX = MAXIMA_VELOCIDAD_HORIZONTAL;
+	}else if (this->velocidadX < -1*MAXIMA_VELOCIDAD_HORIZONTAL){
+		this->velocidadX = -1*MAXIMA_VELOCIDAD_HORIZONTAL;
+	}
+}
+
+void Mario::actualizarPosicion(){
+	this->actualizarVelocidad();
+	this->aplicarCoeficienteDeRozamiento();
+	float desplazamiento = this->velocidadX*0.016;
+	this->posicion->moverHorizontal(desplazamiento);
+}
+
 
 Mario::~Mario(){
 	delete this->posicion;

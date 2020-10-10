@@ -240,6 +240,7 @@ int main( int argc, char* args[] )
 
 	//Liberar recursos y cerrar SDL
 	close();
+	delete mario;
 
 	return 0;
 }

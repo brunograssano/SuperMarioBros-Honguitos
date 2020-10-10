@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string>
 #include <SDL2/SDL.h>
 #include "App.h"
@@ -27,3 +27,4 @@ int main( int argc, char* args[] ){
 	delete aplicacion;
 	return 0;
 }
+*/

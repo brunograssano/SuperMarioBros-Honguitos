@@ -3,29 +3,16 @@
 
 using namespace std;
 #include <iostream>
+#include <string>
 #include "Mario.h"
 
 class Juego{
 
 	public:
-		Juego* getInstance(){
-			if(this->instanciaJuego==nullptr){ // TODO Ver si le pasamos el por defecto, o si lo sacamos directamente
-				this->instanciaJuego = new Juego("a ver");
-			}
-			return this->instanciaJuego;
-		}
-
-		Juego* getInstance(string direccionConfiguracion){
-			if(this->instanciaJuego==nullptr){
-				this->instanciaJuego = new Juego(direccionConfiguracion);
-			}
-			return this->instanciaJuego;
-		}
-
-		~Juego(){
-			// Se borran los niveles/vamos borrando a medida que se avanza?
-			delete jugador;
-		}
+		Juego(Juego &other) = delete;
+		static Juego* getInstance();
+		static Juego* getInstance(string direccionConfiguracion);
+		~Juego();
 
 	private:
 		Juego(string direccionConfiguracion){
@@ -37,9 +24,10 @@ class Juego{
 		}
 
 		Mario* jugador;
-		Juego* instanciaJuego = nullptr;
+		static Juego* instanciaJuego;
 
 };
+
 
 
 #endif /* SRC_MODELO_JUEGO_H_ */

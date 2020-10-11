@@ -40,7 +40,7 @@ class App{
 
 			//	TODO  primera llamada al juego, asi se inicializa
 
-			cargadorTexturas = new CargadorTexturas();
+			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance();
 
 		}

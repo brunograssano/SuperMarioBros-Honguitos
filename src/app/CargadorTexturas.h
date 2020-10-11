@@ -8,7 +8,7 @@
 class CargadorTexturas{
 
 	public:
-		CargadorTexturas();
+		CargadorTexturas(SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaMario();
 		~CargadorTexturas();
 
@@ -20,7 +20,7 @@ class CargadorTexturas{
 		SDL_Texture* texturaSorpresa = NULL;
 
 
-		SDL_Texture* cargarTextura(std::string direccion);
+		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
 
 };
 

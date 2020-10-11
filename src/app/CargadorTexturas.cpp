@@ -9,26 +9,26 @@
 #include <string>
 #include <sstream>
 
-CargadorTexturas::CargadorTexturas(){
+CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
 		// TODO poner en el log que no se pudo activar el filtrado lineal de las texturas
 	}
 
-	texturaMario = cargarTextura( "../../resources/marioElduro.png" ); 	// NO OLVIDARSE DE LIBERAR LAS TEXTURAS QUE SE CARGUEN
+	texturaMario = cargarTextura( "resources/marioElduro.png" ,renderizador); 	// NO OLVIDARSE DE LIBERAR LAS TEXTURAS QUE SE CARGUEN
 	if( texturaMario == NULL ){
 		// TODO escribir en el log
 
 	}
-	texturaMoneda = cargarTextura("marioElduro.png");
+	texturaMoneda = cargarTextura("marioElduro.png",renderizador);
 	if(texturaMoneda == NULL){
 		// TODO escribir en el log
 	}
-	texturaLadrillo = cargarTextura( "comienzo.png" );
+	texturaLadrillo = cargarTextura( "comienzo.png" ,renderizador);
 	if( texturaLadrillo == NULL ){
 		// TODO escribir en el log
 	}
-	texturaSorpresa = cargarTextura("marioElduro.png");
+	texturaSorpresa = cargarTextura("marioElduro.png",renderizador);
 	if(texturaSorpresa == NULL){
 		// TODO escribir en el log
 	}
@@ -37,7 +37,7 @@ CargadorTexturas::CargadorTexturas(){
 
 }
 
-SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion){
+SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer* renderizador){
 	SDL_Texture*  texturaCargada= NULL;
 	SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
 	if(superficieImagen == NULL){
@@ -45,7 +45,7 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion){
 		std::cout<< "No la encontro"<<endl;
 	}
 	else{
-		texturaCargada = SDL_CreateTextureFromSurface( App::GetInstance()->obtenerRenderizador(), superficieImagen );
+		texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficieImagen );
 		if( texturaCargada == NULL ){ // creo que este no es necesario, si es que ya lo verificamos arriba si es null
 			// TODO poner en el log que no se pudo crear una textura SDL_GetError() );
 			std::cout<< "No la encontro la textura"<<endl;

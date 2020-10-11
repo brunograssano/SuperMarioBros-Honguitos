@@ -12,6 +12,7 @@ class Juego{
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
 		static Juego* getInstance(string direccionConfiguracion);
+		Mario* obtenerMario();
 		~Juego();
 
 	private:

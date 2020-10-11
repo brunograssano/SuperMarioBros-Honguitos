@@ -9,7 +9,7 @@ class CargadorTexturas{
 
 	public:
 		CargadorTexturas();
-
+		SDL_Texture* obtenerTexturaMario();
 		~CargadorTexturas();
 
 

@@ -18,6 +18,11 @@ Juego* Juego::getInstance(string direccionConfiguracion){
 	return instanciaJuego;
 }
 
+Mario* Juego::obtenerMario(){
+	return jugador;
+}
+
+
 Juego::~Juego(){
 	// Se borran los niveles/vamos borrando a medida que se avanza?
 	delete jugador;

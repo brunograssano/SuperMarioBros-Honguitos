@@ -13,7 +13,27 @@ App* App::GetInstance(){// TODO Recibir la direccion del archivo a leer?
 
 
 void App::actualizar(SDL_Event evento){
+	Mario* jugador = Juego::getInstance()->obtenerMario();
+	switch(evento.key.keysym.sym){
+		case SDLK_UP:
+			jugador->moveraAbajo();
+		break;
+		case SDLK_DOWN:
+			jugador->moveraArriba();
+		break;
 
+		case SDLK_LEFT:
+			jugador->aceleraraIzquierda();
+		break;
+
+		case SDLK_RIGHT:
+			jugador->aceleraraDerecha();
+		break;
+
+		default:
+		break;
+	}
+	jugador->actualizarPosicion();
 
 
 
@@ -21,8 +41,16 @@ void App::actualizar(SDL_Event evento){
 
 void App::dibujar(){
 
+	Mario* mario = Juego::getInstance()->obtenerMario();
+	SDL_Rect rectanguloMario = {mario->obtenerPosicionX(),mario->obtenerPosicionY(), 40, 80};
+
+	//SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_RenderClear( renderizador );
 
 
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), NULL, &rectanguloMario);
+
+	SDL_RenderPresent( renderizador );
 
 }
 
@@ -40,8 +68,7 @@ App::~App(){
 	SDL_Quit();
 
 	delete cargadorTexturas;
-
-	// TODO delete del juego
+	delete juego;
 }
 
 

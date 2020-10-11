@@ -2,6 +2,7 @@
 #define SRC_APP_APP_H_
 
 #include <SDL2/SDL.h>
+#include "../modelo/Juego.h"
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
@@ -29,7 +30,7 @@ class App{
 				// TODO Poner en el log que no se pudo inicializar el img init --- IMG_GetError()
 			}
 
-			renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED );
+			renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 			if( renderizador == NULL ){
 				// TODO Poner en el log que no se pudo crear un renderizador --- SDL_GetError()
 			}
@@ -40,9 +41,10 @@ class App{
 			//	TODO  primera llamada al juego, asi se inicializa
 
 			cargadorTexturas = new CargadorTexturas();
-
+			juego = Juego::getInstance();
 
 		}
+		Juego* juego;
 		static App* aplicacion;
 		CargadorTexturas* cargadorTexturas;
 		SDL_Window* ventanaAplicacion;

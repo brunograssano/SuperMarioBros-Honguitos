@@ -24,6 +24,9 @@ class Nivel{
 			monedas.push_back(unaMoneda);
 		}
 
+		void actualizarPosicionesEnemigos();
+		list<Enemigo*> obtenerEnemigos();
+
 		~Nivel(){
 			plataformas.clear();
 			enemigos.clear();

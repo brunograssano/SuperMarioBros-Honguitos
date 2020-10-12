@@ -2,9 +2,14 @@
 #define SRC_MODELO_JUEGO_H_
 
 using namespace std;
+#include "Nivel.h"
+#include <queue>
+#include <list>
 #include <iostream>
 #include <string>
 #include "Mario.h"
+
+#include "Enemigos/Goomba.h"
 
 class Juego{
 
@@ -12,7 +17,11 @@ class Juego{
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
 		static Juego* getInstance(string direccionConfiguracion);
+
+		void actualizarPosicionesEnemigos();
+		list<Enemigo*> obtenerEnemigos();
 		Mario* obtenerMario();
+
 		~Juego();
 
 	private:
@@ -21,9 +30,14 @@ class Juego{
 
 			jugador = new Mario();
 
+			//PRUEBA CON UN NIVEL
+			Nivel* unNivel = new Nivel();
+			unNivel->agregarEnemigo(new Goomba(30,400));
+			niveles.push(unNivel);
 
 		}
 
+		queue<Nivel*> niveles;
 		Mario* jugador;
 		static Juego* instanciaJuego;
 

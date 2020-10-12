@@ -1,8 +1,8 @@
 #ifndef SRC_MODELO_ENEMIGOS_ENEMIGO_H_
 #define SRC_MODELO_ENEMIGOS_ENEMIGO_H_
 
-#include "Posicion.h"
-#include "../Movimiento.h"
+#include "../Posicion.h"
+#include "../Movimientos/Movimiento.h"
 
 class Enemigo{
 
@@ -19,7 +19,10 @@ class Enemigo{
 			return posicionActual->obtenerPosY();
 		}
 
-		virtual ~Enemigo();
+
+		virtual void actualizarPosicion(){};
+
+		virtual ~Enemigo(){};
 
 	protected:
 		PosicionMovil* posicionActual;

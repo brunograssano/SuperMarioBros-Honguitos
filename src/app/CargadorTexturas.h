@@ -10,6 +10,7 @@ class CargadorTexturas{
 	public:
 		CargadorTexturas(SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaMario();
+		SDL_Texture* obtenerTexturaMoneda();
 		~CargadorTexturas();
 
 

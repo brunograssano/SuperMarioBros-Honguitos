@@ -19,8 +19,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	if( texturaMario == NULL ){
 		// TODO escribir en el log
 
-	}
-	texturaMoneda = cargarTextura("marioElduro.png",renderizador);
+	}								// LA CARGO ACA PARA PROBAR AL GOOMBA
+	texturaMoneda = cargarTextura("resources/goomba.resized.png",renderizador);
 	if(texturaMoneda == NULL){
 		// TODO escribir en el log
 	}
@@ -57,6 +57,10 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 
 SDL_Texture* CargadorTexturas::obtenerTexturaMario(){
 	return texturaMario;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
+	return texturaMoneda;
 }
 
 CargadorTexturas::~CargadorTexturas(){

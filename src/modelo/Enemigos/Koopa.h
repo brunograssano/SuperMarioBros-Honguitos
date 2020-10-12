@@ -5,16 +5,22 @@
 
 class Koopa : public Enemigo{
 
-public:
+	public:
 
-	Koopa(int coordenadaX, int coordenadaY){
-		this->posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
-	}
+		Koopa(int coordenadaX, int coordenadaY){
+			this->posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
+		}
 
-	~Koopa(){
-		delete this->posicionActual;
-	}
+		~Koopa(){
+			delete this->posicionActual;
+		}
 
+		void actualizarPosicion()override{
+			this->posicionActual->moverHorizontal(velocidadX);
+		}
+
+	private:
+		float velocidadX = 0.05;
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_KOOPA_H_ */

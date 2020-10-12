@@ -34,6 +34,7 @@ void App::actualizar(SDL_Event evento){
 		break;
 	}
 	jugador->actualizarPosicion();
+	Juego::getInstance()->actualizarPosicionesEnemigos();
 
 
 
@@ -44,11 +45,16 @@ void App::dibujar(){
 	Mario* mario = Juego::getInstance()->obtenerMario();
 	SDL_Rect rectanguloMario = {mario->obtenerPosicionX(),mario->obtenerPosicionY(), 40, 80};
 
+	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
+	SDL_Rect rectanguloGoomba = {enemigos.front()->obtenerPosicionX(),enemigos.front()->obtenerPosicionY(), 40, 35};
+
 	//SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( renderizador );
 
 
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), NULL, &rectanguloMario);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMoneda(), NULL, &rectanguloGoomba);
+							// esta en el de la moneda para probar solamente
 
 	SDL_RenderPresent( renderizador );
 

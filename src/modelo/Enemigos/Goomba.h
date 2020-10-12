@@ -6,15 +6,23 @@
 
 class Goomba : public Enemigo{
 
-public:
+	public:
 
-	Goomba(int coordenadaX, int coordenadaY){
-		this->posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
-	}
+		Goomba(int coordenadaX, int coordenadaY){
+			this->posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
+		}
 
-	~Goomba(){
-		delete this->posicionActual;
-	}
+
+
+		void actualizarPosicion()override{
+			this->posicionActual->moverHorizontal(velocidadX);
+		}
+
+		~Goomba(){
+			delete this->posicionActual;
+		}
+	private:
+		float velocidadX = 0.05;
 
 };
 

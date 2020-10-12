@@ -2,7 +2,7 @@
 #include <cmath>
 
 const int COORDENADA_X_DEFAULT = 20;
-const int COORDENADA_Y_DEFAULT = 20;
+const int COORDENADA_Y_DEFAULT = 0;
 
 const int MOVIMIENTO_X_DEFAULT = 5;
 const int MOVIMIENTO_Y_DEFAULT = 5;
@@ -53,8 +53,13 @@ void Mario::agregarMoneda(){
 void Mario::moveraArriba(){
 	this->posicion->moverVertical(MOVIMIENTO_Y_DEFAULT);
 }
+
 void Mario::moveraAbajo(){
-	this->posicion->moverVertical(-1*MOVIMIENTO_Y_DEFAULT);
+	if(this->posicion->obtenerPosY() - MOVIMIENTO_Y_DEFAULT < COORDENADA_Y_DEFAULT){
+		this->posicion->moverVertical(COORDENADA_Y_DEFAULT - this->posicion->obtenerPosY());
+	}else{
+		this->posicion->moverVertical(-1*MOVIMIENTO_Y_DEFAULT);
+	}
 }
 
 void Mario::aceleraraIzquierda(){

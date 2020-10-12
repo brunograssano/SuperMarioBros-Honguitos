@@ -16,10 +16,10 @@ void App::actualizar(SDL_Event evento){
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	switch(evento.key.keysym.sym){
 		case SDLK_UP:
-			jugador->moveraAbajo();
+			jugador->moveraArriba();
 		break;
 		case SDLK_DOWN:
-			jugador->moveraArriba();
+			jugador->moveraAbajo();
 		break;
 
 		case SDLK_LEFT:
@@ -43,7 +43,7 @@ void App::actualizar(SDL_Event evento){
 void App::dibujar(){
 
 	Mario* mario = Juego::getInstance()->obtenerMario();
-	SDL_Rect rectanguloMario = {mario->obtenerPosicionX(),mario->obtenerPosicionY(), 40, 80};
+	SDL_Rect rectanguloMario = {mario->obtenerPosicionX(),420 - mario->obtenerPosicionY(), 40, 80};
 
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
 	SDL_Rect rectanguloGoomba = {enemigos.front()->obtenerPosicionX(),enemigos.front()->obtenerPosicionY(), 40, 35};

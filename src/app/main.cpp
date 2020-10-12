@@ -5,7 +5,6 @@
 
 int main( int argc, char* args[] ){
 
-
 	App* aplicacion = App::GetInstance();
 	bool salir = false;
 	SDL_Event evento;

@@ -21,11 +21,6 @@ Mario::Mario(){
 	this->cantidadMonedas=0;
 }
 
-
-void Mario::mover(Movimiento* unMovimiento){
-	unMovimiento->mover(this->posicion);
-}
-
 int Mario::obtenerPosicionX(){
 	return posicion->obtenerPosX();
 }

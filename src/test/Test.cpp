@@ -7,7 +7,8 @@ using namespace std;
 #include "MarioTest.h"
 #include "Assert.h"
 
-/*int main(int argc, char* argv[]){
+/*
+int main(int argc, char* argv[]){
 	Assert* testSuite = new Assert();
 
 	MarioTest* marioTest = new MarioTest();
@@ -21,4 +22,5 @@ using namespace std;
 	cout << "Pasaron " << testSuite->getPruebasPasadas() << " pruebas de "<< testSuite->getPruebasTotales() << endl;
 	delete testSuite;
 	return 0;
-}*/
+}
+*/

@@ -1,14 +1,13 @@
 #ifndef SRC_MODELO_MARIO_H_
 #define SRC_MODELO_MARIO_H_
 
-#include "Movimientos/Movimiento.h"
+#include "../modelo/Posicion.h"
 
 class Mario{
 
 	public:
 
 		Mario();
-		void mover(Movimiento* unMovimiento);
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		int obtenerPuntos();

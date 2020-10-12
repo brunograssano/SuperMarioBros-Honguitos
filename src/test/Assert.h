@@ -8,9 +8,21 @@ using namespace std;
 
 class Assert{
 	public:
+
 		void assert(int obtenido, int esperado, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido==esperado){
+				cout << "todo bien" <<endl;
+				pruebasPasadas++;
+			}
+			else{
+				cout << "todo mal" <<endl;
+			}
+			pruebasTotales++;
+		}
+		void assert(float obtenido, float esperado, float delta, string textoExplicativo){
+			cout << textoExplicativo << ": ";
+			if(obtenido < esperado + delta && obtenido > esperado - delta){
 				cout << "todo bien" <<endl;
 				pruebasPasadas++;
 			}

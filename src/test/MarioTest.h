@@ -19,6 +19,7 @@ class MarioTest{
 		void test05MarioEmpiezaConCeroMonedas(Assert* testSuite);
 		void test06MarioEmpiezaConCeroPuntos(Assert* testSuite);
 		void test07MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite);
+		void test08CuandoMarioQuiereBajarPorDebajoDeSuNivelMinimoSuPosicionEnYesElMinimo(Assert* testSuite);
 };
 
 

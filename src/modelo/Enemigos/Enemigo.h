@@ -2,14 +2,10 @@
 #define SRC_MODELO_ENEMIGOS_ENEMIGO_H_
 
 #include "../Posicion.h"
-#include "../Movimientos/Movimiento.h"
 
 class Enemigo{
 
 	public:
-		void mover(Movimiento* unMovimiento){
-			unMovimiento->mover(posicionActual);
-		}
 
 		int obtenerPosicionX(){
 			return posicionActual->obtenerPosX();

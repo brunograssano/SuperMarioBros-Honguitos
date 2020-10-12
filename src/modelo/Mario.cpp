@@ -82,10 +82,11 @@ void Mario::aceleraraDerecha(){
 void Mario::aplicarCoeficienteDeRozamiento(){
 	if(this->velocidadX < 7 && this->velocidadX > -7){
 		this->velocidadX = 0;
+		this->aceleracionX = 0;
 	}else if(this->velocidadX > 0){
-		this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL/10;
+		this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL/30;
 	}else if(this->velocidadX < 0){
-		this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL/10;
+		this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL/30;
 	}
 }
 
@@ -99,8 +100,8 @@ void Mario::actualizarVelocidad(){
 }
 
 void Mario::actualizarPosicion(){
-	this->aplicarCoeficienteDeRozamiento();
 	this->actualizarVelocidad();
+	this->aplicarCoeficienteDeRozamiento();
 	float desplazamiento = this->velocidadX*0.016;
 	this->posicion->moverHorizontal(desplazamiento);
 }

@@ -33,11 +33,14 @@ void App::actualizar(SDL_Event evento){
 		default:
 		break;
 	}
+	//jugador->actualizarPosicion();
+	//Juego::getInstance()->actualizarPosicionesEnemigos();
+}
+
+void App::actualizar(){
+	Mario* jugador = Juego::getInstance()->obtenerMario();
 	jugador->actualizarPosicion();
 	Juego::getInstance()->actualizarPosicionesEnemigos();
-
-
-
 }
 
 void App::dibujar(){

@@ -54,6 +54,7 @@ class App{
 		App(App &other) = delete;
 		static App *GetInstance();
 		void actualizar(SDL_Event evento);
+		void actualizar();
 		SDL_Renderer* obtenerRenderizador();
 		void dibujar();
 		~App();

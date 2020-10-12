@@ -14,14 +14,13 @@ int main( int argc, char* args[] ){
 		while( SDL_PollEvent( &evento ) != 0 ){
 			if( evento.type == SDL_QUIT ){
 				salir = true;
-			}
-			else{
+			}else{
 				aplicacion->actualizar(evento);
 			}
 		}
+		aplicacion->actualizar();
 		aplicacion->dibujar();
 	}
-
 
 	delete aplicacion;
 	return 0;

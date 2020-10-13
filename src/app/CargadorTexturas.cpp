@@ -37,6 +37,10 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 }
 
+void CargadorTexturas::actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador){
+        texturaMario = cargarTextura( direccion ,renderizador);
+}
+
 SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer* renderizador){
 	SDL_Texture*  texturaCargada= NULL;
 	SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());

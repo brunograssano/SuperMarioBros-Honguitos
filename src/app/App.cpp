@@ -16,22 +16,27 @@ void App::actualizar(SDL_Event evento){
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	switch(evento.key.keysym.sym){
 		case SDLK_UP:
-			jugador->moveraArriba();
-		break;
+			spriteMario->actualizarSpriteMarioSaltar(jugador, cargadorTexturas, renderizador);
+			//jugador->moveraArriba();
+			break;
 		case SDLK_DOWN:
-			jugador->moveraAbajo();
-		break;
+			spriteMario->actualizarSpriteMarioAgacharse(jugador, cargadorTexturas, renderizador);
+			//jugador->moveraAbajo();
+            		break;
 
 		case SDLK_LEFT:
-			jugador->aceleraraIzquierda();
-		break;
+		    	spriteMario->actualizarSpriteMarioIzquierda(jugador, cargadorTexturas, renderizador);
+			//jugador->aceleraraIzquierda();
+ 			break;
 
 		case SDLK_RIGHT:
-			jugador->aceleraraDerecha();
-		break;
+		    	spriteMario->actualizarSpriteMarioDerecha(jugador, cargadorTexturas, renderizador);
+			//jugador->aceleraraDerecha();
+            		break;
 
 		default:
-		break;
+		    	spriteMario->actualizarSpriteMarioQuieto(jugador, cargadorTexturas, renderizador);
+            		break;
 	}
 	//jugador->actualizarPosicion();
 	//Juego::getInstance()->actualizarPosicionesEnemigos();
@@ -78,6 +83,7 @@ App::~App(){
 
 	delete cargadorTexturas;
 	delete juego;
+	delete spriteMario;
 }
 
 

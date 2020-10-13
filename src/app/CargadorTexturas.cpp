@@ -33,8 +33,13 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		// TODO escribir en el log
 	}
 
+	texturaFondo = cargarTextura("resources/MapaNivel1Base.png", renderizador);
 
 
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
+	return this->texturaFondo;
 }
 
 void CargadorTexturas::actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador){

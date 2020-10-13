@@ -41,12 +41,40 @@ void App::actualizar(){
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	jugador->actualizarPosicion();
 	Juego::getInstance()->actualizarPosicionesEnemigos();
+	moverCamara();
 }
+
+SDL_Rect* App::obtenerRectCamara(){
+	return &rectanguloCamara;
+}
+
+void App::moverCamara(){
+
+	Mario* jugador = Juego::getInstance()->obtenerMario();
+	SDL_Rect* rectanguloCamara = obtenerRectCamara();
+
+	bool elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = jugador->obtenerPosicionX() > rectanguloCamara->x + (ANCHO_PANTALLA)/2;
+
+	if( elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla ){
+		rectanguloCamara->x =   jugador->obtenerPosicionX() - (ANCHO_PANTALLA) / 2 ;
+	}
+
+	if( rectanguloCamara->x < 0 ){
+		 rectanguloCamara->x = 0;
+	}
+
+	if( rectanguloCamara->x > ANCHO_FONDO - ANCHO_PANTALLA){
+		rectanguloCamara->x = ANCHO_FONDO - ANCHO_PANTALLA;
+	}
+}
+
 
 void App::dibujar(){
 
+	SDL_Rect* rectanguloCamara = obtenerRectCamara();
+
 	Mario* mario = Juego::getInstance()->obtenerMario();
-	SDL_Rect rectanguloMario = {mario->obtenerPosicionX(),420 - mario->obtenerPosicionY(), 40, 80};
+	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,420 - mario->obtenerPosicionY(), 40, 80};
 
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
 	SDL_Rect rectanguloGoomba = {enemigos.front()->obtenerPosicionX(),enemigos.front()->obtenerPosicionY(), 40, 35};
@@ -54,7 +82,7 @@ void App::dibujar(){
 	//SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( renderizador );
 
-
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), NULL, &rectanguloMario);
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMoneda(), NULL, &rectanguloGoomba);
 							// esta en el de la moneda para probar solamente
@@ -62,6 +90,8 @@ void App::dibujar(){
 	SDL_RenderPresent( renderizador );
 
 }
+
+
 
 SDL_Renderer* App::obtenerRenderizador(){
 	return renderizador;

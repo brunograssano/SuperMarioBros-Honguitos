@@ -11,6 +11,7 @@ class CargadorTexturas{
 		CargadorTexturas(SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaMario();
 		SDL_Texture* obtenerTexturaMoneda();
+		SDL_Texture* obtenerTexturaFondo();
 		void actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador);
 		~CargadorTexturas();
 
@@ -20,7 +21,7 @@ class CargadorTexturas{
 		SDL_Texture* texturaMoneda = NULL;
 		SDL_Texture* texturaLadrillo = NULL;
 		SDL_Texture* texturaSorpresa = NULL;
-
+		SDL_Texture* texturaFondo = NULL;
 
 		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
 

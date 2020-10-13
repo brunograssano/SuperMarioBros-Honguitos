@@ -11,6 +11,7 @@
 
 const int ANCHO_PANTALLA = 800;
 const int ALTO_PANTALLA = 600;
+const int ANCHO_FONDO = 4000;
 
 class App{
 
@@ -45,6 +46,8 @@ class App{
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance();
 			spriteMario = new SpriteMario();
+			rectanguloCamara = { 0, 0, ANCHO_PANTALLA , ALTO_PANTALLA};
+
 
 		}
 		Juego* juego;
@@ -54,12 +57,17 @@ class App{
 		SDL_Renderer* renderizador;
 		SpriteMario* spriteMario;
 
+		SDL_Rect rectanguloCamara;
+
 	public:
 		App(App &other) = delete;
 		static App *GetInstance();
 		void actualizar(SDL_Event evento);
 		void actualizar();
+		void moverCamara();
 		SDL_Renderer* obtenerRenderizador();
+
+		SDL_Rect* obtenerRectCamara();
 		void dibujar();
 		~App();
 

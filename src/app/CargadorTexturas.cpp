@@ -15,7 +15,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		// TODO poner en el log que no se pudo activar el filtrado lineal de las texturas
 	}
 
-	texturaMario = cargarTextura( "resources/marioElduro.png" ,renderizador); 	// NO OLVIDARSE DE LIBERAR LAS TEXTURAS QUE SE CARGUEN
+	texturaMario = cargarTextura("resources/sprite_mario_grande/mario_grande_quieto_der.png",renderizador); 	// NO OLVIDARSE DE LIBERAR LAS TEXTURAS QUE SE CARGUEN
 	if( texturaMario == NULL ){
 		// TODO escribir en el log
 

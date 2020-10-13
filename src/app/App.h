@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <string>
 #include "CargadorTexturas.h"
+#include "SpriteMario.h"
+
 const int ANCHO_PANTALLA = 800;
 const int ALTO_PANTALLA = 600;
 

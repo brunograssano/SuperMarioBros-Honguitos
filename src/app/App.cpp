@@ -30,6 +30,9 @@ void App::actualizar(SDL_Event evento){
 			jugador->aceleraraDerecha();
 		break;
 
+		case SDLK_SPACE:
+			jugador->saltar();
+		break;
 		default:
 		break;
 	}

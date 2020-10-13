@@ -2,6 +2,7 @@
 #define SRC_MODELO_MARIO_H_
 
 #include "../modelo/Posicion.h"
+#include "../modelo/movimiento/MovimientoMario.h"
 
 class Mario{
 
@@ -19,20 +20,17 @@ class Mario{
 		void moveraAbajo();
 		void aceleraraIzquierda();
 		void aceleraraDerecha();
+		void saltar();
 
 		void actualizarPosicion();
 
 		~Mario();
 
 	private:
-		void actualizarVelocidad();
-		void aplicarCoeficienteDeRozamiento();
 		PosicionMovil* posicion;
-		float velocidadX = 0;
-		float aceleracionX = 0;
 		int puntos;
 		int cantidadMonedas;
-
+		MovimientoMario* movimiento;
 };
 
 

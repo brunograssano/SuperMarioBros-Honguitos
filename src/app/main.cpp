@@ -11,7 +11,7 @@ int main( int argc, char* args[] ){
 
 
 	while(!salir){
-		while( SDL_PollEvent( &evento ) != 0 ){
+		while(SDL_PollEvent( &evento ) != 0){
 			if( evento.type == SDL_QUIT ){
 				salir = true;
 			}else{

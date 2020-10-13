@@ -19,6 +19,7 @@ Mario::Mario(){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);
 	this->puntos=0;
 	this->cantidadMonedas=0;
+	this->movimiento = new MovimientoMario();
 }
 
 int Mario::obtenerPosicionX(){
@@ -58,56 +59,35 @@ void Mario::moveraAbajo(){
 }
 
 void Mario::aceleraraIzquierda(){
-	if(this->aceleracionX < 1e-7 && this->aceleracionX > -1e-7){
-		this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX > 0){
-		this->velocidadX = 0;
-		this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX > -1*MAXIMA_ACELERACION_HORIZONTAL){
-		this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL;
-	}
+	this->movimiento->aceleraraIzquierda();
 }
 
 void Mario::aceleraraDerecha(){
-	if(this->aceleracionX < 1e-7 && this->aceleracionX > -1e-7){
-		this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX < 0){
-		this->velocidadX = 0;
-		this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX < MAXIMA_ACELERACION_HORIZONTAL){
-		this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL;
-	}
-}
-
-void Mario::aplicarCoeficienteDeRozamiento(){
-	if(this->velocidadX < 7 && this->velocidadX > -7){
-		this->velocidadX = 0;
-		this->aceleracionX = 0;
-	}else if(this->velocidadX > 0){
-		this->aceleracionX = -1*MAXIMA_ACELERACION_HORIZONTAL/30;
-	}else if(this->velocidadX < 0){
-		this->aceleracionX = MAXIMA_ACELERACION_HORIZONTAL/30;
-	}
-}
-
-void Mario::actualizarVelocidad(){
-	this->velocidadX += this->aceleracionX*COEFICIENTE_DE_TIEMPO;
-	if(this->velocidadX > MAXIMA_VELOCIDAD_HORIZONTAL){
-		this->velocidadX = MAXIMA_VELOCIDAD_HORIZONTAL;
-	}else if (this->velocidadX < -1*MAXIMA_VELOCIDAD_HORIZONTAL){
-		this->velocidadX = -1*MAXIMA_VELOCIDAD_HORIZONTAL;
-	}
+	this->movimiento->aceleraraDerecha();
 }
 
 void Mario::actualizarPosicion(){
-	this->actualizarVelocidad();
-	this->aplicarCoeficienteDeRozamiento();
-	float desplazamiento = this->velocidadX*0.016;
-	this->posicion->moverHorizontal(desplazamiento);
-}
+	this->movimiento->actualizarVelocidad();
+	this->movimiento->aplicarCoeficienteDeRozamiento();
+	float desplazamientoX = this->movimiento->calcularDesplazamientoHorizontal(0.016);
+	this->posicion->moverHorizontal(desplazamientoX);
 
+	float desplazamientoY = this->movimiento->calcularDesplazamientoVertical(0.1);
+
+	if(this->posicion->obtenerPosY() + desplazamientoY < COORDENADA_Y_DEFAULT){
+		this->posicion->moverVertical(COORDENADA_Y_DEFAULT - this->posicion->obtenerPosY());
+		this->movimiento->setVelocidadY(0);
+	}else{
+		this->posicion->moverVertical(desplazamientoY);
+	}
+	this->movimiento->aplicarGravedad();
+
+}
+void Mario::saltar(){
+	this->movimiento->saltar();
+}
 
 Mario::~Mario(){
 	delete this->posicion;
+	delete this->movimiento;
 }
-

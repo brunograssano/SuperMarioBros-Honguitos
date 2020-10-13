@@ -42,6 +42,7 @@ class App{
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance();
+			spriteMario = new SpriteMario();
 
 		}
 		Juego* juego;
@@ -49,6 +50,7 @@ class App{
 		CargadorTexturas* cargadorTexturas;
 		SDL_Window* ventanaAplicacion;
 		SDL_Renderer* renderizador;
+		SpriteMario* spriteMario;
 
 	public:
 		App(App &other) = delete;

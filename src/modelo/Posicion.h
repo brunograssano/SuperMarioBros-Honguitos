@@ -18,7 +18,7 @@ class Posicion{
 
 		float posicionX;
 		int posicionY;
-
+		int minimoY;
 
 };
 
@@ -27,9 +27,16 @@ class PosicionMovil : public Posicion{
 
 	public:
 
-		PosicionMovil(int coordenadaX,int coordenadaY){
+		PosicionMovil(int coordenadaX,int coordenadaY, int minimoY){
 			this->posicionX=coordenadaX;
 			this->posicionY=coordenadaY;
+			this->minimoY = minimoY;
+		}
+
+		PosicionMovil(int coordenadaX, int coordenadaY){
+			this->posicionX=coordenadaX;
+			this->posicionY=coordenadaY;
+			this->minimoY = 2147483647;
 		}
 
 		void moverHorizontal(int cantidadAMover){
@@ -41,7 +48,11 @@ class PosicionMovil : public Posicion{
 		}
 
 		void moverVertical(int cantidadAMover){
-			this->posicionY+=cantidadAMover;
+			if(posicionY + cantidadAMover < minimoY){
+				posicionY = minimoY;
+			}else{
+				this->posicionY+=cantidadAMover;
+			}
 		}
 
 		~PosicionMovil(){}

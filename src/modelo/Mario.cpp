@@ -3,6 +3,7 @@
 
 const int COORDENADA_X_DEFAULT = 20;
 const int COORDENADA_Y_DEFAULT = 0;
+const int MINIMO_COORDENADA_Y = 0;
 
 const int MOVIMIENTO_X_DEFAULT = 5;
 const int MOVIMIENTO_Y_DEFAULT = 5;
@@ -16,10 +17,11 @@ const float MAXIMA_VELOCIDAD_HORIZONTAL = 150;
 const float COEFICIENTE_DE_TIEMPO = 0.15;
 
 Mario::Mario(){
-	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT);
+	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y);
 	this->puntos=0;
 	this->cantidadMonedas=0;
 	this->movimiento = new MovimientoMario();
+	this->estaSaltando = false;
 }
 
 int Mario::obtenerPosicionX(){
@@ -47,15 +49,9 @@ void Mario::agregarMoneda(){
 }
 
 void Mario::moveraArriba(){
-	this->posicion->moverVertical(MOVIMIENTO_Y_DEFAULT);
 }
 
 void Mario::moveraAbajo(){
-	if(this->posicion->obtenerPosY() - MOVIMIENTO_Y_DEFAULT < COORDENADA_Y_DEFAULT){
-		this->posicion->moverVertical(COORDENADA_Y_DEFAULT - this->posicion->obtenerPosY());
-	}else{
-		this->posicion->moverVertical(-1*MOVIMIENTO_Y_DEFAULT);
-	}
 }
 
 void Mario::aceleraraIzquierda(){
@@ -67,24 +63,17 @@ void Mario::aceleraraDerecha(){
 }
 
 void Mario::actualizarPosicion(){
-	this->movimiento->actualizarVelocidad();
-	this->movimiento->aplicarCoeficienteDeRozamiento();
-	float desplazamientoX = this->movimiento->calcularDesplazamientoHorizontal(0.016);
-	this->posicion->moverHorizontal(desplazamientoX);
-
-	float desplazamientoY = this->movimiento->calcularDesplazamientoVertical(0.1);
-
-	if(this->posicion->obtenerPosY() + desplazamientoY < COORDENADA_Y_DEFAULT){
-		this->posicion->moverVertical(COORDENADA_Y_DEFAULT - this->posicion->obtenerPosY());
+	this->movimiento->mover(this->posicion);
+	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){ //TODO Ojo cuando vayamos a trabajar con floats... y el "==". Cambiar por un intervalo.
 		this->movimiento->setVelocidadY(0);
-	}else{
-		this->posicion->moverVertical(desplazamientoY);
+		this->estaSaltando = false;
 	}
-	this->movimiento->aplicarGravedad();
-
 }
 void Mario::saltar(){
-	this->movimiento->saltar();
+	if(!this->estaSaltando){
+		this->movimiento->saltar();
+		this->estaSaltando = true;		//TODO Hacer un patrón State en Mario o en Movimiento.
+	}
 }
 
 Mario::~Mario(){

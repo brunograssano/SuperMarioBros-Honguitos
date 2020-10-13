@@ -17,32 +17,24 @@ void App::actualizar(SDL_Event evento){
 	switch(evento.key.keysym.sym){
 		case SDLK_UP:
 			spriteMario->actualizarSpriteMarioSaltar(jugador, cargadorTexturas, renderizador);
-			//jugador->moveraArriba();
-			break;
+		break;
 		case SDLK_DOWN:
 			spriteMario->actualizarSpriteMarioAgacharse(jugador, cargadorTexturas, renderizador);
-			//jugador->moveraAbajo();
-            		break;
-
+		break;
 		case SDLK_LEFT:
-		    	spriteMario->actualizarSpriteMarioIzquierda(jugador, cargadorTexturas, renderizador);
-			//jugador->aceleraraIzquierda();
- 			break;
-
+			spriteMario->actualizarSpriteMarioIzquierda(jugador, cargadorTexturas, renderizador);
+		break;
 		case SDLK_RIGHT:
-		    	spriteMario->actualizarSpriteMarioDerecha(jugador, cargadorTexturas, renderizador);
-			//jugador->aceleraraDerecha();
-            		break;
+			spriteMario->actualizarSpriteMarioDerecha(jugador, cargadorTexturas, renderizador);
+		break;
 
 		case SDLK_SPACE:
-			jugador->saltar();
+			spriteMario->actualizarSpriteMarioSaltar(jugador, cargadorTexturas, renderizador);
 		break;
 		default:
-		    	spriteMario->actualizarSpriteMarioQuieto(jugador, cargadorTexturas, renderizador);
-            		break;
+			spriteMario->actualizarSpriteMarioQuieto(jugador, cargadorTexturas, renderizador);
+		break;
 	}
-	//jugador->actualizarPosicion();
-	//Juego::getInstance()->actualizarPosicionesEnemigos();
 }
 
 void App::actualizar(){

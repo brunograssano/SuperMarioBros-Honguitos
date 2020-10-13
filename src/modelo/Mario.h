@@ -16,8 +16,8 @@ class Mario{
 		int obtenerMonedas();
 		void agregarMoneda();
 
-		void moveraArriba();
-		void moveraAbajo();
+		void moveraArriba();		//TODO Eliminar este método. Ojo con los test.
+		void moveraAbajo();			//TODO Eliminar este método. Ojo con los test.
 		void aceleraraIzquierda();
 		void aceleraraDerecha();
 		void saltar();
@@ -28,9 +28,10 @@ class Mario{
 
 	private:
 		PosicionMovil* posicion;
+		MovimientoMario* movimiento;
 		int puntos;
 		int cantidadMonedas;
-		MovimientoMario* movimiento;
+		bool estaSaltando;
 };
 
 

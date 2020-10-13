@@ -95,7 +95,7 @@ void SpriteMario::actualizarSpriteMarioIzquierda(Mario* mario, CargadorTexturas*
 
 
 void SpriteMario::actualizarSpriteMarioSaltar(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador) {
-    mario->moveraArriba();
+    mario->saltar();
     if (estadoActual >= 7 && estadoActual <= 10) {
         estadoActual = 12;
         cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);

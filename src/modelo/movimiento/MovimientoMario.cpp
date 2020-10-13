@@ -1,10 +1,10 @@
 #include "MovimientoMario.h"
 
 
-const float SPRINT_ACELERACION_HORIZONTAL = 1000;
+const float SPRINT_ACELERACION_HORIZONTAL = 150;
 const float MAXIMA_VELOCIDAD_HORIZONTAL = 150;
 
-const float COEFICIENTE_DE_TIEMPO = 0.15;
+const float COEFICIENTE_DE_TIEMPO = 0.16;
 
 
 bool estaAcelerando(float aceleracion){
@@ -43,7 +43,7 @@ void MovimientoMario::aceleraraIzquierda(){
 }
 
 void MovimientoMario::saltar(){
-	this->velocidadY = 70;
+	this->velocidadY = 60;
 }
 
 
@@ -60,9 +60,8 @@ void MovimientoMario::aplicarCoeficienteDeRozamiento(){
 
 
 void MovimientoMario::aplicarGravedad(){
-	this->velocidadY -= 9.8*0.16;
+	this->velocidadY -= 9.8*COEFICIENTE_DE_TIEMPO;
 }
-
 
 
 void MovimientoMario::actualizarVelocidad(){
@@ -74,9 +73,16 @@ void MovimientoMario::actualizarVelocidad(){
 	}
 }
 
-float MovimientoMario::calcularDesplazamientoHorizontal(float unidadDeTiempo){
-	return(this->velocidadX * unidadDeTiempo);
+float calcularDesplazamiento(float velocidad, float unidadDeTiempo){
+	return(velocidad* unidadDeTiempo);
 }
-float MovimientoMario::calcularDesplazamientoVertical(float unidadDeTiempo){
-	return(this->velocidadY * unidadDeTiempo);
+
+void MovimientoMario::mover(PosicionMovil* posicion){
+	actualizarVelocidad();
+	float desplazamientoX = calcularDesplazamiento(this->velocidadX, COEFICIENTE_DE_TIEMPO);
+	float desplazamientoY = calcularDesplazamiento(this->velocidadY, COEFICIENTE_DE_TIEMPO);
+	posicion->moverHorizontal(desplazamientoX);
+	posicion->moverVertical(desplazamientoY);
+	aplicarCoeficienteDeRozamiento();
+	aplicarGravedad();
 }

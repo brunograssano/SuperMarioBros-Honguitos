@@ -5,14 +5,11 @@
 #include "TipoLog.h"
 
 class Debug : public TipoLog{
+	public:
+		Debug(){};
+		~Debug(){};
 
-	//INFO//
-	virtual void seCargaUnaTexturaDesde(string rutaTextura) override {	}
-
-	//ERRORES//
-	virtual void huboUnErrorAlInicializar() override {	}
-	virtual void huboUnErrorEnLaCargaDeLaTextura(string rutaTextura) override {	}
-
+	//Hace todas las opciones, no sobreescribe ninguna
 };
 
 

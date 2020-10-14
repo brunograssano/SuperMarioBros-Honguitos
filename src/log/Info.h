@@ -7,9 +7,14 @@
 
 class Info : public TipoLog{
 
-	//ERRORES//
-	virtual void huboUnErrorAlInicializar() override {	}
-	virtual void huboUnErrorEnLaCargaDeLaTextura(string rutaTextura) override {	}
+	public:
+		Info(){};
+		~Info(){};
+
+		// No hace el nivel de Debug, por lo que las sobreescribe para no hacer nada
+
+		void mostrarPosicion(string registroPosicion,ofstream& archivo) override {};
+		void mostrarAccion(string registroAccion,ofstream& archivo) override {};
 
 };
 

@@ -1,39 +1,54 @@
 #ifndef SRC_LOG_H_
 #define SRC_LOG_H_
 
+using namespace std;
+#include <iostream>
+#include <fstream>
 #include "TipoLog.h"
+#include "Error.h"
+#include <stdio.h>
+#include <string.h>
 
 class Log{
 
-private:
+	private:
+		Log(TipoLog* tipoLog){
+			this->tipoLog = tipoLog;
 
-	TipoLog* tipoLog;
+			string nombreArchivo = "Log - ";
+			time(&tiempo);
+			char* tiempoActual = ctime(&tiempo);
+			nombreArchivo = nombreArchivo +tiempoActual; //delete de tiempoActual? Ctime devuelve un char*
+			nombreArchivo = nombreArchivo + ".txt";
+			archivoLog.open("logs/"+nombreArchivo);
+			//Que hacemos si fallo en abrir el log?
 
-public:
+		}
 
-	Log(TipoLog* tipoLog){
-		this->tipoLog = tipoLog;
-	}
+		string armarMensaje(string primeraParte, string segundaParte);
 
-	//DEBUG//
-	void mostrarPosicionMario(int coordenadaX, int coordenadaY){
-		this->tipoLog->mostrarPosicionMario(coordenadaX, coordenadaY);
-	}
+		TipoLog* tipoLog;
+		ofstream archivoLog;
+		time_t tiempo;
+		static Log* log;
 
-	//INFO//
-	void seCargaUnaTexturaDesde(string rutaTextura){
-		this->tipoLog->seCargaUnaTexturaDesde(rutaTextura);
-	}
+	public:
 
-	//ERRORES//
-	void huboUnErrorAlInicializar(){
-		this->tipoLog->huboUnErrorAlInicializar();
-	}
+		static Log* getInstance(TipoLog* tipo);
+		static Log* getInstance();
+		~Log();
 
-	void huboUnErrorEnLaCargaDeLaTextura(string rutaTextura){
-		this->huboUnErrorEnLaCargaDeLaTextura(rutaTextura);
-	}
+		//DEBUG//
+		void mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY);
+		void mostrarAccion(string accion);
 
+		//INFO//
+		void mostrarMensajeDeInfo(string mensajeInfo);
+		void mostrarMensajeDeCarga(string idObjetoCargado,string rutaObjetoCargado);
+
+		//ERRORES//
+		void huboUnErrorSDL(string descripcionError, string errorSDL);
+		void huboUnError(string descripcionError);
 };
 
 

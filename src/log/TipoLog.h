@@ -8,27 +8,38 @@ using namespace std;
 
 class TipoLog{
 
-public:
-	//DEBUG//
-	virtual void mostrarPosicionMario(int coordenadaX, int coordenadaY){
-		cout<<"La posicion de mario es: ("<<coordenadaX<<","<<coordenadaY<<")"<<endl;
-	}
+	public:
 
-	//INFO//
-	virtual void seCargaUnaTexturaDesde(string rutaTextura){
-		cout<<"Se carga una textura desde: "<< rutaTextura <<endl;
-	}
+		virtual ~TipoLog(){};
 
-	//ERRORES//
-	virtual void huboUnErrorAlInicializar(){
-		cout<<"Hubo un error en la inicializacion del programa"<<endl;
-	}
+		//DEBUG//
+		virtual void mostrarPosicion(string registroPosicion,ofstream& archivo){
+			escribirEnLog(" [DEBUG] ",registroPosicion,archivo);
+		}
 
-	virtual void huboUnErrorEnLaCargaDeLaTextura(string rutaTextura){
-		cout<<"Hubo un error en la carga de la siguiente textura: "<< rutaTextura <<endl;
-	}
+		virtual void mostrarAccion(string registroAccion,ofstream& archivo){
+			escribirEnLog(" [DEBUG] ",registroAccion,archivo);
+		}
+
+		//INFO//
+		virtual void mostrarMensajeDeInfo(string registroInfo,ofstream& archivo){
+			escribirEnLog(" [INFO] ",registroInfo,archivo);
+		}
+		virtual void mostrarMensajeDeCarga(string registroInfo,ofstream& archivo){
+			escribirEnLog(" [INFO] ",registroInfo,archivo);
+		}
+
+		//ERRORES//
+		virtual void huboUnError(string registroError,ofstream& archivo){
+			escribirEnLog(" [ERROR] ",registroError,archivo);
+		}
 
 
+	private:
+
+		void escribirEnLog(string tipo,string registroError,ofstream& archivo){
+			archivo<< tipo + registroError <<endl;
+		}
 
 };
 

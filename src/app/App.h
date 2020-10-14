@@ -9,6 +9,14 @@
 #include "CargadorTexturas.h"
 #include "SpriteMario.h"
 
+#include "../log/Log.h"
+#include "../log/TipoLog.h"
+
+
+#include "../log/Error.h"
+#include "../log/Info.h"
+#include "../log/Debug.h"
+
 const int ANCHO_PANTALLA = 800;
 const int ALTO_PANTALLA = 540;
 
@@ -18,51 +26,48 @@ class App{
 
 	protected:
 		App(){
+
+			// TODO venir del lector o de linea de comando el tipo de log
+			TipoLog* tipo = new Error();
+			Log* log = Log::getInstance(tipo);
+
 			if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-				// TODO escribir en el log que ocurrio un error inicializando SDL --- SDL_GetError()
+				log->huboUnErrorSDL("Error inicializando SDL", SDL_GetError());
 			}
 
 			ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
 			if( ventanaAplicacion == NULL ){
-				// TODO excribir en el log que no se pudo crear una ventana de SDL --- SDL_GetError()
+				log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
 			}
 
-			//Initializo la biblioteca SDL_Image
-			//int imgFlags = IMG_INIT_PNG;
-
 			if( !( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) ){
-				// TODO Poner en el log que no se pudo inicializar el img init --- IMG_GetError()
+				log->huboUnErrorSDL("No se pudo inicializar IMG Init", IMG_GetError());
 			}
 
 			renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 			if( renderizador == NULL ){
-				// TODO Poner en el log que no se pudo crear un renderizador --- SDL_GetError()
+				log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
 			}
-
-			//Initialize renderer color
-			//SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
-			//	TODO  primera llamada al juego, asi se inicializa
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance();
 			spriteMario = new SpriteMario();
 			rectanguloCamara = { 0, 0, ANCHO_PANTALLA , ALTO_PANTALLA};
 
-
 		}
+
 		Juego* juego;
 		static App* aplicacion;
 		CargadorTexturas* cargadorTexturas;
 		SDL_Window* ventanaAplicacion;
 		SDL_Renderer* renderizador;
 		SpriteMario* spriteMario;
-
 		SDL_Rect rectanguloCamara;
 
 	public:
 		App(App &other) = delete;
 		static App *GetInstance();
+
 		void actualizar(SDL_Event evento);
 		void actualizar();
 		void moverCamara();

@@ -2,7 +2,7 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include "App.h"
-/*
+
 int main( int argc, char* args[] ){
 	App* aplicacion = App::GetInstance();
 	bool salir = false;
@@ -24,5 +24,5 @@ int main( int argc, char* args[] ){
 	delete aplicacion;
 	return 0;
 }
-*/
+
 

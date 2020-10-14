@@ -10,8 +10,9 @@
 #include "SpriteMario.h"
 
 const int ANCHO_PANTALLA = 800;
-const int ALTO_PANTALLA = 600;
-const int ANCHO_FONDO = 4000;
+const int ALTO_PANTALLA = 540;
+
+const int ANCHO_FONDO = 8177;
 
 class App{
 

@@ -77,7 +77,7 @@ void App::dibujar(){
 	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,420 - mario->obtenerPosicionY(), 40, 80};
 
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
-	SDL_Rect rectanguloGoomba = {enemigos.front()->obtenerPosicionX(),enemigos.front()->obtenerPosicionY(), 40, 35};
+	SDL_Rect rectanguloGoomba = {enemigos.front()->obtenerPosicionX() - rectanguloCamara->x,enemigos.front()->obtenerPosicionY(), 40, 35};
 
 	//SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( renderizador );

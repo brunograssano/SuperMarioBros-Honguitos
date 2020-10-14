@@ -8,7 +8,7 @@ using namespace std;
 #include "LectorTest.h"
 #include "Assert.h"
 
-
+/*
 int main(int argc, char* argv[]){
 	Assert* testSuite = new Assert();
 
@@ -27,5 +27,5 @@ int main(int argc, char* argv[]){
 	cout << "Pasaron " << testSuite->getPruebasPasadas() << " pruebas de "<< testSuite->getPruebasTotales() << endl;
 	delete testSuite;
 	return 0;
-}
+}*/
 

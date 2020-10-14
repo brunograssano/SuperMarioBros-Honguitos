@@ -1,0 +1,10 @@
+ [ERROR] Wed Oct 14 14:53:59 2020
+ - No se pudo cargar una imagen en comienzo.png ---- Couldn't open comienzo.png
+ [ERROR] Wed Oct 14 14:53:59 2020
+No se pudo cargar ninguna imagen del bloque: ladrillo
+ [ERROR] Wed Oct 14 14:53:59 2020
+ - No se pudo cargar una imagen en marioElduro.png ---- Couldn't open marioElduro.png
+ [ERROR] Wed Oct 14 14:53:59 2020
+No se pudo cargar ninguna imagen del bloque: sorpresa
+ [ERROR] Wed Oct 14 14:53:59 2020
+No se pudo cargar el fondo

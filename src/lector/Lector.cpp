@@ -4,9 +4,9 @@ using namespace std;
 #include <string>
 #include <iostream>
 
-string Lector::leerArchivo(char* nombreArchivo){
+string Lector::leerArchivo(string nombreArchivo){
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("modeloXML.xml");
+	pugi::xml_parse_result result = doc.load_file(nombreArchivo.c_str());
 	if (!result){
 		return "-1";
 	}

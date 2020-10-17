@@ -15,7 +15,7 @@ void LectorTest::test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite)
 
 	Lector* lector = new Lector();
 
-	char* archivoALeer = "modeloXML.xml";
+	string archivoALeer = "resources/modeloXML.xml";
 
 	string ancho = lector->leerArchivo(archivoALeer);
 

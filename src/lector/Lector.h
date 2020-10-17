@@ -6,7 +6,7 @@ using namespace std;
 
 class Lector{
 	public:
-		string leerArchivo(char* nombreArchivo);
+		string leerArchivo(string nombreArchivo);
 };
 
 

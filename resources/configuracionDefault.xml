@@ -1,0 +1,56 @@
+<configuracion>
+    <log>       <!-- Pueden no indicarlo esto, ya que pueden mandarlo por linea de comando al iniciar la app (Si no mandan eso considerar ERROR)-->
+        <level>ERROR</level> <!-- DEBUG o INFO -->
+    </log>
+
+    <ventana>
+        <ancho>800</ancho>
+        <alto>600</alto>
+    </ventana>
+
+    <niveles>
+        <nivel>
+            <mundo>1</mundo> <!-- el numero del nivel se usaria para la indicacion en pantalla Ej. WORLD 1 -->
+            <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
+            <cantidadMonedas>30</cantidadMonedas>   <!--No les damos la opcion de cambiar la textura, aparecen de forma random en el eje X -->
+            <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
+            <enemigos>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <cantidad>10</cantidad>
+                </enemigo>
+<!--
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>imagenKoopa</direccionImagen>
+                    <cantidad>15</cantidad>
+                </enemigo>
+-->
+                <!-- Agregariamos otros enemigos aca -->
+            </enemigos>
+            <plataformas>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>100</coordenadaX>
+                    <coordenadaY>200</coordenadaY>
+                    <cantidadBloques>5</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>400</coordenadaX>
+                    <coordenadaY>400</coordenadaY>
+                    <cantidadBloques>5</cantidadBloques>
+                </plataforma>
+
+                <!-- Agregariamos mas plataformas aca, podemos incluso llegar a dar la opcion de una plataforma compuesta -->
+            </plataformas>
+        </nivel>
+
+        <!-- Agregariamos mas niveles-->
+
+    </niveles>
+</configuracion>

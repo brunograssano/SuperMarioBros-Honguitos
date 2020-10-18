@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "SpriteMario.h"
-#include "App.h"
+#include "../app/App.h"
 
 SpriteMario::SpriteMario() {
 	//Initialize

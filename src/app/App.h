@@ -7,15 +7,12 @@
 #include <stdio.h>
 #include <string>
 #include "CargadorTexturas.h"
-#include "SpriteMario.h"
+#include "../sprites/SpriteMario.h"
 
 #include "../log/Log.h"
 #include "../log/TipoLog.h"
 
-
-#include "../log/Error.h"
-#include "../log/Info.h"
-#include "../log/Debug.h"
+#include "../lector/ArchivoLeido.hpp"
 
 const int ANCHO_PANTALLA = 800;
 const int ALTO_PANTALLA = 540;
@@ -25,17 +22,17 @@ const int ANCHO_FONDO = 8177;
 class App{
 
 	protected:
-		App(){
+		App(ArchivoLeido* archivoLeido){
 
-			// TODO venir del lector o de linea de comando el tipo de log
-			TipoLog* tipo = new Error();
-			Log* log = Log::getInstance(tipo);
+			Log* log = Log::getInstance(archivoLeido->tipoLog);
+			ancho_pantalla = archivoLeido->anchoVentana;
+			alto_pantalla = archivoLeido->altoVentana;
 
 			if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
 				log->huboUnErrorSDL("Error inicializando SDL", SDL_GetError());
 			}
 
-			ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
+			ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
 			if( ventanaAplicacion == NULL ){
 				log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
 			}
@@ -50,9 +47,10 @@ class App{
 			}
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
-			juego = Juego::getInstance();
+			juego = Juego::getInstance(archivoLeido->niveles);
 			spriteMario = new SpriteMario();
-			rectanguloCamara = { 0, 0, ANCHO_PANTALLA , ALTO_PANTALLA};
+			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
+			delete archivoLeido;
 
 		}
 
@@ -64,13 +62,19 @@ class App{
 		SpriteMario* spriteMario;
 		SDL_Rect rectanguloCamara;
 
+		int ancho_pantalla = 800;
+		int alto_pantalla = 540;
+
 	public:
 		App(App &other) = delete;
 		static App *GetInstance();
+		static App *GetInstance(ArchivoLeido* archivoLeido);
+
 
 		void actualizar(SDL_Event evento);
 		void actualizar();
 		void moverCamara();
+
 		SDL_Renderer* obtenerRenderizador();
 
 		SDL_Rect* obtenerRectCamara();

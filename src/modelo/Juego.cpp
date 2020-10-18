@@ -5,15 +5,15 @@
 Juego* Juego::instanciaJuego = nullptr;
 
 Juego* Juego::getInstance(){
-	if(instanciaJuego==nullptr){ // TODO Ver si le pasamos el por defecto, o si lo sacamos directamente
+	/*if(instanciaJuego==nullptr){
 		instanciaJuego = new Juego("");
-	}
+	}*/
 	return instanciaJuego;
 }
 
-Juego* Juego::getInstance(string direccionConfiguracion){
+Juego* Juego::getInstance(list<Nivel*> niveles){
 	if(instanciaJuego==nullptr){
-		instanciaJuego = new Juego(direccionConfiguracion);
+		instanciaJuego = new Juego(niveles);
 	}
 	return instanciaJuego;
 }
@@ -31,10 +31,14 @@ void Juego::actualizarPosicionesEnemigos(){
 	nivelActual->actualizarPosicionesEnemigos();
 }
 
-Juego::~Juego(){
-	// Se borran los niveles/vamos borrando a medida que se avanza?
-	delete jugador;
+string Juego::obtenerDireccionFondoNivelActual(){
+	Nivel* nivelActual = niveles.front();
+	return nivelActual->obtenerDireccionFondoActual();
+}
 
-	// ESTO BORRA SOLO A UNO, LLAMA A SU DESTRUCTOR
-	niveles.pop();
+Juego::~Juego(){
+
+
+	delete jugador;
+	niveles.clear();
 }

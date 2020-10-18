@@ -29,8 +29,10 @@ class Nivel{
 			monedas.push_back(unaMoneda);
 		}
 
+		void inicializarPosicionEnemigo();
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();
+		string obtenerDireccionFondoActual();
 
 		~Nivel(){
 			plataformas.clear();

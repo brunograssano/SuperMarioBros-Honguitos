@@ -1,15 +1,21 @@
 #include "App.h"
 
-
+#include <list>
 
 App* App::aplicacion = nullptr;
 
-App* App::GetInstance(){// TODO Recibir la direccion del archivo a leer?
-		if(aplicacion==nullptr){
-			aplicacion = new App();
-		}
+App* App::GetInstance(ArchivoLeido* archivoLeido){
+	if(aplicacion==nullptr){
+		aplicacion= new App(archivoLeido);
+	}
+	return aplicacion;
+}
+
+App* App::GetInstance(){
 		return aplicacion;
 }
+
+
 
 
 void App::actualizar(SDL_Event evento){
@@ -37,36 +43,45 @@ void App::actualizar(SDL_Event evento){
 	}
 }
 
+
+
 void App::actualizar(){
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	jugador->actualizarPosicion();
 	Juego::getInstance()->actualizarPosicionesEnemigos();
+	cargadorTexturas->revisarSiCambioNivel(renderizador);
 	moverCamara();
 }
+
+
 
 SDL_Rect* App::obtenerRectCamara(){
 	return &rectanguloCamara;
 }
+
+
 
 void App::moverCamara(){
 
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
-	bool elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = jugador->obtenerPosicionX() > rectanguloCamara->x + (ANCHO_PANTALLA)/2;
+	bool elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = jugador->obtenerPosicionX() > rectanguloCamara->x + (ancho_pantalla)/2;
 
 	if( elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla ){
-		rectanguloCamara->x =   jugador->obtenerPosicionX() - (ANCHO_PANTALLA) / 2 ;
+		rectanguloCamara->x =   jugador->obtenerPosicionX() - (ancho_pantalla) / 2 ;
 	}
 
 	if( rectanguloCamara->x < 0 ){
 		 rectanguloCamara->x = 0;
 	}
 
-	if( rectanguloCamara->x > ANCHO_FONDO - ANCHO_PANTALLA){
-		rectanguloCamara->x = ANCHO_FONDO - ANCHO_PANTALLA;
+	if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
+		rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
 	}
 }
+
+
 
 
 void App::dibujar(){
@@ -77,15 +92,21 @@ void App::dibujar(){
 	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,420 - mario->obtenerPosicionY(), 40, 80};
 
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
-	SDL_Rect rectanguloGoomba = {enemigos.front()->obtenerPosicionX() - rectanguloCamara->x,enemigos.front()->obtenerPosicionY(), 40, 35};
+	SDL_Rect rectanguloEnemigo;
 
-	//SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( renderizador );
 
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), NULL, &rectanguloMario);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMoneda(), NULL, &rectanguloGoomba);
-							// esta en el de la moneda para probar solamente
+
+	for (auto const& enemigo : enemigos) {
+	    //enemigo->actualizarPosicion();
+		Sprite* spriteEnemigo = enemigo->obtenerSprite();
+		rectanguloEnemigo = spriteEnemigo->obtenerRectanguloActual();
+		rectanguloEnemigo.x+=enemigo->obtenerPosicionX() - rectanguloCamara->x;
+	    //{enemigo->obtenerPosicionX() - rectanguloCamara->x,enemigo->obtenerPosicionY(), 40, 35};
+	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), NULL, &rectanguloEnemigo);
+	}
 
 	SDL_RenderPresent( renderizador );
 
@@ -93,9 +114,13 @@ void App::dibujar(){
 
 
 
+
 SDL_Renderer* App::obtenerRenderizador(){
 	return renderizador;
 }
+
+
+
 
 
 

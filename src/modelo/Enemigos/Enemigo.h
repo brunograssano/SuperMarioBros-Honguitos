@@ -2,6 +2,8 @@
 #define SRC_MODELO_ENEMIGOS_ENEMIGO_H_
 
 #include "../Posicion.h"
+#include "../../sprites/Sprite.h"
+#include <string>
 
 class Enemigo{
 
@@ -15,6 +17,13 @@ class Enemigo{
 			return posicionActual->obtenerPosY();
 		}
 
+		Sprite* obtenerSprite(){
+			return spriteEnemigo;
+		}
+
+		virtual void agregarPosicion(int coordenadaX,int coordenadaY){
+			posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
+		};
 
 		virtual void actualizarPosicion(){};
 
@@ -22,6 +31,8 @@ class Enemigo{
 
 	protected:
 		PosicionMovil* posicionActual;
+		string direccionImagen;
+		Sprite* spriteEnemigo;
 
 };
 

@@ -3,21 +3,20 @@
 
 using namespace std;
 #include "Nivel.h"
-#include <queue>
 #include <list>
 #include <iostream>
 #include <string>
 #include "Mario.h"
 
-#include "Enemigos/Goomba.h"
+
 
 class Juego{
 
 	public:
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
-		static Juego* getInstance(string direccionConfiguracion);
-
+		static Juego* getInstance(list<Nivel*> archivoLeido);
+		string obtenerDireccionFondoNivelActual();
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();
 		Mario* obtenerMario();
@@ -25,19 +24,22 @@ class Juego{
 		~Juego();
 
 	private:
-		Juego(string direccionConfiguracion){
-			//Llamada al lector que nos va a dar los niveles
+		Juego(list<Nivel*> nivelesLector){
 
 			jugador = new Mario();
+			niveles = nivelesLector;
 
+			for (auto const& nivel : niveles) {
+			    nivel->inicializarPosicionEnemigo();
+			}
 			//PRUEBA CON UN NIVEL
-			Nivel* unNivel = new Nivel(0,"0",0,0);
-			unNivel->agregarEnemigo(new Goomba("a"));
-			niveles.push(unNivel);
+			//Nivel* unNivel = new Nivel(0,"0",0,0);
+			//unNivel->agregarEnemigo(new Goomba("a"));
+			//niveles.push(unNivel);
 
 		}
 
-		queue<Nivel*> niveles;
+		list<Nivel*> niveles;
 		Mario* jugador;
 		static Juego* instanciaJuego;
 

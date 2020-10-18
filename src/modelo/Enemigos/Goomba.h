@@ -4,14 +4,14 @@
 using namespace std;
 
 #include "Enemigo.h"
-#include <string>
+#include "../../sprites/SpriteGoomba.h"
 
 class Goomba : public Enemigo{
 
 	public:
 
 		Goomba(string direccionImagen){
-			this->direccionImagen = direccionImagen;
+			spriteEnemigo = new SpriteGoomba(direccionImagen);
 		}
 
 
@@ -21,11 +21,13 @@ class Goomba : public Enemigo{
 		}
 
 		~Goomba(){
-			delete this->posicionActual;
+			delete posicionActual;
+			delete spriteEnemigo;
 		}
+
 	private:
-		float velocidadX = 0.05;
-		string direccionImagen;
+		float velocidadX = 0.15;
+
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_GOOMBA_H_ */

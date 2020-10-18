@@ -38,8 +38,9 @@ class TipoLog{
 	private:
 
 		void escribirEnLog(string tipo,string registroError,ofstream& archivo){
-			archivo<< tipo + registroError <<endl;
+			//archivo<< tipo + registroError <<endl;
 		}
+
 
 };
 

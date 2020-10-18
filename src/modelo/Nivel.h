@@ -4,12 +4,17 @@
 #include "Bloques/Bloque.h"
 #include "Enemigos/Enemigo.h"
 #include "Moneda.h"
+#include <string>
 
 class Nivel{
 
 
 	public:
-		Nivel(){
+		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas){
+			this->mundo = mundo;
+			this->direccionFondo = direccionFondo;
+			this->tiempo = tiempo;
+			this->cantidadMonedas = cantidadMonedas;
 		}
 
 		void agregarPlataforma(Plataforma* unaPlataforma){
@@ -39,8 +44,10 @@ class Nivel{
 		list<Plataforma*> plataformas;
 		list<Enemigo*> enemigos;
 		list<Moneda*> monedas;
-
-
+		int mundo;
+		string direccionFondo;
+		int tiempo;
+		int cantidadMonedas;
 };
 
 

@@ -31,8 +31,8 @@ class Juego{
 			jugador = new Mario();
 
 			//PRUEBA CON UN NIVEL
-			Nivel* unNivel = new Nivel();
-			unNivel->agregarEnemigo(new Goomba(30,400));
+			Nivel* unNivel = new Nivel(0,"0",0,0);
+			unNivel->agregarEnemigo(new Goomba("a"));
 			niveles.push(unNivel);
 
 		}

@@ -17,9 +17,9 @@ void LectorTest::test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite)
 
 	string archivoALeer = "resources/modeloXML.xml";
 
-	string ancho = lector->leerArchivo(archivoALeer);
+	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
-	int anchoEsperado = stoi(ancho);
+	int anchoEsperado = archivoLeido->anchoVentana;
 
 	testSuite->assert(anchoEsperado,800,"El ancho es de 800 px");
 

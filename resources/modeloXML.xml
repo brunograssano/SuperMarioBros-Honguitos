@@ -33,14 +33,14 @@
             <plataformas>
 
                 <plataforma>
-                    <tipo>ladrillo</tipo>
+                    <tipo>Ladrillo</tipo>
                     <coordenadaX>100</coordenadaX>
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
-                    <tipo>sorpresa</tipo>
+                    <tipo>Sorpresa</tipo>
                     <coordenadaX>400</coordenadaX>
                     <coordenadaY>400</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>

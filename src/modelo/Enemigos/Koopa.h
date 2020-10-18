@@ -1,14 +1,16 @@
 #ifndef SRC_MODELO_ENEMIGOS_KOOPA_H_
 #define SRC_MODELO_ENEMIGOS_KOOPA_H_
+using namespace std;
 
 #include "Enemigo.h"
+#include <string>
 
 class Koopa : public Enemigo{
 
 	public:
 
-		Koopa(int coordenadaX, int coordenadaY){
-			this->posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
+		Koopa(string direccionImagen){
+			this->direccionImagen = direccionImagen;
 		}
 
 		~Koopa(){
@@ -21,6 +23,8 @@ class Koopa : public Enemigo{
 
 	private:
 		float velocidadX = 0.05;
+		string direccionImagen;
+
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_KOOPA_H_ */

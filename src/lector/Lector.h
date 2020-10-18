@@ -3,10 +3,11 @@
 
 using namespace std;
 #include <string>
+#include "ArchivoLeido.hpp"
 
 class Lector{
 	public:
-		string leerArchivo(string nombreArchivo);
+		ArchivoLeido* leerArchivo(string nombreArchivo);
 };
 
 

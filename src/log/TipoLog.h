@@ -3,6 +3,7 @@
 #define SRC_TIPOLOG_H_
 #include <string>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 
@@ -38,7 +39,7 @@ class TipoLog{
 	private:
 
 		void escribirEnLog(string tipo,string registroError,ofstream& archivo){
-			//archivo<< tipo + registroError <<endl;
+			archivo << tipo + registroError << endl;
 		}
 
 

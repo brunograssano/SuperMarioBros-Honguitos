@@ -60,9 +60,9 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 					string cantidad = enemigo.child_value("cantidad");
 					for(int i=0;i<stoi(cantidad);i++){
 						Enemigo* unEnemigo;
-						if(tipo.compare("Goomba")){
+						if(tipo.compare("Goomba")==0){
 							unEnemigo = new Goomba(direccionImagen);
-						}else if(tipo.compare("Koopa")){
+						}else if(tipo.compare("Koopa")==0){
 							unEnemigo = new Koopa(direccionImagen);
 						}
 						unNivel->agregarEnemigo(unEnemigo);
@@ -81,9 +81,9 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 					int coordenadaBloque = stoi(coordenadaX);
 					for(int i=0;i<stoi(cantidadBloques);i++){
 						Bloque* unBloque;
-						if(tipo.compare("Ladrillo")){
+						if(tipo.compare("Ladrillo")==0){
 							unBloque = new Ladrillo(coordenadaBloque,stoi(coordenadaY));
-						}else if(tipo.compare("Sorpresa")){
+						}else if(tipo.compare("Sorpresa")==0){
 							unBloque = new Sorpresa(coordenadaBloque,stoi(coordenadaY));
 						}
 						coordenadaBloque += 50;

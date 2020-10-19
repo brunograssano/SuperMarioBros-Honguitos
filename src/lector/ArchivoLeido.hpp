@@ -13,6 +13,10 @@ class ArchivoLeido{
 			int anchoVentana;
 			int altoVentana;
 			list<Nivel*> niveles;
+			bool leidoCorrectamente;
+			list<string> mensajeError;
+
+			void verificarLectura();
 };
 
 #endif

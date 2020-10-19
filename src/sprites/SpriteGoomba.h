@@ -10,8 +10,14 @@ class SpriteGoomba : public Sprite{
 
 		SDL_Rect obtenerRectanguloActual()override;
 
+		int obtenerPosicionXRectangulo()override;
+
+		void actualizarSprite()override;
+
 	private:
 
+		bool cambio;
+		int ciclos;
 		int estadoActual;
 		SDL_Rect estadosPosibles[3];
 		int ancho;

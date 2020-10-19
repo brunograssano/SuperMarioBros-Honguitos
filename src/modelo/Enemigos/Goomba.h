@@ -17,7 +17,8 @@ class Goomba : public Enemigo{
 
 
 		void actualizarPosicion()override{
-			this->posicionActual->moverHorizontal(velocidadX);
+			posicionActual->moverHorizontal(velocidadX);
+			spriteEnemigo->actualizarSprite();
 		}
 
 		~Goomba(){

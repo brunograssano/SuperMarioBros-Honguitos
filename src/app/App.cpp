@@ -104,8 +104,9 @@ void App::dibujar(){
 		Sprite* spriteEnemigo = enemigo->obtenerSprite();
 		rectanguloEnemigo = spriteEnemigo->obtenerRectanguloActual();
 		rectanguloEnemigo.x+=enemigo->obtenerPosicionX() - rectanguloCamara->x;
-	    //{enemigo->obtenerPosicionX() - rectanguloCamara->x,enemigo->obtenerPosicionY(), 40, 35};
-	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), NULL, &rectanguloEnemigo);
+		int valorX = spriteEnemigo->obtenerPosicionXRectangulo();
+		SDL_Rect recorteTextura = {valorX,0, 16, 32};
+	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
 
 	SDL_RenderPresent( renderizador );

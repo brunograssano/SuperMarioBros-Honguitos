@@ -16,6 +16,12 @@ class Sprite{
 			return direccionTextura;
 		}
 
+		virtual int obtenerPosicionXRectangulo(){
+			return 0;
+		}
+
+		virtual void actualizarSprite(){}
+
 		virtual SDL_Rect obtenerRectanguloActual(){
 			SDL_Rect rectangulo = {20,20,20,20};
 			return rectangulo;

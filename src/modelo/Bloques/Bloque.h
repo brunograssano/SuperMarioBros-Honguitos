@@ -3,8 +3,12 @@
 
 using namespace std;
 #include <list>
+#include <string>
 
 #include "../Posicion.h"
+#include "../../sprites/Sprite.h"
+#include "../../sprites/SpriteSorpresa.h"
+#include "../../sprites/SpriteLadrillo.h"
 
 const int LADO_BLOQUE_DEFAULT = 10;
 
@@ -20,18 +24,25 @@ class Bloque{
 			return this->posicion->obtenerPosY();
 		}
 
+		Sprite* obtenerSprite(){
+			return this->spriteBloque;
+		}
+
     protected:
     	Posicion* posicion;
+    	Sprite* spriteBloque;
 };
 
 class Sorpresa : public Bloque{
     public:
 		Sorpresa(int coordenadaX, int coordenadaY){
 			this->posicion = new PosicionFija(coordenadaX, coordenadaY);
+			this->spriteBloque = new SpriteSorpresa();
 		}
 
         ~Sorpresa(){
         	delete this->posicion;
+        	delete this->spriteBloque;
         }
 
 };
@@ -40,10 +51,12 @@ class Ladrillo : public Bloque {
 	public:
 		Ladrillo(int coordenadaX, int coordenadaY){
 			this->posicion = new PosicionFija(coordenadaX, coordenadaY);
+			this->spriteBloque = new SpriteLadrillo();
 		}
 
 		~Ladrillo(){
 			delete this->posicion;
+			delete this->spriteBloque;
 		}
 };
 

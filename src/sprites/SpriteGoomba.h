@@ -20,6 +20,5 @@ class SpriteGoomba : public Sprite{
 		int ciclos;
 		int estadoActual;
 		SDL_Rect estadosPosibles[3];
-		//int ancho;
-		//int alto;
+
 };

@@ -31,11 +31,12 @@ void SpriteGoomba::actualizarSprite(){
 	ciclos++;
 }
 
+//ESTO YA NO ES NECESARIO
 int SpriteGoomba::obtenerPosicionXRectangulo(){
 	return estadosPosibles[estadoActual].x;
 }
 
 
 SDL_Rect SpriteGoomba::obtenerRectanguloActual(){
-	return estadosPosibles[estadoActual];//Da lo mismo cual devolvamos aca, cambia a partir de donde estaria la imagen
+	return estadosPosibles[estadoActual];
 }

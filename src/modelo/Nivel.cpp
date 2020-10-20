@@ -13,7 +13,9 @@ void Nivel::actualizarPosicionesEnemigos(){
 list<Enemigo*> Nivel::obtenerEnemigos(){
 	return enemigos;
 }
-
+list<Plataforma*> Nivel::obtenerPlataformas(){
+	return plataformas;
+}
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }

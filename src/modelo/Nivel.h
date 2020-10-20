@@ -32,6 +32,7 @@ class Nivel{
 		void inicializarPosicionEnemigo();
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();
+		list<Plataforma*> obtenerPlataformas();
 		string obtenerDireccionFondoActual();
 
 		~Nivel(){

@@ -21,13 +21,13 @@
                     <direccionImagen>resources/Goomba.png</direccionImagen>
                     <cantidad>10</cantidad>
                 </enemigo>
-<!--
+
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <direccionImagen>imagenKoopa</direccionImagen>
+                    <direccionImagen>resources/Koopa.png</direccionImagen>
                     <cantidad>15</cantidad>
                 </enemigo>
--->
+
                 <!-- Agregariamos otros enemigos aca -->
             </enemigos>
             <plataformas>

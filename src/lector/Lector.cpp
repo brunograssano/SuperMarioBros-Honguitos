@@ -24,12 +24,14 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
     {
     	ParserLog* parser = new ParserLog();
 		parser->ParsearLog(log,archivoLeido);
+		delete parser;
     }
 
     for (pugi::xml_node ventana: doc.child("configuracion").children("ventana"))
     {
     	ParserVentana* parser = new ParserVentana();
     	parser->ParsearVentana(ventana,archivoLeido);
+    	delete parser;
     }
 
     for (pugi::xml_node niveles: doc.child("configuracion").children("niveles"))
@@ -38,6 +40,7 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
     	{
     		ParserNivel* parser = new ParserNivel();
 			parser->ParsearNivel(nivel,archivoLeido);
+			delete parser;
     	}
     }
     archivoLeido->verificarLectura();

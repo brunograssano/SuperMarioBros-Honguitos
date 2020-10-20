@@ -26,6 +26,7 @@ class ParserNivel{
 					{
 						ParserEnemigo* parser = new ParserEnemigo();
 						parser->ParsearEnemigo(enemigo,unNivel);
+						delete parser;
 					}
 				}
 				for (pugi::xml_node plataformas: nivel.children("plataformas"))
@@ -34,6 +35,7 @@ class ParserNivel{
 					{
 						ParserPlataforma* parser = new ParserPlataforma();
 						parser->ParsearPlataforma(plataforma,unNivel);
+						delete parser;
 					}
 				}
 

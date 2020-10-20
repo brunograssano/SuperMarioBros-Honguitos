@@ -25,7 +25,7 @@ class ParserPlataforma{
 					}else if(tipo.compare("Sorpresa")==0){
 						unBloque = new Sorpresa(coordenadaBloque,stoi(coordenadaY));
 					}
-					coordenadaBloque += 50;
+					coordenadaBloque += 40;
 					unaPlataforma->agregarBloque(unBloque);
 				}
 				unNivel->agregarPlataforma(unaPlataforma);

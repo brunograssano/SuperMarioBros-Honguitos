@@ -64,6 +64,13 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	// NO OLVIDARSE DE LIBERAR LAS TEXTURAS QUE SE CARGUEN
 }
 
+SDL_Texture* CargadorTexturas::obtenerTexturaLadrillo(){
+	return texturaLadrillo;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaSorpresa(){
+	return this->texturaSorpresa;
+}
 
 SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
 	return texturaFondoActual;

@@ -26,6 +26,10 @@ list<Enemigo*> Juego::obtenerEnemigos(){
 	return niveles.front()->obtenerEnemigos();
 }
 
+list<Plataforma*> Juego::obtenerPlataformas(){
+	return niveles.front()->obtenerPlataformas();
+}
+
 void Juego::actualizarPosicionesEnemigos(){
 	Nivel* nivelActual = niveles.front();
 	nivelActual->actualizarPosicionesEnemigos();

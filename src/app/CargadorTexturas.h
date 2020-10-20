@@ -15,6 +15,8 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaMario();
 		SDL_Texture* obtenerTexturaMoneda();
 		SDL_Texture* obtenerTexturaFondo();
+		SDL_Texture* obtenerTexturaLadrillo();
+		SDL_Texture* obtenerTexturaSorpresa();
 
 		SDL_Texture* obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador);
 

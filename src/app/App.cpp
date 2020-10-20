@@ -107,6 +107,17 @@ void App::dibujar(){
 	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
 
+	list<Plataforma*> plataformas = Juego::getInstance()->obtenerPlataformas();
+
+	for(auto const& plataforma : plataformas){
+		list<Bloque*> bloques = plataforma->obtenerBloques();
+		for (auto const& bloque : bloques) {
+			SDL_Rect rectanguloBloque = {bloque->obtenerPosicionX() - rectanguloCamara->x,bloque->obtenerPosicionY(), 40, 40};
+			SDL_Rect recorteBloque = {0, 0, 16, 16};
+			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaLadrillo(), &recorteBloque, &rectanguloBloque);
+		}
+	}
+
 	SDL_RenderPresent( renderizador );
 }
 

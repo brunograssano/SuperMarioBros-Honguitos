@@ -19,6 +19,7 @@ class Juego{
 		string obtenerDireccionFondoNivelActual();
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();
+		list<Plataforma*> obtenerPlataformas();
 		Mario* obtenerMario();
 
 		~Juego();

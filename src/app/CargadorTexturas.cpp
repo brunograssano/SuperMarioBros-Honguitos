@@ -118,7 +118,7 @@ SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
 	return texturaMoneda;
 }
 
-bool CargadorTexturas::tengoTexturaCargadaEnMemoria(Sprite* spriteEnemigo){ // No me esta tomando el contains del map (c++ 20))
+bool CargadorTexturas::tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo){ // No me esta tomando el contains del map (c++ 20))
 	try{
 		texturasEnemigos.at(spriteEnemigo->direccionImagen());
 	}
@@ -130,11 +130,30 @@ bool CargadorTexturas::tengoTexturaCargadaEnMemoria(Sprite* spriteEnemigo){ // N
 
 
 SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador){
-	if(!tengoTexturaCargadaEnMemoria(spriteEnemigo)){
+	if(!tengoTexturaEnemigoCargadaEnMemoria(spriteEnemigo)){
 		SDL_Texture* texturaNueva = cargarTextura(spriteEnemigo->direccionImagen(),renderizador);
 		texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
 	}
 	return texturasEnemigos[spriteEnemigo->direccionImagen()];
+}
+
+bool CargadorTexturas::tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque){ // No me esta tomando el contains del map (c++ 20))
+	try{
+		texturasBloques.at(spriteBloque->direccionImagen());
+	}
+	catch(std::out_of_range&){
+		return false;
+	}
+	return true;
+}
+
+
+SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
+	if(!tengoTexturaBloqueCargadaEnMemoria(spriteBloque)){
+		SDL_Texture* texturaNueva = cargarTextura(spriteBloque->direccionImagen(),renderizador);
+		texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
+	}
+	return texturasBloques[spriteBloque->direccionImagen()];
 }
 
 CargadorTexturas::~CargadorTexturas(){

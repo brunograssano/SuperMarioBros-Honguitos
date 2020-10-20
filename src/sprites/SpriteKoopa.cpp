@@ -1,5 +1,4 @@
 
-
 #include "SpriteKoopa.h"
 
 SpriteKoopa::SpriteKoopa(string direccionImagen){

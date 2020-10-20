@@ -113,9 +113,11 @@ void App::dibujar(){
 	for(auto const& plataforma : plataformas){
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 		for (auto const& bloque : bloques) {
+
 			SDL_Rect rectanguloBloque = {bloque->obtenerPosicionX() - rectanguloCamara->x,bloque->obtenerPosicionY(), 40, 40};
-			SDL_Rect recorteBloque = {0, 0, 16, 16};
-			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaSorpresa(), &recorteBloque, &rectanguloBloque);
+			Sprite* spriteBloque = bloque->obtenerSprite();
+			SDL_Rect recorteBloque = spriteBloque->obtenerRectanguloActual();
+			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(spriteBloque, renderizador), &recorteBloque, &rectanguloBloque);
 		}
 	}
 

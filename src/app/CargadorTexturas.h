@@ -19,6 +19,7 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaSorpresa();
 
 		SDL_Texture* obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador);
+		SDL_Texture* obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador);
 
 
 		void actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador);
@@ -35,8 +36,11 @@ class CargadorTexturas{
 		SDL_Texture* texturaSorpresa = NULL;
 		SDL_Texture* texturaFondoActual = NULL;
 		map<string,SDL_Texture*> texturasEnemigos;
+		map<string,SDL_Texture*> texturasBloques;
+
 		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
-		bool tengoTexturaCargadaEnMemoria(Sprite* spriteEnemigo);
+		bool tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo);
+		bool tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque);
 
 };
 

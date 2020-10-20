@@ -1,6 +1,6 @@
 using namespace std;
 #include "LectorTest.h"
-#include "../lector/Lector.h"
+#include "../lector/Lector.hpp"
 #include <iostream>
 
 void LectorTest::ejecutar(Assert* testSuite){

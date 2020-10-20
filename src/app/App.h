@@ -48,7 +48,7 @@ class App{
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance(archivoLeido->niveles);
-			spriteMario = new SpriteMario();
+			spriteMario = new SpriteMario("../resources/mario_grande.png");
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 			delete archivoLeido;
 

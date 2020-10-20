@@ -48,12 +48,6 @@ void Mario::agregarMoneda(){
 	cantidadMonedas++;
 }
 
-void Mario::moveraArriba(){
-}
-
-void Mario::moveraAbajo(){
-}
-
 void Mario::aceleraraIzquierda(){
 	this->movimiento->aceleraraIzquierda();
 }
@@ -74,6 +68,13 @@ void Mario::saltar(){
 		this->movimiento->saltar();
 		this->estaSaltando = true;		//TODO Hacer un patrón State en Mario o en Movimiento.
 	}
+}
+
+bool Mario::estaQuietoX(){
+	return this->movimiento->estaQuieto();
+}
+bool Mario::estaEnElPiso(){
+	return !this->estaSaltando;
 }
 
 Mario::~Mario(){

@@ -14,6 +14,7 @@ class MovimientoMario{
 		void setVelocidadY(int velocidad){
 			this->velocidadY = velocidad;
 		}
+		bool estaQuieto();
 	private:
 		void actualizarVelocidad();
 		void aplicarGravedad();

@@ -9,19 +9,18 @@ class Mario{
 	public:
 
 		Mario();
-		int obtenerPosicionX();
-		int obtenerPosicionY();
 		int obtenerPuntos();
 		void agregarPuntos(int unosPuntos);
 		int obtenerMonedas();
 		void agregarMoneda();
 
-		void moveraArriba();		//TODO Eliminar este método. Ojo con los test.
-		void moveraAbajo();			//TODO Eliminar este método. Ojo con los test.
+		int obtenerPosicionX();
+		int obtenerPosicionY();
 		void aceleraraIzquierda();
 		void aceleraraDerecha();
 		void saltar();
-
+		bool estaQuietoX();
+		bool estaEnElPiso();
 		void actualizarPosicion();
 
 		~Mario();

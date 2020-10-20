@@ -14,24 +14,24 @@ class SpriteMario {
 		//Initializes variables
 		SpriteMario();
 
+		SpriteMario(string direccionImagen);
 		//Deallocates memory
-		~SpriteMario();
 
-        void actualizarSpriteMarioDerecha (Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador);
+		int obtenerPosicionXRectangulo();
+		SDL_Rect obtenerRectanguloActual();
 
-        void actualizarSpriteMarioQuieto(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador);
-        void actualizarSpriteMarioAgacharse(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador);
+		void actualizarSprite(Mario* mario);
 
-		void actualizarSpriteMarioIzquierda(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador);
-		void actualizarSpriteMarioSaltar(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador);
+        void actualizarSpriteMarioDerecha (Mario* mario);
+		void actualizarSpriteMarioIzquierda(Mario* mario);
+		void actualizarSpriteMarioSaltar(Mario* mario);
+        void actualizarSpriteMarioAgacharse(Mario* mario);
 
 	private:
-
-		std::string spriteMario[14];
+		string direccionTextura;
+		SDL_Rect estadosPosibles[14];
 		int estadoActual;
-		bool agachado;
-		bool saltando;
-
+		int proximoEstado;
 };
 
 

@@ -22,23 +22,17 @@ void App::actualizar(SDL_Event evento){
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	switch(evento.key.keysym.sym){
 		case SDLK_UP:
-			spriteMario->actualizarSpriteMarioSaltar(jugador, cargadorTexturas, renderizador);
+		case SDLK_SPACE:
+			spriteMario->actualizarSpriteMarioSaltar(jugador);
 		break;
 		case SDLK_DOWN:
-			spriteMario->actualizarSpriteMarioAgacharse(jugador, cargadorTexturas, renderizador);
+			spriteMario->actualizarSpriteMarioAgacharse(jugador);
 		break;
 		case SDLK_LEFT:
-			spriteMario->actualizarSpriteMarioIzquierda(jugador, cargadorTexturas, renderizador);
+			spriteMario->actualizarSpriteMarioIzquierda(jugador);
 		break;
 		case SDLK_RIGHT:
-			spriteMario->actualizarSpriteMarioDerecha(jugador, cargadorTexturas, renderizador);
-		break;
-
-		case SDLK_SPACE:
-			spriteMario->actualizarSpriteMarioSaltar(jugador, cargadorTexturas, renderizador);
-		break;
-		default:
-			spriteMario->actualizarSpriteMarioQuieto(jugador, cargadorTexturas, renderizador);
+			spriteMario->actualizarSpriteMarioDerecha(jugador);
 		break;
 	}
 }
@@ -49,6 +43,7 @@ void App::actualizar(){
 	Mario* jugador = Juego::getInstance()->obtenerMario();
 	jugador->actualizarPosicion();
 	Juego::getInstance()->actualizarPosicionesEnemigos();
+	spriteMario->actualizarSprite(jugador);
 	cargadorTexturas->revisarSiCambioNivel(renderizador);
 	moverCamara();
 }
@@ -88,19 +83,21 @@ void App::dibujar(){
 
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
-	Mario* mario = Juego::getInstance()->obtenerMario();
-	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,420 - mario->obtenerPosicionY(), 40, 80};
-
-	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
-	SDL_Rect rectanguloEnemigo;
-
 	SDL_RenderClear( renderizador );
 
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), NULL, &rectanguloMario);
 
+	Mario* mario = Juego::getInstance()->obtenerMario();
+	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,458 - mario->obtenerPosicionY(), 40, 80};
+	int recorteX = spriteMario->obtenerPosicionXRectangulo();
+	SDL_Rect recorteMario = {recorteX, 0, 16, 32};
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
+
+	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
 	for (auto const& enemigo : enemigos) {
 	    //enemigo->actualizarPosicion();
+
+		SDL_Rect rectanguloEnemigo;
 		Sprite* spriteEnemigo = enemigo->obtenerSprite();
 		rectanguloEnemigo = spriteEnemigo->obtenerRectanguloActual();
 		rectanguloEnemigo.x+=enemigo->obtenerPosicionX() - rectanguloCamara->x;
@@ -110,7 +107,6 @@ void App::dibujar(){
 	}
 
 	SDL_RenderPresent( renderizador );
-
 }
 
 

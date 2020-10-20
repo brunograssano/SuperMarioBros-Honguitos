@@ -18,13 +18,13 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
 
-	texturaMario = cargarTextura("resources/sprite_mario_grande/mario_grande_quieto_der.png",renderizador);
+	texturaMario = cargarTextura("resources/mario_grande.png",renderizador);
 	if( texturaMario == NULL ){
-		log->huboUnError("No se pudo cargar ninguna imagen de Mario en: resources/sprite_mario_grande/mario_grande_quieto_der.png");
+		log->huboUnError("No se pudo cargar ninguna imagen de Mario en: resources/resources/mario_grande.png.png");
 
 	}
 	else{
-		log->mostrarMensajeDeCarga("Mario", "resources/sprite_mario_grande/mario_grande_quieto_der.png");
+		log->mostrarMensajeDeCarga("Mario", "resources/resources/mario_grande.png.png");
 	}
 
 	// LA CARGO ACA PARA PROBAR AL GOOMBA

@@ -86,3 +86,7 @@ void MovimientoMario::mover(PosicionMovil* posicion){
 	aplicarCoeficienteDeRozamiento();
 	aplicarGravedad();
 }
+
+bool MovimientoMario::estaQuieto(){
+	return(velocidadX < 3 && velocidadX > -3);
+}

@@ -7,117 +7,280 @@
 #include "SpriteMario.h"
 #include "../app/App.h"
 
-SpriteMario::SpriteMario() {
-	//Initialize
-	spriteMario[0]  = "./resources/sprite_mario_grande/mario_grande_agachado_izq.png";
-	spriteMario[1]  = "./resources/sprite_mario_grande/mario_grande_saltando_izq.png";
-	spriteMario[2]  = "./resources/sprite_mario_grande/mario_grande_frenando_izq.png";
-	spriteMario[3]  = "./resources/sprite_mario_grande/mario_grande_caminando_izq_3.png";
-	spriteMario[4]  = "./resources/sprite_mario_grande/mario_grande_caminando_izq_2.png";
-	spriteMario[5]  = "./resources/sprite_mario_grande/mario_grande_caminando_izq_1.png";
-	spriteMario[6]  = "./resources/sprite_mario_grande/mario_grande_quieto_izq.png";
-	spriteMario[7]  = "./resources/sprite_mario_grande/mario_grande_quieto_der.png";
-	spriteMario[8]  = "./resources/sprite_mario_grande/mario_grande_caminando_der_1.png";
-	spriteMario[9]  = "./resources/sprite_mario_grande/mario_grande_caminando_der_2.png";
-	spriteMario[10] = "./resources/sprite_mario_grande/mario_grande_caminando_der_3.png";
-	spriteMario[11] = "./resources/sprite_mario_grande/mario_grande_frenando_der.png";
-	spriteMario[12] = "./resources/sprite_mario_grande/mario_grande_saltando_der.png";
-	spriteMario[13] = "./resources/sprite_mario_grande/mario_grande_agachado_der.png";
 
+const int ANCHO_IMAGEN_PIXEL = 405;
+const int ALTO_IMAGEN_PIXEL = 32;
+const int ANCHO_SPRITE_PIXEL = 16;
+const int ALTO_SPRITE_PIXEL = 32;
+const int PASO_PROXIMO_SPRITE = 30;
+
+SpriteMario::SpriteMario(string direccionImagen){
+	direccionTextura = direccionImagen;
 	estadoActual = 7;
-	agachado = false;
-	saltando = false;
+	proximoEstado = 7;
+	int corrimientoEnImagen = 0;
+	for(int i=0;i<14;i++){
+		estadosPosibles[i].x = corrimientoEnImagen;
+		estadosPosibles[i].y = 0;
+		estadosPosibles[i].w = ANCHO_SPRITE_PIXEL;
+		estadosPosibles[i].h = ALTO_SPRITE_PIXEL;
+		corrimientoEnImagen+= PASO_PROXIMO_SPRITE;
+	}
 }
 
-SpriteMario::~SpriteMario() {
-	//Deallocate
+int SpriteMario::obtenerPosicionXRectangulo(){
+	return estadosPosibles[estadoActual].x;
 }
 
-void SpriteMario::actualizarSpriteMarioQuieto(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador) {
-
-    if (estadoActual >= 7 && estadoActual <= 10){
-        estadoActual = 7;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-
-    }
-    else if (estadoActual <= 6 && estadoActual >= 3){
-        estadoActual = 6;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-
-    }
-    agachado = false;
-    saltando = false;
+SDL_Rect SpriteMario::obtenerRectanguloActual(){
+	return estadosPosibles[0];//Da lo mismo cual devolvamos aca, cambia a partir de donde estaria la imagen
 }
 
 
+int contador = 0; //TODO CAMBIAR ESTO QUE ES UN ASCO POR DIOS.
+void SpriteMario::actualizarSprite(Mario* mario){
+	if(contador < 15){
+		contador++;
+		return;
+	}
 
-void SpriteMario::actualizarSpriteMarioDerecha(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador) {
+	if(mario->estaQuietoX()){
+		switch(estadoActual){
+
+			case 0:
+			case 1:
+				if(mario->estaEnElPiso()){
+					estadoActual = 6;
+					proximoEstado = 6;
+				}
+				break;
+
+			case 2:
+				estadoActual = 7; proximoEstado = 7;
+				break;
+
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				estadoActual = 6; proximoEstado = 6;
+				break;
+
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+				estadoActual = 7; proximoEstado = 7;
+				break;
+
+			case 11:
+				estadoActual = 6; proximoEstado = 6;
+				break;
+
+			case 12:
+				if(mario->estaEnElPiso()){
+					estadoActual = 7;
+					proximoEstado = 7;
+				}
+				break;
+
+			case 13:
+				break;
+		}
+	}else{
+		estadoActual = proximoEstado;
+
+		switch(estadoActual){
+			case 0:
+				break;
+
+			case 1:
+				if(mario->estaEnElPiso()){
+					estadoActual = 5;
+					proximoEstado = 4;
+				}
+				break;
+
+			case 2:
+				break;
+
+			case 3: proximoEstado = 5;
+				break;
+
+			case 4: proximoEstado = 3;
+				break;
+
+			case 5: proximoEstado = 4;
+				break;
+
+			case 6:
+				break;
+
+			case 7:
+				break;
+
+			case 8: proximoEstado = 9;
+				break;
+
+			case 9: proximoEstado = 10;
+				break;
+
+			case 10: proximoEstado = 8;
+				break;
+
+			case 11:
+				break;
+
+			case 12:
+				if(mario->estaEnElPiso()){
+					estadoActual = 8;
+					proximoEstado = 9;
+				}
+				break;
+
+			case 13:
+				break;
+		}
+	}
+	contador = 0;
+}
+
+void SpriteMario::actualizarSpriteMarioDerecha(Mario* mario) {
 	mario->aceleraraDerecha();
-
-    if (estadoActual >= 7 && estadoActual < 10) {
-		estadoActual++;
-		cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-	}
-
-	else if (estadoActual == 10) {
-        estadoActual = 7;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-    }
-
-	else if (estadoActual < 7) {
-        estadoActual = 11;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-        estadoActual = 7;
+	switch(estadoActual){
+		case 0:
+		case 2:
+			estadoActual = 7;
+			proximoEstado = 8;
+		break;
+		case 1:
+		case 4:
+		case 5:
+		case 6:
+			estadoActual = 2;
+			proximoEstado = 2;
+		break;
+		case 3:
+			estadoActual = 7;
+			proximoEstado = 8;
+		break;
+		case 7:
+			estadoActual = 8;
+			proximoEstado = 9;
+		break;
+		case 8:
+			estadoActual = 9;
+			proximoEstado = 10;
+		break;
+		case 9:
+			estadoActual = 10;
+			proximoEstado = 8;
+		break;
+		case 10:
+			estadoActual = 8;
+			proximoEstado = 9;
+		break;
+		case 11:
+			estadoActual = 7;
+			proximoEstado = 7;
+		break;
+		case 12:
+			if(mario->estaEnElPiso()){
+				estadoActual = 8;
+				proximoEstado = 9;
+			}else{
+				estadoActual = 12;
+				proximoEstado = 12;
+			}
+		break;
+		case 13:
+			estadoActual = 8;
+			proximoEstado = 9;
+		break;
 	}
 }
 
-void SpriteMario::actualizarSpriteMarioIzquierda(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador) {
+void SpriteMario::actualizarSpriteMarioIzquierda(Mario* mario) {
 	mario->aceleraraIzquierda();
 
-    if (estadoActual == 3) {
-        estadoActual = 6;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-    }
-
-    else if (estadoActual <= 6 && estadoActual > 3) {
-		estadoActual--;
-		cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-	}
-
-	else if (estadoActual > 6) {
-        estadoActual = 2;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-        estadoActual = 6;
+	switch(estadoActual){
+		case 0:
+			estadoActual = 5;
+			proximoEstado = 6;
+		break;
+		case 1:
+			if(mario->estaEnElPiso()){
+				estadoActual = 5;
+				proximoEstado = 4;
+			}else{
+				estadoActual = 1;
+				proximoEstado = 1;
+			}
+			break;
+		case 2:
+			estadoActual = 6;
+			proximoEstado = 6;
+		break;
+		case 3:
+			estadoActual = 5;
+			proximoEstado = 6;
+			break;
+		case 4:
+			estadoActual = 3;
+			proximoEstado = 5;
+			break;
+		case 5:
+			estadoActual = 4;
+			proximoEstado = 3;
+			break;
+		case 6:
+			estadoActual = 5;
+			proximoEstado = 4;
+			break;
+		case 7:
+			estadoActual = 11;
+			proximoEstado = 5;
+			break;
+		case 8:
+		case 9:
+		case 10:
+			estadoActual = 11;
+			proximoEstado = 11;
+			break;
+		case 11:
+			estadoActual = 5;
+			proximoEstado = 4;
+			break;
+		case 12:
+			estadoActual = 11;
+			proximoEstado = 11;
+		break;
+		case 13:
+			estadoActual = 0;
+			proximoEstado = 5;
+		break;
 	}
 }
 
-
-
-
-void SpriteMario::actualizarSpriteMarioSaltar(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador) {
+void SpriteMario::actualizarSpriteMarioSaltar(Mario* mario) {
     mario->saltar();
-    if (estadoActual >= 7 && estadoActual <= 10) {
+    if ((estadoActual >= 7 && estadoActual <= 10) || estadoActual == 13) {
         estadoActual = 12;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-        estadoActual = 7;
+        proximoEstado = 12;
     }
-    if (estadoActual >= 3 && estadoActual <= 6) {
-        estadoActual = 12;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-        estadoActual = 7;
+    if ((estadoActual >= 3 && estadoActual <= 6) || estadoActual == 0) {
+        estadoActual = 1;
+        proximoEstado = 1;
     }
 }
 
-void SpriteMario::actualizarSpriteMarioAgacharse(Mario* mario, CargadorTexturas* cargadorTextura, SDL_Renderer* renderizador) {
-    mario->moveraAbajo();
+void SpriteMario::actualizarSpriteMarioAgacharse(Mario* mario) {
     if (estadoActual >= 7 && estadoActual <= 10) {
         estadoActual = 13;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-        estadoActual = 7;
+        proximoEstado = 13;
     }
     if (estadoActual >= 3 && estadoActual <= 6) {
-        estadoActual = 13;
-        cargadorTextura->actualizarSpriteMario(spriteMario[estadoActual],renderizador);
-        estadoActual = 7;
+        estadoActual = 0;
+        proximoEstado = 0;
     }
 }

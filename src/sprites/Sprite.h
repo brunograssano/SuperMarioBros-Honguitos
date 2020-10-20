@@ -1,4 +1,3 @@
-
 #ifndef SRC_SPRITES_SPRITE_H_
 #define SRC_SPRITES_SPRITE_H_
 

@@ -6,12 +6,9 @@ void MarioTest::ejecutar(Assert* testSuite){
 	cout << "========== Comenzando con las pruebas de Mario ==========" << endl;
 	test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(testSuite);
 	test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(testSuite);
-	test03CuandoPedisAMarioQueSalteSeQuedaArriba(testSuite);
-	test04CuandoMarioSeMueveParaAbajoBaja(testSuite);
-	test05MarioEmpiezaConCeroMonedas(testSuite);
-	test06MarioEmpiezaConCeroPuntos(testSuite);
-	test07MarioGanaDiezPuntosYDevuelveEsoDeTotal(testSuite);
-	test08CuandoMarioQuiereBajarPorDebajoDeSuNivelMinimoSuPosicionEnYesElMinimo(testSuite);
+	test03MarioEmpiezaConCeroMonedas(testSuite);
+	test04MarioEmpiezaConCeroPuntos(testSuite);
+	test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(testSuite);
 	cout << "========== Finalizando con las pruebas de Mario ==========" << endl;
 
 }
@@ -42,37 +39,7 @@ void MarioTest::test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(Assert* testS
 	delete mario;
 }
 
-void MarioTest::test03CuandoPedisAMarioQueSalteSeQuedaArriba(Assert* testSuite){
-
-	Mario* mario = new Mario();
-
-	int posicion = mario->obtenerPosicionY();
-
-	mario->moveraArriba();
-	mario->actualizarPosicion();
-	testSuite->assert(mario->obtenerPosicionY() > posicion,"Mario salta y queda arriba: ");
-
-	delete mario;
-}
-
-void MarioTest::test04CuandoMarioSeMueveParaAbajoBaja(Assert* testSuite){
-
-	Mario* mario = new Mario();
-	mario->moveraArriba();
-	mario->actualizarPosicion();
-	mario->moveraArriba();
-	mario->actualizarPosicion();
-	int posicion = mario->obtenerPosicionY();
-
-	mario->moveraAbajo();
-	mario->actualizarPosicion();
-
-	testSuite->assert(mario->obtenerPosicionY() < posicion,"Mario puede bajar: ");
-
-	delete mario;
-}
-
-void MarioTest::test05MarioEmpiezaConCeroMonedas(Assert* testSuite){
+void MarioTest::test03MarioEmpiezaConCeroMonedas(Assert* testSuite){
 
 	Mario* mario = new Mario();
 
@@ -81,7 +48,7 @@ void MarioTest::test05MarioEmpiezaConCeroMonedas(Assert* testSuite){
 	delete mario;
 }
 
-void MarioTest::test06MarioEmpiezaConCeroPuntos(Assert* testSuite){
+void MarioTest::test04MarioEmpiezaConCeroPuntos(Assert* testSuite){
 
 	Mario* mario = new Mario();
 
@@ -90,21 +57,12 @@ void MarioTest::test06MarioEmpiezaConCeroPuntos(Assert* testSuite){
 	delete mario;
 }
 
-void MarioTest::test07MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite){
+void MarioTest::test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite){
 
 	Mario* mario = new Mario();
 	mario->agregarPuntos(10);
 
 	testSuite->assert(mario->obtenerPuntos(),10,"Mario tiene 10 puntos: ");
 
-	delete mario;
-}
-
-void MarioTest::test08CuandoMarioQuiereBajarPorDebajoDeSuNivelMinimoSuPosicionEnYesElMinimo(Assert* testSuite){
-	Mario* mario = new Mario();
-	float posicionInicial = mario->obtenerPosicionY();
-	mario->moveraAbajo();
-	mario->actualizarPosicion();
-	testSuite->assert(mario->obtenerPosicionY(), posicionInicial, 1e-6,"Mario puede bajar: ");
 	delete mario;
 }

@@ -3,15 +3,15 @@
 using namespace std;
 
 #include "Enemigo.h"
-//#include "../../sprites/SpriteGoomba.h"
+#include "../../sprites/SpriteKoopa.h"
+
 
 class Koopa : public Enemigo{
 
 	public:
 
 		Koopa(string direccionImagen){
-			//spriteEnemigo = new SpriteGoomba(direccionImagen);
-			this->direccionImagen = direccionImagen;
+			spriteEnemigo = new SpriteKoopa(direccionImagen);
 		}
 
 		~Koopa(){
@@ -21,7 +21,8 @@ class Koopa : public Enemigo{
 
 
 		void actualizarPosicion()override{
-			this->posicionActual->moverHorizontal(velocidadX);
+			posicionActual->moverHorizontal(velocidadX);
+			spriteEnemigo->actualizarSprite();
 		}
 
 	private:

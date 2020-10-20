@@ -93,20 +93,21 @@ void App::dibujar(){
 	SDL_Rect recorteMario = {recorteX, 0, 16, 32};
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
 
+
+	//Enemigos
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
 	for (auto const& enemigo : enemigos) {
-	    //enemigo->actualizarPosicion();
 
-		SDL_Rect rectanguloEnemigo;
+		SDL_Rect recorteTextura;
 		Sprite* spriteEnemigo = enemigo->obtenerSprite();
-		rectanguloEnemigo = spriteEnemigo->obtenerRectanguloActual();
-		rectanguloEnemigo.y += 22;
-		rectanguloEnemigo.x+=enemigo->obtenerPosicionX() - rectanguloCamara->x;
-		int valorX = spriteEnemigo->obtenerPosicionXRectangulo();
-		SDL_Rect recorteTextura = {valorX,0, 16, 32};
+		recorteTextura = spriteEnemigo->obtenerRectanguloActual();
+
+		SDL_Rect rectanguloEnemigo = {enemigo->obtenerPosicionX()-rectanguloCamara->x, 472 , 32, 64};
+
 	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
 
+	//Bloques
 	list<Plataforma*> plataformas = Juego::getInstance()->obtenerPlataformas();
 
 	for(auto const& plataforma : plataformas){
@@ -114,7 +115,7 @@ void App::dibujar(){
 		for (auto const& bloque : bloques) {
 			SDL_Rect rectanguloBloque = {bloque->obtenerPosicionX() - rectanguloCamara->x,bloque->obtenerPosicionY(), 40, 40};
 			SDL_Rect recorteBloque = {0, 0, 16, 16};
-			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaLadrillo(), &recorteBloque, &rectanguloBloque);
+			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaSorpresa(), &recorteBloque, &rectanguloBloque);
 		}
 	}
 

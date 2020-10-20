@@ -29,8 +29,8 @@ class SpriteKoopa : public Sprite{
 		int ciclos;
 		int estadoActual;
 		SDL_Rect estadosPosibles[3];
-		int ancho;
-		int alto;
+		//int ancho;
+		//int alto;
 };
 
 #endif /* SRC_SPRITES_SPRITEKOOPA_H_ */

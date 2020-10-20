@@ -100,6 +100,7 @@ void App::dibujar(){
 		SDL_Rect rectanguloEnemigo;
 		Sprite* spriteEnemigo = enemigo->obtenerSprite();
 		rectanguloEnemigo = spriteEnemigo->obtenerRectanguloActual();
+		rectanguloEnemigo.y += 22;
 		rectanguloEnemigo.x+=enemigo->obtenerPosicionX() - rectanguloCamara->x;
 		int valorX = spriteEnemigo->obtenerPosicionXRectangulo();
 		SDL_Rect recorteTextura = {valorX,0, 16, 32};

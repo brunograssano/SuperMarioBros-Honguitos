@@ -32,7 +32,16 @@ void ArchivoLeido::verificarLectura(){
 				this->leidoCorrectamente = false;
 			}
 
-;		}
 	}
+}
 
+}
+
+ArchivoLeido::~ArchivoLeido(){
+	delete this->tipoLog;
+	this->mensajeError.clear();
+	for(Nivel* unNivel: this->niveles){
+		delete unNivel;
+	}
+	this->niveles.clear();
 }

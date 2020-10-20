@@ -17,6 +17,7 @@ class ArchivoLeido{
 			list<string> mensajeError;
 
 			void verificarLectura();
+			~ArchivoLeido();
 };
 
 #endif

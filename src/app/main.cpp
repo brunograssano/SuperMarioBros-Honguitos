@@ -15,7 +15,7 @@ using namespace std;
  * /mario 											(USAMOS TODA LA CONFIUGRACION DEFAULT)
  */
 
-
+/*
 int main( int cantidadArgumentos, char* argumentos[] ){
 
 	Lector* lector = new Lector();
@@ -69,6 +69,6 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	delete lector;
 	delete aplicacion;
 	return 0;
-}
+}*/
 
 

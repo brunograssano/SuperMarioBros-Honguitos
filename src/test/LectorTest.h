@@ -14,7 +14,11 @@ class LectorTest{
 	public:
 		void ejecutar(Assert* testSuite);
 		void test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite);
-
+		void test02CuandoLePedisAlLectorQueLeaTraeElAlto(Assert* testSuite);
+		void test03CuandoLePedisAlLectorElArchivoSeLeeCorrectamente(Assert* testSuite);
+		void test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMensajesDeError(Assert* testSuite);
+		void test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(Assert* testSuite);
+		void test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert* testSuite);
 };
 
 

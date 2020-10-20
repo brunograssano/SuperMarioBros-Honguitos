@@ -44,6 +44,18 @@ class Assert{
 			pruebasTotales++;
 		}
 
+		void assert(string obtenido, string esperado, string textoExplicativo){
+			cout << textoExplicativo << ": ";
+			if(obtenido.compare(esperado) == 0){
+				cout << "todo bien" <<endl;
+				pruebasPasadas++;
+			}
+			else{
+				cout << "todo mal" <<endl;
+			}
+			pruebasTotales++;
+		}
+
 		int getPruebasPasadas(){
 			return pruebasPasadas;
 		}

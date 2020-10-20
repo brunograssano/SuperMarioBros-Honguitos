@@ -13,6 +13,7 @@ using namespace std;
 
 ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 	ArchivoLeido* archivoLeido = new ArchivoLeido();
+	archivoLeido->leidoCorrectamente = true;
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(nombreArchivo.c_str());
 	if (!result){

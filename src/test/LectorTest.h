@@ -7,7 +7,7 @@ using namespace std;
 
 #include <stdio.h>
 
-#include "../lector/Lector.h"
+#include "../lector/Lector.hpp"
 #include "Assert.h"
 class LectorTest{
 

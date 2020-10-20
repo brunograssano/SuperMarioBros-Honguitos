@@ -1,5 +1,5 @@
-#ifndef SRC_LECTOR_LECTOR_H_
-#define SRC_LECTOR_LECTOR_H_
+#ifndef SRC_LECTOR_LECTOR_HPP_
+#define SRC_LECTOR_LECTOR_HPP_
 
 using namespace std;
 #include <string>
@@ -13,4 +13,4 @@ class Lector{
 
 
 
-#endif /* SRC_LECTOR_LECTOR_H_ */
+#endif /* SRC_LECTOR_LECTOR_HPP_ */

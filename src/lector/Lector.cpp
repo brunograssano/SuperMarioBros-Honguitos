@@ -1,11 +1,12 @@
-#include "Lector.h"
+#include "Lector.hpp"
+
 #include "pugixml.hpp"
 #include <string>
 #include <iostream>
 #include "ArchivoLeido.hpp"
-#include "ParserVentana.hpp"
-#include "ParserLog.hpp"
-#include "ParserNivel.hpp"
+#include "Parsers/ParserVentana.hpp"
+#include "Parsers/ParserLog.hpp"
+#include "Parsers/ParserNivel.hpp"
 #include "../modelo/Nivel.h"
 
 using namespace std;

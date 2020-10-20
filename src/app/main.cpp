@@ -3,7 +3,7 @@
 using namespace std;
 #include <SDL2/SDL.h>
 #include "App.h"
-#include "../lector/Lector.h"
+#include "../lector/Lector.hpp"
 
 #include "../log/Log.h"
 #include "../log/Error.h"

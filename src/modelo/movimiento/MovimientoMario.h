@@ -15,6 +15,10 @@ class MovimientoMario{
 			this->velocidadY = velocidad;
 		}
 		bool estaQuieto();
+	
+		void actualizarLimiteTerrenoIzq(int limiteActual) {
+		    this->limite_terreno_izq_actual = limiteActual;
+		}
 	private:
 		void actualizarVelocidad();
 		void aplicarGravedad();
@@ -23,6 +27,8 @@ class MovimientoMario{
 		float aceleracionY;
 		float velocidadX;
 		float velocidadY;
+		
+		int limite_terreno_izq_actual;
 };
 
 

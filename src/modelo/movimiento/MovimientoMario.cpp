@@ -6,6 +6,8 @@ const float MAXIMA_VELOCIDAD_HORIZONTAL = 150;
 
 const float COEFICIENTE_DE_TIEMPO = 0.16;
 
+const int TERRENO_LIMITE_DERECHO_MAX = 8177;
+const int TERRENO_LIMITE_DERECHO_MIN = 0;
 
 bool estaAcelerando(float aceleracion){
 	return(aceleracion > 1e-4 || aceleracion < -1e-4);
@@ -81,7 +83,13 @@ void MovimientoMario::mover(PosicionMovil* posicion){
 	actualizarVelocidad();
 	float desplazamientoX = calcularDesplazamiento(this->velocidadX, COEFICIENTE_DE_TIEMPO);
 	float desplazamientoY = calcularDesplazamiento(this->velocidadY, COEFICIENTE_DE_TIEMPO);
-	posicion->moverHorizontal(desplazamientoX);
+	
+	int posHorizontalSiguiente = posicion->obtenerPosX()  + desplazamientoX;
+
+	if (posHorizontalSiguiente > this->limite_terreno_izq_actual && posHorizontalSiguiente < TERRENO_LIMITE_DERECHO_MAX) {
+		posicion->moverHorizontal(desplazamientoX);
+	}
+	
 	posicion->moverVertical(desplazamientoY);
 	aplicarCoeficienteDeRozamiento();
 	aplicarGravedad();

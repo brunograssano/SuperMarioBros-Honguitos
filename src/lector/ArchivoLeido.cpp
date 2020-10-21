@@ -18,7 +18,7 @@ void ArchivoLeido::verificarLectura(){
 		this->mensajeError.push_back("No se envio informacion de los niveles");
 		this->leidoCorrectamente = false;
 	}
-	for(Nivel* unNivel: this->niveles){
+	for(auto const& unNivel: niveles){
 		if(unNivel == NULL){
 			this->mensajeError.push_back("Hubo un error al crear un nivel");
 			this->leidoCorrectamente = false;
@@ -38,10 +38,5 @@ void ArchivoLeido::verificarLectura(){
 }
 
 ArchivoLeido::~ArchivoLeido(){
-	delete this->tipoLog;
 	this->mensajeError.clear();
-	for(Nivel* unNivel: this->niveles){
-		delete unNivel;
-	}
-	this->niveles.clear();
 }

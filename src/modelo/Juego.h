@@ -22,6 +22,8 @@ class Juego{
 		list<Plataforma*> obtenerPlataformas();
 		Mario* obtenerMario();
 		int obtenerTiempoDelNivel();
+		int obtenerPuntuacionJugador();
+		int obtenerMundoActual();
 
 		~Juego();
 

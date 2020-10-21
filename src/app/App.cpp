@@ -117,9 +117,14 @@ void App::dibujarMario(SDL_Rect* rectanguloCamara){
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
 }
 
-void App::renderizarTexto( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip ){
-	//Set rendering space and render to screen
-	SDL_Rect renderQuad = { x, y, 600, 20 };
+
+
+void App::renderizarTexto(SDL_Rect renderQuad,string textoAMostrar ){
+	SDL_Rect* clip = NULL;
+	double angle = 0.0;
+	SDL_Point* center = NULL;
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+
 
 	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 
@@ -129,23 +134,33 @@ void App::renderizarTexto( int x, int y, SDL_Rect* clip, double angle, SDL_Point
 		renderQuad.h = clip->h;
 	}
 
-	SDL_RenderCopyEx( renderizador, cargadorTexturas->obtenerTexturaFuente(), clip, &renderQuad, angle, center, flip );
+	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoAMostrar, renderizador);
+
+	SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
+	SDL_DestroyTexture(texto);
 }
 
-void App::dibujarTiempo(SDL_Rect* rectanguloCamara){
+
+void App::dibujarTexto(){
 	//Set text to be rendered
 	textoDeTiempo.str( "" );
-	textoDeTiempo << "Milliseconds since start time " << 3000- SDL_GetTicks() - tiempoDeInicio;
-	// TODO hay que mandar a que cargue este texto como textura, asi podemos verlo!
+	int tiempo = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() - tiempoDeInicio)/1000; //Getticks devuelve en milisegundos
+	textoDeTiempo << "Tiempo restante " << tiempo;
 
+	textoDeNivel.str("");
+	textoDeNivel << "Mundo " << juego->obtenerMundoActual();
+
+	textoDePuntos.str("");
+	textoDePuntos << "Puntos " << juego->obtenerPuntuacionJugador();
 	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 
-	renderizarTexto(0, (alto_pantalla-100) / 2);
+	SDL_Rect cuadradoTiempo = { 450, 10, 330, 30 };
+	SDL_Rect cuadradoMundo = { 200, 10, 100, 30 };
+	SDL_Rect cuadradoPuntos = { 10, 10, 100, 30 };
 
-	//gTimeTextTexture.render( ( SCREEN_WIDTH - gPromptTextTexture.getWidth() ) / 2, ( SCREEN_HEIGHT - gPromptTextTexture.getHeight() ) / 2 );
-
-
-
+	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str());
+	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str());
+	renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
 }
 
 
@@ -164,7 +179,7 @@ void App::dibujar(){
 
 	dibujarPlataformas(rectanguloCamara);
 
-	dibujarTiempo(rectanguloCamara);
+	dibujarTexto();
 
 	SDL_RenderPresent( renderizador );
 }

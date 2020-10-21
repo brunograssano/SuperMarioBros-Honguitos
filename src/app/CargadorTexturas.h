@@ -23,6 +23,7 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaFuente();
 
+		SDL_Texture* cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador);
 
 		void actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador);
 		void revisarSiCambioNivel(SDL_Renderer* renderizador);
@@ -44,7 +45,6 @@ class CargadorTexturas{
 		TTF_Font* fuenteJuego;
 
 		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
-		SDL_Texture* cargarFuenteDeTextoATextura(string direccionFuenteDeTexto, SDL_Color colorTexto, int tamanioFuente, SDL_Renderer* renderizador);
 		bool tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo);
 		bool tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque);
 

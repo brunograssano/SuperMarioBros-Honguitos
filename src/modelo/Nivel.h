@@ -33,6 +33,11 @@ class Nivel{
 			return tiempo;
 		}
 
+		int obtenerMundo(){
+			return mundo;
+		}
+
+
 		void inicializarPosicionEnemigo();
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();

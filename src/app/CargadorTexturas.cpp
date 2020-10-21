@@ -58,31 +58,28 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->mostrarMensajeDeCarga("Sorpresa", "resources/BloqueSorpresa.png");
 	}
 
-	SDL_Color colorTexto= { 0, 0, 0, 255 };
-	texturaFuenteJuego = cargarFuenteDeTextoATextura("resources/fuenteSuperMarioBros.ttf",colorTexto, 10, renderizador);
-	if(texturaFuenteJuego!=NULL){
-		log->mostrarMensajeDeCarga("Fuente del juego", "resources/fuenteSuperMarioBros.ttf");
+	int tamanioFuente = 20;
+	string direccionFuente = "resources/fuenteSuperMarioBros.ttf";
+	fuenteJuego = TTF_OpenFont( direccionFuente.c_str(), tamanioFuente);
+	if(texturaFuenteJuego==NULL){
+		log->mostrarMensajeDeCarga("No se pudo cargar la fuente del juego en: ", "resources/fuenteSuperMarioBros.ttf");
 	}
 
 }
 
 
-SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string direccionFuenteDeTexto, SDL_Color colorTexto, int tamanioFuente, SDL_Renderer* renderizador){
+SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
-	SDL_Texture*  texturaCargada= NULL;
-	fuenteJuego = TTF_OpenFont( direccionFuenteDeTexto.c_str(), tamanioFuente);
-	if(fuenteJuego == NULL){
-			log->huboUnError("No se pudo cargar ninguna fuente en: " + direccionFuenteDeTexto);
-			return NULL;
-	}
+	SDL_Color colorTexto= { 0, 0, 0, 255 };
 
-	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, direccionFuenteDeTexto.c_str(), colorTexto );
+
+	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, textoAMostrar.c_str(), colorTexto );
 	if( superficeDeTexto == NULL ){
-		log->huboUnErrorSDL("No se pudo convertir la fuente de texto en : "+ direccionFuenteDeTexto +" a una superficie.", TTF_GetError());
+		log->huboUnErrorSDL("No se pudo convertir el mensaje a superficie : "+ textoAMostrar +" a una superficie.", TTF_GetError());
 		return NULL;
 	}
 
-	texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficeDeTexto );
+	SDL_Texture* texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficeDeTexto );
 	if( texturaCargada == NULL ){
 		log->huboUnErrorSDL( "No se pudo crear una textura a partir de un texto renderizado. ", SDL_GetError() );
 	}

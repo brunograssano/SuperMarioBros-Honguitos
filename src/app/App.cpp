@@ -66,6 +66,7 @@ void App::moverCamara(){
 
 	if( elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla ){
 		rectanguloCamara->x =   jugador->obtenerPosicionX() - (ancho_pantalla) / 2 ;
+		jugador->actualizarLimiteDeMovimiento(rectanguloCamara->x);
 	}
 
 	if( rectanguloCamara->x < 0 ){

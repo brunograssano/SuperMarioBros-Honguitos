@@ -65,6 +65,10 @@ class App{
 		int ancho_pantalla = 800;
 		int alto_pantalla = 540;
 
+		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
+		void dibujarPlataformas(SDL_Rect* rectanguloCamara);
+		void dibujarMario(SDL_Rect* rectanguloCamara);
+
 	public:
 		App(App &other) = delete;
 		static App *GetInstance();

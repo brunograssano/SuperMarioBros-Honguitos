@@ -77,24 +77,7 @@ void App::moverCamara(){
 }
 
 
-
-
-void App::dibujar(){
-
-	SDL_Rect* rectanguloCamara = obtenerRectCamara();
-
-	SDL_RenderClear( renderizador );
-
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
-
-	Mario* mario = Juego::getInstance()->obtenerMario();
-	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,458 - mario->obtenerPosicionY(), 40, 80};
-	int recorteX = spriteMario->obtenerPosicionXRectangulo();
-	SDL_Rect recorteMario = {recorteX, 0, 16, 32};
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
-
-
-	//Enemigos
+void App::dibujarEnemigos(SDL_Rect* rectanguloCamara){
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
 	for (auto const& enemigo : enemigos) {
 
@@ -106,8 +89,10 @@ void App::dibujar(){
 
 	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
+}
 
-	//Bloques
+
+void App::dibujarPlataformas(SDL_Rect* rectanguloCamara){
 	list<Plataforma*> plataformas = Juego::getInstance()->obtenerPlataformas();
 
 	for(auto const& plataforma : plataformas){
@@ -120,6 +105,31 @@ void App::dibujar(){
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(spriteBloque, renderizador), &recorteBloque, &rectanguloBloque);
 		}
 	}
+}
+
+
+void App::dibujarMario(SDL_Rect* rectanguloCamara){
+	Mario* mario = Juego::getInstance()->obtenerMario();
+	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,458 - mario->obtenerPosicionY(), 40, 80};
+	int recorteX = spriteMario->obtenerPosicionXRectangulo();
+	SDL_Rect recorteMario = {recorteX, 0, 16, 32};
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
+}
+
+
+void App::dibujar(){
+
+	SDL_Rect* rectanguloCamara = obtenerRectCamara();
+
+	SDL_RenderClear( renderizador );
+
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
+
+	dibujarMario(rectanguloCamara);
+
+	dibujarEnemigos(rectanguloCamara);
+
+	dibujarPlataformas(rectanguloCamara);
 
 	SDL_RenderPresent( renderizador );
 }

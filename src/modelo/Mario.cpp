@@ -24,6 +24,10 @@ Mario::Mario(){
 	this->estaSaltando = false;
 }
 
+void Mario::actualizarLimiteDeMovimiento(int limiteActual){
+    this->movimiento->actualizarLimiteTerrenoIzq(limiteActual);
+}
+
 int Mario::obtenerPosicionX(){
 	return posicion->obtenerPosX();
 }

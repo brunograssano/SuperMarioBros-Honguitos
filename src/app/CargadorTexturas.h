@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <map>
 #include "../sprites/Sprite.h"
+#include <SDL2/SDL_ttf.h>
 using namespace std;
 
 class CargadorTexturas{
@@ -20,6 +21,7 @@ class CargadorTexturas{
 
 		SDL_Texture* obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador);
+		SDL_Texture* obtenerTexturaFuente();
 
 
 		void actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador);
@@ -30,17 +32,22 @@ class CargadorTexturas{
 
 	private:
 		string direccionFondoActual;
-		SDL_Texture* texturaMario = NULL; // TODO van a ser un vector? (por las diferentes vistas que puede tomar)
+		SDL_Texture* texturaMario = NULL;
 		SDL_Texture* texturaMoneda = NULL;
 		SDL_Texture* texturaLadrillo = NULL;
 		SDL_Texture* texturaSorpresa = NULL;
 		SDL_Texture* texturaFondoActual = NULL;
+		SDL_Texture* texturaFuenteJuego = NULL;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
 
+		TTF_Font* fuenteJuego;
+
 		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
+		SDL_Texture* cargarFuenteDeTextoATextura(string direccionFuenteDeTexto, SDL_Color colorTexto, int tamanioFuente, SDL_Renderer* renderizador);
 		bool tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo);
 		bool tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque);
+
 
 };
 

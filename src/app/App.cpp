@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include <list>
+#include <sstream>
 
 App* App::aplicacion = nullptr;
 
@@ -116,6 +117,38 @@ void App::dibujarMario(SDL_Rect* rectanguloCamara){
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
 }
 
+void App::renderizarTexto( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip ){
+	//Set rendering space and render to screen
+	SDL_Rect renderQuad = { x, y, 600, 20 };
+
+	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
+
+	//Set clip rendering dimensions
+	if( clip != NULL ){
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
+	}
+
+	SDL_RenderCopyEx( renderizador, cargadorTexturas->obtenerTexturaFuente(), clip, &renderQuad, angle, center, flip );
+}
+
+void App::dibujarTiempo(SDL_Rect* rectanguloCamara){
+	//Set text to be rendered
+	textoDeTiempo.str( "" );
+	textoDeTiempo << "Milliseconds since start time " << 3000- SDL_GetTicks() - tiempoDeInicio;
+	// TODO hay que mandar a que cargue este texto como textura, asi podemos verlo!
+
+	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
+
+	renderizarTexto(0, (alto_pantalla-100) / 2);
+
+	//gTimeTextTexture.render( ( SCREEN_WIDTH - gPromptTextTexture.getWidth() ) / 2, ( SCREEN_HEIGHT - gPromptTextTexture.getHeight() ) / 2 );
+
+
+
+}
+
+
 
 void App::dibujar(){
 
@@ -130,6 +163,8 @@ void App::dibujar(){
 	dibujarEnemigos(rectanguloCamara);
 
 	dibujarPlataformas(rectanguloCamara);
+
+	dibujarTiempo(rectanguloCamara);
 
 	SDL_RenderPresent( renderizador );
 }

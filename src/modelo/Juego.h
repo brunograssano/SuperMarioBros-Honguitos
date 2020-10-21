@@ -21,6 +21,7 @@ class Juego{
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		Mario* obtenerMario();
+		int obtenerTiempoDelNivel();
 
 		~Juego();
 
@@ -33,11 +34,6 @@ class Juego{
 			for (auto const& nivel : niveles) {
 			    nivel->inicializarPosicionEnemigo();
 			}
-			//PRUEBA CON UN NIVEL
-			//Nivel* unNivel = new Nivel(0,"0",0,0);
-			//unNivel->agregarEnemigo(new Goomba("a"));
-			//niveles.push(unNivel);
-
 		}
 
 		list<Nivel*> niveles;

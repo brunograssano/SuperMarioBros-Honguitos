@@ -29,6 +29,10 @@ class Nivel{
 			monedas.push_back(unaMoneda);
 		}
 
+		int obtenerTiempo(){
+			return tiempo;
+		}
+
 		void inicializarPosicionEnemigo();
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();

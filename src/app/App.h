@@ -2,16 +2,18 @@
 #define SRC_APP_APP_H_
 
 #include <SDL2/SDL.h>
-#include "../modelo/Juego.h"
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include <sstream>
+
+using namespace std;
+
+#include "../modelo/Juego.h"
 #include "CargadorTexturas.h"
 #include "../sprites/SpriteMario.h"
-
 #include "../log/Log.h"
 #include "../log/TipoLog.h"
-
 #include "../lector/ArchivoLeido.hpp"
 
 const int ANCHO_PANTALLA = 800;
@@ -65,9 +67,18 @@ class App{
 		int ancho_pantalla = 800;
 		int alto_pantalla = 540;
 
+
+		Uint32 tiempoDeInicio = 0;
+		//In memory text stream
+		stringstream textoDeTiempo;
+
+
+
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
 		void dibujarPlataformas(SDL_Rect* rectanguloCamara);
 		void dibujarMario(SDL_Rect* rectanguloCamara);
+		void dibujarTiempo(SDL_Rect* rectanguloCamara);
+		void renderizarTexto( int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE );
 
 	public:
 		App(App &other) = delete;

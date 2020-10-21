@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #include <string>
 #include <sstream>
@@ -14,6 +15,11 @@
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
+
+	if( TTF_Init() == -1 ){
+		log->huboUnErrorSDL("No se pudo inicializar SDL_ttf ", TTF_GetError());
+	}
+
 	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
@@ -52,34 +58,41 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->mostrarMensajeDeCarga("Sorpresa", "resources/BloqueSorpresa.png");
 	}
 
-	/*
-	texturaFondo = cargarTextura("resources/MapaNivel1Base.png", renderizador);
-	if(texturaSorpresa == NULL){
-		log->huboUnError("No se pudo cargar el fondo"); // la cargas de la textura del fondo esta de forma temporal por ahora
+	SDL_Color colorTexto= { 0, 0, 0, 255 };
+	texturaFuenteJuego = cargarFuenteDeTextoATextura("resources/fuenteSuperMarioBros.ttf",colorTexto, 10, renderizador);
+	if(texturaFuenteJuego!=NULL){
+		log->mostrarMensajeDeCarga("Fuente del juego", "resources/fuenteSuperMarioBros.ttf");
 	}
-	else{
-		log->mostrarMensajeDeCarga("Mario", "resources/sprite_mario_grande/mario_grande_quieto_der.png");
+
+}
+
+
+SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string direccionFuenteDeTexto, SDL_Color colorTexto, int tamanioFuente, SDL_Renderer* renderizador){
+	Log* log = Log::getInstance();
+	SDL_Texture*  texturaCargada= NULL;
+	fuenteJuego = TTF_OpenFont( direccionFuenteDeTexto.c_str(), tamanioFuente);
+	if(fuenteJuego == NULL){
+			log->huboUnError("No se pudo cargar ninguna fuente en: " + direccionFuenteDeTexto);
+			return NULL;
 	}
-	*/
-	// NO OLVIDARSE DE LIBERAR LAS TEXTURAS QUE SE CARGUEN
+
+	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, direccionFuenteDeTexto.c_str(), colorTexto );
+	if( superficeDeTexto == NULL ){
+		log->huboUnErrorSDL("No se pudo convertir la fuente de texto en : "+ direccionFuenteDeTexto +" a una superficie.", TTF_GetError());
+		return NULL;
+	}
+
+	texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficeDeTexto );
+	if( texturaCargada == NULL ){
+		log->huboUnErrorSDL( "No se pudo crear una textura a partir de un texto renderizado. ", SDL_GetError() );
+	}
+
+	SDL_FreeSurface( superficeDeTexto );
+
+	return texturaCargada;
 }
 
-SDL_Texture* CargadorTexturas::obtenerTexturaLadrillo(){
-	return texturaLadrillo;
-}
 
-SDL_Texture* CargadorTexturas::obtenerTexturaSorpresa(){
-	return this->texturaSorpresa;
-}
-
-SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
-	return texturaFondoActual;
-}
-
-
-void CargadorTexturas::actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador){
-        texturaMario = cargarTextura( direccion ,renderizador);
-}
 
 void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
 	string direccionDelNivel = Juego::getInstance()->obtenerDireccionFondoNivelActual();
@@ -109,14 +122,7 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 }
 
 
-SDL_Texture* CargadorTexturas::obtenerTexturaMario(){
-	return texturaMario;
-}
 
-
-SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
-	return texturaMoneda;
-}
 
 bool CargadorTexturas::tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo){ // No me esta tomando el contains del map (c++ 20))
 	try{
@@ -156,10 +162,51 @@ SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Ren
 	return texturasBloques[spriteBloque->direccionImagen()];
 }
 
+
+////----------------GETTERS--------------////
+
+SDL_Texture* CargadorTexturas::obtenerTexturaMario(){
+	return texturaMario;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
+	return texturaMoneda;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaLadrillo(){
+	return texturaLadrillo;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaSorpresa(){
+	return this->texturaSorpresa;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
+	return texturaFondoActual;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaFuente(){
+	return texturaFuenteJuego;
+}
+
+
 CargadorTexturas::~CargadorTexturas(){
 	SDL_DestroyTexture( texturaMario );
 	SDL_DestroyTexture( texturaMoneda );
 	SDL_DestroyTexture( texturaLadrillo );
 	SDL_DestroyTexture( texturaSorpresa );
 	SDL_DestroyTexture( texturaFondoActual );
+	SDL_DestroyTexture( texturaFuenteJuego );
+
+	for (auto const& parClaveEnemigo : texturasEnemigos){
+		SDL_DestroyTexture( parClaveEnemigo.second );
+	}
+
+	for (auto const& parClaveBloque : texturasBloques){
+		SDL_DestroyTexture( parClaveBloque.second );
+	}
+
+
+	TTF_CloseFont( fuenteJuego );
+	TTF_Quit();
 }

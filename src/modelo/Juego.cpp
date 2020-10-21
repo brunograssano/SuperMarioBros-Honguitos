@@ -40,6 +40,11 @@ string Juego::obtenerDireccionFondoNivelActual(){
 	return nivelActual->obtenerDireccionFondoActual();
 }
 
+int Juego::obtenerTiempoDelNivel(){
+	Nivel* nivelActual = niveles.front();
+	return nivelActual->obtenerTiempo();
+}
+
 Juego::~Juego(){
 
 

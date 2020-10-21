@@ -22,6 +22,8 @@ class Mario{
 		bool estaQuietoX();
 		bool estaEnElPiso();
 		void actualizarPosicion();
+		
+		void actualizarLimiteDeMovimiento(int limiteActual);
 
 		~Mario();
 

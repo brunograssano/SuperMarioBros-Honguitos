@@ -20,6 +20,8 @@ MovimientoMario::MovimientoMario(){
 	this->aceleracionY = 0;
 	this->velocidadX = 0;
 	this->velocidadY = 0;
+	
+	this->limite_terreno_izq_actual = TERRENO_LIMITE_DERECHO_MIN;
 }
 
 void MovimientoMario::aceleraraDerecha(){

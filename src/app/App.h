@@ -78,6 +78,7 @@ class App{
 
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
 		void dibujarPlataformas(SDL_Rect* rectanguloCamara);
+		void dibujarMonedas(SDL_Rect* rectanguloCamara);
 		void dibujarMario(SDL_Rect* rectanguloCamara);
 		void dibujarTexto();
 		void renderizarTexto(SDL_Rect renderQuad,string textoAMostrar );

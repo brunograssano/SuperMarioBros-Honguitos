@@ -164,6 +164,17 @@ void App::dibujarTexto(){
 	renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
 }
 
+void App::dibujarMonedas(SDL_Rect* rectanguloCamara){
+	list<Moneda*> monedas = Juego::getInstance()->obtenerMonedas();
+	for (auto const& moneda : monedas) {
+		SDL_Rect rectanguloMoneda = {moneda->obtenerPosicionX() - rectanguloCamara->x,moneda->obtenerPosicionY(), 40, 40};
+		Sprite* spriteMoneda = moneda->obtenerSprite();
+		spriteMoneda->actualizarSprite();
+		SDL_Rect recorteMoneda = spriteMoneda->obtenerRectanguloActual();
+		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMoneda(), &recorteMoneda, &rectanguloMoneda);
+
+	}
+}
 
 
 void App::dibujar(){
@@ -179,6 +190,8 @@ void App::dibujar(){
 	dibujarEnemigos(rectanguloCamara);
 
 	dibujarPlataformas(rectanguloCamara);
+
+	dibujarMonedas(rectanguloCamara);
 
 	dibujarTexto();
 

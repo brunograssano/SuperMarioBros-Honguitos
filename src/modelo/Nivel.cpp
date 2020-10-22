@@ -16,6 +16,11 @@ list<Enemigo*> Nivel::obtenerEnemigos(){
 list<Plataforma*> Nivel::obtenerPlataformas(){
 	return plataformas;
 }
+
+list<Moneda*> Nivel::obtenerMonedas(){
+	return monedas;
+}
+
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }

@@ -20,6 +20,7 @@ class Juego{
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
+		list<Moneda*> obtenerMonedas();
 		Mario* obtenerMario();
 		int obtenerTiempoDelNivel();
 		int obtenerPuntuacionJugador();

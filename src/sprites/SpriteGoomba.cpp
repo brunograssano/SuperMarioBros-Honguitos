@@ -5,8 +5,6 @@
 
 SpriteGoomba::SpriteGoomba(string direccionImagen){
 	direccionTextura = direccionImagen;
-	//alto = 40;
-	//ancho = 35;
 	estadoActual = 0;
 	ciclos=0;
 	cambio=false;
@@ -30,12 +28,6 @@ void SpriteGoomba::actualizarSprite(){
 	}
 	ciclos++;
 }
-
-//ESTO YA NO ES NECESARIO
-int SpriteGoomba::obtenerPosicionXRectangulo(){
-	return estadosPosibles[estadoActual].x;
-}
-
 
 SDL_Rect SpriteGoomba::obtenerRectanguloActual(){
 	return estadosPosibles[estadoActual];

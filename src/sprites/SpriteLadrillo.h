@@ -13,11 +13,7 @@ class SpriteLadrillo : public Sprite{
 
 		SDL_Rect obtenerRectanguloActual()override;
 
-		int obtenerPosicionXRectangulo()override;
-
 		void actualizarSprite()override;
-
-		string obtenerDireccionSprite();
 
 	private:
 

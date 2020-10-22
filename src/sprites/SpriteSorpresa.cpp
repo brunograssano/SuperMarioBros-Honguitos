@@ -20,16 +20,6 @@ void SpriteSorpresa::actualizarSprite(){
 	// Por ahora no se actualiza este sprite (queda en estado 0)
 }
 
-string SpriteSorpresa::obtenerDireccionSprite(){
-	return this->direccionTextura;
-}
-
-//ESTO YA NO ES NECESARIO
-int SpriteSorpresa::obtenerPosicionXRectangulo(){
-	return estadosPosibles[estadoActual].x;
-}
-
-
 SDL_Rect SpriteSorpresa::obtenerRectanguloActual(){
 	return estadosPosibles[estadoActual];
 }

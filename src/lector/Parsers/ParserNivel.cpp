@@ -1,5 +1,7 @@
 #include "ParserNivel.hpp"
 
+
+
 void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	string mundo = nivel.child_value("mundo");
 	string direccionFondo = nivel.child_value("direccionFondo");

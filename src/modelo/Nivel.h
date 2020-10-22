@@ -15,6 +15,9 @@ class Nivel{
 			this->direccionFondo = direccionFondo;
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
+			for(int i=0; i<cantidadMonedas; i++){
+				monedas.push_back(new Moneda(60*i, 300));
+			}
 		}
 
 		void agregarPlataforma(Plataforma* unaPlataforma){
@@ -42,6 +45,7 @@ class Nivel{
 		void actualizarPosicionesEnemigos();
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
+		list<Moneda*> obtenerMonedas();
 		string obtenerDireccionFondoActual();
 
 		~Nivel(){

@@ -1,10 +1,3 @@
-/*
- * SpriteKoopa.h
- *
- *  Created on: 19 oct. 2020
- *      Author: adrianstarly
- */
-
 #ifndef SRC_SPRITES_SPRITEKOOPA_H_
 #define SRC_SPRITES_SPRITEKOOPA_H_
 
@@ -19,18 +12,12 @@ class SpriteKoopa : public Sprite{
 
 		SDL_Rect obtenerRectanguloActual()override;
 
-		int obtenerPosicionXRectangulo()override;
-
 		void actualizarSprite()override;
 
 	private:
-
-		bool cambio;
 		int ciclos;
 		int estadoActual;
-		SDL_Rect estadosPosibles[3];
-		//int ancho;
-		//int alto;
+		SDL_Rect estadosPosibles[6];
 };
 
 #endif /* SRC_SPRITES_SPRITEKOOPA_H_ */

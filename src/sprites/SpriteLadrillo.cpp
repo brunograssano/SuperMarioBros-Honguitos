@@ -10,17 +10,8 @@ SpriteLadrillo::SpriteLadrillo(){
 
 }
 
-string SpriteLadrillo::obtenerDireccionSprite(){
-	return this->direccionTextura;
-}
-
 void SpriteLadrillo::actualizarSprite(){
 	// Por ahora no se actualiza este sprite (queda en estado 0)
-}
-
-//ESTO YA NO ES NECESARIO
-int SpriteLadrillo::obtenerPosicionXRectangulo(){
-	return rectanguloLadrillo.x;
 }
 
 

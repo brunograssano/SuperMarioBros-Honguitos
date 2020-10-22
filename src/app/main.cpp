@@ -20,7 +20,7 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 
 	Lector* lector = new Lector();
 	string direccionLectura = "resources/configuracionDefault.xml";
-	TipoLog* nivelLog;
+	//TipoLog* nivelLog; TODO: Esta variable se usa para algo?
 	if(cantidadArgumentos==5){
 		if(strcmp(argumentos[1],"-c")){
 			direccionLectura = argumentos[2];

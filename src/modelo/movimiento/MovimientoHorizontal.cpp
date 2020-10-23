@@ -2,9 +2,6 @@
 
 const float COEFICIENTE_DE_TIEMPO = 1;
 
-const int TERRENO_LIMITE_DERECHO_MAX = 8177;
-const int TERRENO_LIMITE_DERECHO_MIN = 0;
-
 bool velocidadBaja(float velocidad){
 	return(velocidad < 1 && velocidad > -1);
 }
@@ -13,7 +10,6 @@ MovimientoHorizontal::MovimientoHorizontal(float maximaVelocidad, float acelerac
 	this->aceleracionX = aceleracion;
 	this->maximaVelocidadX = maximaVelocidad;
 	this->velocidadX = 0;
-	this->limite_terreno_izq_actual = TERRENO_LIMITE_DERECHO_MIN;
 }
 
 void MovimientoHorizontal::aceleraraDerecha(Terreno* terreno){
@@ -50,10 +46,7 @@ bool MovimientoHorizontal::estaQuieto(){
 
 void MovimientoHorizontal::mover(PosicionMovil* posicion, Terreno* terreno){
 	float desplazamientoX = velocidadX*COEFICIENTE_DE_TIEMPO;
-	int posHorizontalSiguiente = posicion->obtenerPosX()  + desplazamientoX;
-	if (posHorizontalSiguiente > limite_terreno_izq_actual && posHorizontalSiguiente < TERRENO_LIMITE_DERECHO_MAX) {
-		posicion->moverHorizontal(desplazamientoX);
-	}
+	posicion->moverHorizontal(desplazamientoX);
 	velocidadX = terreno->aplicarCoeficienteDeRozamiento(velocidadX);
 	if(velocidadBaja(velocidadX)){
 		velocidadX = 0;

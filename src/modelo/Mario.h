@@ -23,8 +23,8 @@ class Mario{
 		bool estaEnElPiso();
 		void actualizarPosicion();
 		
-		void actualizarLimiteDeMovimiento(int limiteActual);
-
+		void actualizarMaximoX(int limite);
+		void actualizarMinimoX(int limite);
 		~Mario();
 
 	private:

@@ -27,24 +27,29 @@ class PosicionMovil : public Posicion{
 
 	public:
 
-		PosicionMovil(int coordenadaX,int coordenadaY, int minimoY){
+		PosicionMovil(int coordenadaX,int coordenadaY, int minimoY, int minimoX, int maximoX){
 			this->posicionX=coordenadaX;
 			this->posicionY=coordenadaY;
 			this->minimoY = minimoY;
+			this->minimoX = minimoX;
+			this->maximoX = maximoX;
 		}
 
 		PosicionMovil(int coordenadaX, int coordenadaY){
 			this->posicionX=coordenadaX;
 			this->posicionY=coordenadaY;
 			this->minimoY = 2147483647;
-		}
-
-		void moverHorizontal(int cantidadAMover){
-			this->posicionX+=(float)cantidadAMover;
+			this->minimoX = -2147483648;
+			this->maximoX = 2147483647;
 		}
 
 		void moverHorizontal(float cantidadAMover){
-			this->posicionX+=cantidadAMover;
+			if(posicionX + cantidadAMover <= maximoX && posicionX + cantidadAMover >= minimoX)
+				this->posicionX+=cantidadAMover;
+		}
+
+		void moverHorizontal(int cantidadAMover){
+			this->moverHorizontal((float)cantidadAMover);
 		}
 
 		void moverVertical(int cantidadAMover){
@@ -54,9 +59,16 @@ class PosicionMovil : public Posicion{
 				this->posicionY+=cantidadAMover;
 			}
 		}
-
+		void actualizarLimiteTerrenoIzq(int limite){
+			minimoX = limite;
+		}
+		void actualizarLimiteTerrenoDer(int limite){
+			maximoX = limite;
+		}
 		~PosicionMovil(){}
-
+	private:
+		int minimoX;
+		int maximoX;
 };
 
 class PosicionFija : public Posicion{

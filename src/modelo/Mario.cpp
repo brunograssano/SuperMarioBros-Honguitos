@@ -4,17 +4,23 @@
 const int COORDENADA_X_DEFAULT = 20;
 const int COORDENADA_Y_DEFAULT = 0;
 const int MINIMO_COORDENADA_Y = 0;
-
+const int TERRENO_LIMITE_DERECHO_MAX = 8177;
+const int TERRENO_LIMITE_DERECHO_MIN = 0;
 
 Mario::Mario(){
-	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y);
+	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
+			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
 	this->puntos=0;
 	this->cantidadMonedas = 0;
 	this->movimiento = new MovimientoMario();
 }
 
-void Mario::actualizarLimiteDeMovimiento(int limiteActual){
-    this->movimiento->actualizarLimiteTerrenoIzq(limiteActual);
+void Mario::actualizarMaximoX(int limite){
+    this->posicion->actualizarLimiteTerrenoIzq(limite);
+}
+
+void Mario::actualizarMinimoX(int limite){
+    this->posicion->actualizarLimiteTerrenoDer(limite);
 }
 
 int Mario::obtenerPosicionX(){
@@ -63,6 +69,7 @@ void Mario::saltar(){
 bool Mario::estaQuietoX(){
 	return this->movimiento->estaQuieto();
 }
+
 bool Mario::estaEnElPiso(){
 	return this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y;
 }

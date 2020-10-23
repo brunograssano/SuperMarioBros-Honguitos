@@ -15,9 +15,6 @@ class MovimientoMario{
 		void aceleraraDerecha();
 		void aceleraraIzquierda();
 		bool estaQuieto();
-		void actualizarLimiteTerrenoIzq(int limiteActual) {
-		    this->movimientoX->actualizarLimiteTerrenoIzq(limiteActual);
-		}
 		void saltar();
 		void setVelocidadY(int velocidad){
 			this->movimientoY->setVelocidadY(velocidad);

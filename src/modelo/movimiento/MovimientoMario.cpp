@@ -3,6 +3,7 @@
 const float MAXIMA_VELOCIDAD_X = 8;
 const float ACELERACION_X = 0.8;
 const float FUERZA_SALTO = 60;
+
 MovimientoMario::MovimientoMario(){
 	this->movimientoX = new MovimientoHorizontal(MAXIMA_VELOCIDAD_X, ACELERACION_X);
 	this->movimientoY = new MovimientoVertical(FUERZA_SALTO);
@@ -30,7 +31,7 @@ void MovimientoMario::mover(PosicionMovil* posicion){
 
 	int previoY = posicion->obtenerPosY();
 	this->movimientoY->mover(posicion);
-	if(posicion->obtenerPosY() == 0 && previoY > 0){
+	if(posicion->obtenerPosY() == 0 && previoY > 0){ //Me fijo si estoy en tierra y si antes estaba en aire.
 		delete terrenoActual;
 		terrenoActual = new Tierra();
 	}

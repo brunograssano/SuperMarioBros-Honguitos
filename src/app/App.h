@@ -55,7 +55,7 @@ class App{
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
 
-			string direccion = "resources/iconoHongo.jpg";
+			string direccion = "resources/IconoHongo.png";
 			SDL_Surface* icono = IMG_Load(direccion.c_str());
 			if(icono == NULL){
 				Log::getInstance()->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
@@ -68,7 +68,6 @@ class App{
 			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario);
 			delete archivoLeido;
 		}
-
 		Juego* juego;
 		static App* aplicacion;
 		CargadorTexturas* cargadorTexturas;

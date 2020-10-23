@@ -54,6 +54,16 @@ class App{
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 			delete archivoLeido;
 
+			string direccion = "resources/iconoHongo.jpg";
+			SDL_Surface* icono = IMG_Load(direccion.c_str());
+			if(icono == NULL){
+				Log::getInstance()->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
+			}
+			else{
+				SDL_SetWindowIcon(ventanaAplicacion, icono);
+				SDL_FreeSurface(icono);
+			}
+
 		}
 
 		Juego* juego;

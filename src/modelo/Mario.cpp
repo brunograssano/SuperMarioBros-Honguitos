@@ -47,6 +47,14 @@ void Mario::agregarMoneda(){
 	cantidadMonedas++;
 }
 
+void Mario::reiniciarPosicion(){
+	delete posicion;
+	delete movimiento;
+	movimiento = new MovimientoMario();
+	posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y);
+}
+
+
 void Mario::aceleraraIzquierda(){
 	this->movimiento->aceleraraIzquierda();
 }

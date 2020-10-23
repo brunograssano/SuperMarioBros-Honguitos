@@ -18,7 +18,7 @@ class Dibujador{
 	public:
 		Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario);
 		void dibujar(SDL_Rect* rectanguloCamara);
-
+		void dibujarGameOver();
 
 	private:
 		Uint32 tiempoDeInicio = 0;

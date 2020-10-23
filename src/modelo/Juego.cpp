@@ -18,6 +18,15 @@ Juego* Juego::getInstance(list<Nivel*> niveles){
 	return instanciaJuego;
 }
 
+
+void Juego::avanzarNivel(){
+	Nivel* nivelViejo = niveles.front();
+	delete nivelViejo;
+	niveles.pop_front();
+	jugador->reiniciarPosicion();
+
+}
+
 Mario* Juego::obtenerMario(){
 	return jugador;
 }

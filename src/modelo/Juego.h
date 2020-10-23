@@ -16,8 +16,11 @@ class Juego{
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
 		static Juego* getInstance(list<Nivel*> archivoLeido);
-		string obtenerDireccionFondoNivelActual();
+
+		void avanzarNivel();
 		void actualizarPosicionesEnemigos();
+
+		string obtenerDireccionFondoNivelActual();
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();

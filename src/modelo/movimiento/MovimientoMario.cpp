@@ -1,49 +1,21 @@
 #include "MovimientoMario.h"
 
 
-const float SPRINT_ACELERACION_HORIZONTAL = 150;
-const float MAXIMA_VELOCIDAD_HORIZONTAL = 150;
 
 const float COEFICIENTE_DE_TIEMPO = 0.16;
 
-const int TERRENO_LIMITE_DERECHO_MAX = 8177;
-const int TERRENO_LIMITE_DERECHO_MIN = 0;
-
-bool estaAcelerando(float aceleracion){
-	return(aceleracion > 1e-4 || aceleracion < -1e-4);
-}
-
-
-
 MovimientoMario::MovimientoMario(){
-	this->aceleracionX = 0;
 	this->aceleracionY = 0;
-	this->velocidadX = 0;
 	this->velocidadY = 0;
-	
-	this->limite_terreno_izq_actual = TERRENO_LIMITE_DERECHO_MIN;
+	this->movimientoX = new MovimientoHorizontalMario();
 }
 
 void MovimientoMario::aceleraraDerecha(){
-	if(!estaAcelerando(this->aceleracionX)){
-		this->aceleracionX = SPRINT_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX < 0){
-		this->velocidadX = 0;
-		this->aceleracionX = SPRINT_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX < SPRINT_ACELERACION_HORIZONTAL){
-		this->aceleracionX = SPRINT_ACELERACION_HORIZONTAL;
-	}
+	this->movimientoX->aceleraraDerecha();
 }
 
 void MovimientoMario::aceleraraIzquierda(){
-	if(!estaAcelerando(this->aceleracionX)){
-		this->aceleracionX = -1*SPRINT_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX > 0){
-		this->velocidadX = 0;
-		this->aceleracionX = -1*SPRINT_ACELERACION_HORIZONTAL;
-	}else if(this->aceleracionX > -1*SPRINT_ACELERACION_HORIZONTAL){
-		this->aceleracionX = -1*SPRINT_ACELERACION_HORIZONTAL;
-	}
+	this->movimientoX->aceleraraIzquierda();
 }
 
 void MovimientoMario::saltar(){
@@ -51,52 +23,17 @@ void MovimientoMario::saltar(){
 }
 
 
-void MovimientoMario::aplicarCoeficienteDeRozamiento(){
-	if(this->velocidadX < 7 && this->velocidadX > -7){
-		this->velocidadX = 0;
-		this->aceleracionX = 0;
-	}else if(this->velocidadX > 0){
-		this->aceleracionX = -1*SPRINT_ACELERACION_HORIZONTAL/80;
-	}else if(this->velocidadX < 0){
-		this->aceleracionX = SPRINT_ACELERACION_HORIZONTAL/80;
-	}
-}
-
-
 void MovimientoMario::aplicarGravedad(){
 	this->velocidadY -= 9.8*COEFICIENTE_DE_TIEMPO;
 }
 
-
-void MovimientoMario::actualizarVelocidad(){
-	this->velocidadX += this->aceleracionX*COEFICIENTE_DE_TIEMPO;
-	if(this->velocidadX > MAXIMA_VELOCIDAD_HORIZONTAL){
-		this->velocidadX = MAXIMA_VELOCIDAD_HORIZONTAL;
-	}else if (this->velocidadX < -1*MAXIMA_VELOCIDAD_HORIZONTAL){
-		this->velocidadX = -1*MAXIMA_VELOCIDAD_HORIZONTAL;
-	}
-}
-
-float calcularDesplazamiento(float velocidad, float unidadDeTiempo){
-	return(velocidad* unidadDeTiempo);
-}
-
 void MovimientoMario::mover(PosicionMovil* posicion){
-	actualizarVelocidad();
-	float desplazamientoX = calcularDesplazamiento(this->velocidadX, COEFICIENTE_DE_TIEMPO);
-	float desplazamientoY = calcularDesplazamiento(this->velocidadY, COEFICIENTE_DE_TIEMPO);
-	
-	int posHorizontalSiguiente = posicion->obtenerPosX()  + desplazamientoX;
-
-	if (posHorizontalSiguiente > this->limite_terreno_izq_actual && posHorizontalSiguiente < TERRENO_LIMITE_DERECHO_MAX) {
-		posicion->moverHorizontal(desplazamientoX);
-	}
-	
+	this->movimientoX->mover(posicion);
+	float desplazamientoY = this->velocidadY*COEFICIENTE_DE_TIEMPO;
 	posicion->moverVertical(desplazamientoY);
-	aplicarCoeficienteDeRozamiento();
 	aplicarGravedad();
 }
 
 bool MovimientoMario::estaQuieto(){
-	return(velocidadX < 3 && velocidadX > -3);
+	return this->movimientoX->estaQuieto();
 }

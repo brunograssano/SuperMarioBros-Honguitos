@@ -2,7 +2,7 @@
 #define SRC_MODELO_MOVIMIENTO_MOVIMIENTOMARIO_H_
 
 #include "../Posicion.h"
-
+#include "MovimientoHorizontalMario.h"
 class MovimientoMario{
 
 	public:
@@ -17,18 +17,13 @@ class MovimientoMario{
 		bool estaQuieto();
 	
 		void actualizarLimiteTerrenoIzq(int limiteActual) {
-		    this->limite_terreno_izq_actual = limiteActual;
+		    this->movimientoX->actualizarLimiteTerrenoIzq(limiteActual);
 		}
 	private:
-		void actualizarVelocidad();
 		void aplicarGravedad();
-		void aplicarCoeficienteDeRozamiento();
-		float aceleracionX;
 		float aceleracionY;
-		float velocidadX;
 		float velocidadY;
-		
-		int limite_terreno_izq_actual;
+		MovimientoHorizontalMario* movimientoX;
 };
 
 

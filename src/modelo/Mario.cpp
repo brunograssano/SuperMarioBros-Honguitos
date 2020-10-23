@@ -70,7 +70,7 @@ void Mario::actualizarPosicion(){
 void Mario::saltar(){
 	if(!this->estaSaltando){
 		this->movimiento->saltar();
-		this->estaSaltando = true;		//TODO Hacer un patrón State en Mario o en Movimiento.
+		this->estaSaltando = true;
 	}
 }
 

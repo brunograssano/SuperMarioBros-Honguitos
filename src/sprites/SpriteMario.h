@@ -8,7 +8,7 @@
 #include "../modelo/Juego.h"
 #include "../app/CargadorTexturas.h"
 
-class SpriteMario {
+class SpriteMario : public Sprite{
 
 	public:
 		//Initializes variables
@@ -18,7 +18,7 @@ class SpriteMario {
 		//Deallocates memory
 
 		int obtenerPosicionXRectangulo();
-		SDL_Rect obtenerRectanguloActual();
+		SDL_Rect obtenerRectanguloActual()override;
 
 		void actualizarSprite(Mario* mario);
 
@@ -28,7 +28,6 @@ class SpriteMario {
         void actualizarSpriteMarioAgacharse(Mario* mario);
 
 	private:
-		string direccionTextura;
 		SDL_Rect estadosPosibles[14];
 		int estadoActual;
 		int proximoEstado;

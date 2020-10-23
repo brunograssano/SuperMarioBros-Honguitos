@@ -51,7 +51,8 @@ void Mario::reiniciarPosicion(){
 	delete posicion;
 	delete movimiento;
 	movimiento = new MovimientoMario();
-	posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y);
+	posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
+			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
 }
 
 

@@ -9,6 +9,7 @@
 
 using namespace std;
 
+#include "Dibujador.h"
 #include "../modelo/Juego.h"
 #include "CargadorTexturas.h"
 #include "../sprites/SpriteMario.h"
@@ -52,8 +53,20 @@ class App{
 			juego = Juego::getInstance(archivoLeido->niveles);
 			spriteMario = new SpriteMario("../resources/mario_grande.png");
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
-			delete archivoLeido;
 
+
+			string direccion = "resources/iconoHongo.jpg";
+			SDL_Surface* icono = IMG_Load(direccion.c_str());
+			if(icono == NULL){
+				Log::getInstance()->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
+			}
+			else{
+				SDL_SetWindowIcon(ventanaAplicacion, icono);
+				SDL_FreeSurface(icono);
+			}
+
+			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario);
+			delete archivoLeido;
 		}
 
 		Juego* juego;
@@ -63,25 +76,10 @@ class App{
 		SDL_Renderer* renderizador;
 		SpriteMario* spriteMario;
 		SDL_Rect rectanguloCamara;
+		Dibujador* dibujador;
 
 		int ancho_pantalla = 800;
 		int alto_pantalla = 540;
-
-
-		Uint32 tiempoDeInicio = 0;
-		//In memory text stream
-		stringstream textoDeTiempo;
-		stringstream textoDeNivel;
-		stringstream textoDePuntos;
-
-
-
-		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
-		void dibujarPlataformas(SDL_Rect* rectanguloCamara);
-		void dibujarMonedas(SDL_Rect* rectanguloCamara);
-		void dibujarMario(SDL_Rect* rectanguloCamara);
-		void dibujarTexto();
-		void renderizarTexto(SDL_Rect renderQuad,string textoAMostrar );
 
 	public:
 		App(App &other) = delete;

@@ -32,7 +32,6 @@ class Mario{
 		MovimientoMario* movimiento;
 		int puntos;
 		int cantidadMonedas;
-		bool estaSaltando;
 };
 
 

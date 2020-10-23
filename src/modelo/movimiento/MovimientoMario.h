@@ -2,12 +2,16 @@
 #define SRC_MODELO_MOVIMIENTO_MOVIMIENTOMARIO_H_
 
 #include "../Posicion.h"
-#include "MovimientoHorizontalMario.h"
-#include "MovimientoVerticalMario.h"
-class MovimientoMario{
+#include "MovimientoHorizontal.h"
+#include "MovimientoVertical.h"
+#include "Terreno/Terreno.h"
+#include "Terreno/Tierra.h"
+#include "Terreno/Aire.h"
 
+class MovimientoMario{
 	public:
 		MovimientoMario();
+		~MovimientoMario();
 		void aceleraraDerecha();
 		void aceleraraIzquierda();
 		bool estaQuieto();
@@ -21,8 +25,9 @@ class MovimientoMario{
 		void mover(PosicionMovil* posicion);
 
 	private:
-		MovimientoHorizontalMario* movimientoX;
-		MovimientoVerticalMario* movimientoY;
+		MovimientoHorizontal* movimientoX;
+		MovimientoVertical* movimientoY;
+		Terreno* terrenoActual;
 };
 
 

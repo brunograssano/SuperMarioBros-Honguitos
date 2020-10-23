@@ -2,15 +2,16 @@
 #include <list>
 
 App* App::aplicacion = nullptr;
+const int SE_TERMINO_EL_TIEMPO = 0;
 
-App* App::GetInstance(ArchivoLeido* archivoLeido){
+App* App::getInstance(ArchivoLeido* archivoLeido){
 	if(aplicacion==nullptr){
 		aplicacion= new App(archivoLeido);
 	}
 	return aplicacion;
 }
 
-App* App::GetInstance(){
+App* App::getInstance(){
 		return aplicacion;
 }
 
@@ -35,23 +36,37 @@ void App::actualizar(SDL_Event evento){
 }
 
 void App::actualizar(){
-	Mario* jugador = Juego::getInstance()->obtenerMario();
-	jugador->actualizarPosicion();
-	Juego::getInstance()->actualizarPosicionesEnemigos();
-	spriteMario->actualizarSprite(jugador);
-	cargadorTexturas->revisarSiCambioNivel(renderizador);
-	moverCamara();
+	if(!terminoElJuego){
+		Mario* jugador = Juego::getInstance()->obtenerMario();
+		jugador->actualizarPosicion();
+		Juego::getInstance()->actualizarPosicionesEnemigos();
+		spriteMario->actualizarSprite(jugador);
+		revisarSiTerminoNivel(jugador);
+		cargadorTexturas->revisarSiCambioNivel(renderizador);
+		moverCamara(jugador);
+	}
 }
 
+
+void App::revisarSiTerminoNivel(Mario* jugador){
+
+	if(jugador->obtenerPosicionX()>=ANCHO_FONDO-500){ //PONER EL FIN DEL NIVEL EN EL XML?
+		rectanguloCamara.x= 0;
+		rectanguloCamara.y = 0;
+		juego->avanzarNivel();
+		tiempoDeInicio = SDL_GetTicks();
+	}
+
+
+}
 
 SDL_Rect* App::obtenerRectCamara(){
 	return &rectanguloCamara;
 }
 
 
-void App::moverCamara(){
+void App::moverCamara(Mario* jugador){
 
-	Mario* jugador = Juego::getInstance()->obtenerMario();
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
 	bool elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = jugador->obtenerPosicionX() > rectanguloCamara->x + (ancho_pantalla)/2;
@@ -71,9 +86,20 @@ void App::moverCamara(){
 }
 
 void App::dibujar(){
-	dibujador->dibujar(&rectanguloCamara);
+	tiempoFaltante = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() + tiempoDeInicio)/1000;
+	//tiempoFaltante = ((20*1000) - SDL_GetTicks() + tiempoDeInicio)/1000; // PARA PROBAR LA PANTALLA DE GAME OVER
+	if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO){
+		dibujador->dibujarGameOver();
+		terminoElJuego = true;
+	}else if(!terminoElJuego){
+		dibujador->dibujar(&rectanguloCamara);
+	}
 }
 
+
+int App::obtenerTiempoFaltante(){
+	return tiempoFaltante;
+}
 
 SDL_Renderer* App::obtenerRenderizador(){
 	return renderizador;

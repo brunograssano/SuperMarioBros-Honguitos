@@ -64,7 +64,10 @@ class App{
 				SDL_SetWindowIcon(ventanaAplicacion, icono);
 				SDL_FreeSurface(icono);
 			}
-
+			posicionFinalNivel = 5000;
+			tiempoFaltante = 0;
+			tiempoDeInicio = 0;
+			terminoElJuego = false;
 			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario);
 			delete archivoLeido;
 		}
@@ -77,19 +80,27 @@ class App{
 		SpriteMario* spriteMario;
 		SDL_Rect rectanguloCamara;
 		Dibujador* dibujador;
+		int tiempoFaltante;
+		int tiempoDeInicio;
+		int posicionFinalNivel;
+
+		void revisarSiTerminoNivel(Mario* jugador);
+
+		bool terminoElJuego;
 
 		int ancho_pantalla = 800;
 		int alto_pantalla = 540;
 
 	public:
 		App(App &other) = delete;
-		static App *GetInstance();
-		static App *GetInstance(ArchivoLeido* archivoLeido);
+		static App *getInstance();
+		static App *getInstance(ArchivoLeido* archivoLeido);
 
 
 		void actualizar(SDL_Event evento);
 		void actualizar();
-		void moverCamara();
+		void moverCamara(Mario* jugador);
+		int obtenerTiempoFaltante();
 
 		SDL_Renderer* obtenerRenderizador();
 

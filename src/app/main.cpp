@@ -35,7 +35,7 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		if(strcmp(argumentos[1],"-c")){
 			direccionLectura = argumentos[2];
 		}else{
-			// TODO nos quedamos con el nivel del log que nos mandan?
+			// TODO nos quedamos con el nivel del log que nos mandan? Si.
 		}
 	}
 
@@ -50,7 +50,7 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	}
 
 
-	App* aplicacion = App::GetInstance(archivoLeido);
+	App* aplicacion = App::getInstance(archivoLeido);
 
 	bool salir = false;
 	SDL_Event evento;

@@ -1,4 +1,5 @@
 #include "Dibujador.h"
+#include "App.h"
 
 
 Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario){
@@ -8,6 +9,35 @@ Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizad
 	this->spriteMario = spriteMario;
 }
 
+
+void Dibujador::dibujarGameOver(){
+	SDL_RenderClear( renderizador );
+
+	// TODO QUE ALGUIEN SE FIJE BIEN COMO PONER UN FONDO NEGRO Y EN BLANCO ARRIBA GAME OVER
+
+	//SDL_Rect fillRect = { 0, 0, 800, 600};
+	//SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 0xFF );
+	//SDL_RenderFillRect( renderizador, &fillRect );
+	//SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
+	//SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0x00, 0xFF );
+	//SDL_RenderDrawRect( renderizador, &fillRect );
+
+
+	stringstream textoGameOver;
+	textoGameOver.str("");
+	textoGameOver << "GAME OVER";
+	SDL_Rect cuadradoGameOver = { 200, 300, 330, 0 };
+	SDL_Rect* clip = NULL;
+	double angle = 0.0;
+	SDL_Point* center = NULL;
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_SetRenderDrawColor( renderizador, 220, 220, 220, 0 );
+	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoGameOver.str(), renderizador);
+	SDL_RenderCopyEx( renderizador, texto, clip, &cuadradoGameOver, angle, center, flip );
+	SDL_DestroyTexture(texto);
+
+	SDL_RenderPresent( renderizador );
+}
 
 void Dibujador::dibujar(SDL_Rect* rectanguloCamara){
 
@@ -72,7 +102,7 @@ void Dibujador::dibujarMario(SDL_Rect* rectanguloCamara){
 
 void Dibujador::dibujarTexto(){
 	textoDeTiempo.str( "" );
-	int tiempo = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() - tiempoDeInicio)/1000; //Getticks devuelve en milisegundos
+	int tiempo = App::getInstance()->obtenerTiempoFaltante();//((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() - tiempoDeInicio)/1000; //Getticks devuelve en milisegundos
 	textoDeTiempo << "Tiempo restante " << tiempo;
 
 	textoDeNivel.str("");

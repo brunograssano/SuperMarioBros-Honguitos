@@ -50,6 +50,53 @@
             </plataformas>
         </nivel>
 
+<nivel>
+            <mundo>2</mundo> <!-- el numero del nivel se usaria para la indicacion en pantalla Ej. WORLD 1 -->
+            <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
+            <cantidadMonedas>20</cantidadMonedas>   <!--No les damos la opcion de cambiar la textura, aparecen de forma random en el eje X -->
+            <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
+            <enemigos>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <cantidad>7</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/Koopa.png</direccionImagen>
+                    <cantidad>10</cantidad>
+                </enemigo>
+
+                <!-- Agregariamos otros enemigos aca -->
+            </enemigos>
+            <plataformas>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>100</coordenadaX>
+                    <coordenadaY>500</coordenadaY>
+                    <cantidadBloques>4</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>500</coordenadaX>
+                    <coordenadaY>500</coordenadaY>
+                    <cantidadBloques>7</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>800</coordenadaX>
+                    <coordenadaY>400</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+
+                <!-- Agregariamos mas plataformas aca, podemos incluso llegar a dar la opcion de una plataforma compuesta -->
+            </plataformas>
+        </nivel>
         <!-- Agregariamos mas niveles-->
 
     </niveles>

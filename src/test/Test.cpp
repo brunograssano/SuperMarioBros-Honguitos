@@ -7,11 +7,10 @@ using namespace std;
 #include "MarioTest.h"
 #include "LectorTest.h"
 #include "Assert.h"
-/*
 
+/*
 int main(int argc, char* argv[]){
 	Assert* testSuite = new Assert();
-/*
 	MarioTest* marioTest = new MarioTest();
 	marioTest->ejecutar(testSuite);
 	delete marioTest;

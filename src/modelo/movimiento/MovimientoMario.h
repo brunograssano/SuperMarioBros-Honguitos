@@ -3,27 +3,26 @@
 
 #include "../Posicion.h"
 #include "MovimientoHorizontalMario.h"
+#include "MovimientoVerticalMario.h"
 class MovimientoMario{
 
 	public:
 		MovimientoMario();
 		void aceleraraDerecha();
 		void aceleraraIzquierda();
-		void saltar();
-		void mover(PosicionMovil* posicion);
-		void setVelocidadY(int velocidad){
-			this->velocidadY = velocidad;
-		}
 		bool estaQuieto();
-	
 		void actualizarLimiteTerrenoIzq(int limiteActual) {
 		    this->movimientoX->actualizarLimiteTerrenoIzq(limiteActual);
 		}
+		void saltar();
+		void setVelocidadY(int velocidad){
+			this->movimientoY->setVelocidadY(velocidad);
+		}
+		void mover(PosicionMovil* posicion);
+
 	private:
-		void aplicarGravedad();
-		float aceleracionY;
-		float velocidadY;
 		MovimientoHorizontalMario* movimientoX;
+		MovimientoVerticalMario* movimientoY;
 };
 
 

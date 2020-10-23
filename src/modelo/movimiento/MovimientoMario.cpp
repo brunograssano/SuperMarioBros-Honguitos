@@ -1,13 +1,8 @@
 #include "MovimientoMario.h"
 
-
-
-const float COEFICIENTE_DE_TIEMPO = 0.16;
-
 MovimientoMario::MovimientoMario(){
-	this->aceleracionY = 0;
-	this->velocidadY = 0;
 	this->movimientoX = new MovimientoHorizontalMario();
+	this->movimientoY = new MovimientoVerticalMario();
 }
 
 void MovimientoMario::aceleraraDerecha(){
@@ -19,19 +14,13 @@ void MovimientoMario::aceleraraIzquierda(){
 }
 
 void MovimientoMario::saltar(){
-	this->velocidadY = 60;
+	this->movimientoY->saltar();
 }
 
-
-void MovimientoMario::aplicarGravedad(){
-	this->velocidadY -= 9.8*COEFICIENTE_DE_TIEMPO;
-}
 
 void MovimientoMario::mover(PosicionMovil* posicion){
 	this->movimientoX->mover(posicion);
-	float desplazamientoY = this->velocidadY*COEFICIENTE_DE_TIEMPO;
-	posicion->moverVertical(desplazamientoY);
-	aplicarGravedad();
+	this->movimientoY->mover(posicion);
 }
 
 bool MovimientoMario::estaQuieto(){

@@ -4,9 +4,9 @@
 #include "../Posicion.h"
 #include "MovimientoHorizontal.h"
 #include "MovimientoVertical.h"
-#include "Terreno/Terreno.h"
-#include "Terreno/Tierra.h"
-#include "Terreno/Aire.h"
+#include "../Terreno/Terreno.h"
+#include "../Terreno/Tierra.h"
+#include "../Terreno/Aire.h"
 
 class MovimientoMario{
 	public:

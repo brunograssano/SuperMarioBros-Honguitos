@@ -48,6 +48,7 @@ void SpriteMario::actualizarSprite(Mario* mario){
 		switch(estadoActual){
 
 			case 0:
+				break;
 			case 1:
 				if(mario->estaEnElPiso()){
 					estadoActual = 6;

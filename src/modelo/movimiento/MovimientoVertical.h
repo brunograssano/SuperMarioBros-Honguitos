@@ -2,7 +2,7 @@
 #define SRC_MODELO_MOVIMIENTO_MOVIMIENTOVERTICAL_H_
 
 #include "../Posicion.h"
-#include "Terreno/Terreno.h"
+#include "../Terreno/Terreno.h"
 
 class MovimientoVertical{
 

@@ -2,7 +2,7 @@
 #define SRC_MODELO_MOVIMIENTO_MOVIMIENTOHORIZONTAL_H_
 
 #include "../Posicion.h"
-#include "Terreno/Terreno.h"
+#include "../Terreno/Terreno.h"
 
 class MovimientoHorizontal{
 

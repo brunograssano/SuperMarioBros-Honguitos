@@ -1,21 +1,44 @@
 #include "ParserPlataforma.hpp"
 
-void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel){
+#define VALOR_POR_DEFECTO_CANTIDAD_BLOQUES 5
+#define VALOR_POR_DEFECTO_COORDENADAX 200
+#define VALOR_POR_DEFECTO_COORDENADAY 200
+
+void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = plataforma.child_value("tipo");
-	string coordenadaX = plataforma.child_value("coordenadaX");
-	string coordenadaY = plataforma.child_value("coordenadaY");
-	string cantidadBloques = plataforma.child_value("cantidadBloques");
+	int coordenadaX;
+	int coordenadaY;
+	int cantidadBloques;
 	Plataforma* unaPlataforma = new Plataforma();
-	if(coordenadaX.compare("")==0 || coordenadaY.compare("")==0 || cantidadBloques.compare("")==0){
-		return;
+
+	try{
+		cantidadBloques = stoi(plataforma.child_value("cantidadBloques"));
+	}catch(const std::invalid_argument& error){
+		archivoLeido->mensajeError.push_back("El valor de cantidad de bloques enviado no tiene valor valido,se carga el valor por defecto");
+		cantidadBloques = VALOR_POR_DEFECTO_CANTIDAD_BLOQUES;
 	}
-	int coordenadaBloque = stoi(coordenadaX);
-	for(int i=0;i<stoi(cantidadBloques);i++){
+
+	try{
+		coordenadaX = stoi(plataforma.child_value("coordenadaX"));
+	}catch(const std::invalid_argument& error){
+		archivoLeido->mensajeError.push_back("El valor de coordenada X enviado no tiene valor valido,se carga el valor por defecto");
+		coordenadaX = VALOR_POR_DEFECTO_COORDENADAX;
+	}
+
+	try{
+		coordenadaY = stoi(plataforma.child_value("coordenadaY"));
+	}catch(const std::invalid_argument& error){
+		archivoLeido->mensajeError.push_back("El valor de coordenada Y enviado no tiene valor valido,se carga el valor por defecto");
+		coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
+	}
+
+	int coordenadaBloque = coordenadaX;
+	for(int i=0;i<cantidadBloques;i++){
 		Bloque* unBloque;
 		if(tipo.compare("Ladrillo")==0){
-			unBloque = new Ladrillo(coordenadaBloque,stoi(coordenadaY));
+			unBloque = new Ladrillo(coordenadaBloque,coordenadaY);
 		}else if(tipo.compare("Sorpresa")==0){
-			unBloque = new Sorpresa(coordenadaBloque,stoi(coordenadaY));
+			unBloque = new Sorpresa(coordenadaBloque,coordenadaY);
 		}
 		coordenadaBloque += 40;
 		unaPlataforma->agregarBloque(unBloque);

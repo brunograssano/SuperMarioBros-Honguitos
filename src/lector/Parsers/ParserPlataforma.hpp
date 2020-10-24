@@ -8,7 +8,7 @@ using namespace std;
 
 class ParserPlataforma{
 	public:
-			void ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel);
+			void ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel,ArchivoLeido* archivoLeido);
 };
 
 

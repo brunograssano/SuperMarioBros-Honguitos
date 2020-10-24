@@ -1,14 +1,20 @@
 #include "ParserEnemigo.hpp"
 
+#define VALOR_POR_DEFECTO_ENEMIGOS 15
 
-void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel){
+void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = enemigo.child_value("tipo");
 	string direccionImagen = enemigo.child_value("direccionImagen");
-	string cantidad = enemigo.child_value("cantidad");
-	if(cantidad.compare("") == 0){
-		return;
+	int cantidad;
+
+	try{
+		cantidad = stoi(enemigo.child_value("cantidad"));
+	}catch(const std::invalid_argument& error){
+		archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos enviado no tiene valor valido,se carga el valor por defecto");
+		cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
 	}
-	for(int i=0;i<stoi(cantidad);i++){
+
+	for(int i=0;i<cantidad;i++){
 		Enemigo* unEnemigo;
 		if(tipo.compare("Goomba")==0){
 			unEnemigo = new Goomba(direccionImagen);

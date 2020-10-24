@@ -10,7 +10,7 @@ using namespace std;
 
 class ParserEnemigo{
 	public:
-			void ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel);
+			void ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,ArchivoLeido* archivoLeido);
 };
 
 

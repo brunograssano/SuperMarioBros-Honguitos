@@ -32,8 +32,8 @@ void ArchivoLeido::verificarLectura(){
 				this->leidoCorrectamente = false;
 			}
 
+		}
 	}
-}
 
 }
 

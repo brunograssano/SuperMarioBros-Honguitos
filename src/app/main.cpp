@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string>
+#include <string.h>
 using namespace std;
 #include <SDL2/SDL.h>
 #include "App.h"
@@ -7,6 +8,47 @@ using namespace std;
 
 #include "../log/Log.h"
 #include "../log/Error.h"
+#include "../log/Debug.h"
+#include "../log/Info.h"
+
+const int LARGO_ENTRADA = 150;
+
+void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA]){
+	if(cantidadArgumentos==5){
+		if(strcmp(argumentos[1],"-c")==0){
+			strcpy(direccionLecturaComando,argumentos[2]);
+			strcpy(nivelLogEntrada,argumentos[4]);
+		}
+		else{
+			strcpy(direccionLecturaComando,argumentos[4]);
+			strcpy(nivelLogEntrada,argumentos[2]);
+		}
+	}
+	else if(cantidadArgumentos == 3){
+		if(strcmp(argumentos[1],"-c")==0){
+			strcpy(direccionLecturaComando,argumentos[2]);
+		}else{
+			strcpy(nivelLogEntrada,argumentos[2]);
+		}
+	}
+}
+
+TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
+	if(strcmp(nivelLogEntrada,"Error")==0 || strcmp(nivelLogEntrada,"ERROR")==0 || strcmp(nivelLogEntrada,"error")==0 ){
+		return new Error();
+	}
+	else if(strcmp(nivelLogEntrada,"Debug")==0 || strcmp(nivelLogEntrada,"DEBUG")==0 || strcmp(nivelLogEntrada,"debug")==0 ){
+		return new Debug();
+	}
+	else if(strcmp(nivelLogEntrada,"Info")==0 || strcmp(nivelLogEntrada,"INFO")==0 || strcmp(nivelLogEntrada,"info")==0 ){
+		return new Info();
+	}
+	else{
+		return NULL;
+	}
+}
+
+
 
 /* FORMATOS QUE PUEDE RECIBIR
  * /mario -c direccionConfiguracion 				(USAMOS LOG DEL ARCHIVO LEIDO)
@@ -14,43 +56,40 @@ using namespace std;
  * /mario -c direccionConfiguracion -l nivelDeLog 	(O AL REVES)
  * /mario 											(USAMOS TODA LA CONFIUGRACION DEFAULT)
  */
-
-
 int main( int cantidadArgumentos, char* argumentos[] ){
 
 	Lector* lector = new Lector();
-	string direccionLectura = "resources/configuracionDefault.xml";
-	//TipoLog* nivelLog; TODO: Esta variable se usa para algo?
-	if(cantidadArgumentos==5){
-		if(strcmp(argumentos[1],"-c")){
-			direccionLectura = argumentos[2];
-			//nos quedamos con el nivel del log en argumentos[4]
-		}
-		else{
-			direccionLectura = argumentos[4];
-			//nos quedamos con el nivel del log en argumentos[2]
-		}
-	}
-	else if(cantidadArgumentos == 3){
-		if(strcmp(argumentos[1],"-c")){
-			direccionLectura = argumentos[2];
-		}else{
-			// TODO nos quedamos con el nivel del log que nos mandan? Si.
+	string direccionLecturaDefault = "resources/configuracionDefault.xml";
+	char direccionLecturaComando[LARGO_ENTRADA] = "";
+	char nivelLogEntrada[LARGO_ENTRADA] = "";
+	ArchivoLeido* archivoLeido;
+	TipoLog* nivelLog;
+	list<string> mensajesError;
+
+	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada);
+
+	if(strcmp(direccionLecturaComando,"")!=0){
+		archivoLeido = lector->leerArchivo(direccionLecturaComando);
+		if(!archivoLeido->leidoCorrectamente){
+			mensajesError = archivoLeido->mensajeError;
+			archivoLeido = lector->leerArchivo(direccionLecturaDefault);
 		}
 	}
-
-
-	ArchivoLeido* archivoLeido = lector->leerArchivo(direccionLectura);
-	if(archivoLeido == NULL){
-		Log* log = Log::getInstance(new Error());
-		log->huboUnError("No se pudo encontrar la configuacion en: " +  direccionLectura);
-		delete log;
-		delete lector;
-		return 0;
+	else{
+		archivoLeido = lector->leerArchivo(direccionLecturaDefault);
 	}
 
+	if(strcmp(nivelLogEntrada,"")!=0){
+		nivelLog = determinarNivelLog(nivelLogEntrada);
+		if(nivelLog!=NULL){
+			archivoLeido->tipoLog = nivelLog;
+		}
+	}
 
 	App* aplicacion = App::getInstance(archivoLeido);
+	if(!mensajesError.empty()){
+		aplicacion->escribirMensajesDeArchivoLeidoEnLog(mensajesError);
+	}
 
 	bool salir = false;
 	SDL_Event evento;

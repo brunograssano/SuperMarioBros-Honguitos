@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
-
 using namespace std;
 
 #include "Dibujador.h"
@@ -14,7 +13,6 @@ using namespace std;
 #include "CargadorTexturas.h"
 #include "../sprites/SpriteMario.h"
 #include "../log/Log.h"
-#include "../log/TipoLog.h"
 #include "../lector/ArchivoLeido.hpp"
 
 const int ANCHO_PANTALLA = 800;
@@ -71,6 +69,7 @@ class App{
 			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario);
 			delete archivoLeido;
 		}
+
 		Juego* juego;
 		static App* aplicacion;
 		CargadorTexturas* cargadorTexturas;
@@ -100,6 +99,7 @@ class App{
 		void actualizar();
 		void moverCamara(Mario* jugador);
 		int obtenerTiempoFaltante();
+		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();
 
@@ -109,8 +109,5 @@ class App{
 
 
 };
-
-
-
 
 #endif /* SRC_APP_APP_H_ */

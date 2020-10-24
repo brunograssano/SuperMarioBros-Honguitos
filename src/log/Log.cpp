@@ -1,8 +1,9 @@
-
-#include "Log.h"
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "Log.h"
+#include "Error.h"
 
 Log* Log::log=nullptr;
 

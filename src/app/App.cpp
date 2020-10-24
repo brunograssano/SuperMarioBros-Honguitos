@@ -105,6 +105,13 @@ SDL_Renderer* App::obtenerRenderizador(){
 	return renderizador;
 }
 
+void App::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
+	Log* log = Log::getInstance();
+	for(auto const& mensaje:mensajesError){
+		log->huboUnError(mensaje);
+	}
+}
+
 App::~App(){
 	SDL_DestroyRenderer( renderizador );
 	SDL_DestroyWindow( ventanaAplicacion );
@@ -116,4 +123,5 @@ App::~App(){
 	delete cargadorTexturas;
 	delete juego;
 	delete spriteMario;
+	delete Log::getInstance();
 }

@@ -4,10 +4,10 @@
 using namespace std;
 #include <iostream>
 #include <fstream>
-#include "TipoLog.h"
-#include "Error.h"
 #include <stdio.h>
 #include <string.h>
+#include <list>
+#include "TipoLog.h"
 
 class Log{
 
@@ -18,11 +18,9 @@ class Log{
 			string nombreArchivo = "Log - ";
 			time(&tiempo);
 			char* tiempoActual = ctime(&tiempo);
-			nombreArchivo = nombreArchivo +tiempoActual; //delete de tiempoActual? Ctime devuelve un char*
+			nombreArchivo = nombreArchivo +tiempoActual;
 			nombreArchivo = nombreArchivo + ".txt";
 			archivoLog.open("logs/"+nombreArchivo);
-			//Que hacemos si fallo en abrir el log?
-
 		}
 
 		string armarMensaje(string primeraParte, string segundaParte);

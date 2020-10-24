@@ -39,7 +39,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->huboUnError("No se pudo cargar ninguna imagen de las monedas en: resources/Monedas.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("Mario", "resources/Monedas.png");
+		log->mostrarMensajeDeCarga("Moneda", "resources/Monedas.png");
 	}
 
 	texturaLadrillo = cargarTextura( "resources/BloqueLadrillo.png" ,renderizador);
@@ -61,8 +61,11 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	int tamanioFuente = 20;
 	string direccionFuente = "resources/fuenteSuperMarioBros.ttf";
 	fuenteJuego = TTF_OpenFont( direccionFuente.c_str(), tamanioFuente);
-	if(texturaFuenteJuego==NULL){
-		log->mostrarMensajeDeCarga("No se pudo cargar la fuente del juego en: ", "resources/fuenteSuperMarioBros.ttf");
+	if(fuenteJuego==NULL){
+		log->huboUnErrorSDL("No se pudo cargar la fuente del juego en: ", "resources/fuenteSuperMarioBros.ttf");
+	}
+	else{
+		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/fuenteSuperMarioBros.ttf");
 	}
 
 }

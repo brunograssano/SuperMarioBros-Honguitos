@@ -13,6 +13,7 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	try{
 		mundo = stoi(nivel.child_value("mundo"));
 	}catch(const std::invalid_argument& error){
+		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de mundo enviado no tiene valor valido,se carga el valor por defecto");
 		mundo = VALOR_POR_DEFECTO_MUNDO;
 	}
@@ -20,6 +21,7 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	try{
 		tiempoNivel = stoi(nivel.child_value("tiempoNivel"));
 	}catch(const std::invalid_argument& error){
+		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de tiempo del nivel enviado no tiene valor valido,se carga el valor por defecto");
 		tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 	}
@@ -27,6 +29,7 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	try{
 		cantidadMonedas = stoi(nivel.child_value("cantidadMonedas"));
 	}catch(const std::invalid_argument& error){
+		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de cantidad de monedas enviado no tiene valor valido,se carga el valor por defecto");
 		cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
 	}

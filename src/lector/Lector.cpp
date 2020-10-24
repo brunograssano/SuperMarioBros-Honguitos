@@ -64,9 +64,11 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 		offset_data_t posicionUltimoCaracterPorLinea;
 		int linea;
 		if (calcularPosicionesLinea(posicionUltimoCaracterPorLinea,nombreArchivo.c_str())){
+			archivoLeido->leidoCorrectamente = false;
 			linea = obtenerLineaError(posicionUltimoCaracterPorLinea,result.offset);
-			archivoLeido->mensajeError.push_back("Hay un error de  en la linea " + to_string(linea));
+			archivoLeido->mensajeError.push_back("Hay un error en la linea " + to_string(linea));
 		}else{
+			archivoLeido->leidoCorrectamente = false;
 			archivoLeido->mensajeError.push_back("Hubo un error al intentar abrir el archivo");
 		}
 		return archivoLeido;

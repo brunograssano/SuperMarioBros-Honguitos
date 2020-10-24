@@ -111,11 +111,15 @@ void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert
 
 	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
 
-	bool hayMensajesError = !archivoLeido->mensajeError.empty();
+	string mensajeError;
+
+	for(string error: archivoLeido->mensajeError){
+		mensajeError = error;
+	}
 
 
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
-	testSuite->assert(hayMensajesError,"Hay mensajes de error");
+	testSuite->assert(mensajeError,"Hay un error en la linea 56","El mensaje de error es el correcto");
 
 	delete lector;
 	delete archivoLeido;

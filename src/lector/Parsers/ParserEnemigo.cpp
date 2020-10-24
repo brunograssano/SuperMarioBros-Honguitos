@@ -10,6 +10,7 @@ void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,Archivo
 	try{
 		cantidad = stoi(enemigo.child_value("cantidad"));
 	}catch(const std::invalid_argument& error){
+		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos enviado no tiene valor valido,se carga el valor por defecto");
 		cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
 	}

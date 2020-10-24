@@ -19,6 +19,8 @@ class LectorTest{
 		void test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMensajesDeError(Assert* testSuite);
 		void test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(Assert* testSuite);
 		void test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert* testSuite);
+		void test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanzaUnError(Assert* testSuite);
+		void test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanzaUnError(Assert* testSuite);
 };
 
 

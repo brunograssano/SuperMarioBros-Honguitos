@@ -65,10 +65,10 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 		if (calcularPosicionesLinea(posicionUltimoCaracterPorLinea,nombreArchivo.c_str())){
 			archivoLeido->leidoCorrectamente = false;
 			linea = obtenerLineaError(posicionUltimoCaracterPorLinea,result.offset);
-			archivoLeido->mensajeError.push_back("Hay un error en la linea " + to_string(linea));
+			archivoLeido->mensajeError.push_back("Hay un error en la linea " + to_string(linea)+" del archivo "+ nombreArchivo);
 		}else{
 			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("Hubo un error al intentar abrir el archivo");
+			archivoLeido->mensajeError.push_back("Hubo un error al intentar abrir el archivo "+ nombreArchivo +" cuando se intento determinar el error de la linea");
 		}
 		return archivoLeido;
 	}

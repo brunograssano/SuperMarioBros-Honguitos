@@ -1,12 +1,16 @@
 
-
+#include <string>
 #include "Nivel.h"
-
+#include "../log/Log.h"
 
 
 void Nivel::actualizarPosicionesEnemigos(){
+	Log* log = Log::getInstance();
+	int i = 1;
 	for (auto const& enemigo : enemigos) {
 	    enemigo->actualizarPosicion();
+	    log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
+	    i++;
 	}
 }
 

@@ -56,16 +56,18 @@ class App{
 			string direccion = "resources/IconoHongo.png";
 			SDL_Surface* icono = IMG_Load(direccion.c_str());
 			if(icono == NULL){
-				Log::getInstance()->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
+				log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
 			}
 			else{
 				SDL_SetWindowIcon(ventanaAplicacion, icono);
 				SDL_FreeSurface(icono);
 			}
+			log->mostrarMensajeDeInfo("Inicio del juego");
 			posicionFinalNivel = 5000;
 			tiempoFaltante = 0;
 			tiempoDeInicio = 0;
 			terminoElJuego = false;
+			ganaron = false;
 			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario);
 			delete archivoLeido;
 		}
@@ -85,6 +87,7 @@ class App{
 		void revisarSiTerminoNivel(Mario* jugador);
 
 		bool terminoElJuego;
+		bool ganaron;
 
 		int ancho_pantalla = 800;
 		int alto_pantalla = 540;

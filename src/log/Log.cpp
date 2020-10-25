@@ -28,7 +28,7 @@ Log::~Log(){
 //DEBUG//
 void Log::mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY){
 	string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + to_string(coordenadaX) + "," + to_string(coordenadaY) + ")");
-	tipoLog->mostrarMensajeDeInfo(mensaje, archivoLog);
+	tipoLog->mostrarPosicion(mensaje, archivoLog);
 }
 
 void Log::mostrarAccion(string accion){

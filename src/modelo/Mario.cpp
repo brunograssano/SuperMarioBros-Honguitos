@@ -1,4 +1,5 @@
 #include "Mario.h"
+#include "../log/Log.h"
 #include <cmath>
 
 const int COORDENADA_X_DEFAULT = 20;
@@ -69,6 +70,7 @@ void Mario::actualizarPosicion(){
 	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){ //TODO Ojo cuando vayamos a trabajar con floats... y el "==". Cambiar por un intervalo.
 		this->movimiento->setVelocidadY(0);
 	}
+	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
 void Mario::saltar(){

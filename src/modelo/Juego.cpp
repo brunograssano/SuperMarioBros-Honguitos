@@ -27,6 +27,10 @@ void Juego::avanzarNivel(){
 
 }
 
+bool Juego::quedaSoloUnNivel(){
+	return niveles.size()==1;
+}
+
 Mario* Juego::obtenerMario(){
 	return jugador;
 }
@@ -46,6 +50,10 @@ list<Moneda*> Juego::obtenerMonedas(){
 void Juego::actualizarPosicionesEnemigos(){
 	Nivel* nivelActual = niveles.front();
 	nivelActual->actualizarPosicionesEnemigos();
+}
+
+void Juego::sumarPuntosAJugadores(int puntos){
+	jugador->agregarPuntos(puntos);
 }
 
 string Juego::obtenerDireccionFondoNivelActual(){

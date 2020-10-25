@@ -33,7 +33,6 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->mostrarMensajeDeCarga("Mario", "resources/resources/mario_grande.png.png");
 	}
 
-	// LA CARGO ACA PARA PROBAR AL GOOMBA
 	texturaMoneda = cargarTextura("resources/Monedas.png",renderizador);
 	if(texturaMoneda == NULL){
 		log->huboUnError("No se pudo cargar ninguna imagen de las monedas en: resources/Monedas.png");
@@ -68,12 +67,13 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/fuenteSuperMarioBros.ttf");
 	}
 
+	log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes no configurables por el usuario");
 }
 
 
 SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
-	SDL_Color colorTexto= { 0, 0, 0, 255 };
+	SDL_Color colorTexto= { 255, 255, 255, 255 };
 
 
 	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, textoAMostrar.c_str(), colorTexto );

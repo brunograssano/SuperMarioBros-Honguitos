@@ -1,6 +1,6 @@
 <configuracion>
-    <log>       <!-- Pueden no indicarlo esto, ya que pueden mandarlo por linea de comando al iniciar la app (Si no mandan eso considerar ERROR)-->
-        <level>ERROR</level> <!-- DEBUG o INFO -->
+    <log>
+        <level>INFO</level> <!-- DEBUG o INFO -->
     </log>
 
     <ventana>
@@ -10,9 +10,9 @@
 
     <niveles>
         <nivel>
-            <mundo>1</mundo> <!-- el numero del nivel se usaria para la indicacion en pantalla Ej. WORLD 1 -->
+            <mundo>1</mundo>
             <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
-            <cantidadMonedas>30</cantidadMonedas>   <!--No les damos la opcion de cambiar la textura, aparecen de forma random en el eje X -->
+            <cantidadMonedas>30</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
             <enemigos>
 
@@ -28,7 +28,6 @@
                     <cantidad>15</cantidad>
                 </enemigo>
 
-                <!-- Agregariamos otros enemigos aca -->
             </enemigos>
             <plataformas>
 
@@ -46,30 +45,33 @@
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
 
-                <!-- Agregariamos mas plataformas aca, podemos incluso llegar a dar la opcion de una plataforma compuesta -->
             </plataformas>
         </nivel>
 
-<nivel>
-            <mundo>2</mundo> <!-- el numero del nivel se usaria para la indicacion en pantalla Ej. WORLD 1 -->
-            <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
-            <cantidadMonedas>20</cantidadMonedas>   <!--No les damos la opcion de cambiar la textura, aparecen de forma random en el eje X -->
+		<nivel>
+            <mundo>2</mundo>
+            <direccionFondo>resources/MapaNivel2Base.png</direccionFondo>
+            <cantidadMonedas>20</cantidadMonedas>
             <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
             <enemigos>
 
                 <enemigo>
                     <tipo>Goomba</tipo>
-                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <direccionImagen>resources/GoombaInvertido.png</direccionImagen>
                     <cantidad>7</cantidad>
                 </enemigo>
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <direccionImagen>resources/Koopa.png</direccionImagen>
+                    <direccionImagen>resources/KoopaInvertido.png</direccionImagen>
                     <cantidad>10</cantidad>
                 </enemigo>
 
-                <!-- Agregariamos otros enemigos aca -->
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <cantidad>3</cantidad>
+                </enemigo>
             </enemigos>
             <plataformas>
 
@@ -94,10 +96,66 @@
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
-                <!-- Agregariamos mas plataformas aca, podemos incluso llegar a dar la opcion de una plataforma compuesta -->
             </plataformas>
         </nivel>
-        <!-- Agregariamos mas niveles-->
+        
+        <nivel>
+            <mundo>3</mundo>
+            <direccionFondo>resources/MapaNivel3Base.png</direccionFondo>
+            <cantidadMonedas>10</cantidadMonedas>
+            <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
+            <enemigos>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/GoombaInvertido.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/KoopaInvertido.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/Koopa.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+            </enemigos>
+            <plataformas>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1000</coordenadaX>
+                    <coordenadaY>500</coordenadaY>
+                    <cantidadBloques>4</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>500</coordenadaX>
+                    <coordenadaY>500</coordenadaY>
+                    <cantidadBloques>7</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>800</coordenadaX>
+                    <coordenadaY>400</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+
+            </plataformas>
+        </nivel>
+
 
     </niveles>
 </configuracion>

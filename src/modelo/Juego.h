@@ -19,6 +19,8 @@ class Juego{
 
 		void avanzarNivel();
 		void actualizarPosicionesEnemigos();
+		void sumarPuntosAJugadores(int puntos);
+		bool quedaSoloUnNivel();
 
 		string obtenerDireccionFondoNivelActual();
 		list<Enemigo*> obtenerEnemigos();

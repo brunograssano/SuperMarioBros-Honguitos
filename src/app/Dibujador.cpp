@@ -2,6 +2,8 @@
 #include "App.h"
 
 
+const int ALTURA_SDL_PISO_MARIO = 458, ALTURA_SDL_PISO_ENEMIGOS = 472, ALTURA_SDL_PISO_BLOQUES = 800, ALTURA_SDL_PISO_MONEDAS = 600;
+
 Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario){
 	this->cargadorTexturas = cargadorTexturas;
 	this->renderizador = renderizador;
@@ -9,6 +11,24 @@ Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizad
 	this->spriteMario = spriteMario;
 }
 
+
+void Dibujador::dibujarPantallaGanadores(){
+	SDL_RenderClear( renderizador );
+	stringstream textoFelicitaciones;
+	textoFelicitaciones.str("");
+	textoFelicitaciones << "GANARON EL JUEGO!";
+	SDL_Rect cuadradoFin = { 200, 300, 330, 0 };
+	SDL_Rect* clip = NULL;
+	double angle = 0.0;
+	SDL_Point* center = NULL;
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_SetRenderDrawColor( renderizador, 220, 220, 220, 0 );
+	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoFelicitaciones.str(), renderizador);
+	SDL_RenderCopyEx( renderizador, texto, clip, &cuadradoFin, angle, center, flip );
+	SDL_DestroyTexture(texto);
+
+	SDL_RenderPresent( renderizador );
+}
 
 void Dibujador::dibujarGameOver(){
 	SDL_RenderClear( renderizador );
@@ -59,7 +79,7 @@ void Dibujador::dibujarEnemigos(SDL_Rect* rectanguloCamara){
 		Sprite* spriteEnemigo = enemigo->obtenerSprite();
 		SDL_Rect recorteTextura = spriteEnemigo->obtenerRectanguloActual();
 
-		SDL_Rect rectanguloEnemigo = {enemigo->obtenerPosicionX()-rectanguloCamara->x, 472 , 32, 64};
+		SDL_Rect rectanguloEnemigo = {enemigo->obtenerPosicionX()-rectanguloCamara->x, ALTURA_SDL_PISO_ENEMIGOS , 32, 64};
 
 	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(spriteEnemigo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
@@ -72,7 +92,7 @@ void Dibujador::dibujarPlataformas(SDL_Rect* rectanguloCamara){
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 		for (auto const& bloque : bloques) {
 
-			SDL_Rect rectanguloBloque = {bloque->obtenerPosicionX() - rectanguloCamara->x,bloque->obtenerPosicionY(), 40, 40};
+			SDL_Rect rectanguloBloque = {bloque->obtenerPosicionX() - rectanguloCamara->x,ALTURA_SDL_PISO_BLOQUES - bloque->obtenerPosicionY(), 40, 40};
 			Sprite* spriteBloque = bloque->obtenerSprite();
 			SDL_Rect recorteBloque = spriteBloque->obtenerRectanguloActual();
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(spriteBloque, renderizador), &recorteBloque, &rectanguloBloque);
@@ -83,7 +103,7 @@ void Dibujador::dibujarPlataformas(SDL_Rect* rectanguloCamara){
 void Dibujador::dibujarMonedas(SDL_Rect* rectanguloCamara){
 	list<Moneda*> monedas = Juego::getInstance()->obtenerMonedas();
 	for (auto const& moneda : monedas) {
-		SDL_Rect rectanguloMoneda = {moneda->obtenerPosicionX() - rectanguloCamara->x,moneda->obtenerPosicionY(), 40, 40};
+		SDL_Rect rectanguloMoneda = {moneda->obtenerPosicionX() - rectanguloCamara->x,ALTURA_SDL_PISO_MONEDAS - moneda->obtenerPosicionY(), 40, 40};
 		Sprite* spriteMoneda = moneda->obtenerSprite();
 		spriteMoneda->actualizarSprite();
 		SDL_Rect recorteMoneda = spriteMoneda->obtenerRectanguloActual();
@@ -94,7 +114,7 @@ void Dibujador::dibujarMonedas(SDL_Rect* rectanguloCamara){
 
 void Dibujador::dibujarMario(SDL_Rect* rectanguloCamara){
 	Mario* mario = Juego::getInstance()->obtenerMario();
-	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,458 - mario->obtenerPosicionY(), 40, 80};
+	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,ALTURA_SDL_PISO_MARIO - mario->obtenerPosicionY(), 40, 80};
 	int recorteX = spriteMario->obtenerPosicionXRectangulo();
 	SDL_Rect recorteMario = {recorteX, 0, 16, 32};
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
@@ -102,7 +122,7 @@ void Dibujador::dibujarMario(SDL_Rect* rectanguloCamara){
 
 void Dibujador::dibujarTexto(){
 	textoDeTiempo.str( "" );
-	int tiempo = App::getInstance()->obtenerTiempoFaltante();//((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() - tiempoDeInicio)/1000; //Getticks devuelve en milisegundos
+	int tiempo = App::getInstance()->obtenerTiempoFaltante();
 	textoDeTiempo << "Tiempo restante " << tiempo;
 
 	textoDeNivel.str("");

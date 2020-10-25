@@ -50,11 +50,18 @@ void App::actualizar(){
 
 void App::revisarSiTerminoNivel(Mario* jugador){
 
-	if(jugador->obtenerPosicionX()>=ANCHO_FONDO-500){ //PONER EL FIN DEL NIVEL EN EL XML?
+	if(jugador->obtenerPosicionX()>=ANCHO_FONDO-500 && juego->quedaSoloUnNivel()){
+		juego->sumarPuntosAJugadores(tiempoFaltante);
+		ganaron = true;
+		Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
+	}
+	else if(jugador->obtenerPosicionX()>=ANCHO_FONDO-500){ //PONER EL FIN DEL NIVEL EN EL XML? si
 		rectanguloCamara.x= 0;
 		rectanguloCamara.y = 0;
 		juego->avanzarNivel();
+		juego->sumarPuntosAJugadores(tiempoFaltante);
 		tiempoDeInicio = SDL_GetTicks();
+		Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
 	}
 
 
@@ -88,7 +95,11 @@ void App::moverCamara(Mario* jugador){
 void App::dibujar(){
 	tiempoFaltante = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() + tiempoDeInicio)/1000;
 	//tiempoFaltante = ((20*1000) - SDL_GetTicks() + tiempoDeInicio)/1000; // PARA PROBAR LA PANTALLA DE GAME OVER
-	if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO){
+	if(ganaron){
+		dibujador->dibujarPantallaGanadores();
+		terminoElJuego = true;
+	}
+	else if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO){
 		dibujador->dibujarGameOver();
 		terminoElJuego = true;
 	}else if(!terminoElJuego){
@@ -113,6 +124,9 @@ void App::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 }
 
 App::~App(){
+
+	Log::getInstance()->mostrarMensajeDeInfo("Se cierra la aplicacion");
+
 	SDL_DestroyRenderer( renderizador );
 	SDL_DestroyWindow( ventanaAplicacion );
 

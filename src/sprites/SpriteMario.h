@@ -11,11 +11,10 @@
 class SpriteMario : public Sprite{
 
 	public:
-		//Initializes variables
+
 		SpriteMario();
 
 		SpriteMario(string direccionImagen);
-		//Deallocates memory
 
 		int obtenerPosicionXRectangulo();
 		SDL_Rect obtenerRectanguloActual()override;

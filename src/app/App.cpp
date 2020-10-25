@@ -3,6 +3,8 @@
 
 App* App::aplicacion = nullptr;
 const int SE_TERMINO_EL_TIEMPO = 0;
+const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
+
 
 App* App::getInstance(ArchivoLeido* archivoLeido){
 	if(aplicacion==nullptr){
@@ -15,6 +17,46 @@ App* App::getInstance(){
 		return aplicacion;
 }
 
+void App::inicializarSDL(Log* log){
+	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
+		log->huboUnErrorSDL("Error inicializando SDL", SDL_GetError());
+	}
+
+	ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
+	if( ventanaAplicacion == NULL ){
+		log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
+	}
+
+	if( !( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) ){
+		log->huboUnErrorSDL("No se pudo inicializar IMG Init", IMG_GetError());
+	}
+
+	renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+	if( renderizador == NULL ){
+		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
+	}
+
+	string direccion = "resources/IconoHongo.png";
+	SDL_Surface* icono = IMG_Load(direccion.c_str());
+	if(icono == NULL){
+		log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
+	}
+	else{
+		SDL_SetWindowIcon(ventanaAplicacion, icono);
+		SDL_FreeSurface(icono);
+	}
+}
+
+void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana){
+	if(posibleAnchoVentana<ANCHO_VENTANA_MINIMO){
+		posibleAnchoVentana = ANCHO_VENTANA_MINIMO;
+	}
+	if(posibleAltoVentana<ALTO_VENTANA_MINIMO){
+		posibleAltoVentana = ALTO_VENTANA_MINIMO;
+	}
+	ancho_pantalla = posibleAnchoVentana;
+	alto_pantalla = posibleAltoVentana;
+}
 
 void App::actualizar(SDL_Event evento){
 	Mario* jugador = Juego::getInstance()->obtenerMario();

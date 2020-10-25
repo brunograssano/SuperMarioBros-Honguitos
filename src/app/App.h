@@ -15,9 +15,6 @@ using namespace std;
 #include "../log/Log.h"
 #include "../lector/ArchivoLeido.hpp"
 
-const int ANCHO_PANTALLA = 800;
-const int ALTO_PANTALLA = 540;
-
 const int ANCHO_FONDO = 8177;
 
 class App{
@@ -26,49 +23,22 @@ class App{
 		App(ArchivoLeido* archivoLeido){
 
 			Log* log = Log::getInstance(archivoLeido->tipoLog);
-			ancho_pantalla = archivoLeido->anchoVentana;
-			alto_pantalla = archivoLeido->altoVentana;
-
-			if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-				log->huboUnErrorSDL("Error inicializando SDL", SDL_GetError());
-			}
-
-			ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
-			if( ventanaAplicacion == NULL ){
-				log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
-			}
-
-			if( !( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) ){
-				log->huboUnErrorSDL("No se pudo inicializar IMG Init", IMG_GetError());
-			}
-
-			renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			if( renderizador == NULL ){
-				log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
-			}
+			determinarDimensionesPantalla(archivoLeido->anchoVentana,archivoLeido->altoVentana);
+			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance(archivoLeido->niveles);
 			spriteMario = new SpriteMario("../resources/mario_grande.png");
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
-
-			string direccion = "resources/IconoHongo.png";
-			SDL_Surface* icono = IMG_Load(direccion.c_str());
-			if(icono == NULL){
-				log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
-			}
-			else{
-				SDL_SetWindowIcon(ventanaAplicacion, icono);
-				SDL_FreeSurface(icono);
-			}
-			log->mostrarMensajeDeInfo("Inicio del juego");
 			posicionFinalNivel = 5000;
 			tiempoFaltante = 0;
 			tiempoDeInicio = 0;
 			terminoElJuego = false;
 			ganaron = false;
-			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario);
+			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario,ancho_pantalla,alto_pantalla);
+
+			log->mostrarMensajeDeInfo("Inicio del juego");
 			delete archivoLeido;
 		}
 
@@ -85,12 +55,14 @@ class App{
 		int posicionFinalNivel;
 
 		void revisarSiTerminoNivel(Mario* jugador);
+		void inicializarSDL(Log* log);
+		void determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana);
 
 		bool terminoElJuego;
 		bool ganaron;
 
-		int ancho_pantalla = 800;
-		int alto_pantalla = 540;
+		int ancho_pantalla;
+		int alto_pantalla;
 
 	public:
 		App(App &other) = delete;

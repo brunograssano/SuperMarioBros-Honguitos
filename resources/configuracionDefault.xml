@@ -34,14 +34,14 @@
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <coordenadaX>100</coordenadaX>
-                    <coordenadaY>200</coordenadaY>
+                    <coordenadaY>150</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>400</coordenadaX>
-                    <coordenadaY>400</coordenadaY>
+                    <coordenadaY>300</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
 
@@ -85,14 +85,14 @@
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <coordenadaX>500</coordenadaX>
-                    <coordenadaY>500</coordenadaY>
+                    <coordenadaY>150</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>800</coordenadaX>
-                    <coordenadaY>400</coordenadaY>
+                    <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
@@ -142,14 +142,14 @@
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <coordenadaX>500</coordenadaX>
-                    <coordenadaY>500</coordenadaY>
+                    <coordenadaY>300</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>800</coordenadaX>
-                    <coordenadaY>400</coordenadaY>
+                    <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 

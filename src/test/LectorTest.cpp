@@ -121,7 +121,7 @@ void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert
 
 
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
-	testSuite->assert(mensajeError,"Hay un error en la linea 56","El mensaje de error es el correcto");
+	testSuite->assert(mensajeError,"Hay un error en la linea 57","El mensaje de error es el correcto");
 
 	delete lector;
 	delete archivoLeido;

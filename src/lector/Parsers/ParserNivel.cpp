@@ -3,12 +3,14 @@
 #define VALOR_POR_DEFECTO_MUNDO 1
 #define VALOR_POR_DEFECTO_TIEMPO 300
 #define VALOR_POR_DEFECTO_MONEDA 30
+#define VALOR_POR_DEFECTO_PUNTO_FIN 2000
 
 void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	int mundo;
 	string direccionFondo = nivel.child_value("direccionFondo");
 	int tiempoNivel;
 	int cantidadMonedas;
+	int puntoBanderaFin;
 
 	try{
 		mundo = stoi(nivel.child_value("mundo"));
@@ -34,8 +36,16 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 		cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
 	}
 
+	try{
+		puntoBanderaFin = stoi(nivel.child_value("puntoBanderaFin"));
+	}catch(const std::invalid_argument& error){
+		archivoLeido->leidoCorrectamente = false;
+		archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin enviado no tiene valor valido,se carga el valor por defecto");
+		puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
+	}
 
-	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas);
+
+	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin);
 	archivoLeido->niveles.push_back(unNivel);
 	for (pugi::xml_node enemigos: nivel.children("enemigos"))
 	{

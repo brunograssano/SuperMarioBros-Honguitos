@@ -1,7 +1,6 @@
 #include "Lector.hpp"
 
-#include <libxml++/libxml++.h>
-#include <libxml++/parsers/domparser.h>
+#include <vector>
 #include <string>
 #include <iostream>
 #include "ArchivoLeido.hpp"
@@ -11,7 +10,7 @@
 #include "../modelo/Nivel.h"
 
 using namespace std;
-using namespace xmlpp;
+
 
 typedef std::vector<ptrdiff_t> offset_data_t;
 
@@ -56,7 +55,7 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 
 	if (!result  && result.status == pugi::status_file_not_found){
 		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El archivo pedido no existe");
+		archivoLeido->mensajeError.push_back("El archivo pedido en la direccion"+ nombreArchivo +" no existe");
 		return archivoLeido;
 	}
 

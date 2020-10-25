@@ -10,11 +10,12 @@ class Nivel{
 
 
 	public:
-		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas){
+		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
 			this->mundo = mundo;
 			this->direccionFondo = direccionFondo;
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
+			this->puntoBanderaFin = puntoBanderaFin;
 			for(int i=0; i<cantidadMonedas; i++){
 				monedas.push_back(new Moneda(60*i, 300));
 			}
@@ -64,6 +65,7 @@ class Nivel{
 		string direccionFondo;
 		int tiempo;
 		int cantidadMonedas;
+		int puntoBanderaFin;
 };
 
 

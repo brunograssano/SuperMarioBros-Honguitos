@@ -12,6 +12,8 @@ void LectorTest::ejecutar(Assert* testSuite){
 	test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMensajesDeError(testSuite);
 	test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(testSuite);
 	test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(testSuite);
+	test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanzaUnError(testSuite);
+	test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanzaUnError(testSuite);
 	cout << "========== Finalizando con las pruebas del Lector ==========" << endl;
 
 }
@@ -111,15 +113,68 @@ void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert
 
 	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
 
-	bool hayMensajesError = !archivoLeido->mensajeError.empty();
+	string mensajeError;
+
+	for(string error: archivoLeido->mensajeError){
+		mensajeError = error;
+	}
 
 
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
-	testSuite->assert(hayMensajesError,"Hay mensajes de error");
+	testSuite->assert(mensajeError,"Hay un error en la linea 57","El mensaje de error es el correcto");
 
 	delete lector;
 	delete archivoLeido;
 }
+void LectorTest::test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanzaUnError(Assert* testSuite){
 
+	Lector* lector = new Lector();
+
+	string archivoALeer = "resources/archivoAnchoMalEnviado.xml";
+
+	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+
+	int anchoEsperado = archivoLeido->anchoVentana;
+
+	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+
+	string mensajeError;
+
+	for(string error: archivoLeido->mensajeError){
+		mensajeError = error;
+	}
+
+	testSuite->assert(anchoEsperado,800,"El ancho es de 800 px");
+	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
+	testSuite->assert(mensajeError,"El valor de ancho enviado no tiene valor valido,se carga el valor por defecto","El mensaje de error es el correcto");
+
+	delete lector;
+	delete archivoLeido;
+}
+void LectorTest::test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanzaUnError(Assert* testSuite){
+
+	Lector* lector = new Lector();
+
+	string archivoALeer = "resources/archivoAltoMalEnviado.xml";
+
+	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+
+	int altoEsperado = archivoLeido->altoVentana;
+
+	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+
+	string mensajeError;
+
+	for(string error: archivoLeido->mensajeError){
+		mensajeError = error;
+	}
+
+	testSuite->assert(altoEsperado,600,"El alto es de 600 px");
+	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
+	testSuite->assert(mensajeError,"El valor de alto enviado no tiene valor valido,se carga el valor por defecto","El mensaje de error es el correcto");
+
+	delete lector;
+	delete archivoLeido;
+}
 
 

@@ -1,11 +1,11 @@
-configuracion>
+<configuracion>
     <log>       <!-- Pueden no indicarlo esto, ya que pueden mandarlo por linea de comando al iniciar la app (Si no mandan eso considerar ERROR)-->
         <level>ERROR</level> <!-- DEBUG o INFO -->
     </log>
 
     <ventana>
         <ancho>800</ancho>
-        <alto>600</alto>
+        <alto>hola</alto>
     </ventana>
 
     <niveles>

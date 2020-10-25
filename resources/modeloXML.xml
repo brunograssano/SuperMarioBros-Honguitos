@@ -14,6 +14,7 @@
             <direccionFondo>direccion</direccionFondo>
             <cantidadMonedas>30</cantidadMonedas>   <!--No les damos la opcion de cambiar la textura, aparecen de forma random en el eje X -->
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>2000</puntoBanderaFin>          <!--En px-->
             <enemigos>
 
                 <enemigo>

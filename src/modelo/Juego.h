@@ -40,6 +40,8 @@ class Juego{
 			niveles = nivelesLector;
 
 			for (auto const& nivel : niveles) {
+				nivel->inicializarPosicionesOcupadasPorBloques();
+				nivel->inicializarPosicionMonedas();
 			    nivel->inicializarPosicionEnemigo();
 			}
 		}

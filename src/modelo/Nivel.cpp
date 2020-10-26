@@ -29,10 +29,72 @@ string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
+bool Nivel::esUnaPosicionXValidaEnemigo(int numeroPosicion){
+	return !posicionesOcupadasXEnemigos[numeroPosicion];
+}
+
+bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
+	return !posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)];
+}
+
+void Nivel::inicializarPosicionesOcupadasPorBloques(){
+
+	list<Plataforma*> plataformas = this->obtenerPlataformas();
+	for(auto const& plataforma : plataformas){
+
+		list<Bloque*> bloques = plataforma->obtenerBloques();
+
+		for(auto const& bloque : bloques){
+			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/40, bloque->obtenerPosicionY()/40)] = true;
+		}
+	}
+}
+
+void Nivel::inicializarPosicionMonedas(){
+
+	srand(time(NULL));
+
+	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
+
+	int limiteXSuperior = longitudNivel;
+	int limiteYInferior = altoNivel*1/3;
+	int anchoY = altoNivel*2/3;
+
+
+	for(int i=0; i<cantidadMonedas; i++){
+
+		do{
+			numeroPosicionX = rand() % (limiteXSuperior/40);
+			numeroPosicionY = rand() % (anchoY/40) + (limiteYInferior/40);
+		}while(!this->esUnaPosicionValidaMoneda(numeroPosicionX, numeroPosicionY));
+
+		this->posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)] = true;
+
+		coordenadaX = numeroPosicionX*40;
+		coordenadaY = numeroPosicionY*40;
+
+		this->agregarMoneda(new Moneda(coordenadaX, coordenadaY));
+
+	}
+
+}
+
+
 void Nivel::inicializarPosicionEnemigo(){
-	int coordenadaX = 20;
+
+	srand(time(NULL));
+
+	int numeroPosicion = 0;
+	int coordenadaX = 0;
+
 	for (auto const& enemigo : enemigos) {
-	    enemigo->agregarPosicion(coordenadaX,50);
-	    coordenadaX += 200;
+
+		do{
+			numeroPosicion = rand()%(longitudNivel/40);
+		}while(!esUnaPosicionXValidaEnemigo(numeroPosicion));
+
+		posicionesOcupadasXEnemigos[numeroPosicion] = true;
+		coordenadaX = numeroPosicion*40;
+		enemigo->agregarPosicion(coordenadaX,50);
 	}
 }

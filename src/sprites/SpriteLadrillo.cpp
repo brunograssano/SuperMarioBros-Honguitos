@@ -6,7 +6,7 @@ SpriteLadrillo::SpriteLadrillo(){
 	this->rectanguloLadrillo.x = 0;
 	this->rectanguloLadrillo.y = 0;
 	this->rectanguloLadrillo.w = 16;
-	this->rectanguloLadrillo.h = 32;
+	this->rectanguloLadrillo.h = 16;
 
 }
 

@@ -36,7 +36,7 @@ class Bloque{
 class Sorpresa : public Bloque{
     public:
 		Sorpresa(int coordenadaX, int coordenadaY){
-			this->posicion = new PosicionFija(coordenadaX, coordenadaY);
+			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40); //ES HORRIBLE NO ME MATEN AHRE
 			this->spriteBloque = new SpriteSorpresa();
 		}
 
@@ -50,7 +50,7 @@ class Sorpresa : public Bloque{
 class Ladrillo : public Bloque {
 	public:
 		Ladrillo(int coordenadaX, int coordenadaY){
-			this->posicion = new PosicionFija(coordenadaX, coordenadaY);
+			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40);
 			this->spriteBloque = new SpriteLadrillo();
 		}
 

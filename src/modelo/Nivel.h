@@ -4,7 +4,12 @@
 #include "Bloques/Bloque.h"
 #include "Enemigos/Enemigo.h"
 #include "Moneda.h"
+#include <map>
 #include <string>
+#include<tuple>
+#include <cstdlib>
+using namespace std;
+
 
 class Nivel{
 
@@ -16,9 +21,10 @@ class Nivel{
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
 			this->puntoBanderaFin = puntoBanderaFin;
-			for(int i=0; i<cantidadMonedas; i++){
-				monedas.push_back(new Moneda(60*i, 300));
-			}
+
+			this->longitudNivel = 8177; //Esto lo tiene que recibir despues
+			this->altoNivel = 600;
+
 		}
 
 		void agregarPlataforma(Plataforma* unaPlataforma){
@@ -43,7 +49,12 @@ class Nivel{
 
 
 		void inicializarPosicionEnemigo();
+		void inicializarPosicionMonedas();
+
 		void actualizarPosicionesEnemigos();
+
+		void inicializarPosicionesOcupadasPorBloques();
+
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
@@ -58,9 +69,21 @@ class Nivel{
 
 	private:
 
+		bool esUnaPosicionXValidaEnemigo(int coordenadaX);
+
+		bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
+
+		map<int, bool> posicionesOcupadasXEnemigos;
+
+		map<tuple<int, int>, bool> posicionesOcupadas;
+
 		list<Plataforma*> plataformas;
 		list<Enemigo*> enemigos;
 		list<Moneda*> monedas;
+
+		int longitudNivel;
+		int altoNivel;
+
 		int mundo;
 		string direccionFondo;
 		int tiempo;

@@ -26,7 +26,7 @@ class Koopa : public Enemigo{
 		}
 
 	private:
-		float velocidadX = 0.15;
+		float velocidadX = -0.15;
 
 
 };

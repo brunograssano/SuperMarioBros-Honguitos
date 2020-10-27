@@ -56,7 +56,7 @@ void Nivel::inicializarPosicionMonedas(){
 
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
 
-	int limiteXSuperior = longitudNivel;
+	int limiteXSuperior = puntoBanderaFin;
 	int limiteYInferior = altoNivel*1/4;
 	int anchoY = altoNivel*3/4;
 
@@ -90,11 +90,12 @@ void Nivel::inicializarPosicionEnemigo(){
 	for (auto const& enemigo : enemigos) {
 
 		do{
-			numeroPosicion = rand()%(longitudNivel/40);
+			numeroPosicion = rand()%(puntoBanderaFin/40);
 		}while(!esUnaPosicionXValidaEnemigo(numeroPosicion));
 
 		posicionesOcupadasXEnemigos[numeroPosicion] = true;
 		coordenadaX = numeroPosicion*40;
 		enemigo->agregarPosicion(coordenadaX,50);
 	}
+
 }

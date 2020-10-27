@@ -5,7 +5,7 @@
 const int ALTURA_SDL_PISO_MARIO = 458, ALTURA_SDL_PISO_ENEMIGOS = 472, ALTURA_SDL_PISO_BLOQUES = 800, ALTURA_SDL_PISO_MONEDAS = 600;
 const float PROPORCION_PISO_EN_IMAGEN = 0.1;
 const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
-const int ALTO_ENEMIGOS = 64, ANCHO_ENEMIGOS = 32;
+const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
 const int LARGO_BLOQUE = 40;
 
 Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario, int ancho_pantalla,int alto_pantalla){

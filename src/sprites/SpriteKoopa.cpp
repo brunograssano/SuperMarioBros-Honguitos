@@ -10,7 +10,7 @@ SpriteKoopa::SpriteKoopa(string direccionImagen){
 		estadosPosibles[i].x = corrimientoEnImagen;
 		estadosPosibles[i].y = 0;
 		estadosPosibles[i].w = 16;
-		estadosPosibles[i].h = 32;
+		estadosPosibles[i].h = 24;
 		corrimientoEnImagen+= 16;
 	}
 }

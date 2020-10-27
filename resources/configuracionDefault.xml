@@ -33,31 +33,207 @@
             <plataformas>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <coordenadaX>100</coordenadaX>
-                    <coordenadaY>150</coordenadaY>
-                    <cantidadBloques>5</cantidadBloques>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>200</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
-                    <tipo>Sorpresa</tipo>
+                    <tipo>Ladrillo</tipo>
                     <coordenadaX>400</coordenadaX>
-                    <coordenadaY>300</coordenadaY>
-                    <cantidadBloques>5</cantidadBloques>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>       
+                
+                 <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>440</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>  
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>480</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>  
+                
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>480</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma> 
+                
+                 <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>520</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>  
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>560</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>  
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1400</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>  
+                                
+                 <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>1440</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma> 
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1480</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma> 
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1520</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>6</cantidadBloques>
+                </plataforma> 
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1520</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>6</cantidadBloques>
+                </plataforma> 
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1840</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>3</cantidadBloques>
+                </plataforma> 
+                
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>1960</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma> 
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>2160</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma> 
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>2600</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma> 
+                
+                 <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>4000</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                 <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>4160</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>4160</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                 <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>4320</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <coordenadaX>1500</coordenadaX>
-                    <coordenadaY>150</coordenadaY>
-                    <cantidadBloques>10</cantidadBloques>
+                    <coordenadaX>4800</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>4880</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>3</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>5120</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
                 <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>2000</coordenadaX>
-                    <coordenadaY>300</coordenadaY>
-                    <cantidadBloques>15</cantidadBloques>
+                    <coordenadaX>5160</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>5160</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>5240</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>5960</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>6000</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>6080</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>6</cantidadBloques>
                 </plataforma>
 
             </plataformas>

@@ -39,13 +39,14 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
+	int tamanioBloque = 40;
 	list<Plataforma*> plataformas = this->obtenerPlataformas();
 	for(auto const& plataforma : plataformas){
 
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 
 		for(auto const& bloque : bloques){
-			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/40, bloque->obtenerPosicionY()/40)] = true;
+			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/tamanioBloque, bloque->obtenerPosicionY()/tamanioBloque)] = true;
 		}
 	}
 }
@@ -55,23 +56,24 @@ void Nivel::inicializarPosicionMonedas(){
 	srand(time(NULL));
 
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
+	int tamanioMoneda = 40;
 
-	int limiteXSuperior = longitudNivel;
-	int limiteYInferior = altoNivel*1/3;
-	int anchoY = altoNivel*2/3;
+	int limiteXSuperior = puntoBanderaFin;
+	int limiteYInferior = altoNivel*1/4;
+	int anchoY = altoNivel*3/4;
 
 
 	for(int i=0; i<cantidadMonedas; i++){
 
 		do{
-			numeroPosicionX = rand() % (limiteXSuperior/40);
-			numeroPosicionY = rand() % (anchoY/40) + (limiteYInferior/40);
+			numeroPosicionX = rand() % (limiteXSuperior/tamanioMoneda);
+			numeroPosicionY = rand() % (anchoY/tamanioMoneda) + (limiteYInferior/tamanioMoneda);
 		}while(!this->esUnaPosicionValidaMoneda(numeroPosicionX, numeroPosicionY));
 
 		this->posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)] = true;
 
-		coordenadaX = numeroPosicionX*40;
-		coordenadaY = numeroPosicionY*40;
+		coordenadaX = numeroPosicionX*tamanioMoneda;
+		coordenadaY = numeroPosicionY*tamanioMoneda;
 
 		this->agregarMoneda(new Moneda(coordenadaX, coordenadaY));
 
@@ -86,15 +88,18 @@ void Nivel::inicializarPosicionEnemigo(){
 
 	int numeroPosicion = 0;
 	int coordenadaX = 0;
+	int coordenadaY = 50;
+	int tamanioEnemigo = 40;
 
 	for (auto const& enemigo : enemigos) {
 
 		do{
-			numeroPosicion = rand()%(longitudNivel/40);
+			numeroPosicion = rand()%(puntoBanderaFin/tamanioEnemigo);
 		}while(!esUnaPosicionXValidaEnemigo(numeroPosicion));
 
 		posicionesOcupadasXEnemigos[numeroPosicion] = true;
-		coordenadaX = numeroPosicion*40;
-		enemigo->agregarPosicion(coordenadaX,50);
+		coordenadaX = numeroPosicion*tamanioEnemigo;
+		enemigo->agregarPosicion(coordenadaX,coordenadaY);
 	}
+
 }

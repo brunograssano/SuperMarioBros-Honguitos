@@ -22,7 +22,6 @@ class Nivel{
 			this->cantidadMonedas = cantidadMonedas;
 			this->puntoBanderaFin = puntoBanderaFin;
 
-			this->longitudNivel = 8177; //Esto lo tiene que recibir despues
 			this->altoNivel = 600;
 
 		}
@@ -81,7 +80,6 @@ class Nivel{
 		list<Enemigo*> enemigos;
 		list<Moneda*> monedas;
 
-		int longitudNivel;
 		int altoNivel;
 
 		int mundo;

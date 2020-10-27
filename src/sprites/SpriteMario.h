@@ -30,6 +30,8 @@ class SpriteMario : public Sprite{
 		SDL_Rect estadosPosibles[14];
 		int estadoActual;
 		int proximoEstado;
+		int contadorEvento;
+		int temporizadorMarioAgachado;
 
 		bool estaCorriendo(Mario* mario, bool btnDerecho);
 		bool estaSaltando(Mario* mario, bool btnDerecho);
@@ -40,6 +42,8 @@ class SpriteMario : public Sprite{
 		bool estaSaltando(Mario* mario);
 		bool estaAgachado(Mario* mario);
 		bool estaCambiandoDeDireccion(Mario* mario);
+
+		bool controlDeFlujoSprite();
 };
 
 #endif /* SRC_APP_SPRITEMARIO_H_ */

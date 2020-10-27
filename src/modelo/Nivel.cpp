@@ -57,8 +57,8 @@ void Nivel::inicializarPosicionMonedas(){
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
 
 	int limiteXSuperior = longitudNivel;
-	int limiteYInferior = altoNivel*1/3;
-	int anchoY = altoNivel*2/3;
+	int limiteYInferior = altoNivel*1/4;
+	int anchoY = altoNivel*3/4;
 
 
 	for(int i=0; i<cantidadMonedas; i++){

@@ -9,7 +9,7 @@
     </ventana>
 
     <niveles>
-        <nivel>
+    	<nivel>
             <mundo>1</mundo>
             <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>25</cantidadMonedas> 
@@ -238,8 +238,7 @@
 
             </plataformas>
         </nivel>
-
-		<nivel>
+        <nivel>        
             <mundo>2</mundo>
             <direccionFondo>resources/MapaNivel2Base.png</direccionFondo>
             <cantidadMonedas>20</cantidadMonedas>
@@ -268,23 +267,86 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <coordenadaX>100</coordenadaX>
+                    <coordenadaX>0</coordenadaX>
                     <coordenadaY>500</coordenadaY>
-                    <cantidadBloques>4</cantidadBloques>
+                    <cantidadBloques>80</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <coordenadaX>500</coordenadaX>
-                    <coordenadaY>150</coordenadaY>
-                    <cantidadBloques>7</cantidadBloques>
+                    <coordenadaY>40</coordenadaY>
+                    <cantidadBloques>16</cantidadBloques>
+                </plataforma>
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>540</coordenadaX>
+                    <coordenadaY>80</coordenadaY>
+                    <cantidadBloques>14</cantidadBloques>
+                </plataforma>
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>580</coordenadaX>
+                    <coordenadaY>120</coordenadaY>
+                    <cantidadBloques>12</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>800</coordenadaX>
+                    <coordenadaX>740</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
+                    <cantidadBloques>4</cantidadBloques>
+                </plataforma>
+
+		<plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>1500</coordenadaX>
+                    <coordenadaY>120</coordenadaY>
+                    <cantidadBloques>5</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>2500</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>2800</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
+                </plataforma>
+                
+                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>2840</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>6</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>2760</coordenadaX>
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>3080</coordenadaX>
+                    <coordenadaY>200</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>3080</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
             </plataformas>

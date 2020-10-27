@@ -36,8 +36,7 @@ void App::inicializarSDL(Log* log){
 		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
 	}
 
-	ReproductorMusica* reproductor = ReproductorMusica::getInstance();
-	reproductor->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3");
+	ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3");
 
 	string direccion = "resources/IconoHongo.png";
 	SDL_Surface* icono = IMG_Load(direccion.c_str());
@@ -183,4 +182,5 @@ App::~App(){
 	delete juego;
 	delete spriteMario;
 	delete Log::getInstance();
+	delete ReproductorMusica::getInstance();
 }

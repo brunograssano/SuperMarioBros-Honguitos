@@ -23,8 +23,7 @@ void MovimientoMario::saltar(){
 	this->movimientoY->saltar(this->terrenoActual);
 	delete terrenoActual;
 	terrenoActual = new Aire();
-	ReproductorMusica* reproductor = ReproductorMusica::getInstance();
-	reproductor->ReproducirSonidoSalto();
+	ReproductorMusica::getInstance()->ReproducirSonidoSalto();
 }
 
 

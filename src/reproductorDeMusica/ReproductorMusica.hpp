@@ -3,6 +3,8 @@
 
 using namespace std;
 #include <string>
+#include "../log/Log.h"
+#include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -12,13 +14,13 @@ class ReproductorMusica{
 		static ReproductorMusica* getInstance();
 		void ReproducirMusicaNivel(string nombreCancion);
 		void ReproducirSonidoSalto();
+		void ReproducirSonidoAgarrarMoneda();
+		~ReproductorMusica();
 	private:
 		static ReproductorMusica* reproductor;
-		ReproductorMusica(){
-			if((Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0)){
-				// PONER ERROR EN LOG
-			}
-		}
+		ReproductorMusica();
+		map<string,Mix_Chunk*> efectosDeSonido;
+		Mix_Music* cancionReproduciendose = nullptr;
 };
 
 

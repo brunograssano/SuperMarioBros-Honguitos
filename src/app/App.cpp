@@ -146,8 +146,11 @@ void App::dibujar(){
 		terminoElJuego = true;
 	}
 	else if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO || terminoElJuego){
+		if(!terminoElJuego){
+			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
+			terminoElJuego = true;
+		}
 		dibujador->dibujarGameOver();
-		terminoElJuego = true;
 	}else if(!terminoElJuego){
 		dibujador->dibujar(&rectanguloCamara);
 	}

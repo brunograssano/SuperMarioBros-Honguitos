@@ -19,48 +19,51 @@ Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizad
 
 
 void Dibujador::dibujarPantallaGanadores(){
+	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
+
 	stringstream textoFelicitaciones;
 	textoFelicitaciones.str("");
 	textoFelicitaciones << "GANARON EL JUEGO!";
-	SDL_Rect cuadradoFin = { 200, 300, 330, 0 };
-	SDL_Rect* clip = NULL;
-	double angle = 0.0;
-	SDL_Point* center = NULL;
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	SDL_SetRenderDrawColor( renderizador, 220, 220, 220, 0 );
-	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoFelicitaciones.str(), renderizador);
-	SDL_RenderCopyEx( renderizador, texto, clip, &cuadradoFin, angle, center, flip );
-	SDL_DestroyTexture(texto);
+	int ancho_textoFelicitaciones = 400;
+	int alto_textoFelicitaciones = 60;
+	SDL_Rect cuadradoFin = {ancho_pantalla/2 -ancho_textoFelicitaciones/2,
+							alto_pantalla/2 - alto_textoFelicitaciones/2,
+							ancho_textoFelicitaciones,
+							alto_textoFelicitaciones}; //Los coloco en el centro.
+
+	stringstream puntosJugador;
+	puntosJugador.str("");
+	puntosJugador << "Puntos obtenidos: " << juego->obtenerPuntuacionJugador();
+	int ancho_puntosJugador = 500;
+	int alto_puntosJugador = 40;
+	int desfase_puntosJugador = 80;
+	SDL_Rect cuadradoPuntos = {ancho_pantalla/2 -ancho_puntosJugador/2,
+								alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador,
+								ancho_puntosJugador,
+								alto_puntosJugador};
+
+	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str());
+	renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str());
 
 	SDL_RenderPresent( renderizador );
 }
 
 void Dibujador::dibujarGameOver(){
+	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
-
-	// TODO QUE ALGUIEN SE FIJE BIEN COMO PONER UN FONDO NEGRO Y EN BLANCO ARRIBA GAME OVER
-
-	//SDL_Rect fillRect = { 0, 0, 800, 600};
-	//SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 0xFF );
-	//SDL_RenderFillRect( renderizador, &fillRect );
-	//SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
-	//SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0x00, 0xFF );
-	//SDL_RenderDrawRect( renderizador, &fillRect );
-
 
 	stringstream textoGameOver;
 	textoGameOver.str("");
 	textoGameOver << "GAME OVER";
-	SDL_Rect cuadradoGameOver = { 200, 300, 330, 0 };
-	SDL_Rect* clip = NULL;
-	double angle = 0.0;
-	SDL_Point* center = NULL;
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	SDL_SetRenderDrawColor( renderizador, 220, 220, 220, 0 );
-	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoGameOver.str(), renderizador);
-	SDL_RenderCopyEx( renderizador, texto, clip, &cuadradoGameOver, angle, center, flip );
-	SDL_DestroyTexture(texto);
+	int ancho_textoGameOver = 450;
+	int alto_textoGameOver = 80;
+	SDL_Rect cuadradoGameOver = {ancho_pantalla/2 -ancho_textoGameOver/2,
+							alto_pantalla/2 - alto_textoGameOver/2,
+							ancho_textoGameOver,
+							alto_textoGameOver}; //Los coloco en el centro.
+
+	renderizarTexto(cuadradoGameOver, textoGameOver.str().c_str());
 
 	SDL_RenderPresent( renderizador );
 }
@@ -155,7 +158,7 @@ void Dibujador::dibujarTexto(){
 	renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
 }
 
-void Dibujador::renderizarTexto(SDL_Rect renderQuad,string textoAMostrar ){
+void Dibujador::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar ){
 	SDL_Rect* clip = NULL;
 	double angle = 0.0;
 	SDL_Point* center = NULL;

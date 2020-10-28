@@ -1,5 +1,4 @@
 #include "ArchivoLeido.hpp"
-#include <string>
 
 void ArchivoLeido::verificarLectura(){
 	/*if(this->altoVentana == 0){

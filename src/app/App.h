@@ -14,6 +14,7 @@ using namespace std;
 #include "../sprites/SpriteMario.h"
 #include "../log/Log.h"
 #include "../lector/ArchivoLeido.hpp"
+#include "../reproductorDeMusica/ReproductorMusica.hpp"
 
 const int ANCHO_FONDO = 8177;
 

@@ -15,6 +15,7 @@ Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizad
 	this->spriteMario = spriteMario;
 	this->alto_pantalla = alto_pantalla;
 	this->ancho_pantalla = ancho_pantalla;
+	this->dibujadorGameOver = new DibujadorGameOver(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
 
 
@@ -50,22 +51,7 @@ void Dibujador::dibujarPantallaGanadores(){
 }
 
 void Dibujador::dibujarGameOver(){
-	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
-	SDL_RenderClear( renderizador );
-
-	stringstream textoGameOver;
-	textoGameOver.str("");
-	textoGameOver << "GAME OVER";
-	int ancho_textoGameOver = 450;
-	int alto_textoGameOver = 80;
-	SDL_Rect cuadradoGameOver = {ancho_pantalla/2 -ancho_textoGameOver/2,
-							alto_pantalla/2 - alto_textoGameOver/2,
-							ancho_textoGameOver,
-							alto_textoGameOver}; //Los coloco en el centro.
-
-	renderizarTexto(cuadradoGameOver, textoGameOver.str().c_str());
-
-	SDL_RenderPresent( renderizador );
+	dibujadorGameOver->dibujar();
 }
 
 void Dibujador::dibujar(SDL_Rect* rectanguloCamara){
@@ -170,4 +156,9 @@ void Dibujador::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar ){
 
 	SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
 	SDL_DestroyTexture(texto);
+}
+
+
+Dibujador::~Dibujador(){
+	delete dibujadorGameOver;
 }

@@ -56,6 +56,20 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	else{
 		log->mostrarMensajeDeCarga("Sorpresa", "resources/BloqueSorpresa.png");
 	}
+	texturaCoffinMario = cargarTextura("resources/MarioCoffinDance.png", renderizador);
+	if(texturaCoffinMario == NULL){
+		log->huboUnError("No se pudo cargar la imagen de Coffin Mario en: resources/MarioCoffinDance.png");
+	}
+	else{
+		log->mostrarMensajeDeCarga("CoffinMario", "resources/MarioCoffinDance.png");
+	}
+	texturaFondoGameOver = cargarTextura("resources/fondoGameOver.png", renderizador);
+	if(texturaFondoGameOver == NULL){
+		log->huboUnError("No se pudo cargar el fondo del final del juego en: resources/fondoGameOver.png");
+	}
+	else{
+		log->mostrarMensajeDeCarga("FondoGameOver", "resources/fondoGameOver.png");
+	}
 
 	int tamanioFuente = 20;
 	string direccionFuente = "resources/fuenteSuperMarioBros.ttf";
@@ -66,6 +80,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	else{
 		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/fuenteSuperMarioBros.ttf");
 	}
+
 
 	log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes no configurables por el usuario");
 }
@@ -154,6 +169,7 @@ bool CargadorTexturas::tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque){
 }
 
 
+
 SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
 	if(!tengoTexturaBloqueCargadaEnMemoria(spriteBloque)){
 		SDL_Texture* texturaNueva = cargarTextura(spriteBloque->direccionImagen(),renderizador);
@@ -168,6 +184,15 @@ SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Ren
 SDL_Texture* CargadorTexturas::obtenerTexturaMario(){
 	return texturaMario;
 }
+
+SDL_Texture* CargadorTexturas::obtenerTexturaCoffinMario(){
+	return texturaCoffinMario;
+}
+
+SDL_Texture* CargadorTexturas::obtenerTexturaFondoGameOver(){
+	return texturaFondoGameOver;
+}
+
 
 SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
 	return texturaMoneda;
@@ -197,6 +222,7 @@ CargadorTexturas::~CargadorTexturas(){
 	SDL_DestroyTexture( texturaSorpresa );
 	SDL_DestroyTexture( texturaFondoActual );
 	SDL_DestroyTexture( texturaFuenteJuego );
+	SDL_DestroyTexture( texturaCoffinMario );
 
 	for (auto const& parClaveEnemigo : texturasEnemigos){
 		SDL_DestroyTexture( parClaveEnemigo.second );

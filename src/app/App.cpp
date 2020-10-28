@@ -87,7 +87,6 @@ void App::actualizar(){
 		cargadorTexturas->revisarSiCambioNivel(renderizador);
 		moverCamara(jugador);
 	}else{
-
 	}
 }
 
@@ -143,7 +142,7 @@ void App::dibujar(){
 		dibujador->dibujarPantallaGanadores();
 		terminoElJuego = true;
 	}
-	else if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO){
+	else if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO || terminoElJuego){
 		dibujador->dibujarGameOver();
 		terminoElJuego = true;
 	}else if(!terminoElJuego){

@@ -12,6 +12,7 @@ using namespace std;
 #include "../modelo/Juego.h"
 #include "CargadorTexturas.h"
 #include "../sprites/SpriteMario.h"
+#include "DibujadorGameOver.h"
 
 class Dibujador{
 
@@ -20,6 +21,7 @@ class Dibujador{
 		void dibujar(SDL_Rect* rectanguloCamara);
 		void dibujarGameOver();
 		void dibujarPantallaGanadores();
+		~Dibujador();
 
 	private:
 		Uint32 tiempoDeInicio = 0;
@@ -34,7 +36,7 @@ class Dibujador{
 		SDL_Rect rectanguloCamara;
 		Juego* juego;
 		SpriteMario* spriteMario;
-
+		DibujadorGameOver* dibujadorGameOver;
 
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
 		void dibujarPlataformas(SDL_Rect* rectanguloCamara);
@@ -42,7 +44,6 @@ class Dibujador{
 		void dibujarMario(SDL_Rect* rectanguloCamara);
 		void dibujarTexto();
 		void renderizarTexto(SDL_Rect renderQuad,string textoAMostrar );
-
 };
 
 

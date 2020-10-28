@@ -8,6 +8,7 @@
 class SpriteLadrillo : public Sprite{
 	public:
 
+		SpriteLadrillo(string direccionTextura);
 		SpriteLadrillo();
 		~SpriteLadrillo(){};
 

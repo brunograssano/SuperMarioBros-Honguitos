@@ -6,6 +6,7 @@
 
 void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = plataforma.child_value("tipo");
+	string direccionImagen = plataforma.child_value("direccionImagen");
 	int coordenadaX;
 	int coordenadaY;
 	int cantidadBloques;
@@ -57,11 +58,9 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 	for(int i=0;i<cantidadBloques;i++){
 		Bloque* unBloque;
 		if(tipo.compare("Ladrillo")==0){
-			unBloque = new Ladrillo(coordenadaBloque,coordenadaY);
+			unBloque = new Ladrillo(coordenadaBloque,coordenadaY, direccionImagen);
 		}else if(tipo.compare("Sorpresa")==0){
 			unBloque = new Sorpresa(coordenadaBloque,coordenadaY);
-		}else if(tipo.compare("LadrilloInvertido")==0){
-			unBloque = new LadrilloInvertido(coordenadaBloque, coordenadaY);
 		}
 		coordenadaBloque += 40;
 		unaPlataforma->agregarBloque(unBloque);

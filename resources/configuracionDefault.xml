@@ -41,6 +41,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -55,6 +56,7 @@
                 
                  <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>480</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -76,6 +78,7 @@
                 
                  <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>560</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -83,6 +86,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>1400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -97,6 +101,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>1480</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -104,6 +109,7 @@
                 
                  <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>1520</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
@@ -111,6 +117,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>1520</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
@@ -118,6 +125,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>1840</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>3</cantidadBloques>
@@ -132,6 +140,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>2160</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -139,6 +148,7 @@
                 
                  <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>2600</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
@@ -174,6 +184,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>4800</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -181,6 +192,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>4880</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>3</cantidadBloques>
@@ -188,6 +200,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>5120</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -202,6 +215,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>5160</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
@@ -209,6 +223,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>5240</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -217,6 +232,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>5960</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -231,6 +247,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>6080</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
@@ -262,28 +279,32 @@
             <plataformas>
 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>0</coordenadaX>
                     <coordenadaY>500</coordenadaY>
                     <cantidadBloques>80</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>500</coordenadaX>
                     <coordenadaY>40</coordenadaY>
                     <cantidadBloques>16</cantidadBloques>
                 </plataforma>
                 
                  <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>540</coordenadaX>
                     <coordenadaY>80</coordenadaY>
                     <cantidadBloques>14</cantidadBloques>
                 </plataforma>
                 
                  <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>580</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>12</cantidadBloques>
@@ -304,7 +325,8 @@
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>2500</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
@@ -318,21 +340,24 @@
                 </plataforma>
                 
                  <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>2840</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>2760</coordenadaX>
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>3080</coordenadaX>
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
@@ -382,21 +407,24 @@
             <plataformas>
 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>1500</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>4</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>600</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>LadrilloInvertido</tipo>
+                    <tipo>Ladrillo</tipo>
+                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>600</coordenadaX>
                     <coordenadaY>360</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>

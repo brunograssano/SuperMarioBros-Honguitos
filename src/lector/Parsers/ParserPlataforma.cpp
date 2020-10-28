@@ -60,6 +60,8 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 			unBloque = new Ladrillo(coordenadaBloque,coordenadaY);
 		}else if(tipo.compare("Sorpresa")==0){
 			unBloque = new Sorpresa(coordenadaBloque,coordenadaY);
+		}else if(tipo.compare("LadrilloInvertido")==0){
+			unBloque = new LadrilloInvertido(coordenadaBloque, coordenadaY);
 		}
 		coordenadaBloque += 40;
 		unaPlataforma->agregarBloque(unBloque);

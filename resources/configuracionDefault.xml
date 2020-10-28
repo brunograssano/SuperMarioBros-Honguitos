@@ -266,28 +266,28 @@
             <plataformas>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>0</coordenadaX>
                     <coordenadaY>500</coordenadaY>
                     <cantidadBloques>80</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>500</coordenadaX>
                     <coordenadaY>40</coordenadaY>
                     <cantidadBloques>16</cantidadBloques>
                 </plataforma>
                 
                  <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>540</coordenadaX>
                     <coordenadaY>80</coordenadaY>
                     <cantidadBloques>14</cantidadBloques>
                 </plataforma>
                 
                  <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>580</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>12</cantidadBloques>
@@ -308,7 +308,7 @@
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>2500</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
@@ -322,21 +322,21 @@
                 </plataforma>
                 
                  <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>2840</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>2760</coordenadaX>
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
                 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
+                    <tipo>LadrilloInvertido</tipo>
                     <coordenadaX>3080</coordenadaX>
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>

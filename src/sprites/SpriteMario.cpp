@@ -34,12 +34,8 @@ SpriteMario::SpriteMario(string direccionImagen){
 	}
 }
 
-int SpriteMario::obtenerPosicionXRectangulo(){
-	return estadosPosibles[estadoActual].x;
-}
-
 SDL_Rect SpriteMario::obtenerRectanguloActual(){
-	return estadosPosibles[0];//Da lo mismo cual devolvamos aca, cambia a partir de donde estaria la imagen
+	return estadosPosibles[estadoActual];
 }
 
 bool SpriteMario::controlDeFlujoSprite() {

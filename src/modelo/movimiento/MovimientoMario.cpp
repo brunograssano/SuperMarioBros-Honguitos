@@ -1,5 +1,4 @@
 #include "MovimientoMario.h"
-#include "../../reproductorDeMusica/ReproductorMusica.hpp"
 
 const float MAXIMA_VELOCIDAD_X = 8;
 const float ACELERACION_X = 0.8;
@@ -23,7 +22,6 @@ void MovimientoMario::saltar(){
 	this->movimientoY->saltar(this->terrenoActual);
 	delete terrenoActual;
 	terrenoActual = new Aire();
-	ReproductorMusica::getInstance()->ReproducirSonidoSalto();
 }
 
 

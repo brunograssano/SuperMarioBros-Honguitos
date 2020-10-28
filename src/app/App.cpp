@@ -61,21 +61,23 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 }
 
 void App::actualizar(SDL_Event evento){
-	Mario* jugador = Juego::getInstance()->obtenerMario();
-	switch(evento.key.keysym.sym){
-		case SDLK_UP:
-		case SDLK_SPACE:
-			spriteMario->actualizarSpriteMarioSaltar(jugador);
-		break;
-		case SDLK_DOWN:
-			spriteMario->actualizarSpriteMarioAgacharse(jugador);
-		break;
-		case SDLK_LEFT:
-			spriteMario->actualizarSpriteMarioIzquierda(jugador);
-		break;
-		case SDLK_RIGHT:
-			spriteMario->actualizarSpriteMarioDerecha(jugador);
-		break;
+	if(!terminoElJuego){
+		Mario* jugador = Juego::getInstance()->obtenerMario();
+		switch(evento.key.keysym.sym){
+			case SDLK_UP:
+			case SDLK_SPACE:
+				spriteMario->actualizarSpriteMarioSaltar(jugador);
+			break;
+			case SDLK_DOWN:
+				spriteMario->actualizarSpriteMarioAgacharse(jugador);
+			break;
+			case SDLK_LEFT:
+				spriteMario->actualizarSpriteMarioIzquierda(jugador);
+			break;
+			case SDLK_RIGHT:
+				spriteMario->actualizarSpriteMarioDerecha(jugador);
+			break;
+		}
 	}
 }
 

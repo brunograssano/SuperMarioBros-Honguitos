@@ -1,0 +1,22 @@
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se reproduce la cancion de la direccion: resources/Musica/TemaNivel1.mp3
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo Mario desde la ruta resources/resources/mario_grande.png.png
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo Moneda desde la ruta resources/Monedas.png
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo Ladrillo desde la ruta resources/BloqueLadrillo.png
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo Sorpresa desde la ruta resources/BloqueSorpresa.png
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo CoffinMario desde la ruta resources/MarioCoffinDance.png
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo FondoGameOver desde la ruta resources/fondoGameOver.png
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Se cargo Fuente de texto del juego desde la ruta resources/fuenteSuperMarioBros.ttf
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Ha finalizado la carga de imagenes no configurables por el usuario
+ [INFO] Wed Oct 28 16:01:38 2020
+ - Inicio del juego
+ [INFO] Wed Oct 28 16:01:42 2020
+ - Se cierra la aplicacion

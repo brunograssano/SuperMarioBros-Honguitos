@@ -118,8 +118,7 @@ void Dibujador::dibujarMario(SDL_Rect* rectanguloCamara){
 	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,
 								alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario->obtenerPosicionY(),
 								ANCHO_MARIO, ALTO_MARIO};
-	int recorteX = spriteMario->obtenerPosicionXRectangulo();
-	SDL_Rect recorteMario = {recorteX, 0, 16, 32};
+	SDL_Rect recorteMario = spriteMario->obtenerRectanguloActual();
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
 }
 

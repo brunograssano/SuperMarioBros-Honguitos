@@ -12,44 +12,36 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 	int cantidadBloques;
 	Plataforma* unaPlataforma = new Plataforma();
 
+	string cantidadBloquesString = plataforma.child_value("cantidadBloques");
 	try{
-		if(stoi(plataforma.child_value("cantidadBloques")) >= 0){
-			cantidadBloques = stoi(plataforma.child_value("cantidadBloques"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("El valor de cantidad de bloques enviado no tiene valor valido,se carga el valor por defecto");
+		cantidadBloques = stoi(cantidadBloquesString);
+		if( cantidadBloques < 0){
+			archivoLeido->mensajeError.push_back("El valor de cantidad de bloques ("+ cantidadBloquesString +") enviado no tiene valor valido,se carga el valor por defecto");
 			cantidadBloques = VALOR_POR_DEFECTO_CANTIDAD_BLOQUES;
 		}
 	}catch(const std::invalid_argument& error){
-		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El valor de cantidad de bloques enviado no tiene valor valido,se carga el valor por defecto");
+		archivoLeido->mensajeError.push_back("El valor de cantidad de bloques enviado ("+ cantidadBloquesString +") no tiene valor valido,se carga el valor por defecto");
 		cantidadBloques = VALOR_POR_DEFECTO_CANTIDAD_BLOQUES;
 	}
 
 	try{
-		if(stoi(plataforma.child_value("coordenadaX")) >= 0){
-			coordenadaX = stoi(plataforma.child_value("coordenadaX"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
+		coordenadaX = stoi(plataforma.child_value("coordenadaX"));
+		if(coordenadaX < 0){
 			archivoLeido->mensajeError.push_back("El valor de coordenada X enviado no tiene valor valido,se carga el valor por defecto");
 			coordenadaX = VALOR_POR_DEFECTO_COORDENADAX;
 		}
 	}catch(const std::invalid_argument& error){
-		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de coordenada X enviado no tiene valor valido,se carga el valor por defecto");
 		coordenadaX = VALOR_POR_DEFECTO_COORDENADAX;
 	}
 
 	try{
-		if(stoi(plataforma.child_value("coordenadaY")) >= 0){
-			coordenadaY = stoi(plataforma.child_value("coordenadaY"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
+		coordenadaY = stoi(plataforma.child_value("coordenadaY"));
+		if(coordenadaY < 0){
 			archivoLeido->mensajeError.push_back("El valor de coordenada Y enviado no tiene valor valido,se carga el valor por defecto");
 			coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
 		}
 	}catch(const std::invalid_argument& error){
-		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de coordenada Y enviado no tiene valor valido,se carga el valor por defecto");
 		coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
 	}

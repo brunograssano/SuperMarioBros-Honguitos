@@ -14,6 +14,7 @@ using namespace std;
 #include "../sprites/SpriteMario.h"
 #include "../log/Log.h"
 #include "../lector/ArchivoLeido.hpp"
+#include "../reproductorDeMusica/ReproductorMusica.hpp"
 
 const int ANCHO_FONDO = 8177;
 
@@ -23,6 +24,7 @@ class App{
 		App(ArchivoLeido* archivoLeido){
 
 			Log* log = Log::getInstance(archivoLeido->tipoLog);
+			escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 			determinarDimensionesPantalla(archivoLeido->anchoVentana,archivoLeido->altoVentana);
 			inicializarSDL(log);
 

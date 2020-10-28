@@ -378,6 +378,7 @@
             <direccionFondo>resources/MapaNivel3Base.png</direccionFondo>
             <cantidadMonedas>10</cantidadMonedas>
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>3072</puntoBanderaFin>
             <enemigos>
 
                 <enemigo>
@@ -408,7 +409,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
+                    <direccionImagen>resources/BloqueLadrilloBlanco.png</direccionImagen>
                     <coordenadaX>1500</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>4</cantidadBloques>
@@ -416,7 +417,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
+                    <direccionImagen>resources/BloqueLadrilloBlanco.png</direccionImagen>
                     <coordenadaX>600</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
@@ -424,7 +425,7 @@
                 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <direccionImagen>resources/BloqueLadrilloInvertido.png</direccionImagen>
+                    <direccionImagen>resources/BloqueLadrilloBlanco.png</direccionImagen>
                     <coordenadaX>600</coordenadaX>
                     <coordenadaY>360</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>

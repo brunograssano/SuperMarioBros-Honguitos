@@ -13,12 +13,10 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	int puntoBanderaFin;
 
 	try{
-		mundo = stoi(nivel.child_value("mundo"));
-		if(stoi(nivel.child_value("mundo")) >= 0){
-			mundo = stoi(nivel.child_value("mundo"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("El valor de mundo enviado no tiene valor valido,se carga el valor por defecto");
+		string mundoString = nivel.child_value("mundo");
+		mundo = stoi(mundoString);
+		if(mundo < 0){
+			archivoLeido->mensajeError.push_back("El valor de mundo ("+ mundoString +") enviado no tiene valor valido, se carga el valor por defecto");
 			mundo = VALOR_POR_DEFECTO_MUNDO;
 		}
 	}catch(const std::invalid_argument& error){
@@ -28,44 +26,38 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	}
 
 	try{
-		if(stoi(nivel.child_value("tiempoNivel")) >= 0){
-			tiempoNivel = stoi(nivel.child_value("tiempoNivel"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("El valor de tiempo del nivel enviado no tiene valor valido,se carga el valor por defecto");
+		string tiempoString = nivel.child_value("tiempoNivel");
+		tiempoNivel = stoi(tiempoString);
+		if(stoi(nivel.child_value("tiempoNivel")) < 0){
+			archivoLeido->mensajeError.push_back("El valor de tiempo del nivel ("+tiempoString+") enviado no tiene valor valido,se carga el valor por defecto");
 			tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 		}
 	}catch(const std::invalid_argument& error){
-		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de tiempo del nivel enviado no tiene valor valido,se carga el valor por defecto");
 		tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 	}
 
+	string cantMonedasString = nivel.child_value("cantidadMonedas");
 	try{
-		if(stoi(nivel.child_value("cantidadMonedas")) >= 0){
-			cantidadMonedas = stoi(nivel.child_value("cantidadMonedas"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("El valor de cantidad de monedas enviado no tiene valor valido,se carga el valor por defecto");
+		cantidadMonedas = stoi(cantMonedasString);
+		if(cantidadMonedas < 0){
+			archivoLeido->mensajeError.push_back("El valor de cantidad de monedas ("+cantMonedasString+") enviado no tiene valor valido,se carga el valor por defecto");
 			cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
 		}
 	}catch(const std::invalid_argument& error){
-		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El valor de cantidad de monedas enviado no tiene valor valido,se carga el valor por defecto");
+		archivoLeido->mensajeError.push_back("El valor de cantidad de monedas ("+cantMonedasString+") enviado no tiene valor valido,se carga el valor por defecto");
 		cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
 	}
 
+	string puntoBanderaFinString = nivel.child_value("puntoBanderaFin");
 	try{
-		if(stoi(nivel.child_value("puntoBanderaFin")) >= 0){
-			puntoBanderaFin = stoi(nivel.child_value("puntoBanderaFin"));
-		}else{
-			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin enviado no tiene valor valido,se carga el valor por defecto");
+		puntoBanderaFin = stoi(puntoBanderaFinString);
+		if(puntoBanderaFin < 0){
+			archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin ("+puntoBanderaFinString+") enviado no tiene valor valido,se carga el valor por defecto");
 			puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
 		}
 	}catch(const std::invalid_argument& error){
-		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin enviado no tiene valor valido,se carga el valor por defecto");
+		archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin ("+puntoBanderaFinString+") enviado no tiene valor valido,se carga el valor por defecto");
 		puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
 	}
 

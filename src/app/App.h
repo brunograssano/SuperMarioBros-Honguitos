@@ -23,6 +23,7 @@ class App{
 		App(ArchivoLeido* archivoLeido){
 
 			Log* log = Log::getInstance(archivoLeido->tipoLog);
+			escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 			determinarDimensionesPantalla(archivoLeido->anchoVentana,archivoLeido->altoVentana);
 			inicializarSDL(log);
 

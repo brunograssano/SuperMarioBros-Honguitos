@@ -9,6 +9,9 @@ Log* Log::log=nullptr;
 
 Log* Log::getInstance(TipoLog* tipo){
 	if(log==nullptr){
+		if(tipo == NULL){
+			tipo = new Error();
+		}
 		log = new Log(tipo);
 	}
 	return log;

@@ -12,7 +12,7 @@
 using namespace std;
 
 
-typedef std::vector<ptrdiff_t> offset_data_t;
+typedef vector<ptrdiff_t> offset_data_t;
 
 bool calcularPosicionesLinea(offset_data_t& posicionUltimoCaracterPorLinea, const char* nombreArchivo){
     FILE* archivo = fopen(nombreArchivo, "rb");
@@ -40,7 +40,7 @@ bool calcularPosicionesLinea(offset_data_t& posicionUltimoCaracterPorLinea, cons
 }
 
 int obtenerLineaError(const offset_data_t& posicionUltimoCaracterPorLinea, ptrdiff_t offset){
-    offset_data_t::const_iterator iterador = std::lower_bound(posicionUltimoCaracterPorLinea.begin(), posicionUltimoCaracterPorLinea.end(), offset);
+    offset_data_t::const_iterator iterador = lower_bound(posicionUltimoCaracterPorLinea.begin(), posicionUltimoCaracterPorLinea.end(), offset);
     size_t linea = iterador - posicionUltimoCaracterPorLinea.begin();
 
     return 1+linea;
@@ -55,7 +55,7 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 
 	if (!result  && result.status == pugi::status_file_not_found){
 		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El archivo pedido en la direccion"+ nombreArchivo +" no existe");
+		archivoLeido->mensajeError.push_back("El archivo pedido en la direccion: "+ nombreArchivo +" no existe");
 		return archivoLeido;
 	}
 

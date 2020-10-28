@@ -10,8 +10,13 @@ void ParserLog::ParsearLog(pugi::xml_node log,ArchivoLeido* archivoLeido){
 	}else if(level.compare("INFO") == 0){
 		archivoLeido->tipoLog = new Info();
 	}else{
-		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El tipo de log ingresado es incorrecto");
+		if(level.compare("")==0){
+			archivoLeido->mensajeError.push_back("No se ingreso un nivel de log, se carga el por defecto (ERROR)");
+		}
+		else{
+			archivoLeido->mensajeError.push_back("El tipo de log ("+level+") ingresado es incorrecto, se carga el por defecto (ERROR)");
+		}
+		archivoLeido->tipoLog = new Error();
 	}
 }
 

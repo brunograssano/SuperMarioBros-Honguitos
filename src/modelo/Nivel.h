@@ -54,6 +54,8 @@ class Nivel{
 
 		void inicializarPosicionesOcupadasPorBloques();
 
+		int obtenerPuntoBanderaFin();
+
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();

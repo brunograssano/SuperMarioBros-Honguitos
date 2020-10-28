@@ -92,12 +92,12 @@ void App::actualizar(){
 
 void App::revisarSiTerminoNivel(Mario* jugador){
 
-	if(jugador->obtenerPosicionX()>=ANCHO_FONDO-500 && juego->quedaSoloUnNivel()){
+	if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual() && juego->quedaSoloUnNivel()){
 		juego->sumarPuntosAJugadores(tiempoFaltante);
 		ganaron = true;
 		Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 	}
-	else if(jugador->obtenerPosicionX()>=ANCHO_FONDO-500){ //PONER EL FIN DEL NIVEL EN EL XML? si
+	else if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual()){ //PONER EL FIN DEL NIVEL EN EL XML? si
 		rectanguloCamara.x= 0;
 		rectanguloCamara.y = 0;
 		juego->avanzarNivel();

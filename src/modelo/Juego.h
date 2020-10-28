@@ -30,6 +30,7 @@ class Juego{
 		int obtenerTiempoDelNivel();
 		int obtenerPuntuacionJugador();
 		int obtenerMundoActual();
+		int obtenerPuntoBanderaFinActual();
 
 		~Juego();
 

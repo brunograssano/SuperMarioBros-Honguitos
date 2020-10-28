@@ -29,6 +29,10 @@ string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
+int Nivel::obtenerPuntoBanderaFin(){
+	return puntoBanderaFin;
+}
+
 bool Nivel::esUnaPosicionXValidaEnemigo(int numeroPosicion){
 	return !posicionesOcupadasXEnemigos[numeroPosicion];
 }
@@ -51,6 +55,8 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
 	}
 }
 
+//rand() % (MAXIMO + 1 - MINIMO) + MINIMO
+
 void Nivel::inicializarPosicionMonedas(){
 
 	srand(time(NULL));
@@ -59,15 +65,15 @@ void Nivel::inicializarPosicionMonedas(){
 	int tamanioMoneda = 40;
 
 	int limiteXSuperior = puntoBanderaFin;
-	int limiteYInferior = altoNivel*1/4;
-	int anchoY = altoNivel*3/4;
-
+	int limiteXInferior = puntoBanderaFin/10;
+	int limiteYInferior = altoNivel/4;
+	int limiteYSuperior = altoNivel*1/2;
 
 	for(int i=0; i<cantidadMonedas; i++){
 
 		do{
-			numeroPosicionX = rand() % (limiteXSuperior/tamanioMoneda);
-			numeroPosicionY = rand() % (anchoY/tamanioMoneda) + (limiteYInferior/tamanioMoneda);
+			numeroPosicionX = rand() % (limiteXSuperior/tamanioMoneda + 1 - limiteXInferior/tamanioMoneda) + limiteXInferior/tamanioMoneda;
+			numeroPosicionY = rand() % (limiteYSuperior/tamanioMoneda + 1 - limiteYInferior/tamanioMoneda) + limiteYInferior/tamanioMoneda;
 		}while(!this->esUnaPosicionValidaMoneda(numeroPosicionX, numeroPosicionY));
 
 		this->posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)] = true;
@@ -86,7 +92,9 @@ void Nivel::inicializarPosicionEnemigo(){
 
 	srand(time(NULL));
 
-	int numeroPosicion = 0;
+	int numeroPosicionX = 0;
+	int limiteXSuperior = puntoBanderaFin;
+	int limiteXInferior = puntoBanderaFin/10;
 	int coordenadaX = 0;
 	int coordenadaY = 50;
 	int tamanioEnemigo = 40;
@@ -94,11 +102,12 @@ void Nivel::inicializarPosicionEnemigo(){
 	for (auto const& enemigo : enemigos) {
 
 		do{
-			numeroPosicion = rand()%(puntoBanderaFin/tamanioEnemigo);
-		}while(!esUnaPosicionXValidaEnemigo(numeroPosicion));
+			numeroPosicionX = rand() % (limiteXSuperior/tamanioEnemigo + 1 - limiteXInferior/tamanioEnemigo) + limiteXInferior/tamanioEnemigo;
+		}while(!esUnaPosicionXValidaEnemigo(numeroPosicionX));
 
-		posicionesOcupadasXEnemigos[numeroPosicion] = true;
-		coordenadaX = numeroPosicion*tamanioEnemigo;
+		posicionesOcupadasXEnemigos[numeroPosicionX] = true;
+
+		coordenadaX = numeroPosicionX*tamanioEnemigo;
 		enemigo->agregarPosicion(coordenadaX,coordenadaY);
 	}
 

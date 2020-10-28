@@ -14,7 +14,7 @@
             <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>25</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>7500</puntoBanderaFin>     <!--En px-->
+            <puntoBanderaFin>7650</puntoBanderaFin>     <!--En px-->
             <enemigos>
 
                 <enemigo>
@@ -26,7 +26,7 @@
                 <enemigo>
                     <tipo>Koopa</tipo>
                     <direccionImagen>resources/Koopa.png</direccionImagen>
-                    <cantidad>15</cantidad>
+                    <cantidad>5</cantidad>
                 </enemigo>
 
             </enemigos>
@@ -243,25 +243,21 @@
             <direccionFondo>resources/MapaNivel2Base.png</direccionFondo>
             <cantidadMonedas>20</cantidadMonedas>
             <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>3072</puntoBanderaFin>
             <enemigos>
 
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <direccionImagen>resources/GoombaInvertido.png</direccionImagen>
-                    <cantidad>7</cantidad>
+                    <cantidad>5</cantidad>
                 </enemigo>
 
                 <enemigo>
                     <tipo>Koopa</tipo>
                     <direccionImagen>resources/KoopaInvertido.png</direccionImagen>
-                    <cantidad>10</cantidad>
+                    <cantidad>7</cantidad>
                 </enemigo>
 
-                <enemigo>
-                    <tipo>Goomba</tipo>
-                    <direccionImagen>resources/Goomba.png</direccionImagen>
-                    <cantidad>3</cantidad>
-                </enemigo>
             </enemigos>
             <plataformas>
 
@@ -386,23 +382,30 @@
             <plataformas>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <coordenadaX>1000</coordenadaX>
-                    <coordenadaY>500</coordenadaY>
+                    <tipo>LadrilloInvertido</tipo>
+                    <coordenadaX>1500</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
                     <cantidadBloques>4</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <coordenadaX>500</coordenadaX>
-                    <coordenadaY>300</coordenadaY>
+                    <tipo>LadrilloInvertido</tipo>
+                    <coordenadaX>600</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>7</cantidadBloques>
+                </plataforma>
+                
+                <plataforma>
+                    <tipo>LadrilloInvertido</tipo>
+                    <coordenadaX>600</coordenadaX>
+                    <coordenadaY>360</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>800</coordenadaX>
-                    <coordenadaY>200</coordenadaY>
+                    <coordenadaX>1540</coordenadaX>
+                    <coordenadaY>320</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 

@@ -4,6 +4,9 @@
 #include "../modelo/Posicion.h"
 #include "../modelo/movimiento/MovimientoMario.h"
 
+class SpriteMario;
+#include "../sprites/SpriteMario.h"
+
 class Mario{
 
 	public:
@@ -14,6 +17,7 @@ class Mario{
 		int obtenerMonedas();
 		void agregarMoneda();
 
+		SpriteMario* obtenerSpite();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		void aceleraraIzquierda();
@@ -24,6 +28,11 @@ class Mario{
 		void actualizarPosicion();
 		void reiniciarPosicion();
 		
+		void actualizarSaltarMario();
+		void actualizarAgacharseMario();
+		void actualizarIzquierdaMario();
+		void actualizarDerechaMario();
+
 		void actualizarMaximoX(int limite);
 		void actualizarMinimoX(int limite);
 		~Mario();
@@ -31,6 +40,7 @@ class Mario{
 	private:
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
+		SpriteMario * spriteMario;
 		int puntos;
 		int cantidadMonedas;
 };

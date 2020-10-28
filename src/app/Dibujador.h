@@ -17,7 +17,7 @@ using namespace std;
 class Dibujador{
 
 	public:
-		Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario, int ancho_pantalla,int alto_pantalla);
+		Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
 		void dibujar(SDL_Rect* rectanguloCamara);
 		void dibujarGameOver();
 		void dibujarPantallaGanadores();
@@ -35,7 +35,6 @@ class Dibujador{
 		SDL_Renderer* renderizador;
 		SDL_Rect rectanguloCamara;
 		Juego* juego;
-		SpriteMario* spriteMario;
 		DibujadorGameOver* dibujadorGameOver;
 
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara);

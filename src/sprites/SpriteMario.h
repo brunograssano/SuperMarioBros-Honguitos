@@ -7,6 +7,8 @@
 
 #include "../modelo/Juego.h"
 #include "../app/CargadorTexturas.h"
+class Mario;
+#include "../modelo/Mario.h"
 
 class SpriteMario : public Sprite{
 

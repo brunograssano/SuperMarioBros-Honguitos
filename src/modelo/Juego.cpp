@@ -4,6 +4,10 @@
 
 Juego* Juego::instanciaJuego = nullptr;
 
+void Juego::inicializar(){
+	jugador = new Mario();
+}
+
 Juego* Juego::getInstance(){
 	/*if(instanciaJuego==nullptr){
 		instanciaJuego = new Juego("");

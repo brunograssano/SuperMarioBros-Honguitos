@@ -66,16 +66,16 @@ void App::actualizar(SDL_Event evento){
 		switch(evento.key.keysym.sym){
 			case SDLK_UP:
 			case SDLK_SPACE:
-				spriteMario->actualizarSpriteMarioSaltar(jugador);
+				jugador->actualizarSaltarMario();
 			break;
 			case SDLK_DOWN:
-				spriteMario->actualizarSpriteMarioAgacharse(jugador);
+				jugador->actualizarAgacharseMario();
 			break;
 			case SDLK_LEFT:
-				spriteMario->actualizarSpriteMarioIzquierda(jugador);
+				jugador->actualizarIzquierdaMario();
 			break;
 			case SDLK_RIGHT:
-				spriteMario->actualizarSpriteMarioDerecha(jugador);
+				jugador->actualizarDerechaMario();
 			break;
 		}
 	}
@@ -86,7 +86,6 @@ void App::actualizar(){
 		Mario* jugador = Juego::getInstance()->obtenerMario();
 		jugador->actualizarPosicion();
 		Juego::getInstance()->actualizarPosicionesEnemigos();
-		spriteMario->actualizarSprite(jugador);
 		revisarSiTerminoNivel(jugador);
 		cargadorTexturas->revisarSiCambioNivel(renderizador);
 		moverCamara(jugador);
@@ -102,7 +101,7 @@ void App::revisarSiTerminoNivel(Mario* jugador){
 		ganaron = true;
 		Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 	}
-	else if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual()){ //PONER EL FIN DEL NIVEL EN EL XML? si
+	else if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual()){
 		rectanguloCamara.x= 0;
 		rectanguloCamara.y = 0;
 		juego->avanzarNivel();
@@ -183,7 +182,6 @@ App::~App(){
 	delete dibujador;
 	delete cargadorTexturas;
 	delete juego;
-	delete spriteMario;
 	delete Log::getInstance();
 	delete ReproductorMusica::getInstance();
 }

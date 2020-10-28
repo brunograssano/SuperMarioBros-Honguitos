@@ -9,7 +9,6 @@ using namespace std;
 #include "../../sprites/Sprite.h"
 #include "../../sprites/SpriteSorpresa.h"
 #include "../../sprites/SpriteLadrillo.h"
-#include "../../sprites/SpriteLadrilloInvertido.h"
 
 const int LADO_BLOQUE_DEFAULT = 10;
 
@@ -50,25 +49,17 @@ class Sorpresa : public Bloque{
 
 class Ladrillo : public Bloque {
 	public:
+		Ladrillo(int coordenadaX, int coordenadaY, string direccionTextura){
+			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40);
+			this->spriteBloque = new SpriteLadrillo(direccionTextura);
+		}
+
 		Ladrillo(int coordenadaX, int coordenadaY){
 			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40);
 			this->spriteBloque = new SpriteLadrillo();
 		}
 
 		~Ladrillo(){
-			delete this->posicion;
-			delete this->spriteBloque;
-		}
-};
-
-class LadrilloInvertido : public Bloque {
-	public:
-		LadrilloInvertido(int coordenadaX, int coordenadaY){
-			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40);
-			this->spriteBloque = new SpriteLadrilloInvertido();
-		}
-
-		~LadrilloInvertido(){
 			delete this->posicion;
 			delete this->spriteBloque;
 		}

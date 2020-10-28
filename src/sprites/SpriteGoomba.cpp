@@ -2,6 +2,7 @@
 
 
 #include "SpriteGoomba.h"
+#include <iostream>
 
 SpriteGoomba::SpriteGoomba(string direccionImagen){
 	direccionTextura = direccionImagen;

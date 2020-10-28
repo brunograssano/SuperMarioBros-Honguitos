@@ -42,8 +42,12 @@ void ReproductorMusica::ReproducirMusicaNivel(string nombreCancion){
 			Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
 		}else{
 			cancionReproduciendose = cancion;
-			Mix_PlayMusic( cancion, -1 );
-			Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
+			if(Mix_PlayMusic( cancion, -1 ) == 0){
+				Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
+			}else{
+				Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar reproducir la musica en la direccion "+ nombreCancion, Mix_GetError());
+			}
+
 		}
 
 	}else{
@@ -55,9 +59,13 @@ void ReproductorMusica::ReproducirMusicaNivel(string nombreCancion){
 			Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
 		}else{
 			cancionReproduciendose = cancion;
-			Mix_PlayMusic( cancion, -1 );
-			Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
-			Mix_FreeMusic(cancionABorrar);
+			if(Mix_PlayMusic( cancion, -1 ) == 0){
+				Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
+				Mix_FreeMusic(cancionABorrar);
+			}else{
+				Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar reproducir la musica en la direccion "+ nombreCancion, Mix_GetError());
+				Mix_FreeMusic(cancionABorrar);
+			}
 		}
 	}
 }

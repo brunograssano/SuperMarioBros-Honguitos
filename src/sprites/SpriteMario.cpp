@@ -59,9 +59,8 @@ bool SpriteMario::estaCorriendo(Mario* mario, bool btnDerecho) {
     bool corriendo = false;
 
     /* Corriendo hacia la izquierda, Estados permitidos: 3, 4 y 5 */
-    if (estadoActual > 2 && estadoActual < 7) {
+    if (estadoActual >= 2 && estadoActual < 7) {
         corriendo = true;
-        mario->aceleraraIzquierda();
 
         // Cuando la funcion controlDeFlujoSprite devuelve "true", se permite el cambio de sprite.
         if (!controlDeFlujoSprite()) { return corriendo; }
@@ -79,9 +78,8 @@ bool SpriteMario::estaCorriendo(Mario* mario, bool btnDerecho) {
 
 
     /* Corriendo hacia la derecha, Estados permitidos: 8, 9 y 10 */
-    if (estadoActual > 6 && estadoActual < 11) {
+    else if (estadoActual > 6 && estadoActual <= 11) {
         corriendo = true;
-        mario->aceleraraDerecha();
 
         // Cuando la funcion controlDeFlujoSprite devuelve "true", se permite el cambio de sprite.
         if (!controlDeFlujoSprite()) { return corriendo; }
@@ -108,30 +106,27 @@ bool SpriteMario::estaCambiandoDeDireccion(Mario* mario, bool btnDerecho) {
 	bool caminandoAIzq = estadoActual > 2 && estadoActual < 6;
 	bool caminandoADer = estadoActual > 7 && estadoActual < 11;
 
+
 	/* Mario caminando */
 	if (caminandoAIzq && btnDerecho) {
-		mario->aceleraraDerecha();
 		cambiandoDirecc = true;
 		estadoActual = 2;
 		proximoEstado = 7;
 	}
-
-	if (caminandoADer && !btnDerecho) {
+	else if (caminandoADer && !btnDerecho) {
 	    cambiandoDirecc = true;
-        mario->aceleraraIzquierda();
         estadoActual = 11;
         proximoEstado = 6;
 	}
 
 	/* Mario quieto */
-	if (estadoActual == 6 && btnDerecho) {
+	else if (estadoActual == 6 && btnDerecho) {
 		cambiandoDirecc = true;
 		if (!controlDeFlujoSprite()) { return cambiandoDirecc; }
 		estadoActual = 7;
 		proximoEstado = 7;
 	}
-
-	if (estadoActual == 7 && !btnDerecho) {
+	else if (estadoActual == 7 && !btnDerecho) {
 		cambiandoDirecc = true;
 		if (!controlDeFlujoSprite()) { return cambiandoDirecc; }
 		estadoActual = 6;
@@ -152,26 +147,22 @@ bool SpriteMario::estaSaltando(Mario* mario, bool btnDerecho) {
 	saltando = true;
 
     if (btnDerecho && !mario->estaEnElPiso()) {
-    	mario->aceleraraDerecha();
     	estadoActual = 12;
     	proximoEstado = 12;
     }
 
-    if (btnDerecho && mario->estaEnElPiso()) {
-    	mario->aceleraraDerecha();
+    else if (btnDerecho && mario->estaEnElPiso()) {
     	estadoActual = 7;
     	proximoEstado = 8;
 
     }
 
-    if (!btnDerecho && !mario->estaEnElPiso()) {
-    	mario->aceleraraIzquierda();
+    else if (!btnDerecho && !mario->estaEnElPiso()) {
     	estadoActual = 1;
     	proximoEstado = 1;
     }
 
-    if (!btnDerecho && mario->estaEnElPiso()) {
-    	mario->aceleraraIzquierda();
+    else if (!btnDerecho && mario->estaEnElPiso()) {
     	estadoActual = 6;
     	proximoEstado = 5;
     }
@@ -187,16 +178,12 @@ bool SpriteMario::estaAgachado(Mario* mario, bool btnDerecho) {
 
 		estadoActual = 7;
 		proximoEstado = 8;
-
-		mario->aceleraraDerecha();
 	}
 
 	if (!btnDerecho && agachado && mario->estaEnElPiso()) {
 
 		estadoActual = 6;
 		proximoEstado = 5;
-
-		mario->aceleraraIzquierda();
 	}
 
 	return agachado;

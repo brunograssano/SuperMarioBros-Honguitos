@@ -1,6 +1,6 @@
 #include "MarioTest.h"
 
-
+/*
 void MarioTest::ejecutar(Assert* testSuite){
 
 	cout << "========== Comenzando con las pruebas de Mario ==========" << endl;
@@ -65,4 +65,4 @@ void MarioTest::test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite){
 	testSuite->assert(mario->obtenerPuntos(),10,"Mario tiene 10 puntos: ");
 
 	delete mario;
-}
+}*/

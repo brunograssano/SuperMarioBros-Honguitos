@@ -1,4 +1,4 @@
-#include "MarioTest.h"
+#include "MarioTest.hpp"
 
 /*
 void MarioTest::ejecutar(Assert* testSuite){

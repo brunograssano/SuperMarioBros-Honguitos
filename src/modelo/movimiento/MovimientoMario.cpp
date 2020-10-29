@@ -1,7 +1,7 @@
-#include "MovimientoMario.h"
+#include "MovimientoMario.hpp"
 
-const float MAXIMA_VELOCIDAD_X = 8;
-const float ACELERACION_X = 0.8;
+const float MAXIMA_VELOCIDAD_X = 5;
+const float ACELERACION_X = 0.3;
 const float FUERZA_SALTO = 60;
 
 MovimientoMario::MovimientoMario(){

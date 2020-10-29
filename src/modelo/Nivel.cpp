@@ -1,7 +1,8 @@
 
+#include "Nivel.hpp"
+
 #include <string>
-#include "Nivel.h"
-#include "../log/Log.h"
+#include "../log/Log.hpp"
 
 
 void Nivel::actualizarPosicionesEnemigos(){

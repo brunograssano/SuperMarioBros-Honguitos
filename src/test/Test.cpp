@@ -1,12 +1,13 @@
+
 using namespace std;
 #include <iostream>
 #include <string>
 #include <stdio.h>
 
-#include "BloqueTest.h"
-#include "MarioTest.h"
-#include "LectorTest.h"
-#include "Assert.h"
+#include "BloqueTest.hpp"
+#include "MarioTest.hpp"
+#include "LectorTest.hpp"
+#include "Assert.hpp"
 
 /*
 int main(int argc, char* argv[]){

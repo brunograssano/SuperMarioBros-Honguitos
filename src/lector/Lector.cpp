@@ -7,7 +7,7 @@
 #include "Parsers/ParserVentana.hpp"
 #include "Parsers/ParserLog.hpp"
 #include "Parsers/ParserNivel.hpp"
-#include "../modelo/Nivel.h"
+#include "../modelo/Nivel.hpp"
 
 using namespace std;
 

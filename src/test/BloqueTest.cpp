@@ -1,4 +1,4 @@
-#include "BloqueTest.h"
+#include "BloqueTest.hpp"
 
 void BloqueTest::ejecutar(Assert* testSuite){
 

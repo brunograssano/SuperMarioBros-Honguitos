@@ -1,10 +1,11 @@
+#include "SpriteMario.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 #include <string>
 #include <sstream>
 
-#include "SpriteMario.h"
 
 
 const int ANCHO_IMAGEN_PIXEL = 405;

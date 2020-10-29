@@ -1,6 +1,6 @@
 
 
-#include "Juego.h"
+#include "Juego.hpp"
 
 Juego* Juego::instanciaJuego = nullptr;
 

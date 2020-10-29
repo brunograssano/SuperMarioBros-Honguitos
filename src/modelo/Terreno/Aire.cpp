@@ -1,4 +1,4 @@
-#include "Aire.h"
+#include "Aire.hpp"
 float Aire::aplicarCoeficienteDeRozamiento(float velocidadX){
 	if(velocidadX < 0)
 		return (velocidadX + coeficienteDeRozamiento);
@@ -7,7 +7,7 @@ float Aire::aplicarCoeficienteDeRozamiento(float velocidadX){
 }
 
 float Aire::obtenerImpulsoHorizontal(float aceleracion){
-	return aceleracion/2;	//Quito aceleracion por estar en el aire
+	return aceleracion/1.5;	//Quito aceleracion por estar en el aire
 	return 0;
 }
 

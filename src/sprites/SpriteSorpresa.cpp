@@ -1,5 +1,5 @@
 
-#include "SpriteSorpresa.h"
+#include "SpriteSorpresa.hpp"
 
 SpriteSorpresa::SpriteSorpresa(){
 	direccionTextura = "resources/BloqueSorpresa.png";

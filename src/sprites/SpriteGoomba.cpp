@@ -1,7 +1,8 @@
 
 
 
-#include "SpriteGoomba.h"
+#include "SpriteGoomba.hpp"
+
 #include <iostream>
 
 SpriteGoomba::SpriteGoomba(string direccionImagen){

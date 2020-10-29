@@ -1,5 +1,5 @@
 
-#include "SpriteMoneda.h"
+#include "SpriteMoneda.hpp"
 
 SpriteMoneda::SpriteMoneda(){
 	this->direccionTextura = "resources/Monedas.png";

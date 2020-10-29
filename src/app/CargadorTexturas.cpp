@@ -1,8 +1,6 @@
 
 
-#include "CargadorTexturas.h"
-#include "App.h"
-#include "../log/Log.h"
+#include "CargadorTexturas.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -10,6 +8,9 @@
 
 #include <string>
 #include <sstream>
+
+#include "../log/Log.hpp"
+#include "App.hpp"
 
 
 

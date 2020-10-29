@@ -5,8 +5,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "../modelo/Juego.h"
-#include "../app/CargadorTexturas.h"
+class Mario;
+#include "Sprite.h"
+#include "../modelo/Mario.h"
 
 class SpriteMario : public Sprite{
 
@@ -23,8 +24,8 @@ class SpriteMario : public Sprite{
 
         void actualizarSpriteMarioDerecha (Mario* mario);
 		void actualizarSpriteMarioIzquierda(Mario* mario);
-		void actualizarSpriteMarioSaltar(Mario* mario);
-        void actualizarSpriteMarioAgacharse(Mario* mario);
+		void actualizarSpriteMarioSaltar();
+        void actualizarSpriteMarioAgacharse();
 
 	private:
 		SDL_Rect estadosPosibles[14];

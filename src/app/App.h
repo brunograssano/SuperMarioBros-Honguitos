@@ -30,7 +30,6 @@ class App{
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			juego = Juego::getInstance(archivoLeido->niveles);
-			spriteMario = new SpriteMario("../resources/mario_grande.png");
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
 			posicionFinalNivel = 5000;
@@ -39,7 +38,7 @@ class App{
 			terminoElJuego = false;
 			comenzoElJuego = false;
 			ganaron = false;
-			dibujador = new Dibujadores(cargadorTexturas,renderizador,spriteMario,ancho_pantalla,alto_pantalla);
+			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 
 			log->mostrarMensajeDeInfo("Inicio del juego");
 			delete archivoLeido;
@@ -50,7 +49,6 @@ class App{
 		CargadorTexturas* cargadorTexturas;
 		SDL_Window* ventanaAplicacion;
 		SDL_Renderer* renderizador;
-		SpriteMario* spriteMario;
 		SDL_Rect rectanguloCamara;
 		Dibujadores* dibujador;
 		int tiempoFaltante;

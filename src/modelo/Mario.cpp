@@ -14,7 +14,32 @@ Mario::Mario(){
 	this->puntos=0;
 	this->cantidadMonedas = 0;
 	this->movimiento = new MovimientoMario();
+	this->spriteMario = new SpriteMario("../resources/mario_grande.png");
 }
+
+SpriteMario* Mario::obtenerSpite(){
+	return spriteMario;
+}
+
+void Mario::actualizarSaltarMario(){
+	movimiento->saltar();
+	spriteMario->actualizarSpriteMarioSaltar();
+}
+
+void Mario::actualizarAgacharseMario(){
+	spriteMario->actualizarSpriteMarioAgacharse();
+}
+
+void Mario::actualizarIzquierdaMario(){
+	spriteMario->actualizarSpriteMarioIzquierda(this);
+}
+
+void Mario::actualizarDerechaMario(){
+	spriteMario->actualizarSpriteMarioDerecha(this);
+}
+
+
+
 
 void Mario::actualizarMaximoX(int limite){
     this->posicion->actualizarLimiteTerrenoIzq(limite);
@@ -70,11 +95,8 @@ void Mario::actualizarPosicion(){
 	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){ //TODO Ojo cuando vayamos a trabajar con floats... y el "==". Cambiar por un intervalo.
 		this->movimiento->setVelocidadY(0);
 	}
+	spriteMario->actualizarSprite(this);
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
-}
-
-void Mario::saltar(){
-	this->movimiento->saltar();
 }
 
 bool Mario::estaQuietoX(){
@@ -86,6 +108,7 @@ bool Mario::estaEnElPiso(){
 }
 
 Mario::~Mario(){
+	delete this->spriteMario;
 	delete this->posicion;
 	delete this->movimiento;
 }

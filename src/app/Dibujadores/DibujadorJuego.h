@@ -14,23 +14,24 @@ using namespace std;
 #include "Dibujador.h"
 
 class DibujadorJuego : public Dibujador{
+
 	public:
-		DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario, int ancho_pantalla,int alto_pantalla);
+		DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
+
 		void dibujar(SDL_Rect* rectanguloCamara);
 		void dibujar() override{
 			// TODO: Esto está feo.
 		}
-		~DibujadorJuego();
+		virtual ~DibujadorJuego(){}
+
 	private:
 		Uint32 tiempoDeInicio = 0;
 		stringstream textoDeTiempo;
 		stringstream textoDeNivel;
 		stringstream textoDePuntos;
 
-
 		SDL_Rect rectanguloCamara;
 		Juego* juego;
-		SpriteMario* spriteMario;
 
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
 		void dibujarPlataformas(SDL_Rect* rectanguloCamara);

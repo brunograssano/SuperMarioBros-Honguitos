@@ -21,7 +21,7 @@ using namespace std;
 class Dibujadores{
 
 	public:
-		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, SpriteMario* spriteMario, int ancho_pantalla, int alto_pantalla);
+		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
 		void dibujarJuego(SDL_Rect* rectanguloCamara);
 		void dibujarGameOver();
 		void dibujarInicio();

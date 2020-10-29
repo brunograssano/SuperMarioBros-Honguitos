@@ -6,12 +6,29 @@ using namespace std;
 #include <list>
 #include <iostream>
 #include <string>
+
+class Mario;
 #include "Mario.h"
-
-
 
 class Juego{
 
+	private:
+		Mario* jugador;
+		Juego(list<Nivel*> nivelesLector){
+
+			inicializar();
+			niveles = nivelesLector;
+
+			for (auto const& nivel : niveles) {
+				nivel->inicializarPosicionesOcupadasPorBloques();
+				nivel->inicializarPosicionMonedas();
+				nivel->inicializarPosicionEnemigo();
+			}
+		}
+
+		list<Nivel*> niveles;
+		void inicializar();
+		static Juego* instanciaJuego;
 	public:
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
@@ -33,23 +50,6 @@ class Juego{
 		int obtenerPuntoBanderaFinActual();
 
 		~Juego();
-
-	private:
-		Juego(list<Nivel*> nivelesLector){
-
-			jugador = new Mario();
-			niveles = nivelesLector;
-
-			for (auto const& nivel : niveles) {
-				nivel->inicializarPosicionesOcupadasPorBloques();
-				nivel->inicializarPosicionMonedas();
-			    nivel->inicializarPosicionEnemigo();
-			}
-		}
-
-		list<Nivel*> niveles;
-		Mario* jugador;
-		static Juego* instanciaJuego;
 
 };
 

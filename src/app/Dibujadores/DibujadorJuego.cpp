@@ -1,3 +1,5 @@
+#include "DibujadorJuego.h"
+
 #include "../App.h"
 #include "Dibujadores.h"
 
@@ -8,11 +10,10 @@ const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
 const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
 const int LARGO_BLOQUE = 40;
 
-DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario, int ancho_pantalla, int alto_pantalla){ // @suppress("Class members should be properly initialized")
+DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;
 	this->renderizador = renderizador;
 	this->juego = Juego::getInstance();
-	this->spriteMario = spriteMario;
 	this->alto_pantalla = alto_pantalla;
 	this->ancho_pantalla = ancho_pantalla;
 }
@@ -81,7 +82,7 @@ void DibujadorJuego::dibujarMario(SDL_Rect* rectanguloCamara){
 	SDL_Rect rectanguloMario = {mario->obtenerPosicionX() - rectanguloCamara->x,
 								alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario->obtenerPosicionY(),
 								ANCHO_MARIO, ALTO_MARIO};
-	SDL_Rect recorteMario = spriteMario->obtenerRectanguloActual();
+	SDL_Rect recorteMario = mario->obtenerSpite()->obtenerRectanguloActual();
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(), &recorteMario, &rectanguloMario);
 }
 
@@ -104,8 +105,4 @@ void DibujadorJuego::dibujarTexto(){
 	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str());
 	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str());
 	renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
-}
-
-DibujadorJuego::~DibujadorJuego(){
-
 }

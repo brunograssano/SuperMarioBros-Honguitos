@@ -5,7 +5,6 @@
 #include <sstream>
 
 #include "SpriteMario.h"
-#include "../app/App.h"
 
 
 const int ANCHO_IMAGEN_PIXEL = 405;

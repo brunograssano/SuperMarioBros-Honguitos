@@ -5,9 +5,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "../modelo/Juego.h"
-#include "../app/CargadorTexturas.h"
 class Mario;
+#include "Sprite.h"
 #include "../modelo/Mario.h"
 
 class SpriteMario : public Sprite{

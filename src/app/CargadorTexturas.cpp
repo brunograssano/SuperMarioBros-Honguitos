@@ -124,8 +124,12 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
 void CargadorTexturas::cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer* renderizador){
 
 	for(auto const& nivel : niveles){
+		int altoNivel = 0;
+		int largoNivel = 0;
 		SDL_Texture* texturaNueva = cargarTextura(nivel->obtenerDireccionFondoActual() , renderizador);
 		texturasNiveles[nivel->obtenerDireccionFondoActual()] = texturaNueva;
+		SDL_QueryTexture(texturaNueva, NULL, NULL, &largoNivel, &altoNivel);
+		nivel->definirDimesionesDelNivel(largoNivel, altoNivel);
 	}
 
 	texturaFondoActual = this->texturasNiveles[niveles.front()->obtenerDireccionFondoActual()];
@@ -245,6 +249,10 @@ CargadorTexturas::~CargadorTexturas(){
 
 	for (auto const& parClaveBloque : texturasBloques){
 		SDL_DestroyTexture( parClaveBloque.second );
+	}
+
+	for (auto const& parClaveNivel : texturasNiveles){
+			SDL_DestroyTexture( parClaveNivel.second );
 	}
 
 

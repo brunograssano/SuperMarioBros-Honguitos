@@ -21,10 +21,15 @@ class Nivel{
 			this->direccionFondo = direccionFondo;
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
-			this->puntoBanderaFin = puntoBanderaFin;
+			this->puntoBanderaFin = 0;
 
-			this->altoNivel = 600;
+			this->altoNivel = 0;
 
+		}
+
+		void definirDimesionesDelNivel(int largoNivel, int altoNivel){
+			this->puntoBanderaFin = largoNivel-800;
+			this->altoNivel = altoNivel;
 		}
 
 		void agregarPlataforma(Plataforma* unaPlataforma){

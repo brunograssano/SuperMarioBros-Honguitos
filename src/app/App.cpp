@@ -36,8 +36,6 @@ void App::inicializarSDL(Log* log){
 		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
 	}
 
-	ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3");
-
 	string direccion = "resources/IconoHongo.png";
 	SDL_Surface* icono = IMG_Load(direccion.c_str());
 	if(icono == NULL){
@@ -61,7 +59,15 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 }
 
 void App::actualizar(SDL_Event evento){
-	if(!terminoElJuego){
+
+	if(!comenzoElJuego){
+		if(evento.key.keysym.sym == SDLK_RETURN){
+			comenzoElJuego = true;
+			tiempoDeInicio = SDL_GetTicks();
+			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
+		}
+	}
+	else if(!terminoElJuego){
 		Mario* jugador = Juego::getInstance()->obtenerMario();
 		switch(evento.key.keysym.sym){
 			case SDLK_UP:
@@ -82,7 +88,7 @@ void App::actualizar(SDL_Event evento){
 }
 
 void App::actualizar(){
-	if(!terminoElJuego){
+	if(!terminoElJuego && comenzoElJuego){
 		Mario* jugador = Juego::getInstance()->obtenerMario();
 		jugador->actualizarPosicion();
 		Juego::getInstance()->actualizarPosicionesEnemigos();
@@ -140,20 +146,26 @@ void App::moverCamara(Mario* jugador){
 }
 
 void App::dibujar(){
-	tiempoFaltante = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() + tiempoDeInicio)/1000;
-	//tiempoFaltante = ((20*1000) - SDL_GetTicks() + tiempoDeInicio)/1000; // PARA PROBAR LA PANTALLA DE GAME OVER
-	if(ganaron){
-		dibujador->dibujarPantallaGanadores();
-		terminoElJuego = true;
+
+	if(!comenzoElJuego){
+		dibujador->dibujarInicio();
 	}
-	else if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO || terminoElJuego){
-		if(!terminoElJuego){
-			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
+	else{
+		tiempoFaltante = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() + tiempoDeInicio)/1000;
+		//tiempoFaltante = ((20*1000) - SDL_GetTicks() + tiempoDeInicio)/1000; // PARA PROBAR LA PANTALLA DE GAME OVER
+		if(ganaron){
+			dibujador->dibujarPantallaGanadores();
 			terminoElJuego = true;
 		}
-		dibujador->dibujarGameOver();
-	}else if(!terminoElJuego){
-		dibujador->dibujar(&rectanguloCamara);
+		else if(tiempoFaltante<=SE_TERMINO_EL_TIEMPO || terminoElJuego){
+			if(!terminoElJuego){
+				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
+				terminoElJuego = true;
+			}
+			dibujador->dibujarGameOver();
+		}else if(!terminoElJuego){
+			dibujador->dibujar(&rectanguloCamara);
+		}
 	}
 }
 

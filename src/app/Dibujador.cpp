@@ -16,6 +16,7 @@ Dibujador::Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizad
 	this->alto_pantalla = alto_pantalla;
 	this->ancho_pantalla = ancho_pantalla;
 	this->dibujadorGameOver = new DibujadorGameOver(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorInicio = new DibujadorInicio(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
 
 
@@ -48,6 +49,10 @@ void Dibujador::dibujarPantallaGanadores(){
 	renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str());
 
 	SDL_RenderPresent( renderizador );
+}
+
+void Dibujador::dibujarInicio(){
+	dibujadorInicio->dibujar();
 }
 
 void Dibujador::dibujarGameOver(){
@@ -160,4 +165,5 @@ void Dibujador::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar ){
 
 Dibujador::~Dibujador(){
 	delete dibujadorGameOver;
+	delete dibujadorInicio;
 }

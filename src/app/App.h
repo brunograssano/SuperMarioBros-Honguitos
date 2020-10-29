@@ -37,6 +37,7 @@ class App{
 			tiempoFaltante = 0;
 			tiempoDeInicio = 0;
 			terminoElJuego = false;
+			comenzoElJuego = false;
 			ganaron = false;
 			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario,ancho_pantalla,alto_pantalla);
 
@@ -61,6 +62,7 @@ class App{
 		void determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana);
 
 		bool terminoElJuego;
+		bool comenzoElJuego;
 		bool ganaron;
 
 		int ancho_pantalla;

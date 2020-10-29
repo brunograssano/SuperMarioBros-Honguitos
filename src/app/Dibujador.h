@@ -13,6 +13,7 @@ using namespace std;
 #include "CargadorTexturas.h"
 #include "../sprites/SpriteMario.h"
 #include "DibujadorGameOver.h"
+#include "DibujadorInicio.h"
 
 class Dibujador{
 
@@ -20,6 +21,7 @@ class Dibujador{
 		Dibujador(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario, int ancho_pantalla,int alto_pantalla);
 		void dibujar(SDL_Rect* rectanguloCamara);
 		void dibujarGameOver();
+		void dibujarInicio();
 		void dibujarPantallaGanadores();
 		~Dibujador();
 
@@ -37,6 +39,7 @@ class Dibujador{
 		Juego* juego;
 		SpriteMario* spriteMario;
 		DibujadorGameOver* dibujadorGameOver;
+		DibujadorInicio* dibujadorInicio;
 
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
 		void dibujarPlataformas(SDL_Rect* rectanguloCamara);

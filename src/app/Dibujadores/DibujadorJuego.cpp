@@ -36,7 +36,8 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara){
 	list<Enemigo*> enemigos = Juego::getInstance()->obtenerEnemigos();
 	for (auto const& enemigo : enemigos) {
 		Sprite* spriteEnemigo = enemigo->obtenerSprite();
-		SDL_Rect recorteTextura = spriteEnemigo->obtenerRectanguloActual();
+		SDL_Rect recorteTextura;
+		recorteTextura = spriteEnemigo->obtenerRectanguloActual();
 
 		SDL_Rect rectanguloEnemigo = {enemigo->obtenerPosicionX()-rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
@@ -57,7 +58,8 @@ void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara){
 										alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque->obtenerPosicionY(),
 										LARGO_BLOQUE, LARGO_BLOQUE};
 			Sprite* spriteBloque = bloque->obtenerSprite();
-			SDL_Rect recorteBloque = spriteBloque->obtenerRectanguloActual();
+			SDL_Rect recorteBloque;
+			recorteBloque = spriteBloque->obtenerRectanguloActual();
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(spriteBloque, renderizador), &recorteBloque, &rectanguloBloque);
 		}
 	}
@@ -71,7 +73,8 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara){
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		Sprite* spriteMoneda = moneda->obtenerSprite();
 		spriteMoneda->actualizarSprite();
-		SDL_Rect recorteMoneda = spriteMoneda->obtenerRectanguloActual();
+		SDL_Rect recorteMoneda;
+		recorteMoneda = spriteMoneda->obtenerRectanguloActual();
 		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMoneda(), &recorteMoneda, &rectanguloMoneda);
 
 	}

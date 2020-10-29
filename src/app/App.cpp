@@ -164,7 +164,7 @@ void App::dibujar(){
 			}
 			dibujador->dibujarGameOver();
 		}else if(!terminoElJuego){
-			dibujador->dibujar(&rectanguloCamara);
+			dibujador->dibujarJuego(&rectanguloCamara);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <map>
 #include <SDL2/SDL_ttf.h>
-
+#include "../modelo/Nivel.hpp"
 #include "../sprites/Sprite.hpp"
 using namespace std;
 
@@ -28,6 +28,7 @@ class CargadorTexturas{
 
 		SDL_Texture* cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador);
 
+		void cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer* renderizador);
 		void actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador);
 		void revisarSiCambioNivel(SDL_Renderer* renderizador);
 
@@ -46,6 +47,7 @@ class CargadorTexturas{
 		SDL_Texture* texturaFondoGameOver = NULL;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
+		map<string, SDL_Texture*> texturasNiveles;
 
 		TTF_Font* fuenteJuego;
 

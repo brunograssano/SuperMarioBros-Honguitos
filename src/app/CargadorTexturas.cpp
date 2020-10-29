@@ -112,13 +112,26 @@ SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar,
 
 void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
 	string direccionDelNivel = Juego::getInstance()->obtenerDireccionFondoNivelActual();
+
 	if(direccionFondoActual != direccionDelNivel){
 		SDL_DestroyTexture( texturaFondoActual );
 		direccionFondoActual = direccionDelNivel;
-		texturaFondoActual = cargarTextura(direccionDelNivel,renderizador);
+		texturaFondoActual = this->texturasNiveles[direccionFondoActual];
+
 	}
 }
 
+void CargadorTexturas::cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer* renderizador){
+
+	for(auto const& nivel : niveles){
+		SDL_Texture* texturaNueva = cargarTextura(nivel->obtenerDireccionFondoActual() , renderizador);
+		texturasNiveles[nivel->obtenerDireccionFondoActual()] = texturaNueva;
+	}
+
+	texturaFondoActual = this->texturasNiveles[niveles.front()->obtenerDireccionFondoActual()];
+	direccionFondoActual = niveles.front()->obtenerDireccionFondoActual();
+
+}
 
 
 SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer* renderizador){
@@ -208,7 +221,8 @@ SDL_Texture* CargadorTexturas::obtenerTexturaSorpresa(){
 }
 
 SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
-	return texturaFondoActual;
+
+	return this->texturasNiveles[this->direccionFondoActual];
 }
 
 SDL_Texture* CargadorTexturas::obtenerTexturaFuente(){

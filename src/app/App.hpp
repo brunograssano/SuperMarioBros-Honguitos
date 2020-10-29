@@ -29,6 +29,8 @@ class App{
 			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
+			cargadorTexturas->cargarTexturasNiveles(archivoLeido->niveles, renderizador);
+
 			juego = Juego::getInstance(archivoLeido->niveles);
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 

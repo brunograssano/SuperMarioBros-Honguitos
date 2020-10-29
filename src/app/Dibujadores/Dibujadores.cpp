@@ -1,4 +1,4 @@
-#include "Dibujadores.h"
+#include "Dibujadores.hpp"
 
 Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){ // @suppress("Class members should be properly initialized")
 	this->dibujadorGameOver = new DibujadorGameOver(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);

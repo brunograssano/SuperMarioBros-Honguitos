@@ -1,4 +1,4 @@
-#include "DibujadorGameOver.h"
+#include "DibujadorGameOver.hpp"
 
 
 DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){

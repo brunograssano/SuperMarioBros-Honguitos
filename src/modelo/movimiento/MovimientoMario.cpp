@@ -1,4 +1,4 @@
-#include "MovimientoMario.h"
+#include "MovimientoMario.hpp"
 
 const float MAXIMA_VELOCIDAD_X = 5;
 const float ACELERACION_X = 0.3;

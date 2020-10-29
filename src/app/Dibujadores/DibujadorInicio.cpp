@@ -1,4 +1,4 @@
-#include "DibujadorInicio.h"
+#include "DibujadorInicio.hpp"
 
 DibujadorInicio::DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;

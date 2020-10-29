@@ -1,5 +1,5 @@
 
-#include "SpriteKoopa.h"
+#include "SpriteKoopa.hpp"
 
 SpriteKoopa::SpriteKoopa(string direccionImagen){
 	direccionTextura = direccionImagen;

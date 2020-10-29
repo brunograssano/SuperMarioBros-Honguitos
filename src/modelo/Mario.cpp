@@ -1,6 +1,7 @@
-#include "Mario.h"
-#include "../log/Log.h"
+#include "Mario.hpp"
+
 #include <cmath>
+#include "../log/Log.hpp"
 
 const int COORDENADA_X_DEFAULT = 20;
 const int COORDENADA_Y_DEFAULT = 0;

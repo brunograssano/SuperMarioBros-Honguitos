@@ -1,7 +1,7 @@
-#include "DibujadorJuego.h"
+#include "DibujadorJuego.hpp"
 
-#include "../App.h"
-#include "Dibujadores.h"
+#include "../App.hpp"
+#include "Dibujadores.hpp"
 
 
 const int ALTURA_SDL_PISO_MARIO = 458, ALTURA_SDL_PISO_ENEMIGOS = 472, ALTURA_SDL_PISO_BLOQUES = 800, ALTURA_SDL_PISO_MONEDAS = 600;

@@ -5,8 +5,8 @@ using namespace std;
 #include <string>
 #include "../pugixml.hpp"
 #include "../ArchivoLeido.hpp"
-#include "../../modelo/Enemigos/Goomba.h"
-#include "../../modelo/Enemigos/Koopa.h"
+#include "../../modelo/Enemigos/Goomba.hpp"
+#include "../../modelo/Enemigos/Koopa.hpp"
 
 class ParserEnemigo{
 	public:

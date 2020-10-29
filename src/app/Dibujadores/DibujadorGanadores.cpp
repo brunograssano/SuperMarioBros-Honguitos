@@ -1,4 +1,4 @@
-#include "DibujadorGanadores.h"
+#include "DibujadorGanadores.hpp"
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;

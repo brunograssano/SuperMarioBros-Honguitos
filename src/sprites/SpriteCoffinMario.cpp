@@ -1,4 +1,4 @@
-#include "SpriteCoffinMario.h"
+#include "SpriteCoffinMario.hpp"
 
 
 SpriteCoffinMario::SpriteCoffinMario(){

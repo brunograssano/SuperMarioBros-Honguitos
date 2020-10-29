@@ -1,5 +1,6 @@
+
 using namespace std;
-#include "LectorTest.h"
+#include "LectorTest.hpp"
 #include "../lector/Lector.hpp"
 #include <iostream>
 

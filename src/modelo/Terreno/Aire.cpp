@@ -1,4 +1,4 @@
-#include "Aire.h"
+#include "Aire.hpp"
 float Aire::aplicarCoeficienteDeRozamiento(float velocidadX){
 	if(velocidadX < 0)
 		return (velocidadX + coeficienteDeRozamiento);

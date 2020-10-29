@@ -1,4 +1,4 @@
-#include "MovimientoHorizontal.h"
+#include "MovimientoHorizontal.hpp"
 
 const float COEFICIENTE_DE_TIEMPO = 1;
 

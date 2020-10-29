@@ -1,4 +1,5 @@
-#include "Tierra.h"
+#include "Tierra.hpp"
+
 #include "../../reproductorDeMusica/ReproductorMusica.hpp"
 
 float Tierra::aplicarCoeficienteDeRozamiento(float velocidadX){

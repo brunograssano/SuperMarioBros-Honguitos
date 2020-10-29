@@ -4,8 +4,8 @@
 using namespace std;
 #include <string>
 #include <list>
-#include "../modelo/Nivel.h"
-#include "../log/TipoLog.h"
+#include "../modelo/Nivel.hpp"
+#include "../log/TipoLog.hpp"
 
 class ArchivoLeido{
 	public:

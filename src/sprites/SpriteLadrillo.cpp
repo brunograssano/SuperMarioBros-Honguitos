@@ -1,5 +1,5 @@
 
-#include "SpriteLadrillo.h"
+#include "SpriteLadrillo.hpp"
 
 SpriteLadrillo::SpriteLadrillo(string direccionTextura){
 	this->direccionTextura = direccionTextura;

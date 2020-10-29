@@ -5,13 +5,13 @@ using namespace std;
 
 #include <SDL2/SDL.h>
 
-#include "App.h"
+#include "App.hpp"
 #include "../lector/Lector.hpp"
 
-#include "../log/Log.h"
-#include "../log/Error.h"
-#include "../log/Debug.h"
-#include "../log/Info.h"
+#include "../log/Log.hpp"
+#include "../log/Error.hpp"
+#include "../log/Debug.hpp"
+#include "../log/Info.hpp"
 
 const int LARGO_ENTRADA = 150;
 

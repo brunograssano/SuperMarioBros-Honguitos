@@ -3,7 +3,7 @@
 
 using namespace std;
 #include <string>
-#include "../log/Log.h"
+#include "../log/Log.hpp"
 #include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

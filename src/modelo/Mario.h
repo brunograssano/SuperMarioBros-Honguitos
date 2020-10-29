@@ -22,7 +22,6 @@ class Mario{
 		int obtenerPosicionY();
 		void aceleraraIzquierda();
 		void aceleraraDerecha();
-		void saltar();
 		bool estaQuietoX();
 		bool estaEnElPiso();
 		void actualizarPosicion();

@@ -356,9 +356,8 @@ void SpriteMario::actualizarSpriteMarioIzquierda(Mario* mario) {
     if (estaCorriendo(mario,false)) { return; }
 }
 
-void SpriteMario::actualizarSpriteMarioSaltar(Mario* mario) {
+void SpriteMario::actualizarSpriteMarioSaltar() {
 
-    mario->saltar();
     if (estadoActual >= 7 && estadoActual <= 10) {
         estadoActual = 12;
         proximoEstado = 12;
@@ -380,7 +379,7 @@ void SpriteMario::actualizarSpriteMarioSaltar(Mario* mario) {
     }
 }
 
-void SpriteMario::actualizarSpriteMarioAgacharse(Mario* mario) {
+void SpriteMario::actualizarSpriteMarioAgacharse() {
 
     // Reinicia el temporizador
     temporizadorMarioAgachado = 0;

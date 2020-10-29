@@ -22,11 +22,12 @@ SpriteMario* Mario::obtenerSpite(){
 }
 
 void Mario::actualizarSaltarMario(){
-	spriteMario->actualizarSpriteMarioSaltar(this);
+	movimiento->saltar();
+	spriteMario->actualizarSpriteMarioSaltar();
 }
 
 void Mario::actualizarAgacharseMario(){
-	spriteMario->actualizarSpriteMarioAgacharse(this);
+	spriteMario->actualizarSpriteMarioAgacharse();
 }
 
 void Mario::actualizarIzquierdaMario(){
@@ -96,10 +97,6 @@ void Mario::actualizarPosicion(){
 	}
 	spriteMario->actualizarSprite(this);
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
-}
-
-void Mario::saltar(){
-	this->movimiento->saltar();
 }
 
 bool Mario::estaQuietoX(){

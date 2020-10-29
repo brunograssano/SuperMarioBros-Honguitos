@@ -9,15 +9,17 @@
 
 using namespace std;
 
-#include "../modelo/Juego.h"
-#include "CargadorTexturas.h"
-#include "../sprites/SpriteMario.h"
+#include "../../modelo/Juego.h"
+#include "../../sprites/SpriteMario.h"
+#include "Dibujador.h"
 
-
-class DibujadorJuego{
+class DibujadorJuego : public Dibujador{
 	public:
 		DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador,SpriteMario* spriteMario, int ancho_pantalla,int alto_pantalla);
 		void dibujar(SDL_Rect* rectanguloCamara);
+		void dibujar() override{
+			// TODO: Esto está feo.
+		}
 		~DibujadorJuego();
 	private:
 		Uint32 tiempoDeInicio = 0;
@@ -25,10 +27,7 @@ class DibujadorJuego{
 		stringstream textoDeNivel;
 		stringstream textoDePuntos;
 
-		int alto_pantalla;
-		int ancho_pantalla;
-		CargadorTexturas* cargadorTexturas;
-		SDL_Renderer* renderizador;
+
 		SDL_Rect rectanguloCamara;
 		Juego* juego;
 		SpriteMario* spriteMario;
@@ -38,7 +37,6 @@ class DibujadorJuego{
 		void dibujarMonedas(SDL_Rect* rectanguloCamara);
 		void dibujarMario(SDL_Rect* rectanguloCamara);
 		void dibujarTexto();
-		void renderizarTexto(SDL_Rect renderQuad,string textoAMostrar );
 
 };
 

@@ -37,20 +37,6 @@ void DibujadorGameOver::dibujar(){
 	SDL_RenderPresent(renderizador);
 }
 
-void DibujadorGameOver::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar ){
-	SDL_Rect* clip = NULL;
-	double angle = 0.0;
-	SDL_Point* center = NULL;
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-
-	SDL_SetRenderDrawColor( renderizador, 0x0, 0x0, 0x0, 255);
-
-	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoAMostrar, renderizador);
-
-	SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
-	SDL_DestroyTexture(texto);
-}
-
 DibujadorGameOver::~DibujadorGameOver(){
 	delete this->spriteCoffinMario;
 }

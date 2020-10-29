@@ -8,7 +8,7 @@
 #include <sstream>
 using namespace std;
 
-#include "Dibujador.h"
+#include "Dibujadores/Dibujadores.h"
 #include "../modelo/Juego.h"
 #include "CargadorTexturas.h"
 #include "../sprites/SpriteMario.h"
@@ -39,7 +39,7 @@ class App{
 			terminoElJuego = false;
 			comenzoElJuego = false;
 			ganaron = false;
-			dibujador = new Dibujador(cargadorTexturas,renderizador,spriteMario,ancho_pantalla,alto_pantalla);
+			dibujador = new Dibujadores(cargadorTexturas,renderizador,spriteMario,ancho_pantalla,alto_pantalla);
 
 			log->mostrarMensajeDeInfo("Inicio del juego");
 			delete archivoLeido;
@@ -52,7 +52,7 @@ class App{
 		SDL_Renderer* renderizador;
 		SpriteMario* spriteMario;
 		SDL_Rect rectanguloCamara;
-		Dibujador* dibujador;
+		Dibujadores* dibujador;
 		int tiempoFaltante;
 		int tiempoDeInicio;
 		int posicionFinalNivel;

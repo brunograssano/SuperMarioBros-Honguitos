@@ -1,5 +1,5 @@
-#include "Dibujador.h"
-#include "App.h"
+#include "../App.h"
+#include "Dibujadores.h"
 
 
 const int ALTURA_SDL_PISO_MARIO = 458, ALTURA_SDL_PISO_ENEMIGOS = 472, ALTURA_SDL_PISO_BLOQUES = 800, ALTURA_SDL_PISO_MONEDAS = 600;
@@ -105,21 +105,6 @@ void DibujadorJuego::dibujarTexto(){
 	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str());
 	renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
 }
-
-void DibujadorJuego::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar ){
-	SDL_Rect* clip = NULL;
-	double angle = 0.0;
-	SDL_Point* center = NULL;
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-
-	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
-
-	SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoAMostrar, renderizador);
-
-	SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
-	SDL_DestroyTexture(texto);
-}
-
 
 DibujadorJuego::~DibujadorJuego(){
 

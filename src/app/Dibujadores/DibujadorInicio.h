@@ -7,22 +7,15 @@
 #include <string>
 #include <sstream>
 
-#include "CargadorTexturas.h"
+#include "Dibujador.h"
 
-
-class DibujadorInicio{
+class DibujadorInicio : public Dibujador{
 
 	public:
 		DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
-		void dibujar();
+		void dibujar() override;
 		~DibujadorInicio();
 
-	private:
-		CargadorTexturas* cargadorTexturas;
-		SDL_Renderer* renderizador;
-		int ancho_pantalla;
-		int alto_pantalla;
-		void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar);
 };
 
 #endif /* SRC_APP_DIBUJADORINICIO_H_ */

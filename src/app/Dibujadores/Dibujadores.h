@@ -1,5 +1,5 @@
-#ifndef SRC_APP_DIBUJADOR_H_
-#define SRC_APP_DIBUJADOR_H_
+#ifndef SRC_APP_DIBUJADORES_H_
+#define SRC_APP_DIBUJADORES_H_
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -9,24 +9,24 @@
 
 using namespace std;
 
-#include "../modelo/Juego.h"
-#include "CargadorTexturas.h"
-#include "../sprites/SpriteMario.h"
+#include "../../modelo/Juego.h"
+#include "../CargadorTexturas.h"
+#include "../../sprites/SpriteMario.h"
 
 #include "DibujadorGameOver.h"
 #include "DibujadorInicio.h"
 #include "DibujadorGanadores.h"
 #include "DibujadorJuego.h"
 
-class Dibujador{
+class Dibujadores{
 
 	public:
-		Dibujador(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, SpriteMario* spriteMario, int ancho_pantalla, int alto_pantalla);
+		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, SpriteMario* spriteMario, int ancho_pantalla, int alto_pantalla);
 		void dibujarJuego(SDL_Rect* rectanguloCamara);
 		void dibujarGameOver();
 		void dibujarInicio();
 		void dibujarPantallaGanadores();
-		~Dibujador();
+		~Dibujadores();
 
 	private:
 		DibujadorGameOver* dibujadorGameOver;
@@ -37,4 +37,4 @@ class Dibujador{
 
 
 
-#endif /* SRC_APP_DIBUJADOR_H_ */
+#endif /* SRC_APP_DIBUJADORES_H_ */

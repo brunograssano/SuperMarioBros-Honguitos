@@ -7,21 +7,15 @@
 #include <string>
 #include <sstream>
 
-#include "CargadorTexturas.h"
-#include "../modelo/Juego.h"
+#include "Dibujador.h"
+#include "../../modelo/Juego.h"
 
-class DibujadorGanadores{
+class DibujadorGanadores : public Dibujador{
 	public:
 		DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
-		void dibujar();
+		void dibujar() override;
 		~DibujadorGanadores();
 
-	private:
-		CargadorTexturas* cargadorTexturas;
-		SDL_Renderer* renderizador;
-		int ancho_pantalla;
-		int alto_pantalla;
-		void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar);
 };
 
 

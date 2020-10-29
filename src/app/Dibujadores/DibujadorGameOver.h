@@ -8,23 +8,18 @@
 #include <string>
 #include <sstream>
 
-#include "CargadorTexturas.h"
-#include "../sprites/SpriteCoffinMario.h"
-#include "../sprites/Sprite.h"
+#include "Dibujador.h"
+#include "../../sprites/SpriteCoffinMario.h"
+#include "../../sprites/Sprite.h"
 
-class DibujadorGameOver{
+class DibujadorGameOver : public Dibujador{
 
 	public:
 		DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
-		void dibujar();
+		void dibujar() override;
 		~DibujadorGameOver();
 
 	private:
-		void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar );
-		int alto_pantalla;
-		int ancho_pantalla;
-		CargadorTexturas* cargadorTexturas;
-		SDL_Renderer* renderizador;
 		SpriteCoffinMario* spriteCoffinMario;
 };
 

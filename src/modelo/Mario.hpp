@@ -20,8 +20,6 @@ class Mario{
 		SpriteMario* obtenerSpite();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
-		void aceleraraIzquierda();
-		void aceleraraDerecha();
 		bool estaQuietoX();
 		bool estaEnElPiso();
 		void actualizarPosicion();

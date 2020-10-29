@@ -33,10 +33,12 @@ void Mario::actualizarAgacharseMario(){
 
 void Mario::actualizarIzquierdaMario(){
 	spriteMario->actualizarSpriteMarioIzquierda(this);
+	movimiento->aceleraraIzquierda();
 }
 
 void Mario::actualizarDerechaMario(){
 	spriteMario->actualizarSpriteMarioDerecha(this);
+	movimiento->aceleraraDerecha();
 }
 
 
@@ -82,14 +84,6 @@ void Mario::reiniciarPosicion(){
 			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
 }
 
-
-void Mario::aceleraraIzquierda(){
-	this->movimiento->aceleraraIzquierda();
-}
-
-void Mario::aceleraraDerecha(){
-	this->movimiento->aceleraraDerecha();
-}
 
 void Mario::actualizarPosicion(){
 	this->movimiento->mover(this->posicion);

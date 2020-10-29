@@ -72,7 +72,7 @@ class App{
 		static App *getInstance(ArchivoLeido* archivoLeido);
 
 
-		void actualizar(SDL_Event evento);
+		void actualizar(const Uint8 *keystate);
 		void actualizar();
 		void moverCamara(Mario* jugador);
 		int obtenerTiempoFaltante();

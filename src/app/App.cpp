@@ -58,10 +58,10 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 	alto_pantalla = posibleAltoVentana;
 }
 
-void App::actualizar(SDL_Event evento){
+void App::actualizar(const Uint8 *keystate){
 
 	if(!comenzoElJuego){
-		if(evento.key.keysym.sym == SDLK_RETURN){
+		if(keystate[SDL_SCANCODE_RETURN]){
 			comenzoElJuego = true;
 			tiempoDeInicio = SDL_GetTicks();
 			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
@@ -69,20 +69,20 @@ void App::actualizar(SDL_Event evento){
 	}
 	else if(!terminoElJuego){
 		Mario* jugador = Juego::getInstance()->obtenerMario();
-		switch(evento.key.keysym.sym){
-			case SDLK_UP:
-			case SDLK_SPACE:
-				jugador->actualizarSaltarMario();
-			break;
-			case SDLK_DOWN:
-				jugador->actualizarAgacharseMario();
-			break;
-			case SDLK_LEFT:
-				jugador->actualizarIzquierdaMario();
-			break;
-			case SDLK_RIGHT:
-				jugador->actualizarDerechaMario();
-			break;
+		if(keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_UP]){
+			jugador->actualizarSaltarMario();
+		}
+
+		if(keystate[SDL_SCANCODE_DOWN]){
+			jugador->actualizarAgacharseMario();
+		}
+
+		if(keystate[SDL_SCANCODE_LEFT]){
+			jugador->actualizarIzquierdaMario();
+		}
+
+		if(keystate[SDL_SCANCODE_RIGHT]){
+			jugador->actualizarDerechaMario();
 		}
 	}
 }

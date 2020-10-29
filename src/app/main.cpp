@@ -2,7 +2,9 @@
 #include <string>
 #include <string.h>
 using namespace std;
+
 #include <SDL2/SDL.h>
+
 #include "App.h"
 #include "../lector/Lector.hpp"
 
@@ -92,14 +94,19 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	}
 
 	bool salir = false;
-	SDL_Event evento;
+	SDL_Event event;
 	while(!salir){
-		while(SDL_PollEvent( &evento ) != 0){
-			if( evento.type == SDL_QUIT ){
+		while(SDL_PollEvent(&event) ){
+			if( event.type == SDL_QUIT ){
 				salir = true;
-			}else{
-				aplicacion->actualizar(evento);
 			}
+		}
+		SDL_PumpEvents();
+		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
+		if(keyboard_state_array[SDL_SCANCODE_ESCAPE]){
+			salir = true;
+		}else{
+			aplicacion->actualizar(keyboard_state_array);
 		}
 		aplicacion->actualizar();
 		aplicacion->dibujar();

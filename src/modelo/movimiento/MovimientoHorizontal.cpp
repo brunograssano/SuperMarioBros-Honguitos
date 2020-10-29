@@ -3,7 +3,7 @@
 const float COEFICIENTE_DE_TIEMPO = 1;
 
 bool velocidadBaja(float velocidad){
-	return(velocidad < 1 && velocidad > -1);
+	return(velocidad < 0.5 && velocidad > -0.5);
 }
 
 MovimientoHorizontal::MovimientoHorizontal(float maximaVelocidad, float aceleracion){

@@ -70,8 +70,8 @@ void App::actualizar(const Uint8 *keystate){
 		if(keystate[SDL_SCANCODE_RETURN]){
 			comenzoElJuego = true;
 			tiempoDeInicio = SDL_GetTicks();
+			ReproductorMusica::getInstance()->ReproducirInicioJuego();
 			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
-			ReproductorMusica::getInstance()->ReproducirSonidoAgarrarMoneda(); 							//TODO: cambiarlo por un sonido más icónico.
 		}
 	}
 	else if(!terminoElJuego){
@@ -113,6 +113,7 @@ void App::revisarSiTerminoNivel(Mario* jugador){
 		juego->sumarPuntosAJugadores(tiempoFaltante);
 		ganaron = true;
 		Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
+		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.wav"); //TODO: refactorizar a otro método.
 	}
 	else if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual()){
 		rectanguloCamara.x= 0;

@@ -20,6 +20,8 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaLadrillo();
 		SDL_Texture* obtenerTexturaSorpresa();
 		SDL_Texture* obtenerTexturaCoffinMario();
+		SDL_Texture* obtenerTexturaFondoInicio();
+		SDL_Texture* obtenerTexturaTitulo();
 		SDL_Texture* obtenerTexturaFondoGameOver();
 
 		SDL_Texture* obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador);
@@ -44,6 +46,8 @@ class CargadorTexturas{
 		SDL_Texture* texturaFondoActual = NULL;
 		SDL_Texture* texturaFuenteJuego = NULL;
 		SDL_Texture* texturaCoffinMario = NULL;
+		SDL_Texture* texturaFondoInicio = NULL;
+		SDL_Texture* texturaTitulo = NULL;
 		SDL_Texture* texturaFondoGameOver = NULL;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;

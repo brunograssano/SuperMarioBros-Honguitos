@@ -57,13 +57,23 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	else{
 		log->mostrarMensajeDeCarga("Sorpresa", "resources/BloqueSorpresa.png");
 	}
-	texturaCoffinMario = cargarTextura("resources/MarioCoffinDance.png", renderizador);
-	if(texturaCoffinMario == NULL){
-		log->huboUnError("No se pudo cargar la imagen de Coffin Mario en: resources/MarioCoffinDance.png");
+
+	texturaFondoInicio = cargarTextura("resources/fondoInicio.png", renderizador);
+	if(texturaFondoInicio == NULL){
+		log->huboUnError("No se pudo cargar el fondo del inicio del juego en: resources/fondoInicio.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("CoffinMario", "resources/MarioCoffinDance.png");
+		log->mostrarMensajeDeCarga("FondoInicio", "resources/fondoInicio.png");
 	}
+
+	texturaTitulo = cargarTextura("resources/Super_Mario_Bros_Titulo.png", renderizador);
+	if(texturaTitulo == NULL){
+		log->huboUnError("No se pudo cargar el fondo del inicio del juego en: resources/Super_Mario_Bros_Titulo.png");
+	}
+	else{
+		log->mostrarMensajeDeCarga("Titulo", "resources/Super_Mario_Bros_Titulo.png");
+	}
+
 	texturaFondoGameOver = cargarTextura("resources/fondoGameOver.png", renderizador);
 	if(texturaFondoGameOver == NULL){
 		log->huboUnError("No se pudo cargar el fondo del final del juego en: resources/fondoGameOver.png");
@@ -71,6 +81,17 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	else{
 		log->mostrarMensajeDeCarga("FondoGameOver", "resources/fondoGameOver.png");
 	}
+
+	texturaCoffinMario = cargarTextura("resources/MarioCoffinDance.png", renderizador);
+	if(texturaCoffinMario == NULL){
+		log->huboUnError("No se pudo cargar la imagen de Coffin Mario en: resources/MarioCoffinDance.png");
+	}
+	else{
+		log->mostrarMensajeDeCarga("CoffinMario", "resources/MarioCoffinDance.png");
+	}
+
+
+
 
 	int tamanioFuente = 20;
 	string direccionFuente = "resources/fuenteSuperMarioBros.ttf";
@@ -207,6 +228,12 @@ SDL_Texture* CargadorTexturas::obtenerTexturaCoffinMario(){
 	return texturaCoffinMario;
 }
 
+SDL_Texture* CargadorTexturas::obtenerTexturaFondoInicio(){
+	return texturaFondoInicio;
+}
+SDL_Texture* CargadorTexturas::obtenerTexturaTitulo(){
+	return texturaTitulo;
+}
 SDL_Texture* CargadorTexturas::obtenerTexturaFondoGameOver(){
 	return texturaFondoGameOver;
 }

@@ -37,6 +37,7 @@ class App{
 			posicionFinalNivel = 5000;
 			tiempoFaltante = 0;
 			tiempoDeInicio = 0;
+			sePusoMusicaInicio = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
 			ganaron = false;
@@ -61,6 +62,7 @@ class App{
 		void inicializarSDL(Log* log);
 		void determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana);
 
+		bool sePusoMusicaInicio;
 		bool terminoElJuego;
 		bool comenzoElJuego;
 		bool ganaron;

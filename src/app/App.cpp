@@ -61,11 +61,17 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 
 void App::actualizar(const Uint8 *keystate){
 
+	if(!sePusoMusicaInicio){
+		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaInicio.mp3"); //TODO: refactorizar a otro método.
+		sePusoMusicaInicio = true;
+	}
+
 	if(!comenzoElJuego){
 		if(keystate[SDL_SCANCODE_RETURN]){
 			comenzoElJuego = true;
 			tiempoDeInicio = SDL_GetTicks();
 			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
+			ReproductorMusica::getInstance()->ReproducirSonidoAgarrarMoneda(); 							//TODO: cambiarlo por un sonido más icónico.
 		}
 	}
 	else if(!terminoElJuego){

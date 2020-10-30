@@ -15,7 +15,17 @@ class ReproductorMusica{
 		void ReproducirMusicaNivel(string nombreCancion);
 		void ReproducirSonidoSalto();
 		void ReproducirSonidoAgarrarMoneda();
-		void ReproducirInicioJuego();
+		void ReproducirSonidoInicioJuego();
+		void ReproducirSonidoSumarVida();
+		void ReproducirSonidoRomperBloque();
+		void ReproducirSonidoMarioMataGoomba();
+		void ReproducirSonidoMarioChicoGolpeaLadrillo();
+		void ReproducirSonidoMarioLanzaFuego();
+		void ReproducirSonidoBandera();
+		void ReproducirSonidoAparecePlanta();
+		void ReproducirSonidoMarioAgarraHongo();
+		void ReproducirSonidoApareceHongo();
+		void ReproducirSonidoMarioPisaKoopa();
 		~ReproductorMusica();
 	private:
 		static ReproductorMusica* reproductor;

@@ -10,6 +10,7 @@ ReproductorMusica::ReproductorMusica(){
 	map<string,string> nombresSonidos;
 	nombresSonidos.insert(std::pair<string,string>("EfectoSalto","resources/Musica/EfectosSonido/EfectoSalto.wav"));
 	nombresSonidos.insert(std::pair<string,string>("AgarrarMoneda","resources/Musica/EfectosSonido/AgarrarMoneda.wav"));
+	nombresSonidos.insert(std::pair<string,string>("InicioJuego","resources/Musica/EfectosSonido/InicioJuego.wav"));
 
 	string nombreArchivo;
 	Mix_Chunk* efecto =nullptr;
@@ -77,6 +78,10 @@ void ReproductorMusica::ReproducirSonidoSalto(){
 
 void ReproductorMusica::ReproducirSonidoAgarrarMoneda(){
 	Mix_Chunk* efecto = efectosDeSonido.at("AgarrarMoneda");
+	Mix_PlayChannel( -1, efecto, 0 );
+}
+void ReproductorMusica::ReproducirInicioJuego(){
+	Mix_Chunk* efecto = efectosDeSonido.at("InicioJuego");
 	Mix_PlayChannel( -1, efecto, 0 );
 }
 

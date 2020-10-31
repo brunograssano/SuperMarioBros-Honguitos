@@ -22,7 +22,6 @@ class Nivel{
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
 			this->puntoBanderaFin = 0;
-
 			this->altoNivel = 0;
 
 		}

@@ -12,7 +12,7 @@
     	<nivel>
             <mundo>1</mundo>
             <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
-            <cantidadMonedas>25</cantidadMonedas> 
+            <cantidadMonedas>8000</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>7650</puntoBanderaFin>     <!--En px-->
             <enemigos>
@@ -20,7 +20,7 @@
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <direccionImagen>resources/Goomba.png</direccionImagen>
-                    <cantidad>10</cantidad>
+                    <cantidad>2500</cantidad>
                 </enemigo>
 
                 <enemigo>

@@ -11,7 +11,7 @@ SpriteLadrillo::SpriteLadrillo(string direccionTextura){
 }
 
 SpriteLadrillo::SpriteLadrillo(){
-	direccionTextura = "resources/BloqueLadrillo.png";
+	direccionTextura = "resources/Imagenes/Bloques/BloqueLadrillo.png";
 	this->rectanguloLadrillo.x = 0;
 	this->rectanguloLadrillo.y = 0;
 	this->rectanguloLadrillo.w = 16;

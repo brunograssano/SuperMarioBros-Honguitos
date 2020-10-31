@@ -2,7 +2,7 @@
 #include "SpriteMoneda.hpp"
 
 SpriteMoneda::SpriteMoneda(){
-	this->direccionTextura = "resources/Monedas.png";
+	this->direccionTextura = "resources/Imagenes/Bloques/Monedas.png";
 	this->ciclos = 0;
 	this->estadoActual = 2;
 	int desplazamiento = 0;

@@ -61,7 +61,7 @@ TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
 int main( int cantidadArgumentos, char* argumentos[] ){
 
 	Lector* lector = new Lector();
-	string direccionLecturaDefault = "resources/configuracionDefault.xml";
+	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	char direccionLecturaComando[LARGO_ENTRADA] = "";
 	char nivelLogEntrada[LARGO_ENTRADA] = "";
 	ArchivoLeido* archivoLeido;

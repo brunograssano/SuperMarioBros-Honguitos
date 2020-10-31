@@ -6,8 +6,8 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
 
-	string listaParticulas[]={"resources/Particulas/confetiAzul.png","resources/Particulas/confetiAmarillo.png",
-							  "resources/Particulas/confetiRosa.png","resources/Particulas/confetiVerde.png"};
+	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
+							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
 	for(int i=0;i<700;i++){
 		int posX = rand() % ancho_pantalla;
 		int posY = rand() % alto_pantalla;

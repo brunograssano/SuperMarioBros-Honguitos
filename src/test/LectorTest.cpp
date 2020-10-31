@@ -23,7 +23,7 @@ void LectorTest::test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite)
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/modeloXML.xml";
+	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
@@ -39,7 +39,7 @@ void LectorTest::test02CuandoLePedisAlLectorQueLeaTraeElAlto(Assert* testSuite){
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/modeloXML.xml";
+	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
@@ -54,7 +54,7 @@ void LectorTest::test03CuandoLePedisAlLectorElArchivoSeLeeCorrectamente(Assert* 
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/modeloXML.xml";
+	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
@@ -69,7 +69,7 @@ void LectorTest::test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMen
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/modeloXML.xml";
+	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
@@ -108,7 +108,7 @@ void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/archivoMalFormato.xml";
+	string archivoALeer = "resources/ArchivosXML/archivoMalFormato.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
@@ -131,7 +131,7 @@ void LectorTest::test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanza
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/archivoAnchoMalEnviado.xml";
+	string archivoALeer = "resources/ArchivosXML/archivoAnchoMalEnviado.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 
@@ -156,7 +156,7 @@ void LectorTest::test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanza
 
 	Lector* lector = new Lector();
 
-	string archivoALeer = "resources/archivoAltoMalEnviado.xml";
+	string archivoALeer = "resources/ArchivosXML/archivoAltoMalEnviado.xml";
 
 	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
 

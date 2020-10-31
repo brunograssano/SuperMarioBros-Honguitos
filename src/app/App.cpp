@@ -37,7 +37,7 @@ void App::inicializarSDL(Log* log){
 		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
 	}
 
-	string direccion = "resources/IconoHongo.png";
+	string direccion = "resources/Imagenes/Personajes/IconoHongo.png";
 	SDL_Surface* icono = IMG_Load(direccion.c_str());
 	if(icono == NULL){
 		log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());

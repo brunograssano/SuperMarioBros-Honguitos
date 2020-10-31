@@ -9,9 +9,6 @@ void Juego::inicializar(){
 }
 
 Juego* Juego::getInstance(){
-	/*if(instanciaJuego==nullptr){
-		instanciaJuego = new Juego("");
-	}*/
 	return instanciaJuego;
 }
 

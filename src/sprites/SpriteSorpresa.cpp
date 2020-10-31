@@ -2,7 +2,7 @@
 #include "SpriteSorpresa.hpp"
 
 SpriteSorpresa::SpriteSorpresa(){
-	direccionTextura = "resources/BloqueSorpresa.png";
+	direccionTextura = "resources/Imagenes/Bloques/BloqueSorpresa.png";
 	estadoActual = 0;
 	ciclos=0;
 	int corrimientoEnImagen = 0;

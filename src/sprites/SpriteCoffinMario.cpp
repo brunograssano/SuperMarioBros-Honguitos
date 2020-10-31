@@ -2,7 +2,7 @@
 
 
 SpriteCoffinMario::SpriteCoffinMario(){
-	direccionTextura = "resources/MarioCoffinDance.png";
+	direccionTextura = "resources/Imagenes/Personajes/MarioCoffinDance.png";
 	estadoActual = 0;
 	ciclos = 0;
 	posicionX = 0;

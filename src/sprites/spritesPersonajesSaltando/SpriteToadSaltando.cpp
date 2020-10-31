@@ -3,7 +3,7 @@
 
 
 SpriteToadSaltando::SpriteToadSaltando(){
-	direccionTextura = "resources/PersonajesSaltando/HonguitoSaltando.png";
+	direccionTextura = "resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png";
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
 	for(int i=0;i<12;i++){

@@ -25,74 +25,74 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
 
-	texturaMario = cargarTextura("resources/mario_grande.png",renderizador);
+	texturaMario = cargarTextura("resources/Imagenes/Personajes/mario_grande.png",renderizador);
 	if( texturaMario == NULL ){
-		log->huboUnError("No se pudo cargar ninguna imagen de Mario en: resources/resources/mario_grande.png.png");
+		log->huboUnError("No se pudo cargar ninguna imagen de Mario en: resources/Imagenes/Personajes/mario_grande.png");
 
 	}
 	else{
-		log->mostrarMensajeDeCarga("Mario", "resources/resources/mario_grande.png.png");
+		log->mostrarMensajeDeCarga("Mario", "resources/Imagenes/Personajes/mario_grande.png");
 	}
 
-	texturaMoneda = cargarTextura("resources/Monedas.png",renderizador);
+	texturaMoneda = cargarTextura("resources/Imagenes/Bloques/Monedas.png",renderizador);
 	if(texturaMoneda == NULL){
-		log->huboUnError("No se pudo cargar ninguna imagen de las monedas en: resources/Monedas.png");
+		log->huboUnError("No se pudo cargar ninguna imagen de las monedas en: resources/Imagenes/Bloques/Monedas.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("Moneda", "resources/Monedas.png");
+		log->mostrarMensajeDeCarga("Moneda", "resources/Imagenes/Bloques/Monedas.png");
 	}
 
-	texturaLadrillo = cargarTextura( "resources/BloqueLadrillo.png" ,renderizador);
+	texturaLadrillo = cargarTextura( "resources/Imagenes/Bloques/BloqueLadrillo.png" ,renderizador);
 	if( texturaLadrillo == NULL ){
-		log->huboUnError("No se pudo cargar ninguna imagen del bloque ladrillo en: resources/BloqueLadrillo.png");
+		log->huboUnError("No se pudo cargar ninguna imagen del bloque ladrillo en: resources/Imagenes/Bloques/BloqueLadrillo.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("Ladrillo", "resources/BloqueLadrillo.png");
+		log->mostrarMensajeDeCarga("Ladrillo", "resources/Imagenes/Bloques/BloqueLadrillo.png");
 	}
 
-	texturaSorpresa = cargarTextura("resources/BloqueSorpresa.png",renderizador);
+	texturaSorpresa = cargarTextura("resources/Imagenes/Bloques/BloqueSorpresa.png",renderizador);
 	if(texturaSorpresa == NULL){
-		log->huboUnError("No se pudo cargar ninguna imagen del bloque sorpresa en: resources/BloqueSorpresa.png");
+		log->huboUnError("No se pudo cargar ninguna imagen del bloque sorpresa en: resources/Imagenes/Bloques/BloqueSorpresa.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("Sorpresa", "resources/BloqueSorpresa.png");
+		log->mostrarMensajeDeCarga("Sorpresa", "resources/Imagenes/Bloques/BloqueSorpresa.png");
 	}
 
-	texturaFondoInicio = cargarTextura("resources/fondoInicio.png", renderizador);
+	texturaFondoInicio = cargarTextura("resources/Imagenes/Niveles/fondoInicio.png", renderizador);
 	if(texturaFondoInicio == NULL){
-		log->huboUnError("No se pudo cargar el fondo del inicio del juego en: resources/fondoInicio.png");
+		log->huboUnError("No se pudo cargar el fondo del inicio del juego en: resources/Imagenes/Niveles/fondoInicio.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("FondoInicio", "resources/fondoInicio.png");
+		log->mostrarMensajeDeCarga("FondoInicio", "resources/Imagenes/Niveles/fondoInicio.png");
 	}
 
-	texturaTitulo = cargarTextura("resources/Super_Mario_Bros_Titulo.png", renderizador);
+	texturaTitulo = cargarTextura("resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
 	if(texturaTitulo == NULL){
-		log->huboUnError("No se pudo cargar el fondo del inicio del juego en: resources/Super_Mario_Bros_Titulo.png");
+		log->huboUnError("No se pudo cargar el fondo del inicio del juego en: resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("Titulo", "resources/Super_Mario_Bros_Titulo.png");
+		log->mostrarMensajeDeCarga("Titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png");
 	}
 
-	texturaFondoGameOver = cargarTextura("resources/fondoGameOver.png", renderizador);
+	texturaFondoGameOver = cargarTextura("resources/Imagenes/Niveles/fondoGameOver.png", renderizador);
 	if(texturaFondoGameOver == NULL){
-		log->huboUnError("No se pudo cargar el fondo del final del juego en: resources/fondoGameOver.png");
+		log->huboUnError("No se pudo cargar el fondo del final del juego en: resources/Imagenes/Niveles/fondoGameOver.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("FondoGameOver", "resources/fondoGameOver.png");
+		log->mostrarMensajeDeCarga("FondoGameOver", "resources/Imagenes/Niveles/fondoGameOver.png");
 	}
 
-	texturaCoffinMario = cargarTextura("resources/MarioCoffinDance.png", renderizador);
+	texturaCoffinMario = cargarTextura("resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
 	if(texturaCoffinMario == NULL){
-		log->huboUnError("No se pudo cargar la imagen de Coffin Mario en: resources/MarioCoffinDance.png");
+		log->huboUnError("No se pudo cargar la imagen de Coffin Mario en: resources/Imagenes/Personajes/MarioCoffinDance.png");
 	}
 	else{
-		log->mostrarMensajeDeCarga("CoffinMario", "resources/MarioCoffinDance.png");
+		log->mostrarMensajeDeCarga("CoffinMario", "resources/Imagenes/Personajes/MarioCoffinDance.png");
 	}
 
 
-	string listaParticulas[]={"resources/Particulas/confetiAzul.png","resources/Particulas/confetiAmarillo.png",
-							  "resources/Particulas/confetiRosa.png","resources/Particulas/confetiVerde.png"};
+	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
+							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
 
 	for(auto const& particula:listaParticulas){
 		SDL_Texture* particulaTextura = cargarTextura(particula, renderizador);
@@ -106,9 +106,9 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	}
 
 
-	string listaPersonajes[]={"resources/PersonajesSaltando/PeachSaltando.png",
-							  "resources/PersonajesSaltando/HonguitoSaltando.png",
-							  "resources/PersonajesSaltando/YoshiSaltando.png"};
+	string listaPersonajes[]={"resources/Imagenes/PersonajesSaltando/PeachSaltando.png",
+							  "resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png",
+							  "resources/Imagenes/PersonajesSaltando/YoshiSaltando.png"};
 
 	for(auto const& personaje:listaPersonajes){
 		SDL_Texture* personajeTextura = cargarTextura(personaje, renderizador);
@@ -122,13 +122,13 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	}
 
 	int tamanioFuente = 20;
-	string direccionFuente = "resources/fuenteSuperMarioBros.ttf";
+	string direccionFuente = "resources/Fuentes/fuenteSuperMarioBros.ttf";
 	fuenteJuego = TTF_OpenFont( direccionFuente.c_str(), tamanioFuente);
 	if(fuenteJuego==NULL){
-		log->huboUnErrorSDL("No se pudo cargar la fuente del juego en: ", "resources/fuenteSuperMarioBros.ttf");
+		log->huboUnErrorSDL("No se pudo cargar la fuente del juego en: ", "resources/Fuentes/fuenteSuperMarioBros.ttf");
 	}
 	else{
-		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/fuenteSuperMarioBros.ttf");
+		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/Fuentes/fuenteSuperMarioBros.ttf");
 	}
 
 

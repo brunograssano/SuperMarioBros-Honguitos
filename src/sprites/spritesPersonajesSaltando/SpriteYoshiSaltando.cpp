@@ -5,7 +5,7 @@
 
 
 SpriteYoshiSaltando::SpriteYoshiSaltando(){
-	direccionTextura = "resources/PersonajesSaltando/YoshiSaltando.png";
+	direccionTextura = "resources/Imagenes/PersonajesSaltando/YoshiSaltando.png";
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
 	for(int i=0;i<16;i++){

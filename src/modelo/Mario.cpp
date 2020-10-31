@@ -15,7 +15,7 @@ Mario::Mario(){
 	this->puntos=0;
 	this->cantidadMonedas = 0;
 	this->movimiento = new MovimientoMario();
-	this->spriteMario = new SpriteMario("../resources/mario_grande.png");
+	this->spriteMario = new SpriteMario("../resources/Imagenes/Personajes/mario_grande.png");
 }
 
 SpriteMario* Mario::obtenerSpite(){

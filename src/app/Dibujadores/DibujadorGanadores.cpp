@@ -17,6 +17,7 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 
 	spritePeach = new SpritePeachSaltando();
 	spriteToad = new SpriteToadSaltando();
+	spriteYoshi = new SpriteYoshiSaltando();
 }
 
 
@@ -60,12 +61,15 @@ void DibujadorGanadores::dibujarParticulas(){
 }
 
 void DibujadorGanadores::dibujarPersonajes(){
-	SDL_Rect rectanguloPeach = {40, alto_pantalla - (int)(alto_pantalla*0.1)-40 , 52, 80};
-	SDL_Rect rectanguloToad = {200, alto_pantalla - (int)(alto_pantalla*0.1)-40 , 52, 80};
+	SDL_Rect rectanguloPeach = {40, alto_pantalla - (int)(alto_pantalla*0.1)-80, 52, 80};
+	SDL_Rect rectanguloToad = {200, alto_pantalla - (int)(alto_pantalla*0.1)-83 , 52, 80};
+	SDL_Rect rectanguloYoshi = {400, alto_pantalla - (int)(alto_pantalla*0.1)-83, 52, 80};
 	SDL_Rect recortePeach = spritePeach->obtenerRectanguloActual();
 	SDL_Rect recorteToad = spriteToad->obtenerRectanguloActual();
+	SDL_Rect recorteYoshi = spriteYoshi->obtenerRectanguloActual();
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje(spritePeach->direccionImagen()), &recortePeach , &rectanguloPeach);
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje(spriteToad->direccionImagen()), &recorteToad , &rectanguloToad);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje(spriteYoshi->direccionImagen()), &recorteYoshi , &rectanguloYoshi);
 
 }
 
@@ -84,6 +88,7 @@ void DibujadorGanadores::dibujar(){
 	}
 	spritePeach->actualizarSprite();
 	spriteToad->actualizarSprite();
+	spriteYoshi->actualizarSprite();
 }
 
 DibujadorGanadores::~DibujadorGanadores(){

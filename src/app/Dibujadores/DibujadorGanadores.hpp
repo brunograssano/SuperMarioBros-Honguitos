@@ -11,6 +11,8 @@
 #include "Dibujador.hpp"
 #include "../../sprites/spritesPersonajesSaltando/SpritePeachSaltando.hpp"
 #include "../../sprites/spritesPersonajesSaltando/SpriteToadSaltando.hpp"
+#include "../../sprites/spritesPersonajesSaltando/SpriteYoshiSaltando.hpp"
+
 #include "../../modelo/Juego.hpp"
 #include "ParticulaGanadores.hpp"
 
@@ -27,6 +29,7 @@ class DibujadorGanadores : public Dibujador{
 
 		SpritePeachSaltando* spritePeach;
 		SpriteToadSaltando* spriteToad;
+		SpriteYoshiSaltando* spriteYoshi;
 		list<ParticulaGanadores*> particulas;
 };
 

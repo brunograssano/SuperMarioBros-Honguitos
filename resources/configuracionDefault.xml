@@ -12,7 +12,7 @@
     	<nivel>
             <mundo>1</mundo>
             <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
-            <cantidadMonedas>8000</cantidadMonedas> 
+            <cantidadMonedas>40</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
             <enemigos>
 

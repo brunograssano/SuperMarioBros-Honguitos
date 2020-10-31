@@ -49,19 +49,6 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 		cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
 	}
 
-	string puntoBanderaFinString = nivel.child_value("puntoBanderaFin");
-	try{
-		puntoBanderaFin = stoi(puntoBanderaFinString);
-		if(puntoBanderaFin < 0){
-			archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin ("+puntoBanderaFinString+") enviado no tiene valor valido,se carga el valor por defecto");
-			puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
-		}
-	}catch(const std::invalid_argument& error){
-		archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin ("+puntoBanderaFinString+") enviado no tiene valor valido,se carga el valor por defecto");
-		puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
-	}
-
-
 	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas);
 	archivoLeido->niveles.push_back(unNivel);
 	for (pugi::xml_node enemigos: nivel.children("enemigos"))

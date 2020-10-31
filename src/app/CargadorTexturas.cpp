@@ -106,6 +106,18 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	}
 
 
+	string listaPersonajes[]={"resources/PersonajesSaltando/PeachSaltando.png"};
+
+	for(auto const& personaje:listaPersonajes){
+		SDL_Texture* personajeTextura = cargarTextura(personaje, renderizador);
+		if(personajeTextura == NULL){
+			log->huboUnError("No se pudo cargar el personaje en: "+ personaje);
+		}
+		else{
+			log->mostrarMensajeDeCarga("Personaje", personaje);
+		}
+		texturasPersonajes[personaje]=personajeTextura;
+	}
 
 	int tamanioFuente = 20;
 	string direccionFuente = "resources/fuenteSuperMarioBros.ttf";
@@ -208,7 +220,9 @@ bool CargadorTexturas::tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<st
 	return true;
 }
 
-
+SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(string personaje){
+	return texturasPersonajes[personaje];
+}
 
 SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
 	if(!tengoTexturaCargadaEnMemoria(spriteBloque,texturasBloques)){
@@ -292,6 +306,9 @@ CargadorTexturas::~CargadorTexturas(){
 		SDL_DestroyTexture( parClaveParticula.second );
 	}
 
+	for (auto const& parClavePesonaje : texturasPersonajes){
+		SDL_DestroyTexture( parClavePesonaje.second );
+	}
 
 	TTF_CloseFont( fuenteJuego );
 	TTF_Quit();

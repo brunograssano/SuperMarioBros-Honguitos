@@ -14,6 +14,8 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 		float factorAvance = rand() % 3 + 1;
 		particulas.push_front(new ParticulaGanadores(posX,posY,listaParticulas[i%4],factorAvance));
 	}
+
+	spritePeach = new SpritePeachSaltando();
 }
 
 
@@ -56,6 +58,13 @@ void DibujadorGanadores::dibujarParticulas(){
 	}
 }
 
+void DibujadorGanadores::dibujarPersonajes(){
+	SDL_Rect rectanguloPersonaje = {40, alto_pantalla - (int)(alto_pantalla*0.1)-40 , 52, 80};
+	SDL_Rect recortePeach = spritePeach->obtenerRectanguloActual();
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje("resources/PersonajesSaltando/PeachSaltando.png"), &recortePeach , &rectanguloPersonaje);
+}
+
+
 void DibujadorGanadores::dibujar(){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
@@ -63,10 +72,12 @@ void DibujadorGanadores::dibujar(){
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, NULL);
 	dibujarParticulas();
 	dibujarTextoGanadores();
+	dibujarPersonajes();
 	SDL_RenderPresent( renderizador );
 	for(auto const& particula:particulas){
 		particula->actualizarPosicion(alto_pantalla);
 	}
+	spritePeach->actualizarSprite();
 }
 
 DibujadorGanadores::~DibujadorGanadores(){

@@ -7,9 +7,10 @@
 #include <string>
 #include <sstream>
 
-#include "../../modelo/Juego.hpp"
-#include "Dibujador.hpp"
 
+#include "Dibujador.hpp"
+#include "../../sprites/spritesPersonajesSaltando/SpritePeachSaltando.hpp"
+#include "../../modelo/Juego.hpp"
 #include "ParticulaGanadores.hpp"
 
 class DibujadorGanadores : public Dibujador{
@@ -21,7 +22,9 @@ class DibujadorGanadores : public Dibujador{
 	private:
 		void dibujarTextoGanadores();
 		void dibujarParticulas();
+		void dibujarPersonajes();
 
+		SpritePeachSaltando* spritePeach;
 		list<ParticulaGanadores*> particulas;
 };
 

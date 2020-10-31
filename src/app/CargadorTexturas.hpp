@@ -27,6 +27,7 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaFuente();
+		SDL_Texture* obtenerTexturaPersonaje(string personaje);
 
 		SDL_Texture* obtenerParticula(string particulaAsociada);
 
@@ -53,8 +54,9 @@ class CargadorTexturas{
 		SDL_Texture* texturaFondoGameOver = NULL;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
-		map<string, SDL_Texture*> texturasNiveles;
-		map<string, SDL_Texture*> particulas;
+		map<string,SDL_Texture*> texturasNiveles;
+		map<string,SDL_Texture*> particulas;
+		map<string,SDL_Texture*> texturasPersonajes;
 
 		TTF_Font* fuenteJuego;
 

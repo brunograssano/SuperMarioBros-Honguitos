@@ -106,7 +106,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	}
 
 
-	string listaPersonajes[]={"resources/PersonajesSaltando/PeachSaltando.png"};
+	string listaPersonajes[]={"resources/PersonajesSaltando/PeachSaltando.png", "resources/PersonajesSaltando/HonguitoSaltando.png"};
 
 	for(auto const& personaje:listaPersonajes){
 		SDL_Texture* personajeTextura = cargarTextura(personaje, renderizador);

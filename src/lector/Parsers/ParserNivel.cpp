@@ -62,7 +62,7 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	}
 
 
-	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin);
+	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas);
 	archivoLeido->niveles.push_back(unNivel);
 	for (pugi::xml_node enemigos: nivel.children("enemigos"))
 	{

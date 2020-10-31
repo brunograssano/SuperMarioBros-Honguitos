@@ -16,7 +16,7 @@ class Nivel{
 
 
 	public:
-		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
+		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas){
 			this->mundo = mundo;
 			this->direccionFondo = direccionFondo;
 			this->tiempo = tiempo;

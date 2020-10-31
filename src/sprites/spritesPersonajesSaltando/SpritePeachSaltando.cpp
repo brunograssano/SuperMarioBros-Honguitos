@@ -2,14 +2,15 @@
 
 
 SpritePeachSaltando::SpritePeachSaltando(){
+	direccionTextura = "resources/PersonajesSaltando/PeachSaltando.png";
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
 	for(int i=0;i<14;i++){
 		estadosPosibles[i].x = corrimientoEnImagen;
 		estadosPosibles[i].y = 0;
-		estadosPosibles[i].w = 27;
-		estadosPosibles[i].h = 40;
-		corrimientoEnImagen+= 27;
+		estadosPosibles[i].w = 19;
+		estadosPosibles[i].h = 30;
+		corrimientoEnImagen+= 20;
 	}
 }
 

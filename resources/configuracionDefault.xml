@@ -14,13 +14,12 @@
             <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>8000</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>7650</puntoBanderaFin>     <!--En px-->
             <enemigos>
 
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <direccionImagen>resources/Goomba.png</direccionImagen>
-                    <cantidad>2500</cantidad>
+                    <cantidad>5</cantidad>
                 </enemigo>
 
                 <enemigo>
@@ -515,7 +514,6 @@
             <direccionFondo>resources/MapaNivel3Base.png</direccionFondo>
             <cantidadMonedas>10</cantidadMonedas>
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>3072</puntoBanderaFin>
             <enemigos>
 
                 <enemigo>

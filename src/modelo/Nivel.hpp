@@ -28,7 +28,7 @@ class Nivel{
 		}
 
 		void definirDimesionesDelNivel(int largoNivel, int altoNivel){
-			this->puntoBanderaFin = largoNivel-800;
+			this->puntoBanderaFin = largoNivel-600;
 			this->altoNivel = altoNivel;
 		}
 

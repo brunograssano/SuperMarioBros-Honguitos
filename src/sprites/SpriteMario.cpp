@@ -184,14 +184,14 @@ bool SpriteMario::estaAgachado(Mario* mario, bool btnDerecho) {
 
 	if (btnDerecho && agachado && mario->estaEnElPiso()) {
 
-		estadoActual = QUIETO_DER;
-		proximoEstado = MOV_DER_1;
+		estadoActual = MOV_DER_1;
+		proximoEstado = MOV_DER_2;
 	}
 
 	else if (!btnDerecho && agachado && mario->estaEnElPiso()) {
 
-		estadoActual = QUIETO_IZQ;
-		proximoEstado = MOV_IZQ_1;
+		estadoActual = MOV_IZQ_1;
+		proximoEstado = MOV_IZQ_2;
 	}
 
 	return agachado;
@@ -330,24 +330,24 @@ void SpriteMario::actualizarSprite(Mario* mario){
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 void SpriteMario::actualizarSpriteMarioDerecha(Mario* mario) {
 
-    if (estaAgachado(mario,true)) { return; }
-
     if (estaSaltando(mario,true)) { return; }
 
     if (estaCambiandoDeDireccion(mario,true)) { return; }
 
     if (estaCorriendo(mario, true)) { return; }
+
+    if (estaAgachado(mario,true)) { return; }
 }
 
 void SpriteMario::actualizarSpriteMarioIzquierda(Mario* mario) {
-
-    if (estaAgachado(mario,false)) { return; }
 
     if (estaSaltando(mario,false)) { return; }
 
     if (estaCambiandoDeDireccion(mario,false)) { return; }
 
     if (estaCorriendo(mario,false)) { return; }
+
+    if (estaAgachado(mario,false)) { return; }
 }
 
 void SpriteMario::actualizarSpriteMarioSaltar() {

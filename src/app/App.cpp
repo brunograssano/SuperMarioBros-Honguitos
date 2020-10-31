@@ -74,22 +74,27 @@ void App::actualizar(const Uint8 *keystate){
 		}
 	}
 	else if(!terminoElJuego){
+		bool se_movio = false;
 		Mario* jugador = Juego::getInstance()->obtenerMario();
 		if(keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_UP]){
 			jugador->actualizarSaltarMario();
-		}
-
-		if(keystate[SDL_SCANCODE_DOWN]){
-			jugador->actualizarAgacharseMario();
+			se_movio = true;
 		}
 
 		if(keystate[SDL_SCANCODE_LEFT]){
 			jugador->actualizarIzquierdaMario();
+			se_movio = true;
 		}
 
 		if(keystate[SDL_SCANCODE_RIGHT]){
 			jugador->actualizarDerechaMario();
+			se_movio = true;
 		}
+
+		if(keystate[SDL_SCANCODE_DOWN] && !se_movio){
+			jugador->actualizarAgacharseMario();
+		}
+
 	}
 }
 

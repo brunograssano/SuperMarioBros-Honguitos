@@ -29,7 +29,6 @@ class SpriteMario : public Sprite{
 
 	private:
 		SDL_Rect estadosPosibles[14];
-		int estadoActual;
 		int proximoEstado;
 		int contadorEvento;
 		int temporizadorMarioAgachado;

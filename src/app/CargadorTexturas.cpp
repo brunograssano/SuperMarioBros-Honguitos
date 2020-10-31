@@ -91,6 +91,20 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	}
 
 
+	string listaParticulas[]={"resources/Particulas/confetiAzul.png","resources/Particulas/confetiAmarillo.png",
+							  "resources/Particulas/confetiRosa.png","resources/Particulas/confetiVerde.png"};
+
+	for(auto const& particula:listaParticulas){
+		SDL_Texture* particulaTextura = cargarTextura(particula, renderizador);
+		if(particulaTextura == NULL){
+			log->huboUnError("No se pudo cargar la particula en: "+ particula);
+		}
+		else{
+			log->mostrarMensajeDeCarga("Particula", particula);
+		}
+		particulas[particula]=particulaTextura;
+	}
+
 
 
 	int tamanioFuente = 20;
@@ -176,30 +190,17 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 }
 
 
-
-
-bool CargadorTexturas::tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo){ // No me esta tomando el contains del map (c++ 20))
-	try{
-		texturasEnemigos.at(spriteEnemigo->direccionImagen());
-	}
-	catch(std::out_of_range&){
-		return false;
-	}
-	return true;
-}
-
-
 SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador){
-	if(!tengoTexturaEnemigoCargadaEnMemoria(spriteEnemigo)){
+	if(!tengoTexturaCargadaEnMemoria(spriteEnemigo,texturasEnemigos)){
 		SDL_Texture* texturaNueva = cargarTextura(spriteEnemigo->direccionImagen(),renderizador);
 		texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
 	}
 	return texturasEnemigos[spriteEnemigo->direccionImagen()];
 }
 
-bool CargadorTexturas::tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque){ // No me esta tomando el contains del map (c++ 20))
+bool CargadorTexturas::tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<string,SDL_Texture*> texturas){
 	try{
-		texturasBloques.at(spriteBloque->direccionImagen());
+		texturas.at(spriteBloque->direccionImagen());
 	}
 	catch(std::out_of_range&){
 		return false;
@@ -210,11 +211,16 @@ bool CargadorTexturas::tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque){
 
 
 SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
-	if(!tengoTexturaBloqueCargadaEnMemoria(spriteBloque)){
+	if(!tengoTexturaCargadaEnMemoria(spriteBloque,texturasBloques)){
 		SDL_Texture* texturaNueva = cargarTextura(spriteBloque->direccionImagen(),renderizador);
 		texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
 	}
 	return texturasBloques[spriteBloque->direccionImagen()];
+}
+
+
+SDL_Texture* CargadorTexturas::obtenerParticula(string particulaAsociada){
+	return particulas[particulaAsociada];
 }
 
 
@@ -279,7 +285,11 @@ CargadorTexturas::~CargadorTexturas(){
 	}
 
 	for (auto const& parClaveNivel : texturasNiveles){
-			SDL_DestroyTexture( parClaveNivel.second );
+		SDL_DestroyTexture( parClaveNivel.second );
+	}
+
+	for (auto const& parClaveParticula : particulas){
+		SDL_DestroyTexture( parClaveParticula.second );
 	}
 
 

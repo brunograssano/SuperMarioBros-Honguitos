@@ -16,9 +16,6 @@ class SpriteMoneda : public Sprite{
 		void actualizarSprite()override;
 
 	private:
-
-		int ciclos;
-		int estadoActual;
 		SDL_Rect estadosPosibles[4];
 };
 

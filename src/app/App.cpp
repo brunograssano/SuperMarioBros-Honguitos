@@ -101,7 +101,6 @@ void App::actualizar(){
 		revisarSiTerminoNivel(jugador);
 		cargadorTexturas->revisarSiCambioNivel(renderizador);
 		moverCamara(jugador);
-	}else{
 	}
 }
 

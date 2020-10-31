@@ -26,6 +26,8 @@ class Sprite{
 
 	protected:
 		string direccionTextura;
+		int ciclos;
+		int estadoActual;
 
 
 };

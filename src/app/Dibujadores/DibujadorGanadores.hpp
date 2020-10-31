@@ -10,12 +10,19 @@
 #include "../../modelo/Juego.hpp"
 #include "Dibujador.hpp"
 
+#include "ParticulaGanadores.hpp"
+
 class DibujadorGanadores : public Dibujador{
 	public:
 		DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
 		void dibujar() override;
 		~DibujadorGanadores();
 
+	private:
+		void dibujarTextoGanadores();
+		void dibujarParticulas();
+
+		list<ParticulaGanadores*> particulas;
 };
 
 

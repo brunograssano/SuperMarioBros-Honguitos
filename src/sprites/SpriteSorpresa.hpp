@@ -16,10 +16,6 @@ class SpriteSorpresa : public Sprite{
 		void actualizarSprite()override;
 
 	private:
-
-		bool cambio;
-		int ciclos;
-		int estadoActual;
 		SDL_Rect estadosPosibles[5];
 };
 

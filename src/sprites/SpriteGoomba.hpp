@@ -13,10 +13,6 @@ class SpriteGoomba : public Sprite{
 		void actualizarSprite()override;
 
 	private:
-
-		bool cambio;
-		int ciclos;
-		int estadoActual;
 		SDL_Rect estadosPosibles[3];
 
 };

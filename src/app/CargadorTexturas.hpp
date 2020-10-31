@@ -28,6 +28,8 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaFuente();
 
+		SDL_Texture* obtenerParticula(string particulaAsociada);
+
 		SDL_Texture* cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador);
 
 		void cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer* renderizador);
@@ -52,12 +54,13 @@ class CargadorTexturas{
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
 		map<string, SDL_Texture*> texturasNiveles;
+		map<string, SDL_Texture*> particulas;
 
 		TTF_Font* fuenteJuego;
 
 		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
-		bool tengoTexturaEnemigoCargadaEnMemoria(Sprite* spriteEnemigo);
-		bool tengoTexturaBloqueCargadaEnMemoria(Sprite* spriteBloque);
+
+		bool tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<string,SDL_Texture*> texturas);
 
 
 };

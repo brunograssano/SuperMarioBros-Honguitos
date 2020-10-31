@@ -5,7 +5,6 @@ SpriteSorpresa::SpriteSorpresa(){
 	direccionTextura = "resources/BloqueSorpresa.png";
 	estadoActual = 0;
 	ciclos=0;
-	cambio=false;
 	int corrimientoEnImagen = 0;
 	for(int i=0;i<5;i++){
 		estadosPosibles[i].x = corrimientoEnImagen;

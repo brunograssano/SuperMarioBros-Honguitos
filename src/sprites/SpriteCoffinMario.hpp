@@ -22,8 +22,6 @@ class SpriteCoffinMario : public Sprite{
 
 	private:
 		SDL_Rect estadosPosibles[3];
-		int estadoActual;
-		int ciclos;
 		int posicionX;
 };
 

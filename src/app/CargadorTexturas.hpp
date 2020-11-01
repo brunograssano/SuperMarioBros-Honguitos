@@ -57,6 +57,7 @@ class CargadorTexturas{
 		map<string,SDL_Texture*> texturasNiveles;
 		map<string,SDL_Texture*> particulas;
 		map<string,SDL_Texture*> texturasPersonajes;
+		map<string,SDL_Texture*> texturasError;
 
 		TTF_Font* fuenteJuego;
 

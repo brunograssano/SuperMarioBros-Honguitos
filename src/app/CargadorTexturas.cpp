@@ -121,6 +121,20 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		texturasPersonajes[personaje]=personajeTextura;
 	}
 
+	string listaError[]={"resources/Imagenes/Bloques/BloqueError.png"};
+
+	for(auto const& direccionTexturaError:listaError){
+			SDL_Texture* texturaError = cargarTextura(direccionTexturaError, renderizador);
+			if(texturaError == NULL){
+				log->huboUnError("No se pudo cargar el personaje en: "+ direccionTexturaError);
+			}
+			else{
+				log->mostrarMensajeDeCarga("Bloque", direccionTexturaError);
+			}
+			texturasError[direccionTexturaError]=texturaError;
+		}
+
+
 	int tamanioFuente = 20;
 	string direccionFuente = "resources/Fuentes/fuenteSuperMarioBros.ttf";
 	fuenteJuego = TTF_OpenFont( direccionFuente.c_str(), tamanioFuente);
@@ -196,7 +210,7 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 	else{
 		texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficieImagen );
 		if( texturaCargada == NULL ){
-			Log::getInstance()->huboUnErrorSDL("No se pudo crear una texturea a partir de la imagen en " + direccion, SDL_GetError());
+			Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccion, SDL_GetError());
 		}
 		SDL_FreeSurface( superficieImagen );
 	}
@@ -227,9 +241,15 @@ SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(string personaje){
 }
 
 SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
+
 	if(!tengoTexturaCargadaEnMemoria(spriteBloque,texturasBloques)){
 		SDL_Texture* texturaNueva = cargarTextura(spriteBloque->direccionImagen(),renderizador);
-		texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
+		if(texturaNueva == NULL){
+			texturasBloques[spriteBloque->direccionImagen()] = texturasError["resources/Imagenes/Bloques/BloqueError.png"];
+
+		}else{
+			texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
+		}
 	}
 	return texturasBloques[spriteBloque->direccionImagen()];
 }

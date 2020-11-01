@@ -40,7 +40,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <direccionImagen>resources/Imagenes/Bloques/BloqueLadrillo.png</direccionImagen>
+                    <direccionImagen>resources/Imagenes/Bloques/BloqueLasdasadrillo.png</direccionImagen>
                     <coordenadaX>400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>

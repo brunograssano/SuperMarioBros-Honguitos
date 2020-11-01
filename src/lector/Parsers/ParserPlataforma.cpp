@@ -23,6 +23,10 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 		archivoLeido->mensajeError.push_back("El valor de cantidad de bloques enviado ("+ cantidadBloquesString +") no tiene valor valido,se carga el valor por defecto");
 		cantidadBloques = VALOR_POR_DEFECTO_CANTIDAD_BLOQUES;
 	}
+	catch(const std::out_of_range& error){
+		archivoLeido->mensajeError.push_back("El valor de cantidad de bloques enviado ("+ cantidadBloquesString +") no tiene valor valido,se carga el valor por defecto");
+		cantidadBloques = VALOR_POR_DEFECTO_CANTIDAD_BLOQUES;
+	}
 
 	try{
 		coordenadaX = stoi(plataforma.child_value("coordenadaX"));
@@ -34,6 +38,10 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 		archivoLeido->mensajeError.push_back("El valor de coordenada X enviado no tiene valor valido,se carga el valor por defecto");
 		coordenadaX = VALOR_POR_DEFECTO_COORDENADAX;
 	}
+	catch(const std::out_of_range& error){
+		archivoLeido->mensajeError.push_back("El valor de coordenada X enviado no tiene valor valido,se carga el valor por defecto");
+		coordenadaX = VALOR_POR_DEFECTO_COORDENADAX;
+	}
 
 	try{
 		coordenadaY = stoi(plataforma.child_value("coordenadaY"));
@@ -42,6 +50,10 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 			coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
 		}
 	}catch(const std::invalid_argument& error){
+		archivoLeido->mensajeError.push_back("El valor de coordenada Y enviado no tiene valor valido,se carga el valor por defecto");
+		coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
+	}
+	catch(const std::out_of_range& error){
 		archivoLeido->mensajeError.push_back("El valor de coordenada Y enviado no tiene valor valido,se carga el valor por defecto");
 		coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
 	}

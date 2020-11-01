@@ -24,6 +24,11 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 		archivoLeido->mensajeError.push_back("El valor de mundo enviado no tiene valor valido,se carga el valor por defecto");
 		mundo = VALOR_POR_DEFECTO_MUNDO;
 	}
+	catch(const std::out_of_range& error){
+		archivoLeido->leidoCorrectamente = false;
+		archivoLeido->mensajeError.push_back("El valor de mundo enviado no tiene valor valido,se carga el valor por defecto");
+		mundo = VALOR_POR_DEFECTO_MUNDO;
+	}
 
 	try{
 		string tiempoString = nivel.child_value("tiempoNivel");
@@ -33,6 +38,10 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 			tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 		}
 	}catch(const std::invalid_argument& error){
+		archivoLeido->mensajeError.push_back("El valor de tiempo del nivel enviado no tiene valor valido,se carga el valor por defecto");
+		tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
+	}
+	catch(const std::out_of_range& error){
 		archivoLeido->mensajeError.push_back("El valor de tiempo del nivel enviado no tiene valor valido,se carga el valor por defecto");
 		tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 	}
@@ -48,6 +57,11 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 		archivoLeido->mensajeError.push_back("El valor de cantidad de monedas ("+cantMonedasString+") enviado no tiene valor valido,se carga el valor por defecto");
 		cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
 	}
+	catch(const std::out_of_range& error){
+		archivoLeido->mensajeError.push_back("El valor de cantidad de monedas ("+cantMonedasString+") enviado no tiene valor valido,se carga el valor por defecto");
+		cantidadMonedas = VALOR_POR_DEFECTO_MONEDA;
+	}
+
 
 	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas);
 	archivoLeido->niveles.push_back(unNivel);

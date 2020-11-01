@@ -18,6 +18,11 @@ void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,Archivo
 		archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto");
 		cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
 	}
+	catch(const std::out_of_range& error){
+		archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto");
+		cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
+	}
+
 
 	if(tipo.compare("Goomba")!=0 && tipo.compare("Koopa")!=0){
 		archivoLeido->mensajeError.push_back("No existe el tipo de enemigo ("+tipo+"), no se cargara ningun otro tipo de enemigo en su remplazo");

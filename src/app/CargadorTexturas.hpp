@@ -57,10 +57,13 @@ class CargadorTexturas{
 		map<string,SDL_Texture*> texturasNiveles;
 		map<string,SDL_Texture*> particulas;
 		map<string,SDL_Texture*> texturasPersonajes;
+		map<string,SDL_Texture*> texturasError;
 
 		TTF_Font* fuenteJuego;
 
 		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
+		SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador);
+		/*Capaz no esta tan bueno el nombre, pensarlo*/
 
 		bool tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<string,SDL_Texture*> texturas);
 

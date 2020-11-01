@@ -17,11 +17,12 @@ using namespace std;
 #include "DibujadorInicio.hpp"
 #include "DibujadorGanadores.hpp"
 #include "DibujadorJuego.hpp"
+#include "DibujadorError.hpp"
 
 class Dibujadores{
 
 	public:
-		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
+		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, bool leidoCorrectamente);
 		void dibujarJuego(SDL_Rect* rectanguloCamara);
 		void dibujarGameOver();
 		void dibujarInicio();
@@ -33,6 +34,7 @@ class Dibujadores{
 		DibujadorInicio* dibujadorInicio;
 		DibujadorGanadores* dibujadorGanadores;
 		DibujadorJuego* dibujadorJuego;
+		DibujadorError* dibujadorError;
 };
 
 

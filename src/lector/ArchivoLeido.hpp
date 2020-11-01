@@ -9,15 +9,23 @@ using namespace std;
 
 class ArchivoLeido{
 	public:
-			TipoLog* tipoLog;
-			int anchoVentana;
-			int altoVentana;
-			list<Nivel*> niveles;
-			bool leidoCorrectamente;
-			list<string> mensajeError;
 
-			void verificarLectura();
-			~ArchivoLeido();
+		ArchivoLeido(){
+			tipoLog = nullptr;
+			anchoVentana = 0;
+			altoVentana = 0;
+			leidoCorrectamente = true;
+		}
+
+		TipoLog* tipoLog;
+		int anchoVentana;
+		int altoVentana;
+		list<Nivel*> niveles;
+		bool leidoCorrectamente;
+		list<string> mensajeError;
+
+		void verificarLectura();
+		~ArchivoLeido();
 };
 
 #endif

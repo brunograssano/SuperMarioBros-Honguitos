@@ -61,6 +61,10 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 
 void App::actualizar(const Uint8 *keystate){
 
+	if(!juegoInicializadoCorrectamente){
+		return;
+	}
+
 	if(!sePusoMusicaInicio){
 		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaInicio.mp3"); //TODO: refactorizar a otro método.
 		sePusoMusicaInicio = true;
@@ -99,6 +103,9 @@ void App::actualizar(const Uint8 *keystate){
 }
 
 void App::actualizar(){
+	if(!juegoInicializadoCorrectamente){
+			return;
+	}
 	if(!terminoElJuego && comenzoElJuego){
 		Mario* jugador = Juego::getInstance()->obtenerMario();
 		jugador->actualizarPosicion();

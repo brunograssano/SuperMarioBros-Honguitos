@@ -59,7 +59,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		texturasPersonajes[personaje]=personajeTextura;
 	}
 
-	string listaError[]={"resources/Imagenes/Bloques/BloqueError.png"};
+	string listaError[]={"resources/Imagenes/Bloques/BloqueError.png",
+						 "resources/Imagenes/Personajes/EnemigoError.png"};
 
 	for(auto const& direccionTexturaError:listaError){
 		SDL_Texture* texturaError = intentarCarga("Una textura de error", direccionTexturaError, renderizador);
@@ -161,9 +162,14 @@ SDL_Texture* CargadorTexturas::intentarCarga(std::string descripcion, std::strin
 
 
 SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador){
+
 	if(!tengoTexturaCargadaEnMemoria(spriteEnemigo,texturasEnemigos)){
-		SDL_Texture* texturaNueva = cargarTextura(spriteEnemigo->direccionImagen(),renderizador);
-		texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
+		SDL_Texture* texturaNueva = intentarCarga("un enemigo", spriteEnemigo->direccionImagen(),renderizador);
+		if(texturaNueva == NULL){
+			texturasEnemigos[spriteEnemigo->direccionImagen()]=texturasError["resources/Imagenes/Personajes/EnemigoError.png"];
+		}else{
+			texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
+		}
 	}
 	return texturasEnemigos[spriteEnemigo->direccionImagen()];
 }
@@ -185,10 +191,10 @@ SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(string personaje){
 SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
 
 	if(!tengoTexturaCargadaEnMemoria(spriteBloque,texturasBloques)){
-		SDL_Texture* texturaNueva = cargarTextura(spriteBloque->direccionImagen(),renderizador);
+		SDL_Texture* texturaNueva = intentarCarga("un bloque", spriteBloque->direccionImagen(), renderizador);
 		if(texturaNueva == NULL){
 			texturasBloques[spriteBloque->direccionImagen()] = texturasError["resources/Imagenes/Bloques/BloqueError.png"];
-
+			Log::getInstance()->mostrarMensajeDeCarga("un bloque de error", "resources/Imagenes/Bloques/BloqueError.png");
 		}else{
 			texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
 		}

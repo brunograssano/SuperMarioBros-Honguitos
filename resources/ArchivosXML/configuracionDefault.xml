@@ -24,7 +24,7 @@
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <direccionImagen>resources/Imagenes/Personajes/Koopa.png</direccionImagen>
+                    <direccionImagen>resources/Imagenes/Personajes/Koopaasdasd.png</direccionImagen>
                     <cantidad>5</cantidad>
                 </enemigo>
 

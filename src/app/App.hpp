@@ -21,9 +21,10 @@ const int ANCHO_FONDO = 8177;
 class App{
 
 	protected:
-		App(ArchivoLeido* archivoLeido){
+		App(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo){
 
 			Log* log = Log::getInstance(archivoLeido->tipoLog);
+			escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 			escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 			determinarDimensionesPantalla(archivoLeido->anchoVentana,archivoLeido->altoVentana);
 			inicializarSDL(log);
@@ -73,7 +74,7 @@ class App{
 	public:
 		App(App &other) = delete;
 		static App *getInstance();
-		static App *getInstance(ArchivoLeido* archivoLeido);
+		static App *getInstance(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo);
 
 
 		void actualizar(const Uint8 *keystate);

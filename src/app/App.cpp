@@ -7,9 +7,9 @@ const int SE_TERMINO_EL_TIEMPO = 0;
 const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 
 
-App* App::getInstance(ArchivoLeido* archivoLeido){
+App* App::getInstance(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo){
 	if(aplicacion==nullptr){
-		aplicacion= new App(archivoLeido);
+		aplicacion= new App(archivoLeido,mensajesErrorOtroArchivo);
 	}
 	return aplicacion;
 }
@@ -163,7 +163,6 @@ void App::dibujar(){
 	}
 	else{
 		tiempoFaltante = ((juego->obtenerTiempoDelNivel()*1000) - SDL_GetTicks() + tiempoDeInicio)/1000;
-		//tiempoFaltante = ((20*1000) - SDL_GetTicks() + tiempoDeInicio)/1000; // PARA PROBAR LA PANTALLA DE GAME OVER
 		if(ganaron){
 			dibujador->dibujarPantallaGanadores();
 			terminoElJuego = true;

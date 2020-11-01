@@ -66,14 +66,15 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	char nivelLogEntrada[LARGO_ENTRADA] = "";
 	ArchivoLeido* archivoLeido;
 	TipoLog* nivelLog;
-	list<string> mensajesError;
+	list<string> mensajesErrorOtroArchivo;
 
 	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada);
 
 	if(strcmp(direccionLecturaComando,"")!=0){
 		archivoLeido = lector->leerArchivo(direccionLecturaComando);
 		if(!archivoLeido->leidoCorrectamente){
-			mensajesError = archivoLeido->mensajeError;
+			mensajesErrorOtroArchivo = archivoLeido->mensajeError;
+			delete archivoLeido;
 			archivoLeido = lector->leerArchivo(direccionLecturaDefault);
 		}
 	}
@@ -88,10 +89,8 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		}
 	}
 
-	App* aplicacion = App::getInstance(archivoLeido);
-	if(!mensajesError.empty()){
-		aplicacion->escribirMensajesDeArchivoLeidoEnLog(mensajesError);
-	}
+	App* aplicacion = App::getInstance(archivoLeido,mensajesErrorOtroArchivo);
+	delete lector;
 
 	bool salir = false;
 	SDL_Event event;
@@ -112,7 +111,6 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		aplicacion->dibujar();
 	}
 
-	delete lector;
 	delete aplicacion;
 	return 0;
 }

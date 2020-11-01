@@ -146,13 +146,11 @@ void ReproductorMusica::ReproducirSonidoMarioPisaKoopa(){
 }
 
 ReproductorMusica::~ReproductorMusica(){
-	Log::getInstance()->mostrarMensajeDeInfo("Se cierra el reproductor de musica");
 	Mix_FreeMusic(cancionReproduciendose);
 	for (const auto& elemento : efectosDeSonido) {
 		Mix_FreeChunk(elemento.second);
 	}
 	Mix_Quit();
-
 }
 
 

@@ -14,6 +14,7 @@
             <direccionFondo>resources/Imagenes/Niveles/MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>40</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>
@@ -259,6 +260,7 @@
             <direccionFondo>resources/Imagenes/Niveles/MapaNivel2Base.png</direccionFondo>
             <cantidadMonedas>20</cantidadMonedas>
             <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>
@@ -514,6 +516,7 @@
             <direccionFondo>resources/Imagenes/Niveles/MapaNivel3Base.png</direccionFondo>
             <cantidadMonedas>10</cantidadMonedas>
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>

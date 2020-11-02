@@ -1,6 +1,6 @@
 <configuracion>
     <log>
-        <level>INFO</level> <!-- DEBUG o INFO -->
+        <level>ERROR</level> <!-- DEBUG o INFO -->
     </log>
 
     <ventana>
@@ -14,7 +14,7 @@
             <direccionFondo>resources/Imagenes/Niveles/MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>40</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
+            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 50 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>

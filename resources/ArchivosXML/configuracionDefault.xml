@@ -1,6 +1,6 @@
 <configuracion>
     <log>
-        <level>ERROR</level> <!-- DEBUG o INFO -->
+        <level>INFO</level> <!-- DEBUG o INFO -->
     </log>
 
     <ventana>
@@ -25,7 +25,7 @@
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <direccionImagen>resources/Imagenes/Personajes/Koopaasdasd.png</direccionImagen>
+                    <direccionImagen>resources/Imagenes/Personajes/Koopa.png</direccionImagen>
                     <cantidad>5</cantidad>
                 </enemigo>
 
@@ -41,7 +41,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <direccionImagen>resources/Imagenes/Bloques/BloqueLasdasadrillo.png</direccionImagen>
+                    <direccionImagen>resources/Imagenes/Bloques/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>

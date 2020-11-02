@@ -20,7 +20,6 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 			mundo = VALOR_POR_DEFECTO_MUNDO;
 		}
 	}catch(std::exception& e){
-		archivoLeido->leidoCorrectamente = false;
 		archivoLeido->mensajeError.push_back("El valor de mundo enviado no tiene valor valido,se carga el valor por defecto");
 		mundo = VALOR_POR_DEFECTO_MUNDO;
 	}

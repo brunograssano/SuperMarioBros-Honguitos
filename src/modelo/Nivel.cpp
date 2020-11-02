@@ -35,7 +35,7 @@ string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
-int Nivel::obtenerPuntoBanderaFin(){
+float Nivel::obtenerPuntoBanderaFin(){
 	return puntoBanderaFin;
 }
 

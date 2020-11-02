@@ -21,13 +21,13 @@ class Nivel{
 			this->direccionFondo = direccionFondo;
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
-			this->puntoBanderaFin = puntoBanderaFin;
+			this->puntoBanderaFin = (float) puntoBanderaFin;
 			this->altoNivel = 0;
 
 		}
 
 		void definirDimesionesDelNivel(int largoNivel, int altoNivel){
-			this->puntoBanderaFin = largoNivel*this->puntoBanderaFin;
+			this->puntoBanderaFin = largoNivel*(this->puntoBanderaFin/100);
 			this->altoNivel = altoNivel;
 		}
 
@@ -59,7 +59,7 @@ class Nivel{
 
 		void inicializarPosicionesOcupadasPorBloques();
 
-		int obtenerPuntoBanderaFin();
+		float obtenerPuntoBanderaFin();
 
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
@@ -93,7 +93,7 @@ class Nivel{
 		string direccionFondo;
 		int tiempo;
 		int cantidadMonedas;
-		int puntoBanderaFin;
+		float puntoBanderaFin;
 };
 
 

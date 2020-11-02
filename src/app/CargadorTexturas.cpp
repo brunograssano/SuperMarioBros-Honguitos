@@ -25,6 +25,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
 
+	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
+
 	texturaMario = intentarCarga("la imagen de Mario", "resources/Imagenes/Personajes/mario_grande.png",renderizador);
 
 	texturaMoneda = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
@@ -57,14 +59,6 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	for(auto const& personaje:listaPersonajes){
 		SDL_Texture* personajeTextura = intentarCarga("el personaje", personaje, renderizador);
 		texturasPersonajes[personaje]=personajeTextura;
-	}
-
-	string listaError[]={"resources/Imagenes/Bloques/BloqueError.png",
-						 "resources/Imagenes/Personajes/EnemigoError.png"};
-
-	for(auto const& direccionTexturaError:listaError){
-		SDL_Texture* texturaError = intentarCarga("Una textura de error", direccionTexturaError, renderizador);
-		texturasError[direccionTexturaError]=texturaError;
 	}
 
 	int tamanioFuente = 20;
@@ -122,7 +116,7 @@ void CargadorTexturas::cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer*
 	for(auto const& nivel : niveles){
 		int altoNivel = 0;
 		int largoNivel = 0;
-		SDL_Texture* texturaNueva = cargarTextura(nivel->obtenerDireccionFondoActual() , renderizador);
+		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", nivel->obtenerDireccionFondoActual(), renderizador);
 		texturasNiveles[nivel->obtenerDireccionFondoActual()] = texturaNueva;
 		SDL_QueryTexture(texturaNueva, NULL, NULL, &largoNivel, &altoNivel);
 		nivel->definirDimesionesDelNivel(largoNivel, altoNivel);
@@ -152,11 +146,12 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 
 SDL_Texture* CargadorTexturas::intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador){
 	SDL_Texture* texturaCargada =  cargarTextura(direccion, renderizador);
-		if(texturaCargada == NULL){
-			Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion);
-		}else{
-			Log::getInstance()->mostrarMensajeDeCarga(descripcion, direccion);
-		}
+	if(texturaCargada == NULL){
+		texturaCargada = texturaDefecto;
+		Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion + ". Se cargo la textura por defecto.");
+	}else{
+		Log::getInstance()->mostrarMensajeDeCarga(descripcion, direccion);
+	}
 	return texturaCargada;
 }
 
@@ -165,11 +160,7 @@ SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_R
 
 	if(!tengoTexturaCargadaEnMemoria(spriteEnemigo,texturasEnemigos)){
 		SDL_Texture* texturaNueva = intentarCarga("un enemigo", spriteEnemigo->direccionImagen(),renderizador);
-		if(texturaNueva == NULL){
-			texturasEnemigos[spriteEnemigo->direccionImagen()]=texturasError["resources/Imagenes/Personajes/EnemigoError.png"];
-		}else{
-			texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
-		}
+		texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
 	}
 	return texturasEnemigos[spriteEnemigo->direccionImagen()];
 }
@@ -192,12 +183,7 @@ SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Ren
 
 	if(!tengoTexturaCargadaEnMemoria(spriteBloque,texturasBloques)){
 		SDL_Texture* texturaNueva = intentarCarga("un bloque", spriteBloque->direccionImagen(), renderizador);
-		if(texturaNueva == NULL){
-			texturasBloques[spriteBloque->direccionImagen()] = texturasError["resources/Imagenes/Bloques/BloqueError.png"];
-			Log::getInstance()->mostrarMensajeDeCarga("un bloque de error", "resources/Imagenes/Bloques/BloqueError.png");
-		}else{
-			texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
-		}
+		texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
 	}
 	return texturasBloques[spriteBloque->direccionImagen()];
 }
@@ -259,6 +245,7 @@ CargadorTexturas::~CargadorTexturas(){
 	SDL_DestroyTexture( texturaFondoActual );
 	SDL_DestroyTexture( texturaFuenteJuego );
 	SDL_DestroyTexture( texturaCoffinMario );
+	SDL_DestroyTexture( texturaDefecto);
 
 	for (auto const& parClaveEnemigo : texturasEnemigos){
 		SDL_DestroyTexture( parClaveEnemigo.second );

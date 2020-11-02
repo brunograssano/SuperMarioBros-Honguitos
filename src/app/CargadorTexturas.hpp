@@ -52,12 +52,12 @@ class CargadorTexturas{
 		SDL_Texture* texturaFondoInicio = NULL;
 		SDL_Texture* texturaTitulo = NULL;
 		SDL_Texture* texturaFondoGameOver = NULL;
+		SDL_Texture* texturaDefecto = NULL;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
 		map<string,SDL_Texture*> texturasNiveles;
 		map<string,SDL_Texture*> particulas;
 		map<string,SDL_Texture*> texturasPersonajes;
-		map<string,SDL_Texture*> texturasError;
 
 		TTF_Font* fuenteJuego;
 

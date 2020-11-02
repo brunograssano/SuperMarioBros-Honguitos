@@ -7,7 +7,6 @@
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
-const int CANTIDAD_MAXIMA_MONEDAS = 100;
 
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -48,15 +47,19 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
-
 	list<Plataforma*> plataformas = this->obtenerPlataformas();
 	for(auto const& plataforma : plataformas){
-
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 
 		for(auto const& bloque : bloques){
+			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= altoNivel)){
+				Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion se pone en la posicion default");
+				bloque->ubicarEnPosicionDefault();
+			}
+
 			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
 		}
+
 	}
 }
 
@@ -66,6 +69,12 @@ void Nivel::inicializarPosicionMonedas(){
 
 	srand(time(NULL));
 
+	int cantidadMaximaMonedas = (puntoBanderaFin/2)/(TAMANIO_MONEDA);
+
+	if(cantidadMonedas > cantidadMaximaMonedas){
+		Log::getInstance()->huboUnError("No se pueden poner tantas monedas, se ponen " + cantidadMaximaMonedas);
+	}
+
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
 
 	int limiteXSuperior = puntoBanderaFin;
@@ -73,7 +82,7 @@ void Nivel::inicializarPosicionMonedas(){
 	int limiteYInferior = altoNivel/4;
 	int limiteYSuperior = altoNivel*1/2;
 
-	for(int i=0; i<cantidadMonedas && i<CANTIDAD_MAXIMA_MONEDAS; i++){
+	for(int i=0; i<cantidadMonedas && i<cantidadMaximaMonedas; i++){
 
 		do{
 			numeroPosicionX = rand() % (limiteXSuperior/TAMANIO_MONEDA + 1 - limiteXInferior/TAMANIO_MONEDA) + limiteXInferior/TAMANIO_MONEDA;

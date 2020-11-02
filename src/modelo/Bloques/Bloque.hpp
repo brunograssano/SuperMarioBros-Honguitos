@@ -28,15 +28,26 @@ class Bloque{
 			return this->spriteBloque;
 		}
 
+		void ubicarEnPosicionDefault(){
+			delete this->posicion;
+			this->posicion = new PosicionFija(200, 200);
+		}
+
     protected:
     	Posicion* posicion;
     	Sprite* spriteBloque;
+
+		int normalizarCoordenadaIngresada(int coordenada){
+			return (coordenada/40)*40;
+		}
 };
 
 class Sorpresa : public Bloque{
     public:
 		Sorpresa(int coordenadaX, int coordenadaY){
-			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40); //ES HORRIBLE NO ME MATEN AHRE
+			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
+			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
+			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteSorpresa();
 		}
 
@@ -50,12 +61,16 @@ class Sorpresa : public Bloque{
 class Ladrillo : public Bloque {
 	public:
 		Ladrillo(int coordenadaX, int coordenadaY, string direccionTextura){
-			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40);
+			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
+			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
+			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteLadrillo(direccionTextura);
 		}
 
 		Ladrillo(int coordenadaX, int coordenadaY){
-			this->posicion = new PosicionFija(coordenadaX/40 *40, coordenadaY/40 *40);
+			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
+			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
+			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteLadrillo();
 		}
 
@@ -63,6 +78,7 @@ class Ladrillo : public Bloque {
 			delete this->posicion;
 			delete this->spriteBloque;
 		}
+
 };
 
 class Plataforma : public Bloque {

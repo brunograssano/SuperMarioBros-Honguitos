@@ -1,99 +1,68 @@
-using namespace std;
-#include <iostream>
-#include <string>
+#include "MarioTest.hpp"
 
-#include <stdio.h>
+/*
+void MarioTest::ejecutar(Assert* testSuite){
 
-#include "../modelo/Mario.h"
-//#include "../modelo/Movimientos/Movimiento.h"
+	cout << "========== Comenzando con las pruebas de Mario ==========" << endl;
+	test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(testSuite);
+	test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(testSuite);
+	test03MarioEmpiezaConCeroMonedas(testSuite);
+	test04MarioEmpiezaConCeroPuntos(testSuite);
+	test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(testSuite);
+	cout << "========== Finalizando con las pruebas de Mario ==========" << endl;
 
-
-int pruebasPasadas;
-int pruebasTotales;
-
-void ASSERT(int obtenido,int esperado,std::string textoExplicativo){
-	cout << textoExplicativo << ": ";
-	if(obtenido==esperado){
-		cout << "todo bien" <<endl;
-		pruebasPasadas++;
-	}
-	else{
-		cout << "todo mal" <<endl;
-	}
-	pruebasTotales++;
 }
 
-
-
-
-void test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(){
+void MarioTest::test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(Assert* testSuite){
 
 	Mario* mario = new Mario();
-	MovimientoDerecha* movimiento = new MovimientoDerecha(5);
 
 	int posicion = mario->obtenerPosicionX();
 
-	mario->mover(movimiento);
-
-	ASSERT(mario->obtenerPosicionX(),posicion+5,"Mario se mueve a derecha");
+	mario->aceleraraDerecha();
+	mario->actualizarPosicion();
+	testSuite->assert(mario->obtenerPosicionX() > posicion,"Mario se mueve a derecha");
 
 	delete mario;
-	delete movimiento;
 }
 
-void test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(){
+void MarioTest::test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(Assert* testSuite){
 
 	Mario* mario = new Mario();
-	MovimientoIzquierda* movimiento = new MovimientoIzquierda(5);
 
 	int posicion = mario->obtenerPosicionX();
 
-	mario->mover(movimiento);
-
-	ASSERT(mario->obtenerPosicionX(),posicion-5,"Mario se mueve a izquierda");
+	mario->aceleraraIzquierda();
+	mario->actualizarPosicion();
+	testSuite->assert(mario->obtenerPosicionX() < posicion,"Mario se mueve a izquierda");
 
 	delete mario;
-	delete movimiento;
 }
 
-void test03CuandoPedisAMarioQueSalteSeQuedaArriba(){
+void MarioTest::test03MarioEmpiezaConCeroMonedas(Assert* testSuite){
 
 	Mario* mario = new Mario();
-	MovimientoArriba* movimiento = new MovimientoArriba(50);
 
-	int posicion = mario->obtenerPosicionY();
-
-	mario->mover(movimiento);
-
-	ASSERT(mario->obtenerPosicionY(),posicion+50,"Mario salta y queda arriba: ");
+	testSuite->assert(mario->obtenerMonedas(),0,"Mario empieza con 0 monedas: ");
 
 	delete mario;
-	delete movimiento;
 }
 
-void test04CuandoMarioSeMueveParaAbajoBaja(){
+void MarioTest::test04MarioEmpiezaConCeroPuntos(Assert* testSuite){
 
 	Mario* mario = new Mario();
-	MovimientoAbajo* movimiento = new MovimientoAbajo(30);
 
-	int posicion = mario->obtenerPosicionY();
-
-	mario->mover(movimiento);
-
-	ASSERT(mario->obtenerPosicionY(),posicion-30,"Mario puede bajar: ");
+	testSuite->assert(mario->obtenerPuntos(),0,"Mario empieza con 0 puntos: ");
 
 	delete mario;
-	delete movimiento;
 }
 
-int main(){
-	pruebasPasadas = 0;
-	pruebasTotales = 0;
-	test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve();
-	test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve();
-	test03CuandoPedisAMarioQueSalteSeQuedaArriba();
-	test04CuandoMarioSeMueveParaAbajoBaja();
+void MarioTest::test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite){
 
-	cout << "Pasaron " << pruebasPasadas << " pruebas de "<< pruebasTotales <<endl;
-	return 0;
-}
+	Mario* mario = new Mario();
+	mario->agregarPuntos(10);
+
+	testSuite->assert(mario->obtenerPuntos(),10,"Mario tiene 10 puntos: ");
+
+	delete mario;
+}*/

@@ -3,7 +3,6 @@
 Trabajo practico de la materia Taller de programación 1.
   
 ## Grupo Honguitos
-* Avila, Nelson
 * De Angelis Riva, Lukas
 * Gomez, Joaquín
 * Grassano, Bruno

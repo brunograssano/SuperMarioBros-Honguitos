@@ -1,0 +1,162 @@
+<configuracion>
+    <log>
+        <level>INFO</level> <!-- DEBUG o INFO -->
+    </log>
+
+    <ventana>
+        <ancho>800</ancho>
+        <alto>600</alto>
+    </ventana>
+
+    <niveles>
+        <nivel>
+            <mundo>1</mundo>
+            <direccionFondo>resources/MapaNivel1Base.png</direccionFondo>
+            <cantidadMonedas>30</cantidadMonedas> 
+            <tiempoNivel></tiempoNivel>          <!--En segundos-->
+            <puntoBanderaFin>2000<puntoBanderaFin>     <!--En px-->
+            <enemigos>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/IconoHongo.png</direccionImagen>
+                    <cantidad>-1</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/Koopa.png</direccionImagen>
+                    <cantidad>15</cantidad>
+                </enemigo>
+
+            </enemigos>
+            <plataformas>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>100</coordenadaX>
+                    <coordenadaY>150</coordenadaY>
+                    <cantidadBloques>5</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>400</coordenadaX>
+                    <coordenadaY>300</coordenadaY>
+                    <cantidadBloques>5</cantidadBloques>
+                </plataforma>
+
+            </plataformas>
+        </nivel>
+
+		<nivel>
+            <mundo>2</mundo>
+            <direccionFondo>resources/MapaNivel2Base.png</direccionFondo>
+            <cantidadMonedas>20</cantidadMonedas>
+            <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
+            <enemigos>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/GoombaInvertido.png</direccionImagen>
+                    <cantidad>7</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/KoopaInvertido.png</direccionImagen>
+                    <cantidad>10</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <cantidad>3</cantidad>
+                </enemigo>
+            </enemigos>
+            <plataformas>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>100</coordenadaX>
+                    <coordenadaY>500</coordenadaY>
+                    <cantidadBloques>4</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>500</coordenadaX>
+                    <coordenadaY>150</coordenadaY>
+                    <cantidadBloques>7</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>800</coordenadaX>
+                    <coordenadaY>200</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+
+            </plataformas>
+        </nivel>
+        
+        <nivel>
+            <mundo>3</mundo>
+            <direccionFondo>resources/MapaNivel3Base.png</direccionFondo>
+            <cantidadMonedas>10</cantidadMonedas>
+            <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
+            <enemigos>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/GoombaInvertido.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/KoopaInvertido.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Goomba</tipo>
+                    <direccionImagen>resources/Goomba.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <direccionImagen>resources/Koopa.png</direccionImagen>
+                    <cantidad>4</cantidad>
+                </enemigo>
+            </enemigos>
+            <plataformas>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>1000</coordenadaX>
+                    <coordenadaY>500</coordenadaY>
+                    <cantidadBloques>4</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <coordenadaX>500</coordenadaX>
+                    <coordenadaY>300</coordenadaY>
+                    <cantidadBloques>7</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Sorpresa</tipo>
+                    <coordenadaX>800</coordenadaX>
+                    <coordenadaY>200</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+
+            </plataformas>
+        </nivel>
+
+
+    </niveles>
+</configuracion>

@@ -15,23 +15,30 @@ using namespace std;
 
 const int LARGO_ENTRADA = 150;
 
-void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA]){
-	if(cantidadArgumentos==5){
-		if(strcmp(argumentos[1],"-c")==0){
-			strcpy(direccionLecturaComando,argumentos[2]);
-			strcpy(nivelLogEntrada,argumentos[4]);
+// PREGUNTAR SI SE PUEDE USAR GETOPT PARA HACER MAS FLEXIBLE ESTO
+
+void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],bool* esServer){
+	if(cantidadArgumentos==6){ // ASUMO QUE SI TENGO 6 O 4 SE MANDO EL -s de server
+		if(strcmp(argumentos[2],"-c")==0){
+			strcpy(direccionLecturaComando,argumentos[3]);
+			strcpy(nivelLogEntrada,argumentos[5]);
 		}
 		else{
-			strcpy(direccionLecturaComando,argumentos[4]);
-			strcpy(nivelLogEntrada,argumentos[2]);
+			strcpy(direccionLecturaComando,argumentos[5]);
+			strcpy(nivelLogEntrada,argumentos[3]);
 		}
+		(*esServer) = true;
 	}
-	else if(cantidadArgumentos == 3){
-		if(strcmp(argumentos[1],"-c")==0){
-			strcpy(direccionLecturaComando,argumentos[2]);
+	else if(cantidadArgumentos == 4){
+		if(strcmp(argumentos[2],"-c")==0){
+			strcpy(direccionLecturaComando,argumentos[3]);
 		}else{
-			strcpy(nivelLogEntrada,argumentos[2]);
+			strcpy(nivelLogEntrada,argumentos[3]);
 		}
+		(*esServer) = true;
+	}
+	else if(cantidadArgumentos==2 && strcmp(argumentos[1],"-s")==0){
+		(*esServer) = true;
 	}
 }
 
@@ -50,68 +57,85 @@ TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
 	}
 }
 
-
-
-/* FORMATOS QUE PUEDE RECIBIR
- * /mario -c direccionConfiguracion 				(USAMOS LOG DEL ARCHIVO LEIDO)
- * /mario -l nivelDeLog								(USAMOS CONFIGURACION DEFAULT)
- * /mario -c direccionConfiguracion -l nivelDeLog 	(O AL REVES)
- * /mario 											(USAMOS TODA LA CONFIUGRACION DEFAULT)
- */
-int main( int cantidadArgumentos, char* argumentos[] ){
-
+ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],list<string> &mensajesErrorOtroArchivo,TipoLog *nivelLog) {
 	Lector* lector = new Lector();
 	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
-	char direccionLecturaComando[LARGO_ENTRADA] = "";
-	char nivelLogEntrada[LARGO_ENTRADA] = "";
 	ArchivoLeido* archivoLeido;
-	TipoLog* nivelLog;
-	list<string> mensajesErrorOtroArchivo;
-
-	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada);
-
-	if(strcmp(direccionLecturaComando,"")!=0){
+	if (strcmp(direccionLecturaComando, "") != 0) {
 		archivoLeido = lector->leerArchivo(direccionLecturaComando);
-		if(!archivoLeido->leidoCorrectamente){
+		if (!archivoLeido->leidoCorrectamente) {
 			mensajesErrorOtroArchivo = archivoLeido->mensajeError;
 			delete archivoLeido;
 			archivoLeido = lector->leerArchivo(direccionLecturaDefault);
 		}
-	}
-	else{
+	} else {
 		archivoLeido = lector->leerArchivo(direccionLecturaDefault);
 	}
 
-	if(strcmp(nivelLogEntrada,"")!=0){
+	if (strcmp(nivelLogEntrada, "") != 0) {
 		nivelLog = determinarNivelLog(nivelLogEntrada);
-		if(nivelLog!=NULL){
+		if (nivelLog != NULL) {
 			archivoLeido->tipoLog = nivelLog;
 		}
 	}
-
-	App* aplicacion = App::getInstance(archivoLeido,mensajesErrorOtroArchivo);
 	delete lector;
 
+	return archivoLeido;
+}
+
+void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archivoLeido) {
+	App *aplicacion = App::getInstance(archivoLeido, mensajesErrorOtroArchivo);
 	bool salir = false;
 	SDL_Event event;
-	while(!salir){
-		while(SDL_PollEvent(&event) ){
-			if( event.type == SDL_QUIT ){
+	while (!salir) {
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
 				salir = true;
 			}
 		}
 		SDL_PumpEvents();
 		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
-		if(keyboard_state_array[SDL_SCANCODE_ESCAPE]){
+		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
 			salir = true;
-		}else{
+		} else {
 			aplicacion->actualizar(keyboard_state_array);
 		}
 		aplicacion->actualizar();
 		aplicacion->dibujar();
 	}
-
 	delete aplicacion;
+}
+
+/* FORMATOS QUE PUEDE RECIBIR
+ * /mario -s -c direccionConfiguracion 					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
+ * /mario -s -l nivelDeLog								(USAMOS CONFIGURACION DEFAULT)
+ * /mario -s -c direccionConfiguracion -l nivelDeLog 	(O AL REVES)
+ * /mario -s											(SERVER EN CONFIGURACION DEFAULT)
+ * /mario 												(PARA CONECTARSE A UN SERVIDOR)
+ * /mario -l nivelLog ???????????????????????? se puede esto, y la configuracion tambien?
+ */
+int main( int cantidadArgumentos, char* argumentos[] ){
+
+	char direccionLecturaComando[LARGO_ENTRADA] = "";
+	char nivelLogEntrada[LARGO_ENTRADA] = "";
+	ArchivoLeido* archivoLeido;
+	TipoLog* nivelLog;
+	list<string> mensajesErrorOtroArchivo;
+	bool esServer = false;
+
+	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,&esServer);
+
+	if(esServer){
+
+	}
+	else{
+
+	}
+
+	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
+
+	gameLoop(mensajesErrorOtroArchivo, archivoLeido);
+
 	return 0;
 }
 

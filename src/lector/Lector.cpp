@@ -55,7 +55,7 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 
 	if (!result  && result.status == pugi::status_file_not_found){
 		archivoLeido->leidoCorrectamente = false;
-		archivoLeido->mensajeError.push_back("El archivo pedido en la direccion: "+ nombreArchivo +" no existe");
+		archivoLeido->mensajeError.push_back("El archivo pedido en la direccion: "+ nombreArchivo +" no existe,se carga el archivo por defecto");
 		return archivoLeido;
 	}
 
@@ -65,10 +65,10 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 		if (calcularPosicionesLinea(posicionUltimoCaracterPorLinea,nombreArchivo.c_str())){
 			archivoLeido->leidoCorrectamente = false;
 			linea = obtenerLineaError(posicionUltimoCaracterPorLinea,result.offset);
-			archivoLeido->mensajeError.push_back("Hay un error en la linea " + to_string(linea)+" del archivo "+ nombreArchivo);
+			archivoLeido->mensajeError.push_back("Hay un error en la linea " + to_string(linea)+" del archivo "+ nombreArchivo+",se carga el archivo por defecto");
 		}else{
 			archivoLeido->leidoCorrectamente = false;
-			archivoLeido->mensajeError.push_back("Hubo un error al intentar abrir el archivo "+ nombreArchivo +" cuando se intento determinar el error de la linea");
+			archivoLeido->mensajeError.push_back("Hubo un error al intentar abrir el archivo "+ nombreArchivo +" cuando se intento determinar el error de la linea,se carga el archivo por defecto");
 		}
 		return archivoLeido;
 	}

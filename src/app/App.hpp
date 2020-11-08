@@ -11,7 +11,6 @@ using namespace std;
 #include "Dibujadores/Dibujadores.hpp"
 #include "../modelo/Juego.hpp"
 #include "CargadorTexturas.hpp"
-#include "../sprites/SpriteMario.hpp"
 #include "../log/Log.hpp"
 #include "../lector/ArchivoLeido.hpp"
 #include "../reproductorDeMusica/ReproductorMusica.hpp"

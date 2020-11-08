@@ -107,11 +107,11 @@ void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archiv
 }
 
 /* FORMATOS QUE PUEDE RECIBIR
- * /mario -s -c direccionConfiguracion 					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
- * /mario -s -l nivelDeLog								(USAMOS CONFIGURACION DEFAULT)
- * /mario -s -c direccionConfiguracion -l nivelDeLog 	(O AL REVES)
- * /mario -s											(SERVER EN CONFIGURACION DEFAULT)
- * /mario 												(PARA CONECTARSE A UN SERVIDOR)
+ * /mario -s -c direccionConfiguracion -p puerto -i IP					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
+ * /mario -s -l nivelDeLog -p	puerto -i IP							(USAMOS CONFIGURACION DEFAULT)
+ * /mario -s -c direccionConfiguracion -l nivelDeLog -p	puerto -i IP 	(O AL REVES)
+ * /mario -s -p	puerto -i IP											(SERVER EN CONFIGURACION DEFAULT)
+ * /mario 																(PARA CONECTARSE A UN SERVIDOR)
  * /mario -l nivelLog ???????????????????????? se puede esto, y la configuracion tambien?
  */
 int main( int cantidadArgumentos, char* argumentos[] ){

@@ -14,7 +14,7 @@
             <direccionFondo>resources/Imagenes/Niveles/MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>40</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
+            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 50 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>
@@ -25,7 +25,7 @@
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <direccionImagen>resources/Imagenes/Personajes/Koopaasdasd.png</direccionImagen>
+                    <direccionImagen>resources/Imagenes/Personajes/Koopa.png</direccionImagen>
                     <cantidad>5</cantidad>
                 </enemigo>
 
@@ -41,7 +41,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <direccionImagen>resources/Imagenes/Bloques/BloqueLasdasadrillo.png</direccionImagen>
+                    <direccionImagen>resources/Imagenes/Bloques/BloqueLadrillo.png</direccionImagen>
                     <coordenadaX>400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>

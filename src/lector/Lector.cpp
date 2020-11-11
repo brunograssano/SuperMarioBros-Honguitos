@@ -7,10 +7,12 @@
 #include "Parsers/ParserVentana.hpp"
 #include "Parsers/ParserLog.hpp"
 #include "Parsers/ParserNivel.hpp"
+#include "Parsers/ParserUsuario.hpp"
 #include "../modelo/Nivel.hpp"
 
 using namespace std;
 
+const int VALOR_POR_DEFECTO_CONEXIONES = 1;
 
 typedef vector<ptrdiff_t> offset_data_t;
 
@@ -73,29 +75,45 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 		return archivoLeido;
 	}
 
-    for (pugi::xml_node log: doc.child("configuracion").children("log"))
-    {
+    for (pugi::xml_node log: doc.child("configuracion").children("log")){
     	ParserLog* parser = new ParserLog();
 		parser->ParsearLog(log,archivoLeido);
 		delete parser;
     }
 
-    for (pugi::xml_node ventana: doc.child("configuracion").children("ventana"))
-    {
+    for (pugi::xml_node ventana: doc.child("configuracion").children("ventana")){
     	ParserVentana* parser = new ParserVentana();
     	parser->ParsearVentana(ventana,archivoLeido);
     	delete parser;
     }
 
-    for (pugi::xml_node niveles: doc.child("configuracion").children("niveles"))
-    {
-    	for (pugi::xml_node nivel: niveles.children("nivel"))
-    	{
+    for (pugi::xml_node niveles: doc.child("configuracion").children("niveles")){
+    	for (pugi::xml_node nivel: niveles.children("nivel")){
     		ParserNivel* parser = new ParserNivel();
 			parser->ParsearNivel(nivel,archivoLeido);
 			delete parser;
     	}
     }
+    for (pugi::xml_node credenciales: doc.child("configuracion").children("credenciales")){
+		for (pugi::xml_node usuario: credenciales.children("usuario")){
+			ParserUsuario* parser = new ParserUsuario();
+			parser->parsearUsuario(usuario,archivoLeido);
+			delete parser;
+		}
+	}
+
+    string cantidadConexionesString = doc.child("configuracion").child_value("cantidadConexiones");
+    try{
+		archivoLeido->cantidadConexiones = stoi(cantidadConexionesString);
+		if(archivoLeido->cantidadConexiones<=0){
+			archivoLeido->mensajeError.push_back("El valor de cantidad de conexiones ("+cantidadConexionesString+") enviado no puede ser negativo o cero, se carga el valor por defecto");
+			archivoLeido->cantidadConexiones = VALOR_POR_DEFECTO_CONEXIONES;
+		}
+	}catch(std::exception& e){
+		archivoLeido->mensajeError.push_back("El valor de cantidad de conexiones ("+cantidadConexionesString+") enviado no tiene valor valido,se carga el valor por defecto");
+		archivoLeido->cantidadConexiones = VALOR_POR_DEFECTO_CONEXIONES;
+	}
+
     archivoLeido->verificarLectura();
     return archivoLeido;
 

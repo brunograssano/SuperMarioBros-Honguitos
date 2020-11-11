@@ -7,6 +7,11 @@ using namespace std;
 #include "../modelo/Nivel.hpp"
 #include "../log/TipoLog.hpp"
 
+typedef struct usuario{
+	string nombre;
+	string contrasenia;
+}usuario_t;
+
 class ArchivoLeido{
 	public:
 
@@ -15,6 +20,7 @@ class ArchivoLeido{
 			anchoVentana = 0;
 			altoVentana = 0;
 			leidoCorrectamente = true;
+			cantidadConexiones = 1;
 		}
 
 		TipoLog* tipoLog;
@@ -23,6 +29,8 @@ class ArchivoLeido{
 		list<Nivel*> niveles;
 		bool leidoCorrectamente;
 		list<string> mensajeError;
+		list<usuario_t> usuariosValidos;
+		int cantidadConexiones;
 
 		void verificarLectura();
 		~ArchivoLeido();

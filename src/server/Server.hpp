@@ -20,11 +20,6 @@
 
 const int MAX_CONEXIONES = 4;
 
-typedef struct usuario{
-	string nombre;
-	string contrasenia;
-}usuario_t;
-
 class Server{
 
 	public:
@@ -33,6 +28,7 @@ class Server{
 		~Server();
 
 	private:
+		Log* log;
 		int socketServer;
 		int cantidadConexiones;
 		list<usuario_t> usuariosValidos;

@@ -6,11 +6,11 @@ const int TAMANIO_COLA = 50;
 Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, int ip){
 	int opt = 1;
 	struct sockaddr_in address;
-	Log* log = Log::getInstance(archivoLeido->tipoLog);
+	log = Log::getInstance(archivoLeido->tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 
-	/*
+
 	usuariosValidos = archivoLeido->usuariosValidos;
 	if(archivoLeido->cantidadConexiones>MAX_CONEXIONES){
 		log->huboUnError("No se permite la cantidad de conexiones enviada ("+to_string(archivoLeido->cantidadConexiones)+"), el maximo es de " + to_string(MAX_CONEXIONES)+".");
@@ -18,7 +18,7 @@ Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo,
 	}
 	cantidadConexiones = archivoLeido->cantidadConexiones;
 
-	*/
+
 
 	socketServer = socket(AF_INET, SOCK_STREAM, 0);
 	if(socketServer == 0){
@@ -62,14 +62,12 @@ Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo,
 
 
 void Server::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
-	Log* log = Log::getInstance();
 	for(auto const& mensaje:mensajesError){
 		log->huboUnError(mensaje);
 	}
 }
 
 void Server::escuchar(){
-	Log* log = Log::getInstance();
 	int usuariosConectados = 0;
 	int socketConexionEntrante;
 	socklen_t addressStructure;

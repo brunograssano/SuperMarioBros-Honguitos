@@ -708,4 +708,32 @@
 
 
     </niveles>
+	<credenciales>
+		<usuario>
+			<username>lukas</username>
+			<password>12345</password>
+		</usuario>
+
+		<usuario>
+			<username>bruno</username>
+			<password>bru123</password>
+		</usuario>
+
+		<usuario>
+			<username>adrian</username>
+			<password>adrianstarly</password>
+		</usuario>
+
+		<usuario>
+			<username>joaquin</username>
+			<password>123joaco</password>
+		</usuario>
+
+		<usuario>
+			<username>prueba</username>
+			<password>prueba</password>
+		</usuario>
+	</credenciales>
+	<cantidadConexiones>2</cantidadConexiones>
+
 </configuracion>

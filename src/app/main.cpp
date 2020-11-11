@@ -13,6 +13,8 @@ using namespace std;
 #include "../log/Debug.hpp"
 #include "../log/Info.hpp"
 
+#include "../server/Server.hpp"
+
 const int LARGO_ENTRADA = 150;
 
 // PREGUNTAR SI SE PUEDE USAR GETOPT PARA HACER MAS FLEXIBLE ESTO
@@ -126,7 +128,10 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,&esServer);
 
 	if(esServer){
-
+		int puerto=8080;
+		int ip=192456;
+		Server* server = new Server(archivoLeido,mensajesErrorOtroArchivo, puerto,ip);
+		server->escuchar();
 	}
 	else{
 

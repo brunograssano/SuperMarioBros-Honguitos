@@ -8,11 +8,15 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
+#include <thread>
 
 #include "../log/Log.hpp"
 #include "../lector/ArchivoLeido.hpp"
 #include "../modelo/Juego.hpp"
+
+#include "ConexionServidor.hpp"
 
 const int MAX_CONEXIONES = 4;
 
@@ -25,6 +29,7 @@ class Server{
 
 	public:
 		Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, int ip);
+		void escuchar();
 		~Server();
 
 	private:
@@ -32,6 +37,8 @@ class Server{
 		int cantidadConexiones;
 		list<usuario_t> usuariosValidos;
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
+		bool esUsuarioValido(usuario_t posibleUsuario);
+		list<thread> conexionesConElServidor;
 
 };
 

@@ -1,5 +1,5 @@
 #include "Server.hpp"
-
+#include <string>
 
 const int TAMANIO_COLA = 50;
 
@@ -68,7 +68,59 @@ void Server::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 	}
 }
 
+void Server::escuchar(){
+	Log* log = Log::getInstance();
+	int usuariosConectados = 0;
+	int socketConexionEntrante;
+	socklen_t addressStructure;
+	struct sockaddr_in addressCliente;
+	char buffer[256];
+	int estadoLectura;
 
+	while(usuariosConectados<cantidadConexiones){
+
+		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
+		if (socketConexionEntrante < 0){
+			//log->huboUnError("No se pudo aceptar una conexion proveniente de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+		}
+		else{
+			//log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+		}
+
+		send(socketConexionEntrante, "Aceptado\n", 8, 0);
+
+		bzero(buffer,256);//limpia el buffer
+
+		estadoLectura = read(socketConexionEntrante,buffer,255);//usuario // contrasenia //ver como recibimos esto y su pase a usuario_t
+		if (estadoLectura < 0){
+			//log->huboUnError("No se pudo leer de una conexion proveniente de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+		}
+		else{
+			usuario_t posibleUsuario = {"Juan","123"};
+			if(esUsuarioValido(posibleUsuario)){
+				usuariosConectados++;
+				//log->mostrarMensajeDeInfo("Se acepto una conexion de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+				//agregar un thread a la lista de conexiones
+			}
+			else{
+				//log->mostrarMensajeDeInfo("Se rechazo una conexion de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+			}
+		}
+
+		printf("Here is the message: %s\n",buffer);
+
+
+	}
+}
+
+bool Server::esUsuarioValido(usuario_t posibleUsuario){
+	for(auto const& usuario:usuariosValidos){
+		if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0){
+			return true;
+		}
+	}
+	return false;
+}
 
 Server::~Server(){
 	delete Log::getInstance();

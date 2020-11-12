@@ -15,33 +15,52 @@ using namespace std;
 
 #include "../server/Server.hpp"
 
-const int LARGO_ENTRADA = 150;
+#include <getopt.h>
 
-// PREGUNTAR SI SE PUEDE USAR GETOPT PARA HACER MAS FLEXIBLE ESTO
+const int LARGO_ENTRADA = 150,LARGO_IP = 20;
+const int ERROR = -1, VACIO=0, TERMINO = -1;
+#define CONFIG 'c'
+#define IP 'i'
+#define LOG 'l'
+#define SERVER 's'
+#define PUERTO 'p'
 
-void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],bool* esServer){
-	if(cantidadArgumentos==6){ // ASUMO QUE SI TENGO 6 O 4 SE MANDO EL -s de server
-		if(strcmp(argumentos[2],"-c")==0){
-			strcpy(direccionLecturaComando,argumentos[3]);
-			strcpy(nivelLogEntrada,argumentos[5]);
-		}
-		else{
-			strcpy(direccionLecturaComando,argumentos[5]);
-			strcpy(nivelLogEntrada,argumentos[3]);
-		}
-		(*esServer) = true;
-	}
-	else if(cantidadArgumentos == 4){
-		if(strcmp(argumentos[2],"-c")==0){
-			strcpy(direccionLecturaComando,argumentos[3]);
-		}else{
-			strcpy(nivelLogEntrada,argumentos[3]);
-		}
-		(*esServer) = true;
-	}
-	else if(cantidadArgumentos==2 && strcmp(argumentos[1],"-s")==0){
-		(*esServer) = true;
-	}
+void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],
+					char ipEntrada[LARGO_IP],char puertoEntrada[LARGO_IP],bool* esServer){
+
+	  static struct option opcionesLargas[] = {
+	     {"config", required_argument, 0, 'c'},
+	     {"ip", required_argument, 0, 'i'},
+	     {"log", required_argument, 0, 'l'},
+	     {"port", required_argument, 0, 'p'},
+	     {"server", no_argument, 0, 's'},
+	     {0, 0, 0, 0}
+	  };
+
+	  int argumento;
+	  int indiceOpcion = 0;
+
+	  while((argumento = getopt_long(cantidadArgumentos, argumentos, "c:i:p:l:s",opcionesLargas, &indiceOpcion))!=TERMINO){
+	      switch (argumento) {
+	          case CONFIG:
+	        	  strcpy(direccionLecturaComando,optarg);
+	              break;
+	          case IP:
+	        	  strcpy(ipEntrada,optarg);
+	              break;
+	          case LOG:
+	              strcpy(nivelLogEntrada,optarg);
+	              break;
+	          case SERVER:
+	        	  (*esServer) = true;
+	              break;
+	          case PUERTO:
+	        	  strcpy(puertoEntrada,optarg);
+	              break;
+	          default:
+	              break;
+	      }
+	  }
 }
 
 TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
@@ -110,24 +129,27 @@ void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archiv
 
 /* FORMATOS QUE PUEDE RECIBIR
  * /mario -s -c direccionConfiguracion -p puerto -i IP					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
- * /mario -s -l nivelDeLog -p	puerto -i IP							(USAMOS CONFIGURACION DEFAULT)
+ * /mario -s -l nivelDeLog -p puerto -i IP								(USAMOS CONFIGURACION DEFAULT)
  * /mario -s -c direccionConfiguracion -l nivelDeLog -p	puerto -i IP 	(O AL REVES)
  * /mario -s -p	puerto -i IP											(SERVER EN CONFIGURACION DEFAULT)
  * /mario 																(PARA CONECTARSE A UN SERVIDOR)
- * /mario -l nivelLog ???????????????????????? se puede esto, y la configuracion tambien?
+ * /mario -l nivelLog
  */
 int main( int cantidadArgumentos, char* argumentos[] ){
 
 	char direccionLecturaComando[LARGO_ENTRADA] = "";
 	char nivelLogEntrada[LARGO_ENTRADA] = "";
+	char ipEntrada[LARGO_IP] = "";
+	char puertoEntrada[LARGO_IP] = "";
 	ArchivoLeido* archivoLeido;
 	TipoLog* nivelLog;
 	list<string> mensajesErrorOtroArchivo;
 	bool esServer = false;
 
-	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,&esServer);
+	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,ipEntrada,puertoEntrada,&esServer);
 
 	if(esServer){
+		// hacer parseo de la ip
 		int puerto=8080;
 		int ip=192456;
 		Server* server = new Server(archivoLeido,mensajesErrorOtroArchivo, puerto,ip);

@@ -1,8 +1,0 @@
- [ERROR] Mon Nov  2 23:57:28 2020
- - No se pudo cargar una imagen en resources/Imagenes/Personajes/Koopaasdasd.png ---- Couldn't open resources/Imagenes/Personajes/Koopaasdasd.png
- [ERROR] Mon Nov  2 23:57:28 2020
-No se pudo cargar un enemigo en: resources/Imagenes/Personajes/Koopaasdasd.png. Se cargo la textura por defecto.
- [ERROR] Mon Nov  2 23:57:28 2020
- - No se pudo cargar una imagen en resources/Imagenes/Bloques/BloqueLasdasadrillo.png ---- Couldn't open resources/Imagenes/Bloques/BloqueLasdasadrillo.png
- [ERROR] Mon Nov  2 23:57:28 2020
-No se pudo cargar un bloque en: resources/Imagenes/Bloques/BloqueLasdasadrillo.png. Se cargo la textura por defecto.

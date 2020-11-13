@@ -7,7 +7,6 @@
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
-const int CANTIDAD_MAXIMA_MONEDAS = 100;
 
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -48,15 +47,20 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
-
 	list<Plataforma*> plataformas = this->obtenerPlataformas();
 	for(auto const& plataforma : plataformas){
-
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 
 		for(auto const& bloque : bloques){
+			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= altoNivel)){
+				Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
+						+ " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
+				bloque->ubicarEnPosicionDefault();
+			}
+
 			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
 		}
+
 	}
 }
 
@@ -66,6 +70,12 @@ void Nivel::inicializarPosicionMonedas(){
 
 	srand(time(NULL));
 
+	int cantidadMaximaMonedas = (puntoBanderaFin/2)/(TAMANIO_MONEDA);
+
+	if(cantidadMonedas > cantidadMaximaMonedas){
+		Log::getInstance()->huboUnError("No se pueden poner " + to_string(cantidadMonedas) +" monedas, se ponen entonces: " + to_string(cantidadMaximaMonedas));
+	}
+
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
 
 	int limiteXSuperior = puntoBanderaFin;
@@ -73,7 +83,7 @@ void Nivel::inicializarPosicionMonedas(){
 	int limiteYInferior = altoNivel/4;
 	int limiteYSuperior = altoNivel*1/2;
 
-	for(int i=0; i<cantidadMonedas && i<CANTIDAD_MAXIMA_MONEDAS; i++){
+	for(int i=0; i<cantidadMonedas && i<cantidadMaximaMonedas; i++){
 
 		do{
 			numeroPosicionX = rand() % (limiteXSuperior/TAMANIO_MONEDA + 1 - limiteXInferior/TAMANIO_MONEDA) + limiteXInferior/TAMANIO_MONEDA;
@@ -104,10 +114,11 @@ void Nivel::inicializarPosicionEnemigo(){
 	int coordenadaX = 0;
 	int coordenadaY = 50;
 
-	unsigned int cantidadMaximaEnemigos = (puntoBanderaFin/4)/TAMANIO_ENEMIGO;
+	unsigned int cantidadMaximaEnemigos = (puntoBanderaFin/3)/TAMANIO_ENEMIGO;
 
 	if(enemigos.size()>=cantidadMaximaEnemigos){
-			Log::getInstance()->huboUnError("No se pudieron cargar todos los enemigos por que eran demasiados, se carga la cantidad maxima permitida");
+			Log::getInstance()->huboUnError("No se pudieron cargar "+ to_string((int)enemigos.size()) +
+				" enemigos, se carga la cantidad maxima permitida para este nivel: " + to_string((int)cantidadMaximaEnemigos));
 			list<Enemigo*>::iterator iterador1 = enemigos.begin();
 			list<Enemigo*>::iterator iterador2 = enemigos.end();
 			advance(iterador1, cantidadMaximaEnemigos-1);

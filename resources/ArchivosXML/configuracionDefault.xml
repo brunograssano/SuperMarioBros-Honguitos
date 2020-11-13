@@ -283,7 +283,7 @@
                     <direccionImagen>resources/Imagenes/Bloques/BloqueLadrilloInvertido.png</direccionImagen>
                     <coordenadaX>0</coordenadaX>
                     <coordenadaY>500</coordenadaY>
-                    <cantidadBloques>200</cantidadBloques>
+                    <cantidadBloques>190</cantidadBloques>
                 </plataforma>
 
                 <plataforma>

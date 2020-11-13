@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#include "../../modelo/Juego.hpp"
+#include "../juegoCliente/JuegoCliente.hpp"
 #include "../CargadorTexturas.hpp"
 #include "../../sprites/SpriteMario.hpp"
 
@@ -23,7 +23,7 @@ class Dibujadores{
 
 	public:
 		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, bool leidoCorrectamente);
-		void dibujarJuego(SDL_Rect* rectanguloCamara);
+		void dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarGameOver();
 		void dibujarInicio();
 		void dibujarPantallaGanadores();

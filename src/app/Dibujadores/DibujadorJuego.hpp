@@ -9,8 +9,12 @@
 
 using namespace std;
 
-#include "../../modelo/Juego.hpp"
-#include "../../sprites/SpriteMario.hpp"
+#include "../juegoCliente/JuegoCliente.hpp"
+#include "../juegoCliente/RecorteMario.hpp"
+#include "../juegoCliente/RecorteKoopa.hpp"
+#include "../juegoCliente/RecorteGoomba.hpp"
+#include "../juegoCliente/RecorteMoneda.hpp"
+
 #include "Dibujador.hpp"
 
 class DibujadorJuego : public Dibujador{
@@ -18,11 +22,9 @@ class DibujadorJuego : public Dibujador{
 	public:
 		DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
 
-		void dibujar(SDL_Rect* rectanguloCamara);
-		void dibujar() override{
-			// TODO: Esto está feo.
-		}
-		virtual ~DibujadorJuego(){}
+		void dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
+		void dibujar() override{}
+		virtual ~DibujadorJuego();
 
 	private:
 		Uint32 tiempoDeInicio = 0;
@@ -31,13 +33,17 @@ class DibujadorJuego : public Dibujador{
 		stringstream textoDePuntos;
 
 		SDL_Rect rectanguloCamara;
-		Juego* juego;
 
-		void dibujarEnemigos(SDL_Rect* rectanguloCamara);
-		void dibujarPlataformas(SDL_Rect* rectanguloCamara);
-		void dibujarMonedas(SDL_Rect* rectanguloCamara);
-		void dibujarMario(SDL_Rect* rectanguloCamara);
-		void dibujarTexto();
+		RecorteMario* recorteSpriteMario;
+		RecorteGoomba* recorteSpriteGoomba;
+		RecorteKoopa* recorteSpriteKoopa;
+		RecorteMoneda* recorteSpriteMoneda;
+
+		void dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
+		void dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
+		void dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
+		void dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
+		void dibujarTexto(JuegoCliente* juegoCliente);
 
 };
 

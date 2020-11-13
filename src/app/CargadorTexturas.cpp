@@ -27,7 +27,14 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
-	texturaMario = intentarCarga("la imagen de Mario", "resources/Imagenes/Personajes/mario_grande.png",renderizador);
+	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
+						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png"};
+	int i = 1;
+	for(auto const& dirMario:listaMarios){
+		SDL_Texture* texturaMario = intentarCarga("la imagen de mario", dirMario, renderizador);
+		texturasMario[i]=texturaMario;
+		i++;
+	}
 
 	texturaMoneda = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
 
@@ -111,19 +118,19 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
 	}
 }
 
-void CargadorTexturas::cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer* renderizador){
+void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador){
 
-	for(auto const& nivel : niveles){
+	for(int i=0;i<cantidadFondosNiveles;i++){
 		int altoNivel = 0;
 		int largoNivel = 0;
-		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", nivel->obtenerDireccionFondoActual(), renderizador);
-		texturasNiveles[nivel->obtenerDireccionFondoActual()] = texturaNueva;
+		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", direccionesNiveles[i], renderizador);
+		texturasNiveles[direccionesNiveles[i]] = texturaNueva;
 		SDL_QueryTexture(texturaNueva, NULL, NULL, &largoNivel, &altoNivel);
-		nivel->definirDimesionesDelNivel(largoNivel, altoNivel);
+		//nivel->definirDimesionesDelNivel(largoNivel, altoNivel);
 	}
 
-	texturaFondoActual = this->texturasNiveles[niveles.front()->obtenerDireccionFondoActual()];
-	direccionFondoActual = niveles.front()->obtenerDireccionFondoActual();
+	texturaFondoActual = this->texturasNiveles[direccionesNiveles[0]];
+	direccionFondoActual = direccionesNiveles[0];
 
 }
 
@@ -155,19 +162,9 @@ SDL_Texture* CargadorTexturas::intentarCarga(std::string descripcion, std::strin
 	return texturaCargada;
 }
 
-
-SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador){
-
-	if(!tengoTexturaCargadaEnMemoria(spriteEnemigo,texturasEnemigos)){
-		SDL_Texture* texturaNueva = intentarCarga("un enemigo", spriteEnemigo->direccionImagen(),renderizador);
-		texturasEnemigos[spriteEnemigo->direccionImagen()]=texturaNueva;
-	}
-	return texturasEnemigos[spriteEnemigo->direccionImagen()];
-}
-
-bool CargadorTexturas::tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<string,SDL_Texture*> texturas){
+bool CargadorTexturas::tengoTexturaCargadaEnMemoria(string spriteDireccion, map<string,SDL_Texture*> texturas){
 	try{
-		texturas.at(spriteBloque->direccionImagen());
+		texturas.at(spriteDireccion);
 	}
 	catch(std::out_of_range&){
 		return false;
@@ -175,17 +172,28 @@ bool CargadorTexturas::tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<st
 	return true;
 }
 
+SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(string spriteEnemigoDireccion,SDL_Renderer* renderizador){
+
+	if(!tengoTexturaCargadaEnMemoria(spriteEnemigoDireccion,texturasEnemigos)){
+		SDL_Texture* texturaNueva = intentarCarga("un enemigo", spriteEnemigoDireccion,renderizador);
+		texturasEnemigos[spriteEnemigoDireccion]=texturaNueva;
+	}
+	return texturasEnemigos[spriteEnemigoDireccion];
+}
+
+
+
 SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(string personaje){
 	return texturasPersonajes[personaje];
 }
 
-SDL_Texture* CargadorTexturas::obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador){
+SDL_Texture* CargadorTexturas::obtenerTexturaBloque(string spriteDireccionBloque,SDL_Renderer* renderizador){
 
-	if(!tengoTexturaCargadaEnMemoria(spriteBloque,texturasBloques)){
-		SDL_Texture* texturaNueva = intentarCarga("un bloque", spriteBloque->direccionImagen(), renderizador);
-		texturasBloques[spriteBloque->direccionImagen()]=texturaNueva;
+	if(!tengoTexturaCargadaEnMemoria(spriteDireccionBloque,texturasBloques)){
+		SDL_Texture* texturaNueva = intentarCarga("un bloque", spriteDireccionBloque, renderizador);
+		texturasBloques[spriteDireccionBloque]=texturaNueva;
 	}
-	return texturasBloques[spriteBloque->direccionImagen()];
+	return texturasBloques[spriteDireccionBloque];
 }
 
 
@@ -196,8 +204,8 @@ SDL_Texture* CargadorTexturas::obtenerParticula(string particulaAsociada){
 
 ////----------------GETTERS--------------////
 
-SDL_Texture* CargadorTexturas::obtenerTexturaMario(){
-	return texturaMario;
+SDL_Texture* CargadorTexturas::obtenerTexturaMario(int idMario){
+	return texturasMario[idMario];
 }
 
 SDL_Texture* CargadorTexturas::obtenerTexturaCoffinMario(){
@@ -238,7 +246,7 @@ SDL_Texture* CargadorTexturas::obtenerTexturaFuente(){
 
 
 CargadorTexturas::~CargadorTexturas(){
-	SDL_DestroyTexture( texturaMario );
+
 	SDL_DestroyTexture( texturaMoneda );
 	SDL_DestroyTexture( texturaLadrillo );
 	SDL_DestroyTexture( texturaSorpresa );
@@ -246,6 +254,10 @@ CargadorTexturas::~CargadorTexturas(){
 	SDL_DestroyTexture( texturaFuenteJuego );
 	SDL_DestroyTexture( texturaCoffinMario );
 	SDL_DestroyTexture( texturaDefecto);
+
+	for (auto const& parClaveMario : texturasMario){
+		SDL_DestroyTexture( parClaveMario.second );
+	}
 
 	for (auto const& parClaveEnemigo : texturasEnemigos){
 		SDL_DestroyTexture( parClaveEnemigo.second );

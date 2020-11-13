@@ -1,6 +1,6 @@
 <configuracion>
     <log>
-        <level>ERROR</level> <!-- DEBUG o INFO -->
+        <level>INFO</level> <!-- DEBUG o INFO -->
     </log>
 
     <ventana>

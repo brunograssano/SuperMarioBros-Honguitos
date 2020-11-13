@@ -13,7 +13,7 @@ using namespace std;
 #include "../log/Debug.hpp"
 #include "../log/Info.hpp"
 
-#include "../server/Server.hpp"
+#include "../server/Servidor.hpp"
 
 #include <getopt.h>
 
@@ -144,25 +144,33 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	ArchivoLeido* archivoLeido;
 	TipoLog* nivelLog;
 	list<string> mensajesErrorOtroArchivo;
-	bool esServer = false;
+	bool esServer = true;
+	Servidor* server;
 
 	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,ipEntrada,puertoEntrada,&esServer);
 
 	if(esServer){
 		// hacer parseo de la ip
-		int puerto=8080;
-		int ip=192456;
-		Server* server = new Server(archivoLeido,mensajesErrorOtroArchivo, puerto,ip);
-		server->escuchar();
+		archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
+		int puerto = 5003;
+		char ip[] = "127.0.0.1";
+
+		server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
+		pthread_t hilo;
+		if(pthread_create(&hilo, NULL, Servidor::escuchar_helper, server) != 0){
+			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar.");
+		}else{
+			Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar: (" + to_string(hilo) +").");
+		}
 	}
 	else{
+		return -1;
+	}
+	//gameLoop(mensajesErrorOtroArchivo, archivoLeido);
+	while(true){
 
 	}
-
-	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
-
-	gameLoop(mensajesErrorOtroArchivo, archivoLeido);
-
+	delete server;
 	return 0;
 }
 

@@ -1,9 +1,10 @@
-#include "Server.hpp"
+#include "Servidor.hpp"
+
 #include <string>
 
-const int TAMANIO_COLA = 50;
+const int TAMANIO_COLA = 4;
 
-Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, int ip){
+Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
 	int opt = 1;
 	struct sockaddr_in address;
 	log = Log::getInstance(archivoLeido->tipoLog);
@@ -19,8 +20,7 @@ Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo,
 	cantidadConexiones = archivoLeido->cantidadConexiones;
 
 
-
-	socketServer = socket(AF_INET, SOCK_STREAM, 0);
+	socketServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(socketServer == 0){
 		log->huboUnError("No se pudo crear el socket para aceptar conexiones");
 		delete archivoLeido;
@@ -37,9 +37,9 @@ Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo,
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(puerto);
+    inet_pton(AF_INET, ip, &address.sin_addr);
 
-
-
+    /* Enlazamos el socket a la dirección puerto */
     if(bind(socketServer,(struct sockaddr*)&address,sizeof(address))<0){
     	log->huboUnError("No se pudo bindear el socket al puerto.");
 		delete archivoLeido;
@@ -47,13 +47,13 @@ Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo,
         exit(EXIT_FAILURE);
     }
 
-    if(listen(socketServer, TAMANIO_COLA) < 0){
-    	log->huboUnError("No se pudo bindear el socket al puerto.");
+	/* Hacemos que el socket sea para escuchar */
+	if(listen(socketServer, TAMANIO_COLA) < 0){
+		log->huboUnError("No se pudo bindear el socket al puerto.");
 		delete archivoLeido;
 		delete log;
 		exit(EXIT_FAILURE);
 	}
-
 
     log->mostrarMensajeDeInfo("Se creo el server, se estan esperando conexiones");
 
@@ -61,13 +61,13 @@ Server::Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo,
 }
 
 
-void Server::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
+void Servidor::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 	for(auto const& mensaje:mensajesError){
 		log->huboUnError(mensaje);
 	}
 }
 
-void Server::escuchar(){
+void* Servidor::escuchar(){
 	int usuariosConectados = 0;
 	int socketConexionEntrante;
 	socklen_t addressStructure;
@@ -80,14 +80,25 @@ void Server::escuchar(){
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
 		if (socketConexionEntrante < 0){
 			//log->huboUnError("No se pudo aceptar una conexion proveniente de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-		}
-		else{
-			//log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+		}else{
+			log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+			send(socketConexionEntrante, "Aceptado\n", 8, 0);
+			ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, "Juancito" + to_string(usuariosConectados));
+			clientes.push_back(conexion);
+
+			pthread_t hilo;
+			if(pthread_create(&hilo, NULL, ConexionCliente::recibir_helper, conexion) != 0){
+				Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: Juancito" + to_string(usuariosConectados)
+						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+			}else{
+				Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario : Juancito" + to_string(usuariosConectados)
+						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+			}
+			usuariosConectados++;
 		}
 
-		send(socketConexionEntrante, "Aceptado\n", 8, 0);
 
-		bzero(buffer,256);//limpia el buffer
+		/*bzero(buffer,256);//limpia el buffer
 
 		estadoLectura = read(socketConexionEntrante,buffer,255);//usuario // contrasenia //ver como recibimos esto y su pase a usuario_t
 		if (estadoLectura < 0){
@@ -105,13 +116,12 @@ void Server::escuchar(){
 			}
 		}
 
-		printf("Here is the message: %s\n",buffer);
-
-
+		printf("Here is the message: %s\n",buffer);*/
 	}
+	return NULL;
 }
 
-bool Server::esUsuarioValido(usuario_t posibleUsuario){
+bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
 	for(auto const& usuario:usuariosValidos){
 		if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0){
 			return true;
@@ -120,6 +130,12 @@ bool Server::esUsuarioValido(usuario_t posibleUsuario){
 	return false;
 }
 
-Server::~Server(){
+Servidor::~Servidor(){
+
+	for(auto const& cliente:clientes){
+		delete cliente;
+	}
+	clientes.clear();
+	close(socketServer);
 	delete Log::getInstance();
 }

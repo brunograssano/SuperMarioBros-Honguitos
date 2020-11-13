@@ -1,5 +1,5 @@
-#ifndef SRC_SERVER_SERVER_HPP_
-#define SRC_SERVER_SERVER_HPP_
+#ifndef SRC_SERVER_SERVIDOR_HPP_
+#define SRC_SERVER_SERVIDOR_HPP_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,14 +18,21 @@
 
 #include "ConexionServidor.hpp"
 
+class ConexionCliente;
+#include "ConexionCliente.hpp"
+
+
 const int MAX_CONEXIONES = 4;
 
-class Server{
+class Servidor{
 
 	public:
-		Server(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, int ip);
-		void escuchar();
-		~Server();
+		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
+		void* escuchar();
+		static void *escuchar_helper(void* ptr){
+			return((Servidor*) ptr)->escuchar();
+		}
+		~Servidor();
 
 	private:
 		Log* log;
@@ -35,9 +42,10 @@ class Server{
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 		bool esUsuarioValido(usuario_t posibleUsuario);
 		list<thread> conexionesConElServidor;
+		list<ConexionCliente*> clientes;
 
 };
 
 
 
-#endif /* SRC_SERVER_SERVER_HPP_ */
+#endif /* SRC_SERVER_SERVIDOR_HPP_ */

@@ -7,6 +7,11 @@ void ArchivoLeido::verificarLectura(){
 		this->leidoCorrectamente = false;
 	}
 
+	if(this->usuariosValidos.empty()){
+			this->mensajeError.push_back("No se envio informacion de los usuarios validos para jugar, nadie podra ingresar al juego.");
+			this->leidoCorrectamente = false;
+	}
+
 }
 
 ArchivoLeido::~ArchivoLeido(){

@@ -124,7 +124,7 @@ void App::revisarSiTerminoNivel(Mario* jugador){
 		ganaron = true;
 		Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 		ReproductorMusica::getInstance()->ReproducirSonidoMarioAgarraHongo();
-		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.wav"); //TODO: refactorizar a otro método.
+		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.mp3"); //TODO: refactorizar a otro método.
 	}
 	else if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual()){
 		rectanguloCamara.x= 0;

@@ -51,14 +51,18 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 		Bloque* unBloque;
 		if(tipo.compare("Ladrillo")==0){
 			unBloque = new Ladrillo(coordenadaBloque,coordenadaY, direccionImagen);
+			coordenadaBloque += 40;
+			unaPlataforma->agregarBloque(unBloque);
 		}else if(tipo.compare("Sorpresa")==0){
 			unBloque = new Sorpresa(coordenadaBloque,coordenadaY);
+			coordenadaBloque += 40;
+			unaPlataforma->agregarBloque(unBloque);
 		}else{
 			archivoLeido->mensajeError.push_back("El tipo de bloque no es valido, se pone un ladrillo en su lugar");
 			unBloque = new Ladrillo(coordenadaBloque, coordenadaY, direccionImagen);
+			coordenadaBloque += 40;
+			unaPlataforma->agregarBloque(unBloque);
 		}
-		coordenadaBloque += 40;
-		unaPlataforma->agregarBloque(unBloque);
 	}
 	unNivel->agregarPlataforma(unaPlataforma);
 }

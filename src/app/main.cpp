@@ -104,8 +104,8 @@ ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARG
 	return archivoLeido;
 }
 
-void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archivoLeido) {
-	App *aplicacion = App::getInstance(archivoLeido, mensajesErrorOtroArchivo);
+void gameLoop(info_partida_t informacion,TipoLog* tipoLog) {
+	App *aplicacion = App::getInstance(informacion,tipoLog);
 	bool salir = false;
 	SDL_Event event;
 	while (!salir) {
@@ -119,9 +119,9 @@ void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archiv
 		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
 			salir = true;
 		} else {
-			aplicacion->actualizar(keyboard_state_array);
+			aplicacion->actualizarServer(keyboard_state_array);
 		}
-		aplicacion->actualizar();
+		//aplicacion->actualizar();
 		aplicacion->dibujar();
 	}
 	delete aplicacion;
@@ -132,8 +132,8 @@ void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archiv
  * /mario -s -l nivelDeLog -p puerto -i IP								(USAMOS CONFIGURACION DEFAULT)
  * /mario -s -c direccionConfiguracion -l nivelDeLog -p	puerto -i IP 	(O AL REVES)
  * /mario -s -p	puerto -i IP											(SERVER EN CONFIGURACION DEFAULT)
- * /mario 																(PARA CONECTARSE A UN SERVIDOR)
- * /mario -l nivelLog
+ * /mario -p puerto -i IP												(PARA CONECTARSE A UN SERVIDOR)
+ * /mario -l nivelLog -p puerto -i IP									(LOS PARAMETROS SON COMPLETAMENTE FLEXIBLES)
  */
 int main( int cantidadArgumentos, char* argumentos[] ){
 
@@ -149,6 +149,7 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,ipEntrada,puertoEntrada,&esServer);
 
 	if(esServer){
+		archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
 		// hacer parseo de la ip
 		int puerto=8080;
 		int ip=192456;
@@ -156,12 +157,13 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		server->escuchar();
 	}
 	else{
-
+		info_partida_t informacion; //nos lo mandan
+		gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
 	}
 
-	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
 
-	gameLoop(mensajesErrorOtroArchivo, archivoLeido);
+
+
 
 	return 0;
 }

@@ -9,59 +9,80 @@
 using namespace std;
 
 #include "Dibujadores/Dibujadores.hpp"
-#include "../modelo/Juego.hpp"
+#include "juegoCliente/JuegoCliente.hpp"
 #include "CargadorTexturas.hpp"
 #include "../log/Log.hpp"
 #include "../lector/ArchivoLeido.hpp"
 #include "../reproductorDeMusica/ReproductorMusica.hpp"
 
 const int ANCHO_FONDO = 8177;
+const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
+const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70;
+
+typedef struct info_partida{
+	unsigned short cantidadJugadores;
+	jugador_t jugadores[MAX_JUGADORES];
+	string direccionesFondoNiveles[MAX_IMAGEN_NIVELES];
+	unsigned short cantidadFondosNiveles;
+	//string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
+	//string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
+
+	bool iniciadoCorrectamente;
+	unsigned short anchoVentana;
+	unsigned short altoVentana;
+	unsigned short idPropio;
+}info_partida_t;
+
+typedef struct ronda{
+	bloque_t bloques[MAX_BLOQUES];
+	enemigo_t enemigos[MAX_ENEMIGOS];
+	moneda_t monedas[MAX_MONEDAS];
+	jugador_t jugadores[MAX_JUGADORES];
+	int posXCamara;
+}info_ronda_t;
+
 
 class App{
 
 	protected:
-		App(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo){
+		App(info_partida_t informacion,TipoLog* tipoLog){
+			Log* log = Log::getInstance(tipoLog);
 
-			Log* log = Log::getInstance(archivoLeido->tipoLog);
-			escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
-			escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
-			determinarDimensionesPantalla(archivoLeido->anchoVentana,archivoLeido->altoVentana);
+			determinarDimensionesPantalla(informacion.anchoVentana,informacion.altoVentana);
 			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
-			if(archivoLeido->leidoCorrectamente){
-				cargadorTexturas->cargarTexturasNiveles(archivoLeido->niveles, renderizador);
-				juego = Juego::getInstance(archivoLeido->niveles);
+			if(informacion.iniciadoCorrectamente){
+				cargadorTexturas->cargarTexturasNiveles(informacion.direccionesFondoNiveles,informacion.cantidadFondosNiveles, renderizador);
+				//juego = Juego::getInstance(archivoLeido->niveles);
 			}
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
+			juegoInicializadoCorrectamente = informacion.iniciadoCorrectamente;
 
-			juegoInicializadoCorrectamente = archivoLeido->leidoCorrectamente;
-			tiempoFaltante = 0;
-			tiempoDeInicio = 0;
+			juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio);
+
 			sePusoMusicaInicio = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
 			ganaron = false;
-			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,archivoLeido->leidoCorrectamente);
+			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
 
 			log->mostrarMensajeDeInfo("Inicio del juego");
-			delete archivoLeido;
+
 		}
 
-		Juego* juego;
 		static App* aplicacion;
 		CargadorTexturas* cargadorTexturas;
 		SDL_Window* ventanaAplicacion;
 		SDL_Renderer* renderizador;
 		SDL_Rect rectanguloCamara;
 		Dibujadores* dibujador;
-		int tiempoFaltante;
-		int tiempoDeInicio;
 
-		void revisarSiTerminoNivel(Mario* jugador);
 		void inicializarSDL(Log* log);
 		void determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana);
+
+		JuegoCliente* juegoCliente;
 
 		bool sePusoMusicaInicio;
 		bool terminoElJuego;
@@ -75,13 +96,13 @@ class App{
 	public:
 		App(App &other) = delete;
 		static App *getInstance();
-		static App *getInstance(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo);
+		static App *getInstance(info_partida_t informacion,TipoLog* tipoLog);
 
 
-		void actualizar(const Uint8 *keystate);
-		void actualizar();
-		void moverCamara(Mario* jugador);
-		int obtenerTiempoFaltante();
+		void actualizarServer(const Uint8 *keystate);
+		//void actualizar();
+		//void moverCamara(Mario* jugador);
+		//int obtenerTiempoFaltante();
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();

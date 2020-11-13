@@ -6,15 +6,16 @@
 #include <SDL2/SDL_image.h>
 #include <map>
 #include <SDL2/SDL_ttf.h>
-#include "../modelo/Nivel.hpp"
-#include "../sprites/Sprite.hpp"
 using namespace std;
+
+
+const int MAX_IMAGEN_NIVELES = 30;
 
 class CargadorTexturas{
 
 	public:
 		CargadorTexturas(SDL_Renderer* renderizador);
-		SDL_Texture* obtenerTexturaMario();
+		SDL_Texture* obtenerTexturaMario(int idMario);
 		SDL_Texture* obtenerTexturaMoneda();
 		SDL_Texture* obtenerTexturaFondo();
 		SDL_Texture* obtenerTexturaLadrillo();
@@ -24,8 +25,8 @@ class CargadorTexturas{
 		SDL_Texture* obtenerTexturaTitulo();
 		SDL_Texture* obtenerTexturaFondoGameOver();
 
-		SDL_Texture* obtenerTexturaEnemigo(Sprite* spriteEnemigo,SDL_Renderer* renderizador);
-		SDL_Texture* obtenerTexturaBloque(Sprite* spriteBloque,SDL_Renderer* renderizador);
+		SDL_Texture* obtenerTexturaEnemigo(string spriteDireccionEnemigo,SDL_Renderer* renderizador);
+		SDL_Texture* obtenerTexturaBloque(string spriteDireccionBloque,SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaFuente();
 		SDL_Texture* obtenerTexturaPersonaje(string personaje);
 
@@ -33,8 +34,8 @@ class CargadorTexturas{
 
 		SDL_Texture* cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador);
 
-		void cargarTexturasNiveles(list<Nivel*> niveles, SDL_Renderer* renderizador);
-		void actualizarSpriteMario(std::string direccion, SDL_Renderer* renderizador);
+		void cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador);
+		void actualizarSpriteMario(string direccion, SDL_Renderer* renderizador);
 		void revisarSiCambioNivel(SDL_Renderer* renderizador);
 
 		~CargadorTexturas();
@@ -42,7 +43,9 @@ class CargadorTexturas{
 
 	private:
 		string direccionFondoActual;
-		SDL_Texture* texturaMario = NULL;
+
+		map<int,SDL_Texture*> texturasMario;
+
 		SDL_Texture* texturaMoneda = NULL;
 		SDL_Texture* texturaLadrillo = NULL;
 		SDL_Texture* texturaSorpresa = NULL;
@@ -61,11 +64,10 @@ class CargadorTexturas{
 
 		TTF_Font* fuenteJuego;
 
-		SDL_Texture* cargarTextura(std::string direccion,SDL_Renderer* renderizador);
-		SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador);
-		/*Capaz no esta tan bueno el nombre, pensarlo*/
+		SDL_Texture* cargarTextura(string direccion,SDL_Renderer* renderizador);
+		SDL_Texture* intentarCarga(string descripcion,string direccion, SDL_Renderer* renderizador);
 
-		bool tengoTexturaCargadaEnMemoria(Sprite* spriteBloque, map<string,SDL_Texture*> texturas);
+		bool tengoTexturaCargadaEnMemoria(string spriteDireccionImagen, map<string,SDL_Texture*> texturas);
 
 
 };

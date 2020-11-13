@@ -32,8 +32,8 @@ void Dibujadores::dibujarGameOver(){
 	dibujadorGameOver->dibujar();
 }
 
-void Dibujadores::dibujarJuego(SDL_Rect* rectanguloCamara){
-	dibujadorJuego->dibujar(rectanguloCamara);
+void Dibujadores::dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+	dibujadorJuego->dibujar(rectanguloCamara,juegoCliente);
 }
 
 Dibujadores::~Dibujadores(){

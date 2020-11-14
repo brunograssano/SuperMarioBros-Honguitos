@@ -24,7 +24,7 @@ typedef struct mario{
 	unsigned short idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
 	int posX;
 	int posY;
-	int recorteImagen;
+	int recorteImagen; // Si el recorte de la imagen viene en un valor (-1?) se indica que el jugador se desconecto y el recorte correspondiente es el gris
 }mario_t;
 
 typedef struct moneda{

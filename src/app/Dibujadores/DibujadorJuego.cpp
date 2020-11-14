@@ -8,6 +8,7 @@ const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
 const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
 const int LARGO_BLOQUE = 40;
 const int GOOMBA = 1, KOOPA = 2;
+const int MARIO_GRIS = -1;
 
 DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;
@@ -85,13 +86,16 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 	for(auto const mario:marios){
 		mario_t jugador = mario.second.mario;
 		if(jugador.idImagen != idPropio){
+			int idMario = jugador.idImagen;
 			SDL_Rect rectanguloMario = {jugador.posX - rectanguloCamara->x,
 											alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- jugador.posY,
 											ANCHO_MARIO, ALTO_MARIO};
 
 			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(jugador.recorteImagen);
-
-			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(jugador.idImagen), &recorteMario, &rectanguloMario);
+			if(jugador.recorteImagen==MARIO_GRIS){
+				idMario = jugador.recorteImagen;
+			}
+			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(idMario), &recorteMario, &rectanguloMario);
 		}
 	}
 

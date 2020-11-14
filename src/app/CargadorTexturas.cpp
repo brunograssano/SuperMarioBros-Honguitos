@@ -28,9 +28,13 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
-						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png"};
+						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
+						"resources/Imagenes/Personajes/MarioGrisPerdioConexion.png"};
 	int i = 1;
 	for(auto const& dirMario:listaMarios){
+		if(i==4){
+			i=-1; // Asi el mario gris concuerda con el valor que nos mandan
+		}
 		SDL_Texture* texturaMario = intentarCarga("la imagen de mario", dirMario, renderizador);
 		texturasMario[i]=texturaMario;
 		i++;

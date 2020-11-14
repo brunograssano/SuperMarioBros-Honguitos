@@ -135,7 +135,7 @@ void VentanaInicio::obtenerEntrada(){
 	SDL_StartTextInput();
 	string textoIngresadoUsuario = "...";
 	string textoIngresadoConstrasenia = "...";
-	string* entradaUsuario = &textoIngresadoConstrasenia;
+	string* entradaUsuario = &textoIngresadoUsuario;
 
 	bool terminoEntrada = false;
 	while( !terminar && !terminoEntrada){

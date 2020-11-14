@@ -13,10 +13,12 @@ class Mario;
 class Juego{
 
 	private:
-		Mario* jugador;
-		Juego(list<Nivel*> nivelesLector){
 
-			inicializar();
+		void inicializar(int cantJugadores);
+
+		Juego(list<Nivel*> nivelesLector, int cantJugadores){
+
+			inicializar(cantJugadores);
 			niveles = nivelesLector;
 
 			for (auto const& nivel : niveles) {
@@ -26,13 +28,14 @@ class Juego{
 			}
 		}
 
+		list<Mario*> jugadores;
 		list<Nivel*> niveles;
-		void inicializar();
+
 		static Juego* instanciaJuego;
 	public:
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
-		static Juego* getInstance(list<Nivel*> archivoLeido);
+		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
 
 		void avanzarNivel();
 		void actualizarPosicionesEnemigos();
@@ -43,7 +46,7 @@ class Juego{
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
-		Mario* obtenerMario();
+		list<Mario*> obtenerMarios();
 		int obtenerTiempoDelNivel();
 		int obtenerPuntuacionJugador();
 		int obtenerMundoActual();

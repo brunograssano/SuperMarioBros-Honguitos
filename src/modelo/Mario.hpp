@@ -11,7 +11,7 @@ class Mario{
 
 	public:
 
-		Mario();
+		Mario(int numeroJugador);
 		int obtenerPuntos();
 		void agregarPuntos(int unosPuntos);
 		int obtenerMonedas();
@@ -40,6 +40,7 @@ class Mario{
 		SpriteMario * spriteMario;
 		int puntos;
 		int cantidadMonedas;
+		int numeroJugador;
 };
 
 

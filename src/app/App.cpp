@@ -113,68 +113,6 @@ void App::actualizarServer(const Uint8 *keystate){
 
 	}
 }
-/*
-void App::actualizar(){
-	if(!juegoInicializadoCorrectamente){
-			return;
-	}
-	if(!terminoElJuego && comenzoElJuego){
-		Mario* jugador = Juego::getInstance()->obtenerMario();
-		jugador->actualizarPosicion();
-		Juego::getInstance()->actualizarPosicionesEnemigos();
-		revisarSiTerminoNivel(jugador);
-		cargadorTexturas->revisarSiCambioNivel(renderizador);
-		moverCamara(jugador);
-	}
-}
-*/
-/*
-void App::revisarSiTerminoNivel(Mario* jugador){
-
-	if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual() && juego->quedaSoloUnNivel()){
-		juego->sumarPuntosAJugadores(tiempoFaltante);
-		ganaron = true;
-		Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
-		ReproductorMusica::getInstance()->ReproducirSonidoMarioAgarraHongo();
-		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.mp3"); //TODO: refactorizar a otro método.
-	}
-	else if(jugador->obtenerPosicionX()>=juego->obtenerPuntoBanderaFinActual()){
-		rectanguloCamara.x= 0;
-		rectanguloCamara.y = 0;
-		juego->avanzarNivel();
-		juego->sumarPuntosAJugadores(tiempoFaltante);
-		tiempoDeInicio = SDL_GetTicks();
-		Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
-	}
-
-
-}
-*/
-/*
-SDL_Rect* App::obtenerRectCamara(){
-	return &rectanguloCamara;
-}
-*/
-/*
-void App::moverCamara(Mario* jugador){
-	SDL_Rect* rectanguloCamara = obtenerRectCamara();
-
-	bool elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = jugador->obtenerPosicionX() > rectanguloCamara->x + (ancho_pantalla)/2;
-
-	if( elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla ){
-		rectanguloCamara->x =   jugador->obtenerPosicionX() - (ancho_pantalla) / 2 ;
-		jugador->actualizarMaximoX(rectanguloCamara->x);
-	}
-
-	if( rectanguloCamara->x < 0 ){
-		 rectanguloCamara->x = 0;
-	}
-
-	if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
-		rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
-	}
-}
-*/
 
 void App::dibujar(){
 
@@ -198,22 +136,6 @@ void App::dibujar(){
 	}
 }
 
-/*
-int App::obtenerTiempoFaltante(){
-	return tiempoFaltante;
-}*/
-/*
-SDL_Renderer* App::obtenerRenderizador(){
-	return renderizador;
-}*/
-/*
-void App::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
-	Log* log = Log::getInstance();
-	for(auto const& mensaje:mensajesError){
-		log->huboUnError(mensaje);
-	}
-}
-*/
 App::~App(){
 
 	Log::getInstance()->mostrarMensajeDeInfo("Se cierra la aplicacion");
@@ -226,7 +148,6 @@ App::~App(){
 
 	delete dibujador;
 	delete cargadorTexturas;
-	//delete juego;
 	delete Log::getInstance();
 	delete ReproductorMusica::getInstance();
 }

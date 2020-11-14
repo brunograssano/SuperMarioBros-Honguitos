@@ -9,13 +9,14 @@ const int MINIMO_COORDENADA_Y = 0;
 const int TERRENO_LIMITE_DERECHO_MAX = 8177;
 const int TERRENO_LIMITE_DERECHO_MIN = 0;
 
-Mario::Mario(){
+Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
 			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
 	this->puntos=0;
 	this->cantidadMonedas = 0;
 	this->movimiento = new MovimientoMario();
 	this->spriteMario = new SpriteMario("../resources/Imagenes/Personajes/mario_grande.png");
+	this->numeroJugador = numeroJugador;
 }
 
 SpriteMario* Mario::obtenerSpite(){

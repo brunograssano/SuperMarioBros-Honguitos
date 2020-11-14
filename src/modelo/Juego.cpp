@@ -4,17 +4,20 @@
 
 Juego* Juego::instanciaJuego = nullptr;
 
-void Juego::inicializar(){
-	jugador = new Mario();
+void Juego::inicializar(int cantJugadores){
+	for(int i = 1; i < (cantJugadores+1); i++){
+		jugadores.push_back(new Mario(i));
+	}
+
 }
 
 Juego* Juego::getInstance(){
 	return instanciaJuego;
 }
 
-Juego* Juego::getInstance(list<Nivel*> niveles){
+Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores){
 	if(instanciaJuego==nullptr){
-		instanciaJuego = new Juego(niveles);
+		instanciaJuego = new Juego(niveles,cantJugadores);
 	}
 	return instanciaJuego;
 }
@@ -24,16 +27,17 @@ void Juego::avanzarNivel(){
 	Nivel* nivelViejo = niveles.front();
 	delete nivelViejo;
 	niveles.pop_front();
-	jugador->reiniciarPosicion();
-
+	for(auto const& jugador:jugadores){
+		jugador->reiniciarPosicion();
+	}
 }
 
 bool Juego::quedaSoloUnNivel(){
 	return niveles.size()==1;
 }
 
-Mario* Juego::obtenerMario(){
-	return jugador;
+list<Mario*> Juego::obtenerMarios(){
+	return jugadores;
 }
 
 list<Enemigo*> Juego::obtenerEnemigos(){
@@ -54,7 +58,9 @@ void Juego::actualizarPosicionesEnemigos(){
 }
 
 void Juego::sumarPuntosAJugadores(int puntos){
-	jugador->agregarPuntos(puntos);
+	for(auto const& jugador:jugadores){
+		jugador->agregarPuntos(puntos);
+	}
 }
 
 string Juego::obtenerDireccionFondoNivelActual(){
@@ -68,7 +74,7 @@ int Juego::obtenerTiempoDelNivel(){
 }
 
 int Juego::obtenerPuntuacionJugador(){
-	return jugador->obtenerPuntos();
+	return 1;//jugador->obtenerPuntos();
 }
 
 int Juego::obtenerMundoActual(){
@@ -83,7 +89,9 @@ int Juego::obtenerPuntoBanderaFinActual(){
 
 Juego::~Juego(){
 
-
-	delete jugador;
+	for(auto const& jugador:jugadores){
+		delete jugador;
+	}
+	jugadores.clear();
 	niveles.clear();
 }

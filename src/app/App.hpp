@@ -39,6 +39,7 @@ typedef struct ronda{
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
 	int posXCamara;
+	int tiempoFaltante;
 }info_ronda_t;
 
 
@@ -54,7 +55,6 @@ class App{
 			cargadorTexturas = new CargadorTexturas(renderizador);
 			if(informacion.iniciadoCorrectamente){
 				cargadorTexturas->cargarTexturasNiveles(informacion.direccionesFondoNiveles,informacion.cantidadFondosNiveles, renderizador);
-				//juego = Juego::getInstance(archivoLeido->niveles);
 			}
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
@@ -100,9 +100,6 @@ class App{
 
 
 		void actualizarServer(const Uint8 *keystate);
-		//void actualizar();
-		//void moverCamara(Mario* jugador);
-		//int obtenerTiempoFaltante();
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();

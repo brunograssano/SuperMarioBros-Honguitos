@@ -38,15 +38,13 @@ VentanaInicio::VentanaInicio(){
 			}
 		}
 	}
-	//Open the font
-	this->fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 14 );
-	if( this->fuente == NULL )
-	{
+
+	this->fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
+	if( this->fuente == NULL ){
 		log->huboUnErrorSDL("No se pudo cargar la fuente", SDL_GetError());
 	}
-	else
-	{
-		//Render the prompt
+	else{
+
 		SDL_Color textColor = { 0, 0, 0, 0xFF };
 		this->texturaTextoUsuario = cargoTextura("Ingrese usuario:", textColor );
 		this->texturaTextoContrasenia = cargoTextura("Ingrese contrasenia:", textColor );
@@ -71,24 +69,62 @@ SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
 	Log* log = Log::getInstance();
 	SDL_Texture* texturaACargar;
 	SDL_Surface* textSurface = TTF_RenderText_Solid( this->fuente, texto.c_str(), color );
-		if( textSurface != NULL )
-		{
-			//Create texture from surface pixels
-			texturaACargar = SDL_CreateTextureFromSurface( this->renderer, textSurface );
-			if( texturaACargar == NULL )
-			{
-				log->huboUnErrorSDL("No se pudo crear la textura", SDL_GetError());
-			}
+	if( textSurface != NULL ){
+		texturaACargar = SDL_CreateTextureFromSurface( this->renderer, textSurface );
+		if( texturaACargar == NULL ){
+			log->huboUnErrorSDL("No se pudo crear la textura", SDL_GetError());
+		}
 
-			SDL_FreeSurface( textSurface );
-		}
-		else
-		{
-			log->huboUnErrorSDL("No se pudo renderizar la superficie", SDL_GetError());
-		}
+		SDL_FreeSurface( textSurface );
+	}
+	else{
+		log->huboUnErrorSDL("No se pudo renderizar la superficie", SDL_GetError());
+	}
 	return texturaACargar;
 }
-void VentanaInicio::ObtenerEntrada(){
+
+bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,string* textoIngresadoUsuario, string* textoIngresadoConstrasenia, string** entradaUsuario){
+	while( SDL_PollEvent( &evento ) != 0 ){
+		if( evento.type == SDL_QUIT ){
+			(*terminar) = true;
+		}
+		else if( evento.type == SDL_KEYDOWN ){
+			if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){
+				//(*textoIngresadoUsuario).pop_back();
+				(**entradaUsuario).pop_back();
+			}
+			else if(evento.key.keysym.sym == SDLK_DOWN){
+				(*entradaUsuario) = textoIngresadoConstrasenia;
+			}
+			else if(evento.key.keysym.sym == SDLK_UP){
+				(*entradaUsuario) = textoIngresadoUsuario;
+			}
+			else if(evento.key.keysym.sym == SDLK_RETURN){
+				return true;
+			}
+			else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
+				//SDL_SetClipboardText( (*textoIngresadoUsuario).c_str() );
+				//(*textoIngresadoUsuario) += evento.text.text;
+
+				SDL_SetClipboardText( (**entradaUsuario).c_str() );
+				(**entradaUsuario) += evento.text.text;
+			}
+			else if( evento.key.keysym.sym == SDLK_v && (SDL_GetModState() & KMOD_CTRL)){
+				//(*textoIngresadoUsuario) = SDL_GetClipboardText();
+				(**entradaUsuario) = SDL_GetClipboardText();
+			}
+		}
+		else if( evento.type == SDL_TEXTINPUT ){
+			if( !( (SDL_GetModState() & KMOD_CTRL) && ( evento.text.text[ 0 ] == 'c' || evento.text.text[ 0 ] == 'C' || evento.text.text[ 0 ] == 'v' || evento.text.text[ 0 ] == 'V' ) ) ){
+				//(*textoIngresadoUsuario) += evento.text.text;
+				(**entradaUsuario) += evento.text.text;
+			}
+		}
+	}
+	return false;
+}
+
+void VentanaInicio::obtenerEntrada(){
 
 	bool terminar = false;
 
@@ -97,58 +133,50 @@ void VentanaInicio::ObtenerEntrada(){
 	SDL_Color textColor = { 0, 0, 0, 0xFF };
 
 	SDL_StartTextInput();
+	string textoIngresadoUsuario = "...";
+	string textoIngresadoConstrasenia = "...";
+	string* entradaUsuario = &textoIngresadoConstrasenia;
 
-	while( !terminar ){
-		bool renderText = false;
-		string input;
-		while( SDL_PollEvent( &evento ) != 0 ){
-			if( evento.type == SDL_QUIT ){
-				terminar = true;
-			}
-			else if( evento.type == SDL_KEYDOWN ){
-				if( evento.key.keysym.sym == SDLK_BACKSPACE && input.length() > 0 ){
-					input.pop_back();
-					renderText = true;
-				}
-				else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
-					SDL_SetClipboardText( input.c_str() );
-				}
-				else if( evento.key.keysym.sym == SDLK_v && (SDL_GetModState() & KMOD_CTRL)){
-					input = SDL_GetClipboardText();
-					renderText = true;
-				}
-			}
-			else if( evento.type == SDL_TEXTINPUT ){
-				if( !( (SDL_GetModState() & KMOD_CTRL) && ( evento.text.text[ 0 ] == 'c' || evento.text.text[ 0 ] == 'C' || evento.text.text[ 0 ] == 'v' || evento.text.text[ 0 ] == 'V' ) ) ){
-					input += evento.text.text;
-					renderText = true;
-				}
-			}
-		}
-		if( renderText ){
-			if( input != "" ){
-				this->usuarioIngresado = cargoTextura( input.c_str(), textColor );
-			}
-			else{
-				this->usuarioIngresado = cargoTextura( "", textColor );
-			}
-		}
+	bool terminoEntrada = false;
+	while( !terminar && !terminoEntrada){
+
+		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoConstrasenia,&entradaUsuario);
+
+		this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), textColor );
+		this->contraseniaIngresada = cargoTextura( textoIngresadoConstrasenia.c_str(), textColor );
+
 
 		SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( this->renderer );
 
-		Renderizar(10,20,14,200,this->texturaTextoUsuario);
-		Renderizar(10,40,14,200,this->texturaTextoContrasenia);
-		Renderizar(10,70,14,100,this->usuarioIngresado);
-		Renderizar(10,90,14,100,this->contraseniaIngresada);
+		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
+		if(anchoTextoUsuario>270){
+			anchoTextoUsuario = 270;
+		}
+
+		int anchoTextoContrasenia = textoIngresadoConstrasenia.length()*10;
+		if(anchoTextoContrasenia>270){
+			anchoTextoContrasenia = 270;
+		}
+
+		renderizar(10,20,14,200,this->texturaTextoUsuario);
+		renderizar(20,40,14,anchoTextoUsuario,this->usuarioIngresado);
+		renderizar(10,70,14,250,this->texturaTextoContrasenia);
+		renderizar(20,90,14,anchoTextoContrasenia,this->contraseniaIngresada);
 
 		SDL_RenderPresent( this->renderer );
+
+
+		SDL_DestroyTexture( usuarioIngresado );
+		SDL_DestroyTexture( contraseniaIngresada );
 	}
 
 	SDL_StopTextInput();
+
+	// enviar entrada al server
 }
 
-void VentanaInicio::Renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura){
+void VentanaInicio::renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura){
 		SDL_Rect renderQuad = { coordenadaX, coordenadaY, ancho, alto };
 		SDL_Rect* clip = NULL;
 		double angle = 0.0;
@@ -159,6 +187,8 @@ void VentanaInicio::Renderizar(int coordenadaX,int coordenadaY,int alto,int anch
 
 VentanaInicio::~VentanaInicio(){
 
+	SDL_DestroyTexture( texturaTextoUsuario );
+	SDL_DestroyTexture( texturaTextoContrasenia );
 
 	SDL_DestroyRenderer( renderer );
 	SDL_DestroyWindow( ventana );

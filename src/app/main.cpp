@@ -161,8 +161,9 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		nivelLog = determinarNivelLog(nivelLogEntrada);
 		Log::getInstance(nivelLog);
 		info_partida_t informacion; //nos lo mandan
-		VentanaInicio* ventana =  new VentanaInicio();
-		ventana->ObtenerEntrada();
+		VentanaInicio* ventanaInicio =  new VentanaInicio();
+		ventanaInicio->obtenerEntrada();
+		delete ventanaInicio;
 		//gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
 	}
 

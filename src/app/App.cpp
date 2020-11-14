@@ -13,9 +13,9 @@ typedef struct entrada_usuario{
 	bool W;
 }entrada_usuario_t;
 
-App* App::getInstance(info_partida_t informacion,TipoLog* tipoLog){
+App* App::getInstance(info_partida_t informacion){
 	if(aplicacion==nullptr){
-		aplicacion= new App(informacion,tipoLog);
+		aplicacion= new App(informacion);
 	}
 	return aplicacion;
 }

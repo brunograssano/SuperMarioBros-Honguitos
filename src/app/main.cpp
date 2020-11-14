@@ -6,6 +6,7 @@ using namespace std;
 #include <SDL2/SDL.h>
 
 #include "App.hpp"
+#include "VentanaInicio/VentanaInicio.hpp"
 #include "../lector/Lector.hpp"
 
 #include "../log/Log.hpp"
@@ -105,7 +106,7 @@ ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARG
 }
 
 void gameLoop(info_partida_t informacion,TipoLog* tipoLog) {
-	App *aplicacion = App::getInstance(informacion,tipoLog);
+	App *aplicacion = App::getInstance(informacion);
 	bool salir = false;
 	SDL_Event event;
 	while (!salir) {
@@ -157,11 +158,13 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		server->escuchar();
 	}
 	else{
+		nivelLog = determinarNivelLog(nivelLogEntrada);
+		Log::getInstance(nivelLog);
 		info_partida_t informacion; //nos lo mandan
-		gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
+		VentanaInicio* ventana =  new VentanaInicio();
+		ventana->ObtenerEntrada();
+		//gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
 	}
-
-
 
 
 

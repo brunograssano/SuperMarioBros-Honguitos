@@ -7,14 +7,14 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, string nombre){
 }
 
 
-int ReadXBytes(int socket, unsigned int x, void* buffer){
+int Read4Bytes(int socket,  char* buffer){
     int bytesRead = 0;
     int result;
-    while (bytesRead < x)
-    {
-        result = read(socket, buffer + bytesRead, x - bytesRead);
+    memset(buffer, 0, 5);
+    while (bytesRead < 4){
+        result = recv(socket, buffer, 4, MSG_DONTWAIT);
         if (result < 1 ){
-//            break;
+            return bytesRead;
         }
         bytesRead += result;
     }
@@ -22,12 +22,20 @@ int ReadXBytes(int socket, unsigned int x, void* buffer){
 }
 
 void ConexionCliente::recibir(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	while(true){
-		char msg[5] = "";
-		while(ReadXBytes(socket, 4, msg) > 0){
-			if(!(strlen(msg) == 0)){
-				Log::getInstance()->mostrarMensajeDeInfo("Se escribió el mensaje: " + (string) msg);
+		string mensaje;
+		char buffer[5] = "";
+		while(Read4Bytes(socket, buffer) > 0){
+			if(!(strlen(buffer) == 0)){
+				mensaje = mensaje + (string) buffer;
 			}
+		}
+		if(mensaje.length() != 0){
+			pthread_mutex_lock(&mutex);
+			Log::getInstance()->mostrarMensajeDeInfo("Se escribió el mensaje: " + mensaje +
+					" del cliente: " + nombre);
+			pthread_mutex_unlock(&mutex);
 		}
 	}
 }

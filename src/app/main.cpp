@@ -127,6 +127,12 @@ void gameLoop(const list<string> &mensajesErrorOtroArchivo, ArchivoLeido *archiv
 	delete aplicacion;
 }
 
+void abortarMainServidor(ArchivoLeido* archivoLeido, TipoLog* tipoLog, Servidor* servidor){
+	delete archivoLeido;
+	delete tipoLog;
+	delete servidor;
+}
+
 /* FORMATOS QUE PUEDE RECIBIR
  * /mario -s -c direccionConfiguracion -p puerto -i IP					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
  * /mario -s -l nivelDeLog -p puerto -i IP								(USAMOS CONFIGURACION DEFAULT)
@@ -156,22 +162,38 @@ int main( int cantidadArgumentos, char* argumentos[] ){
 		char ip[] = "127.0.0.1";
 
 		server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
+
 		pthread_t hilo;
-		if(pthread_create(&hilo, NULL, Servidor::escuchar_helper, server) != 0){
-			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar.");
+		int resultadoCreate = pthread_create(&hilo, NULL, Servidor::escuchar_helper, server);
+		if(resultadoCreate!= 0){
+			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar, el codigo de error es: " + to_string(resultadoCreate));
+			abortarMainServidor(archivoLeido, nivelLog, server);
+			return -1;
 		}else{
 			Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar: (" + to_string(hilo) +").");
 		}
+		int resultadoJoin = pthread_join(hilo, NULL);
+		if(resultadoJoin != 0){
+			Log::getInstance()->huboUnError("Ocurrió un error al juntar los hilos main y escuchar, el codigo de error es: " + to_string(resultadoJoin));
+			pthread_cancel(hilo);
+			abortarMainServidor(archivoLeido, nivelLog, server);
+			return -1;
+		}else{
+			Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y escuchar.");
+		}
 	}
 	else{
+
 		return -1;
 	}
 	//gameLoop(mensajesErrorOtroArchivo, archivoLeido);
-	while(true){
 
-	}
-	delete server;
+
+
+	abortarMainServidor(archivoLeido, nivelLog, server);
 	return 0;
 }
+
+
 
 

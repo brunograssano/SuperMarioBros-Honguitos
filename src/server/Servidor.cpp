@@ -36,10 +36,12 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArc
     }
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
+
+    /*Seteamos la ip y el puerto donde estara alojado el servidor*/
     address.sin_port = htons(puerto);
     inet_pton(AF_INET, ip, &address.sin_addr);
 
-    /* Enlazamos el socket a la dirección puerto */
+    /* Enlazamos el socket acpetador del servidor a la dirección puerto */
     if(bind(socketServer,(struct sockaddr*)&address,sizeof(address))<0){
     	log->huboUnError("No se pudo bindear el socket al puerto.");
 		delete archivoLeido;
@@ -55,7 +57,7 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArc
 		exit(EXIT_FAILURE);
 	}
 
-    log->mostrarMensajeDeInfo("Se creo el server, se estan esperando conexiones");
+    log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
 
 	delete archivoLeido;
 }
@@ -81,24 +83,34 @@ void* Servidor::escuchar(){
 		if (socketConexionEntrante < 0){
 			//log->huboUnError("No se pudo aceptar una conexion proveniente de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
 		}else{
+
+			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+			pthread_mutex_lock(&mutex);
 			log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-			send(socketConexionEntrante, "Aceptado\n", 8, 0);
+			pthread_mutex_unlock(&mutex);
+
+			send(socketConexionEntrante, "Aceptado\n", 9, 0);
 			ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, "Juancito" + to_string(usuariosConectados));
 			clientes.push_back(conexion);
 
 			pthread_t hilo;
 			if(pthread_create(&hilo, NULL, ConexionCliente::recibir_helper, conexion) != 0){
+				pthread_mutex_lock(&mutex);
 				Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: Juancito" + to_string(usuariosConectados)
 						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+				pthread_mutex_unlock(&mutex);
 			}else{
+				pthread_mutex_lock(&mutex);
 				Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario : Juancito" + to_string(usuariosConectados)
 						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+				pthread_mutex_unlock(&mutex);
 			}
 			usuariosConectados++;
 		}
 
 
-		/*bzero(buffer,256);//limpia el buffer
+		/*bzero(buffer,256);//<---------------------------- limpia el buffer
 
 		estadoLectura = read(socketConexionEntrante,buffer,255);//usuario // contrasenia //ver como recibimos esto y su pase a usuario_t
 		if (estadoLectura < 0){
@@ -117,6 +129,7 @@ void* Servidor::escuchar(){
 		}
 
 		printf("Here is the message: %s\n",buffer);*/
+
 	}
 	return NULL;
 }

@@ -46,8 +46,8 @@ typedef struct ronda{
 class App{
 
 	protected:
-		App(info_partida_t informacion,TipoLog* tipoLog){
-			Log* log = Log::getInstance(tipoLog);
+		App(info_partida_t informacion){
+			Log* log = Log::getInstance();
 
 			determinarDimensionesPantalla(informacion.anchoVentana,informacion.altoVentana);
 			inicializarSDL(log);
@@ -96,7 +96,7 @@ class App{
 	public:
 		App(App &other) = delete;
 		static App *getInstance();
-		static App *getInstance(info_partida_t informacion,TipoLog* tipoLog);
+		static App *getInstance(info_partida_t informacion);
 
 
 		void actualizarServer(const Uint8 *keystate);

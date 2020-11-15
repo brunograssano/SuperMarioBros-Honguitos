@@ -11,7 +11,7 @@
     <niveles>
     	<nivel>
             <mundo>1</mundo>
-            <direccionFondo>resources/Imagenes/Niveles/MapaNivel1Base.png</direccionFondo>
+            <direccionFondo>resources/Imagenes/Niveles/MapaNivel1BaseDefault.png</direccionFondo>
             <cantidadMonedas>40</cantidadMonedas> 
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 50 a 100 que representa el porcentaje del nivel-->

@@ -3,17 +3,6 @@
 #include <string.h>
 using namespace std;
 
-#include <SDL2/SDL.h>
-
-#include "App.hpp"
-#include "VentanaInicio/VentanaInicio.hpp"
-#include "../lector/Lector.hpp"
-
-#include "../log/Log.hpp"
-#include "../log/Error.hpp"
-#include "../log/Debug.hpp"
-#include "../log/Info.hpp"
-
 #include <getopt.h>
 
 #include "../../Server/mainServer.hpp"
@@ -41,11 +30,8 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
 	  }
 }
 
-/* FORMATOS QUE PUEDE RECIBIR POR
-=======
 /*
  * FORMATOS QUE PUEDE RECIBIR
->>>>>>> cd608fe9be3221239d86a6d25313c2832a82d42b
  * /mario -s -c direccionConfiguracion -p puerto -i IP					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
  * /mario -s -l nivelDeLog -p puerto -i IP								(USAMOS CONFIGURACION DEFAULT)
  * /mario -s -c direccionConfiguracion -l nivelDeLog -p	puerto -i IP 	(O AL REVES)

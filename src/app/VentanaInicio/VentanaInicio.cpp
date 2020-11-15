@@ -184,6 +184,11 @@ void VentanaInicio::obtenerEntrada(){
 
 	SDL_StopTextInput();
 
+	credenciales.nombre = textoIngresadoUsuario;
+	credenciales.contrasenia = textoIngresadoContrasenia;
+
+
+
 	// enviar entrada al server
 }
 
@@ -195,6 +200,12 @@ void VentanaInicio::renderizar(int coordenadaX,int coordenadaY,int alto,int anch
 		SDL_RendererFlip flip = SDL_FLIP_NONE;
 		SDL_RenderCopyEx( this->renderer, textura, clip, &renderQuad, angle, center, flip );
 }
+
+credencial_t VentanaInicio::obtenerCredenciales(){
+	return credenciales;
+}
+
+
 
 VentanaInicio::~VentanaInicio(){
 

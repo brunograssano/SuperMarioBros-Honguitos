@@ -17,8 +17,9 @@ class ConexionCliente {
 		~ConexionCliente();
 
 		void recibir();
-		static void* recibir_helper(void* ptr){
-			((ConexionCliente*) ptr)->recibir();
+		void ejecutar();
+		static void* ejecutar_helper(void* ptr){
+			((ConexionCliente*) ptr)->ejecutar();
 			return NULL;
 		}
 
@@ -26,8 +27,10 @@ class ConexionCliente {
 
 	private:
 		string nombre;
+		string contrasenia;
 		int socket;
 		Servidor* servidor;
+		void recibirCredenciales();
 };
 
 

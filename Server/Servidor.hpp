@@ -34,13 +34,15 @@ class Servidor{
 		}
 		~Servidor();
 
+		bool esUsuarioValido(usuario_t posibleUsuario);
+
 	private:
 		Log* log;
 		int socketServer;
 		int cantidadConexiones;
 		list<usuario_t> usuariosValidos;
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
-		bool esUsuarioValido(usuario_t posibleUsuario);
+
 		list<thread> conexionesConElServidor;
 		list<ConexionCliente*> clientes;
 

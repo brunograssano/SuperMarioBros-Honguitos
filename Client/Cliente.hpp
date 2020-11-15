@@ -14,6 +14,8 @@
 #include <unistd.h>
 
 
+#include "../src/app/VentanaInicio/VentanaInicio.hpp"
+
 using namespace std;
 
 const int LARGO_IP = 20;
@@ -24,9 +26,10 @@ class Cliente{
 	public:
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
-		void escuchar();
+		void escucharMensaje(size_t bytes,string* buffer);
 		static void* escuchar_helper(void* ptr){
-			((Cliente*) ptr)->escuchar();
+			string a="PRUEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+			((Cliente*) ptr)->escucharMensaje(1,&a);
 			return NULL;
 		}
 
@@ -36,7 +39,10 @@ class Cliente{
 			return NULL;
 		}
 
+		void ejecutar();
 	private:
+		void enviarCredenciales(credencial_t credencial);
+		bool recibirConfirmacion();
 		int _Read4Bytes(char* buffer);
 		int socketCliente;
 };

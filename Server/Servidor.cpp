@@ -95,7 +95,7 @@ void* Servidor::escuchar(){
 			clientes.push_back(conexion);
 
 			pthread_t hilo;
-			if(pthread_create(&hilo, NULL, ConexionCliente::recibir_helper, conexion) != 0){
+			if(pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper, conexion) != 0){
 				pthread_mutex_lock(&mutex);
 				Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: Juancito" + to_string(usuariosConectados)
 						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
@@ -108,28 +108,6 @@ void* Servidor::escuchar(){
 			}
 			usuariosConectados++;
 		}
-
-
-		/*bzero(buffer,256);//<---------------------------- limpia el buffer
-
-		estadoLectura = read(socketConexionEntrante,buffer,255);//usuario // contrasenia //ver como recibimos esto y su pase a usuario_t
-		if (estadoLectura < 0){
-			//log->huboUnError("No se pudo leer de una conexion proveniente de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-		}
-		else{
-			usuario_t posibleUsuario = {"Juan","123"};
-			if(esUsuarioValido(posibleUsuario)){
-				usuariosConectados++;
-				//log->mostrarMensajeDeInfo("Se acepto una conexion de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-				//agregar un thread a la lista de conexiones
-			}
-			else{
-				//log->mostrarMensajeDeInfo("Se rechazo una conexion de "+ inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-			}
-		}
-
-		printf("Here is the message: %s\n",buffer);*/
-
 	}
 	return NULL;
 }

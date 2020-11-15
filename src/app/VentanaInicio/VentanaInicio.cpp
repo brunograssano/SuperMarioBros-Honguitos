@@ -79,6 +79,7 @@ SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
 	}
 	else{
 		log->huboUnErrorSDL("No se pudo renderizar la superficie", SDL_GetError());
+		log->huboUnErrorSDL(texto, SDL_GetError());
 	}
 	return texturaACargar;
 }
@@ -134,17 +135,22 @@ void VentanaInicio::obtenerEntrada(){
 
 	SDL_StartTextInput();
 	string textoIngresadoUsuario = "...";
-	string textoIngresadoConstrasenia = "...";
+	string textoIngresadoContrasenia = "...";
 	string* entradaUsuario = &textoIngresadoUsuario;
 
 	bool terminoEntrada = false;
+	Log* log = Log::getInstance();
+
 	while( !terminar && !terminoEntrada){
 
-		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoConstrasenia,&entradaUsuario);
+		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoContrasenia,&entradaUsuario);
 
-		this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), textColor );
-		this->contraseniaIngresada = cargoTextura( textoIngresadoConstrasenia.c_str(), textColor );
-
+		if(textoIngresadoUsuario.length() != 0){
+			this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), textColor );
+		}
+		if(textoIngresadoContrasenia.length() != 0){
+			this->contraseniaIngresada = cargoTextura( textoIngresadoContrasenia.c_str(), textColor );
+		}
 
 		SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( this->renderer );
@@ -154,15 +160,20 @@ void VentanaInicio::obtenerEntrada(){
 			anchoTextoUsuario = 270;
 		}
 
-		int anchoTextoContrasenia = textoIngresadoConstrasenia.length()*10;
+		int anchoTextoContrasenia = textoIngresadoContrasenia.length()*10;
 		if(anchoTextoContrasenia>270){
 			anchoTextoContrasenia = 270;
 		}
 
 		renderizar(10,20,14,200,this->texturaTextoUsuario);
-		renderizar(20,40,14,anchoTextoUsuario,this->usuarioIngresado);
+		if(textoIngresadoUsuario.length() != 0){
+			renderizar(20,40,14,anchoTextoUsuario,this->usuarioIngresado);
+		}
+
 		renderizar(10,70,14,250,this->texturaTextoContrasenia);
-		renderizar(20,90,14,anchoTextoContrasenia,this->contraseniaIngresada);
+		if(textoIngresadoContrasenia.length() != 0){
+			renderizar(20,90,14,anchoTextoContrasenia,this->contraseniaIngresada);
+		}
 
 		SDL_RenderPresent( this->renderer );
 

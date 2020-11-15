@@ -7,8 +7,6 @@
 
 #include <SDL2/SDL.h>
 
-#include <thread>
-
 #include "Cliente.hpp"
 
 #include "../src/log/Log.hpp"
@@ -17,7 +15,7 @@
 #include "../src/log/Info.hpp"
 
 #include "../src/app/App.hpp"
-#include "../src/app/VentanaInicio/VentanaInicio.hpp"
+
 
 
 const int LARGO_ENTRADA = 150;
@@ -115,41 +113,9 @@ int mainClient(int argc, char* args[]){
 	info_partida_t informacion; //nos lo mandan
 
 	Cliente* cliente = new Cliente(ip, puerto);
-
-	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, cliente);
-	if(resultadoCreateEscuchar != 0){
-		fprintf(stderr, "Ocurrió un error al crear el hilo para escuchar al servidor.");
-		delete cliente;
-		return -1;
-	}
-
-	pthread_t hiloEnviar;
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, Cliente::enviar_helper, cliente);
-	if(resultadoCreateEnviar != 0){
-		fprintf(stderr, "Ocurrió un error al crear el hilo para enviar al servidor.");
-		delete cliente;
-		return -1;
-	}
-
-	VentanaInicio* ventanaInicio =  new VentanaInicio();
-	ventanaInicio->obtenerEntrada();
-	delete ventanaInicio;
-	//gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
+	cliente->ejecutar();
+	delete cliente;
 
 
-	int resultadoJoinEnviar = pthread_join(hiloEnviar, NULL);
-	if(resultadoJoinEnviar != 0){
-		fprintf(stderr, "Ocurrió un error al enlazar el hilo \"enviar\" con el main.");
-		delete cliente;
-		return -1;
-	}
-
-	int resultadoJoinEscuchar = pthread_join(hiloEscuchar, NULL);
-	if(resultadoJoinEscuchar != 0){
-		fprintf(stderr, "Ocurrió un error al enlazar el hilo \"escuchar\" al main.");
-		delete cliente;
-		return -1;
-	}
 	return 0;
 }

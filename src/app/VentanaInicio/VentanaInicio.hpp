@@ -6,13 +6,21 @@
 #include <string>
 using namespace std;
 
+typedef struct credencial{
+	string nombre;
+	string contrasenia;
+}credencial_t;
+
+
 class VentanaInicio{
 
 	public:
 		VentanaInicio();
 		void obtenerEntrada();
+		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:
+		credencial_t credenciales;
 		SDL_Texture* texturaTextoUsuario;
 		SDL_Texture* texturaTextoContrasenia;
 		SDL_Texture* usuarioIngresado;

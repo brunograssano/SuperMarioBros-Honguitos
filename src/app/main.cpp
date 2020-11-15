@@ -14,26 +14,17 @@ using namespace std;
 #include "../log/Debug.hpp"
 #include "../log/Info.hpp"
 
-#include "../server/Server.hpp"
-
 #include <getopt.h>
 
-const int LARGO_ENTRADA = 150,LARGO_IP = 20;
-const int ERROR = -1, VACIO=0, TERMINO = -1;
-#define CONFIG 'c'
-#define IP 'i'
-#define LOG 'l'
+#include "../../Server/mainServer.hpp"
+#include "../../Client/mainClient.hpp"
+
+const int TERMINO = -1;
 #define SERVER 's'
-#define PUERTO 'p'
 
-void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],
-					char ipEntrada[LARGO_IP],char puertoEntrada[LARGO_IP],bool* esServer){
 
+void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
 	  static struct option opcionesLargas[] = {
-	     {"config", required_argument, 0, 'c'},
-	     {"ip", required_argument, 0, 'i'},
-	     {"log", required_argument, 0, 'l'},
-	     {"port", required_argument, 0, 'p'},
 	     {"server", no_argument, 0, 's'},
 	     {0, 0, 0, 0}
 	  };
@@ -41,94 +32,20 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLec
 	  int argumento;
 	  int indiceOpcion = 0;
 
-	  while((argumento = getopt_long(cantidadArgumentos, argumentos, "c:i:p:l:s",opcionesLargas, &indiceOpcion))!=TERMINO){
+	  while((argumento = getopt_long(cantidadArgumentos, argumentos, "s", opcionesLargas, &indiceOpcion))!=TERMINO){
 	      switch (argumento) {
-	          case CONFIG:
-	        	  strcpy(direccionLecturaComando,optarg);
-	              break;
-	          case IP:
-	        	  strcpy(ipEntrada,optarg);
-	              break;
-	          case LOG:
-	              strcpy(nivelLogEntrada,optarg);
-	              break;
 	          case SERVER:
 	        	  (*esServer) = true;
-	              break;
-	          case PUERTO:
-	        	  strcpy(puertoEntrada,optarg);
-	              break;
-	          default:
 	              break;
 	      }
 	  }
 }
 
-TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
-	if(strcmp(nivelLogEntrada,"Error")==0 || strcmp(nivelLogEntrada,"ERROR")==0 || strcmp(nivelLogEntrada,"error")==0 ){
-		return new Error();
-	}
-	else if(strcmp(nivelLogEntrada,"Debug")==0 || strcmp(nivelLogEntrada,"DEBUG")==0 || strcmp(nivelLogEntrada,"debug")==0 ){
-		return new Debug();
-	}
-	else if(strcmp(nivelLogEntrada,"Info")==0 || strcmp(nivelLogEntrada,"INFO")==0 || strcmp(nivelLogEntrada,"info")==0 ){
-		return new Info();
-	}
-	else{
-		return NULL;
-	}
-}
-
-ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],list<string> &mensajesErrorOtroArchivo,TipoLog *nivelLog) {
-	Lector* lector = new Lector();
-	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
-	ArchivoLeido* archivoLeido;
-	if (strcmp(direccionLecturaComando, "") != 0) {
-		archivoLeido = lector->leerArchivo(direccionLecturaComando);
-		if (!archivoLeido->leidoCorrectamente) {
-			mensajesErrorOtroArchivo = archivoLeido->mensajeError;
-			delete archivoLeido;
-			archivoLeido = lector->leerArchivo(direccionLecturaDefault);
-		}
-	} else {
-		archivoLeido = lector->leerArchivo(direccionLecturaDefault);
-	}
-
-	if (strcmp(nivelLogEntrada, "") != 0) {
-		nivelLog = determinarNivelLog(nivelLogEntrada);
-		if (nivelLog != NULL) {
-			archivoLeido->tipoLog = nivelLog;
-		}
-	}
-	delete lector;
-
-	return archivoLeido;
-}
-
-void gameLoop(info_partida_t informacion,TipoLog* tipoLog) {
-	App *aplicacion = App::getInstance(informacion);
-	bool salir = false;
-	SDL_Event event;
-	while (!salir) {
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				salir = true;
-			}
-		}
-		SDL_PumpEvents();
-		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
-		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
-			salir = true;
-		} else {
-			aplicacion->actualizarServer(keyboard_state_array);
-		}
-		//aplicacion->actualizar();
-		aplicacion->dibujar();
-	}
-	delete aplicacion;
-}
-
-/* FORMATOS QUE PUEDE RECIBIR
+/* FORMATOS QUE PUEDE RECIBIR POR
+=======
+/*
+ * FORMATOS QUE PUEDE RECIBIR
+>>>>>>> cd608fe9be3221239d86a6d25313c2832a82d42b
  * /mario -s -c direccionConfiguracion -p puerto -i IP					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
  * /mario -s -l nivelDeLog -p puerto -i IP								(USAMOS CONFIGURACION DEFAULT)
  * /mario -s -c direccionConfiguracion -l nivelDeLog -p	puerto -i IP 	(O AL REVES)
@@ -136,40 +53,18 @@ void gameLoop(info_partida_t informacion,TipoLog* tipoLog) {
  * /mario -p puerto -i IP												(PARA CONECTARSE A UN SERVIDOR)
  * /mario -l nivelLog -p puerto -i IP									(LOS PARAMETROS SON COMPLETAMENTE FLEXIBLES)
  */
-int main( int cantidadArgumentos, char* argumentos[] ){
+int main( int cantidadArgumentos, char* argumentos[]){
 
-	char direccionLecturaComando[LARGO_ENTRADA] = "";
-	char nivelLogEntrada[LARGO_ENTRADA] = "";
-	char ipEntrada[LARGO_IP] = "";
-	char puertoEntrada[LARGO_IP] = "";
-	ArchivoLeido* archivoLeido;
-	TipoLog* nivelLog;
-	list<string> mensajesErrorOtroArchivo;
 	bool esServer = false;
 
-	manejarEntrada(cantidadArgumentos, argumentos,direccionLecturaComando,nivelLogEntrada,ipEntrada,puertoEntrada,&esServer);
+	manejarEntrada(cantidadArgumentos, argumentos, &esServer);
 
 	if(esServer){
-		archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
-		// hacer parseo de la ip
-		int puerto=8080;
-		int ip=192456;
-		Server* server = new Server(archivoLeido,mensajesErrorOtroArchivo, puerto,ip);
-		server->escuchar();
+		mainServer(cantidadArgumentos, argumentos);
 	}
 	else{
-		nivelLog = determinarNivelLog(nivelLogEntrada);
-		Log::getInstance(nivelLog);
-		info_partida_t informacion; //nos lo mandan
-		VentanaInicio* ventanaInicio =  new VentanaInicio();
-		ventanaInicio->obtenerEntrada();
-		delete ventanaInicio;
-		//gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
+		mainClient(cantidadArgumentos, argumentos);
 	}
-
-
-
-	return 0;
 }
 
 

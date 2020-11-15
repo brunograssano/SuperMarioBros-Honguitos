@@ -17,6 +17,12 @@ class AplicacionServidor{
 		~AplicacionServidor();
 
 		void iniciarJuego();
+
+		static void* gameLoop_helper(void* ptr){
+			((AplicacionServidor*) ptr)->gameLoop();
+			return NULL;
+		}
+
 		void gameLoop();
 
 	private:

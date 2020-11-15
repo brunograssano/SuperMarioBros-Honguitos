@@ -11,6 +11,8 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArc
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 
+	aplicacionServidor = new AplicacionServidor(archivoLeido->niveles, archivoLeido->cantidadConexiones,
+												archivoLeido->anchoVentana, archivoLeido->altoVentana);
 
 	usuariosValidos = archivoLeido->usuariosValidos;
 	if(archivoLeido->cantidadConexiones>MAX_CONEXIONES){
@@ -142,6 +144,21 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
 	}
 	return false;
 }
+
+void Servidor::crearHiloDelJuego(){
+
+	pthread_t hiloJuego;
+	int resultadoCreate = pthread_create(&hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
+
+	if(resultadoCreate!= 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para el juego, el codigo de error es: " + to_string(resultadoCreate));
+	}else{
+		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo del juego: (" + to_string(hiloJuego) +").");
+	}
+
+
+}
+
 
 Servidor::~Servidor(){
 

@@ -33,8 +33,8 @@ void ConexionCliente::recibir(){
 		}
 		if(mensaje.length() != 0){
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se escribió el mensaje: " + mensaje +
-					" del cliente: " + nombre);
+			Log::getInstance()->mostrarMensajeDeInfo("Se escribió el mensaje: \"" + mensaje +
+					"\" del cliente: " + nombre);
 			pthread_mutex_unlock(&mutex);
 		}
 	}

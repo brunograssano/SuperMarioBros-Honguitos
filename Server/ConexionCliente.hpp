@@ -1,5 +1,5 @@
-#ifndef SRC_SERVER_CONEXIONCLIENTE_HPP_
-#define SRC_SERVER_CONEXIONCLIENTE_HPP_
+#ifndef SERVER_CONEXIONCLIENTE_HPP_
+#define SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
 #include "Servidor.hpp"
@@ -8,7 +8,7 @@ using namespace std;
 #include <thread>
 #include <string>
 
-#include "../log/Log.hpp"
+#include "../src/log/Log.hpp"
 
 class ConexionCliente {
 
@@ -31,4 +31,4 @@ class ConexionCliente {
 };
 
 
-#endif /* SRC_SERVER_CONEXIONCLIENTE_HPP_ */
+#endif /* SERVER_CONEXIONCLIENTE_HPP_ */

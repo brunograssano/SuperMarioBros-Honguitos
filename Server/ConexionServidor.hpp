@@ -1,5 +1,5 @@
-#ifndef SRC_SERVER_CONEXIONSERVIDOR_HPP_
-#define SRC_SERVER_CONEXIONSERVIDOR_HPP_
+#ifndef SERVER_CONEXIONSERVIDOR_HPP_
+#define SERVER_CONEXIONSERVIDOR_HPP_
 
 using namespace std;
 #include <thread>
@@ -23,4 +23,4 @@ class ConexionServidor{
 
 
 
-#endif /* SRC_SERVER_CONEXIONSERVIDOR_HPP_ */
+#endif /* SERVER_CONEXIONSERVIDOR_HPP_ */

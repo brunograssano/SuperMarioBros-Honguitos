@@ -74,12 +74,21 @@ void Cliente::ejecutar(){
 	bool pasoVerificacion = false, cerroVentana = false;
 	while(!pasoVerificacion && !cerroVentana){
 		try{
-		ventanaInicio->obtenerEntrada();
-		pasoVerificacion = enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			ventanaInicio->obtenerEntrada(0,3);
+			pasoVerificacion = enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			if(!pasoVerificacion){
+				ventanaInicio->imprimirMensajeError();
+			}
 		}
 		catch(const std::exception& e){
 			cerroVentana = true;
 		}
+	}
+	if(pasoVerificacion){
+		while(true){// TODO: aca va hasta que el server arranque la partida
+			ventanaInicio->imprimirMensajeEspera(/*aca irian los mensajes del server*/);
+		}
+
 	}
 	delete ventanaInicio;
 	if(cerroVentana){

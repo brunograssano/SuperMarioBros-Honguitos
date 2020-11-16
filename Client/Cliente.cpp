@@ -71,11 +71,21 @@ void Cliente::ejecutar(){
 	cout<< "Se recibio el mensaje: " << buffer;
 
 	VentanaInicio* ventanaInicio =  new VentanaInicio();
-	ventanaInicio->obtenerEntrada();
-
-	enviarCredenciales(ventanaInicio->obtenerCredenciales());
-
+	bool pasoVerificacion = false, cerroVentana = false;
+	while(!pasoVerificacion && !cerroVentana){
+		try{
+		ventanaInicio->obtenerEntrada();
+		pasoVerificacion = enviarCredenciales(ventanaInicio->obtenerCredenciales());
+		}
+		catch(const std::exception& e){
+			cerroVentana = true;
+		}
+	}
 	delete ventanaInicio;
+	if(cerroVentana){
+		close(socketCliente);
+		exit(0);
+	}
 
 	/*
 	pthread_t hiloEscuchar;
@@ -117,15 +127,10 @@ bool Cliente::recibirConfirmacion(){
 	return resultado;
 }
 
-void Cliente::enviarCredenciales(credencial_t credencial){
-
+bool Cliente::enviarCredenciales(credencial_t credencial){
 	const char* credencialesParsadas = (credencial.nombre + ";" +credencial.contrasenia).c_str();
-
 	send(socketCliente, credencialesParsadas, strlen(credencialesParsadas), 0);
-	bool esValido = recibirConfirmacion();
-	cout<< "El resultado es " << (esValido ? ":D todo OK" : ":C todo MAL");
-
-	//recibir un bool que nos diga todo OK o no
+	return recibirConfirmacion();
 }
 
 

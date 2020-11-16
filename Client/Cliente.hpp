@@ -41,7 +41,7 @@ class Cliente{
 
 		void ejecutar();
 	private:
-		void enviarCredenciales(credencial_t credencial);
+		bool enviarCredenciales(credencial_t credencial);
 		bool recibirConfirmacion();
 		int _Read4Bytes(char* buffer);
 		int socketCliente;

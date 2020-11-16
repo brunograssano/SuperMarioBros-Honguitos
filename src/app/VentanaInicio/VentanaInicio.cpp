@@ -88,10 +88,10 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 	while( SDL_PollEvent( &evento ) != 0 ){
 		if( evento.type == SDL_QUIT ){
 			(*terminar) = true;
+			throw runtime_error("CerroVentanaDeInicio");
 		}
 		else if( evento.type == SDL_KEYDOWN ){
 			if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){
-				//(*textoIngresadoUsuario).pop_back();
 				(**entradaUsuario).pop_back();
 			}
 			else if(evento.key.keysym.sym == SDLK_DOWN){
@@ -104,20 +104,15 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 				return true;
 			}
 			else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
-				//SDL_SetClipboardText( (*textoIngresadoUsuario).c_str() );
-				//(*textoIngresadoUsuario) += evento.text.text;
-
 				SDL_SetClipboardText( (**entradaUsuario).c_str() );
 				(**entradaUsuario) += evento.text.text;
 			}
 			else if( evento.key.keysym.sym == SDLK_v && (SDL_GetModState() & KMOD_CTRL)){
-				//(*textoIngresadoUsuario) = SDL_GetClipboardText();
 				(**entradaUsuario) = SDL_GetClipboardText();
 			}
 		}
 		else if( evento.type == SDL_TEXTINPUT ){
 			if( !( (SDL_GetModState() & KMOD_CTRL) && ( evento.text.text[ 0 ] == 'c' || evento.text.text[ 0 ] == 'C' || evento.text.text[ 0 ] == 'v' || evento.text.text[ 0 ] == 'V' ) ) ){
-				//(*textoIngresadoUsuario) += evento.text.text;
 				(**entradaUsuario) += evento.text.text;
 			}
 		}

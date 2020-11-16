@@ -8,7 +8,6 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-
 void Nivel::actualizarPosicionesEnemigos(){
 	Log* log = Log::getInstance();
 	int i = 1;

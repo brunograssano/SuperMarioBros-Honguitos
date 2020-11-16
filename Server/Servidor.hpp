@@ -31,7 +31,7 @@ class Servidor{
 	public:
 		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
 		void* escuchar();
-		void crearHiloDelJuego();
+		void iniciarJuego();
 		static void *escuchar_helper(void* ptr){
 			return((Servidor*) ptr)->escuchar();
 		}

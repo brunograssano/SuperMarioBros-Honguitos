@@ -12,7 +12,7 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArc
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 
 	aplicacionServidor = new AplicacionServidor(archivoLeido->niveles, archivoLeido->cantidadConexiones,
-												archivoLeido->anchoVentana, archivoLeido->altoVentana);
+												 archivoLeido->anchoVentana, archivoLeido->altoVentana);
 
 	usuariosValidos = archivoLeido->usuariosValidos;
 	if(archivoLeido->cantidadConexiones>MAX_CONEXIONES){
@@ -123,7 +123,7 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
 	return false;
 }
 
-void Servidor::crearHiloDelJuego(){
+void Servidor::iniciarJuego(){
 
 	pthread_t hiloJuego;
 	int resultadoCreate = pthread_create(&hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
@@ -133,7 +133,6 @@ void Servidor::crearHiloDelJuego(){
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo del juego: (" + to_string(hiloJuego) +").");
 	}
-
 
 }
 

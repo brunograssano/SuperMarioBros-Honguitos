@@ -11,6 +11,8 @@
 #include "Moneda.hpp"
 using namespace std;
 
+const int ANCHO_FONDO2 = 8177;
+const int ALTO_NIVEL = 600;
 
 class Nivel{
 
@@ -21,14 +23,8 @@ class Nivel{
 			this->direccionFondo = direccionFondo;
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
-			this->puntoBanderaFin = (float) puntoBanderaFin;
-			this->altoNivel = 0;
-
-		}
-
-		void definirDimesionesDelNivel(int largoNivel, int altoNivel){
-			this->puntoBanderaFin = largoNivel*(this->puntoBanderaFin/100);
-			this->altoNivel = altoNivel;
+			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+			this->altoNivel = ALTO_NIVEL;
 		}
 
 		void agregarPlataforma(Plataforma* unaPlataforma){

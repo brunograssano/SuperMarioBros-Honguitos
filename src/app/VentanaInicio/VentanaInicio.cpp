@@ -177,12 +177,14 @@ void VentanaInicio::obtenerEntrada(int jugadoresConectados,int jugadoresTotales)
 			this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
 			if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
 				log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
+			}else{
+				renderizar(10,170,14,250,texturaMensajeCredencialesIncorrectas);
 			}
-			renderizar(10,170,14,250,texturaMensajeCredencialesIncorrectas);
 		}
 
-
-		renderizar(10,140,14,250,texturaCantidadJugadores);
+		if( this->texturaCantidadJugadores != nullptr ){
+			renderizar(10,140,14,250,texturaCantidadJugadores);
+		}
 
 		SDL_RenderPresent( this->renderer );
 
@@ -216,10 +218,15 @@ void VentanaInicio::imprimirMensajeEspera(){
 	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas, esperando al resto de jugadores", colorVerde);
 	if( this->texturaMensajeCredencialesCorrectas == nullptr ){
 		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
+	}else{
+		renderizar(10,20,14,250,texturaMensajeCredencialesCorrectas);
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
-	renderizar(10,180,14,250,texturaCantidadJugadores);
-	renderizar(10,20,14,250,texturaMensajeCredencialesCorrectas);
+
+	if( this->texturaCantidadJugadores != nullptr ){
+		renderizar(10,180,14,250,texturaCantidadJugadores);
+	}
+
 	SDL_RenderPresent( this->renderer );
 }
 

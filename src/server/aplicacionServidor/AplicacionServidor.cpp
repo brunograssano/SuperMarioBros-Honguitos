@@ -81,20 +81,36 @@ SDL_Rect* AplicacionServidor::obtenerRectCamara(){
 void AplicacionServidor::moverCamara(list<Mario*> jugadores){
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
-	//bool elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = jugador->obtenerPosicionX() > rectanguloCamara->x + (ancho_pantalla)/2;
-/*
-	if( elJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla ){
-		rectanguloCamara->x =   jugador->obtenerPosicionX() - (ancho_pantalla) / 2 ;
-		jugador->actualizarMaximoX(rectanguloCamara->x);
+	int posicionDelJugadorMasALaDerecha = 0;
+	bool sePuedeMoverLaCamara = true;
+
+	for(auto const& jugador: jugadores){
+		if(jugador->obtenerPosicionX() <= rectanguloCamara->x){
+			sePuedeMoverLaCamara = false;
+		}
+		if(jugador->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
+			posicionDelJugadorMasALaDerecha = jugador->obtenerPosicionX();
+		}
+
 	}
 
-	if( rectanguloCamara->x < 0 ){
-		 rectanguloCamara->x = 0;
+	bool unJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = posicionDelJugadorMasALaDerecha > rectanguloCamara->x + (ancho_pantalla)/2;
+
+	if(sePuedeMoverLaCamara && unJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla){
+		rectanguloCamara->x = posicionDelJugadorMasALaDerecha - (ancho_pantalla) / 2 ;
+
+		for(auto const& jugador: jugadores){
+			jugador->actualizarMaximoX(rectanguloCamara->x);
+		}
 	}
+
+	/*if( rectanguloCamara->x < 0 ){
+		 rectanguloCamara->x = 0;
+	} No estoy seguro pero creo que ya no era neceserio*/
 
 	if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
 		rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
-	}*/
+	}
 }
 
 AplicacionServidor::~AplicacionServidor(){

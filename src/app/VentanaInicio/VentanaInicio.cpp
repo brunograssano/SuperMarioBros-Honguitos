@@ -7,6 +7,7 @@ using namespace std;
 #define ANCHO_PANTALLA 300
 #define ALTO_PANTALLA 300
 VentanaInicio::VentanaInicio(){
+	this->ingresoIncorrectoCredenciales = false;
 	Log* log = Log::getInstance();
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
 		log->huboUnErrorSDL("No se pudo inicializar SDL", SDL_GetError());
@@ -120,13 +121,15 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 	return false;
 }
 
-void VentanaInicio::obtenerEntrada(){
+void VentanaInicio::obtenerEntrada(int jugadoresConectados,int jugadoresTotales){
 
 	bool terminar = false;
 
 	SDL_Event evento;
 
 	SDL_Color textColor = { 0, 0, 0, 0xFF };
+
+	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", textColor);
 
 	SDL_StartTextInput();
 	string textoIngresadoUsuario = "...";
@@ -169,6 +172,19 @@ void VentanaInicio::obtenerEntrada(){
 		if(textoIngresadoContrasenia.length() != 0){
 			renderizar(20,90,14,anchoTextoContrasenia,this->contraseniaIngresada);
 		}
+		if(ingresoIncorrectoCredenciales){
+			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
+			this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
+			if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
+				log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
+			}else{
+				renderizar(10,170,14,250,texturaMensajeCredencialesIncorrectas);
+			}
+		}
+
+		if( this->texturaCantidadJugadores != nullptr ){
+			renderizar(10,140,14,250,texturaCantidadJugadores);
+		}
 
 		SDL_RenderPresent( this->renderer );
 
@@ -187,6 +203,33 @@ void VentanaInicio::obtenerEntrada(){
 	// enviar entrada al server
 }
 
+void VentanaInicio::imprimirMensajeError(){
+	ingresoIncorrectoCredenciales = true;
+}
+
+void VentanaInicio::imprimirMensajeEspera(){
+	Log* log = Log::getInstance();
+	SDL_RenderClear( this->renderer );
+	SDL_DestroyTexture( texturaTextoUsuario );
+	SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );
+	SDL_DestroyTexture( texturaTextoContrasenia );
+
+	SDL_Color colorVerde = { 1, 152, 117, 0xFF };
+	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas, esperando al resto de jugadores", colorVerde);
+	if( this->texturaMensajeCredencialesCorrectas == nullptr ){
+		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
+	}else{
+		renderizar(10,20,14,250,texturaMensajeCredencialesCorrectas);
+	}
+	//aca se crearia cada textura del string del server y se pone por pantalla
+
+	if( this->texturaCantidadJugadores != nullptr ){
+		renderizar(10,180,14,250,texturaCantidadJugadores);
+	}
+
+	SDL_RenderPresent( this->renderer );
+}
+
 void VentanaInicio::renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura){
 		SDL_Rect renderQuad = { coordenadaX, coordenadaY, ancho, alto };
 		SDL_Rect* clip = NULL;
@@ -203,10 +246,9 @@ credencial_t VentanaInicio::obtenerCredenciales(){
 
 
 VentanaInicio::~VentanaInicio(){
-
-	SDL_DestroyTexture( texturaTextoUsuario );
-	SDL_DestroyTexture( texturaTextoContrasenia );
-
+	//aca se elimina cada textura de la pantalla de espera
+	SDL_DestroyTexture( texturaCantidadJugadores );
+	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
 	SDL_DestroyRenderer( renderer );
 	SDL_DestroyWindow( ventana );
 

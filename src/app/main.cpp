@@ -38,5 +38,3 @@ int main( int cantidadArgumentos, char* argumentos[]){
 		mainClient(cantidadArgumentos, argumentos);
 	}
 }
-
-

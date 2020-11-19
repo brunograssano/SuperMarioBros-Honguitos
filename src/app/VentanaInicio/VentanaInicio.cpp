@@ -207,12 +207,13 @@ void VentanaInicio::imprimirMensajeError(){
 	ingresoIncorrectoCredenciales = true;
 }
 
-void VentanaInicio::imprimirMensajeEspera(){
+void VentanaInicio::imprimirMensajeEspera(int cantJugadoresConectados, int cantJugadoresTotales){
 	Log* log = Log::getInstance();
 	SDL_RenderClear( this->renderer );
 	SDL_DestroyTexture( texturaTextoUsuario );
 	SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );
 	SDL_DestroyTexture( texturaTextoContrasenia );
+	SDL_DestroyTexture(	texturaCantidadJugadores);
 
 	SDL_Color colorVerde = { 1, 152, 117, 0xFF };
 	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas, esperando al resto de jugadores", colorVerde);
@@ -222,6 +223,9 @@ void VentanaInicio::imprimirMensajeEspera(){
 		renderizar(10,20,14,250,texturaMensajeCredencialesCorrectas);
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
+
+	SDL_Color textColor = { 0, 0, 0, 0xFF };
+	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(cantJugadoresConectados)+"/"+to_string(cantJugadoresTotales)+" jugadores", textColor);
 
 	if( this->texturaCantidadJugadores != nullptr ){
 		renderizar(10,180,14,250,texturaCantidadJugadores);

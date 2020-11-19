@@ -13,6 +13,8 @@
 
 #include <unistd.h>
 
+#include "EscuchadorSalaDeEspera.hpp"
+
 
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
 
@@ -38,7 +40,7 @@ class Cliente{
 			((Cliente*) ptr)->enviar();
 			return NULL;
 		}
-
+		void recibirInformacionServidor(int* cantidadUsuariosConectados, int* cantidadUsuariosMaximos);
 		void ejecutar();
 	private:
 		bool enviarCredenciales(credencial_t credencial);

@@ -13,7 +13,7 @@ using namespace std;
 class ConexionCliente {
 
 	public:
-		ConexionCliente(Servidor* servidor, int socket, string nombre);
+		ConexionCliente(Servidor* servidor, int socket, string nombre, int cantidadConexiones);
 		~ConexionCliente();
 
 		void recibir();
@@ -22,7 +22,7 @@ class ConexionCliente {
 			((ConexionCliente*) ptr)->ejecutar();
 			return NULL;
 		}
-
+		void actualizarCantidadConexiones(int cantidadConexiones);
 		void enviar(char* msg);
 
 	private:
@@ -30,6 +30,7 @@ class ConexionCliente {
 		string contrasenia;
 		int socket;
 		Servidor* servidor;
+		int cantidadConexiones;
 		void recibirCredenciales();
 };
 

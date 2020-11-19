@@ -89,23 +89,35 @@ void Cliente::ejecutar(){
 			cerroVentana = true;
 		}
 	}
-	if(pasoVerificacion){
-		EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
 
-		pthread_t hiloEscuchar;
-		int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, EscuchadorSalaDeEspera::escuchar_helper, escuchador);
-		if(resultadoCreateEscuchar != 0){
-			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
-			exit(-1); //TODO: Arreglar este exit.
-		}
-		while(true){// TODO: aca va hasta que el server arranque la partida
+	if(cerroVentana){
+		delete ventanaInicio;
+		delete Log::getInstance();
+		close(socketCliente);
+		exit(0);
+	}
+
+	EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
+
+	pthread_t hiloEscuchar;
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, EscuchadorSalaDeEspera::escuchar_helper, escuchador);
+	if(resultadoCreateEscuchar != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
+		exit(-1); //TODO: Arreglar este exit.
+	}
+	while(!cerroVentana){// TODO: aca va hasta que el server arranque la partida
+		try{
 			ventanaInicio->imprimirMensajeEspera(escuchador->getCantidadConectados(), cantidadUsuariosMaximos);
 		}
-
+		catch(const std::exception& e){
+			cerroVentana = true;
+		}
 	}
 	delete ventanaInicio;
+	delete escuchador;
 	if(cerroVentana){
 		close(socketCliente);
+		delete Log::getInstance();
 		exit(0);
 	}
 

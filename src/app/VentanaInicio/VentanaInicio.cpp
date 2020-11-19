@@ -208,6 +208,13 @@ void VentanaInicio::imprimirMensajeError(){
 }
 
 void VentanaInicio::imprimirMensajeEspera(int cantJugadoresConectados, int cantJugadoresTotales){
+	SDL_Event evento;
+	while( SDL_PollEvent( &evento ) != 0 ){
+		if( evento.type == SDL_QUIT ){
+			throw runtime_error("CerroVentanaDeInicio");
+		}
+	}
+
 	Log* log = Log::getInstance();
 	SDL_RenderClear( this->renderer );
 	SDL_DestroyTexture( texturaTextoUsuario );

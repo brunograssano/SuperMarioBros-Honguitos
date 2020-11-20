@@ -16,9 +16,9 @@ class VentanaInicio{
 
 	public:
 		VentanaInicio();
-		void obtenerEntrada(int jugadoresConectados,int jugadoresTotales);
+		void obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales);
 		void imprimirMensajeError();
-		void imprimirMensajeEspera(int cantJugadoresConectados, int cantJugadoresTotales);
+		void imprimirMensajeEspera(unsigned short cantJugadoresConectados, unsigned short cantJugadoresTotales);
 		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:

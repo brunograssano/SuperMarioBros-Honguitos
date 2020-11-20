@@ -17,6 +17,7 @@
 #include "../src/lector/ArchivoLeido.hpp"
 #include "../src/modelo/Juego.hpp"
 #include "AplicacionServidor.hpp"
+#include "../src/Utils.hpp"
 
 #include "ConexionServidor.hpp"
 
@@ -40,6 +41,7 @@ class Servidor{
 		int getMaximasConexiones(){return this->cantidadConexiones;}
 		bool esUsuarioValido(usuario_t posibleUsuario);
 		void intentarIniciarModelo();
+		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 
 	private:
 		Log* log;

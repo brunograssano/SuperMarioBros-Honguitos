@@ -20,6 +20,7 @@ using namespace std;
 
 #include <getopt.h>
 
+
 const int LARGO_ENTRADA = 150,LARGO_IP = 20,VALOR_MAXIMO_PUERTO = 65535,VALOR_MINIMO_PUERTO = 1023;
 const int ERROR = -1, VACIO=0, TERMINO = -1;
 #define CONFIG 'c'

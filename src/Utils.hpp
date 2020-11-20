@@ -1,10 +1,29 @@
 #ifndef SRC_UTILS_HPP_
 #define SRC_UTILS_HPP_
 
+using namespace std;
+
+/* PALABRAS RESERVADAS */
+/*
+ * I: inicio
+ * V: verificacion
+ * U: actualizacion sobre la cantidad de jugadores.
+ * L: Mensaje para el log.
+ *
+ */
+
+
 const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
 const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSIBLES = 30;
 
 const int MAX_JUGADORES = 4;
+const int MAX_MENSAJE = 75;
+
+#define MENSAJE_LOG 'L'
+typedef struct mensaje_log{
+	char tipo;
+	char mensajeParaElLog[MAX_MENSAJE];
+}mensaje_log_t;
 
 typedef struct enemigo{
 	int posX;
@@ -52,23 +71,45 @@ typedef struct entrada_usuario{
 	bool W;
 }entrada_usuario_t;
 
-typedef struct info_partida{
 
+#define INICIO 'I'
+typedef struct info_inicio{
+	unsigned short cantidadJugadores;
+	unsigned short cantidadJugadoresActivos;
+}info_inicio_t;
+
+#define VERIFICACION 'V'
+typedef bool verificacion_t;
+
+typedef struct entrada_usuario_id{
+	entrada_usuario_t entradas;
+	unsigned short id;
+}entrada_usuario_id_t;
+
+typedef struct info_partida{
 	jugador_t jugadores[MAX_JUGADORES];
+	unsigned short cantidadJugadores;
 	string direccionesFondoNiveles[MAX_IMAGEN_NIVELES_POSIBLES];
 
-	//string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
-	//string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
+	bool iniciadoCorrectamente;
 
-	bool iniciadoCorrectamente; // puede volar
-	unsigned short cantidadJugadores;
+	string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
+	string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
+
 	unsigned short cantidadFondosNiveles;
 	unsigned short anchoVentana;
 	unsigned short altoVentana;
 	unsigned short idPropio;
 }info_partida_t;
 
+#define ACTUALIZACION_JUGADORES 'U'
+typedef struct actualizacion_cantidad_jugadores{
+	unsigned short cantidadJugadoresActivos;
+}actualizacion_cantidad_jugadores_t;
+
+
 typedef struct ronda{
+	unsigned short mundo;
 	unsigned short posXCamara;
 	unsigned short tiempoFaltante;
 	unsigned short topeBloques;

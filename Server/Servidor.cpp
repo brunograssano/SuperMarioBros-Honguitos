@@ -155,6 +155,10 @@ void Servidor::iniciarJuego(){
 }
 
 
+void Servidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
+	this->aplicacionServidor->encolarEntradaUsuario(entradaUsuario);
+}
+
 Servidor::~Servidor(){
 	for(auto const& cliente:clientes){
 		delete cliente;

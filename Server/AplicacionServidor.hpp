@@ -4,8 +4,10 @@
 #include <SDL2/SDL.h>
 
 #include <list>
+#include <queue>
 
 #include "../src/log/Log.hpp"
+#include "../src/Utils.hpp"
 
 #include "../src/lector/ArchivoLeido.hpp"
 #include "../src/modelo/Nivel.hpp"
@@ -22,6 +24,8 @@ class AplicacionServidor{
 			((AplicacionServidor*) ptr)->gameLoop();
 			return NULL;
 		}
+
+		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 
 		void gameLoop();
 
@@ -40,6 +44,7 @@ class AplicacionServidor{
 		bool comenzoElJuego;
 		bool ganaron;
 		bool juegoInicializadoCorrectamente;
+		queue<entrada_usuario_id_t> colaDeEntradasUsario;
 };
 
 

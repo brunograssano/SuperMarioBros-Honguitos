@@ -6,6 +6,8 @@
 
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	struct sockaddr_in serv_addr;
+	int resultado;
+
 	socketCliente = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (socketCliente < 0){
 		Log::getInstance()->huboUnError("No se pudo crear el socket: Abortamos.");
@@ -20,101 +22,83 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 		Log::getInstance()->huboUnError("Dirección inválida / Dirección no soportada: Abortamos.");
 		exit(-1);
 	}
-	int res = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
-	if (res < 0){
+	resultado = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+	if (resultado < 0){
 		Log::getInstance()->huboUnErrorSDL("Falló la conexión: Abortamos.",to_string(errno));
 		exit(-1);
 	}
-
-
+	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
+	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
+	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
+	cantidadJugadoresActivos = 0;
+	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente); //TODO: CAMBIAR A DEFINE
 
 }
-
-
-int Cliente::_Read4Bytes(char* buffer){
-    int bytesRead = 0;
-    int result;
-    memset(buffer, 0, 5);
-    while (bytesRead < 4){
-        result = recv(socketCliente, buffer, 4, MSG_DONTWAIT);
-        if (result < 1 ){
-            return bytesRead;
-        }
-        bytesRead += result;
-    }
-    return bytesRead;
-}
-
-void Cliente::escucharMensaje(size_t bytes,string* buffer){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	char bufferTemporal[bytes+1]="";
-	int result = recv(socketCliente, bufferTemporal, bytes, MSG_WAITALL);
-	(*buffer) = bufferTemporal;
-
-	pthread_mutex_lock(&mutex);
-	Log::getInstance()->mostrarMensajeDeInfo("Se recibio el mensaje: "+ (*buffer));
-	pthread_mutex_unlock(&mutex);
-}
-
-/*
- *
- * escuchar(){
- * while(1){
- * 	escucha sobre el socket
- *
- * 	recibo carecter
- *
- *
- * 	decodifico/mando mapa/ifs
- *
- * 	llamo a una clase que sabe que escuchar, lee poniendo en struct -> manda a la clase a ejecutar
- * 	Ej.
- * 	Si recibimos M (Mensjae Log) -> llamo clase que escucha mensaje -> lo recibo --> escribir en el log
- *
- *
- * 	}
- * }
- */
-
 void Cliente::escuchar(){
 	char tipoMensaje;
-	int result;
+	int resultado;
 	while(true){
-		result = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
+			//Excepcion?
+		}
 		//if result = se desconecto el socket -> manejarlo
 		escuchadores[tipoMensaje]->escuchar();
-
 	}
 }
-
-
-
-
-
-
 
 void Cliente::enviar(){
 }
 
-void Cliente::recibirInformacionServidor(int* cantConect, int* cantTot){
-	recv(socketCliente, cantConect, sizeof(int), MSG_WAITALL);
-	recv(socketCliente, cantTot, sizeof(int), MSG_WAITALL);
+void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
+	this->pasoVerificacion = verificacion;
+	this->seRecibioVerificacion = true;
+}
+
+void Cliente::recibirInformacionServidor(info_inicio_t info){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
+	this->infoInicio = info;
+	this->cantidadJugadoresActivos = info.cantidadJugadoresActivos;
+	this->seRecibioInformacionInicio = true;
+	pthread_mutex_unlock(&mutex);
+}
+
+void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores){
+	this->cantidadJugadoresActivos = cantidadJugadores;
+}
+
+void Cliente::esperarRecibirInformacionInicio(){
+	while(!seRecibioInformacionInicio){
+	}//TODO: Mostrar una pantalla de espera al servidor, en caso de ser neceasrio.
+}
+
+void Cliente::esperarRecibirVerificacion(){
+	while(!seRecibioVerificacion){
+	}//TODO: Mostrar un mensaje de espera, en caso de ser necesario.
 }
 
 void Cliente::ejecutar(){
+	pthread_t hiloEscuchar;
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
+	if(resultadoCreateEscuchar != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
+		exit(-1); //TODO: Arreglar este exit.
+	}
 
-	int cantidadUsuariosConectados;
-	int cantidadUsuariosMaximos;
-	this->recibirInformacionServidor(&cantidadUsuariosConectados, &cantidadUsuariosMaximos);
+	esperarRecibirInformacionInicio();
 
 	VentanaInicio* ventanaInicio =  new VentanaInicio();
-	bool pasoVerificacion = false, cerroVentana = false;
+	bool cerroVentana = false;
 	while(!pasoVerificacion && !cerroVentana){
 		try{
-			ventanaInicio->obtenerEntrada(cantidadUsuariosConectados, cantidadUsuariosMaximos);
-			pasoVerificacion = enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			ventanaInicio->obtenerEntrada(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
+			enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			esperarRecibirVerificacion();
 			if(!pasoVerificacion){
 				ventanaInicio->imprimirMensajeError();
+				seRecibioVerificacion = false;
 			}
 		}
 		catch(const std::exception& e){
@@ -129,24 +113,15 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
-
-	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, EscuchadorSalaDeEspera::escuchar_helper, escuchador);
-	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
-		exit(-1); //TODO: Arreglar este exit.
-	}
 	while(!cerroVentana){// TODO: aca va hasta que el server arranque la partida
 		try{
-			ventanaInicio->imprimirMensajeEspera(escuchador->getCantidadConectados(), cantidadUsuariosMaximos);
+			ventanaInicio->imprimirMensajeEspera(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
 		}
 		catch(const std::exception& e){
 			cerroVentana = true;
 		}
 	}
 	delete ventanaInicio;
-	delete escuchador;
 	if(cerroVentana){
 		close(socketCliente);
 		delete Log::getInstance();
@@ -183,23 +158,26 @@ void Cliente::ejecutar(){
 		Log::getInstance()->huboUnError("Ocurrió un error al enlazar el hilo \"escuchar\" al main.");
 		return;
 	}*/
+
 	delete Log::getInstance();
 }
-
-
-bool Cliente::recibirConfirmacion(){
-	bool resultado;
-	int result = recv(socketCliente, &resultado, sizeof(bool), MSG_WAITALL);
-	return resultado;
+void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
+	entradasUsuario.push(entradaUsuario);
 }
 
-bool Cliente::enviarCredenciales(credencial_t credencial){
+void Cliente::enviarCredenciales(credencial_t credencial){
 	const char* credencialesParsadas = (credencial.nombre + ";" +credencial.contrasenia).c_str();
 	send(socketCliente, credencialesParsadas, strlen(credencialesParsadas), 0);
-	return recibirConfirmacion();
+	return;
 }
 
 
 Cliente::~Cliente(){
 	close(socketCliente);
+
+	for(auto const& parClaveEscuchador:escuchadores){
+		delete parClaveEscuchador.second;
+	}
+	escuchadores.clear();
+
 }

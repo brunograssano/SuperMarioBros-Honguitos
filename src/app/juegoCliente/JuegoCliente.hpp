@@ -3,6 +3,7 @@
 
 
 using namespace std;
+#include <queue>
 #include <map>
 #include <string>
 #include <list>
@@ -16,6 +17,8 @@ class JuegoCliente{
 		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio);
 		~JuegoCliente();
 
+		void agregarRonda(info_ronda_t ronda);
+		void actualizar();
 		map<int,jugador_t> obtenerJugadores();
 		list<enemigo_t> obtenerEnemigos();
 		list<bloque_t> obtenerBloques();
@@ -25,6 +28,7 @@ class JuegoCliente{
 		int obtenerIDPropio();
 
 	private:
+		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
 		list<bloque_t> bloques;
 		list<enemigo_t> enemigos;
@@ -34,7 +38,7 @@ class JuegoCliente{
 
 		int numeroMundo;
 		int tiempoFaltante;
-		int tiempoDeInicio;
+		int posXCamara;
 };
 
 

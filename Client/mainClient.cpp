@@ -72,8 +72,8 @@ TipoLog* determinarNivelLogClient(char nivelLogEntrada[LARGO_ENTRADA]){
 }
 
 
-void gameLoop(info_partida_t informacion,TipoLog* tipoLog) {
-	App *aplicacion = App::getInstance(informacion);
+void gameLoop(info_partida_t informacion,TipoLog* tipoLog,Cliente* cliente) {
+	App *aplicacion = App::getInstance(informacion,cliente);
 	bool salir = false;
 	SDL_Event event;
 	while (!salir) {
@@ -89,7 +89,7 @@ void gameLoop(info_partida_t informacion,TipoLog* tipoLog) {
 		} else {
 			aplicacion->actualizarServer(keyboard_state_array);
 		}
-		//aplicacion->actualizar();
+		aplicacion->actualizar();
 		aplicacion->dibujar();
 	}
 	delete aplicacion;

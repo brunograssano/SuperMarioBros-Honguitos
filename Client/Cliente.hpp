@@ -11,12 +11,25 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <queue>
 #include <map>
 
-#include "EscuchadorSalaDeEspera.hpp"
+#include "../src/Utils.hpp"
 
 #include "Escuchadores/Escuchador.hpp"
+class EscuchadorInformacionPartida;
+#include "Escuchadores/EscuchadorInformacionPartida.hpp"
+class EscuchadorVerificacionCredenciales;
+#include "Escuchadores/EscuchadorVerificacionCredenciales.hpp"
+class EscuchadorActualizacionJugadores;
+#include "Escuchadores/EscuchadorActualizacionJugadores.hpp"
+
+#include "Escuchadores/EscuchadorLog.hpp"
+
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
+
+#include "../src/Utils.hpp"
 
 using namespace std;
 
@@ -28,26 +41,36 @@ class Cliente{
 	public:
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
-		void escucharMensaje(size_t bytes,string* buffer);
-		static void* escuchar_helper(void* ptr){
-			string a="PRUEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-			((Cliente*) ptr)->escucharMensaje(1,&a);
-			return NULL;
-		}
-
 		void enviar();
 		void escuchar();
+		static void* escuchar_helper(void* ptr){
+			((Cliente*) ptr)->escuchar();
+			return NULL;
+		}
 		static void* enviar_helper(void* ptr){
 			((Cliente*) ptr)->enviar();
 			return NULL;
 		}
-		void recibirInformacionServidor(int* cantidadUsuariosConectados, int* cantidadUsuariosMaximos);
+		void recibirInformacionServidor(info_inicio_t info_inicio);
+		void recibirVerificacionCredenciales(verificacion_t verificacion);
+		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
 		void ejecutar();
+		void agregarEntrada(entrada_usuario_t entradaUsuario);
 	private:
+		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
-		bool enviarCredenciales(credencial_t credencial);
-		bool recibirConfirmacion();
-		int _Read4Bytes(char* buffer);
+		void enviarCredenciales(credencial_t credencial);
+
+		unsigned short cantidadJugadoresActivos;
+
+		bool seRecibioInformacionInicio = false;
+		info_inicio_t infoInicio;
+		void esperarRecibirInformacionInicio();
+
+		bool seRecibioVerificacion = false;
+		verificacion_t pasoVerificacion = false;
+		void esperarRecibirVerificacion();
+
 		int socketCliente;
 };
 #endif /* CLIENT_CLIENTE_HPP_ */

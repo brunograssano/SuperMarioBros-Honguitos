@@ -4,11 +4,17 @@
 class Servidor;
 #include "Servidor.hpp"
 
+
 using namespace std;
 #include <thread>
 #include <string>
 
+#include "../src/Utils.hpp"
+
 #include "../src/log/Log.hpp"
+
+class EscuchadorEntradaTeclado;
+#include "EscuchadorEntradaTeclado.hpp"
 
 class ConexionCliente {
 
@@ -27,12 +33,17 @@ class ConexionCliente {
 
 
 	private:
+		info_inicio_t crearInformacionInicio();
+		void enviarInformacionInicio();
+		void enviarVerificacion(bool esUsuarioValido);
+		void enviarActualizacionCantidadConexiones();
 		string nombre;
 		string contrasenia;
 		int socket;
 		Servidor* servidor;
 		int cantidadConexiones;
 		void recibirCredenciales();
+		EscuchadorEntradaTeclado* escuchadorEntradaTeclado;
 };
 
 

@@ -121,7 +121,7 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 	return false;
 }
 
-void VentanaInicio::obtenerEntrada(int jugadoresConectados,int jugadoresTotales){
+void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales){
 
 	bool terminar = false;
 
@@ -207,7 +207,7 @@ void VentanaInicio::imprimirMensajeError(){
 	ingresoIncorrectoCredenciales = true;
 }
 
-void VentanaInicio::imprimirMensajeEspera(int cantJugadoresConectados, int cantJugadoresTotales){
+void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados, unsigned short cantJugadoresTotales){
 	SDL_Event evento;
 	while( SDL_PollEvent( &evento ) != 0 ){
 		if( evento.type == SDL_QUIT ){

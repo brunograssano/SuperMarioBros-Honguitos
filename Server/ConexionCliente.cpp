@@ -6,6 +6,8 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	this->cantidadConexiones = cantidadConexiones;
 	this->nombre = "";
 	this->contrasenia = "";
+	this->escuchadorEntradaTeclado = NULL;
+	//ver a donde va el new EscuchadorEntradaTeclado(socket, id, servidor) y la llamada a escuchar;
 }
 
 
@@ -71,21 +73,38 @@ void ConexionCliente::recibirCredenciales(){
 
 }
 
+info_inicio_t ConexionCliente::crearInformacionInicio(){
+	info_inicio_t info;
+	info.cantidadJugadoresActivos = this->cantidadConexiones;
+	info.cantidadJugadores = this->servidor->getMaximasConexiones();
+	return info;
+}
+
+void ConexionCliente::enviarInformacionInicio(){
+	char caracterMensaje = INICIO;
+	info_inicio_t info_inicio = crearInformacionInicio();
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &info_inicio, sizeof(info_inicio_t), 0);
+}
+
+void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
+	char caracterMensaje = VERIFICACION;
+	verificacion_t verificacion = esUsuarioValido;
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &verificacion , sizeof(verificacion), 0);
+}
+
 void ConexionCliente::ejecutar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	bool usuarioValido = false;
+	bool esUsuarioValido = false;
 
-	int maximasConexiones = servidor->getMaximasConexiones();
-	send(socket, &cantidadConexiones, sizeof(cantidadConexiones), 0);
-	send(socket, &maximasConexiones, sizeof(maximasConexiones), 0);
+	enviarInformacionInicio();
 
-
-	while(!usuarioValido){
+	while(!esUsuarioValido){
 		recibirCredenciales();
-		usuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
-
-		send(socket, &usuarioValido, sizeof(usuarioValido), 0);
-		if(usuarioValido){
+		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
+		enviarVerificacion(esUsuarioValido);
+		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia);
 			pthread_mutex_unlock(&mutex);
@@ -94,20 +113,26 @@ void ConexionCliente::ejecutar(){
 
 	int anterior = -1;
 	while(true){
-		if(anterior != this->cantidadConexiones){
-			send(socket, &cantidadConexiones, sizeof(cantidadConexiones), 0);
-			anterior = this->cantidadConexiones;
-		}
+		// System pause.
 	}
 
 	//escuchar para teclas
+}
 
+void ConexionCliente::enviarActualizacionCantidadConexiones(){
+	actualizacion_cantidad_jugadores_t actualizacion;
+	actualizacion.cantidadJugadoresActivos = this->cantidadConexiones;
+	char caracterMensaje = ACTUALIZACION_JUGADORES;
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &actualizacion, sizeof(actualizacion_cantidad_jugadores_t), 0);
 }
 
 void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 	this->cantidadConexiones = cantConexiones;
+	enviarActualizacionCantidadConexiones();
 }
 
 ConexionCliente::~ConexionCliente(){
+	delete escuchadorEntradaTeclado;
 	close(socket);
 }

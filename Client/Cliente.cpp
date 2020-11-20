@@ -195,6 +195,10 @@ void Cliente::ejecutar(){
 }
 
 
+void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
+	entradasUsuario.push(entradaUsuario);
+}
+
 bool Cliente::recibirConfirmacion(){
 	bool resultado;
 	int result = recv(socketCliente, &resultado, sizeof(bool), MSG_WAITALL);

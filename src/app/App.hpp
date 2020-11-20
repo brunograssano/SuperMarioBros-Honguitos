@@ -18,13 +18,14 @@ using namespace std;
 const int ANCHO_FONDO = 8177;
 
 #include "../Utils.hpp"
-
+#include "../../Client/Cliente.hpp"
 
 class App{
 
 	protected:
-		App(info_partida_t informacion){
+		App(info_partida_t informacion,Cliente* cliente){
 			Log* log = Log::getInstance();
+			this->cliente = cliente;
 
 			determinarDimensionesPantalla(informacion.anchoVentana,informacion.altoVentana);
 			inicializarSDL(log);
@@ -69,11 +70,12 @@ class App{
 
 		int ancho_pantalla;
 		int alto_pantalla;
+		Cliente* cliente;
 
 	public:
 		App(App &other) = delete;
 		static App *getInstance();
-		static App *getInstance(info_partida_t informacion);
+		static App *getInstance(info_partida_t informacion,Cliente* cliente);
 
 
 		void actualizarServer(const Uint8 *keystate);

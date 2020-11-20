@@ -9,9 +9,9 @@ const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 #define PROPORCION_PISO_EN_IMAGEN 0.1
 #define ALTO_MARIO 80;
 
-App* App::getInstance(info_partida_t informacion){
+App* App::getInstance(info_partida_t informacion,Cliente* cliente){
 	if(aplicacion==nullptr){
-		aplicacion= new App(informacion);
+		aplicacion= new App(informacion,cliente);
 	}
 	return aplicacion;
 }
@@ -75,16 +75,13 @@ void App::actualizarServer(const Uint8 *keystate){
 	if(!comenzoElJuego){
 		if(keystate[SDL_SCANCODE_RETURN]){
 			comenzoElJuego = true;
-			//tiempoDeInicio = SDL_GetTicks();
 			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
 		}
 	}
 	else if(!terminoElJuego){
 		entrada_usuario_t entradaUsuario = {false,false,false,false};
 		bool se_movio = false;
-		//Mario* jugador = Juego::getInstance()->obtenerMario();
 		if(keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_UP]){
-			//jugador->actualizarSaltarMario();
 			entradaUsuario.W = true;
 			se_movio = true;
 
@@ -97,23 +94,20 @@ void App::actualizarServer(const Uint8 *keystate){
 		}
 
 		if(keystate[SDL_SCANCODE_LEFT]){
-			//jugador->actualizarIzquierdaMario();
 			entradaUsuario.A = true;
 			se_movio = true;
 		}
 
 		if(keystate[SDL_SCANCODE_RIGHT]){
-			//jugador->actualizarDerechaMario();
 			entradaUsuario.D = true;
 			se_movio = true;
 		}
 
 		if(keystate[SDL_SCANCODE_DOWN] && !se_movio){
 			entradaUsuario.S = true;
-			//jugador->actualizarAgacharseMario();
 		}
-		//enviar entradaUsuario a el thread que lo envia
 
+		cliente->agregarEntrada(entradaUsuario);
 	}
 }
 

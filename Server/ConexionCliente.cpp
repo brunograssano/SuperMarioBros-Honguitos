@@ -1,10 +1,11 @@
 #include "ConexionCliente.hpp"
 
-ConexionCliente::ConexionCliente(Servidor* servidor, int socket, string nombre, int cantidadConexiones){
+ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones){
 	this->servidor = servidor;
 	this->socket = socket;
-	this->nombre = nombre;
 	this->cantidadConexiones = cantidadConexiones;
+	this->nombre = "";
+	this->contrasenia = "";
 }
 
 

@@ -101,11 +101,6 @@ ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARG
 	return archivoLeido;
 }
 
-void abortarMainServidor(ArchivoLeido* archivoLeido, TipoLog* tipoLog, Servidor* servidor){
-	delete archivoLeido;
-	delete tipoLog;
-	delete servidor;
-}
 
 int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
@@ -131,23 +126,25 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	int resultadoCreate = pthread_create(&hilo, NULL, Servidor::escuchar_helper, server);
 	if(resultadoCreate!= 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar, el codigo de error es: " + to_string(resultadoCreate));
-		abortarMainServidor(archivoLeido, nivelLog, server);
+		delete server;
 		return -1;
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar: (" + to_string(hilo) +").");
 	}
+
 	int resultadoJoin = pthread_join(hilo, NULL);
 	if(resultadoJoin != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al juntar los hilos main y escuchar, el codigo de error es: " + to_string(resultadoJoin));
 		pthread_cancel(hilo);
-		abortarMainServidor(archivoLeido, nivelLog, server);
+		delete server;
 		return -1;
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y escuchar.");
 	}
 
+	server->intentarIniciarModelo();
 
 
-	abortarMainServidor(archivoLeido, nivelLog, server);
+	delete server;
 	return 0;
 }

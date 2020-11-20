@@ -5,11 +5,11 @@
 
 #include <list>
 
-#include "../../log/Log.hpp"
+#include "../src/log/Log.hpp"
 
-#include "../../lector/ArchivoLeido.hpp"
-#include "../../modelo/Nivel.hpp"
-#include "../../modelo/Juego.hpp"
+#include "../src/lector/ArchivoLeido.hpp"
+#include "../src/modelo/Nivel.hpp"
+#include "../src/modelo/Juego.hpp"
 
 class AplicacionServidor{
 	public:

@@ -10,6 +10,7 @@ using namespace std;
 typedef struct usuario{
 	string nombre;
 	string contrasenia;
+	bool usado;
 }usuario_t;
 
 class ArchivoLeido{

@@ -13,7 +13,7 @@ using namespace std;
 class ConexionCliente {
 
 	public:
-		ConexionCliente(Servidor* servidor, int socket, string nombre, int cantidadConexiones);
+		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones);
 		~ConexionCliente();
 
 		void recibir();

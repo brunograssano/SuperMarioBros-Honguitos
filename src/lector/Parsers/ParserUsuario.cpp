@@ -9,6 +9,6 @@ void ParserUsuario::parsearUsuario(pugi::xml_node usuario,ArchivoLeido* archivoL
 		return;
 	}
 
-	usuario_t usuarioJuego = {nombreUsuario,contraseniaUsuario} ;
+	usuario_t usuarioJuego = {nombreUsuario,contraseniaUsuario,false} ;
 	archivoLeido->usuariosValidos.push_back(usuarioJuego);
 }

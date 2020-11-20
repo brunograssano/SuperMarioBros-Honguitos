@@ -16,7 +16,7 @@
 #include "../src/log/Log.hpp"
 #include "../src/lector/ArchivoLeido.hpp"
 #include "../src/modelo/Juego.hpp"
-#include "../src/server/aplicacionServidor/AplicacionServidor.hpp"
+#include "AplicacionServidor.hpp"
 
 #include "ConexionServidor.hpp"
 
@@ -39,6 +39,7 @@ class Servidor{
 
 		int getMaximasConexiones(){return this->cantidadConexiones;}
 		bool esUsuarioValido(usuario_t posibleUsuario);
+		void intentarIniciarModelo();
 
 	private:
 		Log* log;
@@ -49,6 +50,7 @@ class Servidor{
 		list<usuario_t> usuariosValidos;
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
+		bool terminoJuego;
 		list<thread> conexionesConElServidor;
 		list<ConexionCliente*> clientes;
 

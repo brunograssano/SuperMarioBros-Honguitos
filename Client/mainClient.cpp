@@ -19,7 +19,9 @@
 
 
 
-const int LARGO_ENTRADA = 150,VALOR_MAXIMO_PUERTO = 65535,VALOR_MINIMO_PUERTO = 1023;;
+#define LARGO_ENTRADA 150
+#define VALOR_MAXIMO_PUERTO 65535
+#define VALOR_MINIMO_PUERTO 1023
 const int ERROR = -1, VACIO=0, TERMINO = -1;
 
 #define IP 'i'
@@ -95,7 +97,7 @@ void gameLoop(info_partida_t informacion,TipoLog* tipoLog,Cliente* cliente) {
 	delete aplicacion;
 }
 
-bool esIpValida(string ipEntrada){
+bool esIpValidaCliente(string ipEntrada){
 
     if (ipEntrada.length() > 0){
 
@@ -133,7 +135,7 @@ bool esIpValida(string ipEntrada){
     return false;
 }
 
-void validarPuertoEIp(string ipEntrada,string puertoEntrada,string ip,int puerto){
+void validarPuertoEIpCliente(string ipEntrada,string puertoEntrada,string ip,int puerto){
 	Log* log = Log::getInstance();
 	try{
 		puerto = stoi(puertoEntrada);
@@ -143,7 +145,7 @@ void validarPuertoEIp(string ipEntrada,string puertoEntrada,string ip,int puerto
 	}catch(std::exception& e){
 		log->huboUnError("El valor de puerto enviado no es valido");
 	}
-	if(esIpValida(ipEntrada)){
+	if(esIpValidaCliente(ipEntrada)){
 		ip = ipEntrada;
 	}else{
 		log->huboUnError("El valor de ip enviado no es valido");
@@ -160,7 +162,7 @@ int mainClient(int argc, char* args[]){
 	char ip[] = "";
 
 	manejarEntrada(argc, args, ipEntrada, puertoEntrada, nivelLogEntrada);
-	validarPuertoEIp(ipEntrada,puertoEntrada,ip,puerto);
+	validarPuertoEIpCliente(ipEntrada,puertoEntrada,ip,puerto);
 	TipoLog* nivelLog = determinarNivelLogClient(nivelLogEntrada);
 	Log::getInstance(nivelLog);
 	info_partida_t informacion; //nos lo mandan

@@ -4,6 +4,7 @@
 using namespace std;
 #include "Nivel.hpp"
 #include <list>
+#include <map>
 #include <iostream>
 #include <string>
 
@@ -28,7 +29,7 @@ class Juego{
 			}
 		}
 
-		list<Mario*> jugadores;
+		map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
 
 		static Juego* instanciaJuego;
@@ -46,7 +47,7 @@ class Juego{
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
-		list<Mario*> obtenerMarios();
+		map<int,Mario*> obtenerMarios();
 		int obtenerTiempoDelNivel();
 		int obtenerPuntuacionJugador();
 		int obtenerMundoActual();

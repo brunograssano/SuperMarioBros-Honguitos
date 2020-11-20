@@ -6,7 +6,7 @@ Juego* Juego::instanciaJuego = nullptr;
 
 void Juego::inicializar(int cantJugadores){
 	for(int i = 1; i < (cantJugadores+1); i++){
-		jugadores.push_back(new Mario(i));
+		jugadores[i] = new Mario(i);
 	}
 
 }
@@ -27,8 +27,8 @@ void Juego::avanzarNivel(){
 	Nivel* nivelViejo = niveles.front();
 	delete nivelViejo;
 	niveles.pop_front();
-	for(auto const& jugador:jugadores){
-		jugador->reiniciarPosicion();
+	for(auto const& parClaveJugador:jugadores){
+		parClaveJugador.second->reiniciarPosicion();
 	}
 }
 
@@ -36,7 +36,7 @@ bool Juego::quedaSoloUnNivel(){
 	return niveles.size()==1;
 }
 
-list<Mario*> Juego::obtenerMarios(){
+map<int,Mario*> Juego::obtenerMarios(){
 	return jugadores;
 }
 
@@ -58,8 +58,8 @@ void Juego::actualizarPosicionesEnemigos(){
 }
 
 void Juego::sumarPuntosAJugadores(int puntos){
-	for(auto const& jugador:jugadores){
-		jugador->agregarPuntos(puntos);
+	for(auto const& parClaveJugador:jugadores){
+		parClaveJugador.second->agregarPuntos(puntos);
 	}
 }
 
@@ -89,8 +89,8 @@ int Juego::obtenerPuntoBanderaFinActual(){
 
 Juego::~Juego(){
 
-	for(auto const& jugador:jugadores){
-		delete jugador;
+	for(auto const& parClaveJugador:jugadores){
+		delete parClaveJugador.second;
 	}
 	jugadores.clear();
 	niveles.clear();

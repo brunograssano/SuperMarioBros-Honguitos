@@ -22,18 +22,42 @@ void AplicacionServidor::iniciarJuego(){
 	comenzoElJuego = true;
 }
 
+void AplicacionServidor::actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada){
+	bool seMovio = false;
+	if(entrada.A){
+		jugador->actualizarIzquierdaMario();
+		seMovio = true;
+	}
+	if(entrada.D){
+		jugador->actualizarDerechaMario();
+		seMovio = true;
+	}
+	if(entrada.W){
+		jugador->actualizarSaltarMario();
+		seMovio = true;
+	}
+	if(entrada.S && !seMovio){
+		jugador->actualizarAgacharseMario();
+	}
+}
+
 
 void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 	while(!comenzoElJuego){
 		//estamos esperando a que nos indiquen que puede comenzar el juego
 	}
 
-	list<Mario*> jugadores = juego->obtenerMarios();
+	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
 		// revisar si tenemos comandos en la cola
+		while(!colaDeEntradasUsuario.empty()){
+			entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
+			actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
+			colaDeEntradasUsuario.pop();
+		}
 
-		for(auto const& jugador:jugadores){
-			jugador->actualizarPosicion();
+		for(auto const& parClaveJugador:jugadores){
+			parClaveJugador.second->actualizarPosicion();
 		}
 		juego->actualizarPosicionesEnemigos();
 		revisarSiTerminoNivel(jugadores);
@@ -48,15 +72,15 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 }
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
-	this->colaDeEntradasUsario.push(entradaUsuario);
+	this->colaDeEntradasUsuario.push(entradaUsuario);
 }
 
-void AplicacionServidor::revisarSiTerminoNivel(list<Mario*> jugadores){
+void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 
 	bool pasadoLimite = true;
 	int puntoBandera = juego->obtenerPuntoBanderaFinActual();
-	for(auto const& jugador:jugadores){
-		if(jugador->obtenerPosicionX()<puntoBandera){
+	for(auto const& parClaveJugador:jugadores){
+		if(parClaveJugador.second->obtenerPosicionX()<puntoBandera){
 			pasadoLimite = false;
 		}
 	}
@@ -83,18 +107,18 @@ SDL_Rect* AplicacionServidor::obtenerRectCamara(){
 }
 
 
-void AplicacionServidor::moverCamara(list<Mario*> jugadores){
+void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
 	int posicionDelJugadorMasALaDerecha = 0;
 	bool sePuedeMoverLaCamara = true;
 
-	for(auto const& jugador: jugadores){
-		if(jugador->obtenerPosicionX() <= rectanguloCamara->x){
+	for(auto const& parClaveJugador: jugadores){
+		if(parClaveJugador.second->obtenerPosicionX() <= rectanguloCamara->x){
 			sePuedeMoverLaCamara = false;
 		}
-		if(jugador->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
-			posicionDelJugadorMasALaDerecha = jugador->obtenerPosicionX();
+		if(parClaveJugador.second->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
+			posicionDelJugadorMasALaDerecha = parClaveJugador.second->obtenerPosicionX();
 		}
 
 	}
@@ -104,14 +128,14 @@ void AplicacionServidor::moverCamara(list<Mario*> jugadores){
 	if(sePuedeMoverLaCamara && unJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla){
 		rectanguloCamara->x = posicionDelJugadorMasALaDerecha - (ancho_pantalla) / 2 ;
 
-		for(auto const& jugador: jugadores){
-			jugador->actualizarMaximoX(rectanguloCamara->x);
+		for(auto const& parClaveJugador: jugadores){
+			parClaveJugador.second->actualizarMaximoX(rectanguloCamara->x);
 		}
 	}
 
-	/*if( rectanguloCamara->x < 0 ){
+	if( rectanguloCamara->x < 0 ){
 		 rectanguloCamara->x = 0;
-	} No estoy seguro pero creo que ya no era neceserio*/
+	}
 
 	if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
 		rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;

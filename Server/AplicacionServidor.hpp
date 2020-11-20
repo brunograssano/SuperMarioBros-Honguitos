@@ -30,9 +30,10 @@ class AplicacionServidor{
 		void gameLoop();
 
 	private:
-		void revisarSiTerminoNivel(list<Mario*> jugadores);
+		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
+		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
 		SDL_Rect* obtenerRectCamara();
-		void moverCamara(list<Mario*> jugadores);
+		void moverCamara(map<int,Mario*> jugadores);
 		Log* log;
 		Juego* juego;
 		SDL_Rect rectanguloCamara;
@@ -44,7 +45,7 @@ class AplicacionServidor{
 		bool comenzoElJuego;
 		bool ganaron;
 		bool juegoInicializadoCorrectamente;
-		queue<entrada_usuario_id_t> colaDeEntradasUsario;
+		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
 };
 
 

@@ -33,7 +33,7 @@ class EscuchadorActualizacionJugadores;
 
 using namespace std;
 
-const int LARGO_IP = 20;
+#define LARGO_IP 20
 
 
 class Cliente{

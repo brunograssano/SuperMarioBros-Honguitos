@@ -20,7 +20,8 @@
 #include "Escuchadores/Escuchador.hpp"
 class EscuchadorInformacionPartida;
 #include "Escuchadores/EscuchadorInformacionPartida.hpp"
-
+class EscuchadorVerificacionCredenciales;
+#include "Escuchadores/EscuchadorVerificacionCredenciales.hpp"
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
 
 using namespace std;
@@ -44,15 +45,22 @@ class Cliente{
 			return NULL;
 		}
 		void recibirInformacionServidor(info_inicio_t info_inicio);
+		void recibirVerificacionCredenciales(verificacion_t verificacion);
 		void ejecutar();
 
 	private:
-		bool seRecibioInformacionInicio = false;
-		info_inicio_t infoInicio;
 		info_estado_actual_partida_t infoEstadoPartida = {0};
 		map<char,Escuchador*> escuchadores;
-		bool enviarCredenciales(credencial_t credencial);
-		bool recibirConfirmacion();
+		void enviarCredenciales(credencial_t credencial);
+
+		bool seRecibioInformacionInicio = false;
+		info_inicio_t infoInicio;
+		void esperarRecibirInformacionInicio();
+
+		bool seRecibioVerificacion = false;
+		verificacion_t pasoVerificacion = false;
+		void esperarRecibirVerificacion();
+
 		int socketCliente;
 };
 #endif /* CLIENT_CLIENTE_HPP_ */

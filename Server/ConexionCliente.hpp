@@ -31,6 +31,7 @@ class ConexionCliente {
 	private:
 		info_inicio_t crearInformacionInicio();
 		void enviarInformacionInicio();
+		void enviarVerificacion(bool esUsuarioValido);
 		string nombre;
 		string contrasenia;
 		int socket;

@@ -85,22 +85,24 @@ void ConexionCliente::enviarInformacionInicio(){
 	send(socket, &info_inicio, sizeof(info_inicio_t), 0);
 }
 
-void ConexionCliente::enviarVerificacion(){
-
+void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
+	char caracterMensaje = VERIFICACION;
+	verificacion_t verificacion = esUsuarioValido;
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &verificacion , sizeof(verificacion), 0);
 }
 
 void ConexionCliente::ejecutar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	bool usuarioValido = false;
+	bool esUsuarioValido = false;
 
 	enviarInformacionInicio();
 
-	while(!usuarioValido){
+	while(!esUsuarioValido){
 		recibirCredenciales();
-		usuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
-
-		send(socket, &usuarioValido, sizeof(usuarioValido), 0);
-		if(usuarioValido){
+		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
+		enviarVerificacion(esUsuarioValido);
+		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia);
 			pthread_mutex_unlock(&mutex);

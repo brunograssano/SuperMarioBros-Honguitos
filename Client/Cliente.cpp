@@ -26,6 +26,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 		exit(-1);
 	}
 	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
+	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
 }
 
 void Cliente::escuchar(){
@@ -35,11 +36,15 @@ void Cliente::escuchar(){
 		result = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
 		//if result = se desconecto el socket -> manejarlo
 		escuchadores[tipoMensaje]->escuchar();
-
 	}
 }
 
 void Cliente::enviar(){
+}
+
+void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
+	this->pasoVerificacion = verificacion;
+	this->seRecibioVerificacion = true;
 }
 
 void Cliente::recibirInformacionServidor(info_inicio_t info){
@@ -50,28 +55,36 @@ void Cliente::recibirInformacionServidor(info_inicio_t info){
 	pthread_mutex_unlock(&mutex);
 }
 
+void Cliente::esperarRecibirInformacionInicio(){
+	while(!seRecibioInformacionInicio){
+	}//TODO: Mostrar una pantalla de espera al servidor, en caso de ser neceasrio.
+}
+
+void Cliente::esperarRecibirVerificacion(){
+	while(!seRecibioVerificacion){
+	}//TODO: Mostrar un mensaje de espera, en caso de ser necesario.
+}
+
 void Cliente::ejecutar(){
-
-
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
 		exit(-1); //TODO: Arreglar este exit.
 	}
-	int i = 0;
-	while(!seRecibioInformacionInicio){
-		i++;
-	}
+
+	esperarRecibirInformacionInicio();
 
 	VentanaInicio* ventanaInicio =  new VentanaInicio();
-	bool pasoVerificacion = false, cerroVentana = false;
+	bool cerroVentana = false;
 	while(!pasoVerificacion && !cerroVentana){
 		try{
 			ventanaInicio->obtenerEntrada(infoInicio.cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
-			pasoVerificacion = enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			esperarRecibirVerificacion();
 			if(!pasoVerificacion){
 				ventanaInicio->imprimirMensajeError();
+				seRecibioVerificacion = false;
 			}
 		}
 		catch(const std::exception& e){
@@ -86,7 +99,9 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
+	cout << "todo ok" << endl;
+
+/*	EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
 
 	pthread_t hiloEscuchar1;
 	int resultadoCreateEscuchar1 = pthread_create(&hiloEscuchar1, NULL, EscuchadorSalaDeEspera::escuchar_helper, escuchador);
@@ -109,7 +124,7 @@ void Cliente::ejecutar(){
 		delete Log::getInstance();
 		exit(0);
 	}
-
+*/
 	/*
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
@@ -143,17 +158,10 @@ void Cliente::ejecutar(){
 	delete Log::getInstance();
 }
 
-
-bool Cliente::recibirConfirmacion(){
-	bool resultado;
-	int result = recv(socketCliente, &resultado, sizeof(bool), MSG_WAITALL);
-	return resultado;
-}
-
-bool Cliente::enviarCredenciales(credencial_t credencial){
+void Cliente::enviarCredenciales(credencial_t credencial){
 	const char* credencialesParsadas = (credencial.nombre + ";" +credencial.contrasenia).c_str();
 	send(socketCliente, credencialesParsadas, strlen(credencialesParsadas), 0);
-	return recibirConfirmacion();
+	return;
 }
 
 

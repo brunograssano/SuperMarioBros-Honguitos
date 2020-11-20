@@ -12,7 +12,5 @@ void EscuchadorInformacionPartida::escuchar(){
 	this->cliente->recibirInformacionServidor(info);
 }
 
-
-
 EscuchadorInformacionPartida::~EscuchadorInformacionPartida(){
 }

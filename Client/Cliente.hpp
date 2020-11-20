@@ -22,6 +22,9 @@ class EscuchadorInformacionPartida;
 #include "Escuchadores/EscuchadorInformacionPartida.hpp"
 class EscuchadorVerificacionCredenciales;
 #include "Escuchadores/EscuchadorVerificacionCredenciales.hpp"
+class EscuchadorActualizacionJugadores;
+#include "Escuchadores/EscuchadorActualizacionJugadores.hpp"
+
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
 
 using namespace std;
@@ -46,12 +49,14 @@ class Cliente{
 		}
 		void recibirInformacionServidor(info_inicio_t info_inicio);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
+		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
 		void ejecutar();
 
 	private:
-		info_estado_actual_partida_t infoEstadoPartida = {0};
 		map<char,Escuchador*> escuchadores;
 		void enviarCredenciales(credencial_t credencial);
+
+		unsigned short cantidadJugadoresActivos;
 
 		bool seRecibioInformacionInicio = false;
 		info_inicio_t infoInicio;

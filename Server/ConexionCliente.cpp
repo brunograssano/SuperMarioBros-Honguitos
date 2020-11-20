@@ -111,18 +111,23 @@ void ConexionCliente::ejecutar(){
 
 	int anterior = -1;
 	while(true){
-		if(anterior != this->cantidadConexiones){
-			send(socket, &cantidadConexiones, sizeof(cantidadConexiones), 0);
-			anterior = this->cantidadConexiones;
-		}
+		// System pause.
 	}
 
 	//escuchar para teclas
+}
 
+void ConexionCliente::enviarActualizacionCantidadConexiones(){
+	actualizacion_cantidad_jugadores_t actualizacion;
+	actualizacion.cantidadJugadoresActivos = this->cantidadConexiones;
+	char caracterMensaje = ACTUALIZACION_JUGADORES;
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &actualizacion, sizeof(actualizacion_cantidad_jugadores_t), 0);
 }
 
 void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 	this->cantidadConexiones = cantConexiones;
+	enviarActualizacionCantidadConexiones();
 }
 
 ConexionCliente::~ConexionCliente(){

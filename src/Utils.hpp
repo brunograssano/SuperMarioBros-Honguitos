@@ -3,6 +3,16 @@
 
 using namespace std;
 
+/* PALABRAS RESERVADAS */
+/*
+ * I: inicio
+ * V: verificacion
+ * U: actualizacion sobre la cantidad de jugadores.
+ *
+ *
+ */
+
+
 const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
 const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSIBLES = 30;
 
@@ -79,9 +89,10 @@ typedef struct info_partida{
 	unsigned short idPropio;
 }info_partida_t;
 
-typedef struct info_estado_actual_partida{
+#define ACTUALIZACION_JUGADORES 'U'
+typedef struct actualizacion_cantidad_jugadores{
 	unsigned short cantidadJugadoresActivos;
-}info_estado_actual_partida_t;
+}actualizacion_cantidad_jugadores_t;
 
 
 typedef struct ronda{

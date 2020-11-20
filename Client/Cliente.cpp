@@ -27,6 +27,8 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	}
 	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
 	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
+	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
+	cantidadJugadoresActivos = 0;
 }
 
 void Cliente::escuchar(){
@@ -51,8 +53,13 @@ void Cliente::recibirInformacionServidor(info_inicio_t info){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	this->infoInicio = info;
+	this->cantidadJugadoresActivos = info.cantidadJugadoresActivos;
 	this->seRecibioInformacionInicio = true;
 	pthread_mutex_unlock(&mutex);
+}
+
+void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores){
+	this->cantidadJugadoresActivos = cantidadJugadores;
 }
 
 void Cliente::esperarRecibirInformacionInicio(){
@@ -79,7 +86,7 @@ void Cliente::ejecutar(){
 	bool cerroVentana = false;
 	while(!pasoVerificacion && !cerroVentana){
 		try{
-			ventanaInicio->obtenerEntrada(infoInicio.cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
+			ventanaInicio->obtenerEntrada(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
 			enviarCredenciales(ventanaInicio->obtenerCredenciales());
 			esperarRecibirVerificacion();
 			if(!pasoVerificacion){
@@ -99,32 +106,21 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	cout << "todo ok" << endl;
-
-/*	EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
-
-	pthread_t hiloEscuchar1;
-	int resultadoCreateEscuchar1 = pthread_create(&hiloEscuchar1, NULL, EscuchadorSalaDeEspera::escuchar_helper, escuchador);
-	if(resultadoCreateEscuchar1 != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
-		exit(-1); //TODO: Arreglar este exit.
-	}
 	while(!cerroVentana){// TODO: aca va hasta que el server arranque la partida
 		try{
-			ventanaInicio->imprimirMensajeEspera(escuchador->getCantidadConectados(), this->infoEstadoPartida.cantidadJugadoresActivos);
+			ventanaInicio->imprimirMensajeEspera(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
 		}
 		catch(const std::exception& e){
 			cerroVentana = true;
 		}
 	}
 	delete ventanaInicio;
-	delete escuchador;
 	if(cerroVentana){
 		close(socketCliente);
 		delete Log::getInstance();
 		exit(0);
 	}
-*/
+
 	/*
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
@@ -155,6 +151,7 @@ void Cliente::ejecutar(){
 		Log::getInstance()->huboUnError("Ocurrió un error al enlazar el hilo \"escuchar\" al main.");
 		return;
 	}*/
+
 	delete Log::getInstance();
 }
 

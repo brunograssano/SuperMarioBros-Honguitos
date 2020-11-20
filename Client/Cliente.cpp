@@ -64,18 +64,62 @@ void Cliente::enviar(){
 	}
 }
 
+void Cliente::recibirInformacionServidor(int* cantConect, int* cantTot){
+	recv(socketCliente, cantConect, sizeof(int), MSG_WAITALL);
+	recv(socketCliente, cantTot, sizeof(int), MSG_WAITALL);
+}
+
 void Cliente::ejecutar(){
 
-	string buffer;
-	escucharMensaje(9,&buffer); // Esperamos recibir el Aceptado
-	cout<< "Se recibio el mensaje: " << buffer;
+	int cantidadUsuariosConectados;
+	int cantidadUsuariosMaximos;
+	this->recibirInformacionServidor(&cantidadUsuariosConectados, &cantidadUsuariosMaximos);
 
 	VentanaInicio* ventanaInicio =  new VentanaInicio();
-	ventanaInicio->obtenerEntrada();
+	bool pasoVerificacion = false, cerroVentana = false;
+	while(!pasoVerificacion && !cerroVentana){
+		try{
+			ventanaInicio->obtenerEntrada(cantidadUsuariosConectados, cantidadUsuariosMaximos);
+			pasoVerificacion = enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			if(!pasoVerificacion){
+				ventanaInicio->imprimirMensajeError();
+			}
+		}
+		catch(const std::exception& e){
+			cerroVentana = true;
+		}
+	}
 
-	enviarCredenciales(ventanaInicio->obtenerCredenciales());
+	if(cerroVentana){
+		delete ventanaInicio;
+		delete Log::getInstance();
+		close(socketCliente);
+		exit(0);
+	}
 
+	EscuchadorSalaDeEspera* escuchador = new EscuchadorSalaDeEspera(this->socketCliente);
+
+	pthread_t hiloEscuchar;
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, EscuchadorSalaDeEspera::escuchar_helper, escuchador);
+	if(resultadoCreateEscuchar != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
+		exit(-1); //TODO: Arreglar este exit.
+	}
+	while(!cerroVentana){// TODO: aca va hasta que el server arranque la partida
+		try{
+			ventanaInicio->imprimirMensajeEspera(escuchador->getCantidadConectados(), cantidadUsuariosMaximos);
+		}
+		catch(const std::exception& e){
+			cerroVentana = true;
+		}
+	}
 	delete ventanaInicio;
+	delete escuchador;
+	if(cerroVentana){
+		close(socketCliente);
+		delete Log::getInstance();
+		exit(0);
+	}
 
 	/*
 	pthread_t hiloEscuchar;
@@ -117,15 +161,10 @@ bool Cliente::recibirConfirmacion(){
 	return resultado;
 }
 
-void Cliente::enviarCredenciales(credencial_t credencial){
-
+bool Cliente::enviarCredenciales(credencial_t credencial){
 	const char* credencialesParsadas = (credencial.nombre + ";" +credencial.contrasenia).c_str();
-
 	send(socketCliente, credencialesParsadas, strlen(credencialesParsadas), 0);
-	bool esValido = recibirConfirmacion();
-	cout<< "El resultado es " << (esValido ? ":D todo OK" : ":C todo MAL");
-
-	//recibir un bool que nos diga todo OK o no
+	return recibirConfirmacion();
 }
 
 

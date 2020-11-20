@@ -76,8 +76,6 @@ void* Servidor::escuchar(){
 	int socketConexionEntrante;
 	socklen_t addressStructure;
 	struct sockaddr_in addressCliente;
-	char buffer[256];
-	int estadoLectura;
 
 	while(usuariosConectados<cantidadConexiones){
 
@@ -92,9 +90,7 @@ void* Servidor::escuchar(){
 			log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
 			pthread_mutex_unlock(&mutex);
 
-			send(socketConexionEntrante, "Aceptado\n", 9, 0);
-			ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, "Juancito" + to_string(usuariosConectados));
-			clientes.push_back(conexion);
+			ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, "Juancito" + to_string(usuariosConectados), this->cantUsuariosLogueados);
 
 			pthread_t hilo;
 			if(pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper, conexion) != 0){
@@ -108,15 +104,25 @@ void* Servidor::escuchar(){
 						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
 				pthread_mutex_unlock(&mutex);
 			}
+
 			usuariosConectados++;
+
+			clientes.push_back(conexion);
 		}
 	}
 	return NULL;
 }
 
 bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	for(auto const& usuario:usuariosValidos){
 		if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0){
+			pthread_mutex_lock(&mutex);
+			this->cantUsuariosLogueados++;
+			for(auto const& cliente:clientes){
+				cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
+			}
+			pthread_mutex_unlock(&mutex);
 			return true;
 		}
 	}
@@ -141,6 +147,7 @@ Servidor::~Servidor(){
 
 	for(auto const& cliente:clientes){
 		delete cliente;
+
 	}
 	clientes.clear();
 	close(socketServer);

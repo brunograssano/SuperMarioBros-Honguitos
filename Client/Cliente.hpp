@@ -13,6 +13,8 @@
 
 #include <unistd.h>
 
+#include "EscuchadorSalaDeEspera.hpp"
+
 
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
 
@@ -38,10 +40,10 @@ class Cliente{
 			((Cliente*) ptr)->enviar();
 			return NULL;
 		}
-
+		void recibirInformacionServidor(int* cantidadUsuariosConectados, int* cantidadUsuariosMaximos);
 		void ejecutar();
 	private:
-		void enviarCredenciales(credencial_t credencial);
+		bool enviarCredenciales(credencial_t credencial);
 		bool recibirConfirmacion();
 		int _Read4Bytes(char* buffer);
 		int socketCliente;

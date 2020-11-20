@@ -16,15 +16,21 @@ class VentanaInicio{
 
 	public:
 		VentanaInicio();
-		void obtenerEntrada();
+		void obtenerEntrada(int jugadoresConectados,int jugadoresTotales);
+		void imprimirMensajeError();
+		void imprimirMensajeEspera(int cantJugadoresConectados, int cantJugadoresTotales);
 		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:
+		bool ingresoIncorrectoCredenciales;
 		credencial_t credenciales;
 		SDL_Texture* texturaTextoUsuario;
 		SDL_Texture* texturaTextoContrasenia;
 		SDL_Texture* usuarioIngresado;
 		SDL_Texture* contraseniaIngresada;
+		SDL_Texture* texturaCantidadJugadores;
+		SDL_Texture* texturaMensajeCredencialesIncorrectas;
+		SDL_Texture* texturaMensajeCredencialesCorrectas;
 		TTF_Font* fuente;
 		SDL_Window* ventana;
 		SDL_Renderer* renderer;

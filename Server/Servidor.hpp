@@ -37,6 +37,7 @@ class Servidor{
 		}
 		~Servidor();
 
+		int getMaximasConexiones(){return this->cantidadConexiones;}
 		bool esUsuarioValido(usuario_t posibleUsuario);
 
 	private:
@@ -44,6 +45,7 @@ class Servidor{
 		AplicacionServidor* aplicacionServidor;
 		int socketServer;
 		int cantidadConexiones;
+		int cantUsuariosLogueados = 0;
 		list<usuario_t> usuariosValidos;
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 

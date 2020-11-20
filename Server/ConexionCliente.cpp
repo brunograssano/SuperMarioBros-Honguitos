@@ -1,9 +1,10 @@
 #include "ConexionCliente.hpp"
 
-ConexionCliente::ConexionCliente(Servidor* servidor, int socket, string nombre){
+ConexionCliente::ConexionCliente(Servidor* servidor, int socket, string nombre, int cantidadConexiones){
 	this->servidor = servidor;
 	this->socket = socket;
 	this->nombre = nombre;
+	this->cantidadConexiones = cantidadConexiones;
 }
 
 
@@ -72,6 +73,12 @@ void ConexionCliente::recibirCredenciales(){
 void ConexionCliente::ejecutar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	bool usuarioValido = false;
+
+	int maximasConexiones = servidor->getMaximasConexiones();
+	send(socket, &cantidadConexiones, sizeof(cantidadConexiones), 0);
+	send(socket, &maximasConexiones, sizeof(maximasConexiones), 0);
+
+
 	while(!usuarioValido){
 		recibirCredenciales();
 		usuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
@@ -84,8 +91,20 @@ void ConexionCliente::ejecutar(){
 		}
 	}
 
+	int anterior = -1;
+	while(true){
+		if(anterior != this->cantidadConexiones){
+			send(socket, &cantidadConexiones, sizeof(cantidadConexiones), 0);
+			anterior = this->cantidadConexiones;
+		}
+	}
+
 	//escuchar para teclas
 
+}
+
+void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
+	this->cantidadConexiones = cantConexiones;
 }
 
 ConexionCliente::~ConexionCliente(){

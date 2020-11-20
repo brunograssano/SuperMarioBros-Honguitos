@@ -8,26 +8,12 @@ using namespace std;
 #include "../../Server/mainServer.hpp"
 #include "../../Client/mainClient.hpp"
 
-const int TERMINO = -1;
-#define SERVER 's'
-
-
 void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
-	  static struct option opcionesLargas[] = {
-	     {"server", no_argument, 0, 's'},
-	     {0, 0, 0, 0}
-	  };
-
-	  int argumento;
-	  int indiceOpcion = 0;
-
-	  while((argumento = getopt_long(cantidadArgumentos, argumentos, "s", opcionesLargas, &indiceOpcion))!=TERMINO){
-	      switch (argumento) {
-	          case SERVER:
-	        	  (*esServer) = true;
-	              break;
-	      }
-	  }
+	for(int i=0;i<cantidadArgumentos;i++){
+		if(strcmp(argumentos[i],"-s")==0 || strcmp(argumentos[i],"-server")==0 || strcmp(argumentos[i],"--server")==0){
+			(*esServer) = true;
+		}
+	}
 }
 
 /*
@@ -52,7 +38,6 @@ int main( int cantidadArgumentos, char* argumentos[]){
 		mainClient(cantidadArgumentos, argumentos);
 	}
 }
-
 /*
  * Crear hilo con la funcion game loop (puede ser en el server)
  * Para que el server le diga la aplicacion servidor que puede empezar a correr el ciclo

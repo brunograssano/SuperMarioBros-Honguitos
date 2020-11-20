@@ -71,14 +71,29 @@ void ConexionCliente::recibirCredenciales(){
 
 }
 
+info_inicio_t ConexionCliente::crearInformacionInicio(){
+	info_inicio_t info;
+	info.cantidadJugadoresActivos = this->cantidadConexiones;
+	info.cantidadJugadores = this->servidor->getMaximasConexiones();
+	return info;
+}
+
+void ConexionCliente::enviarInformacionInicio(){
+	char caracterMensaje = INICIO;
+	info_inicio_t info_inicio = crearInformacionInicio();
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &info_inicio, sizeof(info_inicio_t), 0);
+}
+
+void ConexionCliente::enviarVerificacion(){
+
+}
+
 void ConexionCliente::ejecutar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	bool usuarioValido = false;
 
-	int maximasConexiones = servidor->getMaximasConexiones();
-	send(socket, &cantidadConexiones, sizeof(cantidadConexiones), 0);
-	send(socket, &maximasConexiones, sizeof(maximasConexiones), 0);
-
+	enviarInformacionInicio();
 
 	while(!usuarioValido){
 		recibirCredenciales();

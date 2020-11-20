@@ -13,9 +13,14 @@
 #include <unistd.h>
 #include <map>
 
+#include "../src/Utils.hpp"
+
 #include "EscuchadorSalaDeEspera.hpp"
 
 #include "Escuchadores/Escuchador.hpp"
+class EscuchadorInformacionPartida;
+#include "Escuchadores/EscuchadorInformacionPartida.hpp"
+
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
 
 using namespace std;
@@ -28,26 +33,26 @@ class Cliente{
 	public:
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
-		void escucharMensaje(size_t bytes,string* buffer);
-		static void* escuchar_helper(void* ptr){
-			string a="PRUEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-			((Cliente*) ptr)->escucharMensaje(1,&a);
-			return NULL;
-		}
-
 		void enviar();
 		void escuchar();
+		static void* escuchar_helper(void* ptr){
+			((Cliente*) ptr)->escuchar();
+			return NULL;
+		}
 		static void* enviar_helper(void* ptr){
 			((Cliente*) ptr)->enviar();
 			return NULL;
 		}
-		void recibirInformacionServidor(int* cantidadUsuariosConectados, int* cantidadUsuariosMaximos);
+		void recibirInformacionServidor(info_inicio_t info_inicio);
 		void ejecutar();
+
 	private:
+		bool seRecibioInformacionInicio = false;
+		info_inicio_t infoInicio;
+		info_estado_actual_partida_t infoEstadoPartida = {0};
 		map<char,Escuchador*> escuchadores;
 		bool enviarCredenciales(credencial_t credencial);
 		bool recibirConfirmacion();
-		int _Read4Bytes(char* buffer);
 		int socketCliente;
 };
 #endif /* CLIENT_CLIENTE_HPP_ */

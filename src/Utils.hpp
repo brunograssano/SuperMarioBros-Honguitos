@@ -1,6 +1,8 @@
 #ifndef SRC_UTILS_HPP_
 #define SRC_UTILS_HPP_
 
+using namespace std;
+
 const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
 const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSIBLES = 30;
 
@@ -52,21 +54,35 @@ typedef struct entrada_usuario{
 	bool W;
 }entrada_usuario_t;
 
-typedef struct info_partida{
+#define INICIO 'I'
+typedef struct info_inicio{
+	unsigned short cantidadJugadores;
+	unsigned short cantidadJugadoresActivos;
+}info_inicio_t;
 
+#define VERIFICACION 'V'
+typedef bool verificacion_t;
+
+typedef struct info_partida{
 	jugador_t jugadores[MAX_JUGADORES];
+	unsigned short cantidadJugadores;
 	string direccionesFondoNiveles[MAX_IMAGEN_NIVELES_POSIBLES];
 
-	//string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
-	//string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
+	bool iniciadoCorrectamente;
 
-	bool iniciadoCorrectamente; // puede volar
-	unsigned short cantidadJugadores;
+	string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
+	string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
+
 	unsigned short cantidadFondosNiveles;
 	unsigned short anchoVentana;
 	unsigned short altoVentana;
 	unsigned short idPropio;
 }info_partida_t;
+
+typedef struct info_estado_actual_partida{
+	unsigned short cantidadJugadoresActivos;
+}info_estado_actual_partida_t;
+
 
 typedef struct ronda{
 	unsigned short posXCamara;

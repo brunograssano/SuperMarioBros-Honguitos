@@ -8,6 +8,8 @@ using namespace std;
 #include <thread>
 #include <string>
 
+#include "../src/Utils.hpp"
+
 #include "../src/log/Log.hpp"
 
 class ConexionCliente {
@@ -27,6 +29,8 @@ class ConexionCliente {
 
 
 	private:
+		info_inicio_t crearInformacionInicio();
+		void enviarInformacionInicio();
 		string nombre;
 		string contrasenia;
 		int socket;

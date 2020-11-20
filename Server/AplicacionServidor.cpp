@@ -47,6 +47,10 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 }
 
+void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
+	this->colaDeEntradasUsario.push(entradaUsuario);
+}
+
 void AplicacionServidor::revisarSiTerminoNivel(list<Mario*> jugadores){
 
 	bool pasadoLimite = true;

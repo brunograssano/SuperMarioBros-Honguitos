@@ -6,6 +6,8 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	this->cantidadConexiones = cantidadConexiones;
 	this->nombre = "";
 	this->contrasenia = "";
+	this->escuchadorEntradaTeclado = NULL;
+	//ver a donde va el new EscuchadorEntradaTeclado(socket, id, servidor) y la llamada a escuchar;
 }
 
 
@@ -131,5 +133,6 @@ void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 }
 
 ConexionCliente::~ConexionCliente(){
+	delete escuchadorEntradaTeclado;
 	close(socket);
 }

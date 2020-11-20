@@ -11,11 +11,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <queue>
 #include <map>
 
 #include "../src/Utils.hpp"
-
-#include "EscuchadorSalaDeEspera.hpp"
 
 #include "Escuchadores/Escuchador.hpp"
 class EscuchadorInformacionPartida;
@@ -25,7 +25,11 @@ class EscuchadorVerificacionCredenciales;
 class EscuchadorActualizacionJugadores;
 #include "Escuchadores/EscuchadorActualizacionJugadores.hpp"
 
+#include "Escuchadores/EscuchadorLog.hpp"
+
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
+
+#include "../src/Utils.hpp"
 
 using namespace std;
 
@@ -51,8 +55,9 @@ class Cliente{
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
 		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
 		void ejecutar();
-
+		void agregarEntrada(entrada_usuario_t entradaUsuario);
 	private:
+		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
 		void enviarCredenciales(credencial_t credencial);
 

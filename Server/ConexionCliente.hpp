@@ -4,6 +4,7 @@
 class Servidor;
 #include "Servidor.hpp"
 
+
 using namespace std;
 #include <thread>
 #include <string>
@@ -11,6 +12,9 @@ using namespace std;
 #include "../src/Utils.hpp"
 
 #include "../src/log/Log.hpp"
+
+class EscuchadorEntradaTeclado;
+#include "EscuchadorEntradaTeclado.hpp"
 
 class ConexionCliente {
 
@@ -39,6 +43,7 @@ class ConexionCliente {
 		Servidor* servidor;
 		int cantidadConexiones;
 		void recibirCredenciales();
+		EscuchadorEntradaTeclado* escuchadorEntradaTeclado;
 };
 
 

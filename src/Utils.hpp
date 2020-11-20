@@ -5,6 +5,12 @@ const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
 const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSIBLES = 30;
 
 const int MAX_JUGADORES = 4;
+const int MAX_MENSAJE = 75;
+
+typedef struct mensaje_log{
+	char tipo;
+	char mensajeParaElLog[MAX_MENSAJE];
+}mensaje_log_t;
 
 typedef struct enemigo{
 	int posX;

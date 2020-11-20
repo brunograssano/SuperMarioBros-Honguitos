@@ -7,41 +7,8 @@ using namespace std;
 #include <string>
 #include <list>
 
-typedef struct enemigo{
-	int posX;
-	unsigned short numeroRecorte;
-	unsigned short tipoEnemigo; // 1 GOOMBA - 2 KOOPA
-	string direccionImagen;
-}enemigo_t;
 
-typedef struct bloque{
-	int posX;
-	int posY;
-	string dirImagen;
-}bloque_t;
-
-typedef struct mario{
-	unsigned short idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
-	int posX;
-	int posY;
-	int recorteImagen; // Si el recorte de la imagen viene en un valor (-1?) se indica que el jugador se desconecto y el recorte correspondiente es el gris
-}mario_t;
-
-typedef struct moneda{
-	int posX;
-	int posY;
-	unsigned short numeroRecorte;
-}moneda_t;
-
-typedef struct jugador{
-	string nombreJugador;
-	int puntos;
-	mario_t mario;
-}jugador_t;
-
-
-
-const int MAX_JUGADORES = 4;
+#include "../../Utils.hpp"
 
 class JuegoCliente{
 

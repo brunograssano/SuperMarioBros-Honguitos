@@ -6,13 +6,6 @@ App* App::aplicacion = nullptr;
 const int SE_TERMINO_EL_TIEMPO = 0;
 const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 
-typedef struct entrada_usuario{
-	bool A;
-	bool S;
-	bool D;
-	bool W;
-}entrada_usuario_t;
-
 App* App::getInstance(info_partida_t informacion){
 	if(aplicacion==nullptr){
 		aplicacion= new App(informacion);

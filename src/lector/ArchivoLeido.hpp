@@ -7,11 +7,7 @@ using namespace std;
 #include "../modelo/Nivel.hpp"
 #include "../log/TipoLog.hpp"
 
-typedef struct usuario{
-	string nombre;
-	string contrasenia;
-	bool usado;
-}usuario_t;
+#include "../Utils.hpp"
 
 class ArchivoLeido{
 	public:

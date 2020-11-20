@@ -16,31 +16,8 @@ using namespace std;
 #include "../reproductorDeMusica/ReproductorMusica.hpp"
 
 const int ANCHO_FONDO = 8177;
-const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
-const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70;
 
-typedef struct info_partida{
-	unsigned short cantidadJugadores;
-	jugador_t jugadores[MAX_JUGADORES];
-	string direccionesFondoNiveles[MAX_IMAGEN_NIVELES];
-	unsigned short cantidadFondosNiveles;
-	//string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
-	//string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
-
-	bool iniciadoCorrectamente;
-	unsigned short anchoVentana;
-	unsigned short altoVentana;
-	unsigned short idPropio;
-}info_partida_t;
-
-typedef struct ronda{
-	bloque_t bloques[MAX_BLOQUES];
-	enemigo_t enemigos[MAX_ENEMIGOS];
-	moneda_t monedas[MAX_MONEDAS];
-	jugador_t jugadores[MAX_JUGADORES];
-	int posXCamara;
-	int tiempoFaltante;
-}info_ronda_t;
+#include "../Utils.hpp"
 
 
 class App{

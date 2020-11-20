@@ -16,6 +16,7 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
 	}
 }
 
+
 /*
  * FORMATOS QUE PUEDE RECIBIR
  * /mario -s -c direccionConfiguracion -p puerto -i IP					(USAMOS LOG DEL ARCHIVO LEIDO) (-s MODO SERVIDOR)
@@ -27,7 +28,7 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
  */
 int main( int cantidadArgumentos, char* argumentos[]){
 
-	bool esServer = false;
+	bool esServer = true;
 
 	manejarEntrada(cantidadArgumentos, argumentos, &esServer);
 

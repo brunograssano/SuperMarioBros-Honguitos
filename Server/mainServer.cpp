@@ -125,6 +125,8 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
 	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 
+	server->iniciarJuego();
+
 	pthread_t hilo;
 	int resultadoCreate = pthread_create(&hilo, NULL, Servidor::escuchar_helper, server);
 	if(resultadoCreate!= 0){
@@ -143,6 +145,7 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y escuchar.");
 	}
+
 
 
 	abortarMainServidor(archivoLeido, nivelLog, server);

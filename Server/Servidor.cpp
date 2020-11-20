@@ -73,25 +73,7 @@ void Servidor::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 }
 
 
-/*
- *
- * escuchar(){
- * while(1){
- * 	escucha sobre el socket
- *
- * 	recibo carecter
- *
- *
- * 	decodifico/mando mapa/ifs
- *
- * 	llamo a una clase que sabe que escuchar, lee poniendo en struct -> manda a la clase a ejecutar
- * 	Ej.
- * 	Si recibimos M (Mensjae Log) -> llamo clase que escucha mensaje -> lo recibo --> escribir en el log
- *
- *
- * 	}
- * }
- */
+
 
 
 

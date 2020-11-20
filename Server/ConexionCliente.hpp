@@ -25,6 +25,7 @@ class ConexionCliente {
 		void actualizarCantidadConexiones(int cantidadConexiones);
 		void enviar(char* msg);
 
+
 	private:
 		string nombre;
 		string contrasenia;

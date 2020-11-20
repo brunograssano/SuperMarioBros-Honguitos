@@ -10,12 +10,12 @@
 #include <string>
 #include <string.h>
 #include <stdlib.h>
-
 #include <unistd.h>
+#include <map>
 
 #include "EscuchadorSalaDeEspera.hpp"
 
-
+#include "Escuchadores/Escuchador.hpp"
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
 
 using namespace std;
@@ -36,6 +36,7 @@ class Cliente{
 		}
 
 		void enviar();
+		void escuchar();
 		static void* enviar_helper(void* ptr){
 			((Cliente*) ptr)->enviar();
 			return NULL;
@@ -43,6 +44,7 @@ class Cliente{
 		void recibirInformacionServidor(int* cantidadUsuariosConectados, int* cantidadUsuariosMaximos);
 		void ejecutar();
 	private:
+		map<char,Escuchador*> escuchadores;
 		bool enviarCredenciales(credencial_t credencial);
 		bool recibirConfirmacion();
 		int _Read4Bytes(char* buffer);

@@ -25,6 +25,9 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 		Log::getInstance()->huboUnErrorSDL("Falló la conexión: Abortamos.",to_string(errno));
 		exit(-1);
 	}
+
+
+
 }
 
 
@@ -53,15 +56,44 @@ void Cliente::escucharMensaje(size_t bytes,string* buffer){
 	pthread_mutex_unlock(&mutex);
 }
 
+/*
+ *
+ * escuchar(){
+ * while(1){
+ * 	escucha sobre el socket
+ *
+ * 	recibo carecter
+ *
+ *
+ * 	decodifico/mando mapa/ifs
+ *
+ * 	llamo a una clase que sabe que escuchar, lee poniendo en struct -> manda a la clase a ejecutar
+ * 	Ej.
+ * 	Si recibimos M (Mensjae Log) -> llamo clase que escucha mensaje -> lo recibo --> escribir en el log
+ *
+ *
+ * 	}
+ * }
+ */
+
+void Cliente::escuchar(){
+	char tipoMensaje;
+	int result;
+	while(true){
+		result = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+		//if result = se desconecto el socket -> manejarlo
+		escuchadores[tipoMensaje]->escuchar();
+
+	}
+}
+
+
+
+
+
+
 
 void Cliente::enviar(){
-	int i = 0;
-	while(i < 5){
-		char msg[100 /*TODO: a cte*/] = "";
-		scanf(" %[^\n]", msg);
-		send(socketCliente, msg, strlen(msg), 0);
-		i++;
-	}
 }
 
 void Cliente::recibirInformacionServidor(int* cantConect, int* cantTot){

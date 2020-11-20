@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <vector>
 #include <string.h>
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 
 #include <getopt.h>
 
-const int LARGO_ENTRADA = 150,LARGO_IP = 20;
+const int LARGO_ENTRADA = 150,LARGO_IP = 20,VALOR_MAXIMO_PUERTO = 65535,VALOR_MINIMO_PUERTO = 1023;
 const int ERROR = -1, VACIO=0, TERMINO = -1;
 #define CONFIG 'c'
 #define IP 'i'
@@ -27,7 +28,7 @@ const int ERROR = -1, VACIO=0, TERMINO = -1;
 #define PUERTO 'p'
 
 void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],
-					char ipEntrada[LARGO_IP],char puertoEntrada[LARGO_IP],bool* esServer){
+					char ipEntrada[LARGO_IP],char puertoEntrada[LARGO_IP]){
 
 	  static struct option opcionesLargas[] = {
 	     {"config", required_argument, 0, 'c'},
@@ -101,6 +102,61 @@ ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARG
 	return archivoLeido;
 }
 
+bool esIpValida(string ipEntrada){
+
+    if (ipEntrada.length() > 0){
+
+    		vector<string> numeros;
+    		string ipAVerificar = ipEntrada;
+    		string delimitador = "";
+			size_t posicionAnterior = 0;
+			size_t posicion = 0;
+			do{
+				posicion = ipAVerificar.find(delimitador, posicionAnterior);
+				if (posicion == string::npos){
+					posicion = ipAVerificar.length();
+				}
+				string numero = ipAVerificar.substr(posicionAnterior, posicion-posicionAnterior);
+				if (!numero.empty()){
+					numeros.push_back(numero);
+				}
+				posicionAnterior = posicion + delimitador.length();
+			}while (posicion < ipAVerificar.length() && posicionAnterior < ipAVerificar.length());
+
+            if (numeros.size() == 4){
+                    for (int i=0; i < 4; i++){
+                            for (int j=0; j < numeros[i].length(); j++){
+                            	if (!isdigit(numeros[i][j])){
+                            		return false;
+                            	}
+                            }
+                            if ((atoi(numeros[i].c_str()) < 0) || (atoi(numeros[i].c_str()) > 255)){
+                            	return false;
+                            }
+                    }
+            return true;
+            }
+    }
+    return false;
+}
+
+void validarPuertoEIp(string ipEntrada,string puertoEntrada,string ip,int puerto){
+	Log* log = Log::getInstance();
+	try{
+		puerto = stoi(puertoEntrada);
+		if(puerto < VALOR_MINIMO_PUERTO && puerto > VALOR_MAXIMO_PUERTO){
+			log->huboUnError("El valor de puerto enviado "+ to_string(puerto) +" no es valido");
+		}
+	}catch(std::exception& e){
+		log->huboUnError("El valor de puerto enviado no es valido");
+	}
+	if(esIpValida(ipEntrada)){
+		ip = ipEntrada;
+	}else{
+		log->huboUnError("El valor de ip enviado no es valido");
+	}
+}
+
 
 int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
@@ -112,11 +168,13 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	TipoLog* nivelLog;
 	list<string> mensajesErrorOtroArchivo;
 
-	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
+	manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 
-	int puerto = 5003;			// TODO: CLI.
-	char ip[] = "127.0.0.1";	// TODO: CLI.
-	//TODO: Manejar entrada
+	int puerto = 0;
+	char ip[] = "";
+	validarPuertoEIp(ipEntrada,puertoEntrada,ip,puerto);
+
+	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
 
 	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 

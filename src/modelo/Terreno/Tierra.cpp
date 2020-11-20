@@ -1,7 +1,5 @@
 #include "Tierra.hpp"
 
-#include "../../reproductorDeMusica/ReproductorMusica.hpp"
-
 float Tierra::aplicarCoeficienteDeRozamiento(float velocidadX){
 	if(velocidadX < 0)
 		return (velocidadX + coeficienteDeRozamiento);
@@ -14,6 +12,5 @@ float Tierra::obtenerImpulsoHorizontal(float aceleracion){
 }
 
 float Tierra::obtenerImpulsoVertical(float fuerza){
-	ReproductorMusica::getInstance()->ReproducirSonidoSalto();
 	return fuerza;
 }

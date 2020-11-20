@@ -19,7 +19,8 @@ using namespace std;
 
 #include <getopt.h>
 
-const int LARGO_ENTRADA = 150,LARGO_IP = 20;
+#define LARGO_ENTRADA 150
+#define LARGO_IP 20
 const int ERROR = -1, VACIO=0, TERMINO = -1;
 #define CONFIG 'c'
 #define IP 'i'

@@ -11,12 +11,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <queue>
 #include <map>
 
 #include "EscuchadorSalaDeEspera.hpp"
 
 #include "Escuchadores/Escuchador.hpp"
 #include "../src/app/VentanaInicio/VentanaInicio.hpp"
+
+#include "../src/Utils.hpp"
 
 using namespace std;
 
@@ -43,7 +47,9 @@ class Cliente{
 		}
 		void recibirInformacionServidor(int* cantidadUsuariosConectados, int* cantidadUsuariosMaximos);
 		void ejecutar();
+		void agregarEntrada(entrada_usuario_t entradaUsuario);
 	private:
+		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
 		bool enviarCredenciales(credencial_t credencial);
 		bool recibirConfirmacion();

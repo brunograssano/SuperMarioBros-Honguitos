@@ -2,10 +2,14 @@
 
 #include "../src/log/Log.hpp"
 
+#include "Escuchadores/EscuchadorLog.hpp"
+
 #include <thread>
 
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	struct sockaddr_in serv_addr;
+	int resultado;
+
 	socketCliente = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (socketCliente < 0){
 		Log::getInstance()->huboUnError("No se pudo crear el socket: Abortamos.");
@@ -20,13 +24,13 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 		Log::getInstance()->huboUnError("Dirección inválida / Dirección no soportada: Abortamos.");
 		exit(-1);
 	}
-	int res = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
-	if (res < 0){
+	resultado = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+	if (resultado < 0){
 		Log::getInstance()->huboUnErrorSDL("Falló la conexión: Abortamos.",to_string(errno));
 		exit(-1);
 	}
 
-
+	escuchadores['L'] = new EscuchadorLog(socketCliente);
 
 }
 
@@ -78,9 +82,13 @@ void Cliente::escucharMensaje(size_t bytes,string* buffer){
 
 void Cliente::escuchar(){
 	char tipoMensaje;
-	int result;
+	int resultado;
 	while(true){
-		result = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
+			//Excepcion?
+		}
 		//if result = se desconecto el socket -> manejarlo
 		escuchadores[tipoMensaje]->escuchar();
 
@@ -187,6 +195,10 @@ void Cliente::ejecutar(){
 }
 
 
+void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
+	entradasUsuario.push(entradaUsuario);
+}
+
 bool Cliente::recibirConfirmacion(){
 	bool resultado;
 	int result = recv(socketCliente, &resultado, sizeof(bool), MSG_WAITALL);
@@ -202,4 +214,10 @@ bool Cliente::enviarCredenciales(credencial_t credencial){
 
 Cliente::~Cliente(){
 	close(socketCliente);
+
+	for(auto const& parClaveEscuchador:escuchadores){
+		delete parClaveEscuchador.second;
+	}
+	escuchadores.clear();
+
 }

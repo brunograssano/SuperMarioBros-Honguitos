@@ -80,6 +80,7 @@ typedef struct info_partida{
 }info_partida_t;
 
 typedef struct ronda{
+	unsigned short mundo;
 	unsigned short posXCamara;
 	unsigned short tiempoFaltante;
 	unsigned short topeBloques;

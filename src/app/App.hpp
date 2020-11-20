@@ -77,8 +77,8 @@ class App{
 		static App *getInstance();
 		static App *getInstance(info_partida_t informacion,Cliente* cliente);
 
-
 		void actualizarServer(const Uint8 *keystate);
+		void actualizar();
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();

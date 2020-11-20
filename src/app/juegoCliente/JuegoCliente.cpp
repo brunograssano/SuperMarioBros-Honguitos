@@ -10,10 +10,42 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->cantidadJugadores = cantidadJugadores;
 	this->idPropio = idPropio;
 	this->tiempoFaltante = 0;
-	this->tiempoDeInicio = 0;
 	this->numeroMundo = 0;
+	this->posXCamara = 0;
 }
 
+
+void JuegoCliente::agregarRonda(info_ronda_t ronda){
+	rondas.push(ronda);
+}
+
+void JuegoCliente::actualizar(){
+	if(rondas.empty()){
+		return;
+	}
+	info_ronda_t ronda = rondas.front();
+	rondas.pop();
+	tiempoFaltante = ronda.tiempoFaltante;
+	numeroMundo = ronda.mundo;
+	posXCamara = ronda.posXCamara;
+
+	bloques.clear();
+	enemigos.clear();
+	jugadores.clear();
+	monedas.clear();
+	for(int i=0;i<ronda.topeBloques;i++){
+		bloques.push_front(ronda.bloques[i]);
+	}
+	for(int i=0;i<ronda.topeEnemigos;i++){
+		enemigos.push_front(ronda.enemigos[i]);
+	}
+	for(int i=0;i<ronda.topeMonedas;i++){
+		monedas.push_front(ronda.monedas[i]);
+	}
+	for(int i=0;i<cantidadJugadores;i++){
+		jugadores[i]=ronda.jugadores[i];
+	}
+}
 
 int JuegoCliente::obtenerIDPropio(){
 	return idPropio;

@@ -111,6 +111,11 @@ void App::actualizarServer(const Uint8 *keystate){
 	}
 }
 
+void App::actualizar(){
+	juegoCliente->actualizar();
+}
+
+
 void App::dibujar(){
 
 	if(!comenzoElJuego){

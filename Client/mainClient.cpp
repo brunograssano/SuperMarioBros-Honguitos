@@ -92,7 +92,7 @@ void gameLoop(info_partida_t informacion,TipoLog* tipoLog,Cliente* cliente) {
 		} else {
 			aplicacion->actualizarServer(keyboard_state_array);
 		}
-		//aplicacion->actualizar();
+		aplicacion->actualizar();
 		aplicacion->dibujar();
 	}
 	delete aplicacion;

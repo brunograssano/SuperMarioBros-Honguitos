@@ -52,6 +52,11 @@ typedef struct entrada_usuario{
 	bool W;
 }entrada_usuario_t;
 
+typedef struct entrada_usuario_id{
+	entrada_usuario_t entradas;
+	unsigned short id;
+}entrada_usuario_id_t;
+
 typedef struct info_partida{
 
 	jugador_t jugadores[MAX_JUGADORES];

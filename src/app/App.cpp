@@ -6,6 +6,9 @@ App* App::aplicacion = nullptr;
 const int SE_TERMINO_EL_TIEMPO = 0;
 const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 
+#define PROPORCION_PISO_EN_IMAGEN 0.1
+#define ALTO_MARIO 80;
+
 App* App::getInstance(info_partida_t informacion){
 	if(aplicacion==nullptr){
 		aplicacion= new App(informacion);
@@ -84,6 +87,13 @@ void App::actualizarServer(const Uint8 *keystate){
 			//jugador->actualizarSaltarMario();
 			entradaUsuario.W = true;
 			se_movio = true;
+
+			int idPropio = juegoCliente->obtenerIDPropio(); // QUIZAS CONVIENE MOVERLO A ALGO QUE NOS DIGA EL SERVER SI HAY DESFASE
+			map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
+			int piso = alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO;
+			if(jugadores[idPropio].mario.posY==piso){
+				ReproductorMusica::getInstance()->ReproducirSonidoSalto();
+			}
 		}
 
 		if(keystate[SDL_SCANCODE_LEFT]){

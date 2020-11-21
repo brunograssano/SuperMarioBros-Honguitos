@@ -197,10 +197,6 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 	credenciales.nombre = textoIngresadoUsuario;
 	credenciales.contrasenia = textoIngresadoContrasenia;
-
-
-
-	// enviar entrada al server
 }
 
 void VentanaInicio::imprimirMensajeError(){

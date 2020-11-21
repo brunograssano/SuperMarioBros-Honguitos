@@ -2,6 +2,7 @@
 
 #include "EscuchadoresServer/EscuchadorCredenciales.hpp"
 
+#include <thread>
 
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones){
 	this->servidor = servidor;
@@ -16,28 +17,13 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	//ver a donde va el new EscuchadorEntradaTeclado(socket, id, servidor) y la llamada a escuchar;
 }
 
-
-int Read4Bytes(int socket,  char* buffer){
-    int bytesRead = 0;
-    int result;
-    memset(buffer, 0, 5);
-    while (bytesRead < 4){
-        result = recv(socket, buffer, 4, MSG_DONTWAIT);
-        if (result < 1 ){
-            return bytesRead;
-        }
-        bytesRead += result;
-    }
-    return bytesRead;
-}
-
 void ConexionCliente::escuchar(){
 	char tipoMensaje;
 	int resultado;
 	while(true){
 		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
 		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje", to_string(errno));
 			//Excepcion?
 		}
 		//if result = se desconecto el socket -> manejarlo
@@ -45,10 +31,8 @@ void ConexionCliente::escuchar(){
 	}
 }
 
-void ConexionCliente::enviar(char* msg){}
 
-
-void ConexionCliente::recibirCredencial(string nombre,string contrasenia){
+void ConexionCliente::recibirCredencial(string nombre, string contrasenia){
 	this->nombre = nombre;
 	this->contrasenia = contrasenia;
 	recibioCredenciales = true;
@@ -72,16 +56,24 @@ void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
 	char caracterMensaje = VERIFICACION;
 	verificacion_t verificacion = esUsuarioValido;
 	send(socket, &caracterMensaje, sizeof(char), 0);
-	send(socket, &verificacion , sizeof(verificacion), 0);
+	send(socket, &verificacion , sizeof(verificacion_t), 0);
 }
 
 void ConexionCliente::esperarCredenciales(){
 	while(!recibioCredenciales){
 	}
+	recibioCredenciales = false;
 }
 
 
 void ConexionCliente::ejecutar(){
+	pthread_t hiloEscuchar;
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, ConexionCliente::escuchar_helper, this);
+	if(resultadoCreateEscuchar != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente."); //TODO: Obtener IP!!
+		exit(-1); //TODO: Arreglar este exit.
+	}
+
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	bool esUsuarioValido = false;
 
@@ -98,12 +90,10 @@ void ConexionCliente::ejecutar(){
 			pthread_mutex_unlock(&mutex);
 		}
 		else{
-			recibioCredenciales = false;
 			esperarCredenciales();
 		}
 	}
 
-	int anterior = -1;
 	while(true){
 		// System pause.
 	}

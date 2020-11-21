@@ -138,7 +138,7 @@ int mainClient(int argc, char* args[]){
 
 	//manejarEntrada(argc, args, ipEntrada, puertoEntrada, nivelLogEntrada);
 
-	int puerto = 5003;
+	int puerto = 5004;
 	char ip[] = "127.0.0.1";
 
 

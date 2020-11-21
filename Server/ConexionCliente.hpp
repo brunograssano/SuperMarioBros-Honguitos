@@ -25,6 +25,11 @@ class ConexionCliente {
 		~ConexionCliente();
 
 		void escuchar();
+		static void* escuchar_helper(void* ptr){
+			((ConexionCliente*)ptr)->escuchar();
+			return NULL;
+		}
+
 		void ejecutar();
 		static void* ejecutar_helper(void* ptr){
 			((ConexionCliente*) ptr)->ejecutar();
@@ -32,7 +37,6 @@ class ConexionCliente {
 		}
 		void actualizarCantidadConexiones(int cantidadConexiones);
 		void recibirCredencial(string nombre,string contrasenia);
-		void enviar(char* msg);
 
 
 	private:

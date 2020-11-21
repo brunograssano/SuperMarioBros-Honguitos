@@ -85,34 +85,35 @@ void* Servidor::escuchar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 	while(!terminoJuego){
-
-		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
-		if (socketConexionEntrante < 0){
-			pthread_mutex_lock(&mutex);
-			log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-			pthread_mutex_unlock(&mutex);
-		}else{
-
-			pthread_mutex_lock(&mutex);
-			log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-			pthread_mutex_unlock(&mutex);
-
-			ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, this->cantUsuariosLogueados);
-
-			pthread_t hilo;
-			if(pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper, conexion) != 0){
+		if(cantUsuariosLogueados < cantidadConexiones){
+			socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
+			if (socketConexionEntrante < 0){
 				pthread_mutex_lock(&mutex);
-				Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: " + to_string(usuariosConectados)
-						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+				log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
 				pthread_mutex_unlock(&mutex);
 			}else{
-				pthread_mutex_lock(&mutex);
-				Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario: " + to_string(usuariosConectados)
-						+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
-				pthread_mutex_unlock(&mutex);
-			}
 
-			clientes.push_back(conexion);
+				pthread_mutex_lock(&mutex);
+				log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
+				pthread_mutex_unlock(&mutex);
+
+				ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, this->cantUsuariosLogueados);
+
+				pthread_t hilo;
+				if(pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper, conexion) != 0){
+					pthread_mutex_lock(&mutex);
+					Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: " + to_string(usuariosConectados)
+							+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+					pthread_mutex_unlock(&mutex);
+				}else{
+					pthread_mutex_lock(&mutex);
+					Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario: " + to_string(usuariosConectados)
+							+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
+					pthread_mutex_unlock(&mutex);
+				}
+				usuariosConectados++;
+				clientes.push_back(conexion);
+			}
 		}
 
 	}

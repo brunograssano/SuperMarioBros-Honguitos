@@ -174,7 +174,7 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
 	//manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 
-	int puerto = 5003; //SOLO PARA PROBAR
+	int puerto = 5004; //SOLO PARA PROBAR
 	char ip[] = "127.0.0.1";
 	//validarPuertoEIp(ipEntrada,puertoEntrada,ip,puerto);
 

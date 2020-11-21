@@ -16,16 +16,17 @@ class EscuchadorCredenciales: public EscuchadorServer{
 		void escuchar()override{
 			credencial_t credencial;
 			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-			int resultado = recv(socket,&credencial,sizeof(credencial_t),MSG_WAITALL);
+			int resultado = recv(socket, &credencial, sizeof(credencial_t), MSG_WAITALL);
 			if(resultado<0){
 				//todo
 			}
-			string nombre(credencial.nombre);
-			string contrasenia(credencial.contrasenia);
+
+			string nombre = string(credencial.nombre);
+			string contrasenia = string(credencial.contrasenia);
 			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales:" + nombre + " | " +contrasenia +" del cliente: " + "OBTENER IP!!!!!!!!!!!!!!!!!");
 			pthread_mutex_unlock(&mutex);
-			conexionCliente->recibirCredencial(nombre,contrasenia);
+			conexionCliente->recibirCredencial(nombre, contrasenia);
 		}
 
 	private:

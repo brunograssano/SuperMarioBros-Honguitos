@@ -161,9 +161,13 @@ void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
 	entradasUsuario.push(entradaUsuario);
 }
 
-void Cliente::enviarCredenciales(credenciales_t credencial){
-	const char* credencialesParsadas = (credencial.nombre + ";" +credencial.contrasenia).c_str();
-	send(socketCliente, credencialesParsadas, strlen(credencialesParsadas), 0);
+void Cliente::enviarCredenciales(credenciales_t credenciales){
+	credencial_t credencial = {0, 0};
+	strcpy(credencial.nombre, credenciales.nombre.c_str());
+	strcpy(credencial.contrasenia , credenciales.contrasenia.c_str());
+	char tipoMensaje = CREDENCIAL;
+	send(socketCliente, &tipoMensaje, sizeof(char), 0);
+	send(socketCliente, &credencial, sizeof(credencial_t), 0);
 	return;
 }
 

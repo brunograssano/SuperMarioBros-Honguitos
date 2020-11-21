@@ -5,14 +5,14 @@
 
 #include <iostream>
 
-SpriteGoomba::SpriteGoomba(string direccionImagen){
-	direccionTextura = direccionImagen;
+SpriteGoomba::SpriteGoomba(int tipo){
+	direccionTextura = "resources/Imagenes/Personajes/Goombas.png";
 	estadoActual = 0;
 	ciclos=0;
 	int corrimientoEnImagen = 0;
 	for(int i=0;i<3;i++){
 		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = 0;
+		estadosPosibles[i].y = tipo*16;
 		estadosPosibles[i].w = 16;
 		estadosPosibles[i].h = 16;
 		corrimientoEnImagen+= 16;

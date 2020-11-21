@@ -1,10 +1,10 @@
 
 #include "SpriteLadrillo.hpp"
 
-SpriteLadrillo::SpriteLadrillo(string direccionTextura){
-	this->direccionTextura = direccionTextura;
+SpriteLadrillo::SpriteLadrillo(int tipo){
+	this->direccionTextura = "resources/Imagenes/Bloques/Bloques.png";
 	this->rectanguloLadrillo.x = 0;
-	this->rectanguloLadrillo.y = 0;
+	this->rectanguloLadrillo.y = tipo*16;
 	this->rectanguloLadrillo.w = 16;
 	this->rectanguloLadrillo.h = 16;
 

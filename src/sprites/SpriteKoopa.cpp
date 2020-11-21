@@ -1,14 +1,14 @@
 
 #include "SpriteKoopa.hpp"
 
-SpriteKoopa::SpriteKoopa(string direccionImagen){
-	direccionTextura = direccionImagen;
+SpriteKoopa::SpriteKoopa(int tipo){
+	direccionTextura = "resources/Imagenes/Personajes/Koopas.png";
 	estadoActual = 0;
 	ciclos=0;
 	int corrimientoEnImagen=0;
 	for(int i=0;i<6;i++){
 		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = 0;
+		estadosPosibles[i].y = tipo*16;
 		estadosPosibles[i].w = 16;
 		estadosPosibles[i].h = 24;
 		corrimientoEnImagen+= 16;

@@ -11,10 +11,9 @@ class Goomba : public Enemigo{
 
 	public:
 
-		Goomba(string direccionImagen){
-			spriteEnemigo = new SpriteGoomba(direccionImagen);
+		Goomba(int tipo){
+			spriteEnemigo = new SpriteGoomba(tipo);
 		}
-
 
 
 		void actualizarPosicion()override{

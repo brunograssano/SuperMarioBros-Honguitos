@@ -28,7 +28,7 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
  */
 int main( int cantidadArgumentos, char* argumentos[]){
 
-	bool esServer = false;
+	bool esServer = true;
 
 	manejarEntrada(cantidadArgumentos, argumentos, &esServer);
 

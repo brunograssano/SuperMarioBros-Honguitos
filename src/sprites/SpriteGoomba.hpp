@@ -5,7 +5,7 @@
 class SpriteGoomba : public Sprite{
 	public:
 
-		SpriteGoomba(string direccionImagen);
+		SpriteGoomba(int tipo);
 		~SpriteGoomba(){};
 
 		SDL_Rect obtenerRectanguloActual()override;

@@ -123,16 +123,18 @@ void* Servidor::escuchar(){
 
 bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	for(auto& usuario:usuariosValidos){
-		if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
-			pthread_mutex_lock(&mutex);
-			usuario.usado = true;
-			this->cantUsuariosLogueados++;
-			for(auto const& cliente:clientes){
-				cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
+	if(cantUsuariosLogueados<cantidadConexiones){
+		for(auto& usuario:usuariosValidos){
+			if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
+				pthread_mutex_lock(&mutex);
+				usuario.usado = true;
+				this->cantUsuariosLogueados++;
+				for(auto const& cliente:clientes){
+					cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
+				}
+				pthread_mutex_unlock(&mutex);
+				return true;
 			}
-			pthread_mutex_unlock(&mutex);
-			return true;
 		}
 	}
 	return false;

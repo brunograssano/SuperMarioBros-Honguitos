@@ -1,6 +1,7 @@
 #include "ConexionCliente.hpp"
 
 #include "EscuchadoresServer/EscuchadorCredenciales.hpp"
+#include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
 #include <thread>
 

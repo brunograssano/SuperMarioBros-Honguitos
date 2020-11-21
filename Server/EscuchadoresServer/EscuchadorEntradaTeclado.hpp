@@ -9,12 +9,14 @@
 
 #include "../Servidor.hpp"
 #include "../../src/Utils.hpp"
+#include "EscuchadorServer.hpp"
 
-class EscuchadorEntradaTeclado{
+
+class EscuchadorEntradaTeclado:public EscuchadorServer{
 
 	public:
 		EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor);
-		void escuchar();
+		void escuchar()override;
 
 	private:
 		int socket;

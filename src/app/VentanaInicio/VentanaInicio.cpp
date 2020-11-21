@@ -250,7 +250,7 @@ void VentanaInicio::renderizar(int coordenadaX,int coordenadaY,int alto,int anch
 		SDL_RenderCopyEx( this->renderer, textura, clip, &renderQuad, angle, center, flip );
 }
 
-credencial_t VentanaInicio::obtenerCredenciales(){
+credenciales_t VentanaInicio::obtenerCredenciales(){
 	return credenciales;
 }
 

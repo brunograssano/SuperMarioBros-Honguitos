@@ -8,13 +8,15 @@ class Servidor;
 using namespace std;
 #include <thread>
 #include <string>
+#include <map>
+#include "EscuchadoresServer/EscuchadorServer.hpp"
 
 #include "../src/Utils.hpp"
 
 #include "../src/log/Log.hpp"
 
 class EscuchadorEntradaTeclado;
-#include "EscuchadorEntradaTeclado.hpp"
+#include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
 class ConexionCliente {
 
@@ -22,13 +24,14 @@ class ConexionCliente {
 		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones);
 		~ConexionCliente();
 
-		void recibir();
+		void escuchar();
 		void ejecutar();
 		static void* ejecutar_helper(void* ptr){
 			((ConexionCliente*) ptr)->ejecutar();
 			return NULL;
 		}
 		void actualizarCantidadConexiones(int cantidadConexiones);
+		void recibirCredencial(string nombre,string contrasenia);
 		void enviar(char* msg);
 
 
@@ -42,8 +45,12 @@ class ConexionCliente {
 		int socket;
 		Servidor* servidor;
 		int cantidadConexiones;
-		void recibirCredenciales();
 		EscuchadorEntradaTeclado* escuchadorEntradaTeclado;
+
+		map<char,EscuchadorServer*> escuchadores;
+		void esperarCredenciales();
+		bool recibioCredenciales = false;
+
 };
 
 

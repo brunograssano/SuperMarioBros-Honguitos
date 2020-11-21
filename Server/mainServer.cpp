@@ -172,11 +172,11 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	TipoLog* nivelLog;
 	list<string> mensajesErrorOtroArchivo;
 
-	manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
+	//manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 
-	int puerto = 0;
-	char ip[] = "";
-	validarPuertoEIp(ipEntrada,puertoEntrada,ip,puerto);
+	int puerto = 5003; //SOLO PARA PROBAR
+	char ip[] = "127.0.0.1";
+	//validarPuertoEIp(ipEntrada,puertoEntrada,ip,puerto);
 
 	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
 

@@ -1,5 +1,8 @@
 #include "ConexionCliente.hpp"
 
+#include "EscuchadoresServer/EscuchadorCredenciales.hpp"
+
+
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones){
 	this->servidor = servidor;
 	this->socket = socket;
@@ -7,6 +10,9 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	this->nombre = "";
 	this->contrasenia = "";
 	this->escuchadorEntradaTeclado = NULL;
+
+	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
+
 	//ver a donde va el new EscuchadorEntradaTeclado(socket, id, servidor) y la llamada a escuchar;
 }
 
@@ -25,52 +31,27 @@ int Read4Bytes(int socket,  char* buffer){
     return bytesRead;
 }
 
-void ConexionCliente::recibir(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+void ConexionCliente::escuchar(){
+	char tipoMensaje;
+	int resultado;
 	while(true){
-		string mensaje;
-		char buffer[5] = "";
-		while(Read4Bytes(socket, buffer) > 0){
-			if(!(strlen(buffer) == 0)){
-				mensaje = mensaje + (string) buffer;
-			}
+		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
+			//Excepcion?
 		}
-		if(mensaje.length() != 0){
-			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se escribió el mensaje: \"" + mensaje +"\" del cliente: " + nombre);
-			pthread_mutex_unlock(&mutex);
-		}
+		//if result = se desconecto el socket -> manejarlo
+		escuchadores[tipoMensaje]->escuchar();
 	}
 }
 
 void ConexionCliente::enviar(char* msg){}
 
 
-void ConexionCliente::recibirCredenciales(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	bool tengoCredenciales = false;
-	string credenciales;
-	while(!tengoCredenciales){
-		char buffer[5] = "";
-		while(Read4Bytes(socket, buffer) > 0){
-			if(!(strlen(buffer) == 0)){
-				credenciales = credenciales + (string) buffer;
-				tengoCredenciales = true;
-			}
-		}
-		if(credenciales.length() != 0){
-			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se escribió el mensaje: \"" + credenciales +"\" del cliente: " + nombre);
-			pthread_mutex_unlock(&mutex);
-		}
-	}
-
-	string limite = ";";
-	size_t posLimite = credenciales.find(limite);
-	nombre = credenciales.substr(0, posLimite);
-	contrasenia = credenciales.substr(posLimite+1, credenciales.length());
-
-
+void ConexionCliente::recibirCredencial(string nombre,string contrasenia){
+	this->nombre = nombre;
+	this->contrasenia = contrasenia;
+	recibioCredenciales = true;
 }
 
 info_inicio_t ConexionCliente::crearInformacionInicio(){
@@ -94,20 +75,31 @@ void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
 	send(socket, &verificacion , sizeof(verificacion), 0);
 }
 
+void ConexionCliente::esperarCredenciales(){
+	while(!recibioCredenciales){
+	}
+}
+
+
 void ConexionCliente::ejecutar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	bool esUsuarioValido = false;
 
 	enviarInformacionInicio();
 
+	esperarCredenciales();
+
 	while(!esUsuarioValido){
-		recibirCredenciales();
 		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
 		enviarVerificacion(esUsuarioValido);
 		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia);
 			pthread_mutex_unlock(&mutex);
+		}
+		else{
+			recibioCredenciales = false;
+			esperarCredenciales();
 		}
 	}
 

@@ -6,8 +6,6 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <SDL2/SDL.h>
-
 #include "Cliente.hpp"
 
 #include "../src/log/Log.hpp"
@@ -74,28 +72,7 @@ TipoLog* determinarNivelLogClient(char nivelLogEntrada[LARGO_ENTRADA]){
 }
 
 
-void gameLoop(info_partida_t informacion,TipoLog* tipoLog,Cliente* cliente) {
-	App *aplicacion = App::getInstance(informacion,cliente);
-	bool salir = false;
-	SDL_Event event;
-	while (!salir) {
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				salir = true;
-			}
-		}
-		SDL_PumpEvents();
-		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
-		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
-			salir = true;
-		} else {
-			aplicacion->actualizarServer(keyboard_state_array);
-		}
-		aplicacion->actualizar();
-		aplicacion->dibujar();
-	}
-	delete aplicacion;
-}
+
 
 bool esIpValidaCliente(string ipEntrada){
 
@@ -158,11 +135,14 @@ int mainClient(int argc, char* args[]){
 	char nivelLogEntrada[LARGO_ENTRADA] = "";
 	char ipEntrada[LARGO_IP] = "";
 	char puertoEntrada [LARGO_IP]= "";
-	int puerto = 0;
-	char ip[] = "";
 
-	manejarEntrada(argc, args, ipEntrada, puertoEntrada, nivelLogEntrada);
-	validarPuertoEIpCliente(ipEntrada,puertoEntrada,ip,puerto);
+	//manejarEntrada(argc, args, ipEntrada, puertoEntrada, nivelLogEntrada);
+
+	int puerto = 5003;
+	char ip[] = "127.0.0.1";
+
+
+	//validarPuertoEIpCliente(ipEntrada,puertoEntrada,ip,puerto);
 	TipoLog* nivelLog = determinarNivelLogClient(nivelLogEntrada);
 	Log::getInstance(nivelLog);
 	info_partida_t informacion; //nos lo mandan

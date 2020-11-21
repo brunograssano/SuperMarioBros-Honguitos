@@ -6,10 +6,10 @@
 #include <string>
 using namespace std;
 
-typedef struct credencial{
+typedef struct credenciales{
 	string nombre;
 	string contrasenia;
-}credencial_t;
+}credenciales_t;
 
 
 class VentanaInicio{
@@ -19,11 +19,11 @@ class VentanaInicio{
 		void obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales);
 		void imprimirMensajeError();
 		void imprimirMensajeEspera(unsigned short cantJugadoresConectados, unsigned short cantJugadoresTotales);
-		credencial_t obtenerCredenciales();
+		credenciales_t obtenerCredenciales();
 		~VentanaInicio();
 	private:
 		bool ingresoIncorrectoCredenciales;
-		credencial_t credenciales;
+		credenciales_t credenciales;
 		SDL_Texture* texturaTextoUsuario;
 		SDL_Texture* texturaTextoContrasenia;
 		SDL_Texture* usuarioIngresado;

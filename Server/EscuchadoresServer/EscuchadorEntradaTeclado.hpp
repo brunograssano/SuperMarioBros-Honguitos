@@ -7,8 +7,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "Servidor.hpp"
-#include "../src/Utils.hpp"
+#include "../Servidor.hpp"
+#include "../../src/Utils.hpp"
 
 class EscuchadorEntradaTeclado{
 

@@ -1,6 +1,7 @@
 #include "Cliente.hpp"
 
 #include "../src/log/Log.hpp"
+#include "GameLoop.hpp"
 
 #include <thread>
 
@@ -34,6 +35,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente); //TODO: CAMBIAR A DEFINE
 
 }
+
 void Cliente::escuchar(){
 	char tipoMensaje;
 	int resultado;
@@ -48,7 +50,18 @@ void Cliente::escuchar(){
 	}
 }
 
-void Cliente::enviar(){
+void Cliente::enviarEntrada(){
+	entrada_usuario_t entrada;
+	char tipo = ENTRADA;
+	while(true){
+		while(!entradasUsuario.empty()){
+			entrada = entradasUsuario.front();
+			entradasUsuario.pop();
+
+			send(socketCliente,&tipo,sizeof(char),0);
+			send(socketCliente,&entrada,sizeof(entrada_usuario_t),0);
+		}
+	}
 }
 
 void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
@@ -83,7 +96,7 @@ void Cliente::ejecutar(){
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la cantidad de jugadores en el servidor.");
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del server.");
 		exit(-1); //TODO: Arreglar este exit.
 	}
 
@@ -113,7 +126,7 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	while(!cerroVentana){// TODO: aca va hasta que el server arranque la partida
+	while(!cerroVentana && !empiezaElJuego){//crear escuchador de esto (comenzar)
 		try{
 			ventanaInicio->imprimirMensajeEspera(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
 		}
@@ -128,36 +141,19 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	/*
-	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
-	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar al servidor.");
-		return;
+	//SERVIDOR NOS MANDA UN YA EMPIEZA EL JUEGO
+
+	pthread_t hiloEntrada;
+	int resultadoCreateEnviarEntrada = pthread_create(&hiloEntrada, NULL, Cliente::enviar_helper, this);
+	if(resultadoCreateEnviarEntrada != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la entrada del teclado.");
+		exit(-1); //TODO: Arreglar este exit.
 	}
 
-	pthread_t hiloEnviar;
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, Cliente::enviar_helper, this);
-	if(resultadoCreateEnviar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar al servidor.");
-		return;
-	}*/
 
-	//gameLoop(informacion, nivelLog);// OBTENEMOS INFORMACION DEL SERVER ANTES
+	info_partida_t informacion; //RECIBIR LA INFORMACION DEL SERVER
 
-/*
-	int resultadoJoinEnviar = pthread_join(hiloEnviar, NULL);
-
-	if(resultadoJoinEnviar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al enlazar el hilo \"enviar\" con el main.");
-		return;
-	}
-
-	int resultadoJoinEscuchar = pthread_join(hiloEscuchar, NULL);
-	if(resultadoJoinEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al enlazar el hilo \"escuchar\" al main.");
-		return;
-	}*/
+	gameLoop(informacion,this);
 
 	delete Log::getInstance();
 }
@@ -165,7 +161,7 @@ void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
 	entradasUsuario.push(entradaUsuario);
 }
 
-void Cliente::enviarCredenciales(credencial_t credencial){
+void Cliente::enviarCredenciales(credenciales_t credencial){
 	const char* credencialesParsadas = (credencial.nombre + ";" +credencial.contrasenia).c_str();
 	send(socketCliente, credencialesParsadas, strlen(credencialesParsadas), 0);
 	return;

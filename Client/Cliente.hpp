@@ -41,14 +41,14 @@ class Cliente{
 	public:
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
-		void enviar();
+		void enviarEntrada();
 		void escuchar();
 		static void* escuchar_helper(void* ptr){
 			((Cliente*) ptr)->escuchar();
 			return NULL;
 		}
 		static void* enviar_helper(void* ptr){
-			((Cliente*) ptr)->enviar();
+			((Cliente*) ptr)->enviarEntrada();
 			return NULL;
 		}
 		void recibirInformacionServidor(info_inicio_t info_inicio);
@@ -59,7 +59,7 @@ class Cliente{
 	private:
 		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
-		void enviarCredenciales(credencial_t credencial);
+		void enviarCredenciales(credenciales_t credencial);
 
 		unsigned short cantidadJugadoresActivos;
 
@@ -70,6 +70,8 @@ class Cliente{
 		bool seRecibioVerificacion = false;
 		verificacion_t pasoVerificacion = false;
 		void esperarRecibirVerificacion();
+
+		bool empiezaElJuego = false;
 
 		int socketCliente;
 };

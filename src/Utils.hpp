@@ -5,13 +5,16 @@ using namespace std;
 
 /* PALABRAS RESERVADAS */
 /*
- * I: inicio
- * V: verificacion
- * U: actualizacion sobre la cantidad de jugadores.
+ * I: Inicio
+ * V: Verificacion
+ * U: Actualizacion sobre la cantidad de jugadores.
  * L: Mensaje para el log.
- *
+ * E: Entrada del usuario
+ * C: Credenciales que nos manda el usuario
  */
 
+
+const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 
 const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
 const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSIBLES = 30;
@@ -58,12 +61,19 @@ typedef struct jugador{
 }jugador_t;
 
 
+#define CREDENCIAL 'C'
+typedef struct credencial{
+	char nombre[MAX_NOMBRE];
+	char contrasenia[MAX_CONTRASENIA];
+}credencial_t;
+
 typedef struct usuario{
 	string nombre;
 	string contrasenia;
 	bool usado;
 }usuario_t;
 
+#define ENTRADA 'E'
 typedef struct entrada_usuario{
 	bool A;
 	bool S;

@@ -14,8 +14,6 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	this->escuchadorEntradaTeclado = NULL;
 
 	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
-
-	//ver a donde va el new EscuchadorEntradaTeclado(socket, id, servidor) y la llamada a escuchar;
 }
 
 void ConexionCliente::escuchar(){
@@ -83,7 +81,7 @@ void ConexionCliente::ejecutar(){
 	esperarCredenciales();
 
 	while(!esUsuarioValido){
-		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia});
+		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia},this);
 		enviarVerificacion(esUsuarioValido);
 		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
@@ -100,6 +98,11 @@ void ConexionCliente::ejecutar(){
 	}
 
 	//escuchar para teclas
+}
+
+
+void ConexionCliente::agregarIDJuego(int IDJugador){
+	escuchadores[ENTRADA] = new EscuchadorEntradaTeclado(socket,IDJugador,servidor);
 }
 
 void ConexionCliente::enviarActualizacionCantidadConexiones(){

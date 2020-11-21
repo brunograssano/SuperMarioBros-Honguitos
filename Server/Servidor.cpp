@@ -121,7 +121,7 @@ void* Servidor::escuchar(){
 	return NULL;
 }
 
-bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
+bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(cantUsuariosLogueados<cantidadConexiones){
 		for(auto& usuario:usuariosValidos){
@@ -133,6 +133,7 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario){
 					cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
 				}
 				pthread_mutex_unlock(&mutex);
+				conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
 				return true;
 			}
 		}

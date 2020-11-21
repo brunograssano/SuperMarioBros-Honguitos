@@ -37,7 +37,7 @@ class ConexionCliente {
 		}
 		void actualizarCantidadConexiones(int cantidadConexiones);
 		void recibirCredencial(string nombre,string contrasenia);
-
+		void agregarIDJuego(int IDJugador);
 
 	private:
 		info_inicio_t crearInformacionInicio();

@@ -127,6 +127,7 @@ void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGE
 	for(int i=0;i<cantidadFondosNiveles;i++){
 		int altoNivel = 0;
 		int largoNivel = 0;
+		direccionesNiveles[i] = "resources/Imagenes/Niveles/" + direccionesNiveles[i];
 		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", direccionesNiveles[i], renderizador);
 		texturasNiveles[direccionesNiveles[i]] = texturaNueva;
 		SDL_QueryTexture(texturaNueva, NULL, NULL, &largoNivel, &altoNivel);

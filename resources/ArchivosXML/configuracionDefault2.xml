@@ -11,7 +11,7 @@
     <niveles>
         <nivel>
             <mundo>1</mundo>
-            <direccionFondo>resources/Imagenes/Niveles/MapaNivel1Base.png</direccionFondo>
+            <direccionFondo>MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>40</cantidadMonedas> 
             <tiempoNivel>150</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>90</puntoBanderaFin>          <!--Numero de 50 a 100 que representa el porcentaje del nivel-->
@@ -53,7 +53,7 @@
 
 		<nivel>
             <mundo>2</mundo>
-            <direccionFondo>resources/Imagenes/Niveles/MapaNivel2Base.png</direccionFondo>
+            <direccionFondo>MapaNivel2Base.png</direccionFondo>
             <cantidadMonedas>20</cantidadMonedas>
             <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
             <enemigos>

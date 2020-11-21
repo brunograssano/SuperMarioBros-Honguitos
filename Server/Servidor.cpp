@@ -85,14 +85,21 @@ void* Servidor::escuchar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 	while(!terminoJuego){
-		if(cantUsuariosLogueados < cantidadConexiones){
-			socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
+
+		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
+
+		if(cantUsuariosLogueados >= cantidadConexiones){
+			pthread_mutex_lock(&mutex);
+			log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+"." +
+					" porque la cantidad de usuarios logueados es maxima");
+			pthread_mutex_unlock(&mutex);
+			close(socketConexionEntrante);
+		}else{
 			if (socketConexionEntrante < 0){
 				pthread_mutex_lock(&mutex);
 				log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
 				pthread_mutex_unlock(&mutex);
 			}else{
-
 				pthread_mutex_lock(&mutex);
 				log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
 				pthread_mutex_unlock(&mutex);

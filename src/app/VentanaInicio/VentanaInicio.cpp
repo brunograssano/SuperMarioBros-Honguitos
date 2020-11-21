@@ -1,5 +1,4 @@
 #include "VentanaInicio.hpp"
-#include "VentanaInicio.hpp"
 #include <stdio.h>
 using namespace std;
 

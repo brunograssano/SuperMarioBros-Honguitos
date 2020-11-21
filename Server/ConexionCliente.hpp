@@ -21,7 +21,7 @@ class EscuchadorEntradaTeclado;
 class ConexionCliente {
 
 	public:
-		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones);
+		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip);
 		~ConexionCliente();
 
 		void escuchar();
@@ -50,6 +50,7 @@ class ConexionCliente {
 		Servidor* servidor;
 		int cantidadConexiones;
 		EscuchadorEntradaTeclado* escuchadorEntradaTeclado;
+		string ip;
 
 		map<char,EscuchadorServer*> escuchadores;
 		void esperarCredenciales();

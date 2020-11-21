@@ -104,7 +104,7 @@ void* Servidor::escuchar(){
 				log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
 				pthread_mutex_unlock(&mutex);
 
-				ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, this->cantUsuariosLogueados);
+				ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, this->cantUsuariosLogueados,(string) inet_ntoa(addressCliente.sin_addr));
 
 				pthread_t hilo;
 				if(pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper, conexion) != 0){

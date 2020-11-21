@@ -5,9 +5,10 @@
 
 #include <thread>
 
-ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones){
+ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip){
 	this->servidor = servidor;
 	this->socket = socket;
+	this->ip = ip;
 	this->cantidadConexiones = cantidadConexiones;
 	this->nombre = "";
 	this->contrasenia = "";

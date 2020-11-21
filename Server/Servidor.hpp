@@ -39,7 +39,7 @@ class Servidor{
 		~Servidor();
 
 		int getMaximasConexiones(){return this->cantidadConexiones;}
-		bool esUsuarioValido(usuario_t posibleUsuario);
+		bool esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 

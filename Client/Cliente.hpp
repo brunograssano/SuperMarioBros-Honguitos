@@ -59,7 +59,7 @@ class Cliente{
 	private:
 		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
-		void enviarCredenciales(credenciales_t credencial);
+		void enviarCredenciales(credencial_t credencial);
 
 		unsigned short cantidadJugadoresActivos;
 

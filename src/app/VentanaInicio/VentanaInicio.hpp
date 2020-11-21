@@ -4,13 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
+#include "../../Utils.hpp"
 using namespace std;
-
-typedef struct credenciales{
-	string nombre;
-	string contrasenia;
-}credenciales_t;
-
 
 class VentanaInicio{
 
@@ -19,11 +14,11 @@ class VentanaInicio{
 		void obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales);
 		void imprimirMensajeError();
 		void imprimirMensajeEspera(unsigned short cantJugadoresConectados, unsigned short cantJugadoresTotales);
-		credenciales_t obtenerCredenciales();
+		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:
 		bool ingresoIncorrectoCredenciales;
-		credenciales_t credenciales;
+		credencial_t credenciales;
 		SDL_Texture* texturaTextoUsuario;
 		SDL_Texture* texturaTextoContrasenia;
 		SDL_Texture* usuarioIngresado;

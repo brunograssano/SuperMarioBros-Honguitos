@@ -194,8 +194,11 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 	SDL_StopTextInput();
 
-	credenciales.nombre = textoIngresadoUsuario;
-	credenciales.contrasenia = textoIngresadoContrasenia;
+	const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
+	const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
+
+	strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
+	strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
 }
 
 void VentanaInicio::imprimirMensajeError(){
@@ -245,7 +248,7 @@ void VentanaInicio::renderizar(int coordenadaX,int coordenadaY,int alto,int anch
 		SDL_RenderCopyEx( this->renderer, textura, clip, &renderQuad, angle, center, flip );
 }
 
-credenciales_t VentanaInicio::obtenerCredenciales(){
+credencial_t VentanaInicio::obtenerCredenciales(){
 	return credenciales;
 }
 

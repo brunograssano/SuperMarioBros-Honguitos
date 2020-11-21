@@ -7,7 +7,7 @@
 class SpriteKoopa : public Sprite{
 	public:
 
-		SpriteKoopa(string direccionImagen);
+		SpriteKoopa(int tipo);
 		~SpriteKoopa(){};
 
 		SDL_Rect obtenerRectanguloActual()override;

@@ -60,16 +60,20 @@ class Sorpresa : public Bloque{
 
 class Ladrillo : public Bloque {
 	public:
-		Ladrillo(int coordenadaX, int coordenadaY, string direccionTextura){
+		Ladrillo(int coordenadaX, int coordenadaY, int tipo){
+
 			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
 			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
+
 			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
-			this->spriteBloque = new SpriteLadrillo(direccionTextura);
+			this->spriteBloque = new SpriteLadrillo(tipo);
 		}
 
 		Ladrillo(int coordenadaX, int coordenadaY){
+
 			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
 			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
+
 			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteLadrillo();
 		}

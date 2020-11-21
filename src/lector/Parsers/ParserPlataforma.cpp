@@ -7,6 +7,7 @@
 void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = plataforma.child_value("tipo");
 	string direccionImagen = plataforma.child_value("direccionImagen");
+	/*Aca tiene que recibir el COLOR del bloque, ya no la direccion*/
 	int coordenadaX;
 	int coordenadaY;
 	int cantidadBloques;
@@ -50,7 +51,7 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 	for(int i=0;i<cantidadBloques;i++){
 		Bloque* unBloque;
 		if(tipo.compare("Ladrillo")==0){
-			unBloque = new Ladrillo(coordenadaBloque,coordenadaY, direccionImagen);
+			unBloque = new Ladrillo(coordenadaBloque,coordenadaY, 0);
 			coordenadaBloque += 40;
 			unaPlataforma->agregarBloque(unBloque);
 		}else if(tipo.compare("Sorpresa")==0){
@@ -59,7 +60,7 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 			unaPlataforma->agregarBloque(unBloque);
 		}else{
 			archivoLeido->mensajeError.push_back("El tipo de bloque no es valido, se pone un ladrillo en su lugar");
-			unBloque = new Ladrillo(coordenadaBloque, coordenadaY, direccionImagen);
+			unBloque = new Ladrillo(coordenadaBloque, coordenadaY, 0);
 			coordenadaBloque += 40;
 			unaPlataforma->agregarBloque(unBloque);
 		}

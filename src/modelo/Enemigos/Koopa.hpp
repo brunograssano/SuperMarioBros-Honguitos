@@ -11,8 +11,8 @@ class Koopa : public Enemigo{
 
 	public:
 
-		Koopa(string direccionImagen){
-			spriteEnemigo = new SpriteKoopa(direccionImagen);
+		Koopa(int tipo){
+			spriteEnemigo = new SpriteKoopa(tipo);
 		}
 
 		~Koopa(){

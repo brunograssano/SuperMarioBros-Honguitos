@@ -31,12 +31,16 @@ class App{
 			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
-			if(informacion.iniciadoCorrectamente){
-				cargadorTexturas->cargarTexturasNiveles(informacion.direccionesFondoNiveles,informacion.cantidadFondosNiveles, renderizador);
+			string direccionesNiveles[MAX_IMAGEN_NIVELES];
+			for(int i=0;i<informacion.cantidadFondosNiveles;i++){
+				direccionesNiveles[i] = string(informacion.direccionesFondoNiveles[i]);
 			}
-			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
-			juegoInicializadoCorrectamente = informacion.iniciadoCorrectamente;
+			//if(informacion.iniciadoCorrectamente){
+			cargadorTexturas->cargarTexturasNiveles(direccionesNiveles,informacion.cantidadFondosNiveles, renderizador);
+			//}
+
+			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
 			juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio);
 
@@ -44,6 +48,7 @@ class App{
 			terminoElJuego = false;
 			comenzoElJuego = false;
 			ganaron = false;
+			bool juegoInicializadoCorrectamente = true;
 			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
 
 			log->mostrarMensajeDeInfo("Inicio del juego");
@@ -66,7 +71,6 @@ class App{
 		bool terminoElJuego;
 		bool comenzoElJuego;
 		bool ganaron;
-		bool juegoInicializadoCorrectamente;
 
 		int ancho_pantalla;
 		int alto_pantalla;

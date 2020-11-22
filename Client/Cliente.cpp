@@ -28,11 +28,12 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 		Log::getInstance()->huboUnErrorSDL("Falló la conexión: Abortamos.",to_string(errno));
 		exit(-1);
 	}
+	cantidadJugadoresActivos = 0;
 	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
 	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
 	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
-	cantidadJugadoresActivos = 0;
-	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente); //TODO: CAMBIAR A DEFINE
+	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
+	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
 
 }
 
@@ -64,6 +65,13 @@ void Cliente::enviarEntrada(){
 	}
 }
 
+void Cliente::empezarJuego(info_partida_t info_partida){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	empiezaElJuego = true;
+	inicializarAplicacion(info_partida,this);
+	seCargoLaAplicacion = true;
+}
+
 void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
 	this->pasoVerificacion = verificacion;
 	this->seRecibioVerificacion = true;
@@ -90,6 +98,11 @@ void Cliente::esperarRecibirInformacionInicio(){
 void Cliente::esperarRecibirVerificacion(){
 	while(!seRecibioVerificacion){
 	}//TODO: Mostrar un mensaje de espera, en caso de ser necesario.
+}
+
+void Cliente::esperarCargaDeAplicacion(){
+	while(!seCargoLaAplicacion){
+	}
 }
 
 void Cliente::ejecutar(){
@@ -141,7 +154,7 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	//SERVIDOR NOS MANDA UN YA EMPIEZA EL JUEGO
+	esperarCargaDeAplicacion();
 
 	pthread_t hiloEntrada;
 	int resultadoCreateEnviarEntrada = pthread_create(&hiloEntrada, NULL, Cliente::enviar_helper, this);
@@ -150,10 +163,7 @@ void Cliente::ejecutar(){
 		exit(-1); //TODO: Arreglar este exit.
 	}
 
-
-	info_partida_t informacion; //RECIBIR LA INFORMACION DEL SERVER
-
-	gameLoop(informacion,this);
+	gameLoop();
 
 	delete Log::getInstance();
 }

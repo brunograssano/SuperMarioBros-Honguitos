@@ -17,11 +17,10 @@ class SpriteMario : public Sprite{
 
 		SpriteMario(string direccionImagen);
 
-		int obtenerPosicionXRectangulo();
+
 		SDL_Rect obtenerRectanguloActual()override;
 
 		void actualizarSprite(Mario* mario);
-
         void actualizarSpriteMarioDerecha (Mario* mario);
 		void actualizarSpriteMarioIzquierda(Mario* mario);
 		void actualizarSpriteMarioSaltar();

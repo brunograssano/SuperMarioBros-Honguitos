@@ -5,6 +5,7 @@
 
 #include <list>
 #include <queue>
+#include <map>
 
 #include "../src/log/Log.hpp"
 #include "../src/Utils.hpp"
@@ -26,7 +27,7 @@ class AplicacionServidor{
 		}
 
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
-
+		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
 		void gameLoop();
 
 	private:

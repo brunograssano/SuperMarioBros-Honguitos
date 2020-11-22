@@ -5,13 +5,15 @@
 #include <string.h>
 
 #include "Error.hpp"
+#include "Info.hpp"
+#include "Debug.hpp"
 
 Log* Log::log=nullptr;
 
 Log* Log::getInstance(TipoLog* tipo){
 	if(log==nullptr){
 		if(tipo == NULL){
-			tipo = new Error();
+			tipo = new Debug();
 		}
 		log = new Log(tipo);
 	}
@@ -19,7 +21,7 @@ Log* Log::getInstance(TipoLog* tipo){
 }
 Log* Log::getInstance(){
 	if(log==nullptr){
-		log = new Log(new Error());
+		log = new Log(new Debug());
 	}
 	return log;
 }

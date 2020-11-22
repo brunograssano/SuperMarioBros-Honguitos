@@ -17,6 +17,36 @@ AplicacionServidor::AplicacionServidor(list<Nivel*> niveles,int cantidadJugadore
 	rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 }
 
+info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador){
+	Log::getInstance()->mostrarMensajeDeInfo("Se prepara la informacion de la partida para el jugador: " + mapaIDNombre[IDJugador]);
+	info_partida_t info_partida;
+	info_partida.altoVentana = rectanguloCamara.h;
+	info_partida.anchoVentana = rectanguloCamara.w;
+	info_partida.cantidadJugadores = cantJugadores;
+	info_partida.idPropio = IDJugador;
+
+	map<int,Mario*> jugadores = juego->obtenerMarios();
+
+	for(int i=0;i<cantJugadores;i++){
+		info_partida.jugadores[i].puntos = 0;
+		info_partida.jugadores[i].mario.idImagen = i;
+		info_partida.jugadores[i].mario.posX = jugadores[i]->obtenerPosicionX();
+		info_partida.jugadores[i].mario.posY = jugadores[i]->obtenerPosicionY();
+		info_partida.jugadores[i].mario.recorteImagen = jugadores[i]->obtenerSpite()->obtenerEstadoActual();
+		strcpy(info_partida.jugadores[i].nombreJugador,mapaIDNombre[i].c_str());
+	}
+
+	list<Nivel*> niveles = juego->obtenerNiveles();
+	int i = 0;
+	for(auto& nivel:niveles){
+		strcpy(info_partida.direccionesFondoNiveles[i],nivel->obtenerDireccionFondoActual().c_str());
+		i++;
+	}
+	info_partida.cantidadFondosNiveles = i;
+	return info_partida;
+
+}
+
 
 void AplicacionServidor::iniciarJuego(){
 	comenzoElJuego = true;
@@ -46,6 +76,7 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 	while(!comenzoElJuego){
 		//estamos esperando a que nos indiquen que puede comenzar el juego
 	}
+	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
@@ -68,7 +99,7 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 	}
 
-
+	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
 }
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){

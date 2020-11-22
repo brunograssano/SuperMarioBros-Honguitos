@@ -135,12 +135,14 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexio
 			if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
 				pthread_mutex_lock(&mutex);
 				usuario.usado = true;
-				this->cantUsuariosLogueados++;
 				for(auto const& cliente:clientes){
 					cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
 				}
-				pthread_mutex_unlock(&mutex);
+				clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
+				mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
 				conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
+				cantUsuariosLogueados++;
+				pthread_mutex_unlock(&mutex);
 				return true;
 			}
 		}
@@ -150,19 +152,35 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexio
 
 
 void Servidor::intentarIniciarModelo(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	info_partida_t info_partida[cantidadConexiones];
+
 	while(cantUsuariosLogueados < cantidadConexiones){}
+	pthread_mutex_lock(&mutex);
+	log->mostrarMensajeDeInfo("Se va a iniciar el envio de informacion inicial a los jugadores.");
+	pthread_mutex_unlock(&mutex);
+
+
+	int i = 0;
+	for(auto parIDCliente:clientesJugando){
+		info_partida[i] = aplicacionServidor->obtenerInfoPartida(mapaIDNombre,parIDCliente.first);
+		parIDCliente.second->enviarInfoPartida(info_partida[i]);
+		i++;
+	}
+
+
 	aplicacionServidor->iniciarJuego();
 }
 
-void Servidor::iniciarJuego(){
+void Servidor::iniciarJuego(pthread_t* hiloJuego){
 
-	pthread_t hiloJuego;
-	int resultadoCreate = pthread_create(&hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
+
+	int resultadoCreate = pthread_create(hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
 
 	if(resultadoCreate!= 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para el juego, el codigo de error es: " + to_string(resultadoCreate));
 	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo del juego: (" + to_string(hiloJuego) +").");
+		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo del juego: (" + to_string(*hiloJuego) +").");
 	}
 
 }

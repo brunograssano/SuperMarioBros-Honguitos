@@ -28,7 +28,7 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
  */
 int main( int cantidadArgumentos, char* argumentos[]){
 
-	bool esServer = true;
+	bool esServer = false;
 
 	manejarEntrada(cantidadArgumentos, argumentos, &esServer);
 
@@ -39,8 +39,3 @@ int main( int cantidadArgumentos, char* argumentos[]){
 		mainClient(cantidadArgumentos, argumentos);
 	}
 }
-/*
- * Crear hilo con la funcion game loop (puede ser en el server)
- * Para que el server le diga la aplicacion servidor que puede empezar a correr el ciclo
- * Incializar en servidor el objeto, pasarle lo que necesita (parte del archivo leido)
- * */

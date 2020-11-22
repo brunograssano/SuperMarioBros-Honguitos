@@ -38,6 +38,11 @@ class ConexionCliente {
 		void actualizarCantidadConexiones(int cantidadConexiones);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
+		void enviarInfoPartida(info_partida_t info_partida);
+		string obtenerIP(){
+			return ip;
+		}
+
 
 	private:
 		info_inicio_t crearInformacionInicio();
@@ -46,6 +51,8 @@ class ConexionCliente {
 		void enviarActualizacionCantidadConexiones();
 		string nombre;
 		string contrasenia;
+		bool puedeJugar = false;
+		int idPropio;
 		int socket;
 		Servidor* servidor;
 		int cantidadConexiones;

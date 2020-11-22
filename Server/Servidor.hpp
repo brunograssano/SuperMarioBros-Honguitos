@@ -12,14 +12,14 @@
 #include <arpa/inet.h>
 
 #include <thread>
+#include <map>
+
 
 #include "../src/log/Log.hpp"
 #include "../src/lector/ArchivoLeido.hpp"
 #include "../src/modelo/Juego.hpp"
 #include "AplicacionServidor.hpp"
 #include "../src/Utils.hpp"
-
-#include "ConexionServidor.hpp"
 
 class ConexionCliente;
 #include "ConexionCliente.hpp"
@@ -32,7 +32,7 @@ class Servidor{
 	public:
 		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
 		void* escuchar();
-		void iniciarJuego();
+		void iniciarJuego(pthread_t* hiloJuego);
 		static void *escuchar_helper(void* ptr){
 			return((Servidor*) ptr)->escuchar();
 		}
@@ -44,6 +44,7 @@ class Servidor{
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 
 	private:
+		map<int,string> mapaIDNombre;
 		Log* log;
 		AplicacionServidor* aplicacionServidor;
 		int socketServer;
@@ -55,6 +56,7 @@ class Servidor{
 		bool terminoJuego;
 		list<thread> conexionesConElServidor;
 		list<ConexionCliente*> clientes;
+		map<int,ConexionCliente*> clientesJugando;
 
 };
 

@@ -22,6 +22,9 @@ class Sprite{
 			return rectangulo;
 		};//ver como refactorizar
 
+		int obtenerEstadoActual(){
+			return estadoActual;
+		}
 		virtual ~Sprite(){};
 
 	protected:

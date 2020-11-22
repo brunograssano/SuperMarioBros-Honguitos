@@ -7,9 +7,13 @@
 #include "../src/app/App.hpp"
 #include "Cliente.hpp"
 
+void inicializarAplicacion(info_partida_t informacion,Cliente* cliente){
+	App::getInstance(informacion,cliente);
+}
 
-void gameLoop(info_partida_t informacion,Cliente* cliente) {
-	App *aplicacion = App::getInstance(informacion,cliente);
+
+void gameLoop() {
+	App *aplicacion = App::getInstance();
 	bool salir = false;
 	SDL_Event event;
 	while (!salir) {

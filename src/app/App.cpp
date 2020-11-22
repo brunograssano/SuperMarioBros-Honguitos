@@ -63,10 +63,6 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 
 void App::actualizarServer(const Uint8 *keystate){
 
-	if(!juegoInicializadoCorrectamente){
-		return;
-	}
-
 	if(!sePusoMusicaInicio){
 		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaInicio.mp3"); //TODO: refactorizar a otro método.
 		sePusoMusicaInicio = true;

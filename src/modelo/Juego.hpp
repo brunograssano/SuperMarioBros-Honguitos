@@ -20,6 +20,9 @@ class Juego{
 		Juego(list<Nivel*> nivelesLector, int cantJugadores){
 
 			inicializar(cantJugadores);
+			for(int i = 0; i < cantJugadores; i++){
+				jugadores[i] = new Mario(i);
+			}
 			niveles = nivelesLector;
 
 			for (auto const& nivel : niveles) {
@@ -38,6 +41,7 @@ class Juego{
 		static Juego* getInstance();
 		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
 
+		list<Nivel*> obtenerNiveles();
 		void avanzarNivel();
 		void actualizarPosicionesEnemigos();
 		void sumarPuntosAJugadores(int puntos);

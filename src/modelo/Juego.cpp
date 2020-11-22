@@ -5,9 +5,7 @@
 Juego* Juego::instanciaJuego = nullptr;
 
 void Juego::inicializar(int cantJugadores){
-	for(int i = 1; i < (cantJugadores+1); i++){
-		jugadores[i] = new Mario(i);
-	}
+
 
 }
 
@@ -22,6 +20,9 @@ Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores){
 	return instanciaJuego;
 }
 
+list<Nivel*> Juego::obtenerNiveles(){
+	return niveles;
+}
 
 void Juego::avanzarNivel(){
 	Nivel* nivelViejo = niveles.front();

@@ -13,7 +13,7 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	this->nombre = "";
 	this->contrasenia = "";
 	this->escuchadorEntradaTeclado = NULL;
-
+	idPropio = 0;
 	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
 }
 
@@ -82,8 +82,10 @@ void ConexionCliente::ejecutar(){
 	esperarCredenciales();
 
 	while(!esUsuarioValido){
+		pthread_mutex_lock(&mutex);
 		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia},this);
 		enviarVerificacion(esUsuarioValido);
+		pthread_mutex_unlock(&mutex);
 		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia);
@@ -101,10 +103,29 @@ void ConexionCliente::ejecutar(){
 	//escuchar para teclas
 }
 
+void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
+	char caracterMensaje = MENSAJE_LOG;
+	mensaje_log_t mensaje={0,0};
+	mensaje.tipo = INFO;
+	strcpy(mensaje.mensajeParaElLog,"Empieza el juego...");
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &mensaje, sizeof(mensaje_log_t), 0);
+
+	caracterMensaje = PARTIDA;
+	send(socket, &caracterMensaje, sizeof(char), 0);
+	send(socket, &info_partida, sizeof(info_partida_t), 0);
+}
+
+
 
 void ConexionCliente::agregarIDJuego(int IDJugador){
 	escuchadores[ENTRADA] = new EscuchadorEntradaTeclado(socket,IDJugador,servidor);
+	puedeJugar = true;
+	idPropio = IDJugador;
 }
+
+
+
 
 void ConexionCliente::enviarActualizacionCantidadConexiones(){
 	actualizacion_cantidad_jugadores_t actualizacion;

@@ -9,9 +9,6 @@ using namespace std;
 
 #include "Escuchador.hpp"
 
-#define TIPO_ERROR 'E'
-#define INFO 'I'
-
 class EscuchadorLog : public Escuchador{
 
 	public:

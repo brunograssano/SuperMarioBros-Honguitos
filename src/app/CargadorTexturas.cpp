@@ -30,7 +30,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
 						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
 						"resources/Imagenes/Personajes/MarioGrisPerdioConexion.png"};
-	int i = 1;
+	int i = 0;
 	for(auto const& dirMario:listaMarios){
 		if(i==4){
 			i=-1; // Asi el mario gris concuerda con el valor que nos mandan

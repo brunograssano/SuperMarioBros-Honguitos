@@ -2,6 +2,7 @@
 #define SRC_UTILS_HPP_
 
 using namespace std;
+#include <string>
 
 /* PALABRAS RESERVADAS */
 /*
@@ -11,10 +12,14 @@ using namespace std;
  * L: Mensaje para el log.
  * E: Entrada del usuario
  * C: Credenciales que nos manda el usuario
+ * P: Informacion necesaria para iniciar la partida
  */
 
 
 const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
+
+const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
+															// correspondiente a la carpeta en la que tiene que estar esta imagen
 
 const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
 const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSIBLES = 30;
@@ -22,6 +27,9 @@ const int MAX_BLOQUES=200,MAX_ENEMIGOS=70,MAX_MONEDAS=70,MAX_IMAGEN_NIVELES_POSI
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
 
+
+#define TIPO_ERROR 'E'
+#define INFO 'I'
 #define MENSAJE_LOG 'L'
 typedef struct mensaje_log{
 	char tipo;
@@ -43,19 +51,20 @@ typedef struct bloque{
 
 typedef struct mario{
 	unsigned short idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
-	int posX;
-	int posY;
-	int recorteImagen; // Si el recorte de la imagen viene en un valor (-1?) se indica que el jugador se desconecto y el recorte correspondiente es el gris
+	unsigned short posX;
+	unsigned short posY;
+	short recorteImagen; // Si el recorte de la imagen viene en un valor (-1?) se indica que el jugador se desconecto y
+						//el recorte correspondiente es el gris (DE 0 A 14/18? SON LOS ESTADOS)
 }mario_t;
 
 typedef struct moneda{
-	int posX;
-	int posY;
+	unsigned short posX;
+	unsigned short posY;
 	unsigned short numeroRecorte;
 }moneda_t;
 
 typedef struct jugador{
-	string nombreJugador;
+	char nombreJugador[MAX_NOMBRE];
 	int puntos;
 	mario_t mario;
 }jugador_t;
@@ -96,15 +105,11 @@ typedef struct entrada_usuario_id{
 	unsigned short id;
 }entrada_usuario_id_t;
 
-typedef struct info_partida{
+#define PARTIDA 'P'
+typedef struct info_partida{//~438 bytes enviados al inicio
 	jugador_t jugadores[MAX_JUGADORES];
 	unsigned short cantidadJugadores;
-	string direccionesFondoNiveles[MAX_IMAGEN_NIVELES_POSIBLES];
-
-	bool iniciadoCorrectamente;
-
-	string direccionesImagenEnemigos[MAX_IMAGEN_ENEMIGOS];
-	string direccionesImagenBloques[MAX_IMAGEN_BLOQUE];
+	char direccionesFondoNiveles[MAX_CANT_NIVELES][MAX_LARGO_NOMBRE_NIVEL];
 
 	unsigned short cantidadFondosNiveles;
 	unsigned short anchoVentana;

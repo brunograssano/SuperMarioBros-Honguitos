@@ -1,11 +1,11 @@
-#ifndef CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
-#define CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
+#ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
+#define SRC_CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
 #include <thread>
 
 #include <string>
 using namespace std;
 
-#include "../../src/log/Log.hpp"
+#include "../../log/Log.hpp"
 
 #include "Escuchador.hpp"
 
@@ -52,4 +52,4 @@ class EscuchadorLog : public Escuchador{
 
 
 
-#endif /* CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_ */
+#endif /* SRC_CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_ */

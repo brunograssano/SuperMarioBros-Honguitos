@@ -1,5 +1,5 @@
-#ifndef SERVER_SERVIDOR_HPP_
-#define SERVER_SERVIDOR_HPP_
+#ifndef SRC_SERVER_SERVIDOR_HPP_
+#define SRC_SERVER_SERVIDOR_HPP_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,11 +15,11 @@
 #include <map>
 
 
-#include "../src/log/Log.hpp"
-#include "../src/lector/ArchivoLeido.hpp"
-#include "../src/modelo/Juego.hpp"
-#include "AplicacionServidor.hpp"
-#include "../src/Utils.hpp"
+#include "../log/Log.hpp"
+#include "../lector/ArchivoLeido.hpp"
+#include "../modelo/Juego.hpp"
+#include "../Server/AplicacionServidor.hpp"
+#include "../Utils.hpp"
 
 class ConexionCliente;
 #include "ConexionCliente.hpp"
@@ -62,4 +62,4 @@ class Servidor{
 
 
 
-#endif /* SERVER_SERVIDOR_HPP_ */
+#endif /* SRC_SERVER_SERVIDOR_HPP_ */

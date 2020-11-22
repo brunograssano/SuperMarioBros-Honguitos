@@ -1,9 +1,8 @@
 #include "Cliente.hpp"
 
-#include "../src/log/Log.hpp"
-#include "GameLoop.hpp"
-
+#include "../log/Log.hpp"
 #include <thread>
+#include "../Client/GameLoop.hpp"
 
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	struct sockaddr_in serv_addr;

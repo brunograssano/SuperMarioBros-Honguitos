@@ -1,4 +1,4 @@
-#include "mainClient.hpp"
+#include "../Client/mainClient.hpp"
 
 #include <getopt.h>
 #include <string>
@@ -6,14 +6,13 @@
 #include <stdlib.h>
 #include <vector>
 
-#include "Cliente.hpp"
+#include "../log/Log.hpp"
+#include "../log/Error.hpp"
+#include "../log/Debug.hpp"
+#include "../log/Info.hpp"
 
-#include "../src/log/Log.hpp"
-#include "../src/log/Error.hpp"
-#include "../src/log/Debug.hpp"
-#include "../src/log/Info.hpp"
-
-#include "../src/app/App.hpp"
+#include "../app/App.hpp"
+#include "../Client/Cliente.hpp"
 
 
 

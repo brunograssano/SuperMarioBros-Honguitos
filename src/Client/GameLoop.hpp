@@ -1,11 +1,11 @@
-#ifndef CLIENT_GAMELOOP_HPP_
-#define CLIENT_GAMELOOP_HPP_
+#ifndef SRC_CLIENT_GAMELOOP_HPP_
+#define SRC_CLIENT_GAMELOOP_HPP_
 
 #include <SDL2/SDL.h>
 
-#include "../src/Utils.hpp"
-#include "../src/app/App.hpp"
-#include "Cliente.hpp"
+#include "../Utils.hpp"
+#include "../app/App.hpp"
+#include "../Client/Cliente.hpp"
 
 void inicializarAplicacion(info_partida_t informacion,Cliente* cliente){
 	App::getInstance(informacion,cliente);
@@ -37,4 +37,4 @@ void gameLoop() {
 
 
 
-#endif /* CLIENT_GAMELOOP_HPP_ */
+#endif /* SRC_CLIENT_GAMELOOP_HPP_ */

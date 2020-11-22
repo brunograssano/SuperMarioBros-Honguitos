@@ -1,9 +1,8 @@
 #include "ConexionCliente.hpp"
-
+#include "EscuchadoresServer/EscuchadorCredenciales.hpp"
+#include <thread>
 #include "EscuchadoresServer/EscuchadorCredenciales.hpp"
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
-
-#include <thread>
 
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip){
 	this->servidor = servidor;

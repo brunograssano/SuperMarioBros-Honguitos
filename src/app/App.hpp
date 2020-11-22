@@ -18,7 +18,7 @@ using namespace std;
 const int ANCHO_FONDO = 8177;
 
 #include "../Utils.hpp"
-#include "../../Client/Cliente.hpp"
+#include "../../src/Client/Cliente.hpp"
 
 class App{
 

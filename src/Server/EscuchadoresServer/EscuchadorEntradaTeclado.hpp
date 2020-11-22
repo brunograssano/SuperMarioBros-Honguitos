@@ -7,9 +7,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "../Servidor.hpp"
-#include "../../src/Utils.hpp"
 #include "EscuchadorServer.hpp"
+#include "../Servidor.hpp"
+#include "../../Utils.hpp"
 
 
 class EscuchadorEntradaTeclado:public EscuchadorServer{

@@ -1,12 +1,12 @@
-#ifndef CLIENT_ESCUCHADORES_ESCUCHADOR_HPP_
-#define CLIENT_ESCUCHADORES_ESCUCHADOR_HPP_
+#ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADOR_HPP_
+#define SRC_CLIENT_ESCUCHADORES_ESCUCHADOR_HPP_
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "../../src/Utils.hpp"
+#include "../../Utils.hpp"
 
 class Escuchador{
 
@@ -17,4 +17,4 @@ class Escuchador{
 
 
 
-#endif /* CLIENT_ESCUCHADORES_ESCUCHADOR_HPP_ */
+#endif /* SRC_CLIENT_ESCUCHADORES_ESCUCHADOR_HPP_ */

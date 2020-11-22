@@ -1,5 +1,5 @@
-#ifndef CLIENT_CLIENTE_HPP_
-#define CLIENT_CLIENTE_HPP_
+#ifndef SRC_CLIENT_CLIENTE_HPP_
+#define SRC_CLIENT_CLIENTE_HPP_
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -15,24 +15,24 @@
 #include <queue>
 #include <map>
 
-#include "../src/Utils.hpp"
+#include "../../src/Client/Escuchadores/Escuchador.hpp"
+#include "../../src/Utils.hpp"
 
-#include "Escuchadores/Escuchador.hpp"
 class EscuchadorInformacionPartida;
-#include "Escuchadores/EscuchadorInformacionPartida.hpp"
+#include "../../src/Client/Escuchadores/EscuchadorInformacionPartida.hpp"
 class EscuchadorVerificacionCredenciales;
-#include "Escuchadores/EscuchadorVerificacionCredenciales.hpp"
+#include "../../src/Client/Escuchadores/EscuchadorVerificacionCredenciales.hpp"
 class EscuchadorActualizacionJugadores;
-#include "Escuchadores/EscuchadorActualizacionJugadores.hpp"
+#include "../../src/Client/Escuchadores/EscuchadorActualizacionJugadores.hpp"
 class EscuchadorInfoPartidaInicial;
-#include "Escuchadores/EscuchadorInfoPartidaInicial.hpp"
+#include "../../src/Client/Escuchadores/EscuchadorInfoPartidaInicial.hpp"
 
 
 #include "Escuchadores/EscuchadorLog.hpp"
 
-#include "../src/app/VentanaInicio/VentanaInicio.hpp"
+#include "../../src/app/VentanaInicio/VentanaInicio.hpp"
 
-#include "../src/Utils.hpp"
+#include "../../src/Utils.hpp"
 
 using namespace std;
 
@@ -82,4 +82,4 @@ class Cliente{
 
 		int socketCliente;
 };
-#endif /* CLIENT_CLIENTE_HPP_ */
+#endif /* SRC_CLIENT_CLIENTE_HPP_ */

@@ -8,15 +8,15 @@ using namespace std;
 
 #include <SDL2/SDL.h>
 
-#include "../src/app/App.hpp"
-#include "../src/lector/Lector.hpp"
+#include "../app/App.hpp"
+#include "../lector/Lector.hpp"
 
-#include "../src/log/Log.hpp"
-#include "../src/log/Error.hpp"
-#include "../src/log/Debug.hpp"
-#include "../src/log/Info.hpp"
+#include "../log/Log.hpp"
+#include "../log/Error.hpp"
+#include "../log/Debug.hpp"
+#include "../log/Info.hpp"
 
-#include "Servidor.hpp"
+#include "../Server/Servidor.hpp"
 
 #include <getopt.h>
 

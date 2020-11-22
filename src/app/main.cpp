@@ -5,8 +5,8 @@ using namespace std;
 
 #include <getopt.h>
 
-#include "../../Server/mainServer.hpp"
-#include "../../Client/mainClient.hpp"
+#include "../Server/mainServer.hpp"
+#include "../Client/mainClient.hpp"
 
 void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
 	for(int i=0;i<cantidadArgumentos;i++){

@@ -1,5 +1,5 @@
-#ifndef SERVER_CONEXIONCLIENTE_HPP_
-#define SERVER_CONEXIONCLIENTE_HPP_
+#ifndef SRC_SERVER_CONEXIONCLIENTE_HPP_
+#define SRC_SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
 #include "Servidor.hpp"
@@ -11,9 +11,9 @@ using namespace std;
 #include <map>
 #include "EscuchadoresServer/EscuchadorServer.hpp"
 
-#include "../src/Utils.hpp"
+#include "../Utils.hpp"
 
-#include "../src/log/Log.hpp"
+#include "../log/Log.hpp"
 
 class EscuchadorEntradaTeclado;
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
@@ -66,4 +66,4 @@ class ConexionCliente {
 };
 
 
-#endif /* SERVER_CONEXIONCLIENTE_HPP_ */
+#endif /* SRC_SERVER_CONEXIONCLIENTE_HPP_ */

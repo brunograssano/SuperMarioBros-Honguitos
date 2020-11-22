@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include "../Utils.hpp"
-#include "../app/App.hpp"
+#include "../app/AplicacionCliente.hpp"
 #include "../Client/Cliente.hpp"
 
 void inicializarAplicacion(info_partida_t informacion,Cliente* cliente){

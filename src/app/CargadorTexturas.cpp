@@ -10,7 +10,7 @@
 #include <sstream>
 
 #include "../log/Log.hpp"
-#include "App.hpp"
+#include "AplicacionCliente.hpp"
 
 
 

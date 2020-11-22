@@ -1,6 +1,6 @@
 #include "DibujadorJuego.hpp"
 
-#include "../App.hpp"
+#include "../AplicacionCliente.hpp"
 #include "Dibujadores.hpp"
 
 const float PROPORCION_PISO_EN_IMAGEN = 0.1;

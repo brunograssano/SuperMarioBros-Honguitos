@@ -11,7 +11,7 @@
 #include "../log/Debug.hpp"
 #include "../log/Info.hpp"
 
-#include "../app/App.hpp"
+#include "../app/AplicacionCliente.hpp"
 #include "../Client/Cliente.hpp"
 
 

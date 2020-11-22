@@ -8,7 +8,7 @@ using namespace std;
 
 #include <SDL2/SDL.h>
 
-#include "../app/App.hpp"
+#include "../app/AplicacionCliente.hpp"
 #include "../lector/Lector.hpp"
 
 #include "../log/Log.hpp"

@@ -8,13 +8,13 @@ using namespace std;
 
 #include <SDL2/SDL.h>
 
-#include "../app/AplicacionCliente.hpp"
-#include "../lector/Lector.hpp"
+#include "../Client/app/AplicacionCliente.hpp"
+#include "lector/Lector.hpp"
 
-#include "../log/Log.hpp"
-#include "../log/Error.hpp"
-#include "../log/Debug.hpp"
-#include "../log/Info.hpp"
+#include "../Utils/log/Log.hpp"
+#include "../Utils/log/Error.hpp"
+#include "../Utils/log/Debug.hpp"
+#include "../Utils/log/Info.hpp"
 
 #include "../Server/Servidor.hpp"
 

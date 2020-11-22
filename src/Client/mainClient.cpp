@@ -6,13 +6,12 @@
 #include <stdlib.h>
 #include <vector>
 
-#include "../log/Log.hpp"
-#include "../log/Error.hpp"
-#include "../log/Debug.hpp"
-#include "../log/Info.hpp"
-
-#include "../app/AplicacionCliente.hpp"
 #include "../Client/Cliente.hpp"
+#include "../Utils/log/Debug.hpp"
+#include "../Utils/log/Error.hpp"
+#include "../Utils/log/Info.hpp"
+#include "../Utils/log/Log.hpp"
+#include "app/AplicacionCliente.hpp"
 
 
 

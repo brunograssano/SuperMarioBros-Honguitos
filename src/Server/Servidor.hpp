@@ -15,11 +15,11 @@
 #include <map>
 
 
-#include "../log/Log.hpp"
-#include "../lector/ArchivoLeido.hpp"
-#include "../modelo/Juego.hpp"
+#include "../Utils/log/Log.hpp"
+#include "modelo/Juego.hpp"
 #include "../Server/AplicacionServidor.hpp"
-#include "../Utils.hpp"
+#include "../Utils/Utils.hpp"
+#include "lector/ArchivoLeido.hpp"
 
 class ConexionCliente;
 #include "ConexionCliente.hpp"

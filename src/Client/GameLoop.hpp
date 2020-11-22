@@ -3,9 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "../Utils.hpp"
-#include "../app/AplicacionCliente.hpp"
+#include "../Utils/Utils.hpp"
 #include "../Client/Cliente.hpp"
+#include "app/AplicacionCliente.hpp"
 
 void inicializarAplicacion(info_partida_t informacion,Cliente* cliente){
 	App::getInstance(informacion,cliente);

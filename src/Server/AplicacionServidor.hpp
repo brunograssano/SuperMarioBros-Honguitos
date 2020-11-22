@@ -7,12 +7,12 @@
 #include <queue>
 #include <map>
 
-#include "../log/Log.hpp"
-#include "../Utils.hpp"
+#include "../Utils/log/Log.hpp"
+#include "../Utils/Utils.hpp"
 
-#include "../lector/ArchivoLeido.hpp"
-#include "../modelo/Nivel.hpp"
-#include "../modelo/Juego.hpp"
+#include "modelo/Nivel.hpp"
+#include "modelo/Juego.hpp"
+#include "lector/ArchivoLeido.hpp"
 
 class AplicacionServidor{
 	public:

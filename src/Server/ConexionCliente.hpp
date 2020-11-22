@@ -11,9 +11,9 @@ using namespace std;
 #include <map>
 #include "EscuchadoresServer/EscuchadorServer.hpp"
 
-#include "../Utils.hpp"
+#include "../Utils/Utils.hpp"
 
-#include "../log/Log.hpp"
+#include "../Utils/log/Log.hpp"
 
 class EscuchadorEntradaTeclado;
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"

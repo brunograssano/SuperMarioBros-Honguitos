@@ -16,7 +16,7 @@
 #include <map>
 
 #include "../../src/Client/Escuchadores/Escuchador.hpp"
-#include "../../src/Utils.hpp"
+#include "../Utils/Utils.hpp"
 
 class EscuchadorInformacionPartida;
 #include "../../src/Client/Escuchadores/EscuchadorInformacionPartida.hpp"
@@ -30,9 +30,9 @@ class EscuchadorInfoPartidaInicial;
 
 #include "Escuchadores/EscuchadorLog.hpp"
 
-#include "../../src/app/VentanaInicio/VentanaInicio.hpp"
+#include "app/VentanaInicio/VentanaInicio.hpp"
 
-#include "../../src/Utils.hpp"
+#include "../Utils/Utils.hpp"
 
 using namespace std;
 

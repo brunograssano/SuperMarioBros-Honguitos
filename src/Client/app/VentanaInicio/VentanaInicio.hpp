@@ -26,6 +26,7 @@ class VentanaInicio{
 		SDL_Texture* texturaCantidadJugadores;
 		SDL_Texture* texturaMensajeCredencialesIncorrectas;
 		SDL_Texture* texturaMensajeCredencialesCorrectas;
+		SDL_Texture* fondoPantalla;
 		TTF_Font* fuente;
 		SDL_Window* ventana;
 		SDL_Renderer* renderer;

@@ -734,6 +734,6 @@
 			<password>prueba</password>
 		</usuario>
 	</credenciales>
-	<cantidadConexiones>1</cantidadConexiones>
+	<cantidadConexiones>4</cantidadConexiones>
 
 </configuracion>

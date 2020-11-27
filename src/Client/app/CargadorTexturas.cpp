@@ -17,15 +17,13 @@
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
 
-	if( TTF_Init() == -1 ){
+	/*if( TTF_Init() == -1 ){
 		log->huboUnErrorSDL("No se pudo inicializar SDL_ttf ", TTF_GetError());
-	}
+	}*/
 
 	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
-
-	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
 						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
@@ -56,6 +54,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
 							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
+
+	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
 	for(auto const& particula:listaParticulas){
 		SDL_Texture* particulaTextura = intentarCarga("la particula", particula, renderizador);

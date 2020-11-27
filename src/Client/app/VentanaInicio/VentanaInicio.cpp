@@ -260,9 +260,9 @@ VentanaInicio::~VentanaInicio(){
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
 	SDL_DestroyRenderer( renderer );
+	//TTF_Quit();
+	//IMG_Quit();
+	//SDL_Quit();
 	SDL_DestroyWindow( ventana );
 
-	TTF_Quit();
-	IMG_Quit();
-	SDL_Quit();
 }

@@ -30,7 +30,7 @@ void EscuchadorEntradaTeclado::escuchar(){
 
 	entradaUsuarioId.entradas = entradaUsuario;
 	entradaUsuarioId.id = idJugador;
+	pthread_mutex_lock(&mutex);
 	servidor->encolarEntradaUsuario(entradaUsuarioId);
-
-
+	pthread_mutex_unlock(&mutex);
 }

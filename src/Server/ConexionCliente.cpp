@@ -19,15 +19,28 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 void ConexionCliente::escuchar(){
 	char tipoMensaje;
 	int resultado;
-	while(true){
+	bool hayError = false;
+	while(!hayError){
+
 		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
+
 		if(resultado<0){
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje", to_string(errno));
-			//Excepcion?
+			hayError = true;
+		}else if(resultado == 0){
+			Log::getInstance()->huboUnErrorSDL("Se desconecto el socket que escucha al cliente", to_string(errno));
+			hayError = true;
 		}
-		//if result = se desconecto el socket -> manejarlo
-		escuchadores[tipoMensaje]->escuchar();
+
+		try{
+			escuchadores[tipoMensaje]->escuchar();
+		}catch(const std::exception& e){
+			hayError = true;
+		}
 	}
+	shutdown(socket, SHUT_RDWR);
+	close(socket);
+
 }
 
 
@@ -141,5 +154,4 @@ void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 
 ConexionCliente::~ConexionCliente(){
 	delete escuchadorEntradaTeclado;
-	close(socket);
 }

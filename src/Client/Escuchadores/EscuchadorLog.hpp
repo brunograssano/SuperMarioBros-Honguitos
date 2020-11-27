@@ -29,7 +29,7 @@ class EscuchadorLog : public Escuchador{
 				pthread_mutex_lock(&mutex);
 				Log::getInstance()->huboUnErrorSDL("Ocurrio un error al recibir un mensaje del log",to_string(errno));
 				pthread_mutex_unlock(&mutex);
-				//LANZAR EXCEPCION?
+				throw runtime_error("ErrorAlEscucharUnMensajeParaElLog");
 			}
 
 			string mensajeLog(conjuntoMensajeLog.mensajeParaElLog);

@@ -20,6 +20,7 @@ class Mario{
 		SpriteMario* obtenerSpite();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
+		bool estaConectado();
 		bool estaQuietoX();
 		bool estaEnElPiso();
 		void actualizarPosicion();
@@ -30,6 +31,7 @@ class Mario{
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
 
+		void serArrastrado(int corrimiento);
 		void actualizarMaximoX(int limite);
 		void actualizarMinimoX(int limite);
 		~Mario();
@@ -41,6 +43,7 @@ class Mario{
 		int puntos;
 		int cantidadMonedas;
 		int numeroJugador;
+		bool estaConectadoElJugador;
 };
 
 

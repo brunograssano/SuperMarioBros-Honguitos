@@ -143,13 +143,15 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 
 	int posicionDelJugadorMasALaDerecha = 0;
 	bool sePuedeMoverLaCamara = true;
+	Mario* jugador;
 
 	for(auto const& parClaveJugador: jugadores){
-		if(parClaveJugador.second->obtenerPosicionX() <= rectanguloCamara->x){
+		jugador = parClaveJugador.second;
+		if(jugador->estaConectado() && (jugador->obtenerPosicionX() <= rectanguloCamara->x)){
 			sePuedeMoverLaCamara = false;
 		}
-		if(parClaveJugador.second->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
-			posicionDelJugadorMasALaDerecha = parClaveJugador.second->obtenerPosicionX();
+		if(jugador->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
+			posicionDelJugadorMasALaDerecha = jugador->obtenerPosicionX();
 		}
 
 	}
@@ -160,7 +162,12 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 		rectanguloCamara->x = posicionDelJugadorMasALaDerecha - (ancho_pantalla) / 2 ;
 
 		for(auto const& parClaveJugador: jugadores){
-			parClaveJugador.second->actualizarMaximoX(rectanguloCamara->x);
+			jugador = parClaveJugador.second;
+			if((!jugador->estaConectado()) && (jugador->obtenerPosicionX()<rectanguloCamara->x)){
+				jugador->serArrastrado(rectanguloCamara->x-jugador->obtenerPosicionX());
+			}
+
+			jugador->actualizarMaximoX(rectanguloCamara->x);
 		}
 	}
 

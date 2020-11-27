@@ -18,6 +18,7 @@ Mario::Mario(int numeroJugador){
 	this->movimiento = new MovimientoMario();
 	this->spriteMario = new SpriteMario("../resources/Imagenes/Personajes/mario_grande.png");
 	this->numeroJugador = numeroJugador;
+	this->estaConectadoElJugador = true;
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -94,6 +95,14 @@ void Mario::actualizarPosicion(){
 	}
 	spriteMario->actualizarSprite(this);
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
+}
+
+bool Mario::estaConectado(){
+	return this->estaConectadoElJugador;
+}
+
+void Mario::serArrastrado(int corrimiento){
+	this->posicion->moverHorizontal(corrimiento);
 }
 
 bool Mario::estaQuietoX(){

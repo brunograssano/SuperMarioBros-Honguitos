@@ -14,7 +14,8 @@ void Nivel::actualizarPosicionesEnemigos(){
 	int i = 1;
 	for (auto const& enemigo : enemigos) {
 	    enemigo->actualizarPosicion();
-	    log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
+	    //TODO: Descomentar esta linea.
+	    //log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
 	    i++;
 	}
 }

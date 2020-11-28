@@ -34,6 +34,10 @@ class AplicacionServidor{
 		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre, int IDJugador);
 		void gameLoop();
 
+		bool empezoElJuego(){
+			return comenzoElJuego;
+		}
+
 	private:
 		Servidor* servidor;
 		void revisarSiTerminoNivel(map<int,Mario*> jugadores);

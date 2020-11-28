@@ -190,45 +190,70 @@ void Servidor::conectarJugadores(){
 	}
 }
 
-bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+
+bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	if(cantUsuariosLogueados<cantidadConexiones){
-		if(!usuariosQuePerdieronConexion.empty()){
-			for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
-				usuario_t usuario = parClaveUsuario.second;
-				if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
-					pthread_mutex_lock(&mutex);
-					usuario.usado = true;
-					clientesJugando[parClaveUsuario.first] = conexionClienteConPosibleUsuario;
-					conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
-					cantUsuariosLogueados++;
-					for(auto const& cliente:clientes){
-						cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
-					}
-					pthread_mutex_unlock(&mutex);
-					return true;
-				}
+	usuario_t usuario;
+	for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
+		usuario = parClaveUsuario.second;
+		if(coincidenCredenciales(posibleUsuario, usuario)){
+			pthread_mutex_lock(&mutex);
+			usuario.usado = true;
+			clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
+			mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
+			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
+			cantUsuariosLogueados++;
+			for(auto const& cliente:clientes){
+				cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
 			}
-		}
-		else{
-			for(auto& usuario:usuariosValidos){
-				if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
-					pthread_mutex_lock(&mutex);
-					usuario.usado = true;
-					clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
-					mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
-					conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
-					cantUsuariosLogueados++;
-					for(auto const& cliente:clientes){
-						cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
-					}
-					pthread_mutex_unlock(&mutex);
-					return true;
-				}
-			}
+			pthread_mutex_unlock(&mutex);
+			return true;
 		}
 	}
 	return false;
+}
+
+bool Servidor::coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario) {
+	return posibleUsuario.nombre.compare(usuario.nombre) == 0 &&
+		   posibleUsuario.contrasenia.compare(usuario.contrasenia) == 0 &&
+		   !usuario.usado;
+}
+
+bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+	if(aplicacionServidor->empezoElJuego()){
+		return false;
+	}
+
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+	for(auto& usuario:usuariosValidos){
+
+		if (coincidenCredenciales(posibleUsuario, usuario)) {
+			pthread_mutex_lock(&mutex);
+
+			usuario.usado = true;
+			clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
+			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
+			cantUsuariosLogueados++;
+
+			for(auto const& cliente:clientes){
+				cliente->actualizarCantidadConexiones(cantUsuariosLogueados);
+			}
+
+			pthread_mutex_unlock(&mutex);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+	if(cantUsuariosLogueados>=cantidadConexiones){
+		return false;
+	}
+
+	return esUsuarioSinConectarse(posibleUsuario,conexionClienteConPosibleUsuario) ||
+		   esUsuarioDesconectado(posibleUsuario,conexionClienteConPosibleUsuario);
 }
 
 

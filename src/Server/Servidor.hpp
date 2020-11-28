@@ -60,6 +60,10 @@ class Servidor{
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
 
+		bool esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		bool esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
+
 		bool terminoJuego;
 		list<thread> conexionesConElServidor;
 		list<ConexionCliente*> clientes;

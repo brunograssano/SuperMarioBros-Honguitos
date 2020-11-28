@@ -108,11 +108,7 @@ void ConexionCliente::ejecutar(){
 		}
 	}
 
-	while(true){
-		// System pause.
-	}
-
-	//escuchar para teclas
+	enviarActualizacionesDeRonda();
 }
 
 void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){

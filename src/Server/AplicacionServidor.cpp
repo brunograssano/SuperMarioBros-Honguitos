@@ -3,7 +3,7 @@
 const int ANCHO_FONDO = 8177;
 
 
-AplicacionServidor::AplicacionServidor(list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
+AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
 	juego = Juego::getInstance(niveles,cantidadJugadores);
 	cantJugadores = cantidadJugadores;
 	terminoElJuego = false;
@@ -13,6 +13,7 @@ AplicacionServidor::AplicacionServidor(list<Nivel*> niveles,int cantidadJugadore
 	log = Log::getInstance();
 	tiempoDeInicio = 0;
 	tiempoFaltante = 0;
+	servidor = server;
 	this->ancho_pantalla = ancho_pantalla;
 	rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 }
@@ -93,6 +94,7 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 		juego->actualizarPosicionesEnemigos();
 		revisarSiTerminoNivel(jugadores);
 		moverCamara(jugadores);
+
 
 		//transmitir a los clientes
 		//esperar x tiempo?

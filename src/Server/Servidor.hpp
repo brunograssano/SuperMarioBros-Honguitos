@@ -17,6 +17,8 @@
 
 #include "../Utils/log/Log.hpp"
 #include "modelo/Juego.hpp"
+
+class AplicacionServidor;
 #include "../Server/AplicacionServidor.hpp"
 #include "../Utils/Utils.hpp"
 #include "lector/ArchivoLeido.hpp"

@@ -47,6 +47,11 @@ class Servidor{
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador);
 		void ejecutar();
+		void guardarRondaParaEnvio(info_ronda_t ronda);
+
+		map<int,string> obtenerMapaJugadores(){
+			return mapaIDNombre;
+		}
 
 	private:
 		map<int,string> mapaIDNombre;

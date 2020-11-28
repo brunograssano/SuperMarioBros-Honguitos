@@ -26,6 +26,7 @@ class JuegoCliente{
 		int obtenerTiempoFaltante();
 		int obtenerMundoActual();
 		int obtenerIDPropio();
+		int obtenerPosXCamara();
 
 	private:
 		queue<info_ronda_t> rondas;

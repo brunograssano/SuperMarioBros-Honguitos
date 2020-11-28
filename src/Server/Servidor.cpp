@@ -72,6 +72,12 @@ void Servidor::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 	}
 }
 
+void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
+	for(auto const& parClaveClienteJugando: clientesJugando){
+		parClaveClienteJugando.second->recibirInformacionRonda(ronda);
+	}
+}
+
 
 void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -234,6 +240,7 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 			usuario.usado = true;
 			clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
 			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
+			mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
 			cantUsuariosLogueados++;
 
 			for(auto const& cliente:clientes){
@@ -267,11 +274,10 @@ void Servidor::intentarIniciarModelo(){
 	pthread_mutex_unlock(&mutex);
 
 
-	int i = 0;
 	for(auto parIDCliente:clientesJugando){
-		info_partida[i] = aplicacionServidor->obtenerInfoPartida(mapaIDNombre,parIDCliente.first);
-		parIDCliente.second->enviarInfoPartida(info_partida[i]);
-		i++;
+		int id = parIDCliente.first;
+		info_partida[id] = aplicacionServidor->obtenerInfoPartida(mapaIDNombre,id);
+		parIDCliente.second->enviarInfoPartida(info_partida[id]);
 	}
 
 
@@ -302,8 +308,13 @@ Servidor::~Servidor(){
 	for(auto const& parClaveCliente:clientesJugando){
 		delete parClaveCliente.second;
 	}
+	for(auto const& cliente:conexionesPerdidas){
+		delete cliente;
+	}
 	clientes.clear();
 	clientesJugando.clear();
+	conexionesPerdidas.clear();
 	close(socketServer);
-	delete Log::getInstance();
+	delete aplicacionServidor;
+	delete log;
 }

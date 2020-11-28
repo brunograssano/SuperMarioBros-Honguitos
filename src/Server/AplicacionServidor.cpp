@@ -1,5 +1,7 @@
 #include "AplicacionServidor.hpp"
 
+#include <unistd.h>
+
 const int ANCHO_FONDO = 8177;
 
 
@@ -57,9 +59,9 @@ bool AplicacionServidor::estaEnRangoVisible(int posicionX){
 }
 
 
-info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre, int IDJugador){
+info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 
-	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para el jugador: " + mapaIDNombre[IDJugador]);
+	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para enviar.");
 
 	info_ronda_t info_ronda;
 
@@ -100,15 +102,11 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre, 
 		}
 	}
 
-	int numeroJugador = 0;
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	jugador_t jugadorSerializado;
 	for(unsigned short int i=0; i<cantJugadores; i++){
-		if(numeroJugador < MAX_JUGADORES){
-			jugadorSerializado = jugadores[i]->serializar(mapaIDNombre[i].c_str(), i);
-			info_ronda.jugadores[numeroJugador] = jugadorSerializado;
-			numeroJugador++;
-		}
+		jugadorSerializado = jugadores[i]->serializar(mapaIDNombre[i].c_str(), i);
+		info_ronda.jugadores[i] = jugadorSerializado;
 	}
 
 	return info_ronda;
@@ -139,14 +137,17 @@ void AplicacionServidor::actualizarPosicionDeJugador(Mario* jugador,entrada_usua
 
 
 void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
+	unsigned int microSegundosEspera = 16666;
 	while(!comenzoElJuego){
 		//estamos esperando a que nos indiquen que puede comenzar el juego
 	}
+
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
+
 
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
-		// revisar si tenemos comandos en la cola
+
 		while(!colaDeEntradasUsuario.empty()){
 			entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
 			actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
@@ -160,9 +161,12 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 		revisarSiTerminoNivel(jugadores);
 		moverCamara(jugadores);
 
+		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
+		servidor->guardarRondaParaEnvio(ronda);
 
-		//transmitir a los clientes
-		//esperar x tiempo?
+
+		usleep(microSegundosEspera);
+
 
 	}
 

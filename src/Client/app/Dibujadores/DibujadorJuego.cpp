@@ -24,7 +24,7 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 }
 
 void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
-
+	rectanguloCamara->x = juegoCliente->obtenerPosXCamara();
 	SDL_RenderClear( renderizador );
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
 
@@ -86,31 +86,31 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
 }
 
 void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
-	map<int,jugador_t> marios = juegoCliente->obtenerJugadores();
+	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int idPropio = juegoCliente->obtenerIDPropio();
-	for(auto const mario:marios){
-		mario_t jugador = mario.second.mario;
-		if(jugador.idImagen != idPropio){
-			int idMario = jugador.idImagen;
-			SDL_Rect rectanguloMario = {jugador.posX - rectanguloCamara->x,
-											alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- jugador.posY,
+	for(auto const parClaveJugador:jugadores){
+		mario_t mario = parClaveJugador.second.mario;
+		if(mario.idImagen != idPropio){
+			int idMario = mario.idImagen;
+			SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
+											alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario.posY,
 											ANCHO_MARIO, ALTO_MARIO};
 
-			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(jugador.recorteImagen);
-			if(jugador.recorteImagen==MARIO_GRIS){
-				idMario = jugador.recorteImagen;
+			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+			if(mario.recorteImagen==MARIO_GRIS){
+				idMario = mario.recorteImagen;
 			}
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(idMario), &recorteMario, &rectanguloMario);
 		}
 	}
 
-	mario_t jugador = marios[idPropio].mario;
-	SDL_Rect rectanguloMario = {jugador.posX - rectanguloCamara->x,
-												alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- jugador.posY,
+	mario_t mario = jugadores[idPropio].mario;
+	SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
+												alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario.posY,
 												ANCHO_MARIO, ALTO_MARIO};
 
-	SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(jugador.recorteImagen);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(jugador.idImagen), &recorteMario, &rectanguloMario);
+	SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario, &rectanguloMario);
 }
 
 void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){

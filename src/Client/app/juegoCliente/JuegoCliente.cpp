@@ -19,6 +19,10 @@ void JuegoCliente::agregarRonda(info_ronda_t ronda){
 	rondas.push(ronda);
 }
 
+int JuegoCliente::obtenerPosXCamara(){
+	return posXCamara;
+}
+
 void JuegoCliente::actualizar(){
 	if(rondas.empty()){
 		return;

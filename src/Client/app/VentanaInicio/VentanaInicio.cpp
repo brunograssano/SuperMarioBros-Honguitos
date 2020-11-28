@@ -120,7 +120,7 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 			(*terminar) = true;
 			throw runtime_error("CerroVentanaDeInicio");
 		}
-		else if( evento.type == SDL_KEYDOWN ){
+		else if(( evento.type == SDL_KEYDOWN )||(evento.type == SDL_MOUSEBUTTONDOWN)){
 			if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){
 				(**entradaUsuario).pop_back();
 			}

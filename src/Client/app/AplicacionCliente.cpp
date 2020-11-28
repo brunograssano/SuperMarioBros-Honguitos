@@ -94,9 +94,12 @@ void App::actualizarServer(const Uint8 *keystate){
 
 		if((keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_S]) && !se_movio){
 			entradaUsuario.S = true;
+			se_movio = true;
 		}
 
-		cliente->agregarEntrada(entradaUsuario);
+		if(se_movio){
+			cliente->agregarEntrada(entradaUsuario);
+		}
 	}
 }
 
@@ -143,6 +146,5 @@ App::~App(){
 
 	delete dibujador;
 	delete cargadorTexturas;
-	delete Log::getInstance();
 	delete ReproductorMusica::getInstance();
 }

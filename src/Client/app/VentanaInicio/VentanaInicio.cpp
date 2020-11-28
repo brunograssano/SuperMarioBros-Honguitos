@@ -256,13 +256,10 @@ credencial_t VentanaInicio::obtenerCredenciales(){
 
 
 VentanaInicio::~VentanaInicio(){
-	//aca se elimina cada textura de la pantalla de espera
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
 	SDL_DestroyRenderer( renderer );
-	//TTF_Quit();
-	//IMG_Quit();
-	//SDL_Quit();
+
 	SDL_DestroyWindow( ventana );
 
 }

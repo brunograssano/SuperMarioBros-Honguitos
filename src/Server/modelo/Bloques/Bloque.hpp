@@ -126,6 +126,9 @@ class Plataforma : public Bloque {
 		}
 
 		~Plataforma(){
+			for(auto const& bloque:bloques){
+				delete bloque;
+			}
 			bloques.clear();
 		}
 	private:

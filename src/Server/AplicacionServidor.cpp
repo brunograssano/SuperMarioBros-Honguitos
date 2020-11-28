@@ -252,7 +252,7 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 }
 
 AplicacionServidor::~AplicacionServidor(){
-
+	delete juego;
 }
 
 

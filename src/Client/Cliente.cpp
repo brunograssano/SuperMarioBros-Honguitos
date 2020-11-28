@@ -104,9 +104,13 @@ void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short ca
 }
 
 void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	App* aplicacion = App::getInstance();
+	if(aplicacion==nullptr){
+		return;
+	}
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
-	App::getInstance()->agregarRonda(info_ronda);
+	aplicacion->agregarRonda(info_ronda);
 	pthread_mutex_unlock(&mutex);
 }
 
@@ -185,7 +189,6 @@ void Cliente::ejecutar(){
 
 	gameLoop();
 
-	delete Log::getInstance();
 }
 
 void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){

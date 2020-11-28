@@ -213,24 +213,36 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
 	int posicionDelJugadorMasALaDerecha = 0;
+	int posicionDelJugadorMasALaIzquierda = 10000;
+
 	bool sePuedeMoverLaCamara = true;
 	Mario* jugador;
 
 	for(auto const& parClaveJugador: jugadores){
 		jugador = parClaveJugador.second;
-		if(jugador->estaConectado() && (jugador->obtenerPosicionX() <= rectanguloCamara->x)){
+
+		if(jugador->estaConectado() && jugador->obtenerPosicionX() <= rectanguloCamara->x) {
 			sePuedeMoverLaCamara = false;
 		}
 		if(jugador->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
 			posicionDelJugadorMasALaDerecha = jugador->obtenerPosicionX();
 		}
+		if(jugador->obtenerPosicionX() < posicionDelJugadorMasALaIzquierda){
+			posicionDelJugadorMasALaIzquierda = jugador->obtenerPosicionX();
+		}
 
 	}
 
-	bool unJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla = posicionDelJugadorMasALaDerecha > rectanguloCamara->x + (ancho_pantalla)/2;
+	bool unJugadorEstaDelLadoDerechoDeLaPantalla = posicionDelJugadorMasALaDerecha > rectanguloCamara->x + (ancho_pantalla)/2;
 
-	if(sePuedeMoverLaCamara && unJugadorEstaIntentandoIrAlLadoDerechoDeLaPantalla){
-		rectanguloCamara->x = posicionDelJugadorMasALaDerecha - (ancho_pantalla) / 2 ;
+	if(sePuedeMoverLaCamara && unJugadorEstaDelLadoDerechoDeLaPantalla){
+		//MOVER CAMARA
+		if(posicionDelJugadorMasALaIzquierda < posicionDelJugadorMasALaDerecha - ancho_pantalla/2){
+			rectanguloCamara->x = posicionDelJugadorMasALaIzquierda;
+		}else{
+			rectanguloCamara->x = posicionDelJugadorMasALaDerecha - ancho_pantalla/2;
+		}
+
 
 		for(auto const& parClaveJugador: jugadores){
 			jugador = parClaveJugador.second;

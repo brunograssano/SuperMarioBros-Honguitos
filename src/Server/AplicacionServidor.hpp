@@ -31,12 +31,14 @@ class AplicacionServidor{
 
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
+		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre, int IDJugador);
 		void gameLoop();
 
 	private:
 		Servidor* servidor;
 		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
 		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
+		bool estaEnRangoVisible(int posicionX);
 		SDL_Rect* obtenerRectCamara();
 		void moverCamara(map<int,Mario*> jugadores);
 		Log* log;

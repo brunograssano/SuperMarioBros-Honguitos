@@ -117,6 +117,14 @@ class Plataforma : public Bloque {
 			return this->bloques;
 		}
 
+		list<bloque_t> serializarPlataforma(){
+			list<bloque_t> bloquesSerializados;
+			for(auto const& bloque: bloques){
+				bloquesSerializados.push_back(bloque->serializar());
+			}
+			return bloquesSerializados;
+		}
+
 		~Plataforma(){
 			bloques.clear();
 		}

@@ -49,6 +49,61 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 }
 
 
+bool AplicacionServidor::estaEnRangoVisible(bloque_t bloque){
+
+	return (bloque.posX > rectanguloCamara.x) &&
+		   (bloque.posX < rectanguloCamara.x + rectanguloCamara.w);
+
+}
+
+
+info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre, int IDJugador){
+	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para el jugador: " + mapaIDNombre[IDJugador]);
+
+	info_ronda_t info_ronda;
+
+	info_ronda.mundo = juego->obtenerMundoActual();
+	info_ronda.posXCamara = this->rectanguloCamara.x;
+	info_ronda.tiempoFaltante = this->tiempoFaltante;
+	list<Plataforma*> plataformas = juego->obtenerPlataformas();
+
+	int numeroBloque = 0;
+
+	for(auto const& plataforma: plataformas){
+		list<bloque_t> bloques = plataforma->serializar();
+
+		for(auto const& bloque: bloques){
+			if(estaEnRangoVisible(bloque) && numeroBloque<MAX_BLOQUES){
+				info_ronda.bloques[numeroBloque] = bloque;
+				numeroBloque++;
+			}
+		}
+	}
+
+	info_ronda.topeBloques = numeroBloque;
+
+	list<Enemigo*> enemigos = juego->obtenerEnemigos();
+	for(auto const& enemigo: enemigos){
+		enemigo->serializar();
+	}
+
+	typedef struct ronda{
+		unsigned short mundo;
+		unsigned short posXCamara;
+		unsigned short tiempoFaltante;
+		unsigned short topeBloques;
+		unsigned short topeEnemigos;
+		unsigned short topeMonedas;
+		bloque_t bloques[MAX_BLOQUES];
+		enemigo_t enemigos[MAX_ENEMIGOS];
+		moneda_t monedas[MAX_MONEDAS];
+		jugador_t jugadores[MAX_JUGADORES];
+	}info_ronda_t;
+
+
+	return info_ronda;
+}
+
 void AplicacionServidor::iniciarJuego(){
 	comenzoElJuego = true;
 }

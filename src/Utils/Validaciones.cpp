@@ -1,5 +1,7 @@
 #include "Validaciones.hpp"
 
+const int PARTES_DE_IP = 4;
+
 void manejarEntrada(int argc, char* args[], char ipEntrada[LARGO_IP], char puertoEntrada[LARGO_IP], char nivelLogEntrada[LARGO_ENTRADA]){
 
 	  static struct option opcionesLargas[] = {
@@ -84,17 +86,16 @@ TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
 
 
 bool esIpValida(char ipEntrada[LARGO_IP]){
-	/*
-    if (ipEntrada.length() > 0){
-
+	string ipAVerificar = ipEntrada;
+    if (ipAVerificar.length() > 0){
     		vector<string> numeros;
-    		string ipAVerificar = ipEntrada;
-    		string delimitador = "";
+
+    		string delimitador = ".";
 			size_t posicionAnterior = 0;
 			size_t posicion = 0;
 			do{
 				posicion = ipAVerificar.find(delimitador, posicionAnterior);
-				if (posicion == string::npos){
+				if (posicion >= string::npos){
 					posicion = ipAVerificar.length();
 				}
 				string numero = ipAVerificar.substr(posicionAnterior, posicion-posicionAnterior);
@@ -104,8 +105,8 @@ bool esIpValida(char ipEntrada[LARGO_IP]){
 				posicionAnterior = posicion + delimitador.length();
 			}while (posicion < ipAVerificar.length() && posicionAnterior < ipAVerificar.length());
 
-            if (numeros.size() == 4){
-                    for (int i=0; i < 4; i++){
+            if (numeros.size() == PARTES_DE_IP){
+                    for (int i=0; i < PARTES_DE_IP; i++){
                             for (int j=0; j < numeros[i].length(); j++){
                             	if (!isdigit(numeros[i][j])){
                             		return false;
@@ -115,9 +116,10 @@ bool esIpValida(char ipEntrada[LARGO_IP]){
                             	return false;
                             }
                     }
-            return true;
+
+                    return true;
             }
-    }*/
+    }
     return false;
 }
 

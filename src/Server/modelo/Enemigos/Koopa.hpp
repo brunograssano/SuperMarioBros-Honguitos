@@ -26,7 +26,7 @@ class Koopa : public Enemigo{
 			enemigoSerializado.posX = this->obtenerPosicionX();
 			enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
 			enemigoSerializado.numeroRecorteY = tipoColor;
-			enemigoSerializado.tipoEnemigo = KOOPA;
+			enemigoSerializado.tipoEnemigo = TIPO_KOOPA;
 			return enemigoSerializado;
 		}
 

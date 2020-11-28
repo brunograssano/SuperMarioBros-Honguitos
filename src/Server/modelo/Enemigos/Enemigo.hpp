@@ -5,8 +5,8 @@
 #include <string>
 #include "../../sprites/Sprite.hpp"
 
-#define GOOMBA 1
-#define KOOPA 2
+#define TIPO_GOOMBA 1
+#define TIPO_KOOPA 2
 
 
 class Enemigo{
@@ -29,7 +29,7 @@ class Enemigo{
 			posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
 		};
 
-		virtual enemigo_t serializar(){return NULL;};
+		virtual enemigo_t serializar(){return {0,0,0,0};};
 
 		virtual void actualizarPosicion(){};
 

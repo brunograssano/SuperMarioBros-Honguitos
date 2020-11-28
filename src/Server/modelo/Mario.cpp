@@ -87,7 +87,7 @@ jugador_t Mario::serializar(char nombreJugador[MAX_NOMBRE], unsigned short idIma
 	marioSerializado.idImagen = idImagen;
 	marioSerializado.posX = posicion->obtenerPosX();
 	marioSerializado.posY = posicion->obtenerPosY();
-	marioSerializado.recorteImagen = spriteMario->obtenerEstadoActual()
+	marioSerializado.recorteImagen = spriteMario->obtenerEstadoActual();
 	jugadorSerializado.mario = marioSerializado;
 	return jugadorSerializado;
 }

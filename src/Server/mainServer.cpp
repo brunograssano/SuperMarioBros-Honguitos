@@ -12,10 +12,12 @@ using namespace std;
 
 #include <getopt.h>
 
-ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo, TipoLog *nivelLog) {
+ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
+	TipoLog* nivelLog;
 	Lector* lector = new Lector();
 	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	ArchivoLeido* archivoLeido;
+
 	if (strcmp(direccionLecturaComando, "") != 0) {
 		archivoLeido = lector->leerArchivo(direccionLecturaComando);
 		if (!archivoLeido->leidoCorrectamente) {
@@ -28,7 +30,7 @@ ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARG
 	}
 
 	if (strcmp(nivelLogEntrada, "") != 0) {
-		nivelLog = determinarNivelLogServer(nivelLogEntrada);
+		nivelLog = determinarNivelLog(nivelLogEntrada);
 		if (nivelLog != NULL) {
 			archivoLeido->tipoLog = nivelLog;
 		}
@@ -45,18 +47,16 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	char nivelLogEntrada[LARGO_ENTRADA] = "";
 	char ipEntrada[LARGO_IP] = "";
 	char puertoEntrada[LARGO_IP] = "";
+	int puerto = 0;//5004;
+	char ip[LARGO_IP] = "";//"127.0.0.1";
 	ArchivoLeido* archivoLeido;
-	TipoLog* nivelLog;
 	list<string> mensajesErrorOtroArchivo;
 
-	//manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
+	manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 
-	int puerto = 5004;
-	char ip[LARGO_IP] = "127.0.0.1";
+	validarPuertoEIp(ipEntrada,puertoEntrada,ip, &puerto);
 
-	//validarPuertoEIp(ipEntrada,puertoEntrada,ip, &puerto);
-
-	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo, nivelLog);
+	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo);
 
 	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 	pthread_t hiloJuego;

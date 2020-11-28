@@ -15,9 +15,9 @@ int mainClient(int argc, char* args[]){
 	int puerto = 5004;
 	char ip[LARGO_IP] = "127.0.0.1";
 
-	//validarPuertoEIpCliente(ipEntrada, puertoEntrada, ip, &puerto);
+	//validarPuertoEIp(ipEntrada, puertoEntrada, ip, &puerto);
 
-	TipoLog* nivelLog = determinarNivelLogClient(nivelLogEntrada);
+	TipoLog* nivelLog = determinarNivelLog(nivelLogEntrada);
 	Log::getInstance(nivelLog);
 	info_partida_t informacion; //nos lo mandan
 

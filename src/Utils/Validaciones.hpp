@@ -18,6 +18,7 @@
 #define VALOR_MINIMO_PUERTO 1023
 const int ERROR = -1, VACIO=0, TERMINO = -1;
 
+#define SERVER 's'
 #define CONFIG 'c'
 #define IP 'i'
 #define PUERTO 'p'
@@ -25,18 +26,10 @@ const int ERROR = -1, VACIO=0, TERMINO = -1;
 
 void manejarEntrada(int argc, char* args[], char ipEntrada[LARGO_IP], char puertoEntrada[LARGO_IP], char nivelLogEntrada[LARGO_ENTRADA]);
 
-TipoLog* determinarNivelLogClient(char nivelLogEntrada[LARGO_ENTRADA]);
-
-bool esIpValidaCliente(string ipEntrada);
-
-void validarPuertoEIpCliente(char ipEntrada[LARGO_IP], char puertoEntrada[LARGO_IP], char ip[LARGO_IP], int* puerto);
-
 void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLecturaComando[LARGO_ENTRADA],char nivelLogEntrada[LARGO_ENTRADA],
 					char ipEntrada[LARGO_IP],char puertoEntrada[LARGO_IP]);
 
-TipoLog* determinarNivelLogServer(char nivelLogEntrada[LARGO_ENTRADA]);
-
-bool esIpValida(string ipEntrada);
+TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]);
 
 void validarPuertoEIp(char ipEntrada[LARGO_IP], char puertoEntrada[LARGO_IP], char ip[LARGO_IP], int* puerto);
 

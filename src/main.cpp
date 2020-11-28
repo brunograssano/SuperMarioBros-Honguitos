@@ -8,12 +8,16 @@ using namespace std;
 #include "Server/mainServer.hpp"
 #include "Client/mainClient.hpp"
 
-void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
-	for(int i=0;i<cantidadArgumentos;i++){
+bool esServer(int cantidadArgumentos, char* argumentos[]){
+	bool esServer = false;
+	int i=0;
+	while(i<cantidadArgumentos && !esServer){
 		if(strcmp(argumentos[i],"-s")==0 || strcmp(argumentos[i],"-server")==0 || strcmp(argumentos[i],"--server")==0){
-			(*esServer) = true;
+			esServer = true;
 		}
+		i++;
 	}
+	return esServer;
 }
 
 /*
@@ -27,11 +31,7 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[], bool* esServer){
  */
 int main( int cantidadArgumentos, char* argumentos[]){
 
-	bool esServer = false;
-
-	manejarEntrada(cantidadArgumentos, argumentos, &esServer);
-
-	if(esServer){
+	if(esServer(cantidadArgumentos, argumentos)){
 		mainServer(cantidadArgumentos, argumentos);
 	}
 	else{

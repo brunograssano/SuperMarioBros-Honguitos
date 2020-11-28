@@ -36,10 +36,6 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	texturaMoneda = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
 
-	texturaLadrillo = intentarCarga("imagen del bloque ladrillo", "resources/Imagenes/Bloques/BloqueLadrillo.png", renderizador);
-
-	texturaSorpresa = intentarCarga("la textura sorpresa", "resources/Imagenes/Bloques/BloqueSorpresa.png", renderizador);
-
 	texturaFondoInicio = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
 
 	texturaTitulo = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);

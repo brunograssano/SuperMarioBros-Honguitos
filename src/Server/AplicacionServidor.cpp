@@ -68,6 +68,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	info_ronda.mundo = juego->obtenerMundoActual();
 	info_ronda.posXCamara = this->rectanguloCamara.x;
 	info_ronda.tiempoFaltante = this->tiempoFaltante;
+	info_ronda.ganaron = this->ganaron;
 
 	list<Plataforma*> plataformas = juego->obtenerPlataformas();
 	int numeroBloque = 0;

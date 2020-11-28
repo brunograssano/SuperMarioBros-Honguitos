@@ -5,14 +5,14 @@ using namespace std;
 #include <list>
 #include <string>
 
+#include "../../../Utils/Utils.hpp"
+
 #include "../Posicion.hpp"
 #include "../../sprites/Sprite.hpp"
 #include "../../sprites/SpriteSorpresa.hpp"
 #include "../../sprites/SpriteLadrillo.hpp"
 
-#define SORPRESA 1
-#define LADRILLO 2
-
+#define SORPRESA 0
 
 const int LADO_BLOQUE_DEFAULT = 10;
 
@@ -32,7 +32,7 @@ class Bloque{
 			return this->spriteBloque;
 		}
 
-		virtual bloque_t serializar(){return NULL;};
+		virtual bloque_t serializar(){return {0,0,0,0};};
 
 		void ubicarEnPosicionDefault(){
 			delete this->posicion;
@@ -56,12 +56,6 @@ class Sorpresa : public Bloque{
 			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteSorpresa();
 		}
-		typedef struct bloque{
-			int posX;
-			int posY;
-			unsigned short numeroRecorteX;
-			unsigned short numeroRecorteY;
-		}bloque_t;
 
 		bloque_t serializar()override{
 			bloque_t bloqueSerializado;
@@ -71,6 +65,7 @@ class Sorpresa : public Bloque{
 			bloqueSerializado.numeroRecorteY = SORPRESA;
 			return bloqueSerializado;
 		}
+
         ~Sorpresa(){
         	delete this->posicion;
         	delete this->spriteBloque;
@@ -85,8 +80,9 @@ class Ladrillo : public Bloque {
 			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
 			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
 
-			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
-			this->spriteBloque = new SpriteLadrillo(tipo);
+			posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
+			tipoLadrillo = tipo;
+			spriteBloque = new SpriteLadrillo(tipo);
 		}
 
 		bloque_t serializar()override{
@@ -94,23 +90,17 @@ class Ladrillo : public Bloque {
 			bloqueSerializado.posX = posicion->obtenerPosX();
 			bloqueSerializado.posY = posicion->obtenerPosY();
 			bloqueSerializado.numeroRecorteX = spriteBloque->obtenerEstadoActual();
-			bloqueSerializado.numeroRecorteY = LADRILLO;
+			bloqueSerializado.numeroRecorteY = tipoLadrillo;
 			return bloqueSerializado;
 		}
 
-		Ladrillo(int coordenadaX, int coordenadaY){
-
-			int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
-			int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
-
-			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
-			this->spriteBloque = new SpriteLadrillo();
-		}
-
 		~Ladrillo(){
-			delete this->posicion;
-			delete this->spriteBloque;
+			delete posicion;
+			delete spriteBloque;
 		}
+
+	private:
+		int tipoLadrillo;
 
 };
 

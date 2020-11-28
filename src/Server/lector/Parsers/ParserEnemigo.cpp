@@ -1,11 +1,12 @@
 #include "ParserEnemigo.hpp"
 
 #define VALOR_POR_DEFECTO_ENEMIGOS 15
+#define VALOR_POR_DEFECTO_COLOR_ENEMIGO 0
 
 void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = enemigo.child_value("tipo");
-	//string direccionImagen = enemigo.child_value("direccionImagen"); /*ACA TIENE QUE RECIBIR EL COLOR */
-	int cantidad;
+	string colorEnemigoString = enemigo.child_value("color"); /*ACA TIENE QUE RECIBIR EL COLOR */
+	int cantidad, colorEnemigoInt;
 
 	string cantEnemigosString = enemigo.child_value("cantidad");
 	try{
@@ -18,6 +19,17 @@ void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,Archivo
 		archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto");
 		cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
 	}
+
+	try{
+		colorEnemigoInt = stoi(cantEnemigosString);
+		if(colorEnemigoInt < 0 || colorEnemigoInt>2){
+			archivoLeido->mensajeError.push_back("El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto");
+			colorEnemigoInt = VALOR_POR_DEFECTO_COLOR_ENEMIGO;
+		}
+		}catch(std::exception& e){
+			archivoLeido->mensajeError.push_back("El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto");
+			colorEnemigoInt = VALOR_POR_DEFECTO_COLOR_ENEMIGO;
+		}
 
 	if(tipo.compare("Goomba")!=0 && tipo.compare("Koopa")!=0){
 		archivoLeido->mensajeError.push_back("No existe el tipo de enemigo ("+tipo+"), no se cargara ningun otro tipo de enemigo en su remplazo");

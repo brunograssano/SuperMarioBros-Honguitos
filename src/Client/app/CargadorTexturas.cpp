@@ -17,10 +17,6 @@
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
 
-	/*if( TTF_Init() == -1 ){
-		log->huboUnErrorSDL("No se pudo inicializar SDL_ttf ", TTF_GetError());
-	}*/
-
 	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
@@ -125,13 +121,9 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
 void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador){
 
 	for(int i=0;i<cantidadFondosNiveles;i++){
-		int altoNivel = 0;
-		int largoNivel = 0;
 		direccionesNiveles[i] = "resources/Imagenes/Niveles/" + direccionesNiveles[i];
 		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", direccionesNiveles[i], renderizador);
 		texturasNiveles[direccionesNiveles[i]] = texturaNueva;
-		SDL_QueryTexture(texturaNueva, NULL, NULL, &largoNivel, &altoNivel);
-		//nivel->definirDimesionesDelNivel(largoNivel, altoNivel);
 	}
 
 	texturaFondoActual = this->texturasNiveles[direccionesNiveles[0]];

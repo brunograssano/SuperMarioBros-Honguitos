@@ -20,6 +20,7 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 	this->recorteSpriteGoomba = new RecorteGoomba();
 	this->recorteSpriteKoopa = new RecorteKoopa();
 	this->recorteSpriteMoneda = new RecorteMoneda();
+	this->recorteSpriteBloque = new RecorteBloque();
 }
 
 void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
@@ -38,33 +39,36 @@ void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoClien
 
 void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<enemigo_t> enemigos = juegoCliente->obtenerEnemigos();
+	string tipo;
 	for (auto const& enemigo : enemigos) {
 		SDL_Rect recorteTextura;
 		if(enemigo.tipoEnemigo==GOOMBA){
-			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.numeroRecorte);
+			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
+			tipo = "resources/Imagenes/Personajes/Goombas.png";
 		}
 		else{
-			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.numeroRecorte);
+			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
+			tipo = "resources/Imagenes/Personajes/Koopas.png";
 		}
 
 		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
-	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(enemigo.direccionImagen,renderizador), &recorteTextura, &rectanguloEnemigo);
+	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(tipo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
 }
 
 void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<bloque_t> bloques = juegoCliente->obtenerBloques();
-
+	string direccionBloque = "resources/Imagenes/Bloques/Bloques.png";
 	for (auto const& bloque : bloques) {
 
 		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque.posY,
 									LARGO_BLOQUE, LARGO_BLOQUE};
-		SDL_Rect recorteBloque = {0,0,16,16}; // Pasaria a ser un RecorteBloque (por los sorpresa)
-		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(bloque.dirImagen, renderizador), &recorteBloque, &rectanguloBloque);
+		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
+		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(direccionBloque, renderizador), &recorteBloque, &rectanguloBloque);
 	}
 
 }

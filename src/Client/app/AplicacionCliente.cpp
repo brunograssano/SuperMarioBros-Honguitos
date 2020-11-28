@@ -21,18 +21,11 @@ App* App::getInstance(){
 }
 
 void App::inicializarSDL(Log* log){
-	/*if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		log->huboUnErrorSDL("Error inicializando SDL", SDL_GetError());
-	}*/
 
 	ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
 	if( ventanaAplicacion == NULL ){
 		log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
 	}
-
-	/*if( !( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) ){
-		log->huboUnErrorSDL("No se pudo inicializar IMG Init", IMG_GetError());
-	}*/
 
 	renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 	if( renderizador == NULL ){

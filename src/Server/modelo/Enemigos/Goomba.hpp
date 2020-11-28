@@ -27,7 +27,7 @@ class Goomba : public Enemigo{
 			enemigoSerializado.posX = this->obtenerPosicionX();
 			enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
 			enemigoSerializado.numeroRecorteY = tipoColor;
-			enemigoSerializado.tipoEnemigo = GOOMBA;
+			enemigoSerializado.tipoEnemigo = TIPO_GOOMBA;
 			return enemigoSerializado;
 		}
 

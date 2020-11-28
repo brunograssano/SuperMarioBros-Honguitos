@@ -114,6 +114,28 @@ void Servidor::ejecutar(){
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y gameLoop.");
 	}
+
+	list<int> idsUsuariosReconectados;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	while(!terminoJuego){
+		for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
+			usuario_t usuario = parClaveUsuario.second;
+			if(usuario.usado){
+				int idJugador = parClaveUsuario.first;
+				info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
+				pthread_mutex_lock(&mutex);
+				clientesJugando[parClaveUsuario.first]->enviarInfoPartida(info_partida);
+				pthread_mutex_unlock(&mutex);
+				idsUsuariosReconectados.push_front(idJugador);
+			}
+		}
+		for(auto const id:idsUsuariosReconectados){
+			usuariosQuePerdieronConexion.erase(id);
+		}
+	}
+
+	//detach
+
 }
 
 int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados) {
@@ -128,8 +150,7 @@ int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &
 		pthread_mutex_unlock(&mutex);
 		ConexionCliente *conexion = new ConexionCliente(this,socketConexionEntrante, this->cantUsuariosLogueados, (string) (inet_ntoa(addressCliente.sin_addr)));
 		pthread_t hilo;
-		if (pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper,
-				conexion) != 0) {
+		if (pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper,conexion) != 0) {
 			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: "+ to_string(usuariosConectados) + "\n\t Cliente: "+ (string) (inet_ntoa(addressCliente.sin_addr))
 											+ " ; Puerto: " + to_string(ntohs(addressCliente.sin_port)) + ".");
@@ -177,7 +198,7 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexio
 				usuario_t usuario = parClaveUsuario.second;
 				if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
 					pthread_mutex_lock(&mutex);
-					usuariosQuePerdieronConexion.erase(parClaveUsuario.first);
+					usuario.usado = true;
 					clientesJugando[parClaveUsuario.first] = conexionClienteConPosibleUsuario;
 					conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
 					cantUsuariosLogueados++;

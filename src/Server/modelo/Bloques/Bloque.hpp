@@ -16,6 +16,8 @@ using namespace std;
 
 const int LADO_BLOQUE_DEFAULT = 10;
 
+#define ANCHO_BLOQUE_PIXEL 16
+
 class Bloque{
     public:
 

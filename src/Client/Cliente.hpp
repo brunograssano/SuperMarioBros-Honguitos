@@ -70,6 +70,8 @@ class Cliente{
 
 		unsigned short cantidadJugadoresActivos;
 
+		bool cargoLaAplicacion = false;
+
 		bool seRecibioInformacionInicio = false;
 		info_inicio_t infoInicio;
 		void esperarRecibirInformacionInicio();

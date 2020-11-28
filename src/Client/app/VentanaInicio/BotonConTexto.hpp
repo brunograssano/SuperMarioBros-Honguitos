@@ -17,11 +17,14 @@ class BotonConTexto
 
     BotonConTexto( int posicionX, int posicionY, int ancho, int alto , SDL_Texture* texto);
 
+    void cambiarTexto(SDL_Texture* texto);
+
     bool botonClickeado(SDL_Event evento);
 
     void mostrarse(SDL_Renderer* renderer);
 
-    ~BotonConTexto();
+    void mostrarseCambiandoAncho(SDL_Renderer* renderer, int nuevoAncho);
+
 };
 
 #endif

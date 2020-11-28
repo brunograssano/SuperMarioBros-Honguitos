@@ -6,6 +6,10 @@ BotonConTexto::BotonConTexto(int posicionX, int posicionY, int ancho, int alto ,
 	this->texto = texto;
 }
 
+void BotonConTexto::cambiarTexto(SDL_Texture* texto){
+	this->texto = texto;
+}
+
 bool BotonConTexto::botonClickeado(SDL_Event evento){
     //If a mouse button was pressed
     if( evento.type == SDL_MOUSEBUTTONDOWN ){
@@ -32,6 +36,15 @@ void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* 
 void BotonConTexto::mostrarse(SDL_Renderer* renderer){
 
 	renderizar(rectangulo.x + rectangulo.x*0.05,rectangulo.y + rectangulo.y *0.05 ,rectangulo.h * 0.7,rectangulo.w * 0.7,texto,renderer);
+
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
+
+	SDL_RenderDrawRect(renderer, &rectangulo);
+}
+
+void BotonConTexto::mostrarseCambiandoAncho(SDL_Renderer* renderer, int nuevoAncho){
+
+	renderizar(rectangulo.x ,rectangulo.y,rectangulo.h , nuevoAncho,texto,renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
 

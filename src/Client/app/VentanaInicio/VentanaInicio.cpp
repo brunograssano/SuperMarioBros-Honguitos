@@ -91,6 +91,8 @@ VentanaInicio::VentanaInicio(){
 			log->huboUnError("No se pudo crear la textura para ingresar la contraseña");
 		}
 		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , this->textoBotonEnviar);
+		this->cajaTextoUsuario = new BotonConTexto(20,40,150,14,this->usuarioIngresado);
+		this->cajaTextoContrasenia = new BotonConTexto(20,90,150,14,this->contraseniaIngresada);
 	}
 
 }
@@ -114,7 +116,7 @@ SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
 	return texturaACargar;
 }
 
-bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,string* textoIngresadoUsuario, string* textoIngresadoConstrasenia, string** entradaUsuario){
+bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,string* textoIngresadoUsuario, string* textoIngresadoContrasenia, string** entradaUsuario){
 	while( SDL_PollEvent( &evento ) != 0 ){
 		if( evento.type == SDL_QUIT ){
 			(*terminar) = true;
@@ -124,10 +126,10 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 			if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){
 				(**entradaUsuario).pop_back();
 			}
-			else if(evento.key.keysym.sym == SDLK_DOWN){
-				(*entradaUsuario) = textoIngresadoConstrasenia;
+			else if(this->cajaTextoContrasenia->botonClickeado(evento)){
+				(*entradaUsuario) = textoIngresadoContrasenia;
 			}
-			else if(evento.key.keysym.sym == SDLK_UP){
+			else if(this->cajaTextoUsuario->botonClickeado(evento)){
 				(*entradaUsuario) = textoIngresadoUsuario;
 			}
 			else if(this->botonEnviar->botonClickeado(evento)){
@@ -174,18 +176,12 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 		if(textoIngresadoUsuario.length() != 0){
 			this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), colorBlanco );
+			this->cajaTextoUsuario->cambiarTexto(this->usuarioIngresado);
 		}
 		if(textoIngresadoContrasenia.length() != 0){
 			this->contraseniaIngresada = cargoTextura( textoIngresadoContrasenia.c_str(), colorBlanco );
+			this->cajaTextoContrasenia->cambiarTexto(this->contraseniaIngresada);
 		}
-
-		SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-		SDL_RenderClear( this->renderer );
-
-		SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
-		SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
-
-		this->botonEnviar->mostrarse(this->renderer);
 
 		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
 		if(anchoTextoUsuario>270){
@@ -197,15 +193,22 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 			anchoTextoContrasenia = 270;
 		}
 
+		SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderClear( this->renderer );
+
+		SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
+		SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
+
+		this->botonEnviar->mostrarse(this->renderer);
+
 		renderizar(10,20,14,200,this->texturaTextoUsuario);
-		if(textoIngresadoUsuario.length() != 0){
-			renderizar(20,40,14,anchoTextoUsuario,this->usuarioIngresado);
-		}
+
+		this->cajaTextoUsuario->mostrarseCambiandoAncho(this->renderer, anchoTextoUsuario);
 
 		renderizar(10,70,14,250,this->texturaTextoContrasenia);
-		if(textoIngresadoContrasenia.length() != 0){
-			renderizar(20,90,14,anchoTextoContrasenia,this->contraseniaIngresada);
-		}
+
+		this->cajaTextoContrasenia->mostrarseCambiandoAncho(this->renderer, anchoTextoContrasenia);
+
 		if(ingresoIncorrectoCredenciales){
 			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
 			this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
@@ -249,6 +252,11 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	}
 
 	Log* log = Log::getInstance();
+	/*
+	delete(this->botonEnviar);
+	delete(this->cajaTextoUsuario);
+	delete(this->cajaTextoContrasenia);
+	*/
 	SDL_RenderClear( this->renderer );
 	SDL_DestroyTexture( texturaTextoUsuario );
 	SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );

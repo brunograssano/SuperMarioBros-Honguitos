@@ -5,6 +5,8 @@
 #define VALOR_POR_DEFECTO_COORDENADAY 200
 #define VALOR_POR_DEFECTO_COLOR 1
 
+const int MAXIMO_ALTO = 4000;
+
 void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = plataforma.child_value("tipo");
 	string colorBloque = plataforma.child_value("color");
@@ -38,7 +40,7 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 
 	try{
 		coordenadaY = stoi(plataforma.child_value("coordenadaY"));
-		if(coordenadaY < 0){
+		if(coordenadaY < 0 || MAXIMO_ALTO < coordenadaY ){
 			archivoLeido->mensajeError.push_back("El valor de coordenada Y enviado no tiene valor valido,se carga el valor por defecto");
 			coordenadaY = VALOR_POR_DEFECTO_COORDENADAY;
 		}

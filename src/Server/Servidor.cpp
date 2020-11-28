@@ -73,11 +73,80 @@ void Servidor::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 }
 
 
+void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	if(!nombre.empty() && !contrasenia.empty()){
+		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
+		usuariosQuePerdieronConexion[idJugador] = usuarioDesconectado;
+		clientesJugando.erase(idJugador);
+		pthread_mutex_lock(&mutex);
+		log->mostrarMensajeDeInfo("Se perdio la conexion con el usuario: " + nombre);
+		cantUsuariosLogueados--;
+		pthread_mutex_unlock(&mutex);
+	}
+	conexionesPerdidas.push_front(conexionPerdida);
+	clientes.remove(conexionPerdida);
 
 
+	// Informar a los log de los otros jugadores, usar un mutex con el send, que nadie haga nada
+}
 
+void Servidor::ejecutar(){
+	pthread_t hiloJuego;
+	iniciarJuego(&hiloJuego);
 
-void* Servidor::escuchar(){
+	pthread_t hiloEscuchar;
+	int resultadoCreate = pthread_create(&hiloEscuchar, NULL, Servidor::escuchar_helper, this);
+	if(resultadoCreate!= 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar, el codigo de error es: " + to_string(resultadoCreate));
+		return;
+	}else{
+		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar: (" + to_string(hiloEscuchar) +").");
+	}
+
+	intentarIniciarModelo();
+
+	int resultadoJoin = pthread_join(hiloJuego, NULL);
+	if(resultadoJoin != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al juntar los hilos main y gameLoop, el codigo de error es: " + to_string(resultadoJoin));
+		pthread_cancel(hiloJuego);
+		return;
+	}else{
+		Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y gameLoop.");
+	}
+}
+
+int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados) {
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	if (socketConexionEntrante < 0) {
+		pthread_mutex_lock(&mutex);
+		log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
+		pthread_mutex_unlock(&mutex);
+	} else {
+		pthread_mutex_lock(&mutex);
+		log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
+		pthread_mutex_unlock(&mutex);
+		ConexionCliente *conexion = new ConexionCliente(this,socketConexionEntrante, this->cantUsuariosLogueados, (string) (inet_ntoa(addressCliente.sin_addr)));
+		pthread_t hilo;
+		if (pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper,
+				conexion) != 0) {
+			pthread_mutex_lock(&mutex);
+			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: "+ to_string(usuariosConectados) + "\n\t Cliente: "+ (string) (inet_ntoa(addressCliente.sin_addr))
+											+ " ; Puerto: " + to_string(ntohs(addressCliente.sin_port)) + ".");
+			pthread_mutex_unlock(&mutex);
+		} else {
+			pthread_mutex_lock(&mutex);
+			Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario: "+ to_string(usuariosConectados) + "\n\t Cliente: "+ (string) (inet_ntoa(addressCliente.sin_addr))
+														+ " ; Puerto: "+ to_string(ntohs(addressCliente.sin_port)) + ".");
+			pthread_mutex_unlock(&mutex);
+		}
+		usuariosConectados++;
+		clientes.push_back(conexion);
+	}
+	return usuariosConectados;
+}
+
+void Servidor::conectarJugadores(){
 	int usuariosConectados = 0;
 	int socketConexionEntrante;
 	socklen_t addressStructure;
@@ -85,7 +154,6 @@ void* Servidor::escuchar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 	while(!terminoJuego){
-
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
 
 		if(cantUsuariosLogueados >= cantidadConexiones){
@@ -95,55 +163,47 @@ void* Servidor::escuchar(){
 			pthread_mutex_unlock(&mutex);
 			close(socketConexionEntrante);
 		}else{
-			if (socketConexionEntrante < 0){
-				pthread_mutex_lock(&mutex);
-				log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-				pthread_mutex_unlock(&mutex);
-			}else{
-				pthread_mutex_lock(&mutex);
-				log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+".");
-				pthread_mutex_unlock(&mutex);
-
-				ConexionCliente* conexion = new ConexionCliente(this, socketConexionEntrante, this->cantUsuariosLogueados,(string) inet_ntoa(addressCliente.sin_addr));
-
-				pthread_t hilo;
-				if(pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper, conexion) != 0){
-					pthread_mutex_lock(&mutex);
-					Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: " + to_string(usuariosConectados)
-							+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
-					pthread_mutex_unlock(&mutex);
-				}else{
-					pthread_mutex_lock(&mutex);
-					Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario: " + to_string(usuariosConectados)
-							+ "\n\t Cliente: " + (string) inet_ntoa(addressCliente.sin_addr) + " ; Puerto: " + to_string(ntohs(addressCliente.sin_port))+ ".");
-					pthread_mutex_unlock(&mutex);
-				}
-				usuariosConectados++;
-				clientes.push_back(conexion);
-			}
+			usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
 		}
 
 	}
-
-	return NULL;
 }
 
 bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(cantUsuariosLogueados<cantidadConexiones){
-		for(auto& usuario:usuariosValidos){
-			if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
-				pthread_mutex_lock(&mutex);
-				usuario.usado = true;
-				for(auto const& cliente:clientes){
-					cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
+		if(!usuariosQuePerdieronConexion.empty()){
+			for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
+				usuario_t usuario = parClaveUsuario.second;
+				if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
+					pthread_mutex_lock(&mutex);
+					usuariosQuePerdieronConexion.erase(parClaveUsuario.first);
+					clientesJugando[parClaveUsuario.first] = conexionClienteConPosibleUsuario;
+					conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
+					cantUsuariosLogueados++;
+					for(auto const& cliente:clientes){
+						cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
+					}
+					pthread_mutex_unlock(&mutex);
+					return true;
 				}
-				clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
-				mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
-				conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
-				cantUsuariosLogueados++;
-				pthread_mutex_unlock(&mutex);
-				return true;
+			}
+		}
+		else{
+			for(auto& usuario:usuariosValidos){
+				if(posibleUsuario.nombre.compare(usuario.nombre)==0 && posibleUsuario.contrasenia.compare(usuario.contrasenia)==0 && !usuario.usado){
+					pthread_mutex_lock(&mutex);
+					usuario.usado = true;
+					clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
+					mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
+					conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
+					cantUsuariosLogueados++;
+					for(auto const& cliente:clientes){
+						cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
+					}
+					pthread_mutex_unlock(&mutex);
+					return true;
+				}
 			}
 		}
 	}
@@ -174,7 +234,6 @@ void Servidor::intentarIniciarModelo(){
 
 void Servidor::iniciarJuego(pthread_t* hiloJuego){
 
-
 	int resultadoCreate = pthread_create(hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
 
 	if(resultadoCreate!= 0){
@@ -194,7 +253,11 @@ Servidor::~Servidor(){
 	for(auto const& cliente:clientes){
 		delete cliente;
 	}
+	for(auto const& parClaveCliente:clientesJugando){
+		delete parClaveCliente.second;
+	}
 	clientes.clear();
+	clientesJugando.clear();
 	close(socketServer);
 	delete Log::getInstance();
 }

@@ -1,6 +1,6 @@
 <configuracion>
     <log>
-        <level>DEBUG</level> <!-- DEBUG o INFO -->
+        <level>INFO</level> <!-- DEBUG o INFO -->
     </log>
 
     <ventana>
@@ -748,6 +748,6 @@
 		</usuario>
 
 	</credenciales>
-	<cantidadConexiones>1</cantidadConexiones>
+	<cantidadConexiones>2</cantidadConexiones>
 
 </configuracion>

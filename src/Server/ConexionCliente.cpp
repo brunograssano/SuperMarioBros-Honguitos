@@ -40,7 +40,7 @@ void ConexionCliente::escuchar(){
 	}
 	shutdown(socket, SHUT_RDWR);
 	close(socket);
-
+	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
 }
 
 

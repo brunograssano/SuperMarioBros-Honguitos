@@ -79,10 +79,8 @@ void Cliente::enviarEntrada(){
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	empiezaElJuego = true;
-	inicializarAplicacion(info_partida,this);
-	seCargoLaAplicacion = true;
+	infoPartida = info_partida;
 }
 
 void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
@@ -122,11 +120,6 @@ void Cliente::esperarRecibirInformacionInicio(){
 void Cliente::esperarRecibirVerificacion(){
 	while(!seRecibioVerificacion){
 	}//TODO: Mostrar un mensaje de espera, en caso de ser necesario.
-}
-
-void Cliente::esperarCargaDeAplicacion(){
-	while(!seCargoLaAplicacion){
-	}
 }
 
 void Cliente::ejecutar(){
@@ -178,7 +171,7 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	esperarCargaDeAplicacion();
+	inicializarAplicacion(infoPartida,this);
 
 	pthread_t hiloEntrada;
 	int resultadoCreateEnviarEntrada = pthread_create(&hiloEntrada, NULL, Cliente::enviar_helper, this);

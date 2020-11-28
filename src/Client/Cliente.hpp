@@ -63,6 +63,7 @@ class Cliente{
 		void agregarEntrada(entrada_usuario_t entradaUsuario);
 		void empezarJuego(info_partida_t info_partida);
 	private:
+		info_partida_t infoPartida;
 		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
 		void enviarCredenciales(credencial_t credencial);
@@ -76,9 +77,6 @@ class Cliente{
 		bool seRecibioVerificacion = false;
 		verificacion_t pasoVerificacion = false;
 		void esperarRecibirVerificacion();
-
-		void esperarCargaDeAplicacion();
-		bool seCargoLaAplicacion = false;
 
 		bool empiezaElJuego = false;
 

@@ -1,4 +1,4 @@
-#ifndef SRC_SERVER_CONEXIONCLIENTE_HPP_
+	#ifndef SRC_SERVER_CONEXIONCLIENTE_HPP_
 #define SRC_SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
@@ -35,6 +35,10 @@ class ConexionCliente {
 			((ConexionCliente*) ptr)->ejecutar();
 			return NULL;
 		}
+
+		void recibirInformacionRonda(info_ronda_t info_ronda);
+		void enviarActualizacionesDeRonda();
+
 		void actualizarCantidadConexiones(int cantidadConexiones);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);

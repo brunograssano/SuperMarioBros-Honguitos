@@ -78,6 +78,18 @@ void ConexionCliente::esperarCredenciales(){
 }
 
 
+void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	// Encolar la informacion de la ronda que llega.
+}
+
+void ConexionCliente::enviarActualizacionesDeRonda(){
+	while(true){
+		// Desencolar actualización (una info_ronda_t)
+		// Enviarla al cliente.
+	}
+}
+
+
 void ConexionCliente::ejecutar(){
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, ConexionCliente::escuchar_helper, this);

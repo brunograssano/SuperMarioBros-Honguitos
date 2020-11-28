@@ -213,7 +213,7 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
 	int posicionDelJugadorMasALaDerecha = 0;
-	int posicionDelJugadorMasALaIzquierda = 10000;
+	int posicionDelJugadorMasALaIzquierda = ANCHO_FONDO;
 
 	bool sePuedeMoverLaCamara = true;
 	Mario* jugador;

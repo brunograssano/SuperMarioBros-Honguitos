@@ -127,8 +127,8 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 	int espacioY = 10;
 	for(auto const& parClaveJugador:jugadores){
 		textoDePuntos.str("");
-		textoDePuntos << "Puntos de "<< parClaveJugador.second.nombreJugador << parClaveJugador.second.puntos;
-		SDL_Rect cuadradoPuntos = { 10, espacioY, 100, 30 };
+		textoDePuntos << "Puntos de: "<< parClaveJugador.second.nombreJugador << " "<<parClaveJugador.second.puntos;
+		SDL_Rect cuadradoPuntos = { 10, espacioY, 200, 30 };
 		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
 		espacioY += 35;
 	}

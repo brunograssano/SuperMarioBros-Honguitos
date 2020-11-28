@@ -50,6 +50,7 @@ class ConexionCliente {
 
 	private:
 		info_inicio_t crearInformacionInicio();
+		queue<info_ronda_t> colaRondas;
 		void enviarInformacionInicio();
 		void enviarVerificacion(bool esUsuarioValido);
 		void enviarActualizacionCantidadConexiones();

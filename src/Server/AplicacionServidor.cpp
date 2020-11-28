@@ -49,15 +49,16 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 }
 
 
-bool AplicacionServidor::estaEnRangoVisible(bloque_t bloque){
+bool AplicacionServidor::estaEnRangoVisible(int posicionX){
 
-	return (bloque.posX > rectanguloCamara.x) &&
-		   (bloque.posX < rectanguloCamara.x + rectanguloCamara.w);
+	return (posicionX > rectanguloCamara.x) &&
+		   (posicionX < rectanguloCamara.x + rectanguloCamara.w);
 
 }
 
 
 info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre, int IDJugador){
+
 	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para el jugador: " + mapaIDNombre[IDJugador]);
 
 	info_ronda_t info_ronda;
@@ -65,41 +66,50 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre, 
 	info_ronda.mundo = juego->obtenerMundoActual();
 	info_ronda.posXCamara = this->rectanguloCamara.x;
 	info_ronda.tiempoFaltante = this->tiempoFaltante;
+
 	list<Plataforma*> plataformas = juego->obtenerPlataformas();
-
 	int numeroBloque = 0;
-
 	for(auto const& plataforma: plataformas){
-		list<bloque_t> bloques = plataforma->serializar();
+		list<bloque_t> bloques = plataforma->serializarPlataforma();
 
 		for(auto const& bloque: bloques){
-			if(estaEnRangoVisible(bloque) && numeroBloque<MAX_BLOQUES){
+			if(estaEnRangoVisible(bloque.posX) && numeroBloque<MAX_BLOQUES){
 				info_ronda.bloques[numeroBloque] = bloque;
 				numeroBloque++;
 			}
 		}
 	}
-
 	info_ronda.topeBloques = numeroBloque;
 
+	int numeroEnemigo = 0;
 	list<Enemigo*> enemigos = juego->obtenerEnemigos();
 	for(auto const& enemigo: enemigos){
-		enemigo->serializar();
+		if(estaEnRangoVisible(enemigo->obtenerPosicionX()) && numeroEnemigo<MAX_ENEMIGOS){
+			info_ronda.enemigos[numeroEnemigo] = enemigo->serializar();
+			numeroEnemigo++;
+		}
+	}
+	info_ronda.topeEnemigos = numeroEnemigo;
+
+	int numeroMoneda = 0;
+	list<Moneda*> monedas = juego->obtenerMonedas();
+	for(auto const& moneda: monedas){
+		if(estaEnRangoVisible(moneda->obtenerPosicionX()) && numeroMoneda<MAX_MONEDAS){
+			info_ronda.monedas[numeroMoneda] = moneda->serializar();
+			numeroMoneda++;
+		}
 	}
 
-	typedef struct ronda{
-		unsigned short mundo;
-		unsigned short posXCamara;
-		unsigned short tiempoFaltante;
-		unsigned short topeBloques;
-		unsigned short topeEnemigos;
-		unsigned short topeMonedas;
-		bloque_t bloques[MAX_BLOQUES];
-		enemigo_t enemigos[MAX_ENEMIGOS];
-		moneda_t monedas[MAX_MONEDAS];
-		jugador_t jugadores[MAX_JUGADORES];
-	}info_ronda_t;
-
+	int numeroJugador = 0;
+	map<int,Mario*> jugadores = juego->obtenerMarios();
+	jugador_t jugadorSerializado;
+	for(unsigned short int i=0; i<cantJugadores; i++){
+		if(numeroJugador < MAX_JUGADORES){
+			jugadorSerializado = jugadores[i]->serializar(mapaIDNombre[i].c_str(), i);
+			info_ronda.jugadores[numeroJugador] = jugadorSerializado;
+			numeroJugador++;
+		}
+	}
 
 	return info_ronda;
 }

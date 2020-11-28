@@ -79,13 +79,24 @@ void ConexionCliente::esperarCredenciales(){
 
 
 void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
-	// Encolar la informacion de la ronda que llega.
+	colaRondas.push(info_ronda);
 }
 
 void ConexionCliente::enviarActualizacionesDeRonda(){
+
+	char caracterMensaje = RONDA;
+	info_ronda_t ronda;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 	while(true){
-		// Desencolar actualización (una info_ronda_t)
-		// Enviarla al cliente.
+		if(!colaRondas.empty()){
+			pthread_mutex_lock(&mutex);
+			ronda = colaRondas.front();
+			colaRondas.pop();
+			send(socket, &caracterMensaje, sizeof(char), 0);
+			send(socket, &ronda, sizeof(info_ronda_t), 0);
+			pthread_mutex_unlock(&mutex);
+		}
 	}
 }
 

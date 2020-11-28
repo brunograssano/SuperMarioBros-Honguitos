@@ -74,6 +74,10 @@ VentanaInicio::VentanaInicio(){
 		this->texturaTextoContrasenia = cargoTextura("Ingrese contrasenia:", colorBlanco );
 		this->usuarioIngresado = cargoTextura("...", colorBlanco );
 		this->contraseniaIngresada = cargoTextura("...", colorBlanco );
+		this->textoBotonEnviar = cargoTextura("Enviar", colorBlanco );
+		if( this->textoBotonEnviar == nullptr ){
+			log->huboUnError("No se pudo crear la textura para el texto del boton enviar");
+		}
 		if( this->texturaTextoUsuario == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando del usuario");
 		}
@@ -86,7 +90,9 @@ VentanaInicio::VentanaInicio(){
 		if( this->contraseniaIngresada == nullptr ){
 			log->huboUnError("No se pudo crear la textura para ingresar la contraseña");
 		}
+		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , this->textoBotonEnviar);
 	}
+
 }
 
 SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
@@ -124,7 +130,7 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 			else if(evento.key.keysym.sym == SDLK_UP){
 				(*entradaUsuario) = textoIngresadoUsuario;
 			}
-			else if(evento.key.keysym.sym == SDLK_RETURN){
+			else if(this->botonEnviar->botonClickeado(evento)){
 				return true;
 			}
 			else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
@@ -179,6 +185,8 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 		SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
 		SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
 
+		this->botonEnviar->mostrarse(this->renderer);
+
 		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
 		if(anchoTextoUsuario>270){
 			anchoTextoUsuario = 270;
@@ -209,7 +217,7 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
-			renderizar(10,140,14,250,texturaCantidadJugadores);
+			renderizar(10,200,14,250,texturaCantidadJugadores);
 		}
 
 		SDL_RenderPresent( this->renderer );

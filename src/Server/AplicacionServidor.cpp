@@ -250,7 +250,9 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 				jugador->serArrastrado(rectanguloCamara->x-jugador->obtenerPosicionX());
 			}
 
+			int anchoJugador = jugador->obtenerSpite()->obtenerRectanguloActual().w;
 			jugador->actualizarMaximoX(rectanguloCamara->x);
+			jugador->actualizarMinimoX(rectanguloCamara->x + ancho_pantalla - anchoJugador*2);
 		}
 	}
 

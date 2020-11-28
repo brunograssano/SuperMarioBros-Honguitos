@@ -44,9 +44,6 @@ void Mario::actualizarDerechaMario(){
 	movimiento->aceleraraDerecha();
 }
 
-
-
-
 void Mario::actualizarMaximoX(int limite){
     this->posicion->actualizarLimiteTerrenoIzq(limite);
 }

@@ -4,6 +4,8 @@
 #include "movimiento/MovimientoMario.hpp"
 #include "Posicion.hpp"
 
+#include "../../Utils/Utils.hpp"
+
 class SpriteMario;
 #include "../sprites/SpriteMario.hpp"
 
@@ -30,6 +32,8 @@ class Mario{
 		void actualizarAgacharseMario();
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
+
+		jugador_t serializar(char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
 
 		void serArrastrado(int corrimiento);
 		void actualizarMaximoX(int limite);

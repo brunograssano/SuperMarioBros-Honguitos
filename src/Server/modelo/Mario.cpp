@@ -79,6 +79,20 @@ void Mario::agregarMoneda(){
 	cantidadMonedas++;
 }
 
+jugador_t Mario::serializar(char nombreJugador[MAX_NOMBRE], unsigned short idImagen){
+	jugador_t jugadorSerializado;
+	strcpy(jugadorSerializado.nombreJugador, nombreJugador);
+	jugadorSerializado.puntos = puntos;
+	mario_t marioSerializado;
+	marioSerializado.idImagen = idImagen;
+	marioSerializado.posX = posicion->obtenerPosX();
+	marioSerializado.posY = posicion->obtenerPosY();
+	marioSerializado.recorteImagen = spriteMario->obtenerEstadoActual()
+	jugadorSerializado.mario = marioSerializado;
+	return jugadorSerializado;
+}
+
+
 void Mario::reiniciarPosicion(){
 	delete posicion;
 	delete movimiento;

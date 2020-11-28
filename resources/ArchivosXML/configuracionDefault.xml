@@ -522,7 +522,7 @@
 
                 <enemigo>
                     <tipo>Goomba</tipo>
-                    <color>3</color>
+                    <color>2</color>
                     <cantidad>4</cantidad>
                 </enemigo>
 

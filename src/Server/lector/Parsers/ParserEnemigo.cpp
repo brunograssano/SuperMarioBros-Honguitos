@@ -5,7 +5,8 @@
 
 void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,ArchivoLeido* archivoLeido){
 	string tipo = enemigo.child_value("tipo");
-	string colorEnemigoString = enemigo.child_value("color"); /*ACA TIENE QUE RECIBIR EL COLOR */
+	string colorEnemigoString = enemigo.child_value("color");
+
 	int cantidad, colorEnemigoInt;
 
 	string cantEnemigosString = enemigo.child_value("cantidad");
@@ -21,8 +22,8 @@ void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,Archivo
 	}
 
 	try{
-		colorEnemigoInt = stoi(cantEnemigosString);
-		if(colorEnemigoInt < 0 || colorEnemigoInt>2){
+		colorEnemigoInt = stoi(colorEnemigoString);
+		if((colorEnemigoInt < 0) || (colorEnemigoInt>2)){
 			archivoLeido->mensajeError.push_back("El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto");
 			colorEnemigoInt = VALOR_POR_DEFECTO_COLOR_ENEMIGO;
 		}
@@ -38,9 +39,9 @@ void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,Archivo
 		for(int i=0;i<cantidad;i++){
 				Enemigo* unEnemigo;
 				if(tipo.compare("Goomba")==0){
-					unEnemigo = new Goomba(0);
+					unEnemigo = new Goomba(colorEnemigoInt);
 				}else if(tipo.compare("Koopa")==0){
-					unEnemigo = new Koopa(0);
+					unEnemigo = new Koopa(colorEnemigoInt);
 				}
 				unNivel->agregarEnemigo(unEnemigo);
 		}

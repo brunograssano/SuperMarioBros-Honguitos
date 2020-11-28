@@ -7,8 +7,9 @@
 #include "../Client/Cliente.hpp"
 #include "app/AplicacionCliente.hpp"
 
-void inicializarAplicacion(info_partida_t informacion,Cliente* cliente){
-	App::getInstance(informacion,cliente);
+bool inicializarAplicacion(info_partida_t informacion,Cliente* cliente){
+	App* app = App::getInstance(informacion,cliente);
+	return(app != nullptr);
 }
 
 

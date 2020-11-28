@@ -4,6 +4,11 @@
 
 const int ANCHO_FONDO = 8177;
 
+/*
+ * Es el ancho que se permite hacia adelante y hacia atrás de la pantalla
+ * para considerar a una entidad que está en el rango de visión
+ */
+const int ANCHO_RANGO = 100;
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
 	juego = Juego::getInstance(niveles,cantidadJugadores);
@@ -53,8 +58,8 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 
 bool AplicacionServidor::estaEnRangoVisible(int posicionX){
 
-	return (posicionX > rectanguloCamara.x) &&
-		   (posicionX < rectanguloCamara.x + rectanguloCamara.w);
+	return (posicionX + ANCHO_RANGO > rectanguloCamara.x) &&
+		   (posicionX < rectanguloCamara.x + rectanguloCamara.w + ANCHO_RANGO);
 
 }
 
@@ -76,7 +81,8 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 		list<bloque_t> bloques = plataforma->serializarPlataforma();
 
 		for(auto const& bloque: bloques){
-			if(estaEnRangoVisible(bloque.posX) && numeroBloque<MAX_BLOQUES){
+			if(estaEnRangoVisible(bloque.posX) &&
+			numeroBloque<MAX_BLOQUES){
 				info_ronda.bloques[numeroBloque] = bloque;
 				numeroBloque++;
 			}
@@ -87,7 +93,8 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	int numeroEnemigo = 0;
 	list<Enemigo*> enemigos = juego->obtenerEnemigos();
 	for(auto const& enemigo: enemigos){
-		if(estaEnRangoVisible(enemigo->obtenerPosicionX()) && numeroEnemigo<MAX_ENEMIGOS){
+		if(estaEnRangoVisible(enemigo->obtenerPosicionX()) &&
+		numeroEnemigo<MAX_ENEMIGOS){
 			info_ronda.enemigos[numeroEnemigo] = enemigo->serializar();
 			numeroEnemigo++;
 		}
@@ -97,7 +104,8 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	int numeroMoneda = 0;
 	list<Moneda*> monedas = juego->obtenerMonedas();
 	for(auto const& moneda: monedas){
-		if(estaEnRangoVisible(moneda->obtenerPosicionX()) && numeroMoneda<MAX_MONEDAS){
+		if(estaEnRangoVisible(moneda->obtenerPosicionX()) &&
+		numeroMoneda<MAX_MONEDAS){
 			info_ronda.monedas[numeroMoneda] = moneda->serializar();
 			numeroMoneda++;
 		}

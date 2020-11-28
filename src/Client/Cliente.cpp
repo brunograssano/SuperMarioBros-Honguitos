@@ -102,10 +102,10 @@ void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short ca
 }
 
 void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
-	App* aplicacion = App::getInstance();
-	if(aplicacion==nullptr){
+	if(!cargoLaAplicacion){
 		return;
 	}
+	App* aplicacion = App::getInstance();
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	aplicacion->agregarRonda(info_ronda);
@@ -171,8 +171,12 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	inicializarAplicacion(infoPartida,this);
-
+	cargoLaAplicacion = inicializarAplicacion(infoPartida, this);
+	if(!cargoLaAplicacion){
+		close(socketCliente);
+		delete Log::getInstance();
+		exit(-1);
+	}
 	pthread_t hiloEntrada;
 	int resultadoCreateEnviarEntrada = pthread_create(&hiloEntrada, NULL, Cliente::enviar_helper, this);
 	if(resultadoCreateEnviarEntrada != 0){

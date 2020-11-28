@@ -5,6 +5,10 @@
 #include <string>
 #include "../../sprites/Sprite.hpp"
 
+#define GOOMBA 1
+#define KOOPA 2
+
+
 class Enemigo{
 
 	public:
@@ -25,6 +29,8 @@ class Enemigo{
 			posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
 		};
 
+		virtual enemigo_t serializar(){return NULL;};
+
 		virtual void actualizarPosicion(){};
 
 		virtual ~Enemigo(){};
@@ -33,7 +39,6 @@ class Enemigo{
 		PosicionMovil* posicionActual;
 		string direccionImagen;
 		Sprite* spriteEnemigo;
-
 };
 
 

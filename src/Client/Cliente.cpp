@@ -33,7 +33,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
 	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
 	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
-
+	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
 }
 
 void Cliente::escuchar(){
@@ -101,6 +101,13 @@ void Cliente::recibirInformacionServidor(info_inicio_t info){
 
 void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores){
 	this->cantidadJugadoresActivos = cantidadJugadores;
+}
+
+void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
+	App::getInstance()->agregarRonda(info_ronda);
+	pthread_mutex_unlock(&mutex);
 }
 
 void Cliente::esperarRecibirInformacionInicio(){
@@ -180,6 +187,7 @@ void Cliente::ejecutar(){
 
 	delete Log::getInstance();
 }
+
 void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
 	entradasUsuario.push(entradaUsuario);
 }

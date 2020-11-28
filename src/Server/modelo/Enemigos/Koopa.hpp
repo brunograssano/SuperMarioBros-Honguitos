@@ -11,8 +11,9 @@ class Koopa : public Enemigo{
 
 	public:
 
-		Koopa(int tipo){
-			spriteEnemigo = new SpriteKoopa(tipo);
+		Koopa(int tipoColor){
+			spriteEnemigo = new SpriteKoopa(tipoColor);
+			this->tipoColor = tipoColor;
 		}
 
 		~Koopa(){
@@ -20,6 +21,14 @@ class Koopa : public Enemigo{
 			delete posicionActual;
 		}
 
+		enemigo_t serializar() override{
+			enemigo_t enemigoSerializado;
+			enemigoSerializado.posX = this->obtenerPosicionX();
+			enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
+			enemigoSerializado.numeroRecorteY = tipoColor;
+			enemigoSerializado.tipoEnemigo = KOOPA;
+			return enemigoSerializado;
+		}
 
 		void actualizarPosicion()override{
 			posicionActual->moverHorizontal(velocidadX);
@@ -28,7 +37,7 @@ class Koopa : public Enemigo{
 
 	private:
 		float velocidadX = -0.15;
-
+		int tipoColor;
 
 };
 

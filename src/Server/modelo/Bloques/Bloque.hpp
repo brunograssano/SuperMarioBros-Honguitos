@@ -10,6 +10,10 @@ using namespace std;
 #include "../../sprites/SpriteSorpresa.hpp"
 #include "../../sprites/SpriteLadrillo.hpp"
 
+#define SORPRESA 1
+#define LADRILLO 2
+
+
 const int LADO_BLOQUE_DEFAULT = 10;
 
 class Bloque{
@@ -27,6 +31,8 @@ class Bloque{
 		Sprite* obtenerSprite(){
 			return this->spriteBloque;
 		}
+
+		virtual bloque_t serializar(){return NULL;};
 
 		void ubicarEnPosicionDefault(){
 			delete this->posicion;
@@ -50,7 +56,21 @@ class Sorpresa : public Bloque{
 			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteSorpresa();
 		}
+		typedef struct bloque{
+			int posX;
+			int posY;
+			unsigned short numeroRecorteX;
+			unsigned short numeroRecorteY;
+		}bloque_t;
 
+		bloque_t serializar()override{
+			bloque_t bloqueSerializado;
+			bloqueSerializado.posX = posicion->obtenerPosX();
+			bloqueSerializado.posY = posicion->obtenerPosY();
+			bloqueSerializado.numeroRecorteX = spriteBloque->obtenerEstadoActual();
+			bloqueSerializado.numeroRecorteY = SORPRESA;
+			return bloqueSerializado;
+		}
         ~Sorpresa(){
         	delete this->posicion;
         	delete this->spriteBloque;
@@ -67,6 +87,15 @@ class Ladrillo : public Bloque {
 
 			this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
 			this->spriteBloque = new SpriteLadrillo(tipo);
+		}
+
+		bloque_t serializar()override{
+			bloque_t bloqueSerializado;
+			bloqueSerializado.posX = posicion->obtenerPosX();
+			bloqueSerializado.posY = posicion->obtenerPosY();
+			bloqueSerializado.numeroRecorteX = spriteBloque->obtenerEstadoActual();
+			bloqueSerializado.numeroRecorteY = LADRILLO;
+			return bloqueSerializado;
 		}
 
 		Ladrillo(int coordenadaX, int coordenadaY){

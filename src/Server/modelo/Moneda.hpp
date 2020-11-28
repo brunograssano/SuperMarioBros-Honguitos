@@ -23,6 +23,15 @@ public:
 		return this->sprite;
 	}
 
+	moneda_t serializar(){
+		moneda_t monedaSerializada;
+
+		monedaSerializada.posX = posicion->obtenerPosX();
+		monedaSerializada.posY = posicion->obtenerPosY();
+		monedaSerializada.numeroRecorte = sprite->obtenerEstadoActual();
+		return monedaSerializada;
+	}
+
 	int obtenerPosicionX(){
 		return this->posicion->obtenerPosX();
 	}

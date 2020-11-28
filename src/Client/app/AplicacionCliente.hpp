@@ -83,6 +83,7 @@ class App{
 
 		void actualizarServer(const Uint8 *keystate);
 		void actualizar();
+		void agregarRonda(info_ronda_t info_ronda);
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();

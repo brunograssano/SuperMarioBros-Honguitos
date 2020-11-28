@@ -107,6 +107,10 @@ void App::actualizarServer(const Uint8 *keystate){
 	}
 }
 
+void App::agregarRonda(info_ronda_t info_ronda){
+	juegoCliente->agregarRonda(info_ronda);
+}
+
 void App::actualizar(){
 	juegoCliente->actualizar();
 }

@@ -76,6 +76,7 @@ void Servidor::ejecutar(){
 		for(auto const id:idsUsuariosReconectados){
 			usuariosQuePerdieronConexion.erase(id);
 		}
+		idsUsuariosReconectados.clear();
 	}
 
 	//detach

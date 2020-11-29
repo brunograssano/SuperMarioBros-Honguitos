@@ -57,10 +57,9 @@ list<Plataforma*> Juego::obtenerPlataformas(){
 list<Moneda*> Juego::obtenerMonedas(){
 	return niveles.front()->obtenerMonedas();
 }
-
-void Juego::actualizarPosicionesEnemigos(){
+void Juego::actualizarModelo(){
 	Nivel* nivelActual = niveles.front();
-	nivelActual->actualizarPosicionesEnemigos();
+	nivelActual->actualizarModelo();
 }
 
 void Juego::sumarPuntosAJugadores(int puntos){

@@ -19,6 +19,10 @@ public:
 		delete this->sprite;
 	}
 
+	void actualizar(){
+		this->sprite->actualizarSprite();
+	}
+
 	Sprite* obtenerSprite(){
 		return this->sprite;
 	}

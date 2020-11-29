@@ -47,11 +47,10 @@ class Nivel{
 			return mundo;
 		}
 
+		void actualizarModelo();
 
 		void inicializarPosicionEnemigo();
 		void inicializarPosicionMonedas();
-
-		void actualizarPosicionesEnemigos();
 
 		void inicializarPosicionesOcupadasPorBloques();
 
@@ -79,6 +78,9 @@ class Nivel{
 
 
 	private:
+
+		void actualizarPosicionesEnemigos();
+		void actualizarMonedas();
 
 		bool esUnaPosicionXValidaEnemigo(int coordenadaX);
 

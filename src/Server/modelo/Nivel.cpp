@@ -20,6 +20,18 @@ void Nivel::actualizarPosicionesEnemigos(){
 	}
 }
 
+void Nivel::actualizarMonedas(){
+	for(auto const& moneda : monedas){
+		moneda->actualizar();
+	}
+}
+
+
+void Nivel::actualizarModelo(){
+	actualizarPosicionesEnemigos();
+	actualizarMonedas();
+}
+
 list<Enemigo*> Nivel::obtenerEnemigos(){
 	return enemigos;
 }

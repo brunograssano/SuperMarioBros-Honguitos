@@ -36,6 +36,11 @@ class Juego{
 		list<Nivel*> niveles;
 
 		static Juego* instanciaJuego;
+
+		void actualizarMonedas();
+		void actualizarPosicionesEnemigos();
+
+
 	public:
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
@@ -43,7 +48,7 @@ class Juego{
 
 		list<Nivel*> obtenerNiveles();
 		void avanzarNivel();
-		void actualizarPosicionesEnemigos();
+		void actualizarModelo();
 		void sumarPuntosAJugadores(int puntos);
 		bool quedaSoloUnNivel();
 		void desconectarJugador(int idJugador);

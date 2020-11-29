@@ -110,6 +110,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 			numeroMoneda++;
 		}
 	}
+	info_ronda.topeMonedas = numeroMoneda;
 
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	jugador_t jugadorSerializado;
@@ -166,7 +167,9 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 		for(auto const& parClaveJugador:jugadores){
 			parClaveJugador.second->actualizarPosicion();
 		}
-		juego->actualizarPosicionesEnemigos();
+
+		juego->actualizarModelo();
+
 		revisarSiTerminoNivel(jugadores);
 		moverCamara(jugadores);
 

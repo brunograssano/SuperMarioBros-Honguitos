@@ -9,6 +9,7 @@ const int COORDENADA_Y_DEFAULT = 0;
 const int MINIMO_COORDENADA_Y = 0;
 const int TERRENO_LIMITE_DERECHO_MAX = 8177;
 const int TERRENO_LIMITE_DERECHO_MIN = 0;
+const short MARIO_DESCONECTADO = -1;
 
 Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
@@ -85,6 +86,9 @@ jugador_t Mario::serializar(const char nombreJugador[MAX_NOMBRE], unsigned short
 	marioSerializado.posX = posicion->obtenerPosX();
 	marioSerializado.posY = posicion->obtenerPosY();
 	marioSerializado.recorteImagen = spriteMario->obtenerEstadoActual();
+	if(!estaConectadoElJugador){
+		marioSerializado.recorteImagen = MARIO_DESCONECTADO;
+	}
 	jugadorSerializado.mario = marioSerializado;
 	return jugadorSerializado;
 }

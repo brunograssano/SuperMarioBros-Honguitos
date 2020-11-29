@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
+#include "BotonConTexto.hpp"
 #include "../../../Utils/Utils.hpp"
 using namespace std;
 
@@ -26,9 +27,14 @@ class VentanaInicio{
 		SDL_Texture* texturaCantidadJugadores;
 		SDL_Texture* texturaMensajeCredencialesIncorrectas;
 		SDL_Texture* texturaMensajeCredencialesCorrectas;
+		SDL_Texture* textoBotonEnviar;
+		SDL_Texture* fondoPantalla;
 		TTF_Font* fuente;
 		SDL_Window* ventana;
 		SDL_Renderer* renderer;
+		BotonConTexto* botonEnviar;
+		BotonConTexto* cajaTextoUsuario;
+		BotonConTexto* cajaTextoContrasenia;
 		SDL_Texture* cargoTextura(string textureText, SDL_Color textColor);
 		void renderizar(int coordenadaX,int coordenadaY,int ancho,int alto,SDL_Texture* textura);
 		bool manejarEntradaUsuario(SDL_Event evento,bool* terminar,string* textoIngresadoUsuario,string* textoIngresadoConstrasenia,string** entradaUsuario);

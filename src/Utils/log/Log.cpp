@@ -13,7 +13,7 @@ Log* Log::log=nullptr;
 Log* Log::getInstance(TipoLog* tipo){
 	if(log==nullptr){
 		if(tipo == NULL){
-			tipo = new Debug();
+			tipo = new Info();
 		}
 		log = new Log(tipo);
 	}
@@ -21,7 +21,7 @@ Log* Log::getInstance(TipoLog* tipo){
 }
 Log* Log::getInstance(){
 	if(log==nullptr){
-		log = new Log(new Debug());
+		log = new Log(new Info());
 	}
 	return log;
 }

@@ -46,11 +46,38 @@ VentanaInicio::VentanaInicio(){
 	}
 	else{
 
-		SDL_Color textColor = { 0, 0, 0, 0xFF };
-		this->texturaTextoUsuario = cargoTextura("Ingrese usuario:", textColor );
-		this->texturaTextoContrasenia = cargoTextura("Ingrese contrasenia:", textColor );
-		this->usuarioIngresado = cargoTextura("...", textColor );
-		this->contraseniaIngresada = cargoTextura("...", textColor );
+		string direccionIcono = "resources/Imagenes/Personajes/IconoHongo.png";
+		SDL_Surface* icono = IMG_Load(direccionIcono.c_str());
+		if(icono == NULL){
+			log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccionIcono, IMG_GetError());
+		}
+		else{
+			SDL_SetWindowIcon(this->ventana, icono);
+			SDL_FreeSurface(icono);
+		}
+
+		string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.jpg";
+		SDL_Surface* superficieImagen = IMG_Load(direccionFondo.c_str());
+		if(superficieImagen == NULL){
+			Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccionFondo, IMG_GetError());
+		}
+		else{
+			this->fondoPantalla = SDL_CreateTextureFromSurface( this->renderer, superficieImagen );
+			if( this->fondoPantalla == NULL ){
+				Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccionFondo, SDL_GetError());
+			}
+			SDL_FreeSurface( superficieImagen );
+		}
+
+		SDL_Color colorBlanco = { 255, 255, 255, 0xFF };
+		this->texturaTextoUsuario = cargoTextura("Ingrese usuario:", colorBlanco );
+		this->texturaTextoContrasenia = cargoTextura("Ingrese contrasenia:", colorBlanco );
+		this->usuarioIngresado = cargoTextura("...", colorBlanco );
+		this->contraseniaIngresada = cargoTextura("...", colorBlanco );
+		this->textoBotonEnviar = cargoTextura("Enviar", colorBlanco );
+		if( this->textoBotonEnviar == nullptr ){
+			log->huboUnError("No se pudo crear la textura para el texto del boton enviar");
+		}
 		if( this->texturaTextoUsuario == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando del usuario");
 		}
@@ -63,7 +90,11 @@ VentanaInicio::VentanaInicio(){
 		if( this->contraseniaIngresada == nullptr ){
 			log->huboUnError("No se pudo crear la textura para ingresar la contraseña");
 		}
+		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , this->textoBotonEnviar);
+		this->cajaTextoUsuario = new BotonConTexto(20,40,150,14,this->usuarioIngresado);
+		this->cajaTextoContrasenia = new BotonConTexto(20,90,150,14,this->contraseniaIngresada);
 	}
+
 }
 
 SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
@@ -85,23 +116,23 @@ SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
 	return texturaACargar;
 }
 
-bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,string* textoIngresadoUsuario, string* textoIngresadoConstrasenia, string** entradaUsuario){
+bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,string* textoIngresadoUsuario, string* textoIngresadoContrasenia, string** entradaUsuario){
 	while( SDL_PollEvent( &evento ) != 0 ){
 		if( evento.type == SDL_QUIT ){
 			(*terminar) = true;
 			throw runtime_error("CerroVentanaDeInicio");
 		}
-		else if( evento.type == SDL_KEYDOWN ){
+		else if(( evento.type == SDL_KEYDOWN )||(evento.type == SDL_MOUSEBUTTONDOWN)){
 			if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){
 				(**entradaUsuario).pop_back();
 			}
-			else if(evento.key.keysym.sym == SDLK_DOWN){
-				(*entradaUsuario) = textoIngresadoConstrasenia;
+			else if(this->cajaTextoContrasenia->botonClickeado(evento)){
+				(*entradaUsuario) = textoIngresadoContrasenia;
 			}
-			else if(evento.key.keysym.sym == SDLK_UP){
+			else if(this->cajaTextoUsuario->botonClickeado(evento)){
 				(*entradaUsuario) = textoIngresadoUsuario;
 			}
-			else if(evento.key.keysym.sym == SDLK_RETURN){
+			else if(this->botonEnviar->botonClickeado(evento)){
 				return true;
 			}
 			else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
@@ -127,9 +158,9 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 	SDL_Event evento;
 
-	SDL_Color textColor = { 0, 0, 0, 0xFF };
+	SDL_Color colorBlanco = { 255, 255, 255, 0xFF };
 
-	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", textColor);
+	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", colorBlanco);
 
 	SDL_StartTextInput();
 	string textoIngresadoUsuario = "...";
@@ -144,14 +175,13 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoContrasenia,&entradaUsuario);
 
 		if(textoIngresadoUsuario.length() != 0){
-			this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), textColor );
+			this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), colorBlanco );
+			this->cajaTextoUsuario->cambiarTexto(this->usuarioIngresado);
 		}
 		if(textoIngresadoContrasenia.length() != 0){
-			this->contraseniaIngresada = cargoTextura( textoIngresadoContrasenia.c_str(), textColor );
+			this->contraseniaIngresada = cargoTextura( textoIngresadoContrasenia.c_str(), colorBlanco );
+			this->cajaTextoContrasenia->cambiarTexto(this->contraseniaIngresada);
 		}
-
-		SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-		SDL_RenderClear( this->renderer );
 
 		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
 		if(anchoTextoUsuario>270){
@@ -163,15 +193,22 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 			anchoTextoContrasenia = 270;
 		}
 
+		SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderClear( this->renderer );
+
+		SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
+		SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
+
+		this->botonEnviar->mostrarse(this->renderer);
+
 		renderizar(10,20,14,200,this->texturaTextoUsuario);
-		if(textoIngresadoUsuario.length() != 0){
-			renderizar(20,40,14,anchoTextoUsuario,this->usuarioIngresado);
-		}
+
+		this->cajaTextoUsuario->mostrarseCambiandoAncho(this->renderer, anchoTextoUsuario);
 
 		renderizar(10,70,14,250,this->texturaTextoContrasenia);
-		if(textoIngresadoContrasenia.length() != 0){
-			renderizar(20,90,14,anchoTextoContrasenia,this->contraseniaIngresada);
-		}
+
+		this->cajaTextoContrasenia->mostrarseCambiandoAncho(this->renderer, anchoTextoContrasenia);
+
 		if(ingresoIncorrectoCredenciales){
 			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
 			this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
@@ -183,7 +220,7 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
-			renderizar(10,140,14,250,texturaCantidadJugadores);
+			renderizar(10,200,14,250,texturaCantidadJugadores);
 		}
 
 		SDL_RenderPresent( this->renderer );
@@ -215,11 +252,19 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	}
 
 	Log* log = Log::getInstance();
+	/*
+	delete(this->botonEnviar);
+	delete(this->cajaTextoUsuario);
+	delete(this->cajaTextoContrasenia);
+	*/
 	SDL_RenderClear( this->renderer );
 	SDL_DestroyTexture( texturaTextoUsuario );
 	SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );
 	SDL_DestroyTexture( texturaTextoContrasenia );
 	SDL_DestroyTexture(	texturaCantidadJugadores);
+
+	SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
+	SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
 
 	SDL_Color colorVerde = { 1, 152, 117, 0xFF };
 	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas, esperando al resto de jugadores", colorVerde);
@@ -230,12 +275,14 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
 
-	SDL_Color textColor = { 0, 0, 0, 0xFF };
-	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(cantJugadoresConectados)+"/"+to_string(cantJugadoresTotales)+" jugadores", textColor);
+	SDL_Color colorBlanco = { 255, 255, 255, 0xFF };
+	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(cantJugadoresConectados)+"/"+to_string(cantJugadoresTotales)+" jugadores", colorBlanco);
 
 	if( this->texturaCantidadJugadores != nullptr ){
 		renderizar(10,180,14,250,texturaCantidadJugadores);
 	}
+
+
 
 	SDL_RenderPresent( this->renderer );
 }
@@ -256,6 +303,8 @@ credencial_t VentanaInicio::obtenerCredenciales(){
 
 
 VentanaInicio::~VentanaInicio(){
+	//aca se elimina cada textura de la pantalla de espera
+	SDL_DestroyTexture( fondoPantalla );
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
 	SDL_DestroyRenderer( renderer );

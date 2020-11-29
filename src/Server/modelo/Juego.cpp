@@ -37,6 +37,11 @@ bool Juego::quedaSoloUnNivel(){
 	return niveles.size()==1;
 }
 
+void Juego::desconectarJugador(int idJugador){
+	jugadores[idJugador]->desconectar();
+}
+
+
 map<int,Mario*> Juego::obtenerMarios(){
 	return jugadores;
 }

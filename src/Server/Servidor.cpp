@@ -88,6 +88,7 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,strin
 		pthread_mutex_lock(&mutex);
 		log->mostrarMensajeDeInfo("Se perdio la conexion con el usuario: " + nombre);
 		cantUsuariosLogueados--;
+		aplicacionServidor->desconectarJugador(idJugador);
 		pthread_mutex_unlock(&mutex);
 	}
 	conexionesPerdidas.push_front(conexionPerdida);

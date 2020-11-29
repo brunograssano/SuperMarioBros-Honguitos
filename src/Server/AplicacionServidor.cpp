@@ -212,6 +212,10 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 
 }
 
+void AplicacionServidor::desconectarJugador(int idJugador){
+	juego->desconectarJugador(idJugador);
+}
+
 
 SDL_Rect* AplicacionServidor::obtenerRectCamara(){
 	return &rectanguloCamara;

@@ -1,12 +1,8 @@
 #include "Servidor.hpp"
-
 #include <string>
 
-const int TAMANIO_COLA = 4;
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
-	int opt = 1;
-	struct sockaddr_in address;
 	terminoJuego = false;
 	log = Log::getInstance(archivoLeido->tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
@@ -22,55 +18,13 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArc
 	}
 	cantidadConexiones = archivoLeido->cantidadConexiones;
 
-
-	socketServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if(socketServer == 0){
-		log->huboUnError("No se pudo crear el socket para aceptar conexiones");
-		delete archivoLeido;
-		delete log;
-		exit(EXIT_FAILURE);
-	}
-
-    if(setsockopt(socketServer, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))){
-		log->huboUnError("Ocurrio un error al hacer el setsockopt");
-		delete archivoLeido;
-		delete log;
-        exit(EXIT_FAILURE);
-    }
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-
-    /*Seteamos la ip y el puerto donde estara alojado el servidor*/
-    address.sin_port = htons(puerto);
-    inet_pton(AF_INET, ip, &address.sin_addr);
-
-    /* Enlazamos el socket acpetador del servidor a la dirección puerto */
-    if(bind(socketServer,(struct sockaddr*)&address,sizeof(address))<0){
-    	log->huboUnError("No se pudo bindear el socket al puerto.");
-		delete archivoLeido;
-		delete log;
-        exit(EXIT_FAILURE);
-    }
-
-	/* Hacemos que el socket sea para escuchar */
-	if(listen(socketServer, TAMANIO_COLA) < 0){
-		log->huboUnError("No se pudo bindear el socket al puerto.");
-		delete archivoLeido;
-		delete log;
-		exit(EXIT_FAILURE);
-	}
+	socketServer = iniciarSocketServidor(puerto,ip);
 
     log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
 
 	delete archivoLeido;
 }
 
-
-void Servidor::escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
-	for(auto const& mensaje:mensajesError){
-		log->huboUnError(mensaje);
-	}
-}
 
 void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 	for(auto const& parClaveClienteJugando: clientesJugando){
@@ -100,27 +54,10 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,strin
 
 void Servidor::ejecutar(){
 	pthread_t hiloJuego;
-	iniciarJuego(&hiloJuego);
-
-	pthread_t hiloEscuchar;
-	int resultadoCreate = pthread_create(&hiloEscuchar, NULL, Servidor::escuchar_helper, this);
-	if(resultadoCreate!= 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar, el codigo de error es: " + to_string(resultadoCreate));
-		return;
-	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar: (" + to_string(hiloEscuchar) +").");
-	}
-
+	iniciarJuego(&hiloJuego,aplicacionServidor);
+	crearHiloConectarJugadores(this);
 	intentarIniciarModelo();
-
-	int resultadoJoin = pthread_join(hiloJuego, NULL);
-	if(resultadoJoin != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al juntar los hilos main y gameLoop, el codigo de error es: " + to_string(resultadoJoin));
-		pthread_cancel(hiloJuego);
-		return;
-	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y gameLoop.");
-	}
+	unirHilosPrincipalYGameLoop(&hiloJuego);
 
 	list<int> idsUsuariosReconectados;
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -284,19 +221,6 @@ void Servidor::intentarIniciarModelo(){
 
 	aplicacionServidor->iniciarJuego();
 }
-
-void Servidor::iniciarJuego(pthread_t* hiloJuego){
-
-	int resultadoCreate = pthread_create(hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
-
-	if(resultadoCreate!= 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para el juego, el codigo de error es: " + to_string(resultadoCreate));
-	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo del juego: (" + to_string(*hiloJuego) +").");
-	}
-
-}
-
 
 void Servidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
 	this->aplicacionServidor->encolarEntradaUsuario(entradaUsuario);

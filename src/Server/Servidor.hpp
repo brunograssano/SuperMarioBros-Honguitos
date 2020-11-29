@@ -21,6 +21,7 @@
 class AplicacionServidor;
 #include "../Server/AplicacionServidor.hpp"
 #include "../Utils/Utils.hpp"
+#include "UtilidadesServer.hpp"
 #include "lector/ArchivoLeido.hpp"
 
 class ConexionCliente;
@@ -34,7 +35,6 @@ class Servidor{
 	public:
 		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
 		void conectarJugadores();
-		void iniciarJuego(pthread_t* hiloJuego);
 		static void *escuchar_helper(void* ptr){
 			((Servidor*) ptr)->conectarJugadores();
 			return NULL;
@@ -62,7 +62,6 @@ class Servidor{
 		int cantUsuariosLogueados = 0;
 		list<usuario_t> usuariosValidos;
 		map<int,usuario_t> usuariosQuePerdieronConexion;
-		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
 
 		bool esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);

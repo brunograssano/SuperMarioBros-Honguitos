@@ -7,6 +7,9 @@
 #include <queue>
 #include <map>
 
+class Servidor;
+#include "Servidor.hpp"
+
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
 
@@ -16,7 +19,7 @@
 
 class AplicacionServidor{
 	public:
-		AplicacionServidor(list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla);
+		AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla);
 		~AplicacionServidor();
 
 		void iniciarJuego();
@@ -28,11 +31,18 @@ class AplicacionServidor{
 
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
+		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
 		void gameLoop();
 
+		bool empezoElJuego(){
+			return comenzoElJuego;
+		}
+
 	private:
+		Servidor* servidor;
 		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
 		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
+		bool estaEnRangoVisible(int posicionX);
 		SDL_Rect* obtenerRectCamara();
 		void moverCamara(map<int,Mario*> jugadores);
 		Log* log;

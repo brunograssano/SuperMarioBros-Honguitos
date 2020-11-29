@@ -93,6 +93,9 @@ Juego::~Juego(){
 	for(auto const& parClaveJugador:jugadores){
 		delete parClaveJugador.second;
 	}
+	for(auto const& nivel:niveles){
+		delete nivel;
+	}
 	jugadores.clear();
 	niveles.clear();
 }

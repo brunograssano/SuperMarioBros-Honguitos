@@ -18,6 +18,7 @@ Mario::Mario(int numeroJugador){
 	this->movimiento = new MovimientoMario();
 	this->spriteMario = new SpriteMario("../resources/Imagenes/Personajes/mario_grande.png");
 	this->numeroJugador = numeroJugador;
+	this->estaConectadoElJugador = true;
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -42,9 +43,6 @@ void Mario::actualizarDerechaMario(){
 	spriteMario->actualizarSpriteMarioDerecha(this);
 	movimiento->aceleraraDerecha();
 }
-
-
-
 
 void Mario::actualizarMaximoX(int limite){
     this->posicion->actualizarLimiteTerrenoIzq(limite);
@@ -78,6 +76,20 @@ void Mario::agregarMoneda(){
 	cantidadMonedas++;
 }
 
+jugador_t Mario::serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen){
+	jugador_t jugadorSerializado;
+	strcpy(jugadorSerializado.nombreJugador, nombreJugador);
+	jugadorSerializado.puntos = puntos;
+	mario_t marioSerializado;
+	marioSerializado.idImagen = idImagen;
+	marioSerializado.posX = posicion->obtenerPosX();
+	marioSerializado.posY = posicion->obtenerPosY();
+	marioSerializado.recorteImagen = spriteMario->obtenerEstadoActual();
+	jugadorSerializado.mario = marioSerializado;
+	return jugadorSerializado;
+}
+
+
 void Mario::reiniciarPosicion(){
 	delete posicion;
 	delete movimiento;
@@ -94,6 +106,14 @@ void Mario::actualizarPosicion(){
 	}
 	spriteMario->actualizarSprite(this);
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
+}
+
+bool Mario::estaConectado(){
+	return this->estaConectadoElJugador;
+}
+
+void Mario::serArrastrado(int corrimiento){
+	this->posicion->moverHorizontal(corrimiento);
 }
 
 bool Mario::estaQuietoX(){

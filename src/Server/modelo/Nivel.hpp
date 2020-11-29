@@ -63,6 +63,15 @@ class Nivel{
 		string obtenerDireccionFondoActual();
 
 		~Nivel(){
+			for(const auto& plataforma:plataformas){
+				delete plataforma;
+			}
+			for(const auto& moneda:monedas){
+				delete moneda;
+			}
+			for(const auto& enemigo:enemigos){
+				delete enemigo;
+			}
 			plataformas.clear();
 			enemigos.clear();
 			monedas.clear();

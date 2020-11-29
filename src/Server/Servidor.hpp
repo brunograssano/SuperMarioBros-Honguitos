@@ -17,6 +17,8 @@
 
 #include "../Utils/log/Log.hpp"
 #include "modelo/Juego.hpp"
+
+class AplicacionServidor;
 #include "../Server/AplicacionServidor.hpp"
 #include "../Utils/Utils.hpp"
 #include "lector/ArchivoLeido.hpp"
@@ -31,10 +33,11 @@ class Servidor{
 
 	public:
 		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
-		void* escuchar();
+		void conectarJugadores();
 		void iniciarJuego(pthread_t* hiloJuego);
 		static void *escuchar_helper(void* ptr){
-			return((Servidor*) ptr)->escuchar();
+			((Servidor*) ptr)->conectarJugadores();
+			return NULL;
 		}
 		~Servidor();
 
@@ -42,6 +45,13 @@ class Servidor{
 		bool esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
+		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador);
+		void ejecutar();
+		void guardarRondaParaEnvio(info_ronda_t ronda);
+
+		map<int,string> obtenerMapaJugadores(){
+			return mapaIDNombre;
+		}
 
 	private:
 		map<int,string> mapaIDNombre;
@@ -51,11 +61,18 @@ class Servidor{
 		int cantidadConexiones;
 		int cantUsuariosLogueados = 0;
 		list<usuario_t> usuariosValidos;
+		map<int,usuario_t> usuariosQuePerdieronConexion;
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
+		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
+
+		bool esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		bool esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 
 		bool terminoJuego;
 		list<thread> conexionesConElServidor;
 		list<ConexionCliente*> clientes;
+		list<ConexionCliente*> conexionesPerdidas;
 		map<int,ConexionCliente*> clientesJugando;
 
 };

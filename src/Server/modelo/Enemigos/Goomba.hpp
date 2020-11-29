@@ -11,8 +11,9 @@ class Goomba : public Enemigo{
 
 	public:
 
-		Goomba(int tipo){
-			spriteEnemigo = new SpriteGoomba(tipo);
+		Goomba(int tipoColor){
+			spriteEnemigo = new SpriteGoomba(tipoColor);
+			this->tipoColor = tipoColor;
 		}
 
 
@@ -21,6 +22,16 @@ class Goomba : public Enemigo{
 			spriteEnemigo->actualizarSprite();
 		}
 
+		enemigo_t serializar() override{
+			enemigo_t enemigoSerializado;
+			enemigoSerializado.posX = this->obtenerPosicionX();
+			enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
+			enemigoSerializado.numeroRecorteY = tipoColor;
+			enemigoSerializado.tipoEnemigo = TIPO_GOOMBA;
+			return enemigoSerializado;
+		}
+
+
 		~Goomba(){
 			delete posicionActual;
 			delete spriteEnemigo;
@@ -28,7 +39,7 @@ class Goomba : public Enemigo{
 
 	private:
 		float velocidadX = -0.15;
-
+		int tipoColor;
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_GOOMBA_HP_ */

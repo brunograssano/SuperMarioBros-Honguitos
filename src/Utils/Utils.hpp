@@ -13,6 +13,7 @@ using namespace std;
  * E: Entrada del usuario
  * C: Credenciales que nos manda el usuario
  * P: Informacion necesaria para iniciar la partida
+ * R: Información necesaria para renderizar
  */
 
 
@@ -38,15 +39,16 @@ typedef struct mensaje_log{
 
 typedef struct enemigo{
 	int posX;
-	unsigned short numeroRecorte;
-	unsigned short tipoEnemigo; // 1 GOOMBA - 2 KOOPA
-	string direccionImagen;
+	unsigned short numeroRecorteX;	// 1|2|3|4|5|6|...|
+	unsigned short numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco
+	unsigned short tipoEnemigo;		// 1 GOOMBA - 2 KOOPA
 }enemigo_t;
 
 typedef struct bloque{
 	int posX;
 	int posY;
-	string dirImagen;
+	unsigned short numeroRecorteX;
+	unsigned short numeroRecorteY;
 }bloque_t;
 
 typedef struct mario{
@@ -69,18 +71,11 @@ typedef struct jugador{
 	mario_t mario;
 }jugador_t;
 
-
 #define CREDENCIAL 'C'
 typedef struct credencial{
 	char nombre[MAX_NOMBRE];
 	char contrasenia[MAX_CONTRASENIA];
 }credencial_t;
-
-typedef struct usuario{
-	string nombre;
-	string contrasenia;
-	bool usado;
-}usuario_t;
 
 #define ENTRADA 'E'
 typedef struct entrada_usuario{
@@ -89,7 +84,6 @@ typedef struct entrada_usuario{
 	bool D;
 	bool W;
 }entrada_usuario_t;
-
 
 #define INICIO 'I'
 typedef struct info_inicio{
@@ -122,7 +116,7 @@ typedef struct actualizacion_cantidad_jugadores{
 	unsigned short cantidadJugadoresActivos;
 }actualizacion_cantidad_jugadores_t;
 
-
+#define RONDA 'R'
 typedef struct ronda{
 	unsigned short mundo;
 	unsigned short posXCamara;
@@ -130,11 +124,18 @@ typedef struct ronda{
 	unsigned short topeBloques;
 	unsigned short topeEnemigos;
 	unsigned short topeMonedas;
+	bool ganaron;
 	bloque_t bloques[MAX_BLOQUES];
 	enemigo_t enemigos[MAX_ENEMIGOS];
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
 }info_ronda_t;
+
+typedef struct usuario{
+	string nombre;
+	string contrasenia;
+	bool usado;
+}usuario_t;
 
 
 

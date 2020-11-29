@@ -9,7 +9,7 @@ const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 #define PROPORCION_PISO_EN_IMAGEN 0.1
 #define ALTO_MARIO 80;
 
-App* App::getInstance(info_partida_t informacion,Cliente* cliente){
+App* App::getInstance(info_partida_t informacion, Cliente* cliente){
 	if(aplicacion==nullptr){
 		aplicacion= new App(informacion,cliente);
 	}
@@ -21,17 +21,10 @@ App* App::getInstance(){
 }
 
 void App::inicializarSDL(Log* log){
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		log->huboUnErrorSDL("Error inicializando SDL", SDL_GetError());
-	}
 
 	ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
 	if( ventanaAplicacion == NULL ){
 		log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
-	}
-
-	if( !( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) ){
-		log->huboUnErrorSDL("No se pudo inicializar IMG Init", IMG_GetError());
 	}
 
 	renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
@@ -77,7 +70,7 @@ void App::actualizarServer(const Uint8 *keystate){
 	else if(!terminoElJuego){
 		entrada_usuario_t entradaUsuario = {false,false,false,false};
 		bool se_movio = false;
-		if(keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_UP]){
+		if(keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
 			entradaUsuario.W = true;
 			se_movio = true;
 
@@ -89,22 +82,29 @@ void App::actualizarServer(const Uint8 *keystate){
 			}
 		}
 
-		if(keystate[SDL_SCANCODE_LEFT]){
+		if(keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A]){
 			entradaUsuario.A = true;
 			se_movio = true;
 		}
 
-		if(keystate[SDL_SCANCODE_RIGHT]){
+		if(keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_D]){
 			entradaUsuario.D = true;
 			se_movio = true;
 		}
 
-		if(keystate[SDL_SCANCODE_DOWN] && !se_movio){
+		if((keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_S]) && !se_movio){
 			entradaUsuario.S = true;
+			se_movio = true;
 		}
 
-		cliente->agregarEntrada(entradaUsuario);
+		if(se_movio){
+			cliente->agregarEntrada(entradaUsuario);
+		}
 	}
+}
+
+void App::agregarRonda(info_ronda_t info_ronda){
+	juegoCliente->agregarRonda(info_ronda);
 }
 
 void App::actualizar(){
@@ -118,7 +118,7 @@ void App::dibujar(){
 		dibujador->dibujarInicio();
 	}
 	else{
-		if(ganaron){
+		if(juegoCliente->ganaronElJuego()){
 			dibujador->dibujarPantallaGanadores();
 			terminoElJuego = true;
 		}
@@ -146,6 +146,5 @@ App::~App(){
 
 	delete dibujador;
 	delete cargadorTexturas;
-	delete Log::getInstance();
 	delete ReproductorMusica::getInstance();
 }

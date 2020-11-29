@@ -47,7 +47,7 @@ class App{
 			sePusoMusicaInicio = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
-			ganaron = false;
+
 			bool juegoInicializadoCorrectamente = true;
 			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
 
@@ -70,7 +70,6 @@ class App{
 		bool sePusoMusicaInicio;
 		bool terminoElJuego;
 		bool comenzoElJuego;
-		bool ganaron;
 
 		int ancho_pantalla;
 		int alto_pantalla;
@@ -83,6 +82,7 @@ class App{
 
 		void actualizarServer(const Uint8 *keystate);
 		void actualizar();
+		void agregarRonda(info_ronda_t info_ronda);
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();

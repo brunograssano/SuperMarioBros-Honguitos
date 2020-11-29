@@ -17,15 +17,9 @@
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
 
-	if( TTF_Init() == -1 ){
-		log->huboUnErrorSDL("No se pudo inicializar SDL_ttf ", TTF_GetError());
-	}
-
 	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
 		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
 	}
-
-	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
 						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
@@ -42,10 +36,6 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	texturaMoneda = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
 
-	texturaLadrillo = intentarCarga("imagen del bloque ladrillo", "resources/Imagenes/Bloques/BloqueLadrillo.png", renderizador);
-
-	texturaSorpresa = intentarCarga("la textura sorpresa", "resources/Imagenes/Bloques/BloqueSorpresa.png", renderizador);
-
 	texturaFondoInicio = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
 
 	texturaTitulo = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
@@ -56,6 +46,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
 							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
+
+	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
 	for(auto const& particula:listaParticulas){
 		SDL_Texture* particulaTextura = intentarCarga("la particula", particula, renderizador);
@@ -88,10 +80,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 }
 
 
-SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador){
+SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto){
 	Log* log = Log::getInstance();
-	SDL_Color colorTexto= { 255, 255, 255, 255 };
-
 
 	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, textoAMostrar.c_str(), colorTexto );
 	if( superficeDeTexto == NULL ){
@@ -125,13 +115,9 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
 void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador){
 
 	for(int i=0;i<cantidadFondosNiveles;i++){
-		int altoNivel = 0;
-		int largoNivel = 0;
 		direccionesNiveles[i] = "resources/Imagenes/Niveles/" + direccionesNiveles[i];
 		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", direccionesNiveles[i], renderizador);
 		texturasNiveles[direccionesNiveles[i]] = texturaNueva;
-		SDL_QueryTexture(texturaNueva, NULL, NULL, &largoNivel, &altoNivel);
-		//nivel->definirDimesionesDelNivel(largoNivel, altoNivel);
 	}
 
 	texturaFondoActual = this->texturasNiveles[direccionesNiveles[0]];

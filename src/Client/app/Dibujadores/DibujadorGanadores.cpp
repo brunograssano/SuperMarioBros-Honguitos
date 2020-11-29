@@ -44,8 +44,8 @@ void DibujadorGanadores::dibujarTextoGanadores(){
 								ancho_puntosJugador,
 								alto_puntosJugador};
 
-	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str());
-	renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str());
+	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colorDefault);
 }
 
 

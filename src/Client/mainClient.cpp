@@ -148,6 +148,7 @@ int mainClient(int argc, char* args[]){
 	Cliente* cliente = new Cliente(ip, puerto);
 	cliente->ejecutar();
 	delete cliente;
+	delete Log::getInstance();
 
 
 	return 0;

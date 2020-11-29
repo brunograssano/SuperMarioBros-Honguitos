@@ -12,7 +12,7 @@ void BloqueTest::ejecutar(Assert* testSuite){
 
 void BloqueTest::test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* testSuite){
 
-	Bloque* bloque = new Ladrillo(3, 5);
+	Bloque* bloque = new Ladrillo(3, 5,0);
 
 	testSuite->assert(bloque->obtenerPosicionX() == 3 && bloque->obtenerPosicionY() == 5,"El Ladrillo se creo correctamente");
 
@@ -22,7 +22,7 @@ void BloqueTest::test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* te
 void BloqueTest::test02SeAniadeUnBloqueAUnaPlataforma(Assert* testSuite){
 
 	Plataforma* plataforma = new Plataforma();
-	Bloque* bloque = new Ladrillo(3,5);
+	Bloque* bloque = new Ladrillo(3,5,0);
 	plataforma->agregarBloque(bloque);
 
 	int cantidadDeBloques = plataforma->obtenerBloques().size();

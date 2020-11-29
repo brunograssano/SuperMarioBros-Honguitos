@@ -26,7 +26,8 @@ class EscuchadorActualizacionJugadores;
 #include "../../src/Client/Escuchadores/EscuchadorActualizacionJugadores.hpp"
 class EscuchadorInfoPartidaInicial;
 #include "../../src/Client/Escuchadores/EscuchadorInfoPartidaInicial.hpp"
-
+class EscuchadorRonda;
+#include "../../src/Client/Escuchadores/EscuchadorRonda.hpp"
 
 #include "Escuchadores/EscuchadorLog.hpp"
 
@@ -57,15 +58,19 @@ class Cliente{
 		void recibirInformacionServidor(info_inicio_t info_inicio);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
 		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
+		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void ejecutar();
 		void agregarEntrada(entrada_usuario_t entradaUsuario);
 		void empezarJuego(info_partida_t info_partida);
 	private:
+		info_partida_t infoPartida;
 		queue<entrada_usuario_t> entradasUsuario;
 		map<char,Escuchador*> escuchadores;
 		void enviarCredenciales(credencial_t credencial);
 
 		unsigned short cantidadJugadoresActivos;
+
+		bool cargoLaAplicacion = false;
 
 		bool seRecibioInformacionInicio = false;
 		info_inicio_t infoInicio;
@@ -74,9 +79,6 @@ class Cliente{
 		bool seRecibioVerificacion = false;
 		verificacion_t pasoVerificacion = false;
 		void esperarRecibirVerificacion();
-
-		void esperarCargaDeAplicacion();
-		bool seCargoLaAplicacion = false;
 
 		bool empiezaElJuego = false;
 

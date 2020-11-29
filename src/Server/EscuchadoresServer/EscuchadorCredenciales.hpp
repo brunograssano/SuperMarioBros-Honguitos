@@ -16,17 +16,32 @@ class EscuchadorCredenciales: public EscuchadorServer{
 		void escuchar()override{
 			credencial_t credencial;
 			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+			string nombre;
+			string contrasenia;
+
 			int resultado = recv(socket, &credencial, sizeof(credencial_t), MSG_WAITALL);
+
 			if(resultado<0){
-				//todo
+				pthread_mutex_lock(&mutex);
+				Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de las credenciales, se cierra el socket", to_string(errno));
+				pthread_mutex_unlock(&mutex);
+				throw runtime_error("ErrorAlRecibirCredenciales");
+			}else if(resultado == 0){
+				pthread_mutex_lock(&mutex);
+				Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de las credenciales, se cierra el socket");
+				pthread_mutex_unlock(&mutex);
+				throw runtime_error("ErrorAlRecibirCredenciales");
 			}
 
-			string nombre = string(credencial.nombre);
-			string contrasenia = string(credencial.contrasenia);
+			nombre = string(credencial.nombre);
+			contrasenia = string(credencial.contrasenia);
+
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales: " + nombre + " | " +contrasenia +" del cliente: " + conexionCliente->obtenerIP());
+			Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales:" + nombre + " | " +contrasenia +" del cliente: " + "OBTENER IP!!!!!!!!!!!!!!!!!");
 			pthread_mutex_unlock(&mutex);
+
 			conexionCliente->recibirCredencial(nombre, contrasenia);
+
 		}
 
 	private:

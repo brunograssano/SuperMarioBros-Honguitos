@@ -33,21 +33,35 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
 	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
 	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
-
+	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
 }
 
 void Cliente::escuchar(){
 	char tipoMensaje;
 	int resultado;
-	while(true){
+	bool hayError = false;
+
+	while(!hayError){
 		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+
 		if(resultado<0){
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
-			//Excepcion?
+			hayError = true;
+		}else if(resultado == 0){
+			Log::getInstance()->huboUnErrorSDL("Se desconecto el socket que escucha al server", to_string(errno));
+			hayError = true;
 		}
-		//if result = se desconecto el socket -> manejarlo
-		escuchadores[tipoMensaje]->escuchar();
+
+		try{
+			escuchadores[tipoMensaje]->escuchar();
+		}catch(const std::exception& e){
+			hayError = true;
+		}
 	}
+
+	shutdown(socketCliente, SHUT_RDWR);
+	close(socketCliente);
+
 }
 
 void Cliente::enviarEntrada(){
@@ -65,10 +79,8 @@ void Cliente::enviarEntrada(){
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	empiezaElJuego = true;
-	inicializarAplicacion(info_partida,this);
-	seCargoLaAplicacion = true;
+	infoPartida = info_partida;
 }
 
 void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
@@ -89,6 +101,17 @@ void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short ca
 	this->cantidadJugadoresActivos = cantidadJugadores;
 }
 
+void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	if(!cargoLaAplicacion){
+		return;
+	}
+	App* aplicacion = App::getInstance();
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
+	aplicacion->agregarRonda(info_ronda);
+	pthread_mutex_unlock(&mutex);
+}
+
 void Cliente::esperarRecibirInformacionInicio(){
 	while(!seRecibioInformacionInicio){
 	}//TODO: Mostrar una pantalla de espera al servidor, en caso de ser neceasrio.
@@ -97,11 +120,6 @@ void Cliente::esperarRecibirInformacionInicio(){
 void Cliente::esperarRecibirVerificacion(){
 	while(!seRecibioVerificacion){
 	}//TODO: Mostrar un mensaje de espera, en caso de ser necesario.
-}
-
-void Cliente::esperarCargaDeAplicacion(){
-	while(!seCargoLaAplicacion){
-	}
 }
 
 void Cliente::ejecutar(){
@@ -153,8 +171,12 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	esperarCargaDeAplicacion();
-
+	cargoLaAplicacion = inicializarAplicacion(infoPartida, this);
+	if(!cargoLaAplicacion){
+		close(socketCliente);
+		delete Log::getInstance();
+		exit(-1);
+	}
 	pthread_t hiloEntrada;
 	int resultadoCreateEnviarEntrada = pthread_create(&hiloEntrada, NULL, Cliente::enviar_helper, this);
 	if(resultadoCreateEnviarEntrada != 0){
@@ -164,8 +186,8 @@ void Cliente::ejecutar(){
 
 	gameLoop();
 
-	delete Log::getInstance();
 }
+
 void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
 	entradasUsuario.push(entradaUsuario);
 }
@@ -179,7 +201,6 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 
 Cliente::~Cliente(){
-	close(socketCliente);
 
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;

@@ -20,10 +20,15 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 	this->recorteSpriteGoomba = new RecorteGoomba();
 	this->recorteSpriteKoopa = new RecorteKoopa();
 	this->recorteSpriteMoneda = new RecorteMoneda();
+	this->recorteSpriteBloque = new RecorteBloque();
+	colores[0] = {230, 30 , 044, 255}; // Rojo.
+	colores[1] = {69 , 230, 52 , 255}; // Verde.
+	colores[2] = {179, 25 , 252, 255}; // Violeta.
+	colores[3] = {76 , 225, 252, 255}; // Celeste.
 }
 
 void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
-
+	rectanguloCamara->x = juegoCliente->obtenerPosXCamara();
 	SDL_RenderClear( renderizador );
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
 
@@ -38,33 +43,36 @@ void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoClien
 
 void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<enemigo_t> enemigos = juegoCliente->obtenerEnemigos();
+	string tipo;
 	for (auto const& enemigo : enemigos) {
 		SDL_Rect recorteTextura;
 		if(enemigo.tipoEnemigo==GOOMBA){
-			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.numeroRecorte);
+			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
+			tipo = "resources/Imagenes/Personajes/Goombas.png";
 		}
 		else{
-			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.numeroRecorte);
+			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
+			tipo = "resources/Imagenes/Personajes/Koopas.png";
 		}
 
 		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
-	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(enemigo.direccionImagen,renderizador), &recorteTextura, &rectanguloEnemigo);
+	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(tipo,renderizador), &recorteTextura, &rectanguloEnemigo);
 	}
 }
 
 void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<bloque_t> bloques = juegoCliente->obtenerBloques();
-
+	string direccionBloque = "resources/Imagenes/Bloques/Bloques.png";
 	for (auto const& bloque : bloques) {
 
 		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque.posY,
 									LARGO_BLOQUE, LARGO_BLOQUE};
-		SDL_Rect recorteBloque = {0,0,16,16}; // Pasaria a ser un RecorteBloque (por los sorpresa)
-		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(bloque.dirImagen, renderizador), &recorteBloque, &rectanguloBloque);
+		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
+		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(direccionBloque, renderizador), &recorteBloque, &rectanguloBloque);
 	}
 
 }
@@ -82,31 +90,31 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
 }
 
 void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
-	map<int,jugador_t> marios = juegoCliente->obtenerJugadores();
+	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int idPropio = juegoCliente->obtenerIDPropio();
-	for(auto const mario:marios){
-		mario_t jugador = mario.second.mario;
-		if(jugador.idImagen != idPropio){
-			int idMario = jugador.idImagen;
-			SDL_Rect rectanguloMario = {jugador.posX - rectanguloCamara->x,
-											alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- jugador.posY,
+	for(auto const parClaveJugador:jugadores){
+		mario_t mario = parClaveJugador.second.mario;
+		if(mario.idImagen != idPropio){
+			int idMario = mario.idImagen;
+			SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
+											alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario.posY,
 											ANCHO_MARIO, ALTO_MARIO};
 
-			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(jugador.recorteImagen);
-			if(jugador.recorteImagen==MARIO_GRIS){
-				idMario = jugador.recorteImagen;
+			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+			if(mario.recorteImagen==MARIO_GRIS){
+				idMario = mario.recorteImagen;
 			}
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(idMario), &recorteMario, &rectanguloMario);
 		}
 	}
 
-	mario_t jugador = marios[idPropio].mario;
-	SDL_Rect rectanguloMario = {jugador.posX - rectanguloCamara->x,
-												alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- jugador.posY,
+	mario_t mario = jugadores[idPropio].mario;
+	SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
+												alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario.posY,
 												ANCHO_MARIO, ALTO_MARIO};
 
-	SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(jugador.recorteImagen);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(jugador.idImagen), &recorteMario, &rectanguloMario);
+	SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario, &rectanguloMario);
 }
 
 void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
@@ -123,17 +131,17 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 	int espacioY = 10;
 	for(auto const& parClaveJugador:jugadores){
 		textoDePuntos.str("");
-		textoDePuntos << "Puntos de "<< parClaveJugador.second.nombreJugador << parClaveJugador.second.puntos;
-		SDL_Rect cuadradoPuntos = { 10, espacioY, 100, 30 };
-		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
+		textoDePuntos << "Puntos de: "<< parClaveJugador.second.nombreJugador << " "<<parClaveJugador.second.puntos;
+		SDL_Rect cuadradoPuntos = { 10, espacioY, 200, 30 };
+		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str(), colores[parClaveJugador.first]);
 		espacioY += 35;
 	}
 
 	SDL_Rect cuadradoTiempo = { ancho_pantalla - 340, 10, 330, 30 };
 	SDL_Rect cuadradoMundo = { ancho_pantalla - ancho_pantalla/2 - 100, 10, 100, 30 };
 
-	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str());
-	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str());
+	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str(), colorDefault);
 }
 
 DibujadorJuego::~DibujadorJuego(){

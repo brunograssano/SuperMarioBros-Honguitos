@@ -19,15 +19,28 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 void ConexionCliente::escuchar(){
 	char tipoMensaje;
 	int resultado;
-	while(true){
+	bool hayError = false;
+	while(!hayError){
+
 		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
+
 		if(resultado<0){
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje", to_string(errno));
-			//Excepcion?
+			hayError = true;
+		}else if(resultado == 0){
+			Log::getInstance()->huboUnErrorSDL("Se desconecto el socket que escucha al cliente", to_string(errno));
+			hayError = true;
 		}
-		//if result = se desconecto el socket -> manejarlo
-		escuchadores[tipoMensaje]->escuchar();
+
+		try{
+			escuchadores[tipoMensaje]->escuchar();
+		}catch(const std::exception& e){
+			hayError = true;
+		}
 	}
+	shutdown(socket, SHUT_RDWR);
+	close(socket);
+	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
 }
 
 
@@ -65,6 +78,29 @@ void ConexionCliente::esperarCredenciales(){
 }
 
 
+void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	colaRondas.push(info_ronda);
+}
+
+void ConexionCliente::enviarActualizacionesDeRonda(){
+
+	char caracterMensaje = RONDA;
+	info_ronda_t ronda;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+	while(true){
+		if(!colaRondas.empty()){
+			pthread_mutex_lock(&mutex);
+			ronda = colaRondas.front();
+			colaRondas.pop();
+			send(socket, &caracterMensaje, sizeof(char), 0);
+			send(socket, &ronda, sizeof(info_ronda_t), 0);
+			pthread_mutex_unlock(&mutex);
+		}
+	}
+}
+
+
 void ConexionCliente::ejecutar(){
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, ConexionCliente::escuchar_helper, this);
@@ -95,11 +131,7 @@ void ConexionCliente::ejecutar(){
 		}
 	}
 
-	while(true){
-		// System pause.
-	}
-
-	//escuchar para teclas
+	enviarActualizacionesDeRonda();
 }
 
 void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
@@ -141,5 +173,4 @@ void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 
 ConexionCliente::~ConexionCliente(){
 	delete escuchadorEntradaTeclado;
-	close(socket);
 }

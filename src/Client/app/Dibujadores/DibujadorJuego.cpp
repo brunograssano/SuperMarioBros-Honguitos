@@ -21,6 +21,7 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 	this->recorteSpriteKoopa = new RecorteKoopa();
 	this->recorteSpriteMoneda = new RecorteMoneda();
 	this->recorteSpriteBloque = new RecorteBloque();
+	colores[-1] = {150, 150 , 150, 255}; // Gris.
 	colores[0] = {230, 30 , 044, 255}; // Rojo.
 	colores[1] = {69 , 230, 52 , 255}; // Verde.
 	colores[2] = {179, 25 , 252, 255}; // Violeta.
@@ -103,6 +104,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
 			if(mario.recorteImagen==MARIO_GRIS){
 				idMario = mario.recorteImagen;
+				recorteMario = recorteSpriteMario->obtenerRecorte(0);
 			}
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(idMario), &recorteMario, &rectanguloMario);
 		}
@@ -133,7 +135,11 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 		textoDePuntos.str("");
 		textoDePuntos << "Puntos de: "<< parClaveJugador.second.nombreJugador << " "<<parClaveJugador.second.puntos;
 		SDL_Rect cuadradoPuntos = { 10, espacioY, 200, 30 };
-		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str(), colores[parClaveJugador.first]);
+		int id = parClaveJugador.first;
+		if(parClaveJugador.second.mario.recorteImagen == MARIO_GRIS){
+			id = MARIO_GRIS;
+		}
+		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str(), colores[id]);
 		espacioY += 35;
 	}
 

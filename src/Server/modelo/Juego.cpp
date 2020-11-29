@@ -41,6 +41,10 @@ void Juego::desconectarJugador(int idJugador){
 	jugadores[idJugador]->desconectar();
 }
 
+void Juego::conectarJugador(int idMarioConectandose){
+	jugadores[idMarioConectandose]->conectar();
+}
+
 
 map<int,Mario*> Juego::obtenerMarios(){
 	return jugadores;

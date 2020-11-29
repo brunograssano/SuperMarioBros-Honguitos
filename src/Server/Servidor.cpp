@@ -57,7 +57,7 @@ void Servidor::ejecutar(){
 	iniciarJuego(&hiloJuego,aplicacionServidor);
 	crearHiloConectarJugadores(this);
 	intentarIniciarModelo();
-	unirHilosPrincipalYGameLoop(&hiloJuego);
+	//unirHilosPrincipalYGameLoop(&hiloJuego);
 
 	list<int> idsUsuariosReconectados;
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -137,19 +137,15 @@ void Servidor::conectarJugadores(){
 
 bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	usuario_t usuario;
 	for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
-		usuario = parClaveUsuario.second;
-		if(coincidenCredenciales(posibleUsuario, usuario)){
+
+		if(coincidenCredenciales(posibleUsuario, parClaveUsuario.second)){
 			pthread_mutex_lock(&mutex);
-			usuario.usado = true;
-			clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
-			mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
-			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
+			parClaveUsuario.second.usado = true;
+			clientesJugando[parClaveUsuario.first] = conexionClienteConPosibleUsuario;
+			conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
+			aplicacionServidor->activarJugador(parClaveUsuario.first);
 			cantUsuariosLogueados++;
-			for(auto const& cliente:clientes){
-				cliente->actualizarCantidadConexiones(this->cantUsuariosLogueados);
-			}
 			pthread_mutex_unlock(&mutex);
 			return true;
 		}

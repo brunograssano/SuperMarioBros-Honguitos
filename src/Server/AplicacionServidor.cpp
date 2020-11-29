@@ -215,6 +215,10 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 
 }
 
+void AplicacionServidor::activarJugador(int idMarioConectandose){
+	juego->conectarJugador(idMarioConectandose);
+}
+
 void AplicacionServidor::desconectarJugador(int idJugador){
 	juego->desconectarJugador(idJugador);
 }

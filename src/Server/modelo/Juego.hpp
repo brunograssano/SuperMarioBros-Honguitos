@@ -52,6 +52,7 @@ class Juego{
 		void sumarPuntosAJugadores(int puntos);
 		bool quedaSoloUnNivel();
 		void desconectarJugador(int idJugador);
+		void conectarJugador(int idMarioConectandose);
 
 		string obtenerDireccionFondoNivelActual();
 		list<Enemigo*> obtenerEnemigos();

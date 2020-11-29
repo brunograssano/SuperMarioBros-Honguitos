@@ -158,7 +158,7 @@ void Cliente::ejecutar(){
 
 	while(!cerroVentana && !empiezaElJuego){//crear escuchador de esto (comenzar)
 		try{
-			ventanaInicio->imprimirMensajeEspera(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
+			ventanaInicio->imprimirMensajeEspera(cantidadJugadoresActivos, infoInicio.cantidadJugadores);
 		}
 		catch(const std::exception& e){
 			cerroVentana = true;

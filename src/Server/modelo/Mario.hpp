@@ -33,9 +33,13 @@ class Mario{
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
 
+
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
 		void desconectar(){
 			estaConectadoElJugador = false;
+		}
+		void conectar(){
+			estaConectadoElJugador = true;
 		}
 		void serArrastrado(int corrimiento);
 		void actualizarMaximoX(int limite);

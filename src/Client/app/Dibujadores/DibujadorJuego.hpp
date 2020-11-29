@@ -41,6 +41,8 @@ class DibujadorJuego : public Dibujador{
 		RecorteMoneda* recorteSpriteMoneda;
 		RecorteBloque* recorteSpriteBloque;
 
+		map<int, SDL_Color> colores;
+
 		void dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);

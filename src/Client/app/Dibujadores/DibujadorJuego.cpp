@@ -21,6 +21,10 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 	this->recorteSpriteKoopa = new RecorteKoopa();
 	this->recorteSpriteMoneda = new RecorteMoneda();
 	this->recorteSpriteBloque = new RecorteBloque();
+	colores[0] = {230, 30 , 044, 255}; // Rojo.
+	colores[1] = {69 , 230, 52 , 255}; // Verde.
+	colores[2] = {179, 25 , 252, 255}; // Violeta.
+	colores[3] = {76 , 225, 252, 255}; // Celeste.
 }
 
 void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
@@ -129,15 +133,15 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 		textoDePuntos.str("");
 		textoDePuntos << "Puntos de: "<< parClaveJugador.second.nombreJugador << " "<<parClaveJugador.second.puntos;
 		SDL_Rect cuadradoPuntos = { 10, espacioY, 200, 30 };
-		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str());
+		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str(), colores[parClaveJugador.first]);
 		espacioY += 35;
 	}
 
 	SDL_Rect cuadradoTiempo = { ancho_pantalla - 340, 10, 330, 30 };
 	SDL_Rect cuadradoMundo = { ancho_pantalla - ancho_pantalla/2 - 100, 10, 100, 30 };
 
-	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str());
-	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str());
+	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str(), colorDefault);
 }
 
 DibujadorJuego::~DibujadorJuego(){

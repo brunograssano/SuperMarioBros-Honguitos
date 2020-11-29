@@ -80,10 +80,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 }
 
 
-SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador){
+SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto){
 	Log* log = Log::getInstance();
-	SDL_Color colorTexto= { 255, 255, 255, 255 };
-
 
 	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, textoAMostrar.c_str(), colorTexto );
 	if( superficeDeTexto == NULL ){

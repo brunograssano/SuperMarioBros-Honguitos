@@ -67,7 +67,7 @@ void DibujadorInicio::dibujar(){
 								alto_indicacion};
 
 	//renderizarTexto(cuadradoGameOver, titulo.str().c_str());
-	renderizarTexto(cuadradoIndicacion, indicacion.str().c_str());
+	renderizarTexto(cuadradoIndicacion, indicacion.str().c_str(), colorDefault);
 	SDL_RenderPresent(renderizador);
 
 }

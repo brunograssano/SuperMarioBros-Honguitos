@@ -28,7 +28,7 @@ void DibujadorGameOver::dibujar(){
 							ancho_textoGameOver,
 							alto_textoGameOver}; //Los coloco en el centro.
 
-	renderizarTexto(cuadradoGameOver, textoGameOver.str().c_str());
+	renderizarTexto(cuadradoGameOver, textoGameOver.str().c_str(), colorDefault);
 	int piso = 440;
 	SDL_Rect rectanguloCoffinMario = {posicionXCoffinMario, piso, 3*70, 3*32};
 	SDL_Rect recorteCoffinMario = this->spriteCoffinMario->obtenerRectanguloActual();

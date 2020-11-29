@@ -124,6 +124,7 @@ typedef struct ronda{
 	unsigned short topeBloques;
 	unsigned short topeEnemigos;
 	unsigned short topeMonedas;
+	bool ganaron;
 	bloque_t bloques[MAX_BLOQUES];
 	enemigo_t enemigos[MAX_ENEMIGOS];
 	moneda_t monedas[MAX_MONEDAS];

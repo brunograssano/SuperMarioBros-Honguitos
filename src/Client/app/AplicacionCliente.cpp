@@ -118,7 +118,7 @@ void App::dibujar(){
 		dibujador->dibujarInicio();
 	}
 	else{
-		if(ganaron){
+		if(juegoCliente->ganaronElJuego()){
 			dibujador->dibujarPantallaGanadores();
 			terminoElJuego = true;
 		}

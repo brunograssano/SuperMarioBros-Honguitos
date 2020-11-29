@@ -27,6 +27,7 @@ class JuegoCliente{
 		int obtenerMundoActual();
 		int obtenerIDPropio();
 		int obtenerPosXCamara();
+		bool ganaronElJuego();
 
 	private:
 		queue<info_ronda_t> rondas;
@@ -40,6 +41,7 @@ class JuegoCliente{
 		int numeroMundo;
 		int tiempoFaltante;
 		int posXCamara;
+		bool ganaron;
 };
 
 

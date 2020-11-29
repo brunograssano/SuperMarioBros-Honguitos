@@ -47,7 +47,7 @@ class App{
 			sePusoMusicaInicio = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
-			ganaron = false;
+
 			bool juegoInicializadoCorrectamente = true;
 			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
 
@@ -70,7 +70,6 @@ class App{
 		bool sePusoMusicaInicio;
 		bool terminoElJuego;
 		bool comenzoElJuego;
-		bool ganaron;
 
 		int ancho_pantalla;
 		int alto_pantalla;

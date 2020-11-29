@@ -109,6 +109,7 @@ void App::agregarRonda(info_ronda_t info_ronda){
 
 void App::actualizar(){
 	juegoCliente->actualizar();
+	cargadorTexturas->revisarSiCambioNivel(renderizador, direccionesNiveles[juegoCliente->obtenerMundoActual()-1]);
 }
 
 
@@ -119,6 +120,11 @@ void App::dibujar(){
 	}
 	else{
 		if(juegoCliente->ganaronElJuego()){
+
+			if(!this->estaReproduciendoMusicaGanadores){
+				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.mp3");
+				estaReproduciendoMusicaGanadores = true;
+			}
 			dibujador->dibujarPantallaGanadores();
 			terminoElJuego = true;
 		}

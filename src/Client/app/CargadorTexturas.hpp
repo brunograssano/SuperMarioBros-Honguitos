@@ -36,7 +36,7 @@ class CargadorTexturas{
 
 		void cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador);
 		void actualizarSpriteMario(string direccion, SDL_Renderer* renderizador);
-		void revisarSiCambioNivel(SDL_Renderer* renderizador);
+		void revisarSiCambioNivel(SDL_Renderer* renderizador, string direccionFondoActual);
 
 		~CargadorTexturas();
 
@@ -64,8 +64,8 @@ class CargadorTexturas{
 
 		TTF_Font* fuenteJuego;
 
-		SDL_Texture* cargarTextura(string direccion,SDL_Renderer* renderizador);
-		SDL_Texture* intentarCarga(string descripcion,string direccion, SDL_Renderer* renderizador);
+		SDL_Texture* cargarTextura(string direccion, SDL_Renderer* renderizador);
+		SDL_Texture* intentarCarga(string descripcion, string direccion, SDL_Renderer* renderizador);
 
 		bool tengoTexturaCargadaEnMemoria(string spriteDireccionImagen, map<string,SDL_Texture*> texturas);
 

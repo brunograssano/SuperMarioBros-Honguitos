@@ -101,12 +101,11 @@ SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar,
 
 
 
-void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador){
-	string direccionDelNivel = Juego::getInstance()->obtenerDireccionFondoNivelActual();
+void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string direccionFondo){
 
-	if(direccionFondoActual != direccionDelNivel){
+	if(direccionFondoActual != direccionFondo){
 		SDL_DestroyTexture( texturaFondoActual );
-		direccionFondoActual = direccionDelNivel;
+		direccionFondoActual = direccionFondo;
 		texturaFondoActual = this->texturasNiveles[direccionFondoActual];
 
 	}

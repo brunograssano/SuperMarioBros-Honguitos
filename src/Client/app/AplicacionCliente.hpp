@@ -31,10 +31,11 @@ class App{
 			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
-			string direccionesNiveles[MAX_IMAGEN_NIVELES];
+
 			for(int i=0;i<informacion.cantidadFondosNiveles;i++){
-				direccionesNiveles[i] = string(informacion.direccionesFondoNiveles[i]);
+				this->direccionesNiveles[i] = string(informacion.direccionesFondoNiveles[i]);
 			}
+
 
 			//if(informacion.iniciadoCorrectamente){
 			cargadorTexturas->cargarTexturasNiveles(direccionesNiveles,informacion.cantidadFondosNiveles, renderizador);
@@ -47,6 +48,7 @@ class App{
 			sePusoMusicaInicio = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
+			estaReproduciendoMusicaGanadores = false;
 
 			bool juegoInicializadoCorrectamente = true;
 			dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
@@ -70,7 +72,8 @@ class App{
 		bool sePusoMusicaInicio;
 		bool terminoElJuego;
 		bool comenzoElJuego;
-
+		bool estaReproduciendoMusicaGanadores;
+		string direccionesNiveles[MAX_IMAGEN_NIVELES];
 		int ancho_pantalla;
 		int alto_pantalla;
 		Cliente* cliente;

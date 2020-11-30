@@ -126,16 +126,21 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 			if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){
 				(**entradaUsuario).pop_back();
 			}
-			else if(this->cajaTextoContrasenia->botonClickeado(evento)){
+			else if(this->cajaTextoContrasenia->botonClickeado(evento) || evento.key.keysym.sym == SDLK_DOWN){
 				(*entradaUsuario) = textoIngresadoContrasenia;
 			}
-			else if(this->cajaTextoUsuario->botonClickeado(evento)){
+			else if(this->cajaTextoUsuario->botonClickeado(evento) || evento.key.keysym.sym == SDLK_UP){
 				(*entradaUsuario) = textoIngresadoUsuario;
 			}
-			else if(this->botonEnviar->botonClickeado(evento)){
+			else if(this->botonEnviar->botonClickeado(evento) || evento.key.keysym.sym == SDLK_RETURN){
 				return true;
-			}
-			else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
+			}else if(evento.key.keysym.sym == SDLK_TAB){
+				 if((*entradaUsuario) == textoIngresadoUsuario){
+					 (*entradaUsuario) = textoIngresadoContrasenia;
+				 }else{
+					 (*entradaUsuario) = textoIngresadoUsuario;
+				 }
+			}else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
 				SDL_SetClipboardText( (**entradaUsuario).c_str() );
 				(**entradaUsuario) += evento.text.text;
 			}

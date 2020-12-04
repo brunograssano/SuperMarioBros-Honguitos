@@ -1,4 +1,4 @@
-	#ifndef SRC_SERVER_CONEXIONCLIENTE_HPP_
+#ifndef SRC_SERVER_CONEXIONCLIENTE_HPP_
 #define SRC_SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
@@ -9,12 +9,11 @@ using namespace std;
 #include <thread>
 #include <string>
 #include <map>
-#include "EscuchadoresServer/EscuchadorServer.hpp"
 
-#include "../Utils/Utils.hpp"
 
 #include "../Utils/log/Log.hpp"
-
+#include "../Utils/Escuchador.hpp"
+#include "../Utils/Utils.hpp"
 class EscuchadorEntradaTeclado;
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
@@ -71,7 +70,7 @@ class ConexionCliente {
 		string ip;
 
 		Servidor* servidor;
-		map<char,EscuchadorServer*> escuchadores;
+		map<char,Escuchador*> escuchadores;
 
 
 

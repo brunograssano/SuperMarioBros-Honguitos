@@ -5,16 +5,19 @@
 class Cliente;
 #include "../Cliente.hpp"
 
-#include "Escuchador.hpp"
+#include "../../Utils/Escuchador.hpp"
 
 class EscuchadorVerificacionCredenciales : public Escuchador{
 
 	public:
 		EscuchadorVerificacionCredenciales(int socketCliente, Cliente* cliente);
-		void escuchar() override;
-		~EscuchadorVerificacionCredenciales();
+		virtual ~EscuchadorVerificacionCredenciales();
+		void escuchar();
+		void casoError(int resultado)override;
+		void casoSocketCerrado()override;
+		void casoExitoso()override;
 	private:
-		int socket;
+		verificacion_t verificacion;
 		Cliente* cliente;
 };
 

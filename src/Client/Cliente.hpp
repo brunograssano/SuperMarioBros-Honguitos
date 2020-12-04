@@ -15,7 +15,7 @@
 #include <queue>
 #include <map>
 
-#include "../../src/Client/Escuchadores/Escuchador.hpp"
+#include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
 
 class EscuchadorInformacionPartida;

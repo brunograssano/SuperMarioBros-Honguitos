@@ -5,17 +5,21 @@
 class Cliente;
 #include "../Cliente.hpp"
 
-#include "Escuchador.hpp"
+#include "../../Utils/Escuchador.hpp"
 
 class EscuchadorRonda: public Escuchador{
 
 	public:
 		EscuchadorRonda(int socketCliente, Cliente* cliente);
-		void escuchar() override;
-		~EscuchadorRonda();
+		virtual ~EscuchadorRonda();
+		void escuchar();
+		void casoError(int resultado)override;
+		void casoSocketCerrado()override;
+		void casoExitoso()override;
+
 	private:
-		int socket;
 		Cliente* cliente;
+		info_ronda_t info_ronda;
 };
 
 

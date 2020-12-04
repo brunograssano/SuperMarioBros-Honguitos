@@ -18,11 +18,10 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 	ganaron = false;
 	juegoInicializadoCorrectamente = false;
 	log = Log::getInstance();
-	tiempoDeInicio = 0;
-	tiempoFaltante = 0;
 	servidor = server;
 	this->ancho_pantalla = ancho_pantalla;
 	rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
+	contadorNivel = new Contador(juego->obtenerNiveles().front()->obtenerTiempo(), SEGUNDOS);
 }
 
 info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador){
@@ -72,7 +71,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 
 	info_ronda.mundo = juego->obtenerMundoActual();
 	info_ronda.posXCamara = this->rectanguloCamara.x;
-	info_ronda.tiempoFaltante = this->tiempoFaltante;
+	info_ronda.tiempoFaltante = this->contadorNivel->tiempoRestante();
 	info_ronda.ganaron = this->ganaron;
 
 	list<Plataforma*> plataformas = juego->obtenerPlataformas();
@@ -152,8 +151,8 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 		//estamos esperando a que nos indiquen que puede comenzar el juego
 	}
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
-
-	Contador* contador = new Contador(microSegundosEspera);
+	contadorNivel->iniciar();
+	Contador* contador = new Contador(microSegundosEspera, USEGUNDOS);
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
 		contador->iniciar();
@@ -201,7 +200,7 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 	}
 
 	if(pasadoLimite && juego->quedaSoloUnNivel()){
-		juego->sumarPuntosAJugadores(tiempoFaltante);
+		juego->sumarPuntosAJugadores(contadorNivel->tiempoRestante());
 		ganaron = true;
 		log->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 	}
@@ -209,8 +208,10 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 		rectanguloCamara.x= 0;
 		rectanguloCamara.y = 0;
 		juego->avanzarNivel();
-		juego->sumarPuntosAJugadores(tiempoFaltante);
-		tiempoDeInicio = SDL_GetTicks();
+		juego->sumarPuntosAJugadores(contadorNivel->tiempoRestante());
+		delete contadorNivel;
+		contadorNivel = new Contador(juego->obtenerNiveles().front()->obtenerTiempo(), SEGUNDOS);
+		contadorNivel->iniciar();
 		log->mostrarMensajeDeInfo("Se avanzo de nivel");
 	}
 

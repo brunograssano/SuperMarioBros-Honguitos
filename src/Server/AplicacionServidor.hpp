@@ -52,8 +52,6 @@ class AplicacionServidor{
 		Log* log;
 		Juego* juego;
 		SDL_Rect rectanguloCamara;
-		int tiempoDeInicio;
-		int tiempoFaltante;
 		int cantJugadores;
 		int ancho_pantalla;
 		bool terminoElJuego;
@@ -61,6 +59,7 @@ class AplicacionServidor{
 		bool ganaron;
 		bool juegoInicializadoCorrectamente;
 		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
+		Contador* contadorNivel;
 };
 
 

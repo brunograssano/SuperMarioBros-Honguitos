@@ -1,4 +1,3 @@
-
 #ifndef SERVER_ESCUCHADORENTRADATECLADO_HPP_
 #define SERVER_ESCUCHADORENTRADATECLADO_HPP_
 
@@ -7,24 +6,24 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "EscuchadorServer.hpp"
 #include "../Servidor.hpp"
 #include "../../Utils//Utils.hpp"
+#include "../../Utils/Escuchador.hpp"
 
-
-class EscuchadorEntradaTeclado:public EscuchadorServer{
+class EscuchadorEntradaTeclado:public Escuchador{
 
 	public:
 		EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor);
-		void escuchar()override;
+		void escuchar();
+		void casoError(int resultado)override;
+		void casoSocketCerrado()override;
+		void casoExitoso()override;
 
 	private:
-		int socket;
+		entrada_usuario_t entradaUsuario;
 		int idJugador;
 		Servidor* servidor;
 
 };
-
-
 
 #endif /* SERVER_ESCUCHADORENTRADATECLADO_HPP_ */

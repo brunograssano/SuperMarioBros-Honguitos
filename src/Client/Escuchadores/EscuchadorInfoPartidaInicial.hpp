@@ -1,22 +1,25 @@
 #ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORINFOPARTIDAINICIAL_HPP_
 #define SRC_CLIENT_ESCUCHADORES_ESCUCHADORINFOPARTIDAINICIAL_HPP_
 
-#include "Escuchador.hpp"
-
 class Cliente;
 #include "../Cliente.hpp"
 
+#include "../../Utils/Escuchador.hpp"
 
 class EscuchadorInfoPartidaInicial : public Escuchador{
 
 	public:
 		EscuchadorInfoPartidaInicial(int socket,Cliente* cliente);
-
-		void escuchar()override;
+		virtual ~EscuchadorInfoPartidaInicial();
+		void escuchar();
+		void casoError(int resultado)override;
+		void casoSocketCerrado()override;
+		void casoExitoso()override;
 
 	private:
+		info_partida_t info_partida;
 		Cliente* cliente;
-		int socket;
+
 };
 
 

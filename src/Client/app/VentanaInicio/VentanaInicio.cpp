@@ -163,23 +163,28 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	bool terminoEntrada = false;
 	Log* log = Log::getInstance();
 
+	int anchoTextoUsuario;
+	int anchoTextoContrasenia;
 	while( !terminar && !terminoEntrada){
 
 		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoContrasenia,&entradaUsuario);
 
-		if(!textoIngresadoUsuario.empty()){
-			this->cajaTextoUsuario->cambiarTexto(textoIngresadoUsuario);
-		}
-		if(!textoIngresadoUsuario.empty()){
-			this->cajaTextoContrasenia->cambiarTexto(textoIngresadoContrasenia);
+		cajaTextoUsuario->cambiarTexto(textoIngresadoUsuario);
+		cajaTextoContrasenia->cambiarTexto(textoIngresadoContrasenia);
+
+		anchoTextoUsuario = textoIngresadoUsuario.length()*10;
+		if(textoIngresadoUsuario.empty()){
+			anchoTextoUsuario = 30;
 		}
 
-		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
 		if(anchoTextoUsuario>270){
 			anchoTextoUsuario = 270;
 		}
 
-		int anchoTextoContrasenia = textoIngresadoContrasenia.length()*10;
+		anchoTextoContrasenia = textoIngresadoContrasenia.length()*10;
+		if(textoIngresadoContrasenia.empty()){
+			anchoTextoContrasenia = 30;
+		}
 		if(anchoTextoContrasenia>270){
 			anchoTextoContrasenia = 270;
 		}

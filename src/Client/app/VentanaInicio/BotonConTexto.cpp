@@ -15,8 +15,7 @@ SDL_Texture* BotonConTexto::cargoTextura(string texto){
 		SDL_FreeSurface( textSurface );
 	}
 	else{
-		log->huboUnErrorSDL("No se pudo renderizar la superficie", SDL_GetError());
-		log->huboUnErrorSDL(texto, SDL_GetError());
+		log->huboUnErrorSDL("No se pudo renderizar la superficie para el texto: " + texto, SDL_GetError());
 	}
 	return texturaACargar;
 }

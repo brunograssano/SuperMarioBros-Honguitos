@@ -10,22 +10,25 @@
 #include "Dibujador.hpp"
 #include "ParticulaGanadores.hpp"
 
-#include "../../../Server/modelo/Juego.hpp"
+#include "../juegoCliente/JuegoCliente.hpp"
+
 #include "../../../Server/sprites/spritesPersonajesSaltando/SpritePeachSaltando.hpp"
 #include "../../../Server/sprites/spritesPersonajesSaltando/SpriteToadSaltando.hpp"
 #include "../../../Server/sprites/spritesPersonajesSaltando/SpriteYoshiSaltando.hpp"
 
+
 class DibujadorGanadores : public Dibujador{
 	public:
 		DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
-		void dibujar() override;
+		void dibujar(JuegoCliente* juegoCliente);
 		~DibujadorGanadores();
 
 	private:
-		void dibujarTextoGanadores();
+		void dibujarTextoGanadores(JuegoCliente* juegoCliente);
 		void dibujarParticulas();
 		void dibujarPersonajes();
 
+		map<int, SDL_Color> colores;
 		SpritePeachSaltando* spritePeach;
 		SpriteToadSaltando* spriteToad;
 		SpriteYoshiSaltando* spriteYoshi;

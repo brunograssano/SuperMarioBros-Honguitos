@@ -128,7 +128,7 @@ void App::dibujar(){
 				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.mp3");
 				estaReproduciendoMusicaGanadores = true;
 			}
-			dibujador->dibujarPantallaGanadores();
+			dibujador->dibujarPantallaGanadores(juegoCliente);
 			terminoElJuego = true;
 		}
 		else if(juegoCliente->perdieronElJuego()){

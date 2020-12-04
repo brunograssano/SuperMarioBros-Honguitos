@@ -26,7 +26,7 @@ class Dibujadores{
 		void dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarGameOver();
 		void dibujarInicio();
-		void dibujarPantallaGanadores();
+		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
 		~Dibujadores();
 
 	private:

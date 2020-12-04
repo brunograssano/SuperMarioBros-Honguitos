@@ -155,7 +155,7 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 	Contador* contador = new Contador(microSegundosEspera);
 	map<int,Mario*> jugadores = juego->obtenerMarios();
-	while(!terminoElJuego){
+	while(!terminoElJuego || tengojugadores(jugadores)){
 		contador->iniciar();
 		if(!ganaron){
 
@@ -183,6 +183,7 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 	}
 	delete contador;
 	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
+	servidor->terminoElJuego();
 }
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
@@ -203,6 +204,7 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 	if(pasadoLimite && juego->quedaSoloUnNivel()){
 		juego->sumarPuntosAJugadores(tiempoFaltante);
 		ganaron = true;
+		terminoElJuego = true;
 		log->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 	}
 	else if(pasadoLimite){
@@ -229,6 +231,18 @@ SDL_Rect* AplicacionServidor::obtenerRectCamara(){
 	return &rectanguloCamara;
 }
 
+bool AplicacionServidor::tengojugadores(map<int,Mario*> jugadores){
+	int i = 0;
+	bool hayAlguienConectado = false;
+	while(i<cantJugadores && !hayAlguienConectado){
+		if(jugadores[i]->estaConectado()){
+			hayAlguienConectado = true;
+		}
+		i++;
+	}
+	return hayAlguienConectado;
+
+}
 
 void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();

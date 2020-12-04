@@ -43,6 +43,7 @@ class AplicacionServidor{
 		}
 
 	private:
+		bool tengojugadores(map<int,Mario*> jugadores);
 		Servidor* servidor;
 		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
 		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);

@@ -72,27 +72,15 @@ VentanaInicio::VentanaInicio(){
 		SDL_Color colorBlanco = { 255, 255, 255, 0xFF };
 		this->texturaTextoUsuario = cargoTextura("Ingrese usuario:", colorBlanco );
 		this->texturaTextoContrasenia = cargoTextura("Ingrese contrasenia:", colorBlanco );
-		this->usuarioIngresado = cargoTextura("...", colorBlanco );
-		this->contraseniaIngresada = cargoTextura("...", colorBlanco );
-		this->textoBotonEnviar = cargoTextura("Enviar", colorBlanco );
-		if( this->textoBotonEnviar == nullptr ){
-			log->huboUnError("No se pudo crear la textura para el texto del boton enviar");
-		}
 		if( this->texturaTextoUsuario == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando del usuario");
 		}
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		if( this->usuarioIngresado == nullptr ){
-			log->huboUnError("No se pudo crear la textura para ingresar el usuario");
-		}
-		if( this->contraseniaIngresada == nullptr ){
-			log->huboUnError("No se pudo crear la textura para ingresar la contraseña");
-		}
-		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , this->textoBotonEnviar);
-		this->cajaTextoUsuario = new BotonConTexto(20,40,150,14,this->usuarioIngresado);
-		this->cajaTextoContrasenia = new BotonConTexto(20,90,150,14,this->contraseniaIngresada);
+		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , "Enviar",this->renderer,this->fuente);
+		this->cajaTextoUsuario = new BotonConTexto(20,40,150,14,"...",this->renderer,this->fuente);
+		this->cajaTextoContrasenia = new BotonConTexto(20,90,150,14,"...",this->renderer,this->fuente);
 	}
 
 }
@@ -168,8 +156,8 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", colorBlanco);
 
 	SDL_StartTextInput();
-	string textoIngresadoUsuario = "...";
-	string textoIngresadoContrasenia = "...";
+	string textoIngresadoUsuario = "";
+	string textoIngresadoContrasenia = "";
 	string* entradaUsuario = &textoIngresadoUsuario;
 
 	bool terminoEntrada = false;
@@ -179,13 +167,11 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoContrasenia,&entradaUsuario);
 
-		if(textoIngresadoUsuario.length() != 0){
-			this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), colorBlanco );
-			this->cajaTextoUsuario->cambiarTexto(this->usuarioIngresado);
+		if(!textoIngresadoUsuario.empty()){
+			this->cajaTextoUsuario->cambiarTexto(textoIngresadoUsuario);
 		}
-		if(textoIngresadoContrasenia.length() != 0){
-			this->contraseniaIngresada = cargoTextura( textoIngresadoContrasenia.c_str(), colorBlanco );
-			this->cajaTextoContrasenia->cambiarTexto(this->contraseniaIngresada);
+		if(!textoIngresadoUsuario.empty()){
+			this->cajaTextoContrasenia->cambiarTexto(textoIngresadoContrasenia);
 		}
 
 		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
@@ -204,15 +190,15 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 		SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
 		SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
 
-		this->botonEnviar->mostrarse(this->renderer);
+		this->botonEnviar->mostrarse();
 
 		renderizar(10,20,14,200,this->texturaTextoUsuario);
 
-		this->cajaTextoUsuario->mostrarseCambiandoAncho(this->renderer, anchoTextoUsuario);
+		this->cajaTextoUsuario->mostrarseCambiandoAncho(anchoTextoUsuario);
 
 		renderizar(10,70,14,250,this->texturaTextoContrasenia);
 
-		this->cajaTextoContrasenia->mostrarseCambiandoAncho(this->renderer, anchoTextoContrasenia);
+		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
 		if(ingresoIncorrectoCredenciales){
 			SDL_Color colorRojo = { 207, 0, 15, 0xFF };

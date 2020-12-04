@@ -50,6 +50,7 @@ class ConexionCliente {
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
 		void enviarInfoPartida(info_partida_t info_partida);
+		void enviarMensajeLog(mensaje_log_t mensaje);
 		string obtenerIP(){
 			return ip;
 		}

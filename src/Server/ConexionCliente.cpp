@@ -1,6 +1,6 @@
-#include "ConexionCliente.hpp"
-#include "EscuchadoresServer/EscuchadorCredenciales.hpp"
 #include <thread>
+
+#include "ConexionCliente.hpp"
 #include "EscuchadoresServer/EscuchadorCredenciales.hpp"
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
@@ -82,34 +82,10 @@ void ConexionCliente::recibirCredencial(string nombre, string contrasenia){
 	recibioCredenciales = true;
 }
 
-info_inicio_t ConexionCliente::crearInformacionInicio(){
-	info_inicio_t info;
-	info.cantidadJugadoresActivos = this->cantidadConexiones;
-	info.cantidadJugadores = this->servidor->getMaximasConexiones();
-	return info;
-}
-
-void ConexionCliente::enviarInformacionInicio(){
-	info_inicio_t info_inicio = crearInformacionInicio();
-	enviadores[INICIO]->dejarInformacion(&info_inicio);
-	identificadoresMensajeAEnviar.push(INICIO);
-}
-
-void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
-	enviadores[VERIFICACION]->dejarInformacion(&esUsuarioValido);
-	identificadoresMensajeAEnviar.push(VERIFICACION);
-}
-
 void ConexionCliente::esperarCredenciales(){
 	while(!recibioCredenciales){
 	}
 	recibioCredenciales = false;
-}
-
-
-void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
-	enviadores[RONDA]->dejarInformacion(&info_ronda);
-	identificadoresMensajeAEnviar.push(RONDA);
 }
 
 void ConexionCliente::enviarActualizacionesDeRonda(){
@@ -158,6 +134,37 @@ void ConexionCliente::ejecutar(){
 	enviarActualizacionesDeRonda();
 }
 
+
+////---------------------------------ENVIADORES---------------------------------////
+
+void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
+	enviadores[VERIFICACION]->dejarInformacion(&esUsuarioValido);
+	identificadoresMensajeAEnviar.push(VERIFICACION);
+}
+
+info_inicio_t ConexionCliente::crearInformacionInicio(){
+	info_inicio_t info;
+	info.cantidadJugadoresActivos = this->cantidadConexiones;
+	info.cantidadJugadores = this->servidor->getMaximasConexiones();
+	return info;
+}
+
+void ConexionCliente::enviarInformacionInicio(){
+	info_inicio_t info_inicio = crearInformacionInicio();
+	enviadores[INICIO]->dejarInformacion(&info_inicio);
+	identificadoresMensajeAEnviar.push(INICIO);
+}
+
+void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	enviadores[RONDA]->dejarInformacion(&info_ronda);
+	identificadoresMensajeAEnviar.push(RONDA);
+}
+
+void ConexionCliente::enviarMensajeLog(mensaje_log_t mensaje){
+	enviadores[MENSAJE_LOG]->dejarInformacion(&mensaje);
+	identificadoresMensajeAEnviar.push(MENSAJE_LOG);
+}
+
 void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
 	enviadores[PARTIDA]->dejarInformacion(&info_partida);
 	identificadoresMensajeAEnviar.push(PARTIDA);
@@ -180,6 +187,8 @@ void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 	enviadores[ACTUALIZACION_JUGADORES]->dejarInformacion(&actualizacion);
 	identificadoresMensajeAEnviar.push(ACTUALIZACION_JUGADORES);
 }
+
+////---------------------------------DESTRUCTOR---------------------------------////
 
 ConexionCliente::~ConexionCliente(){
 	for(auto const& parClaveEscuchador:escuchadores){

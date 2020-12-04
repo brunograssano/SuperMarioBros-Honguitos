@@ -48,6 +48,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 
 	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
 	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
+
 }
 
 void Cliente::escuchar(){

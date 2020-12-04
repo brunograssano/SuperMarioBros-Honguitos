@@ -1,6 +1,6 @@
 #include "Servidor.hpp"
 #include <string>
-
+#include <string.h>
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
@@ -48,8 +48,13 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,strin
 	conexionesPerdidas.push_front(conexionPerdida);
 	clientes.remove(conexionPerdida);
 
-
-	// Informar a los log de los otros jugadores, usar un mutex con el send, que nadie haga nada
+	mensaje_log_t mensajeLog;
+	nombre.insert(0,"Se desconecto el usuario: ");
+	strcpy(mensajeLog.mensajeParaElLog,nombre.c_str());
+	mensajeLog.tipo = INFO;
+	for(auto const parClaveCliente:clientesJugando){
+		parClaveCliente.second->enviarMensajeLog(mensajeLog);
+	}
 }
 
 void Servidor::ejecutar(){
@@ -57,7 +62,6 @@ void Servidor::ejecutar(){
 	iniciarJuego(&hiloJuego,aplicacionServidor);
 	crearHiloConectarJugadores(this);
 	intentarIniciarModelo();
-	//unirHilosPrincipalYGameLoop(&hiloJuego);
 
 	list<int> idsUsuariosReconectados;
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -78,8 +82,6 @@ void Servidor::ejecutar(){
 		}
 		idsUsuariosReconectados.clear();
 	}
-
-	//detach
 
 }
 

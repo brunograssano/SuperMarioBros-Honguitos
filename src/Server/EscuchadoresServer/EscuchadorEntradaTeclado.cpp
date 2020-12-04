@@ -23,7 +23,7 @@ void EscuchadorEntradaTeclado::escuchar(){
 		throw runtime_error("ErrorAlRecibirEntradaTeclado");
 	}else if(resultado == 0){
 		pthread_mutex_lock(&mutex);
-		Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion, se cierra el socket");
+		Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de entrada de teclado. Se cierra el socket");
 		pthread_mutex_unlock(&mutex);
 		throw runtime_error("ErrorAlRecibirEntradaTeclado");
 	}

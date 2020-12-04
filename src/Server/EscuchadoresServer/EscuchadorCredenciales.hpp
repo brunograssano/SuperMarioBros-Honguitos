@@ -37,11 +37,10 @@ class EscuchadorCredenciales: public EscuchadorServer{
 			contrasenia = string(credencial.contrasenia);
 
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales:" + nombre + " | " +contrasenia +" del cliente: " + "OBTENER IP!!!!!!!!!!!!!!!!!");
+			Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales:" + nombre + " | " +contrasenia +" del cliente: " + conexionCliente->obtenerIP());
 			pthread_mutex_unlock(&mutex);
 
 			conexionCliente->recibirCredencial(nombre, contrasenia);
-
 		}
 
 	private:

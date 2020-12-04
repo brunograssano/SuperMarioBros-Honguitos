@@ -9,6 +9,10 @@ class Contador{
 			tiempoTotal = tiempo;
 			tiempoInicio = time(nullptr);
 		}
+
+		void iniciar(){
+			tiempoInicio = time(nullptr);
+		}
 		/*En microsegundos*/
 		int tiempoRestante(){
 			time_t tiempoActual = time(nullptr);

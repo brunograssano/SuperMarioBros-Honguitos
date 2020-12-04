@@ -154,12 +154,11 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 
-
+	Contador* contador = new Contador(microSegundosEspera);
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
+		contador->iniciar();
 		if(!ganaron){
-
-			Contador* contador = new Contador(microSegundosEspera);
 
 			while(!colaDeEntradasUsuario.empty()){
 				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
@@ -181,8 +180,9 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 
 		usleep(contador->tiempoRestante());
-	}
 
+	}
+	delete contador;
 	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
 }
 

@@ -223,6 +223,13 @@ void Servidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
 	this->aplicacionServidor->encolarEntradaUsuario(entradaUsuario);
 }
 
+void Servidor::terminoElJuego(){
+	for(auto const cliente:conexionesPerdidas){
+		cliente->terminoElJuego();
+	}
+	terminoJuego = true;
+}
+
 Servidor::~Servidor(){
 	for(auto const& cliente:clientes){
 		delete cliente;

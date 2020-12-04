@@ -47,26 +47,33 @@ class ConexionCliente {
 			return ip;
 		}
 
+		void terminoElJuego();
 
 	private:
 		info_inicio_t crearInformacionInicio();
-		queue<info_ronda_t> colaRondas;
 		void enviarInformacionInicio();
 		void enviarVerificacion(bool esUsuarioValido);
 		void enviarActualizacionCantidadConexiones();
+		void esperarCredenciales();
+
+		queue<info_ronda_t> colaRondas;
+
 		string nombre;
 		string contrasenia;
-		bool puedeJugar = false;
+
+		bool puedeJugar;
+		bool terminoJuego;
+		bool recibioCredenciales;
+
 		int idPropio;
 		int socket;
-		Servidor* servidor;
 		int cantidadConexiones;
-		EscuchadorEntradaTeclado* escuchadorEntradaTeclado;
 		string ip;
 
+		Servidor* servidor;
 		map<char,EscuchadorServer*> escuchadores;
-		void esperarCredenciales();
-		bool recibioCredenciales = false;
+
+
 
 };
 

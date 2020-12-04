@@ -34,13 +34,9 @@ class Servidor{
 
 	public:
 		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
-		void conectarJugadores();
-		static void *escuchar_helper(void* ptr){
-			((Servidor*) ptr)->conectarJugadores();
-			return NULL;
-		}
 		~Servidor();
 
+		void conectarJugadores();
 		int getMaximasConexiones(){return this->cantidadConexiones;}
 		bool esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
@@ -48,10 +44,17 @@ class Servidor{
 		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador);
 		void ejecutar();
 		void guardarRondaParaEnvio(info_ronda_t ronda);
+		void terminoElJuego();
 
 		map<int,string> obtenerMapaJugadores(){
 			return mapaIDNombre;
 		}
+
+		static void *escuchar_helper(void* ptr){
+			((Servidor*) ptr)->conectarJugadores();
+			return NULL;
+		}
+
 
 	private:
 		map<int,string> mapaIDNombre;
@@ -60,10 +63,11 @@ class Servidor{
 		int socketServer;
 		int cantidadConexiones;
 		int cantUsuariosLogueados = 0;
+
 		list<usuario_t> usuariosValidos;
 		map<int,usuario_t> usuariosQuePerdieronConexion;
-		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
 
+		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
 		bool esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);

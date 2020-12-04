@@ -11,7 +11,9 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	this->cantidadConexiones = cantidadConexiones;
 	this->nombre = "";
 	this->contrasenia = "";
-	this->escuchadorEntradaTeclado = NULL;
+	puedeJugar = false;
+	terminoJuego = false;
+	recibioCredenciales = false;
 	idPropio = 0;
 	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
 }
@@ -88,7 +90,7 @@ void ConexionCliente::enviarActualizacionesDeRonda(){
 	info_ronda_t ronda;
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-	while(true){
+	while(!terminoJuego){
 		if(!colaRondas.empty()){
 			pthread_mutex_lock(&mutex);
 			ronda = colaRondas.front();
@@ -147,7 +149,9 @@ void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
 	send(socket, &info_partida, sizeof(info_partida_t), 0);
 }
 
-
+void ConexionCliente::terminoElJuego(){
+	terminoJuego = true;
+}
 
 void ConexionCliente::agregarIDJuego(int IDJugador){
 	escuchadores[ENTRADA] = new EscuchadorEntradaTeclado(socket,IDJugador,servidor);
@@ -172,5 +176,8 @@ void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
 }
 
 ConexionCliente::~ConexionCliente(){
-	delete escuchadorEntradaTeclado;
+	for(auto const& parClaveEscuchador:escuchadores){
+		delete parClaveEscuchador.second;
+	}
+	escuchadores.clear();
 }

@@ -18,34 +18,63 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	spritePeach = new SpritePeachSaltando();
 	spriteToad = new SpriteToadSaltando();
 	spriteYoshi = new SpriteYoshiSaltando();
+
+	colores[-1] = {150, 150 , 150, 255}; // Gris.
+	colores[0] = {230, 30 , 044, 255}; // Rojo.
+	colores[1] = {69 , 230, 52 , 255}; // Verde.
+	colores[2] = {179, 25 , 252, 255}; // Violeta.
+	colores[3] = {76 , 225, 252, 255}; // Celeste.
 }
 
 
-void DibujadorGanadores::dibujarTextoGanadores(){
+void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
 	stringstream textoFelicitaciones;
 	textoFelicitaciones.str("");
 	textoFelicitaciones << "GANARON EL JUEGO!";
 	int ancho_textoFelicitaciones = 400;
 	int alto_textoFelicitaciones = 60;
 	SDL_Rect cuadradoFin = {ancho_pantalla/2 -ancho_textoFelicitaciones/2,
-							alto_pantalla/2 - alto_textoFelicitaciones/2,
+							alto_pantalla/2 - alto_textoFelicitaciones/2 - 100,
 							ancho_textoFelicitaciones,
-							alto_textoFelicitaciones}; //Los coloco en el centro.
+							alto_textoFelicitaciones};
 
-	Juego* juego = Juego::getInstance();
+
+	int ancho_puntosJugador = 200;
+	int alto_puntosJugador = 30;
+	int desfase_puntosJugador = 50;
+	SDL_Rect cuadradoPuntos;
+
 	stringstream puntosJugador;
-	puntosJugador.str("");
-	puntosJugador << "Puntos obtenidos: " << juego->obtenerPuntuacionJugador();
-	int ancho_puntosJugador = 500;
-	int alto_puntosJugador = 40;
-	int desfase_puntosJugador = 80;
-	SDL_Rect cuadradoPuntos = {ancho_pantalla/2 -ancho_puntosJugador/2,
-								alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador,
-								ancho_puntosJugador,
-								alto_puntosJugador};
+
+	for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+	   //puntosJugador = parIdJugador.second.puntos;
+	   puntosJugador.str("");
+	   puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
+
+
+
+	   cuadradoPuntos = {ancho_pantalla/2 -ancho_puntosJugador/2,
+	   									alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
+	   									ancho_puntosJugador,
+	   									alto_puntosJugador};
+	   int idColor = parIdJugador.first;
+	   if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+		   idColor = MARIO_GRIS;
+	   }
+
+	   parIdJugador.second.mario.idImagen;
+
+	   renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+
+	   desfase_puntosJugador +=40;
+	}
+
+
+
+
 
 	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
-	renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colorDefault);
+
 }
 
 
@@ -74,13 +103,13 @@ void DibujadorGanadores::dibujarPersonajes(){
 }
 
 
-void DibujadorGanadores::dibujar(){
+void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
 	SDL_Rect rectanguloCamara = {0, 0, alto_pantalla, ancho_pantalla};
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, NULL);
 	dibujarParticulas();
-	dibujarTextoGanadores();
+	dibujarTextoGanadores(juegoCliente);
 	dibujarPersonajes();
 	SDL_RenderPresent( renderizador );
 	for(auto const& particula:particulas){

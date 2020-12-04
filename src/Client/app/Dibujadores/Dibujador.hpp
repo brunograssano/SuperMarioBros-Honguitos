@@ -13,6 +13,7 @@ using namespace std;
 #include "../CargadorTexturas.hpp"
 
 const SDL_Color colorDefault = {255, 255, 255, 255};
+const int MARIO_GRIS = -1;
 
 class Dibujador{
 

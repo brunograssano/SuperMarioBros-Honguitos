@@ -15,8 +15,8 @@ Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* render
 }
 
 
-void Dibujadores::dibujarPantallaGanadores(){
-	dibujadorGanadores->dibujar();
+void Dibujadores::dibujarPantallaGanadores(JuegoCliente* juegoCliente){
+	dibujadorGanadores->dibujar(juegoCliente);
 }
 
 void Dibujadores::dibujarInicio(){

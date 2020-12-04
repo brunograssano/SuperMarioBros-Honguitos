@@ -9,7 +9,6 @@ const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
 const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
 const int LARGO_BLOQUE = 40;
 const int GOOMBA = 1, KOOPA = 2;
-const int MARIO_GRIS = -1;
 
 DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;

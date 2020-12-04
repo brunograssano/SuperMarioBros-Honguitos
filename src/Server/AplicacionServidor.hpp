@@ -7,6 +7,8 @@
 #include <queue>
 #include <map>
 
+#include "Contador.hpp"
+
 class Servidor;
 #include "Servidor.hpp"
 

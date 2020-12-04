@@ -32,12 +32,12 @@ void ConexionCliente::escuchar(){
 		}else if(resultado == 0){
 			Log::getInstance()->huboUnErrorSDL("Se desconecto el socket que escucha al cliente", to_string(errno));
 			hayError = true;
-		}
-
-		try{
-			escuchadores[tipoMensaje]->escuchar();
-		}catch(const std::exception& e){
-			hayError = true;
+		}else{
+			try{
+				escuchadores[tipoMensaje]->escuchar();
+			}catch(const std::exception& e){
+				hayError = true;
+			}
 		}
 	}
 	shutdown(socket, SHUT_RDWR);

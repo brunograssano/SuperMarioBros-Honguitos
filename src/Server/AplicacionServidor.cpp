@@ -151,7 +151,6 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 	while(!comenzoElJuego){
 		//estamos esperando a que nos indiquen que puede comenzar el juego
 	}
-
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 
 

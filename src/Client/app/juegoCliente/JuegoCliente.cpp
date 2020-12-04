@@ -1,6 +1,7 @@
-
-
 #include "JuegoCliente.hpp"
+
+/* para evitar el delay por renderizar cosas viejas y no nuevas */
+#define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20
 
 
 JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio){
@@ -32,8 +33,18 @@ void JuegoCliente::actualizar(){
 	if(rondas.empty()){
 		return;
 	}
-	info_ronda_t ronda = rondas.front();
-	rondas.pop();
+	info_ronda_t ronda;
+
+	if(rondas.size() >= CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS){
+		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+		ronda = rondas.back();
+		pthread_mutex_lock(&mutex);
+		while(!rondas.empty()) rondas.pop();
+		pthread_mutex_unlock(&mutex);
+	}else{
+		ronda = rondas.front();
+		rondas.pop();
+	}
 	tiempoFaltante = ronda.tiempoFaltante;
 	numeroMundo = ronda.mundo;
 	posXCamara = ronda.posXCamara;

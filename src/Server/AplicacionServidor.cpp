@@ -157,22 +157,22 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
+		if(!ganaron){
+			while(!colaDeEntradasUsuario.empty()){
+				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
+				actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
+				colaDeEntradasUsuario.pop();
+			}
 
-		while(!colaDeEntradasUsuario.empty()){
-			entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
-			actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
-			colaDeEntradasUsuario.pop();
+			for(auto const& parClaveJugador:jugadores){
+				parClaveJugador.second->actualizarPosicion();
+			}
+
+			juego->actualizarModelo();
+
+			revisarSiTerminoNivel(jugadores);
+			moverCamara(jugadores);
 		}
-
-		for(auto const& parClaveJugador:jugadores){
-			parClaveJugador.second->actualizarPosicion();
-		}
-
-		juego->actualizarModelo();
-
-		revisarSiTerminoNivel(jugadores);
-		moverCamara(jugadores);
-
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
 

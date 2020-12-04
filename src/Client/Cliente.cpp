@@ -27,6 +27,14 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 		Log::getInstance()->huboUnErrorSDL("Falló la conexión: Abortamos.",to_string(errno));
 		exit(-1);
 	}
+
+	terminoJuego = false;
+	empiezaElJuego = false;
+	pasoVerificacion = false;
+	seRecibioVerificacion = false;
+	seRecibioInformacionInicio = false;
+	cargoLaAplicacion = false;
+
 	cantidadJugadoresActivos = 0;
 	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
 	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
@@ -41,7 +49,7 @@ void Cliente::escuchar(){
 	int resultado;
 	bool hayError = false;
 
-	while(!hayError){
+	while(!hayError && !terminoJuego){
 		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
 		if(resultado<0){
@@ -59,15 +67,17 @@ void Cliente::escuchar(){
 		}
 	}
 
-	shutdown(socketCliente, SHUT_RDWR);
-	close(socketCliente);
+	if(hayError){
+		shutdown(socketCliente, SHUT_RDWR);
+		close(socketCliente);
+	}
 
 }
 
 void Cliente::enviarEntrada(){
 	entrada_usuario_t entrada;
 	char tipo = ENTRADA;
-	while(true){
+	while(!terminoJuego){
 		while(!entradasUsuario.empty()){
 			entrada = entradasUsuario.front();
 			entradasUsuario.pop();
@@ -186,6 +196,7 @@ void Cliente::ejecutar(){
 
 	gameLoop();
 
+	terminoJuego = true;
 }
 
 void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
@@ -201,7 +212,10 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 
 Cliente::~Cliente(){
-
+	if(terminoJuego){
+		shutdown(socketCliente, SHUT_RDWR);
+		close(socketCliente);
+	}
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}

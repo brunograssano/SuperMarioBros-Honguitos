@@ -45,8 +45,17 @@ class Cliente{
 	public:
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
+
 		void enviarEntrada();
 		void escuchar();
+		void recibirInformacionServidor(info_inicio_t info_inicio);
+		void recibirVerificacionCredenciales(verificacion_t verificacion);
+		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
+		void recibirInformacionRonda(info_ronda_t info_ronda);
+		void ejecutar();
+		void agregarEntrada(entrada_usuario_t entradaUsuario);
+		void empezarJuego(info_partida_t info_partida);
+
 		static void* escuchar_helper(void* ptr){
 			((Cliente*) ptr)->escuchar();
 			return NULL;
@@ -55,33 +64,25 @@ class Cliente{
 			((Cliente*) ptr)->enviarEntrada();
 			return NULL;
 		}
-		void recibirInformacionServidor(info_inicio_t info_inicio);
-		void recibirVerificacionCredenciales(verificacion_t verificacion);
-		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
-		void recibirInformacionRonda(info_ronda_t info_ronda);
-		void ejecutar();
-		void agregarEntrada(entrada_usuario_t entradaUsuario);
-		void empezarJuego(info_partida_t info_partida);
+
 	private:
-		info_partida_t infoPartida;
-		queue<entrada_usuario_t> entradasUsuario;
-		map<char,Escuchador*> escuchadores;
 		void enviarCredenciales(credencial_t credencial);
-
-		unsigned short cantidadJugadoresActivos;
-
-		bool cargoLaAplicacion = false;
-
-		bool seRecibioInformacionInicio = false;
-		info_inicio_t infoInicio;
 		void esperarRecibirInformacionInicio();
-
-		bool seRecibioVerificacion = false;
-		verificacion_t pasoVerificacion = false;
 		void esperarRecibirVerificacion();
 
-		bool empiezaElJuego = false;
+		queue<entrada_usuario_t> entradasUsuario;
+		map<char,Escuchador*> escuchadores;
+
+		info_partida_t infoPartida;
+		info_inicio_t infoInicio;
+		verificacion_t pasoVerificacion;
+		bool cargoLaAplicacion;
+		bool seRecibioInformacionInicio;
+		bool seRecibioVerificacion;
+		bool empiezaElJuego;
+		bool terminoJuego;
 
 		int socketCliente;
+		unsigned short cantidadJugadoresActivos;
 };
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

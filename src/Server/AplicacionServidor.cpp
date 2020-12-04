@@ -172,8 +172,9 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 			juego->actualizarModelo();
 
 			revisarSiTerminoNivel(jugadores);
-			if(revisarSiPerdieron())
+			if(revisarSiPerdieron()){
 				terminoElJuego = true;
+			}
 
 			moverCamara(jugadores);
 		}
@@ -208,13 +209,13 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 		}
 	}
 
-	if(pasadoLimite && juego->quedaSoloUnNivel()){
+	if(pasadoLimite && juego->quedaSoloUnNivel() && tengojugadores(jugadores)){
 		juego->sumarPuntosAJugadores(contadorNivel->tiempoRestante());
 		ganaron = true;
 		terminoElJuego = true;
 		log->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 	}
-	else if(pasadoLimite){
+	else if(pasadoLimite && tengojugadores(jugadores)){
 		rectanguloCamara.x= 0;
 		rectanguloCamara.y = 0;
 		juego->avanzarNivel();

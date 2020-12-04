@@ -6,8 +6,7 @@ App* App::aplicacion = nullptr;
 const int SE_TERMINO_EL_TIEMPO = 0;
 const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 
-#define PROPORCION_PISO_EN_IMAGEN 0.1
-#define ALTO_MARIO 80;
+#define LIMITE_SALTO 1
 
 App* App::getInstance(info_partida_t informacion, Cliente* cliente){
 	if(aplicacion==nullptr){
@@ -76,9 +75,13 @@ void App::actualizarServer(const Uint8 *keystate){
 
 			int idPropio = juegoCliente->obtenerIDPropio(); // QUIZAS CONVIENE MOVERLO A ALGO QUE NOS DIGA EL SERVER SI HAY DESFASE
 			map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
-			int piso = alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO;
-			if(jugadores[idPropio].mario.posY==piso){
+			float posYJugador = jugadores[idPropio].mario.posY;
+			if(posYJugador<=LIMITE_SALTO && !sonoSalto){
 				ReproductorMusica::getInstance()->ReproducirSonidoSalto();
+				sonoSalto = true;
+			}
+			else if(posYJugador>LIMITE_SALTO){
+				sonoSalto = false;
 			}
 		}
 

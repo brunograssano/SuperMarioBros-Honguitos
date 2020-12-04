@@ -46,6 +46,7 @@ class App{
 			juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio);
 
 			sePusoMusicaInicio = false;
+			sonoSalto = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
 			estaReproduciendoMusicaGanadores = false;
@@ -72,6 +73,7 @@ class App{
 		bool sePusoMusicaInicio;
 		bool terminoElJuego;
 		bool comenzoElJuego;
+		bool sonoSalto;
 		bool estaReproduciendoMusicaGanadores;
 		string direccionesNiveles[MAX_IMAGEN_NIVELES];
 		int ancho_pantalla;

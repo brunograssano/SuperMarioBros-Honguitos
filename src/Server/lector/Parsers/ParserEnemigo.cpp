@@ -23,7 +23,7 @@ void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,Archivo
 
 	try{
 		colorEnemigoInt = stoi(colorEnemigoString);
-		if((colorEnemigoInt < 0) || (colorEnemigoInt>2)){
+		if((colorEnemigoInt < 0) || (colorEnemigoInt>3)){
 			archivoLeido->mensajeError.push_back("El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto");
 			colorEnemigoInt = VALOR_POR_DEFECTO_COLOR_ENEMIGO;
 		}

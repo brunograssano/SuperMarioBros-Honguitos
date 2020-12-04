@@ -4,6 +4,9 @@
 #include <thread>
 #include "../Client/GameLoop.hpp"
 
+#include "EnviadoresCliente/EnviadorEntrada.hpp"
+#include "EnviadoresCliente/EnviadorCredenciales.hpp"
+
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	struct sockaddr_in serv_addr;
 	int resultado;
@@ -42,6 +45,9 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
 	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
 	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
+
+	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
+	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
 }
 
 void Cliente::escuchar(){
@@ -74,16 +80,18 @@ void Cliente::escuchar(){
 
 }
 
-void Cliente::enviarEntrada(){
-	entrada_usuario_t entrada;
-	char tipo = ENTRADA;
-	while(!terminoJuego){
-		while(!entradasUsuario.empty()){
-			entrada = entradasUsuario.front();
-			entradasUsuario.pop();
-
-			send(socketCliente,&tipo,sizeof(char),0);
-			send(socketCliente,&entrada,sizeof(entrada_usuario_t),0);
+void Cliente::enviar(){
+	char tipoMensaje;
+	bool hayError = false;
+	while(!terminoJuego && !hayError){
+		while(!identificadoresMensajeAEnviar.empty()){
+			tipoMensaje = identificadoresMensajeAEnviar.front();
+			identificadoresMensajeAEnviar.pop();
+			try{
+				enviadores[tipoMensaje]->enviar();
+			}catch(const std::exception& e){
+				hayError = true;
+			}
 		}
 	}
 }
@@ -140,6 +148,13 @@ void Cliente::ejecutar(){
 		exit(-1); //TODO: Arreglar este exit.
 	}
 
+	pthread_t hiloEnviar;
+	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, Cliente::enviar_helper, this);
+	if(resultadoCreateEnviar != 0){
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la informacion del cliente al server.");
+		exit(-1); //TODO: Arreglar este exit.
+	}
+
 	esperarRecibirInformacionInicio();
 
 	VentanaInicio* ventanaInicio =  new VentanaInicio();
@@ -166,7 +181,7 @@ void Cliente::ejecutar(){
 		exit(0);
 	}
 
-	while(!cerroVentana && !empiezaElJuego){//crear escuchador de esto (comenzar)
+	while(!cerroVentana && !empiezaElJuego){
 		try{
 			ventanaInicio->imprimirMensajeEspera(cantidadJugadoresActivos, infoInicio.cantidadJugadores);
 		}
@@ -187,12 +202,6 @@ void Cliente::ejecutar(){
 		delete Log::getInstance();
 		exit(-1);
 	}
-	pthread_t hiloEntrada;
-	int resultadoCreateEnviarEntrada = pthread_create(&hiloEntrada, NULL, Cliente::enviar_helper, this);
-	if(resultadoCreateEnviarEntrada != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la entrada del teclado.");
-		exit(-1); //TODO: Arreglar este exit.
-	}
 
 	gameLoop();
 
@@ -200,14 +209,13 @@ void Cliente::ejecutar(){
 }
 
 void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
-	entradasUsuario.push(entradaUsuario);
+	enviadores[ENTRADA]->dejarInformacion(&entradaUsuario);
+	identificadoresMensajeAEnviar.push(ENTRADA);
 }
 
 void Cliente::enviarCredenciales(credencial_t credenciales){
-	char tipoMensaje = CREDENCIAL;
-	send(socketCliente, &tipoMensaje, sizeof(char), 0);
-	send(socketCliente, &credenciales, sizeof(credencial_t), 0);
-	return;
+	enviadores[CREDENCIAL]->dejarInformacion(&credenciales);
+	identificadoresMensajeAEnviar.push(CREDENCIAL);
 }
 
 
@@ -219,6 +227,10 @@ Cliente::~Cliente(){
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}
+	for(auto const& parClaveEnviador:enviadores){
+		delete parClaveEnviador.second;
+	}
 	escuchadores.clear();
+	enviadores.clear();
 
 }

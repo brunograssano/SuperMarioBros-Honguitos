@@ -12,7 +12,7 @@ using namespace std;
 #include "EscuchadoresServer/EscuchadorServer.hpp"
 
 #include "../Utils/Utils.hpp"
-
+#include "../Utils/Enviador.hpp"
 #include "../Utils/log/Log.hpp"
 
 class EscuchadorEntradaTeclado;
@@ -36,6 +36,13 @@ class ConexionCliente {
 			return NULL;
 		}
 
+
+		void enviar();
+		static void* enviar_helper(void* ptr){
+			((ConexionCliente*) ptr)->enviar();
+			return NULL;
+		}
+
 		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void enviarActualizacionesDeRonda();
 
@@ -53,10 +60,9 @@ class ConexionCliente {
 		info_inicio_t crearInformacionInicio();
 		void enviarInformacionInicio();
 		void enviarVerificacion(bool esUsuarioValido);
-		void enviarActualizacionCantidadConexiones();
 		void esperarCredenciales();
 
-		queue<info_ronda_t> colaRondas;
+		queue<char> identificadoresMensajeAEnviar;
 
 		string nombre;
 		string contrasenia;
@@ -72,6 +78,7 @@ class ConexionCliente {
 
 		Servidor* servidor;
 		map<char,EscuchadorServer*> escuchadores;
+		map<char,Enviador*> enviadores;
 
 
 

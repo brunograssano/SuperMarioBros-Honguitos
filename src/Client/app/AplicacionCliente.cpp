@@ -131,7 +131,7 @@ void App::dibujar(){
 			dibujador->dibujarPantallaGanadores();
 			terminoElJuego = true;
 		}
-		else if(terminoElJuego){
+		else if(juegoCliente->perdieronElJuego()){
 			if(!terminoElJuego){
 				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
 				terminoElJuego = true;

@@ -71,9 +71,9 @@ class App{
 		JuegoCliente* juegoCliente;
 
 		bool sePusoMusicaInicio;
-		bool terminoElJuego;
 		bool comenzoElJuego;
 		bool sonoSalto;
+		bool terminoElJuego;
 		bool estaReproduciendoMusicaGanadores;
 		string direccionesNiveles[MAX_IMAGEN_NIVELES];
 		int ancho_pantalla;

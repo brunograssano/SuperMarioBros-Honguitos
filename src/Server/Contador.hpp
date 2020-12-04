@@ -2,26 +2,33 @@
 #define SRC_SERVER_CONTADOR_HPP_
 
 #include <time.h>
+
+/* No tocar */
+#define SEGUNDOS  1				// segundos
+#define MSEGUNDOS 1000			// milisegundos
+#define USEGUNDOS 1000000		// microsegundos
+
 class Contador{
 
 	public:
-		Contador(int tiempo/*En micro segundos*/){
+		Contador(int tiempo, int unidad){
 			tiempoTotal = tiempo;
 			tiempoInicio = time(nullptr);
+			this->unidad = unidad;
 		}
 
 		void iniciar(){
 			tiempoInicio = time(nullptr);
 		}
-		/*En microsegundos*/
+
 		int tiempoRestante(){
 			time_t tiempoActual = time(nullptr);
-			double tiempoDesdeElComienzoEnSegundos = difftime(tiempoInicio, tiempoActual);
-			int tiempoDesdeElComienzoEnMicroSegundos = (int) tiempoDesdeElComienzoEnSegundos*1000000; //s*e6/e6 = us*e6
-			if(tiempoDesdeElComienzoEnMicroSegundos >= tiempoTotal){
+			double tiempoDesdeElComienzoEnSegundos = difftime(tiempoActual, tiempoInicio);
+			int tiempoDesdeElComienzo = (int) tiempoDesdeElComienzoEnSegundos*unidad;
+			if(tiempoDesdeElComienzo >= tiempoTotal){
 				return 0;
 			}else{
-				return (tiempoTotal - tiempoDesdeElComienzoEnMicroSegundos);
+				return (tiempoTotal - tiempoDesdeElComienzo);
 			}
 		}
 		~Contador(){
@@ -30,6 +37,7 @@ class Contador{
 	private:
 		int tiempoTotal;
 		time_t tiempoInicio;
+		int unidad;
 };
 
 

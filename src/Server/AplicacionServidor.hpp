@@ -46,6 +46,7 @@ class AplicacionServidor{
 		bool tengojugadores(map<int,Mario*> jugadores);
 		Servidor* servidor;
 		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
+		bool revisarSiPerdieron();
 		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
 		bool estaEnRangoVisible(int posicionX);
 		SDL_Rect* obtenerRectCamara();
@@ -53,8 +54,6 @@ class AplicacionServidor{
 		Log* log;
 		Juego* juego;
 		SDL_Rect rectanguloCamara;
-		int tiempoDeInicio;
-		int tiempoFaltante;
 		int cantJugadores;
 		int ancho_pantalla;
 		bool terminoElJuego;
@@ -62,6 +61,7 @@ class AplicacionServidor{
 		bool ganaron;
 		bool juegoInicializadoCorrectamente;
 		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
+		Contador* contadorNivel;
 };
 
 

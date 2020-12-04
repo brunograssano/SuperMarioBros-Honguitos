@@ -46,6 +46,7 @@ class AplicacionServidor{
 		bool tengojugadores(map<int,Mario*> jugadores);
 		Servidor* servidor;
 		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
+		bool revisarSiPerdieron();
 		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
 		bool estaEnRangoVisible(int posicionX);
 		SDL_Rect* obtenerRectCamara();

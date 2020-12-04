@@ -73,6 +73,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	info_ronda.posXCamara = this->rectanguloCamara.x;
 	info_ronda.tiempoFaltante = this->contadorNivel->tiempoRestante();
 	info_ronda.ganaron = this->ganaron;
+	info_ronda.perdieron = terminoElJuego && !ganaron;
 
 	list<Plataforma*> plataformas = juego->obtenerPlataformas();
 	int numeroBloque = 0;
@@ -171,6 +172,9 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 			juego->actualizarModelo();
 
 			revisarSiTerminoNivel(jugadores);
+			if(revisarSiPerdieron())
+				terminoElJuego = true;
+
 			moverCamara(jugadores);
 		}
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
@@ -187,6 +191,10 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
 	this->colaDeEntradasUsuario.push(entradaUsuario);
+}
+
+bool AplicacionServidor::revisarSiPerdieron(){
+	return ((contadorNivel->tiempoRestante() == 0) && !ganaron);
 }
 
 void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){

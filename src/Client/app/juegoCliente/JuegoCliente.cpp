@@ -14,12 +14,18 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->numeroMundo = 0;
 	this->posXCamara = 0;
 	this->ganaron = false;
+	this->perdieron = false;
 }
 
 
 bool JuegoCliente::ganaronElJuego(){
 	return this->ganaron;
 }
+
+bool JuegoCliente::perdieronElJuego(){
+	return this->perdieron;
+}
+
 
 void JuegoCliente::agregarRonda(info_ronda_t ronda){
 	rondas.push(ronda);
@@ -49,6 +55,7 @@ void JuegoCliente::actualizar(){
 	numeroMundo = ronda.mundo;
 	posXCamara = ronda.posXCamara;
 	ganaron = ronda.ganaron;
+	perdieron = ronda.perdieron;
 
 	bloques.clear();
 	enemigos.clear();

@@ -15,7 +15,7 @@ using namespace std;
 ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
 	Lector* lector = new Lector();
-	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
+	string direccionLecturaDefault = "resources/ArchivosXML/configuracionInicial.xml";
 	ArchivoLeido* archivoLeido;
 
 	if (strcmp(direccionLecturaComando, "") != 0) {

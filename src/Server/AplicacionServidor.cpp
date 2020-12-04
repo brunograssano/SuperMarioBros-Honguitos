@@ -153,34 +153,35 @@ void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
 	}
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 
-
+	Contador* contador = new Contador(microSegundosEspera);
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	while(!terminoElJuego){
+		contador->iniciar();
+		if(!ganaron){
 
-		Contador* contador = new Contador(microSegundosEspera);
+			while(!colaDeEntradasUsuario.empty()){
+				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
+				actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
+				colaDeEntradasUsuario.pop();
+			}
 
-		while(!colaDeEntradasUsuario.empty()){
-			entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
-			actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
-			colaDeEntradasUsuario.pop();
+			for(auto const& parClaveJugador:jugadores){
+				parClaveJugador.second->actualizarPosicion();
+			}
+
+			juego->actualizarModelo();
+
+			revisarSiTerminoNivel(jugadores);
+			moverCamara(jugadores);
 		}
-
-		for(auto const& parClaveJugador:jugadores){
-			parClaveJugador.second->actualizarPosicion();
-		}
-
-		juego->actualizarModelo();
-
-		revisarSiTerminoNivel(jugadores);
-		moverCamara(jugadores);
-
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
 
 
 		usleep(contador->tiempoRestante());
-	}
 
+	}
+	delete contador;
 	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
 }
 
@@ -193,7 +194,8 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 	bool pasadoLimite = true;
 	int puntoBandera = juego->obtenerPuntoBanderaFinActual();
 	for(auto const& parClaveJugador:jugadores){
-		if(parClaveJugador.second->obtenerPosicionX()<puntoBandera){
+		Mario* jugador = parClaveJugador.second;
+		if(jugador->obtenerPosicionX()<puntoBandera && jugador->estaConectado()){
 			pasadoLimite = false;
 		}
 	}
@@ -287,5 +289,3 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 AplicacionServidor::~AplicacionServidor(){
 	delete juego;
 }
-
-

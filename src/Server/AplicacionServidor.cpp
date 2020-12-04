@@ -195,7 +195,8 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 	bool pasadoLimite = true;
 	int puntoBandera = juego->obtenerPuntoBanderaFinActual();
 	for(auto const& parClaveJugador:jugadores){
-		if(parClaveJugador.second->obtenerPosicionX()<puntoBandera){
+		Mario* jugador = parClaveJugador.second;
+		if(jugador->obtenerPosicionX()<puntoBandera && jugador->estaConectado()){
 			pasadoLimite = false;
 		}
 	}

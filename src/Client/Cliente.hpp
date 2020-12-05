@@ -36,6 +36,9 @@ class EscuchadorRonda;
 #include "../Utils/Utils.hpp"
 #include "../Utils/Enviador.hpp"
 
+class GameLoop;
+#include "../Client/GameLoop.hpp"
+
 using namespace std;
 
 #define LARGO_IP 20
@@ -84,8 +87,14 @@ class Cliente{
 		bool seRecibioVerificacion;
 		bool empiezaElJuego;
 		bool terminoJuego;
+		bool cerroVentana;
+
+		bool terminoEnviar;
+		bool terminoEscuchar;
 
 		int socketCliente;
 		unsigned short cantidadJugadoresActivos;
+
+		GameLoop* gameLoop;
 };
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

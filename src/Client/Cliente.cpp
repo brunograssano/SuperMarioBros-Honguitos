@@ -2,7 +2,7 @@
 
 #include "../Utils/log/Log.hpp"
 #include <thread>
-#include "../Client/GameLoop.hpp"
+
 
 #include "EnviadoresCliente/EnviadorEntrada.hpp"
 #include "EnviadoresCliente/EnviadorCredenciales.hpp"
@@ -37,6 +37,9 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	seRecibioVerificacion = false;
 	seRecibioInformacionInicio = false;
 	cargoLaAplicacion = false;
+	terminoEnviar = false;
+	terminoEscuchar = false;
+	cerroVentana = false;
 
 	cantidadJugadoresActivos = 0;
 	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
@@ -49,9 +52,11 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
 	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
 
+	gameLoop = new GameLoop();
 }
 
 void Cliente::escuchar(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	char tipoMensaje;
 	int resultado;
 	bool hayError = false;
@@ -63,29 +68,32 @@ void Cliente::escuchar(){
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
 			hayError = true;
 		}else if(resultado == 0){
-			Log::getInstance()->huboUnErrorSDL("Se desconecto el socket que escucha al server", to_string(errno));
+			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server: " +to_string(errno));
 			hayError = true;
 		}
-
-		try{
-			escuchadores[tipoMensaje]->escuchar();
-		}catch(const std::exception& e){
-			hayError = true;
+		else{
+			try{
+				escuchadores[tipoMensaje]->escuchar();
+			}catch(const std::exception& e){
+				hayError = true;
+			}
 		}
 	}
-
-	if(hayError){
-		shutdown(socketCliente, SHUT_RDWR);
-		close(socketCliente);
-	}
-
+	terminoEscuchar = true;
+	pthread_mutex_lock(&mutex);
+	terminoJuego = true;
+	cerroVentana = true;
+	gameLoop->seMurioElServer();
+	pthread_mutex_unlock(&mutex);
 }
 
 void Cliente::enviar(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 	char tipoMensaje;
 	bool hayError = false;
 	while(!terminoJuego && !hayError){
-		while(!identificadoresMensajeAEnviar.empty()){
+		if(!identificadoresMensajeAEnviar.empty()){
 			tipoMensaje = identificadoresMensajeAEnviar.front();
 			identificadoresMensajeAEnviar.pop();
 			try{
@@ -95,6 +103,12 @@ void Cliente::enviar(){
 			}
 		}
 	}
+	terminoEnviar = true;
+	pthread_mutex_lock(&mutex);
+	terminoJuego = true;
+	cerroVentana = true;
+	gameLoop->seMurioElServer();
+	pthread_mutex_unlock(&mutex);
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){
@@ -159,7 +173,6 @@ void Cliente::ejecutar(){
 	esperarRecibirInformacionInicio();
 
 	VentanaInicio* ventanaInicio =  new VentanaInicio();
-	bool cerroVentana = false;
 	while(!pasoVerificacion && !cerroVentana){
 		try{
 			ventanaInicio->obtenerEntrada(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
@@ -176,9 +189,20 @@ void Cliente::ejecutar(){
 	}
 
 	if(cerroVentana){
+		Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
+		int resultado;
 		delete ventanaInicio;
 		delete Log::getInstance();
-		close(socketCliente);
+		resultado = shutdown(socketCliente,SHUT_RDWR);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+		}
+		resultado = close(socketCliente);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+		}
+		while(!terminoEnviar || !terminoEscuchar){}
+		delete Log::getInstance();
 		exit(0);
 	}
 
@@ -192,19 +216,37 @@ void Cliente::ejecutar(){
 	}
 	delete ventanaInicio;
 	if(cerroVentana){
-		close(socketCliente);
+		Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
+		int resultado = shutdown(socketCliente,SHUT_RDWR);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+		}
+		resultado = close(socketCliente);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+		}
+		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(0);
 	}
 
-	cargoLaAplicacion = inicializarAplicacion(infoPartida, this);
+	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
-		close(socketCliente);
+		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
+		int resultado = shutdown(socketCliente,SHUT_RDWR);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+		}
+		resultado = close(socketCliente);
+		if(resultado<0){
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+		}
+		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(-1);
 	}
 
-	gameLoop();
+	gameLoop->gameLoop();
 
 	terminoJuego = true;
 }
@@ -221,10 +263,12 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 
 Cliente::~Cliente(){
-	if(terminoJuego){
-		shutdown(socketCliente, SHUT_RDWR);
-		close(socketCliente);
-	}
+
+	shutdown(socketCliente, SHUT_RDWR);
+	close(socketCliente);
+
+	while(!terminoEnviar || !terminoEscuchar){}
+
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}
@@ -233,5 +277,7 @@ Cliente::~Cliente(){
 	}
 	escuchadores.clear();
 	enviadores.clear();
+
+	delete gameLoop;
 
 }

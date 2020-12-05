@@ -46,10 +46,13 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 	list<Nivel*> niveles = juego->obtenerNiveles();
 	int i = 0;
 	for(auto& nivel:niveles){
-		strcpy(info_partida.direccionesFondoNiveles[i],nivel->obtenerDireccionFondoActual().c_str());
+		strcpy(info_partida.direccionesFondoNiveles[i], nivel->obtenerDireccionFondoActual().c_str());
 		i++;
 	}
 	info_partida.cantidadFondosNiveles = i;
+
+	info_partida.mundo = juego->obtenerMundoActual();
+
 	return info_partida;
 
 }

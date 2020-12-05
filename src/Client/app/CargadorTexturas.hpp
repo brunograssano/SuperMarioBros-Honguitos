@@ -34,7 +34,7 @@ class CargadorTexturas{
 
 		SDL_Texture* cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto);
 
-		void cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador);
+		void cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador, unsigned short mundos);
 		void actualizarSpriteMario(string direccion, SDL_Renderer* renderizador);
 		void revisarSiCambioNivel(SDL_Renderer* renderizador, string direccionFondoActual);
 

@@ -107,6 +107,7 @@ typedef struct info_partida{//~438 bytes enviados al inicio
 
 	unsigned short cantidadFondosNiveles;
 	unsigned short anchoVentana;
+	unsigned short mundo;
 	unsigned short altoVentana;
 	unsigned short idPropio;
 }info_partida_t;

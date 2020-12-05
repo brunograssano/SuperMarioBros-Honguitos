@@ -23,22 +23,24 @@ const int ANCHO_FONDO = 8177;
 class App{
 
 	protected:
-		App(info_partida_t informacion,Cliente* cliente){
+		App(info_partida_t informacion, Cliente* cliente){
 			Log* log = Log::getInstance();
 			this->cliente = cliente;
 
-			determinarDimensionesPantalla(informacion.anchoVentana,informacion.altoVentana);
+			determinarDimensionesPantalla(informacion.anchoVentana, informacion.altoVentana);
 			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
 
-			for(int i=0;i<informacion.cantidadFondosNiveles;i++){
-				this->direccionesNiveles[i] = string(informacion.direccionesFondoNiveles[i]);
+
+			//int mundos[MAX_CANT_NIVELES]; <- EN INFO PARTIDA T
+
+			for(int i=0; i<informacion.cantidadFondosNiveles;i++){
+				this->direccionesNiveles[informacion.mundo - 1 + i] = string(informacion.direccionesFondoNiveles[i]);
 			}
 
-
 			//if(informacion.iniciadoCorrectamente){
-			cargadorTexturas->cargarTexturasNiveles(direccionesNiveles,informacion.cantidadFondosNiveles, renderizador);
+			cargadorTexturas->cargarTexturasNiveles(direccionesNiveles,informacion.cantidadFondosNiveles, renderizador, informacion.mundo);
 			//}
 
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};

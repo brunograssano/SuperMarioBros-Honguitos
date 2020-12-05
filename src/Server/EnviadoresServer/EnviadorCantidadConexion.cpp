@@ -7,8 +7,14 @@ EnviadorCantidadConexion::EnviadorCantidadConexion(int socket){
 
 void EnviadorCantidadConexion::enviar(){
 	char caracterMensaje = ACTUALIZACION_JUGADORES;
-	send(socket, &caracterMensaje, sizeof(char), 0);
-	send(socket, &cant_jugadores_activos, sizeof(actualizacion_cantidad_jugadores_t), 0);
+
+	int resultadoEnvio;
+
+	resultadoEnvio = send(socket, &caracterMensaje, sizeof(char), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de actualizacion de cantidad de jugadores");
+
+	resultadoEnvio = send(socket, &cant_jugadores_activos, sizeof(actualizacion_cantidad_jugadores_t), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de actualizacion de cantidad de jugaores");
 }
 
 void EnviadorCantidadConexion::dejarInformacion(void* cantJugadoresActivos){

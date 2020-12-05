@@ -13,14 +13,23 @@ void EnviadorInfoPartida::enviar(){
 	mensaje_log_t mensaje={0,0};
 	mensaje.tipo = INFO;
 	strcpy(mensaje.mensajeParaElLog,"Empieza el juego...");
-	send(socket, &caracterMensaje, sizeof(char), 0);
-	send(socket, &mensaje, sizeof(mensaje_log_t), 0);
+
+	int resultadoEnvio;
+	resultadoEnvio = send(socket, &caracterMensaje, sizeof(char), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de mensaje para log");
+
+	resultadoEnvio = send(socket, &mensaje, sizeof(mensaje_log_t), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el mensaje de inicio de juego");
 
 	caracterMensaje = PARTIDA;
-	send(socket, &caracterMensaje, sizeof(char), 0);
-	send(socket, &info_comienzo_partida, sizeof(info_partida_t), 0);
+	resultadoEnvio = send(socket, &caracterMensaje, sizeof(char), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de informacion de partida");
+
+	resultadoEnvio = send(socket, &info_comienzo_partida, sizeof(info_partida_t), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de informacion de partida");
 }
 
 void EnviadorInfoPartida::dejarInformacion(void* infoComienzoPartida){
 	info_comienzo_partida = *((info_partida_t*)infoComienzoPartida);
 }
+

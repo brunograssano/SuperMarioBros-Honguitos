@@ -22,7 +22,7 @@ void EscuchadorActualizacionJugadores::casoSocketCerrado(){
 	throw runtime_error("ErrorAlEscucharActualizacionJugadores");
 }
 void EscuchadorActualizacionJugadores::casoExitoso(){
-	this->cliente->recibirInformacionActualizacionCantidadJugadores(actualizacion.cantidadJugadoresActivos);
+	this->cliente->recibirInformacionActualizacion(actualizacion);
 }
 
 EscuchadorActualizacionJugadores::~EscuchadorActualizacionJugadores(){

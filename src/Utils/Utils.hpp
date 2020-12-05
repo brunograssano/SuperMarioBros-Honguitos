@@ -112,13 +112,22 @@ typedef struct info_partida{//~438 bytes enviados al inicio
 	unsigned short idPropio;
 }info_partida_t;
 
+
+typedef struct par_id_nombre{
+	char nombre[MAX_NOMBRE];
+	unsigned short id;
+	bool conectado;
+}par_id_nombre_t;
+
 #define ACTUALIZACION_JUGADORES 'U'
 typedef struct actualizacion_cantidad_jugadores{
 	unsigned short cantidadJugadoresActivos;
+	unsigned short tope;
+	par_id_nombre_t pares_id_nombre[MAX_JUGADORES];
 }actualizacion_cantidad_jugadores_t;
 
 #define RONDA 'R'
-typedef struct ronda{//~1822 bytes enviados en cada ronda
+typedef struct ronda{
 	unsigned short mundo;
 	unsigned short posXCamara;
 	unsigned short tiempoFaltante;

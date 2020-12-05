@@ -45,7 +45,7 @@ class ConexionCliente {
 		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void enviarActualizacionesDeRonda();
 
-		void actualizarCantidadConexiones(int cantidadConexiones);
+		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
 		void enviarInfoPartida(info_partida_t info_partida);

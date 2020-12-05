@@ -180,10 +180,8 @@ void ConexionCliente::agregarIDJuego(int IDJugador){
 	idPropio = IDJugador;
 }
 
-void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
-	this->cantidadConexiones = cantConexiones;
-	actualizacion_cantidad_jugadores_t actualizacion;
-	actualizacion.cantidadJugadoresActivos = this->cantidadConexiones;
+void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion){
+	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
 	enviadores[ACTUALIZACION_JUGADORES]->dejarInformacion(&actualizacion);
 	identificadoresMensajeAEnviar.push(ACTUALIZACION_JUGADORES);
 }

@@ -15,6 +15,7 @@ class VentanaInicio{
 		void obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales);
 		void imprimirMensajeError();
 		void imprimirMensajeEspera(unsigned short cantJugadoresConectados, unsigned short cantJugadoresTotales);
+		void actualizarJugadores(actualizacion_cantidad_jugadores_t actualizacion);
 		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:

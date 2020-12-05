@@ -55,6 +55,10 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,strin
 	for(auto const parClaveCliente:clientesJugando){
 		parClaveCliente.second->enviarMensajeLog(mensajeLog);
 	}
+	actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
+	for(auto const& cliente:clientes){
+		cliente->actualizarCliente(actualizacion);
+	}
 }
 
 void Servidor::ejecutar(){
@@ -137,11 +141,39 @@ void Servidor::conectarJugadores(){
 	}
 }
 
+bool Servidor::estaDesconectado(string nombre){
+	bool estaDesconectado = false;
+	for(auto const& parClaveUsuario:usuariosQuePerdieronConexion){
+		if(nombre == parClaveUsuario.second.nombre){
+			estaDesconectado = true;
+		}
+	}
+	return estaDesconectado;
+}
+
+actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){
+	actualizacion_cantidad_jugadores_t actualizacion;
+	memset(&actualizacion, 0, sizeof(actualizacion_cantidad_jugadores_t));
+	int i = 0;
+	for(auto const& idNombre:mapaIDNombre){
+		par_id_nombre_t par_id_nombre;
+		strcpy(par_id_nombre.nombre, idNombre.second.c_str());
+		par_id_nombre.id = i;
+		par_id_nombre.conectado = !estaDesconectado(idNombre.second);
+
+		actualizacion.pares_id_nombre[i] = par_id_nombre;
+		i++;
+	}
+	actualizacion.tope = i;
+	actualizacion.cantidadJugadoresActivos = cantUsuariosLogueados;
+
+	return actualizacion;
+}
+
 
 bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
-
 		if(coincidenCredenciales(posibleUsuario, parClaveUsuario.second)){
 			pthread_mutex_lock(&mutex);
 			parClaveUsuario.second.usado = true;
@@ -149,6 +181,10 @@ bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* c
 			conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
 			aplicacionServidor->activarJugador(parClaveUsuario.first);
 			cantUsuariosLogueados++;
+			actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
+			for(auto const& cliente:clientes){
+				cliente->actualizarCliente(actualizacion);
+			}
 			pthread_mutex_unlock(&mutex);
 			return true;
 		}
@@ -179,9 +215,9 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
 			mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
 			cantUsuariosLogueados++;
-
+			actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 			for(auto const& cliente:clientes){
-				cliente->actualizarCantidadConexiones(cantUsuariosLogueados);
+				cliente->actualizarCliente(actualizacion);
 			}
 
 			pthread_mutex_unlock(&mutex);

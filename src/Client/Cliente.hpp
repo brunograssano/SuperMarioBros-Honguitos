@@ -51,7 +51,7 @@ class Cliente{
 		void escuchar();
 		void recibirInformacionServidor(info_inicio_t info_inicio);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
-		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
+		void recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void ejecutar();
 		void agregarEntrada(entrada_usuario_t entradaUsuario);
@@ -75,6 +75,8 @@ class Cliente{
 		map<char,Escuchador*> escuchadores;
 
 		queue<char> identificadoresMensajeAEnviar;
+
+		VentanaInicio* ventanaInicio;
 
 		info_partida_t infoPartida;
 		info_inicio_t infoInicio;

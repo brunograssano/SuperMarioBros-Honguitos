@@ -12,7 +12,7 @@ class EnviadorCantidadConexion :public Enviador {
 		void dejarInformacion(void* informacion)override;
 
 	private:
-		actualizacion_cantidad_jugadores_t cant_jugadores_activos;
+		actualizacion_cantidad_jugadores_t actualizacion;
 
 };
 

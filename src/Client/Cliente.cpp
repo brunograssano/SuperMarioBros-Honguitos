@@ -49,6 +49,8 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
 	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
 
+	ventanaInicio = nullptr;
+
 }
 
 void Cliente::escuchar(){
@@ -116,10 +118,10 @@ void Cliente::recibirInformacionServidor(info_inicio_t info){
 	pthread_mutex_unlock(&mutex);
 }
 
-void Cliente::recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores){
-	this->cantidadJugadoresActivos = cantidadJugadores;
+void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion){
+	cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
+	ventanaInicio->actualizarJugadores(actualizacion);
 }
-
 void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
 	if(!cargoLaAplicacion){
 		return;
@@ -158,7 +160,7 @@ void Cliente::ejecutar(){
 
 	esperarRecibirInformacionInicio();
 
-	VentanaInicio* ventanaInicio =  new VentanaInicio();
+	ventanaInicio =  new VentanaInicio();
 	bool cerroVentana = false;
 	while(!pasoVerificacion && !cerroVentana){
 		try{

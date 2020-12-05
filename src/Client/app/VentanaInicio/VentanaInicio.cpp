@@ -85,6 +85,10 @@ VentanaInicio::VentanaInicio(){
 
 }
 
+void VentanaInicio::actualizarJugadores(actualizacion_cantidad_jugadores_t actualizacion){
+
+}
+
 SDL_Texture* VentanaInicio::cargoTextura(string texto, SDL_Color color){
 	Log* log = Log::getInstance();
 	SDL_Texture* texturaACargar;

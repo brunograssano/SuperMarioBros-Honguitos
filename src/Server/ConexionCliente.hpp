@@ -10,7 +10,7 @@ using namespace std;
 #include <string>
 #include <map>
 
-
+#include "../Utils/Enviador.hpp"
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
@@ -35,6 +35,13 @@ class ConexionCliente {
 			return NULL;
 		}
 
+
+		void enviar();
+		static void* enviar_helper(void* ptr){
+			((ConexionCliente*) ptr)->enviar();
+			return NULL;
+		}
+
 		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void enviarActualizacionesDeRonda();
 
@@ -42,6 +49,7 @@ class ConexionCliente {
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
 		void enviarInfoPartida(info_partida_t info_partida);
+		void enviarMensajeLog(mensaje_log_t mensaje);
 		string obtenerIP(){
 			return ip;
 		}
@@ -52,10 +60,9 @@ class ConexionCliente {
 		info_inicio_t crearInformacionInicio();
 		void enviarInformacionInicio();
 		void enviarVerificacion(bool esUsuarioValido);
-		void enviarActualizacionCantidadConexiones();
 		void esperarCredenciales();
 
-		queue<info_ronda_t> colaRondas;
+		queue<char> identificadoresMensajeAEnviar;
 
 		string nombre;
 		string contrasenia;
@@ -71,6 +78,7 @@ class ConexionCliente {
 
 		Servidor* servidor;
 		map<char,Escuchador*> escuchadores;
+		map<char,Enviador*> enviadores;
 
 
 

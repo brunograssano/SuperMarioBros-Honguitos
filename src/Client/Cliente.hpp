@@ -34,6 +34,7 @@ class EscuchadorRonda;
 #include "app/VentanaInicio/VentanaInicio.hpp"
 
 #include "../Utils/Utils.hpp"
+#include "../Utils/Enviador.hpp"
 
 using namespace std;
 
@@ -46,7 +47,7 @@ class Cliente{
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
 
-		void enviarEntrada();
+		void enviar();
 		void escuchar();
 		void recibirInformacionServidor(info_inicio_t info_inicio);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
@@ -61,7 +62,7 @@ class Cliente{
 			return NULL;
 		}
 		static void* enviar_helper(void* ptr){
-			((Cliente*) ptr)->enviarEntrada();
+			((Cliente*) ptr)->enviar();
 			return NULL;
 		}
 
@@ -70,8 +71,10 @@ class Cliente{
 		void esperarRecibirInformacionInicio();
 		void esperarRecibirVerificacion();
 
-		queue<entrada_usuario_t> entradasUsuario;
+		map<char,Enviador*> enviadores;
 		map<char,Escuchador*> escuchadores;
+
+		queue<char> identificadoresMensajeAEnviar;
 
 		info_partida_t infoPartida;
 		info_inicio_t infoInicio;

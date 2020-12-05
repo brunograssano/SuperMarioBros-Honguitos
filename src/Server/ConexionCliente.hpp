@@ -20,7 +20,7 @@ class EscuchadorEntradaTeclado;
 class ConexionCliente {
 
 	public:
-		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip);
+		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
 		~ConexionCliente();
 
 		void escuchar();
@@ -57,6 +57,7 @@ class ConexionCliente {
 		void terminoElJuego();
 
 	private:
+		actualizacion_cantidad_jugadores_t informacionAMandar;
 		info_inicio_t crearInformacionInicio();
 		void enviarInformacionInicio();
 		void enviarVerificacion(bool esUsuarioValido);

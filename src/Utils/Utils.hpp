@@ -121,6 +121,7 @@ typedef struct par_id_nombre{
 
 #define ACTUALIZACION_JUGADORES 'U'
 typedef struct actualizacion_cantidad_jugadores{
+	unsigned short cantidadMaximaDeJugadores;
 	unsigned short cantidadJugadoresActivos;
 	unsigned short tope;
 	par_id_nombre_t pares_id_nombre[MAX_JUGADORES];

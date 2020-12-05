@@ -42,7 +42,6 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	cerroVentana = false;
 
 	cantidadJugadoresActivos = 0;
-	escuchadores[INICIO] = new EscuchadorInformacionPartida(socketCliente, this);
 	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
 	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
 	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
@@ -122,17 +121,20 @@ void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
 	this->seRecibioVerificacion = true;
 }
 
-void Cliente::recibirInformacionServidor(info_inicio_t info){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	this->infoInicio = info;
-	this->seRecibioInformacionInicio = true;
-	pthread_mutex_unlock(&mutex);
-}
-
 void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion){
-	cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
-	ventanaInicio->actualizarJugadores(actualizacion);
+	if(!seRecibioInformacionInicio){
+		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+		pthread_mutex_lock(&mutex);
+		this->infoInicio = {actualizacion.cantidadMaximaDeJugadores, actualizacion.cantidadJugadoresActivos};
+		ventanaInicio = new VentanaInicio(infoInicio.cantidadJugadoresActivos, infoInicio.cantidadJugadores);
+		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
+		ventanaInicio->actualizarJugadores(actualizacion);
+		this->seRecibioInformacionInicio = true;
+		pthread_mutex_unlock(&mutex);
+	}else{
+		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
+		ventanaInicio->actualizarJugadores(actualizacion);
+	}
 }
 void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
 	if(!cargoLaAplicacion){
@@ -172,7 +174,6 @@ void Cliente::ejecutar(){
 
 	esperarRecibirInformacionInicio();
 
-	ventanaInicio =  new VentanaInicio(infoInicio.cantidadJugadoresActivos, infoInicio.cantidadJugadores);
 	while(!pasoVerificacion && !cerroVentana){
 		try{
 			ventanaInicio->obtenerEntrada();

@@ -47,6 +47,13 @@ class Servidor{
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminoElJuego();
 
+		void reconectarJugadoresFaseInicial();
+		static void* reconectarJugadoresFaseInicial_helper(void* ptr){
+			((Servidor*) ptr)->reconectarJugadoresFaseInicial();
+			return nullptr;
+		}
+		void reconectarJugadoresFaseJuego();
+
 		map<int,string> obtenerMapaJugadores(){
 			return mapaIDNombre;
 		}

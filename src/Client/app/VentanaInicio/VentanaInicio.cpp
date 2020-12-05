@@ -179,7 +179,6 @@ void VentanaInicio::obtenerEntrada(){
 
 	bool terminoEntrada = false;
 
-
 	int anchoTextoUsuario;
 	int anchoTextoContrasenia;
 	while( !terminar && !terminoEntrada){

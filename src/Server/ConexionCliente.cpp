@@ -44,7 +44,7 @@ void ConexionCliente::escuchar(){
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje", to_string(errno));
 			hayError = true;
 		}else if(resultado == 0){
-			Log::getInstance()->huboUnErrorSDL("Se desconecto el socket que escucha al cliente", to_string(errno));
+			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al cliente: "+ to_string(errno));
 			hayError = true;
 		}else{
 			try{

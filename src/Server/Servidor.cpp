@@ -70,6 +70,17 @@ void Servidor::ejecutar(){
 		for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
 			usuario_t usuario = parClaveUsuario.second;
 			if(usuario.usado){
+
+				mensaje_log_t mensajeLog;
+				usuario.nombre.insert(0, "Se reconecto el usuario: ");
+				strcpy(mensajeLog.mensajeParaElLog,usuario.nombre.c_str());
+				mensajeLog.tipo = INFO;
+
+				for(auto const parClaveCliente:clientesJugando){
+					parClaveCliente.second->enviarMensajeLog(mensajeLog);
+				}
+
+
 				int idJugador = parClaveUsuario.first;
 				info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
 				pthread_mutex_lock(&mutex);

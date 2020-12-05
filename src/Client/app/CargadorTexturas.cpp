@@ -107,20 +107,19 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string d
 		SDL_DestroyTexture( texturaFondoActual );
 		direccionFondoActual = direccionFondo;
 		texturaFondoActual = this->texturasNiveles[direccionFondoActual];
-
 	}
 }
 
-void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador){
+void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador, unsigned short mundo){
 
-	for(int i=0;i<cantidadFondosNiveles;i++){
+	for(int i=mundo-1; i<mundo-1+cantidadFondosNiveles; i++){
 		direccionesNiveles[i] = "resources/Imagenes/Niveles/" + direccionesNiveles[i];
 		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", direccionesNiveles[i], renderizador);
 		texturasNiveles[direccionesNiveles[i]] = texturaNueva;
 	}
 
-	texturaFondoActual = this->texturasNiveles[direccionesNiveles[0]];
-	direccionFondoActual = direccionesNiveles[0];
+	texturaFondoActual = this->texturasNiveles[direccionesNiveles[mundo-1]];
+	direccionFondoActual = direccionesNiveles[mundo-1];
 
 }
 

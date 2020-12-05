@@ -4,8 +4,8 @@
 using namespace std;
 
 #include "../../../Utils/log/Log.hpp"
-#define ANCHO_PANTALLA 300
-#define ALTO_PANTALLA 300
+#define ANCHO_PANTALLA 600
+#define ALTO_PANTALLA 450
 VentanaInicio::VentanaInicio(){
 	this->ingresoIncorrectoCredenciales = false;
 	Log* log = Log::getInstance();
@@ -56,7 +56,7 @@ VentanaInicio::VentanaInicio(){
 			SDL_FreeSurface(icono);
 		}
 
-		string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.jpg";
+		string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.png";
 		SDL_Surface* superficieImagen = IMG_Load(direccionFondo.c_str());
 		if(superficieImagen == NULL){
 			Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccionFondo, IMG_GetError());
@@ -72,27 +72,15 @@ VentanaInicio::VentanaInicio(){
 		SDL_Color colorBlanco = { 255, 255, 255, 0xFF };
 		this->texturaTextoUsuario = cargoTextura("Ingrese usuario:", colorBlanco );
 		this->texturaTextoContrasenia = cargoTextura("Ingrese contrasenia:", colorBlanco );
-		this->usuarioIngresado = cargoTextura("...", colorBlanco );
-		this->contraseniaIngresada = cargoTextura("...", colorBlanco );
-		this->textoBotonEnviar = cargoTextura("Enviar", colorBlanco );
-		if( this->textoBotonEnviar == nullptr ){
-			log->huboUnError("No se pudo crear la textura para el texto del boton enviar");
-		}
 		if( this->texturaTextoUsuario == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando del usuario");
 		}
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		if( this->usuarioIngresado == nullptr ){
-			log->huboUnError("No se pudo crear la textura para ingresar el usuario");
-		}
-		if( this->contraseniaIngresada == nullptr ){
-			log->huboUnError("No se pudo crear la textura para ingresar la contraseña");
-		}
-		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , this->textoBotonEnviar);
-		this->cajaTextoUsuario = new BotonConTexto(20,40,150,14,this->usuarioIngresado);
-		this->cajaTextoContrasenia = new BotonConTexto(20,90,150,14,this->contraseniaIngresada);
+		this->botonEnviar = new BotonConTexto(100, 130, 85 , 40 , "  Enviar",this->renderer,this->fuente);
+		this->cajaTextoUsuario = new BotonConTexto(50,40,200,20,"...",this->renderer,this->fuente);
+		this->cajaTextoContrasenia = new BotonConTexto(50,90,200,20,"...",this->renderer,this->fuente);
 	}
 
 }
@@ -128,17 +116,25 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 			}
 			else if(this->cajaTextoContrasenia->botonClickeado(evento) || evento.key.keysym.sym == SDLK_DOWN){
 				(*entradaUsuario) = textoIngresadoContrasenia;
+				cajaTextoContrasenia->seleccionarCajaTexto();
+				cajaTextoUsuario->deseleccionarCajaTexto();
 			}
 			else if(this->cajaTextoUsuario->botonClickeado(evento) || evento.key.keysym.sym == SDLK_UP){
 				(*entradaUsuario) = textoIngresadoUsuario;
+				cajaTextoUsuario->seleccionarCajaTexto();
+				cajaTextoContrasenia->deseleccionarCajaTexto();
 			}
 			else if(this->botonEnviar->botonClickeado(evento) || evento.key.keysym.sym == SDLK_RETURN){
 				return true;
 			}else if(evento.key.keysym.sym == SDLK_TAB){
 				 if((*entradaUsuario) == textoIngresadoUsuario){
 					 (*entradaUsuario) = textoIngresadoContrasenia;
+					 cajaTextoContrasenia->seleccionarCajaTexto();
+					 cajaTextoUsuario->deseleccionarCajaTexto();
 				 }else{
 					 (*entradaUsuario) = textoIngresadoUsuario;
+					 cajaTextoUsuario->seleccionarCajaTexto();
+					 cajaTextoContrasenia->deseleccionarCajaTexto();
 				 }
 			}else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
 				SDL_SetClipboardText( (**entradaUsuario).c_str() );
@@ -168,32 +164,35 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", colorBlanco);
 
 	SDL_StartTextInput();
-	string textoIngresadoUsuario = "...";
-	string textoIngresadoContrasenia = "...";
+	string textoIngresadoUsuario = "";
+	string textoIngresadoContrasenia = "";
 	string* entradaUsuario = &textoIngresadoUsuario;
 
 	bool terminoEntrada = false;
 	Log* log = Log::getInstance();
 
+	int anchoTextoUsuario;
+	int anchoTextoContrasenia;
 	while( !terminar && !terminoEntrada){
 
 		terminoEntrada = manejarEntradaUsuario(evento,&terminar,&textoIngresadoUsuario,&textoIngresadoContrasenia,&entradaUsuario);
 
-		if(textoIngresadoUsuario.length() != 0){
-			this->usuarioIngresado = cargoTextura( textoIngresadoUsuario.c_str(), colorBlanco );
-			this->cajaTextoUsuario->cambiarTexto(this->usuarioIngresado);
-		}
-		if(textoIngresadoContrasenia.length() != 0){
-			this->contraseniaIngresada = cargoTextura( textoIngresadoContrasenia.c_str(), colorBlanco );
-			this->cajaTextoContrasenia->cambiarTexto(this->contraseniaIngresada);
+		cajaTextoUsuario->cambiarTexto(textoIngresadoUsuario);
+		cajaTextoContrasenia->cambiarTexto(textoIngresadoContrasenia);
+
+		anchoTextoUsuario = textoIngresadoUsuario.length()*10;
+		if(textoIngresadoUsuario.empty()){
+			anchoTextoUsuario = 30;
 		}
 
-		int anchoTextoUsuario = textoIngresadoUsuario.length()*10;
 		if(anchoTextoUsuario>270){
 			anchoTextoUsuario = 270;
 		}
 
-		int anchoTextoContrasenia = textoIngresadoContrasenia.length()*10;
+		anchoTextoContrasenia = textoIngresadoContrasenia.length()*10;
+		if(textoIngresadoContrasenia.empty()){
+			anchoTextoContrasenia = 30;
+		}
 		if(anchoTextoContrasenia>270){
 			anchoTextoContrasenia = 270;
 		}
@@ -204,15 +203,15 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 		SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
 		SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
 
-		this->botonEnviar->mostrarse(this->renderer);
+		this->botonEnviar->mostrarse();
 
-		renderizar(10,20,14,200,this->texturaTextoUsuario);
+		renderizar(30,20,14,200,this->texturaTextoUsuario);
 
-		this->cajaTextoUsuario->mostrarseCambiandoAncho(this->renderer, anchoTextoUsuario);
+		this->cajaTextoUsuario->mostrarseCambiandoAncho(anchoTextoUsuario);
 
-		renderizar(10,70,14,250,this->texturaTextoContrasenia);
+		renderizar(30,70,14,250,this->texturaTextoContrasenia);
 
-		this->cajaTextoContrasenia->mostrarseCambiandoAncho(this->renderer, anchoTextoContrasenia);
+		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
 		if(ingresoIncorrectoCredenciales){
 			SDL_Color colorRojo = { 207, 0, 15, 0xFF };

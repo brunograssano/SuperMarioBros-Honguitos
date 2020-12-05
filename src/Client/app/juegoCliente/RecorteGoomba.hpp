@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-const int COLORES_GOOMBA_POSIBLES = 3, ESTADOS_GOOMBA = 3;
+const int COLORES_GOOMBA_POSIBLES = 4, ESTADOS_GOOMBA = 3;
 
 class RecorteGoomba{
 	public:

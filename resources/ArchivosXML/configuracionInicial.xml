@@ -693,7 +693,7 @@
 
                 <enemigo>
                     <tipo>Goomba</tipo>
-                    <color>2</color>
+                    <color>3</color>
                     <cantidad>10</cantidad>
                 </enemigo>
 
@@ -705,7 +705,7 @@
 
                 <enemigo>
                     <tipo>Goomba</tipo>
-                    <color>2</color>
+                    <color>3</color>
                     <cantidad>4</cantidad>
                 </enemigo>
 

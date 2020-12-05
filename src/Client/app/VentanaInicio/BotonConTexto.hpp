@@ -4,27 +4,36 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <string>
+using namespace std;
 
 class BotonConTexto
 {
     private:
 
-    SDL_Rect rectangulo;
-
-    SDL_Texture* texto;
+		SDL_Rect rectangulo;
+		string texto;
+		SDL_Texture* texturaTexto;
+		TTF_Font* fuente;
+		SDL_Renderer* renderer;
+		SDL_Texture* cargoTextura(string texto);
+		bool clickeado;
 
     public:
 
-    BotonConTexto( int posicionX, int posicionY, int ancho, int alto , SDL_Texture* texto);
+		BotonConTexto( int posicionX, int posicionY, int ancho, int alto , string texto,SDL_Renderer* renderer,TTF_Font* fuente);
 
-    void cambiarTexto(SDL_Texture* texto);
+		void cambiarTexto(string texto);
 
-    bool botonClickeado(SDL_Event evento);
+		bool botonClickeado(SDL_Event evento);
 
-    void mostrarse(SDL_Renderer* renderer);
+		void mostrarse();
 
-    void mostrarseCambiandoAncho(SDL_Renderer* renderer, int nuevoAncho);
+		void mostrarseCambiandoAncho( int nuevoAncho);
 
+		void seleccionarCajaTexto();
+
+		void deseleccionarCajaTexto();
 };
 
 #endif

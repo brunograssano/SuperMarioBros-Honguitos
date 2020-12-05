@@ -21,13 +21,12 @@ SDL_Texture* BotonConTexto::cargoTextura(string texto){
 }
 
 BotonConTexto::BotonConTexto(int posicionX, int posicionY, int ancho, int alto , string texto, SDL_Renderer* renderer, TTF_Font* fuente){
-	Log* log = Log::getInstance();
 	this->rectangulo = {posicionX, posicionY, ancho , alto };
 	this->texto = texto;
 	this->fuente = fuente;
 	this->renderer = renderer;
 	this->texturaTexto = this->cargoTextura(texto);
-
+	clickeado = false;
 }
 
 void BotonConTexto::cambiarTexto(string texto){
@@ -36,7 +35,11 @@ void BotonConTexto::cambiarTexto(string texto){
 	if(!texto.empty()){
 		this->texturaTexto = this->cargoTextura(texto);
 	}else{
-		this->texturaTexto = this->cargoTextura("...");
+		if(clickeado){
+			this->texturaTexto = this->cargoTextura(texto);
+		}else{
+			this->texturaTexto = this->cargoTextura("...");
+		}
 	}
 
 	SDL_DestroyTexture( texturaABorrar );
@@ -54,6 +57,14 @@ bool BotonConTexto::botonClickeado(SDL_Event evento){
         }
     }
     return false;
+}
+
+void BotonConTexto::seleccionarCajaTexto(){
+	clickeado = true;
+}
+
+void BotonConTexto::deseleccionarCajaTexto(){
+	clickeado = false;
 }
 
 void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura,SDL_Renderer* renderer){

@@ -4,8 +4,8 @@
 using namespace std;
 
 #include "../../../Utils/log/Log.hpp"
-#define ANCHO_PANTALLA 300
-#define ALTO_PANTALLA 300
+#define ANCHO_PANTALLA 600
+#define ALTO_PANTALLA 450
 VentanaInicio::VentanaInicio(){
 	this->ingresoIncorrectoCredenciales = false;
 	Log* log = Log::getInstance();
@@ -56,7 +56,7 @@ VentanaInicio::VentanaInicio(){
 			SDL_FreeSurface(icono);
 		}
 
-		string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.jpg";
+		string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.png";
 		SDL_Surface* superficieImagen = IMG_Load(direccionFondo.c_str());
 		if(superficieImagen == NULL){
 			Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccionFondo, IMG_GetError());
@@ -78,9 +78,9 @@ VentanaInicio::VentanaInicio(){
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		this->botonEnviar = new BotonConTexto(160, 120, 70 , 40 , "Enviar",this->renderer,this->fuente);
-		this->cajaTextoUsuario = new BotonConTexto(20,40,150,14,"...",this->renderer,this->fuente);
-		this->cajaTextoContrasenia = new BotonConTexto(20,90,150,14,"...",this->renderer,this->fuente);
+		this->botonEnviar = new BotonConTexto(100, 130, 85 , 40 , "  Enviar",this->renderer,this->fuente);
+		this->cajaTextoUsuario = new BotonConTexto(50,40,200,20,"...",this->renderer,this->fuente);
+		this->cajaTextoContrasenia = new BotonConTexto(50,90,200,20,"...",this->renderer,this->fuente);
 	}
 
 }
@@ -116,17 +116,25 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 			}
 			else if(this->cajaTextoContrasenia->botonClickeado(evento) || evento.key.keysym.sym == SDLK_DOWN){
 				(*entradaUsuario) = textoIngresadoContrasenia;
+				cajaTextoContrasenia->seleccionarCajaTexto();
+				cajaTextoUsuario->deseleccionarCajaTexto();
 			}
 			else if(this->cajaTextoUsuario->botonClickeado(evento) || evento.key.keysym.sym == SDLK_UP){
 				(*entradaUsuario) = textoIngresadoUsuario;
+				cajaTextoUsuario->seleccionarCajaTexto();
+				cajaTextoContrasenia->deseleccionarCajaTexto();
 			}
 			else if(this->botonEnviar->botonClickeado(evento) || evento.key.keysym.sym == SDLK_RETURN){
 				return true;
 			}else if(evento.key.keysym.sym == SDLK_TAB){
 				 if((*entradaUsuario) == textoIngresadoUsuario){
 					 (*entradaUsuario) = textoIngresadoContrasenia;
+					 cajaTextoContrasenia->seleccionarCajaTexto();
+					 cajaTextoUsuario->deseleccionarCajaTexto();
 				 }else{
 					 (*entradaUsuario) = textoIngresadoUsuario;
+					 cajaTextoUsuario->seleccionarCajaTexto();
+					 cajaTextoContrasenia->deseleccionarCajaTexto();
 				 }
 			}else if( evento.key.keysym.sym == SDLK_c && (SDL_GetModState() & KMOD_CTRL) ){
 				SDL_SetClipboardText( (**entradaUsuario).c_str() );
@@ -197,11 +205,11 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 		this->botonEnviar->mostrarse();
 
-		renderizar(10,20,14,200,this->texturaTextoUsuario);
+		renderizar(30,20,14,200,this->texturaTextoUsuario);
 
 		this->cajaTextoUsuario->mostrarseCambiandoAncho(anchoTextoUsuario);
 
-		renderizar(10,70,14,250,this->texturaTextoContrasenia);
+		renderizar(30,70,14,250,this->texturaTextoContrasenia);
 
 		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 

@@ -17,6 +17,7 @@ class BotonConTexto
 		TTF_Font* fuente;
 		SDL_Renderer* renderer;
 		SDL_Texture* cargoTextura(string texto);
+		bool clickeado;
 
     public:
 
@@ -30,6 +31,9 @@ class BotonConTexto
 
 		void mostrarseCambiandoAncho( int nuevoAncho);
 
+		void seleccionarCajaTexto();
+
+		void deseleccionarCajaTexto();
 };
 
 #endif

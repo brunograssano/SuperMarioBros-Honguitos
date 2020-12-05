@@ -27,7 +27,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	}
 	resultado = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
 	if (resultado < 0){
-		Log::getInstance()->huboUnErrorSDL("Falló la conexión: Abortamos.",to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("Falló la conexión al servidor. Abortamos.",to_string(errno));
 		exit(-1);
 	}
 
@@ -56,7 +56,6 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 }
 
 void Cliente::escuchar(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	char tipoMensaje;
 	int resultado;
 	bool hayError = false;
@@ -80,6 +79,11 @@ void Cliente::escuchar(){
 		}
 	}
 	terminoEscuchar = true;
+	terminarProcesosDelCliente();
+}
+
+void Cliente::terminarProcesosDelCliente() {
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	terminoJuego = true;
 	cerroVentana = true;
@@ -88,7 +92,6 @@ void Cliente::escuchar(){
 }
 
 void Cliente::enviar(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 	char tipoMensaje;
 	bool hayError = false;
@@ -104,11 +107,7 @@ void Cliente::enviar(){
 		}
 	}
 	terminoEnviar = true;
-	pthread_mutex_lock(&mutex);
-	terminoJuego = true;
-	cerroVentana = true;
-	gameLoop->seMurioElServer();
-	pthread_mutex_unlock(&mutex);
+	terminarProcesosDelCliente();
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){
@@ -147,12 +146,12 @@ void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
 
 void Cliente::esperarRecibirInformacionInicio(){
 	while(!seRecibioInformacionInicio){
-	}//TODO: Mostrar una pantalla de espera al servidor, en caso de ser neceasrio.
+	}
 }
 
 void Cliente::esperarRecibirVerificacion(){
 	while(!seRecibioVerificacion){
-	}//TODO: Mostrar un mensaje de espera, en caso de ser necesario.
+	}
 }
 
 void Cliente::ejecutar(){
@@ -160,14 +159,15 @@ void Cliente::ejecutar(){
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del server.");
-		exit(-1); //TODO: Arreglar este exit.
+		return;
 	}
 
 	pthread_t hiloEnviar;
 	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, Cliente::enviar_helper, this);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la informacion del cliente al server.");
-		exit(-1); //TODO: Arreglar este exit.
+		terminoJuego = true;
+		return;
 	}
 
 	esperarRecibirInformacionInicio();
@@ -263,9 +263,14 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 
 Cliente::~Cliente(){
-
-	shutdown(socketCliente, SHUT_RDWR);
-	close(socketCliente);
+	int resultado = shutdown(socketCliente, SHUT_RDWR);
+	if(resultado<0){
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+	}
+	resultado = close(socketCliente);
+	if(resultado<0){
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+	}
 
 	while(!terminoEnviar || !terminoEscuchar){}
 

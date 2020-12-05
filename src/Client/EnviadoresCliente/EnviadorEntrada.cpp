@@ -8,12 +8,16 @@ EnviadorEntrada::EnviadorEntrada(int socket){
 void EnviadorEntrada::enviar(){
 	entrada_usuario_t entrada;
 	char tipo = ENTRADA;
+	int resultadoEnvio;
 	if(!entradasUsuario.empty()){
 		entrada = entradasUsuario.front();
 		entradasUsuario.pop();
 
-		send(socket,&tipo,sizeof(char),0);
-		send(socket,&entrada,sizeof(entrada_usuario_t),0);
+
+		resultadoEnvio = send(socket,&tipo,sizeof(char),0);
+		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de entrada de usuario");
+		resultadoEnvio = send(socket,&entrada,sizeof(entrada_usuario_t),0);
+		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de entrada de un usuario");
 	}
 
 }

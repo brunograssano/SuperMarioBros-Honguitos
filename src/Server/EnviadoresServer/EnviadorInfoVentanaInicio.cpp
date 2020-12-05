@@ -8,8 +8,14 @@ EnviadorInfoVentanaInicio::EnviadorInfoVentanaInicio(int socket){
 
 void EnviadorInfoVentanaInicio::enviar(){
 	char caracterMensaje = INICIO;
-	send(socket, &caracterMensaje, sizeof(char), 0);
-	send(socket, &info_inicio_ventana, sizeof(info_inicio_t), 0);
+
+	int resultadoEnvio;
+	resultadoEnvio = send(socket, &caracterMensaje, sizeof(char), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de informacion de la ventana de incicio");
+
+
+	resultadoEnvio = send(socket, &info_inicio_ventana, sizeof(info_inicio_t), 0);
+	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de informacion de la ventana de inicio");
 };
 
 void EnviadorInfoVentanaInicio::dejarInformacion(void* infoComienzoPartida){

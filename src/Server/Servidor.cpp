@@ -4,6 +4,7 @@
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
+	manejadorIDs = new ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido->tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
@@ -130,16 +131,7 @@ void Servidor::conectarJugadores(){
 	while(!terminoJuego){
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
 
-		if(cantUsuariosLogueados >= cantidadConexiones){
-			pthread_mutex_lock(&mutex);
-			log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+"." +
-					" porque la cantidad de usuarios logueados es maxima");
-			pthread_mutex_unlock(&mutex);
-			close(socketConexionEntrante);
-		}else{
-			usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
-		}
-
+		usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
 	}
 }
 
@@ -213,9 +205,10 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 			pthread_mutex_lock(&mutex);
 
 			usuario.usado = true;
-			clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
-			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
-			mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
+			int id = manejadorIDs->obtenerIDNueva();
+			clientesJugando[id] = conexionClienteConPosibleUsuario;
+			conexionClienteConPosibleUsuario->agregarIDJuego(id);
+			mapaIDNombre[id] = posibleUsuario.nombre;
 			cantUsuariosLogueados++;
 			actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 			for(auto const& cliente:clientes){
@@ -285,6 +278,7 @@ Servidor::~Servidor(){
 	clientesJugando.clear();
 	conexionesPerdidas.clear();
 	close(socketServer);
+	delete manejadorIDs;
 	delete aplicacionServidor;
 	delete log;
 }

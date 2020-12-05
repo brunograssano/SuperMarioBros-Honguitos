@@ -27,6 +27,7 @@ class AplicacionServidor;
 class ConexionCliente;
 #include "ConexionCliente.hpp"
 
+#include "ManejadorIdentificadores.hpp"
 
 const int MAX_CONEXIONES = 4;
 
@@ -60,6 +61,8 @@ class Servidor{
 		map<int,string> mapaIDNombre;
 		Log* log;
 		AplicacionServidor* aplicacionServidor;
+		ManejadorIdentificadores* manejadorIDs;
+
 		int socketServer;
 		int cantidadConexiones;
 		int cantUsuariosLogueados = 0;

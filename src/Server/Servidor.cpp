@@ -127,16 +127,7 @@ void Servidor::conectarJugadores(){
 	while(!terminoJuego){
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
 
-		if(cantUsuariosLogueados >= cantidadConexiones){
-			pthread_mutex_lock(&mutex);
-			log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) inet_ntoa(addressCliente.sin_addr) + " del puerto "+ to_string(ntohs(addressCliente.sin_port))+"." +
-					" porque la cantidad de usuarios logueados es maxima");
-			pthread_mutex_unlock(&mutex);
-			close(socketConexionEntrante);
-		}else{
-			usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
-		}
-
+		usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
 	}
 }
 

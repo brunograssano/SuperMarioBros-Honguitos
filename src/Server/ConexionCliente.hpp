@@ -77,7 +77,7 @@ class ConexionCliente {
 		string ip;
 
 		Servidor* servidor;
-		map<char,EscuchadorServer*> escuchadores;
+		map<char,Escuchador*> escuchadores;
 		map<char,Enviador*> enviadores;
 
 

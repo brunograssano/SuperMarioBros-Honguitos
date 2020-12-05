@@ -36,7 +36,7 @@ void ConexionCliente::escuchar(){
 	char tipoMensaje;
 	int resultado;
 	bool hayError = false;
-	while(!hayError){
+	while(!terminoJuego && !hayError){
 
 		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
@@ -56,6 +56,7 @@ void ConexionCliente::escuchar(){
 	}
 	shutdown(socket, SHUT_RDWR);
 	close(socket);
+	terminoJuego = true;
 	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
 }
 
@@ -63,7 +64,7 @@ void ConexionCliente::enviar(){
 	char tipoMensaje;
 	bool hayError = false;
 	while(!terminoJuego && !hayError){
-		while(!identificadoresMensajeAEnviar.empty()){
+		if(!identificadoresMensajeAEnviar.empty()){
 			tipoMensaje = identificadoresMensajeAEnviar.front();
 			identificadoresMensajeAEnviar.pop();
 			try{
@@ -73,7 +74,7 @@ void ConexionCliente::enviar(){
 			}
 		}
 	}
-
+	terminoJuego = true;
 }
 
 void ConexionCliente::recibirCredencial(string nombre, string contrasenia){
@@ -100,13 +101,13 @@ void ConexionCliente::ejecutar(){
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, ConexionCliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente."); //TODO: Obtener IP!!
-		exit(-1); //TODO: Arreglar este exit.
+		return; // El hilo de ejecutar muere, y queda dando vueltas solamente el objeto ConexionCliente en la lista
 	}
 
 	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, ConexionCliente::enviar_helper, this);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del server al cliente."); //TODO: Obtener IP!!
-		exit(-1); //TODO: Arreglar este exit.
+		return;
 	}
 
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;

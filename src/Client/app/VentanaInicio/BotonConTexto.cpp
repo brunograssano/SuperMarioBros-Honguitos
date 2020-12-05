@@ -36,7 +36,7 @@ void BotonConTexto::cambiarTexto(string texto){
 		this->texturaTexto = this->cargoTextura(texto);
 	}else{
 		if(clickeado){
-			this->texturaTexto = this->cargoTextura(texto);
+			this->texturaTexto = this->cargoTextura(" ");
 		}else{
 			this->texturaTexto = this->cargoTextura("...");
 		}
@@ -78,7 +78,7 @@ void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* 
 
 void BotonConTexto::mostrarse(){
 
-	renderizar(rectangulo.x + rectangulo.x*0.05,rectangulo.y + rectangulo.y *0.05 ,rectangulo.h * 0.7,rectangulo.w * 0.7,texturaTexto,renderer);
+	renderizar(rectangulo.x + 5,rectangulo.y + rectangulo.y *0.05 ,rectangulo.h * 0.7,rectangulo.w * 0.9,texturaTexto,renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
 

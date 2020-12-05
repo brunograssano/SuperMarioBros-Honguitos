@@ -20,6 +20,7 @@ class VentanaInicio{
 		~VentanaInicio();
 	private:
 		bool ingresoIncorrectoCredenciales;
+		bool salaLlena;
 		credencial_t credenciales;
 		SDL_Texture* texturaTextoUsuario;
 		SDL_Texture* texturaTextoContrasenia;
@@ -28,6 +29,7 @@ class VentanaInicio{
 		SDL_Texture* texturaCantidadJugadores;
 		SDL_Texture* texturaMensajeCredencialesIncorrectas;
 		SDL_Texture* texturaMensajeCredencialesCorrectas;
+		SDL_Texture* texturaMensajeSalaLlena = nullptr;
 		SDL_Texture* textoBotonEnviar;
 		SDL_Texture* fondoPantalla;
 		TTF_Font* fuente;

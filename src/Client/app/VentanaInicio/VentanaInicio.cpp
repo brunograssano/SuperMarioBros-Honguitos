@@ -4,10 +4,11 @@
 using namespace std;
 
 #include "../../../Utils/log/Log.hpp"
-#define ANCHO_PANTALLA 600
+#define ANCHO_PANTALLA 650
 #define ALTO_PANTALLA 450
 VentanaInicio::VentanaInicio(){
 	this->ingresoIncorrectoCredenciales = false;
+	this->salaLlena = false;
 	Log* log = Log::getInstance();
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
 		log->huboUnErrorSDL("No se pudo inicializar SDL", SDL_GetError());
@@ -78,9 +79,9 @@ VentanaInicio::VentanaInicio(){
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		this->botonEnviar = new BotonConTexto(100, 130, 85 , 40 , "  Enviar",this->renderer,this->fuente);
-		this->cajaTextoUsuario = new BotonConTexto(50,40,200,20,"...",this->renderer,this->fuente);
-		this->cajaTextoContrasenia = new BotonConTexto(50,90,200,20,"...",this->renderer,this->fuente);
+		this->botonEnviar = new BotonConTexto(470, 200, 80 , 40 , "Enviar",this->renderer,this->fuente);
+		this->cajaTextoUsuario = new BotonConTexto(400,60,200,20,"...",this->renderer,this->fuente);
+		this->cajaTextoContrasenia = new BotonConTexto(400,140,200,20,"...",this->renderer,this->fuente);
 	}
 
 }
@@ -159,6 +160,8 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 
 void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales){
 
+	Log* log = Log::getInstance();
+
 	bool terminar = false;
 
 	SDL_Event evento;
@@ -173,7 +176,7 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	string* entradaUsuario = &textoIngresadoUsuario;
 
 	bool terminoEntrada = false;
-	Log* log = Log::getInstance();
+
 
 	int anchoTextoUsuario;
 	int anchoTextoContrasenia;
@@ -209,26 +212,40 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 		this->botonEnviar->mostrarse();
 
-		renderizar(30,20,14,200,this->texturaTextoUsuario);
+		renderizar(380,40,14,200,this->texturaTextoUsuario);
 
 		this->cajaTextoUsuario->mostrarseCambiandoAncho(anchoTextoUsuario);
 
-		renderizar(30,70,14,250,this->texturaTextoContrasenia);
+		renderizar(380,120,14,250,this->texturaTextoContrasenia);
 
 		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
 		if(ingresoIncorrectoCredenciales){
 			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
-			this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
-			if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
-				log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
+
+			if (jugadoresConectados >= jugadoresTotales){
+				salaLlena = true;
+				this->texturaMensajeSalaLlena = cargoTextura("La sala esta llena, no puede ingresar", colorRojo);
+				if( this->texturaMensajeSalaLlena == nullptr ){
+					log->huboUnError("No se pudo crear la textura para el mensaje de error de sala llena");
+				}
+				renderizar(380,250,14,250,texturaMensajeSalaLlena);
+
 			}else{
-				renderizar(10,170,14,250,texturaMensajeCredencialesIncorrectas);
+
+				this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
+				if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
+					log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
+				}else{
+					renderizar(380,250,14,250,texturaMensajeCredencialesIncorrectas);
+
+				}
 			}
+
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
-			renderizar(10,200,14,250,texturaCantidadJugadores);
+			renderizar(380,280,14,250,texturaCantidadJugadores);
 		}
 
 		SDL_RenderPresent( this->renderer );
@@ -239,12 +256,13 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	}
 
 	SDL_StopTextInput();
+	if (!salaLlena){
+		const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
+		const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
 
-	const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
-	const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
-
-	strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
-	strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
+		strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
+		strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
+	}
 }
 
 void VentanaInicio::imprimirMensajeError(){
@@ -279,7 +297,7 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	if( this->texturaMensajeCredencialesCorrectas == nullptr ){
 		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
 	}else{
-		renderizar(10,20,14,250,texturaMensajeCredencialesCorrectas);
+		renderizar(380,240,14,250,texturaMensajeCredencialesCorrectas);
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
 
@@ -287,7 +305,7 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(cantJugadoresConectados)+"/"+to_string(cantJugadoresTotales)+" jugadores", colorBlanco);
 
 	if( this->texturaCantidadJugadores != nullptr ){
-		renderizar(10,180,14,250,texturaCantidadJugadores);
+		renderizar(380,280,14,250,texturaCantidadJugadores);
 	}
 
 
@@ -312,6 +330,9 @@ credencial_t VentanaInicio::obtenerCredenciales(){
 
 VentanaInicio::~VentanaInicio(){
 	//aca se elimina cada textura de la pantalla de espera
+	if (texturaMensajeSalaLlena != nullptr){
+		SDL_DestroyTexture( texturaMensajeSalaLlena );
+	}
 	SDL_DestroyTexture( fondoPantalla );
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );

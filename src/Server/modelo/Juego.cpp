@@ -68,7 +68,9 @@ void Juego::actualizarModelo(){
 
 void Juego::sumarPuntosAJugadores(int puntos){
 	for(auto const& parClaveJugador:jugadores){
-		parClaveJugador.second->agregarPuntos(puntos);
+		if(parClaveJugador.second->estaConectado()){
+			parClaveJugador.second->agregarPuntos(puntos);
+		}
 	}
 }
 

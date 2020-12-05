@@ -4,7 +4,7 @@
 using namespace std;
 
 #include "../../../Utils/log/Log.hpp"
-#define ANCHO_PANTALLA 600
+#define ANCHO_PANTALLA 650
 #define ALTO_PANTALLA 450
 VentanaInicio::VentanaInicio(){
 	this->ingresoIncorrectoCredenciales = false;
@@ -78,9 +78,9 @@ VentanaInicio::VentanaInicio(){
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		this->botonEnviar = new BotonConTexto(100, 130, 85 , 40 , "  Enviar",this->renderer,this->fuente);
-		this->cajaTextoUsuario = new BotonConTexto(50,40,200,20,"...",this->renderer,this->fuente);
-		this->cajaTextoContrasenia = new BotonConTexto(50,90,200,20,"...",this->renderer,this->fuente);
+		this->botonEnviar = new BotonConTexto(470, 200, 80 , 40 , "Enviar",this->renderer,this->fuente);
+		this->cajaTextoUsuario = new BotonConTexto(400,60,200,20,"...",this->renderer,this->fuente);
+		this->cajaTextoContrasenia = new BotonConTexto(400,140,200,20,"...",this->renderer,this->fuente);
 	}
 
 }
@@ -205,11 +205,11 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 		this->botonEnviar->mostrarse();
 
-		renderizar(30,20,14,200,this->texturaTextoUsuario);
+		renderizar(380,40,14,200,this->texturaTextoUsuario);
 
 		this->cajaTextoUsuario->mostrarseCambiandoAncho(anchoTextoUsuario);
 
-		renderizar(30,70,14,250,this->texturaTextoContrasenia);
+		renderizar(380,120,14,250,this->texturaTextoContrasenia);
 
 		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
@@ -219,12 +219,12 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 			if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
 				log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
 			}else{
-				renderizar(10,170,14,250,texturaMensajeCredencialesIncorrectas);
+				renderizar(380,250,14,250,texturaMensajeCredencialesIncorrectas);
 			}
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
-			renderizar(10,200,14,250,texturaCantidadJugadores);
+			renderizar(380,280,14,250,texturaCantidadJugadores);
 		}
 
 		SDL_RenderPresent( this->renderer );
@@ -275,7 +275,7 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	if( this->texturaMensajeCredencialesCorrectas == nullptr ){
 		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
 	}else{
-		renderizar(10,20,14,250,texturaMensajeCredencialesCorrectas);
+		renderizar(380,240,14,250,texturaMensajeCredencialesCorrectas);
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
 
@@ -283,7 +283,7 @@ void VentanaInicio::imprimirMensajeEspera(unsigned short cantJugadoresConectados
 	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(cantJugadoresConectados)+"/"+to_string(cantJugadoresTotales)+" jugadores", colorBlanco);
 
 	if( this->texturaCantidadJugadores != nullptr ){
-		renderizar(10,180,14,250,texturaCantidadJugadores);
+		renderizar(380,280,14,250,texturaCantidadJugadores);
 	}
 
 

@@ -8,6 +8,7 @@ using namespace std;
 #define ALTO_PANTALLA 450
 VentanaInicio::VentanaInicio(){
 	this->ingresoIncorrectoCredenciales = false;
+	this->salaLlena = false;
 	Log* log = Log::getInstance();
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
 		log->huboUnErrorSDL("No se pudo inicializar SDL", SDL_GetError());
@@ -155,6 +156,8 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 
 void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales){
 
+	Log* log = Log::getInstance();
+
 	bool terminar = false;
 
 	SDL_Event evento;
@@ -169,7 +172,7 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	string* entradaUsuario = &textoIngresadoUsuario;
 
 	bool terminoEntrada = false;
-	Log* log = Log::getInstance();
+
 
 	int anchoTextoUsuario;
 	int anchoTextoContrasenia;
@@ -215,12 +218,26 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 
 		if(ingresoIncorrectoCredenciales){
 			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
-			this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
-			if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
-				log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
+
+			if (jugadoresConectados >= jugadoresTotales){
+				salaLlena = true;
+				this->texturaMensajeSalaLlena = cargoTextura("La sala esta llena, no puede ingresar", colorRojo);
+				if( this->texturaMensajeSalaLlena == nullptr ){
+					log->huboUnError("No se pudo crear la textura para el mensaje de error de sala llena");
+				}
+				renderizar(380,250,14,250,texturaMensajeSalaLlena);
+
 			}else{
-				renderizar(380,250,14,250,texturaMensajeCredencialesIncorrectas);
+
+				this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
+				if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
+					log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
+				}else{
+					renderizar(380,250,14,250,texturaMensajeCredencialesIncorrectas);
+
+				}
 			}
+
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
@@ -235,12 +252,13 @@ void VentanaInicio::obtenerEntrada(unsigned short jugadoresConectados, unsigned 
 	}
 
 	SDL_StopTextInput();
+	if (!salaLlena){
+		const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
+		const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
 
-	const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
-	const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
-
-	strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
-	strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
+		strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
+		strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
+	}
 }
 
 void VentanaInicio::imprimirMensajeError(){
@@ -308,6 +326,9 @@ credencial_t VentanaInicio::obtenerCredenciales(){
 
 VentanaInicio::~VentanaInicio(){
 	//aca se elimina cada textura de la pantalla de espera
+	if (texturaMensajeSalaLlena != nullptr){
+		SDL_DestroyTexture( texturaMensajeSalaLlena );
+	}
 	SDL_DestroyTexture( fondoPantalla );
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );

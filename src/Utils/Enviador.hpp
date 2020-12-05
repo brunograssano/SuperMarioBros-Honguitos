@@ -53,7 +53,7 @@ class Enviador{
 		void casoExitoso(string descripcion){
 			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se recibio exitosamente informacion de: "+ descripcion);
+			Log::getInstance()->mostrarAccion("Se recibio exitosamente informacion de: "+ descripcion);
 			pthread_mutex_unlock(&mutex);
 		};
 

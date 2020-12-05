@@ -80,7 +80,9 @@ void Servidor::ejecutar(){
 		for(auto const id:idsUsuariosReconectados){
 			usuariosQuePerdieronConexion.erase(id);
 		}
-		idsUsuariosReconectados.clear();
+		if(!idsUsuariosReconectados.empty()){
+			idsUsuariosReconectados.clear();
+		}
 	}
 
 }
@@ -204,8 +206,9 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexio
 void Servidor::intentarIniciarModelo(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	info_partida_t info_partida[cantidadConexiones];
+	while(mapaIDNombre.size() < cantidadConexiones){
+	}
 
-	while(cantUsuariosLogueados < cantidadConexiones){}
 	pthread_mutex_lock(&mutex);
 	log->mostrarMensajeDeInfo("Se va a iniciar el envio de informacion inicial a los jugadores.");
 	pthread_mutex_unlock(&mutex);

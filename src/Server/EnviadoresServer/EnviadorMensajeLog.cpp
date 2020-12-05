@@ -16,14 +16,14 @@ void EnviadorMensajeLog::enviar(){
 		pthread_mutex_lock(&mutex);
 		mensaje = mensajesLog.front();
 		mensajesLog.pop();
+		pthread_mutex_unlock(&mutex);
 
 		resultadoEnvio = send(socket, &caracterMensaje, sizeof(char), 0);
 		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de mensaje para el log");
 
-		resultadoEnvio = send(socket, &mensaje, sizeof(info_ronda_t), 0);
+		resultadoEnvio = send(socket, &mensaje, sizeof(mensaje_log_t), 0);
 		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de mensaje de informacion de ronda");
 
-		pthread_mutex_unlock(&mutex);
 	}
 
 }

@@ -59,14 +59,6 @@ bool BotonConTexto::botonClickeado(SDL_Event evento){
     return false;
 }
 
-void BotonConTexto::seleccionarCajaTexto(){
-	clickeado = true;
-}
-
-void BotonConTexto::deseleccionarCajaTexto(){
-	clickeado = false;
-}
-
 void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura,SDL_Renderer* renderer){
 		SDL_Rect renderQuad = { coordenadaX, coordenadaY, ancho, alto };
 		SDL_Rect* clip = NULL;
@@ -76,20 +68,36 @@ void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* 
 		SDL_RenderCopyEx( renderer, textura, clip, &renderQuad, angle, center, flip );
 }
 
+void BotonConTexto::seleccionarCajaTexto(){
+	clickeado = true;
+}
+
+void BotonConTexto::deseleccionarCajaTexto(){
+	clickeado = false;
+}
+
 void BotonConTexto::mostrarse(){
 
-	renderizar(rectangulo.x + 5,rectangulo.y + rectangulo.y *0.05 ,rectangulo.h * 0.7,rectangulo.w * 0.9,texturaTexto,renderer);
-
+	if(clickeado){
+		SDL_SetRenderDrawColor(renderer, 50, 65, 93, 0xFF );
+	}else{
+		SDL_SetRenderDrawColor(renderer, 109, 132, 176, 0xFF );
+	}
+	SDL_RenderFillRect(renderer, &rectangulo);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
-
 	SDL_RenderDrawRect(renderer, &rectangulo);
+	renderizar(rectangulo.x + 5,rectangulo.y + rectangulo.y *0.05 ,rectangulo.h * 0.7,rectangulo.w * 0.9,texturaTexto,renderer);
 }
 
 void BotonConTexto::mostrarseCambiandoAncho(int nuevoAncho){
 
-	renderizar(rectangulo.x ,rectangulo.y,rectangulo.h , nuevoAncho,texturaTexto,renderer);
-
+	if(clickeado){
+		SDL_SetRenderDrawColor(renderer, 50, 65, 93, 0xFF );
+	}else{
+		SDL_SetRenderDrawColor(renderer, 109, 132, 176, 0xFF );
+	}
+	SDL_RenderFillRect(renderer, &rectangulo);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
-
 	SDL_RenderDrawRect(renderer, &rectangulo);
+	renderizar(rectangulo.x ,rectangulo.y,rectangulo.h ,nuevoAncho ,texturaTexto,renderer);
 }

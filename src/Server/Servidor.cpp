@@ -4,6 +4,7 @@
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
+	manejadorIDs = new ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido->tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
@@ -151,6 +152,9 @@ bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* c
 			conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
 			aplicacionServidor->activarJugador(parClaveUsuario.first);
 			cantUsuariosLogueados++;
+			for(auto const& cliente:clientes){
+				cliente->actualizarCantidadConexiones(cantUsuariosLogueados);
+			}
 			pthread_mutex_unlock(&mutex);
 			return true;
 		}
@@ -177,9 +181,10 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 			pthread_mutex_lock(&mutex);
 
 			usuario.usado = true;
-			clientesJugando[cantUsuariosLogueados] = conexionClienteConPosibleUsuario;
-			conexionClienteConPosibleUsuario->agregarIDJuego(cantUsuariosLogueados);
-			mapaIDNombre[cantUsuariosLogueados] = posibleUsuario.nombre;
+			int id = manejadorIDs->obtenerIDNueva();
+			clientesJugando[id] = conexionClienteConPosibleUsuario;
+			conexionClienteConPosibleUsuario->agregarIDJuego(id);
+			mapaIDNombre[id] = posibleUsuario.nombre;
 			cantUsuariosLogueados++;
 
 			for(auto const& cliente:clientes){
@@ -249,6 +254,7 @@ Servidor::~Servidor(){
 	clientesJugando.clear();
 	conexionesPerdidas.clear();
 	close(socketServer);
+	delete manejadorIDs;
 	delete aplicacionServidor;
 	delete log;
 }

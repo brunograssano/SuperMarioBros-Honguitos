@@ -6,21 +6,25 @@
 #include <string>
 #include "BotonConTexto.hpp"
 #include "../../../Utils/Utils.hpp"
+
 using namespace std;
 
 class VentanaInicio{
 
 	public:
-		VentanaInicio();
-		void obtenerEntrada(unsigned short jugadoresConectados, unsigned short jugadoresTotales);
+		VentanaInicio(unsigned short jugadoresConectados, unsigned short jugadoresTotales);
+		void obtenerEntrada();
 		void imprimirMensajeError();
-		void imprimirMensajeEspera(unsigned short cantJugadoresConectados, unsigned short cantJugadoresTotales);
+		void imprimirMensajeEspera();
 		void actualizarJugadores(actualizacion_cantidad_jugadores_t actualizacion);
 		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:
 		bool ingresoIncorrectoCredenciales;
 		bool salaLlena;
+		unsigned short jugadoresTotales;
+		unsigned short jugadoresConectados;
+		actualizacion_cantidad_jugadores_t informacionJugadoresConectados;
 		credencial_t credenciales;
 		SDL_Texture* texturaTextoUsuario;
 		SDL_Texture* texturaTextoContrasenia;
@@ -39,9 +43,15 @@ class VentanaInicio{
 		BotonConTexto* cajaTextoUsuario;
 		BotonConTexto* cajaTextoContrasenia;
 		SDL_Texture* cargoTextura(string textureText, SDL_Color textColor);
+		void ponerLosMarios();
 		void renderizar(int coordenadaX,int coordenadaY,int ancho,int alto,SDL_Texture* textura);
 		bool manejarEntradaUsuario(SDL_Event evento,bool* terminar,string* textoIngresadoUsuario,string* textoIngresadoConstrasenia,string** entradaUsuario);
 		void manejarEntradaContrasenia();
+
+		SDL_Texture* texturasMarios;
+
+		SDL_Texture* cargarTextura(std::string direccion, SDL_Renderer* renderizador);
+		SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador);
 
 
 };

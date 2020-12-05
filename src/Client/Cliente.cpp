@@ -52,12 +52,8 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
 	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
 
-<<<<<<< HEAD
 	ventanaInicio = nullptr;
-
-=======
 	gameLoop = new GameLoop();
->>>>>>> a8c0b69f9958cf3716a863ba5ee6be34abb8363f
 }
 
 void Cliente::escuchar(){
@@ -130,7 +126,6 @@ void Cliente::recibirInformacionServidor(info_inicio_t info){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	this->infoInicio = info;
-	this->cantidadJugadoresActivos = info.cantidadJugadoresActivos;
 	this->seRecibioInformacionInicio = true;
 	pthread_mutex_unlock(&mutex);
 }
@@ -177,10 +172,10 @@ void Cliente::ejecutar(){
 
 	esperarRecibirInformacionInicio();
 
-	ventanaInicio =  new VentanaInicio();
+	ventanaInicio =  new VentanaInicio(infoInicio.cantidadJugadoresActivos, infoInicio.cantidadJugadores);
 	while(!pasoVerificacion && !cerroVentana){
 		try{
-			ventanaInicio->obtenerEntrada(this->cantidadJugadoresActivos, this->infoInicio.cantidadJugadores);
+			ventanaInicio->obtenerEntrada();
 			enviarCredenciales(ventanaInicio->obtenerCredenciales());
 			esperarRecibirVerificacion();
 			if(!pasoVerificacion){
@@ -213,7 +208,7 @@ void Cliente::ejecutar(){
 
 	while(!cerroVentana && !empiezaElJuego){
 		try{
-			ventanaInicio->imprimirMensajeEspera(cantidadJugadoresActivos, infoInicio.cantidadJugadores);
+			ventanaInicio->imprimirMensajeEspera();
 		}
 		catch(const std::exception& e){
 			cerroVentana = true;

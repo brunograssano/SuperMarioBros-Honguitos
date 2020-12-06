@@ -11,6 +11,7 @@ using namespace std;
 #include <sstream>
 
 #include "../CargadorTexturas.hpp"
+#include "../ManejadorSDL.hpp"
 
 const SDL_Color colorDefault = {255, 255, 255, 255};
 const int MARIO_GRIS = -1;
@@ -32,7 +33,8 @@ class Dibujador{
 			SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoAMostrar, renderizador, color);
 
 			SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
-			SDL_DestroyTexture(texto);
+			destructorDeTexturas(texto);
+
 		};
 
 		virtual ~Dibujador(){};

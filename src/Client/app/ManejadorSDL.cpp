@@ -23,8 +23,10 @@ void iniciarSDL(){
 }
 
 void destructorDeTexturas(SDL_Texture* textura){
-	SDL_DestroyTexture( textura );
-	textura = nullptr;
+	if(textura != nullptr){
+		SDL_DestroyTexture( textura );
+		textura = nullptr;
+	}
 }
 
 void terminarSDL(){

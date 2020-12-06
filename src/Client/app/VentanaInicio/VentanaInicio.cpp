@@ -2,7 +2,8 @@
 
 #include <stdio.h>
 using namespace std;
-
+#include<string>
+#include<iostream>
 #include "../../../Utils/log/Log.hpp"
 #define ANCHO_PANTALLA 650
 #define ALTO_PANTALLA 450
@@ -331,13 +332,32 @@ credencial_t VentanaInicio::obtenerCredenciales(){
 
 
 void VentanaInicio::ponerLosMarios(){
+	SDL_Color colorBlanco = { 255, 255, 255, 0xFF };
 	for(int i = 0; i < informacionJugadoresConectados.tope; i++){
-		SDL_Rect rectanguloMario = {100 + 50*i, ALTO_PANTALLA - 100, 32, 64};
+
+		int x = 60+70*i;
+		int y = ALTO_PANTALLA -102;
+		int w = 32;
+		int h = 64;
+
+		SDL_Rect rectanguloMario = {x, y, w, h};
 		SDL_Rect recorte = {0, 0, 0, 0};
 		if(informacionJugadoresConectados.pares_id_nombre[i].conectado)
 			recorte = {i*16, 0, 16, 32};
 		else
 			recorte = {64, 0, 16, 32};
+
+		string strNombre = informacionJugadoresConectados.pares_id_nombre[i].nombre;
+		SDL_Texture* texturaNombre = cargoTextura(strNombre, colorBlanco);
+		SDL_Rect rectanguloNombre = {x-5, y-15, 40, 10};
+		SDL_SetRenderDrawColor(renderer, 75, 89, 129, 0x0F );
+		SDL_RenderFillRect(renderer, &rectanguloNombre);
+		SDL_RenderDrawRect(renderer, &rectanguloNombre);
+
+		if( texturaNombre != nullptr ){
+			renderizar(rectanguloNombre.x,rectanguloNombre.y,rectanguloNombre.h,rectanguloNombre.w,texturaNombre);
+		}
+
 		SDL_RenderCopy(renderer, texturasMarios, &recorte, &rectanguloMario);
 	}
 }
@@ -350,6 +370,7 @@ VentanaInicio::~VentanaInicio(){
 	}
 	SDL_DestroyTexture( fondoPantalla );
 	SDL_DestroyTexture( texturaCantidadJugadores );
+	SDL_DestroyTexture( texturasMarios);
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
 	SDL_DestroyRenderer( renderer );
 

@@ -9,7 +9,7 @@ using namespace std;
 #include "Client/mainClient.hpp"
 
 bool esServer(int cantidadArgumentos, char* argumentos[]){
-	bool esServer = false;
+	bool esServer = true;
 	int i=0;
 	while(i<cantidadArgumentos && !esServer){
 		if(strcmp(argumentos[i],"-s")==0 || strcmp(argumentos[i],"-server")==0 || strcmp(argumentos[i],"--server")==0){

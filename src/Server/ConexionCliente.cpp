@@ -11,7 +11,7 @@
 #include "EnviadoresServer/EnviadorInfoPartida.hpp"
 #include "EnviadoresServer/EnviadorCantidadConexion.hpp"
 
-ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip){
+ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
 	this->servidor = servidor;
 	this->socket = socket;
 	this->ip = ip;
@@ -30,6 +30,7 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, int cantidadCon
 	enviadores[MENSAJE_LOG] = new EnviadorMensajeLog(socket);
 	enviadores[PARTIDA] = new EnviadorInfoPartida(socket);
 	enviadores[ACTUALIZACION_JUGADORES] = new EnviadorCantidadConexion(socket);
+	this->informacionAMandar = informacionAMandar;
 }
 
 void ConexionCliente::escuchar(){
@@ -54,8 +55,6 @@ void ConexionCliente::escuchar(){
 			}
 		}
 	}
-	shutdown(socket, SHUT_RDWR);
-	close(socket);
 	terminoJuego = true;
 	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
 }
@@ -114,8 +113,7 @@ void ConexionCliente::ejecutar(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	bool esUsuarioValido = false;
 
-	enviarInformacionInicio();
-
+	actualizarCliente(informacionAMandar);
 	esperarCredenciales();
 
 	while(!esUsuarioValido){
@@ -182,10 +180,8 @@ void ConexionCliente::agregarIDJuego(int IDJugador){
 	idPropio = IDJugador;
 }
 
-void ConexionCliente::actualizarCantidadConexiones(int cantConexiones){
-	this->cantidadConexiones = cantConexiones;
-	actualizacion_cantidad_jugadores_t actualizacion;
-	actualizacion.cantidadJugadoresActivos = this->cantidadConexiones;
+void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion){
+	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
 	enviadores[ACTUALIZACION_JUGADORES]->dejarInformacion(&actualizacion);
 	identificadoresMensajeAEnviar.push(ACTUALIZACION_JUGADORES);
 }
@@ -201,4 +197,7 @@ ConexionCliente::~ConexionCliente(){
 	}
 	escuchadores.clear();
 	enviadores.clear();
+
+	shutdown(socket, SHUT_RDWR);
+	close(socket);
 }

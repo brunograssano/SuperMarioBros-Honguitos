@@ -113,16 +113,26 @@ typedef struct info_partida{
 	unsigned short idPropio;
 }info_partida_t;
 
+
+typedef struct par_id_nombre{
+	char nombre[MAX_NOMBRE];
+	unsigned short id;
+	bool conectado;
+}par_id_nombre_t;
+
 #define ACTUALIZACION_JUGADORES 'U'
 typedef struct actualizacion_cantidad_jugadores{
+	unsigned short cantidadMaximaDeJugadores;
 	unsigned short cantidadJugadoresActivos;
+	unsigned short tope;
+	par_id_nombre_t pares_id_nombre[MAX_JUGADORES];
 }actualizacion_cantidad_jugadores_t;
 
 #define RONDA 'R'
 typedef struct ronda{
 	uint8_t mundo;
 	uint8_t topeBloques;
-	uint8_t topeEnemigos;
+  uint8_t topeEnemigos;
 	uint8_t topeMonedas;
 	bool ganaron;
 	bool perdieron;

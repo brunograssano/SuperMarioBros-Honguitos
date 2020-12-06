@@ -18,8 +18,6 @@
 #include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
 
-class EscuchadorInformacionPartida;
-#include "../../src/Client/Escuchadores/EscuchadorInformacionPartida.hpp"
 class EscuchadorVerificacionCredenciales;
 #include "../../src/Client/Escuchadores/EscuchadorVerificacionCredenciales.hpp"
 class EscuchadorActualizacionJugadores;
@@ -52,9 +50,8 @@ class Cliente{
 
 		void enviar();
 		void escuchar();
-		void recibirInformacionServidor(info_inicio_t info_inicio);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
-		void recibirInformacionActualizacionCantidadJugadores(unsigned short cantidadJugadores);
+		void recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void ejecutar();
 		void agregarEntrada(entrada_usuario_t entradaUsuario);
@@ -79,6 +76,8 @@ class Cliente{
 		map<char,Escuchador*> escuchadores;
 
 		queue<char> identificadoresMensajeAEnviar;
+
+		VentanaInicio* ventanaInicio;
 
 		info_partida_t infoPartida;
 		info_inicio_t infoInicio;

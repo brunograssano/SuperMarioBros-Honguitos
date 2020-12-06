@@ -47,6 +47,13 @@ class Servidor{
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminoElJuego();
 
+		void reconectarJugadoresFaseInicial();
+		static void* reconectarJugadoresFaseInicial_helper(void* ptr){
+			((Servidor*) ptr)->reconectarJugadoresFaseInicial();
+			return nullptr;
+		}
+		void reconectarJugadoresFaseJuego();
+
 		map<int,string> obtenerMapaJugadores(){
 			return mapaIDNombre;
 		}
@@ -70,6 +77,9 @@ class Servidor{
 		list<usuario_t> usuariosValidos;
 		map<int,usuario_t> usuariosQuePerdieronConexion;
 
+		bool estaDesconectado(string nombre);
+
+		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
 		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
 		bool esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);

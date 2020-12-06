@@ -83,7 +83,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		this->botonEnviar = new BotonConTexto(470, 200, 80 , 40 , "Enviar",this->renderer,this->fuente);
+		this->botonEnviar = new BotonConTexto(460, 190, 80 , 40 , "Enviar",this->renderer,this->fuente);
 		this->cajaTextoUsuario = new BotonConTexto(400,60,200,20,"...",this->renderer,this->fuente);
 		this->cajaTextoContrasenia = new BotonConTexto(400,140,200,20,"...",this->renderer,this->fuente);
 	}
@@ -223,15 +223,20 @@ void VentanaInicio::obtenerEntrada(){
 		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
 		if(ingresoIncorrectoCredenciales){
-			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
+			SDL_Color colorRojo = { 214, 40, 57, 0xFF };
+			SDL_Rect rectangulo = {370, 265, 260, 30 };
+			SDL_SetRenderDrawColor(renderer, 162, 177, 205, 0xFF );
+			SDL_RenderFillRect(renderer, &rectangulo);
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
+			SDL_RenderDrawRect(renderer, &rectangulo);
 
-			if (jugadoresConectados >= jugadoresTotales){
+			if (informacionJugadoresConectados.tope >= jugadoresTotales){
 				salaLlena = true;
 				this->texturaMensajeSalaLlena = cargoTextura("La sala esta llena, no puede ingresar", colorRojo);
 				if( this->texturaMensajeSalaLlena == nullptr ){
 					log->huboUnError("No se pudo crear la textura para el mensaje de error de sala llena");
 				}
-				renderizar(380,250,14,250,texturaMensajeSalaLlena);
+				renderizar(375,270,18,250,texturaMensajeSalaLlena);
 
 			}else{
 
@@ -239,7 +244,7 @@ void VentanaInicio::obtenerEntrada(){
 				if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
 					log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
 				}else{
-					renderizar(380,250,14,250,texturaMensajeCredencialesIncorrectas);
+					renderizar(375,270,18,250,texturaMensajeCredencialesIncorrectas);
 
 				}
 			}
@@ -247,7 +252,7 @@ void VentanaInicio::obtenerEntrada(){
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
-			renderizar(380,280,14,250,texturaCantidadJugadores);
+			renderizar(380,320,14,250,texturaCantidadJugadores);
 		}
 
 		this->ponerLosMarios();
@@ -297,11 +302,17 @@ void VentanaInicio::imprimirMensajeEspera(){
 	SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
 
 	SDL_Color colorVerde = { 1, 152, 117, 0xFF };
-	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas, esperando al resto de jugadores", colorVerde);
+	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas", colorVerde);
 	if( this->texturaMensajeCredencialesCorrectas == nullptr ){
 		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
 	}else{
-		renderizar(380,240,14,250,texturaMensajeCredencialesCorrectas);
+		renderizar(375,150,14,250,texturaMensajeCredencialesCorrectas);
+	}
+	this->texturaMensajeEspera = cargoTextura("Esperando al resto de jugadores", colorVerde);
+	if( this->texturaMensajeEspera == nullptr ){
+		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
+	}else{
+		renderizar(375,180,14,250,texturaMensajeEspera);
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
 
@@ -309,7 +320,7 @@ void VentanaInicio::imprimirMensajeEspera(){
 	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", colorBlanco);
 
 	if( this->texturaCantidadJugadores != nullptr ){
-		renderizar(380,280,14,250,texturaCantidadJugadores);
+		renderizar(380,320,14,250,texturaCantidadJugadores);
 	}
 
 	ponerLosMarios();
@@ -372,6 +383,7 @@ VentanaInicio::~VentanaInicio(){
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturasMarios);
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
+	SDL_DestroyTexture( texturaMensajeEspera );
 	SDL_DestroyRenderer( renderer );
 
 	SDL_DestroyWindow( ventana );

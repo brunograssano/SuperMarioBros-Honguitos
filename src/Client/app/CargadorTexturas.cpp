@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 
+#include "ManejadorSDL.hpp"
 #include "../../Utils/log/Log.hpp"
 #include "AplicacionCliente.hpp"
 
@@ -102,7 +103,7 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string d
 	direccionFondo = "resources/Imagenes/Niveles/" + direccionFondo;
 
 	if(direccionFondoActual != direccionFondo){
-		SDL_DestroyTexture( texturaFondoActual );
+		destructorDeTexturas(texturaFondoActual);
 		direccionFondoActual = direccionFondo;
 		texturaFondoActual = this->texturasNiveles[direccionFondoActual];
 	}
@@ -237,37 +238,36 @@ SDL_Texture* CargadorTexturas::obtenerTexturaFuente(){
 
 
 CargadorTexturas::~CargadorTexturas(){
-
-	SDL_DestroyTexture( texturaMoneda );
-	SDL_DestroyTexture( texturaLadrillo );
-	SDL_DestroyTexture( texturaSorpresa );
-	SDL_DestroyTexture( texturaFondoActual );
-	SDL_DestroyTexture( texturaFuenteJuego );
-	SDL_DestroyTexture( texturaCoffinMario );
-	SDL_DestroyTexture( texturaDefecto);
+	destructorDeTexturas(texturaMoneda);
+	destructorDeTexturas(texturaLadrillo);
+	destructorDeTexturas(texturaSorpresa);
+	destructorDeTexturas(texturaFondoActual);
+	destructorDeTexturas(texturaFuenteJuego);
+	destructorDeTexturas(texturaCoffinMario);
+	destructorDeTexturas(texturaDefecto);
 
 	for (auto const& parClaveMario : texturasMario){
-		SDL_DestroyTexture( parClaveMario.second );
+		destructorDeTexturas(parClaveMario.second);
 	}
 
 	for (auto const& parClaveEnemigo : texturasEnemigos){
-		SDL_DestroyTexture( parClaveEnemigo.second );
+		destructorDeTexturas(parClaveEnemigo.second);
 	}
 
 	for (auto const& parClaveBloque : texturasBloques){
-		SDL_DestroyTexture( parClaveBloque.second );
+		destructorDeTexturas(parClaveBloque.second);
 	}
 
 	for (auto const& parClaveNivel : texturasNiveles){
-		SDL_DestroyTexture( parClaveNivel.second );
+		destructorDeTexturas(parClaveNivel.second);
 	}
 
 	for (auto const& parClaveParticula : particulas){
-		SDL_DestroyTexture( parClaveParticula.second );
+		destructorDeTexturas(parClaveParticula.second);
 	}
 
 	for (auto const& parClavePesonaje : texturasPersonajes){
-		SDL_DestroyTexture( parClavePesonaje.second );
+		destructorDeTexturas(parClavePesonaje.second);
 	}
 
 	TTF_CloseFont( fuenteJuego );

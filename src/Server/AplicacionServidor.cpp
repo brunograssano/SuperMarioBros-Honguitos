@@ -27,6 +27,8 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador){
 	Log::getInstance()->mostrarMensajeDeInfo("Se prepara la informacion de la partida para el jugador: " + mapaIDNombre[IDJugador]);
 	info_partida_t info_partida;
+	memset(&info_partida,0,sizeof(info_partida_t));
+
 	info_partida.altoVentana = rectanguloCamara.h;
 	info_partida.anchoVentana = rectanguloCamara.w;
 	info_partida.cantidadJugadores = cantJugadores;
@@ -71,6 +73,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para enviar.");
 
 	info_ronda_t info_ronda;
+	memset(&info_ronda,0,sizeof(info_ronda_t));
 
 	info_ronda.mundo = juego->obtenerMundoActual();
 	info_ronda.posXCamara = this->rectanguloCamara.x;
@@ -291,6 +294,9 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 			rectanguloCamara->x = posicionDelJugadorMasALaDerecha - ancho_pantalla/2;
 		}
 
+		if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
+			rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
+		}
 
 		for(auto const& parClaveJugador: jugadores){
 			jugador = parClaveJugador.second;
@@ -308,9 +314,7 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 		 rectanguloCamara->x = 0;
 	}
 
-	if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
-		rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
-	}
+
 }
 
 AplicacionServidor::~AplicacionServidor(){

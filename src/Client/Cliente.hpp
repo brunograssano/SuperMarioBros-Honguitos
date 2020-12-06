@@ -70,6 +70,7 @@ class Cliente{
 		void enviarCredenciales(credencial_t credencial);
 		void esperarRecibirInformacionInicio();
 		void esperarRecibirVerificacion();
+		void terminarProcesosDelCliente();
 
 		map<char,Enviador*> enviadores;
 		map<char,Escuchador*> escuchadores;
@@ -79,7 +80,6 @@ class Cliente{
 		VentanaInicio* ventanaInicio;
 
 		info_partida_t infoPartida;
-		info_inicio_t infoInicio;
 		verificacion_t pasoVerificacion;
 		bool cargoLaAplicacion;
 		bool seRecibioInformacionInicio;

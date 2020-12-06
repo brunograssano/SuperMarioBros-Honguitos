@@ -5,6 +5,7 @@
 
 EnviadorInfoPartida::EnviadorInfoPartida(int socket){
 	this->socket = socket;
+	memset(&info_comienzo_partida,0,sizeof(info_partida_t));
 }
 
 

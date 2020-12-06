@@ -9,6 +9,7 @@
 using namespace std;
 
 #include "Dibujadores/Dibujadores.hpp"
+#include "ManejadorSDL.hpp"
 #include "juegoCliente/JuegoCliente.hpp"
 #include "CargadorTexturas.hpp"
 #include "../../Utils/log/Log.hpp"
@@ -19,6 +20,8 @@ const int ANCHO_FONDO = 8177;
 
 #include "../../Utils/Utils.hpp"
 #include "../Cliente.hpp"
+
+#include <map>
 
 class App{
 
@@ -35,8 +38,9 @@ class App{
 
 			//int mundos[MAX_CANT_NIVELES]; <- EN INFO PARTIDA T
 
-			for(int i=0; i<informacion.cantidadFondosNiveles;i++){
-				this->direccionesNiveles[informacion.mundo - 1 + i] = string(informacion.direccionesFondoNiveles[i]);
+			for(int i=0; i<informacion.cantidadFondosNiveles; i++){
+				//*Traerme el vector de mundos*//
+				this->direccionesNiveles[informacion.mundo+i] = string(informacion.direccionesFondoNiveles[i]);
 			}
 
 			//if(informacion.iniciadoCorrectamente){
@@ -77,7 +81,7 @@ class App{
 		bool sonoSalto;
 		bool terminoElJuego;
 		bool estaReproduciendoMusicaGanadores;
-		string direccionesNiveles[MAX_IMAGEN_NIVELES];
+		map<int,string> direccionesNiveles;
 		int ancho_pantalla;
 		int alto_pantalla;
 		Cliente* cliente;

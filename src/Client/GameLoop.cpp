@@ -1,5 +1,5 @@
 #include "GameLoop.hpp"
-
+#include "../Utils/Contador.hpp"
 
 GameLoop::GameLoop(){
 	salir = false;
@@ -18,7 +18,10 @@ void GameLoop::seMurioElServer(){
 void GameLoop::gameLoop() {
 	App *aplicacion = App::getInstance();
 	SDL_Event event;
+	unsigned int microSegundosEspera = 11000;
+	Contador* contador = new Contador(microSegundosEspera, USEGUNDOS);
 	while (!salir) {
+		contador->iniciar();
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				salir = true;
@@ -33,6 +36,8 @@ void GameLoop::gameLoop() {
 		}
 		aplicacion->actualizar();
 		aplicacion->dibujar();
+		usleep(contador->tiempoRestante());
 	}
+	delete contador;
 	delete aplicacion;
 };

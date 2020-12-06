@@ -58,8 +58,6 @@ class ConexionCliente {
 
 	private:
 		actualizacion_cantidad_jugadores_t informacionAMandar;
-		info_inicio_t crearInformacionInicio();
-		void enviarInformacionInicio();
 		void enviarVerificacion(bool esUsuarioValido);
 		void esperarCredenciales();
 

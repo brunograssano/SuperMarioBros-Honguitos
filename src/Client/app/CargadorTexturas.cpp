@@ -17,10 +17,6 @@
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
 
-	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
-		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
-	}
-
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
 						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
 						"resources/Imagenes/Personajes/MarioGrisPerdioConexion.png"};
@@ -103,6 +99,8 @@ SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar,
 
 void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string direccionFondo){
 
+	direccionFondo = "resources/Imagenes/Niveles/" + direccionFondo;
+
 	if(direccionFondoActual != direccionFondo){
 		SDL_DestroyTexture( texturaFondoActual );
 		direccionFondoActual = direccionFondo;
@@ -110,16 +108,20 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string d
 	}
 }
 
-void CargadorTexturas::cargarTexturasNiveles(string direccionesNiveles[MAX_IMAGEN_NIVELES],int cantidadFondosNiveles, SDL_Renderer* renderizador, unsigned short mundo){
+void CargadorTexturas::cargarTexturasNiveles(map<int,string> direccionesNiveles, int cantidadFondosNiveles, SDL_Renderer* renderizador, unsigned short mundo){
 
-	for(int i=mundo-1; i<mundo-1+cantidadFondosNiveles; i++){
-		direccionesNiveles[i] = "resources/Imagenes/Niveles/" + direccionesNiveles[i];
-		SDL_Texture* texturaNueva = intentarCarga("Fondo Nivel", direccionesNiveles[i], renderizador);
-		texturasNiveles[direccionesNiveles[i]] = texturaNueva;
+	string direccion;
+	SDL_Texture* texturaNueva;
+	string prefijo = "resources/Imagenes/Niveles/";
+
+	for (auto const& parMundoDireccion : direccionesNiveles){
+	  direccion = prefijo + parMundoDireccion.second;
+	  texturaNueva = intentarCarga("Fondo Nivel", direccion, renderizador);
+	  texturasNiveles[direccion] = texturaNueva;
 	}
 
-	texturaFondoActual = this->texturasNiveles[direccionesNiveles[mundo-1]];
-	direccionFondoActual = direccionesNiveles[mundo-1];
+	texturaFondoActual = this->texturasNiveles[prefijo + direccionesNiveles[mundo]];
+	direccionFondoActual = prefijo + direccionesNiveles[mundo];
 
 }
 
@@ -269,5 +271,4 @@ CargadorTexturas::~CargadorTexturas(){
 	}
 
 	TTF_CloseFont( fuenteJuego );
-	TTF_Quit();
 }

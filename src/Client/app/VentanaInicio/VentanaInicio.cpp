@@ -13,6 +13,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 	this->salaLlena = false;
 	this->jugadoresTotales = jugadoresTotales;
 	this->jugadoresConectados = jugadoresConectados;
+	texturaMensajeCredencialesIncorrectas = nullptr;
 	Log* log = Log::getInstance();
 
 	this->ventana = SDL_CreateWindow( "Inicio Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
@@ -274,7 +275,10 @@ void VentanaInicio::imprimirMensajeEspera(){
 	*/
 	SDL_RenderClear( this->renderer );
 	SDL_DestroyTexture( texturaTextoUsuario );
-	SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );
+	if(texturaMensajeCredencialesIncorrectas!=nullptr){
+		SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );
+		texturaMensajeCredencialesIncorrectas = nullptr;
+	}
 	SDL_DestroyTexture( texturaTextoContrasenia );
 	SDL_DestroyTexture(	texturaCantidadJugadores);
 

@@ -21,6 +21,12 @@ void iniciarSDL(){
 		exit(-1);
 	}
 }
+
+void destructorDeTexturas(SDL_Texture* textura){
+	SDL_DestroyTexture( textura );
+	textura = nullptr;
+}
+
 void terminarSDL(){
 	TTF_Quit();
 	IMG_Quit();

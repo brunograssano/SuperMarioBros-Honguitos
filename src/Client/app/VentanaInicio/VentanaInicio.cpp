@@ -4,6 +4,7 @@
 using namespace std;
 #include<string>
 #include<iostream>
+#include "../ManejadorSDL.hpp"
 #include "../../../Utils/log/Log.hpp"
 #define ANCHO_PANTALLA 650
 #define ALTO_PANTALLA 450
@@ -240,9 +241,8 @@ void VentanaInicio::obtenerEntrada(){
 
 		SDL_RenderPresent( this->renderer );
 
-
-		SDL_DestroyTexture( usuarioIngresado );
-		SDL_DestroyTexture( contraseniaIngresada );
+		destructorDeTexturas(usuarioIngresado);
+		destructorDeTexturas(contraseniaIngresada);
 	}
 
 	SDL_StopTextInput();
@@ -274,13 +274,10 @@ void VentanaInicio::imprimirMensajeEspera(){
 	delete(this->cajaTextoContrasenia);
 	*/
 	SDL_RenderClear( this->renderer );
-	SDL_DestroyTexture( texturaTextoUsuario );
-	if(texturaMensajeCredencialesIncorrectas!=nullptr){
-		SDL_DestroyTexture( texturaMensajeCredencialesIncorrectas );
-		texturaMensajeCredencialesIncorrectas = nullptr;
-	}
-	SDL_DestroyTexture( texturaTextoContrasenia );
-	SDL_DestroyTexture(	texturaCantidadJugadores);
+	destructorDeTexturas(texturaTextoUsuario);
+	destructorDeTexturas(texturaMensajeCredencialesIncorrectas);
+	destructorDeTexturas(texturaTextoContrasenia);
+	destructorDeTexturas(texturaCantidadJugadores);
 
 	SDL_Rect rectanguloCamara = {0, 0, ALTO_PANTALLA, ANCHO_PANTALLA};
 	SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
@@ -360,14 +357,13 @@ void VentanaInicio::ponerLosMarios(){
 
 VentanaInicio::~VentanaInicio(){
 	//aca se elimina cada textura de la pantalla de espera
-	if (texturaMensajeSalaLlena != nullptr){
-		SDL_DestroyTexture( texturaMensajeSalaLlena );
-	}
-	SDL_DestroyTexture( fondoPantalla );
-	SDL_DestroyTexture( texturaCantidadJugadores );
-	SDL_DestroyTexture( texturasMarios);
-	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
-	SDL_DestroyTexture( texturaMensajeEspera );
+	destructorDeTexturas(texturaMensajeSalaLlena);
+	destructorDeTexturas(fondoPantalla);
+	destructorDeTexturas(texturaCantidadJugadores);
+	destructorDeTexturas(texturasMarios);
+	destructorDeTexturas(texturaMensajeCredencialesCorrectas);
+	destructorDeTexturas(texturaMensajeEspera);
+
 	SDL_DestroyRenderer( renderer );
 
 	SDL_DestroyWindow( ventana );

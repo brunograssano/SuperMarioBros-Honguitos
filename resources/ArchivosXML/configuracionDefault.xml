@@ -14,9 +14,8 @@
             <direccionFondo>MapaNivel1BaseDefault.png</direccionFondo>
             <cantidadMonedas>40</cantidadMonedas>
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 50 a 100 que representa el porcentaje del nivel-->
+            <puntoBanderaFin>95</puntoBanderaFin> 	<!--Numero de 50 a 100 que representa el porcentaje del nivel-->
             <enemigos>
-
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <color>0</color>
@@ -28,10 +27,8 @@
                     <color>0</color>
                     <cantidad>5</cantidad>
                 </enemigo>
-
             </enemigos>
             <plataformas>
-
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>200</coordenadaX>
@@ -40,8 +37,7 @@
                 </plataforma>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <!--0 - sorpresa / 1 - normal / 2 - invertido / 3 - negro/ 4 - blanco / 5 - amarillo -->
+                    <tipo>Ladrillo</tipo> 			<!--0 - sorpresa / 1 - normal / 2 - invertido / 3 - negro/ 4 - blanco / 5 - amarillo -->
                     <color>1</color>
                     <coordenadaX>400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
@@ -253,17 +249,15 @@
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
                 </plataforma>
-
             </plataformas>
         </nivel>
         <nivel>
             <mundo>2</mundo>
-            <direccionFondo>MapaNivel2Base.png</direccionFondo>
+            <direccionFondo>MapaNivel2BaseDefault.png</direccionFondo>
             <cantidadMonedas>20</cantidadMonedas>
             <tiempoNivel>500</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
-
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <color>1</color>
@@ -275,10 +269,8 @@
                     <color>1</color>
                     <cantidad>7</cantidad>
                 </enemigo>
-
             </enemigos>
             <plataformas>
-
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
@@ -318,7 +310,7 @@
                     <cantidadBloques>4</cantidadBloques>
                 </plataforma>
 
-		<plataforma>
+				<plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>1500</coordenadaX>
                     <coordenadaY>120</coordenadaY>
@@ -356,7 +348,6 @@
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
-
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
@@ -371,9 +362,8 @@
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-
-
-		<plataforma>
+				
+				<plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
                     <coordenadaX>3400</coordenadaX>
@@ -395,8 +385,6 @@
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-
-
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
@@ -508,18 +496,15 @@
                     <coordenadaY>200</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
-
-
             </plataformas>
         </nivel>
         <nivel>
             <mundo>3</mundo>
-            <direccionFondo>MapaNivel3Base.png</direccionFondo>
+            <direccionFondo>MapaNivel3BaseDefault.png</direccionFondo>
             <cantidadMonedas>10</cantidadMonedas>
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
-
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <color>2</color>
@@ -545,7 +530,6 @@
                 </enemigo>
             </enemigos>
             <plataformas>
-
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
@@ -693,7 +677,6 @@
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
-
               	<plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color> <!--0 - sorpresa / 1 - normal / 2 - invertido / 3 - negro/ 4 - blanco / 5 - amarillo -->
@@ -701,53 +684,31 @@
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-
-
-
             </plataformas>
         </nivel>
-
-
     </niveles>
 
 	<credenciales>
-
 		<usuario>
-			<username>lukas</username>
-			<password>12345</password>
+			<username>prueba1</username>
+			<password>prueba1</password>
 		</usuario>
 
 		<usuario>
-			<username>bruno</username>
-			<password>bru123</password>
-		</usuario>
-
-		<usuario>
-			<username>adrian</username>
-			<password>adrianstarly</password>
-		</usuario>
-
-		<usuario>
-			<username>joaquin</username>
-			<password>123joaco</password>
-		</usuario>
-
-		<usuario>
-			<username>prueba</username>
-			<password>prueba</password>
-		</usuario>
-
-    <usuario>
 			<username>prueba2</username>
 			<password>prueba2</password>
 		</usuario>
 
-    <usuario>
+		<usuario>
 			<username>prueba3</username>
 			<password>prueba3</password>
 		</usuario>
 
+		<usuario>
+			<username>prueba4</username>
+			<password>prueba4</password>
+		</usuario>
 	</credenciales>
-	<cantidadConexiones>1</cantidadConexiones>
 
+	<cantidadConexiones>4</cantidadConexiones>
 </configuracion>

@@ -9,6 +9,7 @@
 using namespace std;
 
 #include "Dibujadores/Dibujadores.hpp"
+#include "ManejadorSDL.hpp"
 #include "juegoCliente/JuegoCliente.hpp"
 #include "CargadorTexturas.hpp"
 #include "../../Utils/log/Log.hpp"

@@ -125,6 +125,7 @@ void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t
 		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 		pthread_mutex_lock(&mutex);
 		this->infoInicio = {actualizacion.cantidadMaximaDeJugadores, actualizacion.cantidadJugadoresActivos};
+		iniciarSDL();
 		ventanaInicio = new VentanaInicio(infoInicio.cantidadJugadoresActivos, infoInicio.cantidadJugadores);
 		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
 		ventanaInicio->actualizarJugadores(actualizacion);
@@ -264,6 +265,9 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 
 Cliente::~Cliente(){
+
+	terminarSDL();
+
 	int resultado = shutdown(socketCliente, SHUT_RDWR);
 	if(resultado<0){
 		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));

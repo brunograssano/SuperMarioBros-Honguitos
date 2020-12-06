@@ -14,49 +14,30 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 	this->jugadoresTotales = jugadoresTotales;
 	this->jugadoresConectados = jugadoresConectados;
 	Log* log = Log::getInstance();
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		log->huboUnErrorSDL("No se pudo inicializar SDL", SDL_GetError());
-	}
-	else{
-		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
-			log->huboUnError("No se pudo activar el filtrado lineal de texturas");
-		}
-		this->ventana = SDL_CreateWindow( "Inicio Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
-		if( ventana == NULL ){
-			log->huboUnErrorSDL("No se pudo crear una ventana de inicio por error de SDL", SDL_GetError());
 
-		}
-		else{
-			this->renderer = SDL_CreateRenderer( ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			if( renderer == NULL ){
-				log->huboUnErrorSDL("No se pudo crear el renderer por error de SDL", SDL_GetError());
-			}
-			else{
-				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	this->ventana = SDL_CreateWindow( "Inicio Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
+	if( ventana == NULL ){
+		log->huboUnErrorSDL("No se pudo crear una ventana de inicio por error de SDL", SDL_GetError());
 
-				int imgFlags = IMG_INIT_PNG;
-				if( !( IMG_Init( imgFlags ) & imgFlags ) ){
-					log->huboUnErrorSDL("No se pudo inicializar SDL image", SDL_GetError());
-				}
-				if( TTF_Init() == -1 ){
-					log->huboUnErrorSDL("No se pudo inicializar SDL ttf", SDL_GetError());
-				}
-			}
+	}else{
+		this->renderer = SDL_CreateRenderer( ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+		if( renderer == NULL ){
+			log->huboUnErrorSDL("No se pudo crear el renderer por error de SDL", SDL_GetError());
+		}else{
+			SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		}
 	}
 
 	this->fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
 	if( this->fuente == NULL ){
 		log->huboUnErrorSDL("No se pudo cargar la fuente", SDL_GetError());
-	}
-	else{
+	}else{
 
 		string direccionIcono = "resources/Imagenes/Personajes/IconoHongo.png";
 		SDL_Surface* icono = IMG_Load(direccionIcono.c_str());
 		if(icono == NULL){
 			log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccionIcono, IMG_GetError());
-		}
-		else{
+		}else{
 			SDL_SetWindowIcon(this->ventana, icono);
 			SDL_FreeSurface(icono);
 		}
@@ -65,8 +46,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 		SDL_Surface* superficieImagen = IMG_Load(direccionFondo.c_str());
 		if(superficieImagen == NULL){
 			Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccionFondo, IMG_GetError());
-		}
-		else{
+		}else{
 			this->fondoPantalla = SDL_CreateTextureFromSurface( this->renderer, superficieImagen );
 			if( this->fondoPantalla == NULL ){
 				Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccionFondo, SDL_GetError());
@@ -83,7 +63,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 		if( this->texturaTextoContrasenia == nullptr ){
 			log->huboUnError("No se pudo crear la textura para el comando de la contraseña");
 		}
-		this->botonEnviar = new BotonConTexto(470, 200, 80 , 40 , "Enviar",this->renderer,this->fuente);
+		this->botonEnviar = new BotonConTexto(460, 190, 80 , 40 , "Enviar",this->renderer,this->fuente);
 		this->cajaTextoUsuario = new BotonConTexto(400,60,200,20,"...",this->renderer,this->fuente);
 		this->cajaTextoContrasenia = new BotonConTexto(400,140,200,20,"...",this->renderer,this->fuente);
 	}
@@ -223,15 +203,20 @@ void VentanaInicio::obtenerEntrada(){
 		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
 		if(ingresoIncorrectoCredenciales){
-			SDL_Color colorRojo = { 207, 0, 15, 0xFF };
+			SDL_Color colorRojo = { 214, 40, 57, 0xFF };
+			SDL_Rect rectangulo = {370, 265, 260, 30 };
+			SDL_SetRenderDrawColor(renderer, 162, 177, 205, 0xFF );
+			SDL_RenderFillRect(renderer, &rectangulo);
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
+			SDL_RenderDrawRect(renderer, &rectangulo);
 
-			if (jugadoresConectados >= jugadoresTotales){
+			if (informacionJugadoresConectados.tope >= jugadoresTotales){
 				salaLlena = true;
 				this->texturaMensajeSalaLlena = cargoTextura("La sala esta llena, no puede ingresar", colorRojo);
 				if( this->texturaMensajeSalaLlena == nullptr ){
 					log->huboUnError("No se pudo crear la textura para el mensaje de error de sala llena");
 				}
-				renderizar(380,250,14,250,texturaMensajeSalaLlena);
+				renderizar(375,270,18,250,texturaMensajeSalaLlena);
 
 			}else{
 
@@ -239,7 +224,7 @@ void VentanaInicio::obtenerEntrada(){
 				if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
 					log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
 				}else{
-					renderizar(380,250,14,250,texturaMensajeCredencialesIncorrectas);
+					renderizar(375,270,18,250,texturaMensajeCredencialesIncorrectas);
 
 				}
 			}
@@ -247,7 +232,7 @@ void VentanaInicio::obtenerEntrada(){
 		}
 
 		if( this->texturaCantidadJugadores != nullptr ){
-			renderizar(380,280,14,250,texturaCantidadJugadores);
+			renderizar(380,320,14,250,texturaCantidadJugadores);
 		}
 
 		this->ponerLosMarios();
@@ -297,11 +282,17 @@ void VentanaInicio::imprimirMensajeEspera(){
 	SDL_RenderCopy( this->renderer, this->fondoPantalla, &rectanguloCamara, NULL);
 
 	SDL_Color colorVerde = { 1, 152, 117, 0xFF };
-	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas, esperando al resto de jugadores", colorVerde);
+	this->texturaMensajeCredencialesCorrectas = cargoTextura("Credenciales correctas", colorVerde);
 	if( this->texturaMensajeCredencialesCorrectas == nullptr ){
 		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
 	}else{
-		renderizar(380,240,14,250,texturaMensajeCredencialesCorrectas);
+		renderizar(375,150,14,250,texturaMensajeCredencialesCorrectas);
+	}
+	this->texturaMensajeEspera = cargoTextura("Esperando al resto de jugadores", colorVerde);
+	if( this->texturaMensajeEspera == nullptr ){
+		log->huboUnError("No se pudo crear la textura para el mensaje de credenciales correctas");
+	}else{
+		renderizar(375,180,14,250,texturaMensajeEspera);
 	}
 	//aca se crearia cada textura del string del server y se pone por pantalla
 
@@ -309,7 +300,7 @@ void VentanaInicio::imprimirMensajeEspera(){
 	this->texturaCantidadJugadores = cargoTextura("Conectados "+ to_string(jugadoresConectados)+"/"+to_string(jugadoresTotales)+" jugadores", colorBlanco);
 
 	if( this->texturaCantidadJugadores != nullptr ){
-		renderizar(380,280,14,250,texturaCantidadJugadores);
+		renderizar(380,320,14,250,texturaCantidadJugadores);
 	}
 
 	ponerLosMarios();
@@ -372,6 +363,7 @@ VentanaInicio::~VentanaInicio(){
 	SDL_DestroyTexture( texturaCantidadJugadores );
 	SDL_DestroyTexture( texturasMarios);
 	SDL_DestroyTexture( texturaMensajeCredencialesCorrectas );
+	SDL_DestroyTexture( texturaMensajeEspera );
 	SDL_DestroyRenderer( renderer );
 
 	SDL_DestroyWindow( ventana );

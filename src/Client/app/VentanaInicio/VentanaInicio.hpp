@@ -33,6 +33,7 @@ class VentanaInicio{
 		SDL_Texture* texturaCantidadJugadores;
 		SDL_Texture* texturaMensajeCredencialesIncorrectas;
 		SDL_Texture* texturaMensajeCredencialesCorrectas;
+		SDL_Texture* texturaMensajeEspera;
 		SDL_Texture* texturaMensajeSalaLlena = nullptr;
 		SDL_Texture* textoBotonEnviar;
 		SDL_Texture* fondoPantalla;

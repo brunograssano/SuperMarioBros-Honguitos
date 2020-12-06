@@ -70,6 +70,7 @@ class Cliente{
 		void enviarCredenciales(credencial_t credencial);
 		void esperarRecibirInformacionInicio();
 		void esperarRecibirVerificacion();
+		void terminarProcesosDelCliente();
 
 		map<char,Enviador*> enviadores;
 		map<char,Escuchador*> escuchadores;

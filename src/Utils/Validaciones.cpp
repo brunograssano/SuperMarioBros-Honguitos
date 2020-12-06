@@ -14,7 +14,7 @@ void manejarEntrada(int argc, char* args[], char ipEntrada[LARGO_IP], char puert
 	  int argumento;
 	  int indiceOpcion = 0;
 
-	  while((argumento = getopt_long(argc, args, "i:p:",opcionesLargas, &indiceOpcion))!=TERMINO){
+	  while((argumento = getopt_long(argc, args, "i:p:l:",opcionesLargas, &indiceOpcion))!=TERMINO){
 	      switch (argumento) {
 	          case IP:
 	        	  strcpy(ipEntrada,optarg);

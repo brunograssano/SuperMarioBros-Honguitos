@@ -294,6 +294,9 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 			rectanguloCamara->x = posicionDelJugadorMasALaDerecha - ancho_pantalla/2;
 		}
 
+		if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
+			rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
+		}
 
 		for(auto const& parClaveJugador: jugadores){
 			jugador = parClaveJugador.second;
@@ -311,9 +314,7 @@ void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
 		 rectanguloCamara->x = 0;
 	}
 
-	if( rectanguloCamara->x > ANCHO_FONDO - ancho_pantalla){
-		rectanguloCamara->x = ANCHO_FONDO - ancho_pantalla;
-	}
+
 }
 
 AplicacionServidor::~AplicacionServidor(){

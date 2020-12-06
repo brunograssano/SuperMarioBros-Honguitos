@@ -19,7 +19,6 @@ int mainClient(int argc, char* args[]){
 
 	TipoLog* nivelLog = determinarNivelLog(nivelLogEntrada);
 	Log::getInstance(nivelLog);
-	info_partida_t informacion; //nos lo mandan
 
 	Cliente* cliente = new Cliente(ip, puerto);
 	cliente->ejecutar();

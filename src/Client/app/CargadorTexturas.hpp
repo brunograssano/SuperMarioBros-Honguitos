@@ -46,16 +46,16 @@ class CargadorTexturas{
 
 		map<int,SDL_Texture*> texturasMario;
 
-		SDL_Texture* texturaMoneda = NULL;
-		SDL_Texture* texturaLadrillo = NULL;
-		SDL_Texture* texturaSorpresa = NULL;
-		SDL_Texture* texturaFondoActual = NULL;
-		SDL_Texture* texturaFuenteJuego = NULL;
-		SDL_Texture* texturaCoffinMario = NULL;
-		SDL_Texture* texturaFondoInicio = NULL;
-		SDL_Texture* texturaTitulo = NULL;
-		SDL_Texture* texturaFondoGameOver = NULL;
-		SDL_Texture* texturaDefecto = NULL;
+		SDL_Texture* texturaMoneda = nullptr;
+		SDL_Texture* texturaLadrillo = nullptr;
+		SDL_Texture* texturaSorpresa = nullptr;
+		SDL_Texture* texturaFondoActual = nullptr;
+		SDL_Texture* texturaFuenteJuego = nullptr;
+		SDL_Texture* texturaCoffinMario = nullptr;
+		SDL_Texture* texturaFondoInicio = nullptr;
+		SDL_Texture* texturaTitulo = nullptr;
+		SDL_Texture* texturaFondoGameOver = nullptr;
+		SDL_Texture* texturaDefecto = nullptr;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
 		map<string,SDL_Texture*> texturasNiveles;

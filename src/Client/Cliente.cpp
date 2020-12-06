@@ -3,6 +3,7 @@
 #include "../Utils/log/Log.hpp"
 #include <thread>
 
+#include "app/ManejadorSDL.hpp"
 
 #include "EnviadoresCliente/EnviadorEntrada.hpp"
 #include "EnviadoresCliente/EnviadorCredenciales.hpp"
@@ -124,9 +125,8 @@ void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t
 	if(!seRecibioInformacionInicio){
 		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 		pthread_mutex_lock(&mutex);
-		this->infoInicio = {actualizacion.cantidadMaximaDeJugadores, actualizacion.cantidadJugadoresActivos};
 		iniciarSDL();
-		ventanaInicio = new VentanaInicio(infoInicio.cantidadJugadoresActivos, infoInicio.cantidadJugadores);
+		ventanaInicio = new VentanaInicio(actualizacion.cantidadJugadoresActivos, actualizacion.cantidadMaximaDeJugadores);
 		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
 		ventanaInicio->actualizarJugadores(actualizacion);
 		this->seRecibioInformacionInicio = true;

@@ -5,7 +5,6 @@
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
 #include "EnviadoresServer/EnviadorEstadoCredencial.hpp"
-#include "EnviadoresServer/EnviadorInfoVentanaInicio.hpp"
 #include "EnviadoresServer/EnviadorRonda.hpp"
 #include "EnviadoresServer/EnviadorMensajeLog.hpp"
 #include "EnviadoresServer/EnviadorInfoPartida.hpp"
@@ -25,7 +24,6 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/
 	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
 
 	enviadores[VERIFICACION] = new EnviadorEstadoCredencial(socket);
-	enviadores[INICIO] = new EnviadorInfoVentanaInicio(socket);
 	enviadores[RONDA] = new EnviadorRonda(socket);
 	enviadores[MENSAJE_LOG] = new EnviadorMensajeLog(socket);
 	enviadores[PARTIDA] = new EnviadorInfoPartida(socket);
@@ -140,19 +138,6 @@ void ConexionCliente::ejecutar(){
 void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
 	enviadores[VERIFICACION]->dejarInformacion(&esUsuarioValido);
 	identificadoresMensajeAEnviar.push(VERIFICACION);
-}
-
-info_inicio_t ConexionCliente::crearInformacionInicio(){
-	info_inicio_t info;
-	info.cantidadJugadoresActivos = this->cantidadConexiones;
-	info.cantidadJugadores = this->servidor->getMaximasConexiones();
-	return info;
-}
-
-void ConexionCliente::enviarInformacionInicio(){
-	info_inicio_t info_inicio = crearInformacionInicio();
-	enviadores[INICIO]->dejarInformacion(&info_inicio);
-	identificadoresMensajeAEnviar.push(INICIO);
 }
 
 void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){

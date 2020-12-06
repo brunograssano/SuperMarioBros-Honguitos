@@ -7,13 +7,13 @@ EnviadorEntrada::EnviadorEntrada(int socket){
 
 void EnviadorEntrada::enviar(){
 	entrada_usuario_t entrada;
+	memset(&entrada,0,sizeof(entrada_usuario_t));
+
 	char tipo = ENTRADA;
 	int resultadoEnvio;
 	if(!entradasUsuario.empty()){
 		entrada = entradasUsuario.front();
 		entradasUsuario.pop();
-
-
 		resultadoEnvio = send(socket,&tipo,sizeof(char),0);
 		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de entrada de usuario");
 		resultadoEnvio = send(socket,&entrada,sizeof(entrada_usuario_t),0);

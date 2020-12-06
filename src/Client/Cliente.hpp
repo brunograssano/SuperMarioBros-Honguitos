@@ -80,7 +80,6 @@ class Cliente{
 		VentanaInicio* ventanaInicio;
 
 		info_partida_t infoPartida;
-		info_inicio_t infoInicio;
 		verificacion_t pasoVerificacion;
 		bool cargoLaAplicacion;
 		bool seRecibioInformacionInicio;

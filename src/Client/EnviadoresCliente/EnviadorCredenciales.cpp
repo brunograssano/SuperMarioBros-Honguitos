@@ -4,12 +4,13 @@
 
 EnviadorCredenciales::EnviadorCredenciales(int socket){
 	this->socket = socket;
+	memset(&credenciales,0,sizeof(credencial_t));
 }
 
 void EnviadorCredenciales::enviar(){
 	char tipoMensaje = CREDENCIAL;
-	int resultadoEnvio;
-	resultadoEnvio = send(socket, &tipoMensaje, sizeof(char), 0);
+
+	int resultadoEnvio = send(socket, &tipoMensaje, sizeof(char), 0);
 	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de informacion de credencial");
 
 	resultadoEnvio = send(socket, &credenciales, sizeof(credencial_t), 0);

@@ -7,7 +7,6 @@ using namespace std;
 
 /* PALABRAS RESERVADAS */
 /*
- * I: Inicio
  * V: Verificacion
  * U: Actualizacion sobre la cantidad de jugadores.
  * L: Mensaje para el log.
@@ -85,12 +84,6 @@ typedef struct entrada_usuario{
 	bool D;
 	bool W;
 }entrada_usuario_t;
-
-#define INICIO 'I'
-typedef struct info_inicio{
-	unsigned short cantidadJugadores;
-	unsigned short cantidadJugadoresActivos;
-}info_inicio_t;
 
 #define VERIFICACION 'V'
 typedef bool verificacion_t;

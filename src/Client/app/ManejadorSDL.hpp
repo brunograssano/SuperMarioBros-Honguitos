@@ -4,8 +4,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+using namespace std;
+#include<string>
 
 void iniciarSDL();
+void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura,SDL_Renderer* renderer);
+SDL_Renderer* crearRenderer(SDL_Window* ventana);
+void cargarIcono(SDL_Window* ventana);
+SDL_Texture* cargoTextura(string texto, SDL_Color color,SDL_Renderer* renderer,TTF_Font* fuente);
 void destructorDeTexturas(SDL_Texture* textura);
 void terminarSDL();
 

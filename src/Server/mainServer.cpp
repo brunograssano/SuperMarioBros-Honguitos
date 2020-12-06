@@ -15,15 +15,25 @@ using namespace std;
 ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
 	Lector* lector = new Lector();
-	string direccionLecturaDefault = "resources/ArchivosXML/configuracionInicial.xml";
+	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	ArchivoLeido* archivoLeido;
 
 	if (strcmp(direccionLecturaComando, "") != 0) {
 		archivoLeido = lector->leerArchivo(direccionLecturaComando);
 		if (!archivoLeido->leidoCorrectamente) {
 			mensajesErrorOtroArchivo = archivoLeido->mensajeError;
-			delete archivoLeido;
-			archivoLeido = lector->leerArchivo(direccionLecturaDefault);
+			if(!archivoLeido->usuariosValidos.empty()){
+				list<usuario_t> usuarios;
+				usuarios.swap(archivoLeido->usuariosValidos);
+				int cantidadConexiones = archivoLeido->cantidadConexiones;
+				delete archivoLeido;
+				archivoLeido = lector->leerArchivo(direccionLecturaDefault);
+				archivoLeido->usuariosValidos.swap(usuarios);
+				archivoLeido->cantidadConexiones = cantidadConexiones;
+			}else{
+				delete archivoLeido;
+				archivoLeido = lector->leerArchivo(direccionLecturaDefault);
+			}
 		}
 	} else {
 		archivoLeido = lector->leerArchivo(direccionLecturaDefault);

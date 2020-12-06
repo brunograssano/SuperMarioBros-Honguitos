@@ -14,49 +14,30 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 	this->jugadoresTotales = jugadoresTotales;
 	this->jugadoresConectados = jugadoresConectados;
 	Log* log = Log::getInstance();
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		log->huboUnErrorSDL("No se pudo inicializar SDL", SDL_GetError());
-	}
-	else{
-		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
-			log->huboUnError("No se pudo activar el filtrado lineal de texturas");
-		}
-		this->ventana = SDL_CreateWindow( "Inicio Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
-		if( ventana == NULL ){
-			log->huboUnErrorSDL("No se pudo crear una ventana de inicio por error de SDL", SDL_GetError());
 
-		}
-		else{
-			this->renderer = SDL_CreateRenderer( ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			if( renderer == NULL ){
-				log->huboUnErrorSDL("No se pudo crear el renderer por error de SDL", SDL_GetError());
-			}
-			else{
-				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	this->ventana = SDL_CreateWindow( "Inicio Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ANCHO_PANTALLA, ALTO_PANTALLA, SDL_WINDOW_SHOWN );
+	if( ventana == NULL ){
+		log->huboUnErrorSDL("No se pudo crear una ventana de inicio por error de SDL", SDL_GetError());
 
-				int imgFlags = IMG_INIT_PNG;
-				if( !( IMG_Init( imgFlags ) & imgFlags ) ){
-					log->huboUnErrorSDL("No se pudo inicializar SDL image", SDL_GetError());
-				}
-				if( TTF_Init() == -1 ){
-					log->huboUnErrorSDL("No se pudo inicializar SDL ttf", SDL_GetError());
-				}
-			}
+	}else{
+		this->renderer = SDL_CreateRenderer( ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+		if( renderer == NULL ){
+			log->huboUnErrorSDL("No se pudo crear el renderer por error de SDL", SDL_GetError());
+		}else{
+			SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		}
 	}
 
 	this->fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
 	if( this->fuente == NULL ){
 		log->huboUnErrorSDL("No se pudo cargar la fuente", SDL_GetError());
-	}
-	else{
+	}else{
 
 		string direccionIcono = "resources/Imagenes/Personajes/IconoHongo.png";
 		SDL_Surface* icono = IMG_Load(direccionIcono.c_str());
 		if(icono == NULL){
 			log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccionIcono, IMG_GetError());
-		}
-		else{
+		}else{
 			SDL_SetWindowIcon(this->ventana, icono);
 			SDL_FreeSurface(icono);
 		}
@@ -65,8 +46,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 		SDL_Surface* superficieImagen = IMG_Load(direccionFondo.c_str());
 		if(superficieImagen == NULL){
 			Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccionFondo, IMG_GetError());
-		}
-		else{
+		}else{
 			this->fondoPantalla = SDL_CreateTextureFromSurface( this->renderer, superficieImagen );
 			if( this->fondoPantalla == NULL ){
 				Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccionFondo, SDL_GetError());

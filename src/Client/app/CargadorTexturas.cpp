@@ -17,10 +17,6 @@
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
 
-	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ){
-		log->huboUnError("No se pudo activar el filtrado lineal de las texturas");
-	}
-
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
 						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
 						"resources/Imagenes/Personajes/MarioGrisPerdioConexion.png"};
@@ -275,5 +271,4 @@ CargadorTexturas::~CargadorTexturas(){
 	}
 
 	TTF_CloseFont( fuenteJuego );
-	TTF_Quit();
 }

@@ -150,9 +150,6 @@ App::~App(){
 	SDL_DestroyRenderer( renderizador );
 	SDL_DestroyWindow( ventanaAplicacion );
 
-	IMG_Quit();
-	SDL_Quit();
-
 	delete dibujador;
 	delete cargadorTexturas;
 	delete ReproductorMusica::getInstance();

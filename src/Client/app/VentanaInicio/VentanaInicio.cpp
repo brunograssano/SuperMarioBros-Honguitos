@@ -212,24 +212,12 @@ void VentanaInicio::obtenerEntrada(){
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
 			SDL_RenderDrawRect(renderer, &rectangulo);
 
-			if (informacionJugadoresConectados.tope >= jugadoresTotales){
-				salaLlena = true;
-				this->texturaMensajeSalaLlena = cargoTextura("La sala esta llena, no puede ingresar", colorRojo);
-				if( this->texturaMensajeSalaLlena == nullptr ){
-					log->huboUnError("No se pudo crear la textura para el mensaje de error de sala llena");
-				}
-				renderizar(375,270,18,250,texturaMensajeSalaLlena);
-
-			}else{
-
-				this->texturaMensajeCredencialesIncorrectas = cargoTextura("Las credenciales ingresadas son erroneas", colorRojo);
-				if( this->texturaMensajeCredencialesIncorrectas == nullptr ){
-					log->huboUnError("No se pudo crear la textura para el mensaje de error de credenciales");
-				}else{
-					renderizar(375,270,18,250,texturaMensajeCredencialesIncorrectas);
-
-				}
+			SDL_Texture* texturaMensaje = cargoTextura(errorDeIngreso, colorRojo);
+			if(texturaMensaje == nullptr){
+				log->huboUnError("No se pudo crear la textura para el mensaje: '" + errorDeIngreso +"'");
 			}
+			renderizar(375, 270, 18, 250, texturaMensaje);
+			destructorDeTexturas(texturaMensaje);
 
 		}
 
@@ -257,6 +245,12 @@ void VentanaInicio::obtenerEntrada(){
 
 void VentanaInicio::imprimirMensajeError(){
 	ingresoIncorrectoCredenciales = true;
+	if (informacionJugadoresConectados.tope >= jugadoresTotales){
+		salaLlena = true;
+		errorDeIngreso = string("La sala esta llena, no puede ingresar");
+	}else{
+		errorDeIngreso = string("Las credenciales ingresadas son erroneas");
+	}
 }
 
 void VentanaInicio::imprimirMensajeEspera(){

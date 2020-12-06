@@ -21,6 +21,7 @@ class VentanaInicio{
 		~VentanaInicio();
 	private:
 		bool ingresoIncorrectoCredenciales;
+		string errorDeIngreso;
 		bool salaLlena;
 		unsigned short jugadoresTotales;
 		unsigned short jugadoresConectados;

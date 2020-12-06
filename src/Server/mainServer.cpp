@@ -66,7 +66,7 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
 	//validarPuertoEIp(ipEntrada,puertoEntrada,ip, &puerto);
 
-	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo);
+	archivoLeido = realizarConfiguracionesIniciales("resources/ArchivosXML/configuracionInicial.xml", nivelLogEntrada, mensajesErrorOtroArchivo);
 
 	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 

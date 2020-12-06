@@ -3,6 +3,7 @@
 
 using namespace std;
 #include <string>
+#include <stdint.h>
 
 /* PALABRAS RESERVADAS */
 /*
@@ -23,7 +24,7 @@ const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, n
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
 
 const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
-const int MAX_BLOQUES=100,MAX_ENEMIGOS=30,MAX_MONEDAS=30,MAX_IMAGEN_NIVELES_POSIBLES = 30;
+const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_IMAGEN_NIVELES_POSIBLES = 30;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
@@ -39,35 +40,35 @@ typedef struct mensaje_log{
 
 typedef struct enemigo{
 	int posX;
-	unsigned short numeroRecorteX;	// 1|2|3|4|5|6|...|
-	unsigned short numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco
-	unsigned short tipoEnemigo;		// 1 GOOMBA - 2 KOOPA
+	uint8_t numeroRecorteX;	// 1|2|3|4|5|6|...|
+	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco ,( 4: fuego goomba)
+	uint8_t tipoEnemigo;	// 1 GOOMBA - 2 KOOPA
 }enemigo_t;
 
 typedef struct bloque{
 	int posX;
 	int posY;
-	unsigned short numeroRecorteX;
-	unsigned short numeroRecorteY;
+	uint8_t numeroRecorteX;
+	uint8_t numeroRecorteY;
 }bloque_t;
 
 typedef struct mario{
-	unsigned short idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
+	uint8_t idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
 	unsigned short posX;
 	unsigned short posY;
-	short recorteImagen; // Si el recorte de la imagen viene en un valor (-1?) se indica que el jugador se desconecto y
+	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y
 						//el recorte correspondiente es el gris (DE 0 A 14/18? SON LOS ESTADOS)
 }mario_t;
 
 typedef struct moneda{
 	unsigned short posX;
 	unsigned short posY;
-	unsigned short numeroRecorte;
+	uint8_t numeroRecorte;
 }moneda_t;
 
 typedef struct jugador{
 	char nombreJugador[MAX_NOMBRE];
-	int puntos;
+	unsigned short puntos;
 	mario_t mario;
 }jugador_t;
 
@@ -100,7 +101,7 @@ typedef struct entrada_usuario_id{
 }entrada_usuario_id_t;
 
 #define PARTIDA 'P'
-typedef struct info_partida{//~438 bytes enviados al inicio
+typedef struct info_partida{
 	jugador_t jugadores[MAX_JUGADORES];
 	unsigned short cantidadJugadores;
 	char direccionesFondoNiveles[MAX_CANT_NIVELES][MAX_LARGO_NOMBRE_NIVEL];
@@ -118,15 +119,15 @@ typedef struct actualizacion_cantidad_jugadores{
 }actualizacion_cantidad_jugadores_t;
 
 #define RONDA 'R'
-typedef struct ronda{//~1822 bytes enviados en cada ronda
-	unsigned short mundo;
-	unsigned short posXCamara;
-	unsigned short tiempoFaltante;
-	unsigned short topeBloques;
-	unsigned short topeEnemigos;
-	unsigned short topeMonedas;
+typedef struct ronda{
+	uint8_t mundo;
+	uint8_t topeBloques;
+	uint8_t topeEnemigos;
+	uint8_t topeMonedas;
 	bool ganaron;
 	bool perdieron;
+	unsigned short posXCamara;
+	unsigned short tiempoFaltante;
 	bloque_t bloques[MAX_BLOQUES];
 	enemigo_t enemigos[MAX_ENEMIGOS];
 	moneda_t monedas[MAX_MONEDAS];

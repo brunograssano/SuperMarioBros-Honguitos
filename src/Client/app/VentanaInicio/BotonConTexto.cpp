@@ -1,5 +1,6 @@
 #include "BotonConTexto.hpp"
 #include "../../../Utils/log/Log.hpp"
+#include "../ManejadorSDL.hpp"
 
 SDL_Texture* BotonConTexto::cargoTextura(string texto){
 	Log* log = Log::getInstance();
@@ -41,8 +42,7 @@ void BotonConTexto::cambiarTexto(string texto){
 			this->texturaTexto = this->cargoTextura("...");
 		}
 	}
-
-	SDL_DestroyTexture( texturaABorrar );
+	destructorDeTexturas(texturaABorrar);
 }
 
 bool BotonConTexto::botonClickeado(SDL_Event evento){
@@ -57,15 +57,6 @@ bool BotonConTexto::botonClickeado(SDL_Event evento){
         }
     }
     return false;
-}
-
-void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura,SDL_Renderer* renderer){
-		SDL_Rect renderQuad = { coordenadaX, coordenadaY, ancho, alto };
-		SDL_Rect* clip = NULL;
-		double angle = 0.0;
-		SDL_Point* center = NULL;
-		SDL_RendererFlip flip = SDL_FLIP_NONE;
-		SDL_RenderCopyEx( renderer, textura, clip, &renderQuad, angle, center, flip );
 }
 
 void BotonConTexto::seleccionarCajaTexto(){

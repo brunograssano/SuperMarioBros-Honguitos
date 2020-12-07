@@ -73,7 +73,6 @@ void Servidor::reconectarJugadoresFaseInicial(){
 				int idJugador = parClaveUsuario.first;
 				pthread_mutex_lock(&mutex);
 				idsUsuariosReconectados.push_front(idJugador);
-				clientes.push_back(clientesJugando[parClaveUsuario.first]);
 				pthread_mutex_unlock(&mutex);
 				actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 				for(auto const& cliente:clientes){
@@ -115,7 +114,6 @@ void Servidor::reconectarJugadoresFaseJuego(){
 				clientesJugando[parClaveUsuario.first]->enviarInfoPartida(info_partida);
 				pthread_mutex_unlock(&mutex);
 				idsUsuariosReconectados.push_front(idJugador);
-				clientes.push_back(clientesJugando[parClaveUsuario.first]);
 			}
 		}
 		for(auto const id:idsUsuariosReconectados){
@@ -184,7 +182,6 @@ void Servidor::conectarJugadores(){
 	int socketConexionEntrante;
 	socklen_t addressStructure;
 	struct sockaddr_in addressCliente;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 	while(!terminoJuego){
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);

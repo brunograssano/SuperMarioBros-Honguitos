@@ -57,6 +57,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 }
 
 void Cliente::escuchar(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	char tipoMensaje;
 	int resultado;
 	bool hayError = false;
@@ -65,10 +66,14 @@ void Cliente::escuchar(){
 		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
 		if(resultado<0){
+			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
+			pthread_mutex_unlock(&mutex);
 			hayError = true;
 		}else if(resultado == 0){
+			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server: " +to_string(errno));
+			pthread_mutex_unlock(&mutex);
 			hayError = true;
 		}
 		else{
@@ -158,6 +163,7 @@ void Cliente::esperarRecibirVerificacion(){
 }
 
 void Cliente::ejecutar(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
@@ -191,18 +197,25 @@ void Cliente::ejecutar(){
 	}
 
 	if(cerroVentana){
+		pthread_mutex_lock(&mutex);
 		Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-		int resultado;
+		pthread_mutex_unlock(&mutex);
 		delete ventanaInicio;
-		delete Log::getInstance();
-		resultado = shutdown(socketCliente,SHUT_RDWR);
+
+		int resultado = shutdown(socketCliente,SHUT_RDWR);
 		if(resultado<0){
+			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+			pthread_mutex_unlock(&mutex);
 		}
+
 		resultado = close(socketCliente);
 		if(resultado<0){
+			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+			pthread_mutex_unlock(&mutex);
 		}
+
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(0);
@@ -218,14 +231,21 @@ void Cliente::ejecutar(){
 	}
 	delete ventanaInicio;
 	if(cerroVentana){
+		pthread_mutex_lock(&mutex);
 		Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
+		pthread_mutex_unlock(&mutex);
+
 		int resultado = shutdown(socketCliente,SHUT_RDWR);
 		if(resultado<0){
+			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+			pthread_mutex_unlock(&mutex);
 		}
 		resultado = close(socketCliente);
 		if(resultado<0){
+			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+			pthread_mutex_unlock(&mutex);
 		}
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();

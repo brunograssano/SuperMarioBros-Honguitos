@@ -10,6 +10,8 @@
 #include "EnviadoresServer/EnviadorInfoPartida.hpp"
 #include "EnviadoresServer/EnviadorCantidadConexion.hpp"
 
+#define SIN_JUGAR -1
+
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
 	this->servidor = servidor;
 	this->socket = socket;
@@ -20,7 +22,7 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/
 	puedeJugar = false;
 	terminoJuego = false;
 	recibioCredenciales = false;
-	idPropio = 0;
+	idPropio = SIN_JUGAR;
 	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
 
 	enviadores[VERIFICACION] = new EnviadorEstadoCredencial(socket);

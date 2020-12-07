@@ -71,6 +71,10 @@ class Cliente{
 		void esperarRecibirInformacionInicio();
 		void esperarRecibirVerificacion();
 		void terminarProcesosDelCliente();
+		void cerradoVentanaInicio();
+		void cerrarSocketCliente();
+		void esperarAQueEmpieceElJuego();
+		void intentarEntrarAlJuego();
 
 		map<char,Enviador*> enviadores;
 		map<char,Escuchador*> escuchadores;

@@ -2,6 +2,8 @@
 #include <string>
 #include <string.h>
 
+#define SIN_JUGAR -1
+
 Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
 	manejadorIDs = new ManejadorIdentificadores();
@@ -36,29 +38,38 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 
 void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	if(!nombre.empty() && !contrasenia.empty()){
+	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
 		usuariosQuePerdieronConexion[idJugador] = usuarioDesconectado;
 		clientesJugando.erase(idJugador);
 		pthread_mutex_lock(&mutex);
 		log->mostrarMensajeDeInfo("Se perdio la conexion con el usuario: " + nombre);
 		cantUsuariosLogueados--;
-		aplicacionServidor->desconectarJugador(idJugador);
 		pthread_mutex_unlock(&mutex);
+		aplicacionServidor->desconectarJugador(idJugador);
 	}
+	pthread_mutex_lock(&mutex);
 	conexionesPerdidas.push_front(conexionPerdida);
 	clientes.remove(conexionPerdida);
+	pthread_mutex_unlock(&mutex);
 
 	mensaje_log_t mensajeLog;
+	memset(&mensajeLog,0,sizeof(mensaje_log_t));
+
 	nombre.insert(0,"Se desconecto el usuario: ");
 	strcpy(mensajeLog.mensajeParaElLog,nombre.c_str());
 	mensajeLog.tipo = INFO;
 	for(auto const parClaveCliente:clientesJugando){
+		pthread_mutex_lock(&mutex);
 		parClaveCliente.second->enviarMensajeLog(mensajeLog);
+		pthread_mutex_unlock(&mutex);
 	}
+
 	actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 	for(auto const& cliente:clientes){
+		pthread_mutex_lock(&mutex);
 		cliente->actualizarCliente(actualizacion);
+		pthread_mutex_unlock(&mutex);
 	}
 }
 
@@ -99,20 +110,26 @@ void Servidor::reconectarJugadoresFaseJuego(){
 			if(usuario.usado){
 
 				mensaje_log_t mensajeLog;
+				memset(&mensajeLog, 0, sizeof(mensaje_log_t));
+
 				usuario.nombre.insert(0, "Se reconecto el usuario: ");
 				strcpy(mensajeLog.mensajeParaElLog,usuario.nombre.c_str());
 				mensajeLog.tipo = INFO;
 
 				for(auto const parClaveCliente:clientesJugando){
+					pthread_mutex_lock(&mutex);
 					parClaveCliente.second->enviarMensajeLog(mensajeLog);
+					pthread_mutex_unlock(&mutex);
 				}
 
 
 				int idJugador = parClaveUsuario.first;
 				info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
+
 				pthread_mutex_lock(&mutex);
 				clientesJugando[parClaveUsuario.first]->enviarInfoPartida(info_partida);
 				pthread_mutex_unlock(&mutex);
+
 				idsUsuariosReconectados.push_front(idJugador);
 			}
 		}
@@ -129,17 +146,7 @@ void Servidor::ejecutar(){
 	pthread_t hiloJuego;
 	iniciarJuego(&hiloJuego,aplicacionServidor);
 	crearHiloConectarJugadores(this);
-	pthread_t hilo;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	if (pthread_create(&hilo, NULL, Servidor::reconectarJugadoresFaseInicial_helper, this) != 0) {
-		pthread_mutex_lock(&mutex);
-		Log::getInstance()->huboUnError("No se logro crear el hilo para reconectar los jugadores en fase de inicio.");
-		pthread_mutex_unlock(&mutex);
-	} else {
-		pthread_mutex_lock(&mutex);
-		Log::getInstance()->mostrarMensajeDeInfo("Se creo el hilo para reconectar los jugadores en fase de inicio correctamente.");
-		pthread_mutex_unlock(&mutex);
-	}
+	crearHiloReconectarJugadoresFaseInicial(this);
 	intentarIniciarModelo();
 	reconectarJugadoresFaseJuego();
 }
@@ -155,7 +162,9 @@ int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &
 		log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
 		pthread_mutex_unlock(&mutex);
 		actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
+
 		ConexionCliente *conexion = new ConexionCliente(this,socketConexionEntrante, this->cantUsuariosLogueados, (string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
+
 		pthread_t hilo;
 		if (pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper,conexion) != 0) {
 			pthread_mutex_lock(&mutex);
@@ -255,9 +264,8 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 
 		if (coincidenCredenciales(posibleUsuario, usuario)) {
 			pthread_mutex_lock(&mutex);
-
-			usuario.usado = true;
 			int id = manejadorIDs->obtenerIDNueva();
+			usuario.usado = true;
 			clientesJugando[id] = conexionClienteConPosibleUsuario;
 			conexionClienteConPosibleUsuario->agregarIDJuego(id);
 			mapaIDNombre[id] = posibleUsuario.nombre;
@@ -266,7 +274,6 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 			for(auto const& cliente:clientes){
 				cliente->actualizarCliente(actualizacion);
 			}
-
 			pthread_mutex_unlock(&mutex);
 			return true;
 		}
@@ -298,7 +305,9 @@ void Servidor::intentarIniciarModelo(){
 	for(auto parIDCliente:clientesJugando){
 		int id = parIDCliente.first;
 		info_partida[id] = aplicacionServidor->obtenerInfoPartida(mapaIDNombre,id);
+		pthread_mutex_lock(&mutex);
 		parIDCliente.second->enviarInfoPartida(info_partida[id]);
+		pthread_mutex_unlock(&mutex);
 	}
 
 

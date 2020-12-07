@@ -18,4 +18,6 @@ void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 void unirHilosPrincipalYGameLoop(pthread_t* hiloJuego);
 
+void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor);
+
 #endif /* SRC_SERVER_UTILIDADESSERVER_HPP_ */

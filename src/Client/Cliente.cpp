@@ -98,7 +98,6 @@ void Cliente::terminarProcesosDelCliente() {
 }
 
 void Cliente::enviar(){
-
 	char tipoMensaje;
 	bool hayError = false;
 	while(!terminoJuego && !hayError){
@@ -162,8 +161,33 @@ void Cliente::esperarRecibirVerificacion(){
 	}
 }
 
+void Cliente::esperarAQueEmpieceElJuego() {
+	while (!cerroVentana && !empiezaElJuego) {
+		try {
+			ventanaInicio->imprimirMensajeEspera();
+		} catch (const std::exception &e) {
+			cerroVentana = true;
+		}
+	}
+}
+
+void Cliente::intentarEntrarAlJuego() {
+	while (!pasoVerificacion && !cerroVentana) {
+		try {
+			ventanaInicio->obtenerEntrada();
+			enviarCredenciales(ventanaInicio->obtenerCredenciales());
+			esperarRecibirVerificacion();
+			if (!pasoVerificacion) {
+				ventanaInicio->imprimirMensajeError();
+				seRecibioVerificacion = false;
+			}
+		} catch (const std::exception &e) {
+			cerroVentana = true;
+		}
+	}
+}
+
 void Cliente::ejecutar(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_t hiloEscuchar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
@@ -180,73 +204,19 @@ void Cliente::ejecutar(){
 	}
 
 	esperarRecibirInformacionInicio();
-
-	while(!pasoVerificacion && !cerroVentana){
-		try{
-			ventanaInicio->obtenerEntrada();
-			enviarCredenciales(ventanaInicio->obtenerCredenciales());
-			esperarRecibirVerificacion();
-			if(!pasoVerificacion){
-				ventanaInicio->imprimirMensajeError();
-				seRecibioVerificacion = false;
-			}
-		}
-		catch(const std::exception& e){
-			cerroVentana = true;
-		}
-	}
-
+	intentarEntrarAlJuego();
 	if(cerroVentana){
-		pthread_mutex_lock(&mutex);
-		Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-		pthread_mutex_unlock(&mutex);
 		delete ventanaInicio;
-
-		int resultado = shutdown(socketCliente,SHUT_RDWR);
-		if(resultado<0){
-			pthread_mutex_lock(&mutex);
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
-			pthread_mutex_unlock(&mutex);
-		}
-
-		resultado = close(socketCliente);
-		if(resultado<0){
-			pthread_mutex_lock(&mutex);
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
-			pthread_mutex_unlock(&mutex);
-		}
-
+		cerradoVentanaInicio();
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(0);
 	}
 
-	while(!cerroVentana && !empiezaElJuego){
-		try{
-			ventanaInicio->imprimirMensajeEspera();
-		}
-		catch(const std::exception& e){
-			cerroVentana = true;
-		}
-	}
+	esperarAQueEmpieceElJuego();
 	delete ventanaInicio;
 	if(cerroVentana){
-		pthread_mutex_lock(&mutex);
-		Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-		pthread_mutex_unlock(&mutex);
-
-		int resultado = shutdown(socketCliente,SHUT_RDWR);
-		if(resultado<0){
-			pthread_mutex_lock(&mutex);
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
-			pthread_mutex_unlock(&mutex);
-		}
-		resultado = close(socketCliente);
-		if(resultado<0){
-			pthread_mutex_lock(&mutex);
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
-			pthread_mutex_unlock(&mutex);
-		}
+		cerradoVentanaInicio();
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(0);
@@ -254,15 +224,11 @@ void Cliente::ejecutar(){
 
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
+		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
-		int resultado = shutdown(socketCliente,SHUT_RDWR);
-		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
-		}
-		resultado = close(socketCliente);
-		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
-		}
+		pthread_mutex_unlock(&mutex);
+		cerrarSocketCliente();
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(-1);
@@ -272,6 +238,8 @@ void Cliente::ejecutar(){
 
 	terminoJuego = true;
 }
+
+/////------------------ENVIADORES------------------/////
 
 void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
 	enviadores[ENTRADA]->dejarInformacion(&entradaUsuario);
@@ -283,20 +251,35 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 	identificadoresMensajeAEnviar.push(CREDENCIAL);
 }
 
+/////------------------DESTRUCTOR------------------/////
 
-Cliente::~Cliente(){
+void Cliente::cerradoVentanaInicio() {
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
+	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
+	pthread_mutex_unlock(&mutex);
+	cerrarSocketCliente();
+}
 
-	terminarSDL();
-
+void Cliente::cerrarSocketCliente() {
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	int resultado = shutdown(socketCliente, SHUT_RDWR);
-	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket", to_string(errno));
+	if (resultado < 0) {
+		pthread_mutex_lock(&mutex);
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",to_string(errno));
+		pthread_mutex_unlock(&mutex);
 	}
 	resultado = close(socketCliente);
-	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket", to_string(errno));
+	if (resultado < 0) {
+		pthread_mutex_lock(&mutex);
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",to_string(errno));
+		pthread_mutex_unlock(&mutex);
 	}
+}
 
+Cliente::~Cliente(){
+	terminarSDL();
+	cerrarSocketCliente();
 	while(!terminoEnviar || !terminoEscuchar){}
 
 	for(auto const& parClaveEscuchador:escuchadores){

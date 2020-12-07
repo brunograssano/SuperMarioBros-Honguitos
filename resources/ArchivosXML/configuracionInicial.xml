@@ -9,16 +9,13 @@
     </ventana>
 
     <niveles>
-    	<nivel>
+        <nivel>
             <mundo>1</mundo>
             <direccionFondo>MapaNivel1Base.png</direccionFondo>
             <cantidadMonedas>25</cantidadMonedas>
             <tiempoNivel>300</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>96</puntoBanderaFin>          <!--Numero de 50 a 100 que representa el porcentaje del nivel-->
             <enemigos>
-
-                
-
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <color>0</color>
@@ -290,7 +287,7 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-				<plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>5</color>
                     <coordenadaX>720</coordenadaX>
@@ -346,20 +343,20 @@
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-				<plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>5</color>
                     <coordenadaX>2240</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>3</cantidadBloques>
                 </plataforma>
-				<plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>2360</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-				<plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>5</color>
                     <coordenadaX>2400</coordenadaX>
@@ -447,7 +444,7 @@
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
                 </plataforma>
-				
+                
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>5</color>
@@ -456,14 +453,14 @@
                     <cantidadBloques>6</cantidadBloques>
                 </plataforma>
 
-				<plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>6280</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
-				<plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>6640</coordenadaX>
                     <coordenadaY>160</coordenadaY>
@@ -476,138 +473,123 @@
             <direccionFondo>MapaNivel3Base.png</direccionFondo>
             <cantidadMonedas>10</cantidadMonedas>
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
+            <puntoBanderaFin>96</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>
                     <tipo>Goomba</tipo>
-                    <color>2</color>
-                    <cantidad>4</cantidad>
+                    <color>1</color>
+                    <cantidad>8</cantidad>
                 </enemigo>
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <color>2</color>
-                    <cantidad>4</cantidad>
-                </enemigo>
-
-                <enemigo>
-                    <tipo>Goomba</tipo>
-                    <color>2</color>
-                    <cantidad>4</cantidad>
-                </enemigo>
-
-                <enemigo>
-                    <tipo>Koopa</tipo>
-                    <color>2</color>
-                    <cantidad>4</cantidad>
+                    <color>1</color>
+                    <cantidad>8</cantidad>
                 </enemigo>
             </enemigos>
             <plataformas>
-
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>1500</coordenadaX>
-                    <coordenadaY>160</coordenadaY>
-                    <cantidadBloques>4</cantidadBloques>
-                </plataforma>
-
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>600</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>400</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
-
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>600</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>400</coordenadaX>
                     <coordenadaY>360</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <color>2</color>
+                    <coordenadaX>1300</coordenadaX>
+                    <coordenadaY>160</coordenadaY>
+                    <cantidadBloques>4</cantidadBloques>
+                </plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>1540</coordenadaX>
+                    <coordenadaX>1340</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>2000</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>2080</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>2000</coordenadaX>
+                    <coordenadaX>2080</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>2600</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>2680</coordenadaX>
                     <coordenadaY>40</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>2640</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>2720</coordenadaX>
                     <coordenadaY>80</coordenadaY>
                     <cantidadBloques>4</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>2680</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>2760</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>3</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>3000</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>3080</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>3200</coordenadaX>
+                    <coordenadaX>3280</coordenadaX>
                     <coordenadaY>320</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
-                    <coordenadaX>3200</coordenadaX>
+                    <coordenadaX>3280</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>3240</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>3320</coordenadaX>
                     <coordenadaY>320</coordenadaY>
-                    <cantidadBloques>10</cantidadBloques>
+                    <cantidadBloques>8</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
+                    <color>2</color>
                     <coordenadaX>3800</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>4</cantidadBloques>
@@ -615,7 +597,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
+                    <color>2</color>
                     <coordenadaX>4500</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
@@ -623,23 +605,23 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
+                    <color>2</color>
                     <coordenadaX>4600</coordenadaX>
                     <coordenadaY>320</coordenadaY>
-                    <cantidadBloques>17</cantidadBloques>
+                    <cantidadBloques>12</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>5400</coordenadaX>
+                    <color>2</color>
+                    <coordenadaX>5200</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color>
+                    <color>2</color>
                     <coordenadaX>6000</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
@@ -655,14 +637,11 @@
 
               	<plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>4</color> <!--0 - sorpresa / 1 - normal / 2 - invertido / 3 - negro/ 4 - blanco / 5 - amarillo -->
+                    <color>2</color>
                     <coordenadaX>6120</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-
-
-
             </plataformas>
         </nivel>
         
@@ -671,7 +650,7 @@
             <direccionFondo>MapaNivel4Base.png</direccionFondo>
             <cantidadMonedas>20</cantidadMonedas>
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
-            <puntoBanderaFin>95</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
+            <puntoBanderaFin>94</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
                 <enemigo>

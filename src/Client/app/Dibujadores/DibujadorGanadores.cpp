@@ -1,4 +1,5 @@
 #include "DibujadorGanadores.hpp"
+const int ANCHO_FONDO = 8177;
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;
@@ -106,7 +107,7 @@ void DibujadorGanadores::dibujarPersonajes(){
 void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
-	SDL_Rect rectanguloCamara = {0, 0, alto_pantalla, ancho_pantalla};
+	SDL_Rect rectanguloCamara = {(ANCHO_FONDO - ancho_pantalla), 0, alto_pantalla, ancho_pantalla};
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, NULL);
 	dibujarParticulas();
 	dibujarTextoGanadores(juegoCliente);

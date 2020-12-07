@@ -661,7 +661,7 @@
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <color>2</color>
+                    <color>3</color>
                     <cantidad>6</cantidad>
                 </enemigo>
 
@@ -673,7 +673,7 @@
 
                 <enemigo>
                     <tipo>Koopa</tipo>
-                    <color>2</color>
+                    <color>3</color>
                     <cantidad>6</cantidad>
                 </enemigo>
             </enemigos>

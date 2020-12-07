@@ -53,7 +53,7 @@ void ParserPlataforma::ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNive
 	if(!colorBloque.empty()){
 		try{
 				tipoColorBloque = stoi(colorBloque);
-				if(tipoColorBloque < 0 || 5 < tipoColorBloque){
+				if(tipoColorBloque < 0 || 6 < tipoColorBloque){
 					archivoLeido->mensajeError.push_back("El color del bloque "+colorBloque+" no es valido, se carga el por defecto.");
 					tipoColorBloque = VALOR_POR_DEFECTO_COLOR;
 				}

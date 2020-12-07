@@ -10,7 +10,7 @@ EscuchadorCredenciales::EscuchadorCredenciales(int socket, ConexionCliente* clie
 void EscuchadorCredenciales::casoError(int resultado){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
-	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de las credenciales, se cierra el socket", to_string(errno));
+	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de las credenciales del cliente: " + this->conexionCliente->obtenerIP() + ", se cierra el socket", to_string(errno));
 	pthread_mutex_unlock(&mutex);
 	throw runtime_error("ErrorAlRecibirCredenciales");
 }
@@ -18,7 +18,7 @@ void EscuchadorCredenciales::casoError(int resultado){
 void EscuchadorCredenciales::casoSocketCerrado(){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
-	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de las credenciales, se cierra el socket");
+	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de las credenciales del cliente: "+ this->conexionCliente->obtenerIP() +", se cierra el socket");
 	pthread_mutex_unlock(&mutex);
 	throw runtime_error("ErrorAlRecibirCredenciales");
 }

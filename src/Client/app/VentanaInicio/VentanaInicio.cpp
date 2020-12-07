@@ -197,14 +197,11 @@ void VentanaInicio::obtenerEntrada(){
 	}
 
 	SDL_StopTextInput();
-	if (!salaLlena){
-		const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
-		const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
+	const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
+	const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
 
-		strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
-		strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
-		salaLlena = false;
-	}
+	strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
+	strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
 }
 
 
@@ -221,7 +218,6 @@ bool VentanaInicio::estaConectado(string nombre){
 void VentanaInicio::imprimirMensajeError(){
 	ingresoIncorrectoCredenciales = true;
 	if (informacionJugadoresConectados.tope >= jugadoresTotales){
-		salaLlena = true;
 		errorDeIngreso = string("La sala esta llena, no puede ingresar");
 	}else if(estaConectado(this->credenciales.nombre)){
 		errorDeIngreso = string("Este jugador ya ingreso a la sala.");

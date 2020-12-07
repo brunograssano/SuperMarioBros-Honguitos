@@ -42,10 +42,10 @@ void ConexionCliente::escuchar(){
 		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
 		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje", to_string(errno));
+			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje en el cliente: " + this->ip, to_string(errno));
 			hayError = true;
 		}else if(resultado == 0){
-			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al cliente: "+ to_string(errno));
+			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al cliente: " +this->ip+ " ---- "+ to_string(errno));
 			hayError = true;
 		}else{
 			try{
@@ -99,13 +99,13 @@ void ConexionCliente::ejecutar(){
 	pthread_t hiloEnviar;
 	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, ConexionCliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente.");
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente: " + this->ip);
 		return; // El hilo de ejecutar muere, y queda dando vueltas solamente el objeto ConexionCliente en la lista
 	}
 
 	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, ConexionCliente::enviar_helper, this);
 	if(resultadoCreateEnviar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del server al cliente.");
+		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del servidor al cliente: " + this->ip);
 		terminoJuego = true; // Muere el hilo de este cliente y el de escuchar, queda el cliente en la lista.
 		return;
 	}
@@ -123,7 +123,7 @@ void ConexionCliente::ejecutar(){
 		pthread_mutex_unlock(&mutex);
 		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia);
+			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia + "del cliente: " + this->ip);
 			pthread_mutex_unlock(&mutex);
 		}
 		else{

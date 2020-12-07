@@ -327,7 +327,7 @@
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>3080</coordenadaX>
-                    <coordenadaY>200</coordenadaY>
+                    <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
@@ -439,7 +439,7 @@
 
                 <plataforma>
                     <tipo>Ladrillo</tipo>
-                    <color>5</color>
+                    <color>4</color>
                     <coordenadaX>4520</coordenadaX>
                     <coordenadaY>160</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>

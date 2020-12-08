@@ -72,7 +72,7 @@ void Cliente::escuchar(){
 			hayError = true;
 		}else if(resultado == 0){
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server: " +to_string(errno));
+			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server. ----- " +to_string(errno));
 			pthread_mutex_unlock(&mutex);
 			hayError = true;
 		}

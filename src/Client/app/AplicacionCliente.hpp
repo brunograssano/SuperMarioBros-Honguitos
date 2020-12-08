@@ -55,6 +55,7 @@ class App{
 			sonoSalto = false;
 			terminoElJuego = false;
 			comenzoElJuego = false;
+			errorServidor = false;
 			estaReproduciendoMusicaGanadores = false;
 
 			bool juegoInicializadoCorrectamente = true;
@@ -80,6 +81,7 @@ class App{
 		bool comenzoElJuego;
 		bool sonoSalto;
 		bool terminoElJuego;
+		bool errorServidor;
 		bool estaReproduciendoMusicaGanadores;
 		map<int,string> direccionesNiveles;
 		int ancho_pantalla;
@@ -94,6 +96,7 @@ class App{
 		void actualizarServer(const Uint8 *keystate);
 		void actualizar();
 		void agregarRonda(info_ronda_t info_ronda);
+		void ocurrioUnErrorServidor();
 		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
 		SDL_Renderer* obtenerRenderizador();

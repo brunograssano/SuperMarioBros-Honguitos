@@ -18,6 +18,7 @@ using namespace std;
 #include "DibujadorGanadores.hpp"
 #include "DibujadorJuego.hpp"
 #include "DibujadorError.hpp"
+#include "DibujadorErrorServidor.hpp"
 
 class Dibujadores{
 
@@ -27,6 +28,7 @@ class Dibujadores{
 		void dibujarGameOver();
 		void dibujarInicio();
 		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
+		void dibujarErrorServidor();
 		~Dibujadores();
 
 	private:
@@ -35,6 +37,8 @@ class Dibujadores{
 		DibujadorGanadores* dibujadorGanadores;
 		DibujadorJuego* dibujadorJuego;
 		DibujadorError* dibujadorError;
+		DibujadorErrorServidor* dibujadorErrorServidor;
+		bool archivoBienLeido;
 };
 
 

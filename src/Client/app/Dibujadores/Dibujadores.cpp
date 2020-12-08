@@ -1,17 +1,14 @@
 #include "Dibujadores.hpp"
 
 Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla, bool leidoCorrectamente){ // @suppress("Class members should be properly initialized")
-	if(leidoCorrectamente){
-		this->dibujadorGameOver = new DibujadorGameOver(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
-		this->dibujadorInicio = new DibujadorInicio(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
-		this->dibujadorGanadores = new DibujadorGanadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
-		this->dibujadorJuego = new DibujadorJuego(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
-		this->dibujadorError = nullptr;
-	}
-	else{
-		this->dibujadorError = new DibujadorError(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
-	}
-
+	archivoBienLeido = leidoCorrectamente;
+	this->dibujadorGameOver = new DibujadorGameOver(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorInicio = new DibujadorInicio(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorGanadores = new DibujadorGanadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorJuego = new DibujadorJuego(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorError = nullptr;
+	this->dibujadorError = new DibujadorError(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorErrorServidor = new DibujadorErrorServidor(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
 
 
@@ -20,7 +17,7 @@ void Dibujadores::dibujarPantallaGanadores(JuegoCliente* juegoCliente){
 }
 
 void Dibujadores::dibujarInicio(){
-	if(dibujadorError==nullptr){
+	if(archivoBienLeido){
 		dibujadorInicio->dibujar();
 	}
 	else{
@@ -30,6 +27,10 @@ void Dibujadores::dibujarInicio(){
 
 void Dibujadores::dibujarGameOver(){
 	dibujadorGameOver->dibujar();
+}
+
+void Dibujadores::dibujarErrorServidor(){
+	dibujadorErrorServidor->dibujar();
 }
 
 void Dibujadores::dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){

@@ -53,6 +53,10 @@ void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoV
 	alto_pantalla = posibleAltoVentana;
 }
 
+void App::ocurrioUnErrorServidor(){
+	errorServidor = true;
+}
+
 void App::actualizarServer(const Uint8 *keystate){
 
 	if(!sePusoMusicaInicio){
@@ -115,13 +119,13 @@ void App::actualizar(){
 	cargadorTexturas->revisarSiCambioNivel(renderizador, direccionesNiveles[juegoCliente->obtenerMundoActual()]);
 }
 
-
 void App::dibujar(){
 
-	if(!comenzoElJuego){
+	if(this->errorServidor){
+		dibujador->dibujarErrorServidor();
+	}else if(!comenzoElJuego){
 		dibujador->dibujarInicio();
-	}
-	else{
+	}else{
 		if(juegoCliente->ganaronElJuego()){
 
 			if(!this->estaReproduciendoMusicaGanadores){

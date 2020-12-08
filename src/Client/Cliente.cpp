@@ -57,7 +57,6 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 }
 
 void Cliente::escuchar(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	char tipoMensaje;
 	int resultado;
 	bool hayError = false;
@@ -66,14 +65,10 @@ void Cliente::escuchar(){
 		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
 		if(resultado<0){
-			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
-			pthread_mutex_unlock(&mutex);
 			hayError = true;
 		}else if(resultado == 0){
-			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server. ----- " +to_string(errno));
-			pthread_mutex_unlock(&mutex);
 			hayError = true;
 		}
 		else{
@@ -131,9 +126,9 @@ void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
 void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion){
 	if(!seRecibioInformacionInicio){
 		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_lock(&mutex);
 		iniciarSDL();
 		ventanaInicio = new VentanaInicio(actualizacion.cantidadJugadoresActivos, actualizacion.cantidadMaximaDeJugadores);
+		pthread_mutex_lock(&mutex);
 		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
 		ventanaInicio->actualizarJugadores(actualizacion);
 		this->seRecibioInformacionInicio = true;
@@ -148,10 +143,7 @@ void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
 		return;
 	}
 	App* aplicacion = App::getInstance();
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
 	aplicacion->agregarRonda(info_ronda);
-	pthread_mutex_unlock(&mutex);
 }
 
 void Cliente::esperarRecibirInformacionInicio(){
@@ -229,10 +221,7 @@ void Cliente::ejecutar(){
 
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
-		pthread_mutex_unlock(&mutex);
 		cerrarSocketCliente();
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
@@ -259,26 +248,18 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 /////------------------DESTRUCTOR------------------/////
 
 void Cliente::cerradoVentanaInicio() {
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-	pthread_mutex_unlock(&mutex);
 	cerrarSocketCliente();
 }
 
 void Cliente::cerrarSocketCliente() {
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	int resultado = shutdown(socketCliente, SHUT_RDWR);
 	if (resultado < 0) {
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",to_string(errno));
-		pthread_mutex_unlock(&mutex);
 	}
 	resultado = close(socketCliente);
 	if (resultado < 0) {
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",to_string(errno));
-		pthread_mutex_unlock(&mutex);
 	}
 }
 

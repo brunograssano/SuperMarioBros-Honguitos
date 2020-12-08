@@ -28,7 +28,10 @@ bool JuegoCliente::perdieronElJuego(){
 
 
 void JuegoCliente::agregarRonda(info_ronda_t ronda){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	rondas.push(ronda);
+	pthread_mutex_unlock(&mutex);
 }
 
 int JuegoCliente::obtenerPosXCamara(){
@@ -36,20 +39,22 @@ int JuegoCliente::obtenerPosXCamara(){
 }
 
 void JuegoCliente::actualizar(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(rondas.empty()){
 		return;
 	}
 	info_ronda_t ronda;
 
 	if(rondas.size() >= CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS){
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 		ronda = rondas.back();
 		pthread_mutex_lock(&mutex);
 		while(!rondas.empty()) rondas.pop();
 		pthread_mutex_unlock(&mutex);
 	}else{
+		pthread_mutex_lock(&mutex);
 		ronda = rondas.front();
 		rondas.pop();
+		pthread_mutex_unlock(&mutex);
 	}
 	tiempoFaltante = ronda.tiempoFaltante;
 	numeroMundo = ronda.mundo;

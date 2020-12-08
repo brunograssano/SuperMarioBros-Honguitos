@@ -60,7 +60,6 @@ class Juego{
 		list<Moneda*> obtenerMonedas();
 		map<int,Mario*> obtenerMarios();
 		int obtenerTiempoDelNivel();
-		int obtenerPuntuacionJugador();
 		int obtenerMundoActual();
 		int obtenerPuntoBanderaFinActual();
 

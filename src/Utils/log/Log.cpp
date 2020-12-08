@@ -33,35 +33,53 @@ Log::~Log(){
 
 //DEBUG//
 void Log::mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + to_string(coordenadaX) + "," + to_string(coordenadaY) + ")");
 	tipoLog->mostrarPosicion(mensaje, archivoLog);
+	pthread_mutex_unlock(&mutex);
 }
 
 void Log::mostrarAccion(string accion){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - " + accion,"");
 	tipoLog->mostrarAccion(mensaje, archivoLog);
+	pthread_mutex_unlock(&mutex);
 }
 
 //INFO//
 void Log::mostrarMensajeDeInfo(string mensajeInfo){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - " + mensajeInfo,"");
 	tipoLog->mostrarMensajeDeInfo(mensaje, archivoLog);
+	pthread_mutex_unlock(&mutex);
 }
 
 void Log::mostrarMensajeDeCarga(string idObjetoCargado,string rutaObjetoCargado){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - Se cargo " + idObjetoCargado, " desde la ruta " + rutaObjetoCargado);
-	tipoLog->mostrarMensajeDeCarga(mensaje, archivoLog);;
+	tipoLog->mostrarMensajeDeCarga(mensaje, archivoLog);
+	pthread_mutex_unlock(&mutex);
 }
 
 //ERRORES//
 void Log::huboUnErrorSDL(string descripcionError, string errorSDL){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	string mensaje= armarMensaje(" - " + descripcionError, " ---- " + errorSDL);
 	tipoLog->huboUnError(mensaje, archivoLog);
+	pthread_mutex_unlock(&mutex);
 }
 
 void Log::huboUnError(string descripcionError){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(descripcionError,"");
 	tipoLog->huboUnError(mensaje, archivoLog);
+	pthread_mutex_unlock(&mutex);
 }
 
 string Log::armarMensaje(string primeraParte, string segundaParte) {

@@ -117,14 +117,10 @@ void ConexionCliente::ejecutar(){
 	esperarCredenciales();
 
 	while(!esUsuarioValido){
-		pthread_mutex_lock(&mutex);
 		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia},this);
 		enviarVerificacion(esUsuarioValido);
-		pthread_mutex_unlock(&mutex);
 		if(esUsuarioValido){
-			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia + " del cliente: " + this->ip);
-			pthread_mutex_unlock(&mutex);
 		}
 		else{
 			esperarCredenciales();
@@ -138,23 +134,35 @@ void ConexionCliente::ejecutar(){
 ////---------------------------------ENVIADORES---------------------------------////
 
 void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[VERIFICACION]->dejarInformacion(&esUsuarioValido);
+	pthread_mutex_lock(&mutex);
 	identificadoresMensajeAEnviar.push(VERIFICACION);
+	pthread_mutex_unlock(&mutex);
 }
 
 void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[RONDA]->dejarInformacion(&info_ronda);
+	pthread_mutex_lock(&mutex);
 	identificadoresMensajeAEnviar.push(RONDA);
+	pthread_mutex_unlock(&mutex);
 }
 
 void ConexionCliente::enviarMensajeLog(mensaje_log_t mensaje){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[MENSAJE_LOG]->dejarInformacion(&mensaje);
+	pthread_mutex_lock(&mutex);
 	identificadoresMensajeAEnviar.push(MENSAJE_LOG);
+	pthread_mutex_unlock(&mutex);
 }
 
 void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[PARTIDA]->dejarInformacion(&info_partida);
+	pthread_mutex_lock(&mutex);
 	identificadoresMensajeAEnviar.push(PARTIDA);
+	pthread_mutex_unlock(&mutex);
 }
 
 void ConexionCliente::terminoElJuego(){
@@ -168,15 +176,17 @@ void ConexionCliente::agregarIDJuego(int IDJugador){
 }
 
 void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion){
-	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[ACTUALIZACION_JUGADORES]->dejarInformacion(&actualizacion);
+	pthread_mutex_lock(&mutex);
+	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
 	identificadoresMensajeAEnviar.push(ACTUALIZACION_JUGADORES);
+	pthread_mutex_unlock(&mutex);
 }
 
 ////---------------------------------DESTRUCTOR---------------------------------////
 
 ConexionCliente::~ConexionCliente(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}
@@ -188,14 +198,10 @@ ConexionCliente::~ConexionCliente(){
 
 	int resultado = shutdown(socket, SHUT_RDWR);
 	if(resultado<0){
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el shutdown del socket del usuario: "+nombre,to_string(errno));
-		pthread_mutex_unlock(&mutex);
 	}
 	resultado = close(socket);
 	if(resultado<0){
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el close del socket del usuario: "+nombre,to_string(errno));
-		pthread_mutex_unlock(&mutex);
 	}
 }

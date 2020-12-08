@@ -94,14 +94,9 @@ void unirHilosPrincipalYGameLoop(pthread_t* hiloJuego){
 
 void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor){
 	pthread_t hilo;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if (pthread_create(&hilo, NULL, Servidor::reconectarJugadoresFaseInicial_helper, servidor) != 0) {
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->huboUnError("No se logro crear el hilo para reconectar los jugadores en fase de inicio.");
-		pthread_mutex_unlock(&mutex);
 	} else {
-		pthread_mutex_lock(&mutex);
 		Log::getInstance()->mostrarMensajeDeInfo("Se creo el hilo para reconectar los jugadores en fase de inicio correctamente.");
-		pthread_mutex_unlock(&mutex);
 	}
 }

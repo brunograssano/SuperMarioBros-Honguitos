@@ -31,5 +31,8 @@ void EnviadorMensajeLog::enviar(){
 }
 
 void EnviadorMensajeLog::dejarInformacion(void* informacion){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_lock(&mutex);
 	mensajesLog.push(*((mensaje_log_t*)informacion));
+	pthread_mutex_unlock(&mutex);
 }

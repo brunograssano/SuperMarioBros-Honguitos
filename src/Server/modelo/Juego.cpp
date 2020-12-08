@@ -84,10 +84,6 @@ int Juego::obtenerTiempoDelNivel(){
 	return nivelActual->obtenerTiempo();
 }
 
-int Juego::obtenerPuntuacionJugador(){
-	return 1;//jugador->obtenerPuntos();
-}
-
 int Juego::obtenerMundoActual(){
 	Nivel* nivelActual = niveles.front();
 	return nivelActual->obtenerMundo();

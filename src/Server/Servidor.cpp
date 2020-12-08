@@ -47,23 +47,25 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,strin
 		cantUsuariosLogueados--;
 		pthread_mutex_unlock(&mutex);
 		aplicacionServidor->desconectarJugador(idJugador);
+
+		mensaje_log_t mensajeLog;
+		memset(&mensajeLog,0,sizeof(mensaje_log_t));
+
+		nombre.insert(0,"Se desconecto el usuario: ");
+		strcpy(mensajeLog.mensajeParaElLog,nombre.c_str());
+		mensajeLog.tipo = INFO;
+		for(auto const cliente:clientes){
+			if(cliente != conexionPerdida){
+				pthread_mutex_lock(&mutex);
+				cliente->enviarMensajeLog(mensajeLog);
+				pthread_mutex_unlock(&mutex);
+			}
+		}
 	}
 	pthread_mutex_lock(&mutex);
 	conexionesPerdidas.push_front(conexionPerdida);
 	clientes.remove(conexionPerdida);
 	pthread_mutex_unlock(&mutex);
-
-	mensaje_log_t mensajeLog;
-	memset(&mensajeLog,0,sizeof(mensaje_log_t));
-
-	nombre.insert(0,"Se desconecto el usuario: ");
-	strcpy(mensajeLog.mensajeParaElLog,nombre.c_str());
-	mensajeLog.tipo = INFO;
-	for(auto const parClaveCliente:clientesJugando){
-		pthread_mutex_lock(&mutex);
-		parClaveCliente.second->enviarMensajeLog(mensajeLog);
-		pthread_mutex_unlock(&mutex);
-	}
 
 	actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 	for(auto const& cliente:clientes){

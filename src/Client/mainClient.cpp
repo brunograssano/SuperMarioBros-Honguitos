@@ -10,12 +10,12 @@ int mainClient(int argc, char* args[]){
 	char ipEntrada[LARGO_IP] = "";
 	char puertoEntrada [LARGO_IP]= "";
 
-	//manejarEntrada(argc, args, ipEntrada, puertoEntrada, nivelLogEntrada);
+	manejarEntrada(argc, args, ipEntrada, puertoEntrada, nivelLogEntrada);
 
-	int puerto = 5004;
-	char ip[LARGO_IP] = "127.0.0.1";
+	int puerto;
+	char ip[LARGO_IP] = "";
 
-	//validarPuertoEIp(ipEntrada, puertoEntrada, ip, &puerto);
+	validarPuertoEIp(ipEntrada, puertoEntrada, ip, &puerto);
 
 	TipoLog* nivelLog = determinarNivelLog(nivelLogEntrada);
 	Log::getInstance(nivelLog);

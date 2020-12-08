@@ -31,8 +31,6 @@ bool esServer(int cantidadArgumentos, char* argumentos[]){
  */
 int main( int cantidadArgumentos, char* argumentos[]){
 
-	// Para usar true / false ir a la línea 12.
-
 	if(esServer(cantidadArgumentos, argumentos)){
 		mainServer(cantidadArgumentos, argumentos);
 	}

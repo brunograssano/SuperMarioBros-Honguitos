@@ -35,26 +35,17 @@ class Enviador{
 		}
 
 		void casoError(int resultado, string descripcion){
-			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-			pthread_mutex_lock(&mutex);
 			Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir informacion de: "+ descripcion +", se cierra el socket", to_string(errno));
-			pthread_mutex_unlock(&mutex);
 			throw runtime_error(descripcion+" Error");
 		};
 
 		void casoSocketCerrado(string descripcion){
-			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de: "+ descripcion +", se cierra el socket");
-			pthread_mutex_unlock(&mutex);
 			throw runtime_error(descripcion+" Error");
 
 		};
 		void casoExitoso(string descripcion){
-			pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-			pthread_mutex_lock(&mutex);
 			Log::getInstance()->mostrarAccion("Se recibio exitosamente informacion de: "+ descripcion);
-			pthread_mutex_unlock(&mutex);
 		};
 
 

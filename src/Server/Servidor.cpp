@@ -102,7 +102,6 @@ void Servidor::reconectarJugadoresFaseInicial(){
 
 void Servidor::reconectarJugadoresFaseJuego(){
 	list<int> idsUsuariosReconectados;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	while(!terminoJuego){
 		for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
 			usuario_t usuario = parClaveUsuario.second;
@@ -281,7 +280,6 @@ bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexio
 
 
 void Servidor::intentarIniciarModelo(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	info_partida_t info_partida[cantidadConexiones];
 	while(mapaIDNombre.size() < cantidadConexiones){
 	}

@@ -135,7 +135,7 @@ void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t
 		ventanaInicio->actualizarJugadores(actualizacion);
 		this->seRecibioInformacionInicio = true;
 		pthread_mutex_unlock(&mutex);
-	}else{
+	}else if(!empiezaElJuego){
 		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
 		ventanaInicio->actualizarJugadores(actualizacion);
 	}

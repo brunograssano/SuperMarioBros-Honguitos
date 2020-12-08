@@ -83,7 +83,7 @@ void ConexionCliente::recibirCredencial(string nombre, string contrasenia){
 }
 
 void ConexionCliente::esperarCredenciales(){
-	while(!recibioCredenciales){
+	while(!recibioCredenciales && !terminoJuego){
 	}
 	recibioCredenciales = false;
 }

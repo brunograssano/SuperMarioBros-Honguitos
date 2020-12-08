@@ -92,8 +92,11 @@ void Cliente::terminarProcesosDelCliente() {
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	terminoJuego = true;
-	cerroVentana = true;
+	//cerroVentana = true;
 	gameLoop->seMurioElServer();
+	if(ventanaInicio!=nullptr){
+		ventanaInicio->seMurioElServer();
+	}
 	pthread_mutex_unlock(&mutex);
 }
 
@@ -207,6 +210,7 @@ void Cliente::ejecutar(){
 	intentarEntrarAlJuego();
 	if(cerroVentana){
 		delete ventanaInicio;
+		ventanaInicio = nullptr;
 		cerradoVentanaInicio();
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
@@ -215,6 +219,7 @@ void Cliente::ejecutar(){
 
 	esperarAQueEmpieceElJuego();
 	delete ventanaInicio;
+	ventanaInicio = nullptr;
 	if(cerroVentana){
 		cerradoVentanaInicio();
 		while(!terminoEnviar || !terminoEscuchar){}

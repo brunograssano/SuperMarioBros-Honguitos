@@ -17,6 +17,7 @@ class VentanaInicio{
 		void imprimirMensajeError();
 		void imprimirMensajeEspera();
 		void actualizarJugadores(actualizacion_cantidad_jugadores_t actualizacion);
+		void seMurioElServer();
 		credencial_t obtenerCredenciales();
 		~VentanaInicio();
 	private:
@@ -24,6 +25,7 @@ class VentanaInicio{
 		bool ingresoIncorrectoCredenciales;
 		string errorDeIngreso;
 		bool salaLlena;
+		bool murioElServer;
 
 		unsigned short jugadoresTotales;
 		unsigned short jugadoresConectados;

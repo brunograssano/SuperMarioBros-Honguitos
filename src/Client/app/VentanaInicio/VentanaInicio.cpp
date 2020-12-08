@@ -12,6 +12,7 @@ using namespace std;
 VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short jugadoresTotales){
 	this->ingresoIncorrectoCredenciales = false;
 	this->salaLlena = false;
+	this->murioElServer = false;
 	this->jugadoresTotales = jugadoresTotales;
 	this->jugadoresConectados = jugadoresConectados;
 	Log* log = Log::getInstance();
@@ -108,6 +109,10 @@ bool VentanaInicio::manejarEntradaUsuario(SDL_Event evento, bool* terminar,strin
 		}
 	}
 	return false;
+}
+
+void VentanaInicio::seMurioElServer(){
+	murioElServer = true;
 }
 
 void VentanaInicio::obtenerEntrada(){
@@ -220,7 +225,9 @@ void VentanaInicio::imprimirMensajeError(){
 	ingresoIncorrectoCredenciales = true;
 	if (informacionJugadoresConectados.tope >= jugadoresTotales){
 		errorDeIngreso = string("La sala esta llena, no puede ingresar");
-	}else if(estaConectado(this->credenciales.nombre)){
+	}else if(murioElServer){
+		errorDeIngreso = string("Se perdio la conexion con el servidor."); //ACA NO NOS SIRVE
+	}else if(estaConectado(credenciales.nombre)){
 		errorDeIngreso = string("Este jugador ya ingreso a la sala.");
 	}else{
 		errorDeIngreso = string("Las credenciales ingresadas son erroneas");

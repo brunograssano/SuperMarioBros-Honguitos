@@ -152,11 +152,11 @@ void AplicacionServidor::actualizarPosicionDeJugador(Mario* jugador,entrada_usua
 }
 
 
-void AplicacionServidor::gameLoop(){ //funcion que pasamos al hilo
+void AplicacionServidor::gameLoop(){
 	unsigned int microSegundosEspera = 16666;
 	while(!comenzoElJuego){
-		//estamos esperando a que nos indiquen que puede comenzar el juego
 	}
+
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 	contadorNivel->iniciar();
 	Contador* contador = new Contador(microSegundosEspera, USEGUNDOS);

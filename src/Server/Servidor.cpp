@@ -237,11 +237,11 @@ bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* c
 	for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
 		if(coincidenCredenciales(posibleUsuario, parClaveUsuario.second)){
 			pthread_mutex_lock(&mutex);
+			cantUsuariosLogueados++;
 			parClaveUsuario.second.usado = true;
 			clientesJugando[parClaveUsuario.first] = conexionClienteConPosibleUsuario;
 			conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
 			aplicacionServidor->activarJugador(parClaveUsuario.first);
-			cantUsuariosLogueados++;
 			pthread_mutex_unlock(&mutex);
 			return true;
 		}

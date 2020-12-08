@@ -107,7 +107,7 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
     try{
 		archivoLeido->cantidadConexiones = stoi(cantidadConexionesString);
 		if(archivoLeido->cantidadConexiones<=0){
-			archivoLeido->mensajeError.push_back("El valor de cantidad de conexiones ("+cantidadConexionesString+") enviado no puede ser negativo o cero, se carga el valor por defecto");
+			archivoLeido->mensajeError.push_back("El valor de cantidad de conexiones ("+cantidadConexionesString+") enviado no puede ser negativo o cero, se carga el valor por defecto ("+to_string(VALOR_POR_DEFECTO_CONEXIONES)+")");
 			archivoLeido->cantidadConexiones = VALOR_POR_DEFECTO_CONEXIONES;
 		}
 	}catch(std::exception& e){

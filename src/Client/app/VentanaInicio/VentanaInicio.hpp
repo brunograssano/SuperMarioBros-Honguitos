@@ -46,6 +46,7 @@ class VentanaInicio{
 		BotonConTexto* cajaTextoContrasenia;
 
 		bool estaConectado(string nombre);
+		void imprimirMensajeDesconexion();
 		void ponerLosMarios();
 		SDL_Texture* texturasMarios;
 

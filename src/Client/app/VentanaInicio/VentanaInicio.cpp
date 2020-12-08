@@ -115,6 +115,18 @@ void VentanaInicio::seMurioElServer(){
 	murioElServer = true;
 }
 
+void VentanaInicio::imprimirMensajeDesconexion(){
+	SDL_RenderClear( this->renderer );
+	SDL_Color colorNegro = { 0, 0, 0, 0xFF };
+	SDL_Texture* texturaMensaje = cargoTextura("Ocurrio un error en la conexion con el Servidor.", colorNegro, this->renderer, this->fuente);
+	SDL_Texture* texturaMensajeInfo = cargoTextura("Revise su archivo log en la carpeta \"/logs/\".", colorNegro, this->renderer, this->fuente);
+
+	renderizar(20,ALTO_PANTALLA/2-80,40,ANCHO_PANTALLA-50, texturaMensaje, renderer);
+	renderizar(20,ALTO_PANTALLA/2,40,ANCHO_PANTALLA-50, texturaMensajeInfo, renderer);
+	destructorDeTexturas(texturaMensaje);
+	destructorDeTexturas(texturaMensajeInfo);
+}
+
 void VentanaInicio::obtenerEntrada(){
 
 	Log* log = Log::getInstance();
@@ -174,14 +186,23 @@ void VentanaInicio::obtenerEntrada(){
 
 		this->cajaTextoContrasenia->mostrarseCambiandoAncho(anchoTextoContrasenia);
 
-		if(ingresoIncorrectoCredenciales){
+		if(texturaCantidadJugadores != nullptr ){
+			renderizar(380,320,14,250,texturaCantidadJugadores,renderer);
+		}
+		destructorDeTexturas(texturaCantidadJugadores);
+
+		this->ponerLosMarios();
+
+		if(ingresoIncorrectoCredenciales || murioElServer){
 			SDL_Color colorRojo = { 214, 40, 57, 0xFF };
 			SDL_Rect rectangulo = {370, 265, 260, 30 };
 			SDL_SetRenderDrawColor(renderer, 162, 177, 205, 0xFF );
 			SDL_RenderFillRect(renderer, &rectangulo);
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
 			SDL_RenderDrawRect(renderer, &rectangulo);
-
+			if(murioElServer){
+				imprimirMensajeDesconexion();
+			}
 			SDL_Texture* texturaMensaje = cargoTextura(errorDeIngreso, colorRojo, this->renderer, this->fuente);
 			if(texturaMensaje == nullptr){
 				log->huboUnError("No se pudo crear la textura para el mensaje: '" + errorDeIngreso +"'");
@@ -191,13 +212,6 @@ void VentanaInicio::obtenerEntrada(){
 			destructorDeTexturas(texturaMensaje);
 
 		}
-
-		if(texturaCantidadJugadores != nullptr ){
-			renderizar(380,320,14,250,texturaCantidadJugadores,renderer);
-		}
-		destructorDeTexturas(texturaCantidadJugadores);
-
-		this->ponerLosMarios();
 
 		SDL_RenderPresent( this->renderer );
 	}
@@ -209,7 +223,6 @@ void VentanaInicio::obtenerEntrada(){
 	strcpy(credenciales.nombre,punteroTextoIngresadoUsuario);
 	strcpy(credenciales.contrasenia,punteroTextoIngresadoContrasenia);
 }
-
 
 bool VentanaInicio::estaConectado(string nombre){
 	for(int i = 0; i < informacionJugadoresConectados.tope; i++){

@@ -123,7 +123,7 @@ void ConexionCliente::ejecutar(){
 		pthread_mutex_unlock(&mutex);
 		if(esUsuarioValido){
 			pthread_mutex_lock(&mutex);
-			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia + "del cliente: " + this->ip);
+			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia + " del cliente: " + this->ip);
 			pthread_mutex_unlock(&mutex);
 		}
 		else{

@@ -7,6 +7,8 @@
 #include <string>
 using namespace std;
 
+#include "OcultadorDeTexto.hpp"
+
 class BotonConTexto
 {
     private:
@@ -18,10 +20,13 @@ class BotonConTexto
 		SDL_Renderer* renderer;
 		SDL_Texture* cargoTextura(string texto);
 		bool clickeado;
+		OcultadorDeTexto* ocultadorDeTexto;
 
     public:
 
 		BotonConTexto( int posicionX, int posicionY, int ancho, int alto , string texto,SDL_Renderer* renderer,TTF_Font* fuente);
+
+		void ocultaTexto();
 
 		void cambiarTexto(string texto);
 
@@ -34,6 +39,8 @@ class BotonConTexto
 		void seleccionarCajaTexto();
 
 		void deseleccionarCajaTexto();
+
+		~BotonConTexto();
 };
 
 #endif

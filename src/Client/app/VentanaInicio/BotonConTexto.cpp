@@ -28,13 +28,19 @@ BotonConTexto::BotonConTexto(int posicionX, int posicionY, int ancho, int alto ,
 	this->renderer = renderer;
 	this->texturaTexto = this->cargoTextura(texto);
 	clickeado = false;
+	ocultadorDeTexto = new OcultadorDeTextoNulo();
+}
+
+void BotonConTexto::ocultaTexto(){
+	delete ocultadorDeTexto;
+	ocultadorDeTexto = new OcultadorDeTextoAstericos();
 }
 
 void BotonConTexto::cambiarTexto(string texto){
 	this->texto = texto;
 	SDL_Texture* texturaABorrar = this->texturaTexto;
 	if(!texto.empty()){
-		this->texturaTexto = this->cargoTextura(texto);
+		this->texturaTexto = this->cargoTextura(ocultadorDeTexto->ocultar(texto));
 	}else{
 		if(clickeado){
 			this->texturaTexto = this->cargoTextura(" ");
@@ -91,4 +97,8 @@ void BotonConTexto::mostrarseCambiandoAncho(int nuevoAncho){
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
 	SDL_RenderDrawRect(renderer, &rectangulo);
 	renderizar(rectangulo.x ,rectangulo.y,rectangulo.h ,nuevoAncho ,texturaTexto,renderer);
+}
+
+BotonConTexto::~BotonConTexto(){
+	delete ocultadorDeTexto;
 }

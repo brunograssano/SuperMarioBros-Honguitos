@@ -50,6 +50,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 		this->botonEnviar = new BotonConTexto(460, 190, 80 , 40 , "Enviar",this->renderer,this->fuente);
 		this->cajaTextoUsuario = new BotonConTexto(400,60,200,20,"...",this->renderer,this->fuente);
 		this->cajaTextoContrasenia = new BotonConTexto(400,140,200,20,"...",this->renderer,this->fuente);
+		cajaTextoContrasenia->ocultaTexto();
 	}
 	texturasMarios = intentarCarga("Textura de colores mario", "resources/Imagenes/Personajes/ColoresMarios.png", renderer);
 	string errorDeIngreso = string(" "); //evita comportamiento indeterminado.

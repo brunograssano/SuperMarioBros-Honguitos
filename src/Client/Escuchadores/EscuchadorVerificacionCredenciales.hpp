@@ -1,0 +1,25 @@
+#ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORVERIFICACIONCREDENCIALES_HPP_
+#define SRC_CLIENT_ESCUCHADORES_ESCUCHADORVERIFICACIONCREDENCIALES_HPP_
+
+
+class Cliente;
+#include "../Cliente.hpp"
+
+#include "../../Utils/Escuchador.hpp"
+
+class EscuchadorVerificacionCredenciales : public Escuchador{
+
+	public:
+		EscuchadorVerificacionCredenciales(int socketCliente, Cliente* cliente);
+		virtual ~EscuchadorVerificacionCredenciales();
+		void escuchar();
+		void casoError(int resultado)override;
+		void casoSocketCerrado()override;
+		void casoExitoso()override;
+	private:
+		verificacion_t verificacion;
+		Cliente* cliente;
+};
+
+
+#endif /* SRC_CLIENT_ESCUCHADORES_ESCUCHADORVERIFICACIONCREDENCIALES_HPP_ */

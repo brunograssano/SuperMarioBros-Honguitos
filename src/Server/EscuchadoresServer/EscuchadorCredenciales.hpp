@@ -1,0 +1,25 @@
+#ifndef SRC_SERVER_ESCUCHADORESSERVER_ESCUCHADORCREDENCIALES_HPP_
+#define SRC_SERVER_ESCUCHADORESSERVER_ESCUCHADORCREDENCIALES_HPP_
+
+#include "../../Utils/Escuchador.hpp"
+#include "../ConexionCliente.hpp"
+
+
+class EscuchadorCredenciales: public Escuchador{
+
+	public:
+		EscuchadorCredenciales(int socket, ConexionCliente* cliente);
+		~EscuchadorCredenciales();
+		void escuchar();
+		void casoError(int resultado)override;
+		void casoSocketCerrado()override;
+		void casoExitoso()override;
+
+	private:
+		ConexionCliente* conexionCliente;
+		credencial_t credencial;
+};
+
+
+
+#endif /* SRC_SERVER_ESCUCHADORESSERVER_ESCUCHADORCREDENCIALES_HPP_ */

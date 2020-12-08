@@ -15,12 +15,12 @@ class EscuchadorInfoPartidaInicial : public Escuchador{
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
-		bool recibioInformacionPartidaValida(string* error);
+		bool recibioInformacionPartidaValida();
 
 	private:
 		info_partida_t info_partida;
 		Cliente* cliente;
-
+		string error = "";
 };
 
 

@@ -18,28 +18,25 @@ void EscuchadorInfoPartidaInicial::casoSocketCerrado(){
 }
 
 void EscuchadorInfoPartidaInicial::casoExitoso(){
-
-	string error = "";
-
-	if(recibioInformacionPartidaValida(&error)){
+	if(recibioInformacionPartidaValida()){
 		cliente->empezarJuego(info_partida);
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("Ocurrio el siguiente error al escuchar la informacion inicial de la partida: " + error);
 	}
 }
 
-bool EscuchadorInfoPartidaInicial::recibioInformacionPartidaValida(string* error){
+bool EscuchadorInfoPartidaInicial::recibioInformacionPartidaValida(){
 	bool esValidaInfoPartida = true;
 
 	if(info_partida.mundo < 1){
 		esValidaInfoPartida = false;
-		*error = "El valor del mundo recibido es menor a 1";
+		error = string("El valor del mundo recibido es menor a 1");
 	}else if(info_partida.cantidadJugadores > 4 || info_partida.cantidadJugadores < 0){
 		esValidaInfoPartida = false;
-		*error = "La cantidad de jugadores recibida es menor a 1 o mayor a 4";
+		error = string("La cantidad de jugadores recibida es menor a 1 o mayor a 4");
 	}else if(info_partida.idPropio > 3 || info_partida.idPropio < 0){
 		esValidaInfoPartida = false;
-		*error = "EL id propio recibido es menor a 0 o mayor a 3";
+		error = string("EL id propio recibido es menor a 0 o mayor a 3");
 	}
 
 	return esValidaInfoPartida;

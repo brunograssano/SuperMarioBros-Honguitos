@@ -41,7 +41,7 @@ bool EscuchadorActualizacionJugadores::recibioMensajeValido(){
 		error = string("Una id es mayor a 4.");
 		ocurrioError = true;
 	}
-	return ocurrioError;
+	return !ocurrioError;
 }
 
 void EscuchadorActualizacionJugadores::casoExitoso(){

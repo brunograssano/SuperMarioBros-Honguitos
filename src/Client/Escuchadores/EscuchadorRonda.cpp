@@ -65,7 +65,7 @@ bool EscuchadorRonda::recibioMensajeValido(){
 		error = string("El vector de enemigos posee al menos un enemigo invalido.");
 		ocurrioError = true;
 	}
-	return ocurrioError;
+	return !ocurrioError;
 }
 
 void EscuchadorRonda::casoExitoso(){

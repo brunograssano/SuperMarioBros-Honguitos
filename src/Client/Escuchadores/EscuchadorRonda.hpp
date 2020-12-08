@@ -5,10 +5,10 @@
 class Cliente;
 #include "../Cliente.hpp"
 
-#include "../juegoCliente/RecorteBloque.hpp"
-#include "../juegoCliente/RecorteMoneda.hpp"
-#include "../juegoCliente/RecorteGoomba.hpp"
-#include "../juegoCliente/RecorteKoopa.hpp"
+#include "../app/juegoCliente/RecorteBloque.hpp"
+#include "../app/juegoCliente/RecorteMoneda.hpp"
+#include "../app/juegoCliente/RecorteGoomba.hpp"
+#include "../app/juegoCliente/RecorteKoopa.hpp"
 
 #include "../../Utils/Escuchador.hpp"
 

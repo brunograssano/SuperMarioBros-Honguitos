@@ -28,6 +28,9 @@ const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_IMAGEN_NIVELES_POSI
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
 
+const int TIPO_GOOMBA = 1;
+const int TIPO_KOOPA = 2;
+
 
 #define TIPO_ERROR 'E'
 #define INFO 'I'

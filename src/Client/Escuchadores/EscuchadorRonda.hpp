@@ -5,6 +5,11 @@
 class Cliente;
 #include "../Cliente.hpp"
 
+#include "../juegoCliente/RecorteBloque.hpp"
+#include "../juegoCliente/RecorteMoneda.hpp"
+#include "../juegoCliente/RecorteGoomba.hpp"
+#include "../juegoCliente/RecorteKoopa.hpp"
+
 #include "../../Utils/Escuchador.hpp"
 
 class EscuchadorRonda: public Escuchador{
@@ -17,9 +22,15 @@ class EscuchadorRonda: public Escuchador{
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 
+		bool bloquesValidos(bloque_t bloques[MAX_BLOQUES], int tope);
+		bool monedasValidas(moneda_t monedas[MAX_MONEDAS], int tope);
+		bool enemigosValidos(enemigo_t enemigos[MAX_ENEMIGOS], int tope);
+
+		bool recibioMensajeValido();
 	private:
 		Cliente* cliente;
 		info_ronda_t info_ronda;
+		string error;
 };
 
 

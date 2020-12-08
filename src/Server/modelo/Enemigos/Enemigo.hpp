@@ -5,10 +5,6 @@
 #include <string>
 #include "../../sprites/Sprite.hpp"
 
-#define TIPO_GOOMBA 1
-#define TIPO_KOOPA 2
-
-
 class Enemigo{
 
 	public:

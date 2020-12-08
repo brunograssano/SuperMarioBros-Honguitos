@@ -3,11 +3,13 @@
 
 #include <SDL2/SDL.h>
 
+const int ESTADOS_MONEDA = 4;
+
 class RecorteMoneda{
 	public:
 		RecorteMoneda(){
 			int desplazamiento = 0;
-			for(int i = 0; i < 4; i++){
+			for(int i = 0; i < ESTADOS_MONEDA; i++){
 				this->estadosPosibles[i].x = desplazamiento;
 				this->estadosPosibles[i].y = 0;
 				this->estadosPosibles[i].w = 16;

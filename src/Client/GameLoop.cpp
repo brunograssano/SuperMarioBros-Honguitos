@@ -12,7 +12,10 @@ bool GameLoop::inicializarAplicacion(info_partida_t informacion,Cliente* cliente
 };
 
 void GameLoop::seMurioElServer(){
-	App::getInstance()->ocurrioUnErrorServidor();
+	App* app = App::getInstance();
+	if(app!=nullptr){
+		app->ocurrioUnErrorServidor();
+	}
 };
 
 void GameLoop::gameLoop() {

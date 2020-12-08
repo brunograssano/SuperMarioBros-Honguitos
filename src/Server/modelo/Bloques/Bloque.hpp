@@ -60,7 +60,7 @@ class Sorpresa : public Bloque{
 		}
 
 		bloque_t serializar()override{
-			bloque_t bloqueSerializado;
+			bloque_t bloqueSerializado = {0, 0, 0, 0};
 			bloqueSerializado.posX = posicion->obtenerPosX();
 			bloqueSerializado.posY = posicion->obtenerPosY();
 			bloqueSerializado.numeroRecorteX = spriteBloque->obtenerEstadoActual();
@@ -88,7 +88,7 @@ class Ladrillo : public Bloque {
 		}
 
 		bloque_t serializar()override{
-			bloque_t bloqueSerializado;
+			bloque_t bloqueSerializado = {0, 0, 0, 0};
 			bloqueSerializado.posX = posicion->obtenerPosX();
 			bloqueSerializado.posY = posicion->obtenerPosY();
 			bloqueSerializado.numeroRecorteX = spriteBloque->obtenerEstadoActual();

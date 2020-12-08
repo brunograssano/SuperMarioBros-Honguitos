@@ -10,8 +10,10 @@ EnviadorMensajeLog::EnviadorMensajeLog(int socket){
 void EnviadorMensajeLog::enviar(){
 	char caracterMensaje = MENSAJE_LOG;
 	mensaje_log_t mensaje;
+	memset(&mensaje,0,sizeof(mensaje_log_t));
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	int resultadoEnvio;
+	int resultadoEnvio = 0;
+
 	if(!mensajesLog.empty()){
 		pthread_mutex_lock(&mutex);
 		mensaje = mensajesLog.front();

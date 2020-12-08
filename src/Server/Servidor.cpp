@@ -190,9 +190,10 @@ int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &
 
 void Servidor::conectarJugadores(){
 	int usuariosConectados = 0;
-	int socketConexionEntrante;
-	socklen_t addressStructure;
+	int socketConexionEntrante = 0;
+	socklen_t addressStructure = 0;
 	struct sockaddr_in addressCliente;
+	memset(&addressCliente,0,sizeof(sockaddr_in));
 
 	while(!terminoJuego){
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
@@ -211,7 +212,7 @@ bool Servidor::estaDesconectado(string nombre){
 	return estaDesconectado;
 }
 
-actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){
+actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PASAR A USAR EL MANEJADOR DE KEYS
 	actualizacion_cantidad_jugadores_t actualizacion;
 	memset(&actualizacion, 0, sizeof(actualizacion_cantidad_jugadores_t));
 	int i = 0;

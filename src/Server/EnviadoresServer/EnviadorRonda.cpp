@@ -8,8 +8,9 @@ EnviadorRonda::EnviadorRonda(int socket){
 void EnviadorRonda::enviar(){
 	char caracterMensaje = RONDA;
 	info_ronda_t ronda;
+	memset(&ronda,0,sizeof(info_ronda_t));
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	int resultadoEnvio;
+	int resultadoEnvio = 0;;
 
 	if(!colaRondas.empty()){
 		pthread_mutex_lock(&mutex);

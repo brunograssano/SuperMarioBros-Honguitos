@@ -15,7 +15,7 @@ using namespace std;
 ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
 	Lector* lector = new Lector();
-	string direccionLecturaDefault = "resources/ArchivosXML/configuracionInicial.xml";
+	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	ArchivoLeido* archivoLeido;
 
 	if (strcmp(direccionLecturaComando, "") != 0) {
@@ -57,16 +57,16 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	char nivelLogEntrada[LARGO_ENTRADA] = "";
 	char ipEntrada[LARGO_IP] = "";
 	char puertoEntrada[LARGO_IP] = "";
-	int puerto = 5004;
-	char ip[LARGO_IP] = "127.0.0.1";
+	int puerto;
+	char ip[LARGO_IP] = "";
 	ArchivoLeido* archivoLeido;
 	list<string> mensajesErrorOtroArchivo;
 
-	//manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
+	manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 
-	//validarPuertoEIp(ipEntrada,puertoEntrada,ip, &puerto);
+	validarPuertoEIp(ipEntrada,puertoEntrada,ip, &puerto);
 
-	archivoLeido = realizarConfiguracionesIniciales("resources/ArchivosXML/configuracionInicial.xml", nivelLogEntrada, mensajesErrorOtroArchivo);
+	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo);
 
 	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 

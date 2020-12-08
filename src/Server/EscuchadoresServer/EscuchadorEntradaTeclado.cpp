@@ -27,7 +27,20 @@ void EscuchadorEntradaTeclado::casoExitoso(){
 	entrada_usuario_id_t entradaUsuarioId;
 	entradaUsuarioId.entradas = entradaUsuario;
 	entradaUsuarioId.id = idJugador;
-	pthread_mutex_lock(&mutex);
-	servidor->encolarEntradaUsuario(entradaUsuarioId);
-	pthread_mutex_unlock(&mutex);
+
+	bool esIdValido = false;
+
+	for(auto const& parIdNombre :servidor->obtenerMapaJugadores()){
+		if(entradaUsuarioId.id == parIdNombre.first){
+			esIdValido = true;
+		}
+	}
+
+	if(esIdValido){
+		pthread_mutex_lock(&mutex);
+		servidor->encolarEntradaUsuario(entradaUsuarioId);
+		pthread_mutex_unlock(&mutex);
+	}else{
+		Log::getInstance()->mostrarMensajeDeInfo("El ID proveniente del cliente no es valido, se ignora la entrada del teclado");
+	}
 }

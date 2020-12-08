@@ -6,6 +6,7 @@
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
+	terminoHiloAceptar = false;
 	manejadorIDs = new ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido->tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
@@ -197,9 +198,11 @@ void Servidor::conectarJugadores(){
 
 	while(!terminoJuego){
 		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
-
-		usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
+		if(!terminoJuego){
+			usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
+		}
 	}
+	terminoHiloAceptar = true;
 }
 
 bool Servidor::estaDesconectado(string nombre){
@@ -341,7 +344,18 @@ Servidor::~Servidor(){
 	clientes.clear();
 	clientesJugando.clear();
 	conexionesPerdidas.clear();
-	close(socketServer);
+
+	int resultado = shutdown(socketServer,SHUT_RDWR);
+	if(resultado<0){
+		log->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
+	}
+	resultado = close(socketServer);
+	if(resultado<0){
+		log->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
+	}
+
+	while(!terminoHiloAceptar){}
+
 	delete manejadorIDs;
 	delete aplicacionServidor;
 	delete log;

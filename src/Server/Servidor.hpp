@@ -86,6 +86,7 @@ class Servidor{
 		bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 
 		bool terminoJuego;
+		bool terminoHiloAceptar;
 		list<ConexionCliente*> clientes;
 		list<ConexionCliente*> conexionesPerdidas;
 		map<int,ConexionCliente*> clientesJugando;

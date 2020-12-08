@@ -55,8 +55,8 @@ void ConexionCliente::escuchar(){
 			}
 		}
 	}
-	terminoJuego = true;
 	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
+	terminoJuego = true;
 }
 
 void ConexionCliente::enviar(){
@@ -176,6 +176,7 @@ void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actua
 ////---------------------------------DESTRUCTOR---------------------------------////
 
 ConexionCliente::~ConexionCliente(){
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}
@@ -185,6 +186,16 @@ ConexionCliente::~ConexionCliente(){
 	escuchadores.clear();
 	enviadores.clear();
 
-	shutdown(socket, SHUT_RDWR);
-	close(socket);
+	int resultado = shutdown(socket, SHUT_RDWR);
+	if(resultado<0){
+		pthread_mutex_lock(&mutex);
+		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el shutdown del socket del usuario: "+nombre,to_string(errno));
+		pthread_mutex_unlock(&mutex);
+	}
+	resultado = close(socket);
+	if(resultado<0){
+		pthread_mutex_lock(&mutex);
+		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el close del socket del usuario: "+nombre,to_string(errno));
+		pthread_mutex_unlock(&mutex);
+	}
 }

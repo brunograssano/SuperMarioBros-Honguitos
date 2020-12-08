@@ -2,7 +2,7 @@
 #include <string>
 #include <string.h>
 using namespace std;
-
+#include <signal.h>
 #include <getopt.h>
 
 #include "Server/mainServer.hpp"
@@ -31,10 +31,13 @@ bool esServer(int cantidadArgumentos, char* argumentos[]){
  */
 int main( int cantidadArgumentos, char* argumentos[]){
 
+	signal(SIGPIPE, SIG_IGN);
+
 	if(esServer(cantidadArgumentos, argumentos)){
 		mainServer(cantidadArgumentos, argumentos);
 	}
 	else{
 		mainClient(cantidadArgumentos, argumentos);
 	}
+	return 0;
 }

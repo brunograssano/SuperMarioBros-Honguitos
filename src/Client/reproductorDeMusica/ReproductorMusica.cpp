@@ -1,4 +1,5 @@
 #include "ReproductorMusica.hpp"
+#include "EstadoMusica.hpp"
 
 #include <string>
 
@@ -35,6 +36,9 @@ ReproductorMusica::ReproductorMusica(){
 			efectosDeSonido.insert(std::pair<string,Mix_Chunk*>(elemento.first ,efecto));
 		}
 	}
+
+    estadoMusica = new Suena();
+    estadoSonidos = new SuenanSonidos();
 }
 
 ReproductorMusica* ReproductorMusica::getInstance(){
@@ -45,105 +49,121 @@ ReproductorMusica* ReproductorMusica::getInstance(){
 }
 
 void ReproductorMusica::ReproducirMusicaNivel(string nombreCancion){
-	Mix_Music* cancion = NULL;
+    estadoMusica->reproducir(nombreCancion);
+}
 
-	if (cancionReproduciendose == nullptr){
+void ReproductorMusica::ponerMusica(string nombreCancion){
+    Mix_Music* cancion = NULL;
 
-		cancion = Mix_LoadMUS( nombreCancion.c_str());
-		if( cancion == NULL ){
-			Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
-		}else{
-			cancionReproduciendose = cancion;
-			if(Mix_PlayMusic( cancion, -1 ) == 0){
-				Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
-			}else{
-				Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar reproducir la musica en la direccion "+ nombreCancion, Mix_GetError());
-			}
+    if (cancionReproduciendose == nullptr){
 
-		}
+        cancion = Mix_LoadMUS( nombreCancion.c_str());
+        if( cancion == NULL ){
+            Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
+        }else{
+            cancionReproduciendose = cancion;
+            if(Mix_PlayMusic( cancion, -1 ) == 0){
+                Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
+            }else{
+                Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar reproducir la musica en la direccion "+ nombreCancion, Mix_GetError());
+            }
 
-	}else{
+        }
 
-		Mix_Music* cancionABorrar = cancionReproduciendose;
-		cancion = Mix_LoadMUS( nombreCancion.c_str());
+    }else{
 
-		if( cancion == NULL ){
-			Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
-		}else{
-			cancionReproduciendose = cancion;
-			if(Mix_PlayMusic( cancion, -1 ) == 0){
-				Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
-				Mix_FreeMusic(cancionABorrar);
-			}else{
-				Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar reproducir la musica en la direccion "+ nombreCancion, Mix_GetError());
-				Mix_FreeMusic(cancionABorrar);
-			}
-		}
-	}
+        Mix_Music* cancionABorrar = cancionReproduciendose;
+        cancion = Mix_LoadMUS( nombreCancion.c_str());
+
+        if( cancion == NULL ){
+            Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
+        }else{
+            cancionReproduciendose = cancion;
+            if(Mix_PlayMusic( cancion, -1 ) == 0){
+                Log::getInstance()->mostrarMensajeDeInfo("Se reproduce la cancion de la direccion: "+nombreCancion);
+                Mix_FreeMusic(cancionABorrar);
+            }else{
+                Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar reproducir la musica en la direccion "+ nombreCancion, Mix_GetError());
+                Mix_FreeMusic(cancionABorrar);
+            }
+        }
+    }
+}
+
+void ReproductorMusica::pausarMusica(){
+    Mix_PauseMusic();
+}
+
+void ReproductorMusica::reanudarMusica(){
+    Mix_ResumeMusic();
 }
 
 void ReproductorMusica::ReproducirSonidoSalto(){
-	Mix_Chunk* efecto = efectosDeSonido.at("EfectoSalto");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("EfectoSalto");
 }
 
 void ReproductorMusica::ReproducirSonidoAgarrarMoneda(){
-	Mix_Chunk* efecto = efectosDeSonido.at("AgarrarMoneda");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("AgarrarMoneda");
 }
 void ReproductorMusica::ReproducirSonidoInicioJuego(){
-	Mix_Chunk* efecto = efectosDeSonido.at("InicioJuego");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("InicioJuego");
 }
 
 void ReproductorMusica::ReproducirSonidoSumarVida(){
-	Mix_Chunk* efecto = efectosDeSonido.at("SumarVida");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("SumarVida");
 }
 
 void ReproductorMusica::ReproducirSonidoRomperBloque(){
-	Mix_Chunk* efecto = efectosDeSonido.at("RomperBloque");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("RomperBloque");
 }
 
 void ReproductorMusica::ReproducirSonidoMarioMataGoomba(){
-	Mix_Chunk* efecto = efectosDeSonido.at("MarioMataGoomba");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("MarioMataGoomba");
 }
 
 void ReproductorMusica::ReproducirSonidoMarioChicoGolpeaLadrillo(){
-	Mix_Chunk* efecto = efectosDeSonido.at("MarioChicoGolpeaLadrillo");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("MarioChicoGolpeaLadrillo");
 }
 
 void ReproductorMusica::ReproducirSonidoMarioLanzaFuego(){
-	Mix_Chunk* efecto = efectosDeSonido.at("MarioLanzaFuego");
-	Mix_PlayChannel( -1, efecto, 0 );
+    estadoSonidos->reproducir("MarioLanzaFuego");
 }
 
 void ReproductorMusica::ReproducirSonidoBandera(){
-	Mix_Chunk* efecto = efectosDeSonido.at("SonidoBandera");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("SonidoBandera");
 }
 
 void ReproductorMusica::ReproducirSonidoAparecePlanta(){
-	Mix_Chunk* efecto = efectosDeSonido.at("AparecePlanta");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("AparecePlanta");
 }
 
 void ReproductorMusica::ReproducirSonidoMarioAgarraHongo(){
-	Mix_Chunk* efecto = efectosDeSonido.at("MarioAgarraHongo");
-	Mix_PlayChannel( -1, efecto, 0 );
+    estadoSonidos->reproducir("MarioAgarraHongo");
 }
 
 void ReproductorMusica::ReproducirSonidoApareceHongo(){
-	Mix_Chunk* efecto = efectosDeSonido.at("ApareceHongo");
-	Mix_PlayChannel( -1, efecto, 0 );
+	estadoSonidos->reproducir("ApareceHongo");
 }
 
 void ReproductorMusica::ReproducirSonidoMarioPisaKoopa(){
-	Mix_Chunk* efecto = efectosDeSonido.at("MarioPisaKoopa");
-	Mix_PlayChannel( -1, efecto, 0 );
+    estadoSonidos->reproducir("MarioPisaKoopa");
+}
+
+void ReproductorMusica::cambiarMusica(){
+    EstadoMusica* nuevoEstadoMusica = estadoMusica->cambiar();
+    delete estadoMusica;
+    estadoMusica = nuevoEstadoMusica;
+}
+
+void ReproductorMusica::cambiarSonidos(){
+    EstadoSonidos* nuevoEstadoSonidos = estadoSonidos->cambiar();
+    delete estadoSonidos;
+    estadoSonidos = nuevoEstadoSonidos;
+}
+
+void ReproductorMusica::reproducirSonido(string tipoSonido) {
+    Mix_Chunk* efecto = efectosDeSonido.at(tipoSonido);
+    Mix_PlayChannel( -1, efecto, 0 );
 }
 
 ReproductorMusica::~ReproductorMusica(){
@@ -152,7 +172,10 @@ ReproductorMusica::~ReproductorMusica(){
 		Mix_FreeChunk(elemento.second);
 	}
 	Mix_Quit();
+	delete estadoSonidos;
+	delete estadoMusica;
 }
+
 
 
 

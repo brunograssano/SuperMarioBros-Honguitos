@@ -1,6 +1,7 @@
 #include "Servidor.hpp"
 #include <string>
-#include <string.h>
+#include <utility>
+#include <cstring>
 
 #define SIN_JUGAR -1
 
@@ -9,7 +10,7 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArc
 	terminoHiloAceptar = false;
 	manejadorIDs = new ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido->tipoLog);
-	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
+	escribirMensajesDeArchivoLeidoEnLog(std::move(mensajesErrorOtroArchivo));
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 
 	aplicacionServidor = new AplicacionServidor(this, archivoLeido->niveles, archivoLeido->cantidadConexiones,
@@ -37,7 +38,7 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 }
 
 
-void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador){
+void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, const string& contrasenia,int idJugador){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
@@ -152,10 +153,10 @@ int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &
 		log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
 		actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 
-		ConexionCliente *conexion = new ConexionCliente(this,socketConexionEntrante, this->cantUsuariosLogueados, (string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
+		auto *conexion = new ConexionCliente(this,socketConexionEntrante, this->cantUsuariosLogueados, (string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
 
 		pthread_t hilo;
-		if (pthread_create(&hilo, NULL, ConexionCliente::ejecutar_helper,conexion) != 0) {
+		if (pthread_create(&hilo, nullptr, ConexionCliente::ejecutar_helper,conexion) != 0) {
 			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: "+ to_string(usuariosConectados) + "\n\t Cliente: "+ (string) (inet_ntoa(addressCliente.sin_addr))
 											+ " ; Puerto: " + to_string(ntohs(addressCliente.sin_port)) + ".");
 			delete conexion;
@@ -175,7 +176,7 @@ void Servidor::conectarJugadores(){
 	int usuariosConectados = 0;
 	int socketConexionEntrante = 0;
 	socklen_t addressStructure = 0;
-	struct sockaddr_in addressCliente;
+	struct sockaddr_in addressCliente{};
 	memset(&addressCliente,0,sizeof(sockaddr_in));
 
 	while(!terminoJuego){
@@ -187,7 +188,7 @@ void Servidor::conectarJugadores(){
 	terminoHiloAceptar = true;
 }
 
-bool Servidor::estaDesconectado(string nombre){
+bool Servidor::estaDesconectado(const string& nombre){
 	bool estaDesconectado = false;
 	for(auto const& parClaveUsuario:usuariosQuePerdieronConexion){
 		if(nombre == parClaveUsuario.second.nombre && !parClaveUsuario.second.usado){
@@ -218,7 +219,7 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 }
 
 
-bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
 		if(coincidenCredenciales(posibleUsuario, parClaveUsuario.second)){
@@ -236,12 +237,12 @@ bool Servidor::esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* c
 }
 
 bool Servidor::coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario) {
-	return posibleUsuario.nombre.compare(usuario.nombre) == 0 &&
-		   posibleUsuario.contrasenia.compare(usuario.contrasenia) == 0 &&
+	return posibleUsuario.nombre == usuario.nombre &&
+		   posibleUsuario.contrasenia == usuario.contrasenia &&
 		   !usuario.usado;
 }
 
-bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	if(aplicacionServidor->empezoElJuego()){
 		return false;
 	}
@@ -269,7 +270,7 @@ bool Servidor::esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* 
 	return false;
 }
 
-bool Servidor::esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+bool Servidor::esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
 	if(cantUsuariosLogueados>=cantidadConexiones){
 		return false;
 	}
@@ -291,7 +292,6 @@ void Servidor::intentarIniciarModelo(){
 		info_partida[id] = aplicacionServidor->obtenerInfoPartida(mapaIDNombre,id);
 		parIDCliente.second->enviarInfoPartida(info_partida[id]);
 	}
-
 
 	aplicacionServidor->iniciarJuego();
 }

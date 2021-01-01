@@ -8,15 +8,15 @@
 class SpriteKoopa : public Sprite{
 	public:
 
-		SpriteKoopa(int tipo);
-		~SpriteKoopa(){};
+		explicit SpriteKoopa(int tipo);
+		~SpriteKoopa() override= default;;
 
 		SDL_Rect obtenerRectanguloActual()override;
 
 		void actualizarSprite()override;
 
 	private:
-		SDL_Rect estadosPosibles[6];
+		SDL_Rect estadosPosibles[6]{};
 };
 
 #endif /* SRC_SERVER_SPRITES_SPRITEKOOPA_HPP_ */

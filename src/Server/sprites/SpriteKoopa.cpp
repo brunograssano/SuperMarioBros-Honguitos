@@ -6,11 +6,11 @@ SpriteKoopa::SpriteKoopa(int tipo){
 	estadoActual = 0;
 	ciclos=0;
 	int corrimientoEnImagen=0;
-	for(int i=0;i<6;i++){
-		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = tipo*16;
-		estadosPosibles[i].w = 16;
-		estadosPosibles[i].h = 24;
+	for(auto & estadosPosible : estadosPosibles){
+		estadosPosible.x = corrimientoEnImagen;
+		estadosPosible.y = tipo*16;
+		estadosPosible.w = 16;
+		estadosPosible.h = 24;
 		corrimientoEnImagen+= 16;
 	}
 }

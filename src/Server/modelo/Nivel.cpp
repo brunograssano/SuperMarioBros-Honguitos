@@ -46,7 +46,7 @@ string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
-float Nivel::obtenerPuntoBanderaFin(){
+float Nivel::obtenerPuntoBanderaFin() const{
 	return puntoBanderaFin;
 }
 
@@ -59,7 +59,7 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
-	list<Plataforma*> plataformas = this->obtenerPlataformas();
+
 	for(auto const& plataforma : plataformas){
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 
@@ -80,7 +80,7 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
 void Nivel::inicializarPosicionMonedas(){
 
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	int cantidadMaximaMonedas = (puntoBanderaFin/2)/(TAMANIO_MONEDA);
 
@@ -116,7 +116,7 @@ void Nivel::inicializarPosicionMonedas(){
 
 void Nivel::inicializarPosicionEnemigo(){
 
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	int numeroPosicionX = 0;
 
@@ -131,8 +131,8 @@ void Nivel::inicializarPosicionEnemigo(){
 	if(enemigos.size()>=cantidadMaximaEnemigos){
 			Log::getInstance()->huboUnError("No se pudieron cargar "+ to_string((int)enemigos.size()) +
 				" enemigos, se carga la cantidad maxima permitida para este nivel: " + to_string((int)cantidadMaximaEnemigos));
-			list<Enemigo*>::iterator iterador1 = enemigos.begin();
-			list<Enemigo*>::iterator iterador2 = enemigos.end();
+			auto iterador1 = enemigos.begin();
+			auto iterador2 = enemigos.end();
 			advance(iterador1, cantidadMaximaEnemigos-1);
 			enemigos.erase(iterador1,iterador2);
 	}

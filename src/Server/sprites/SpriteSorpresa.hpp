@@ -10,14 +10,14 @@ class SpriteSorpresa : public Sprite{
 	public:
 
 		SpriteSorpresa();
-		~SpriteSorpresa(){};
+		~SpriteSorpresa() override= default;;
 
 		SDL_Rect obtenerRectanguloActual()override;
 
 		void actualizarSprite()override;
 
 	private:
-		SDL_Rect estadosPosibles[5];
+		SDL_Rect estadosPosibles[5]{};
 };
 
 

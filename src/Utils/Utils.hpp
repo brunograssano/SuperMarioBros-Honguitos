@@ -22,8 +22,8 @@ const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
 
-const int MAX_IMAGEN_ENEMIGOS = 30,MAX_IMAGEN_BLOQUE = 30;
-const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_IMAGEN_NIVELES_POSIBLES = 30;
+
+const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
@@ -128,7 +128,7 @@ typedef struct actualizacion_cantidad_jugadores{
 typedef struct ronda{
 	uint8_t mundo;
 	uint8_t topeBloques;
-  uint8_t topeEnemigos;
+    uint8_t topeEnemigos;
 	uint8_t topeMonedas;
 	bool ganaron;
 	bool perdieron;

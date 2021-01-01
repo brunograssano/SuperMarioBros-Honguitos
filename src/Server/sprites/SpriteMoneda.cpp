@@ -6,11 +6,11 @@ SpriteMoneda::SpriteMoneda(){
 	this->ciclos = 0;
 	this->estadoActual = 2;
 	int desplazamiento = 0;
-	for(int i = 0; i < 4; i++){
-		this->estadosPosibles[i].x = desplazamiento;
-		this->estadosPosibles[i].y = 0;
-		this->estadosPosibles[i].w = 16;
-		this->estadosPosibles[i].h = 17;
+	for(auto & estadosPosible : this->estadosPosibles){
+		estadosPosible.x = desplazamiento;
+		estadosPosible.y = 0;
+		estadosPosible.w = 16;
+		estadosPosible.h = 17;
 		desplazamiento += 16;
 	}
 }

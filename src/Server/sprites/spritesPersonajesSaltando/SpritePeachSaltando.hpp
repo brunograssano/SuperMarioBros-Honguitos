@@ -12,7 +12,7 @@ class SpritePeachSaltando: public Sprite{
 		SDL_Rect obtenerRectanguloActual()override;
 
 	private:
-		SDL_Rect estadosPosibles[14];
+		SDL_Rect estadosPosibles[14]{};
 		int estadoActual;
 
 };

@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <utility>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -16,14 +15,14 @@ const int TAMANIO_COLA = 4;
 void salir(string mensajeLog){
 	Log* log = Log::getInstance();
 	cout << "No se pudo iniciar el server, cerrando la aplicacion" << endl;
-	log->huboUnError(mensajeLog);
+	log->huboUnError(std::move(mensajeLog));
 	delete log;
 	exit(EXIT_FAILURE);
 }
 
 int iniciarSocketServidor(int puerto, char* ip){
 	int opt = 1;
-	struct sockaddr_in address;
+	struct sockaddr_in address{};
 	int socketServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(socketServer == 0){
 		salir("No se pudo crear el socket para aceptar conexiones");
@@ -55,7 +54,7 @@ int iniciarSocketServidor(int puerto, char* ip){
 }
 
 void iniciarJuego(pthread_t* hiloJuego,AplicacionServidor* aplicacionServidor){
-	int resultadoCreate = pthread_create(hiloJuego, NULL, AplicacionServidor::gameLoop_helper, aplicacionServidor);
+	int resultadoCreate = pthread_create(hiloJuego, nullptr, AplicacionServidor::gameLoop_helper, aplicacionServidor);
 
 	if(resultadoCreate!= 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para el juego, el codigo de error es: " + to_string(resultadoCreate));
@@ -65,7 +64,7 @@ void iniciarJuego(pthread_t* hiloJuego,AplicacionServidor* aplicacionServidor){
 
 }
 
-void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
+void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError){
 	Log* log = Log::getInstance();
 	for(auto const& mensaje:mensajesError){
 		log->huboUnError(mensaje);
@@ -74,7 +73,7 @@ void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError){
 
 void crearHiloConectarJugadores(Servidor* servidor){
 	pthread_t hiloEscuchar;
-	int resultadoCreate = pthread_create(&hiloEscuchar, NULL, Servidor::escuchar_helper, servidor);
+	int resultadoCreate = pthread_create(&hiloEscuchar, nullptr, Servidor::escuchar_helper, servidor);
 	if(resultadoCreate!= 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar, el codigo de error es: " + to_string(resultadoCreate));
 	}else{
@@ -82,8 +81,8 @@ void crearHiloConectarJugadores(Servidor* servidor){
 	}
 }
 
-void unirHilosPrincipalYGameLoop(pthread_t* hiloJuego){
-	int resultadoJoin = pthread_join((*hiloJuego), NULL);
+void unirHilosPrincipalYGameLoop(const pthread_t* hiloJuego){
+	int resultadoJoin = pthread_join((*hiloJuego), nullptr);
 	if(resultadoJoin != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al juntar los hilos main y gameLoop, el codigo de error es: " + to_string(resultadoJoin));
 		pthread_cancel((*hiloJuego));
@@ -94,7 +93,7 @@ void unirHilosPrincipalYGameLoop(pthread_t* hiloJuego){
 
 void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor){
 	pthread_t hilo;
-	if (pthread_create(&hilo, NULL, Servidor::reconectarJugadoresFaseInicial_helper, servidor) != 0) {
+	if (pthread_create(&hilo, nullptr, Servidor::reconectarJugadoresFaseInicial_helper, servidor) != 0) {
 		Log::getInstance()->huboUnError("No se logro crear el hilo para reconectar los jugadores en fase de inicio.");
 	} else {
 		Log::getInstance()->mostrarMensajeDeInfo("Se creo el hilo para reconectar los jugadores en fase de inicio correctamente.");

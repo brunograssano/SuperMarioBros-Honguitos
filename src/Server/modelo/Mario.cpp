@@ -1,7 +1,5 @@
 #include "Mario.hpp"
 
-#include <cmath>
-
 #include "../../Utils/log/Log.hpp"
 
 const int COORDENADA_X_DEFAULT = 20;
@@ -17,7 +15,7 @@ Mario::Mario(int numeroJugador){
 	this->puntos=0;
 	this->cantidadMonedas = 0;
 	this->movimiento = new MovimientoMario();
-	this->spriteMario = new SpriteMario("../resources/Imagenes/Personajes/mario_grande.png");
+	this->spriteMario = new SpriteMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;
 }
@@ -61,7 +59,7 @@ int Mario::obtenerPosicionY(){
 	return posicion->obtenerPosY();
 }
 
-int Mario::obtenerPuntos(){
+int Mario::obtenerPuntos() const{
 	return puntos;
 }
 
@@ -69,7 +67,7 @@ void Mario::agregarPuntos(int unosPuntos){
 	puntos+=unosPuntos;
 }
 
-int Mario::obtenerMonedas(){
+int Mario::obtenerMonedas() const{
 	return cantidadMonedas;
 }
 
@@ -112,7 +110,7 @@ void Mario::actualizarPosicion(){
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
-bool Mario::estaConectado(){
+bool Mario::estaConectado() const{
 	return this->estaConectadoElJugador;
 }
 

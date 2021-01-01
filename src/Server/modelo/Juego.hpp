@@ -7,6 +7,7 @@ using namespace std;
 #include <map>
 #include <iostream>
 #include <string>
+#include <utility>
 
 class Mario;
 #include "../modelo/Mario.hpp"
@@ -15,15 +16,15 @@ class Juego{
 
 	private:
 
-		void inicializar(int cantJugadores);
+		void inicializar();
 
 		Juego(list<Nivel*> nivelesLector, int cantJugadores){
 
-			inicializar(cantJugadores);
+            inicializar();
 			for(int i = 0; i < cantJugadores; i++){
 				jugadores[i] = new Mario(i);
 			}
-			niveles = nivelesLector;
+			niveles = std::move(nivelesLector);
 
 			for (auto const& nivel : niveles) {
 				nivel->inicializarPosicionesOcupadasPorBloques();
@@ -37,11 +38,7 @@ class Juego{
 
 		static Juego* instanciaJuego;
 
-		void actualizarMonedas();
-		void actualizarPosicionesEnemigos();
-
-
-	public:
+public:
 		Juego(Juego &other) = delete;
 		static Juego* getInstance();
 		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
@@ -54,13 +51,11 @@ class Juego{
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
 
-		string obtenerDireccionFondoNivelActual();
-		list<Enemigo*> obtenerEnemigos();
+        list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
 		map<int,Mario*> obtenerMarios();
-		int obtenerTiempoDelNivel();
-		int obtenerMundoActual();
+        int obtenerMundoActual();
 		int obtenerPuntoBanderaFinActual();
 
 		~Juego();

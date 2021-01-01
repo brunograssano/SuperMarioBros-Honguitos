@@ -6,14 +6,14 @@
 class SpriteGoomba : public Sprite{
 	public:
 
-		SpriteGoomba(int tipo);
-		~SpriteGoomba(){};
+		explicit SpriteGoomba(int tipo);
+		~SpriteGoomba() override= default;;
 
 		SDL_Rect obtenerRectanguloActual()override;
 
 		void actualizarSprite()override;
 
 	private:
-		SDL_Rect estadosPosibles[3];
+		SDL_Rect estadosPosibles[3]{};
 
 };

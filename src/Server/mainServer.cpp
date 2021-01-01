@@ -10,7 +10,7 @@ using namespace std;
 
 ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	ArchivoLeido* archivoLeido;
 
@@ -37,7 +37,7 @@ ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARG
 
 	if (strcmp(nivelLogEntrada, "") != 0) {
 		nivelLog = determinarNivelLog(nivelLogEntrada);
-		if (nivelLog != NULL) {
+		if (nivelLog != nullptr) {
 			archivoLeido->tipoLog = nivelLog;
 		}
 	}
@@ -64,7 +64,7 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
 	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo);
 
-	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
+	auto* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 
 	server->ejecutar();
 

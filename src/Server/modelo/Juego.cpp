@@ -2,9 +2,11 @@
 
 #include "Juego.hpp"
 
+#include <utility>
+
 Juego* Juego::instanciaJuego = nullptr;
 
-void Juego::inicializar(int cantJugadores){
+void Juego::inicializar() {
 
 
 }
@@ -15,7 +17,7 @@ Juego* Juego::getInstance(){
 
 Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores){
 	if(instanciaJuego==nullptr){
-		instanciaJuego = new Juego(niveles,cantJugadores);
+		instanciaJuego = new Juego(std::move(niveles),cantJugadores);
 	}
 	return instanciaJuego;
 }
@@ -72,16 +74,6 @@ void Juego::sumarPuntosAJugadores(int puntos){
 			parClaveJugador.second->agregarPuntos(puntos);
 		}
 	}
-}
-
-string Juego::obtenerDireccionFondoNivelActual(){
-	Nivel* nivelActual = niveles.front();
-	return nivelActual->obtenerDireccionFondoActual();
-}
-
-int Juego::obtenerTiempoDelNivel(){
-	Nivel* nivelActual = niveles.front();
-	return nivelActual->obtenerTiempo();
 }
 
 int Juego::obtenerMundoActual(){

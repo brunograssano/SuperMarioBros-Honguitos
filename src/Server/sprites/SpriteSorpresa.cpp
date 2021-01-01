@@ -6,11 +6,11 @@ SpriteSorpresa::SpriteSorpresa(){
 	estadoActual = 0;
 	ciclos=0;
 	int corrimientoEnImagen = 0;
-	for(int i=0;i<5;i++){
-		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = 0;
-		estadosPosibles[i].w = 16;
-		estadosPosibles[i].h = 16;
+	for(auto & estadosPosible : estadosPosibles){
+		estadosPosible.x = corrimientoEnImagen;
+		estadosPosible.y = 0;
+		estadosPosible.w = 16;
+		estadosPosible.h = 16;
 		corrimientoEnImagen+= 16;
 	}
 }

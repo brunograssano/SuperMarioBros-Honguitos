@@ -5,6 +5,7 @@
 #include <string>
 #include<tuple>
 #include <cstdlib>
+#include <utility>
 
 #include "Bloques/Bloque.hpp"
 #include "Enemigos/Enemigo.hpp"
@@ -20,7 +21,7 @@ class Nivel{
 	public:
 		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
 			this->mundo = mundo;
-			this->direccionFondo = direccionFondo;
+			this->direccionFondo = std::move(direccionFondo);
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
 			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
@@ -39,11 +40,11 @@ class Nivel{
 			monedas.push_back(unaMoneda);
 		}
 
-		int obtenerTiempo(){
+		int obtenerTiempo() const{
 			return tiempo;
 		}
 
-		int obtenerMundo(){
+		int obtenerMundo() const{
 			return mundo;
 		}
 
@@ -54,7 +55,7 @@ class Nivel{
 
 		void inicializarPosicionesOcupadasPorBloques();
 
-		float obtenerPuntoBanderaFin();
+		float obtenerPuntoBanderaFin() const;
 
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();

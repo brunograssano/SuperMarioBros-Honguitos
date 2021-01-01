@@ -8,11 +8,11 @@ SpriteYoshiSaltando::SpriteYoshiSaltando(){
 	direccionTextura = "resources/Imagenes/PersonajesSaltando/YoshiSaltando.png";
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
-	for(int i=0;i<16;i++){
-		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = 0;
-		estadosPosibles[i].w = 20;
-		estadosPosibles[i].h = 29;
+	for(auto & estadosPosible : estadosPosibles){
+		estadosPosible.x = corrimientoEnImagen;
+		estadosPosible.y = 0;
+		estadosPosible.w = 20;
+		estadosPosible.h = 29;
 		corrimientoEnImagen+= 20;
 	}
 }

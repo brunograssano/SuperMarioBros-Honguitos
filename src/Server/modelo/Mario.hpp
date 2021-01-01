@@ -14,15 +14,15 @@ class Mario{
 	public:
 
 		Mario(int numeroJugador);
-		int obtenerPuntos();
+		int obtenerPuntos() const;
 		void agregarPuntos(int unosPuntos);
-		int obtenerMonedas();
+		int obtenerMonedas() const;
 		void agregarMoneda();
 
 		SpriteMario* obtenerSpite();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
-		bool estaConectado();
+		bool estaConectado() const;
 		bool estaQuietoX();
 		bool estaEnElPiso();
 		void actualizarPosicion();

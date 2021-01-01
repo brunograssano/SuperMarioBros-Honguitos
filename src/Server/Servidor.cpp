@@ -321,14 +321,7 @@ Servidor::~Servidor(){
 	clientesJugando.clear();
 	conexionesPerdidas.clear();
 
-	int resultado = shutdown(socketServer,SHUT_RDWR);
-	if(resultado<0){
-		log->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
-	}
-	resultado = close(socketServer);
-	if(resultado<0){
-		log->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
-	}
+	cerrarServidor(socketServer);
 
 	while(!terminoHiloAceptar){}
 

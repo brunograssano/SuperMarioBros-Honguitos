@@ -20,4 +20,6 @@ void unirHilosPrincipalYGameLoop(pthread_t* hiloJuego);
 
 void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor);
 
+void cerrarServidor(int socketServer);
+
 #endif /* SRC_SERVER_UTILIDADESSERVER_HPP_ */

@@ -1,11 +1,6 @@
 #ifndef SRC_CLIENT_CLIENTE_HPP_
 #define SRC_CLIENT_CLIENTE_HPP_
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 #include <iostream>
 #include <string>
 #include <string.h>
@@ -17,6 +12,8 @@
 
 #include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
+#include "app/VentanaInicio/VentanaInicio.hpp"
+#include "../Utils/Enviador.hpp"
 
 class EscuchadorVerificacionCredenciales;
 #include "../../src/Client/Escuchadores/EscuchadorVerificacionCredenciales.hpp"
@@ -28,11 +25,6 @@ class EscuchadorRonda;
 #include "../../src/Client/Escuchadores/EscuchadorRonda.hpp"
 
 #include "Escuchadores/EscuchadorLog.hpp"
-
-#include "app/VentanaInicio/VentanaInicio.hpp"
-
-#include "../Utils/Utils.hpp"
-#include "../Utils/Enviador.hpp"
 
 class GameLoop;
 #include "../Client/GameLoop.hpp"
@@ -72,7 +64,6 @@ class Cliente{
 		void esperarRecibirVerificacion();
 		void terminarProcesosDelCliente();
 		void cerradoVentanaInicio();
-		void cerrarSocketCliente();
 		void esperarAQueEmpieceElJuego();
 		void intentarEntrarAlJuego();
 

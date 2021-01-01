@@ -1,6 +1,5 @@
 #include "Cliente.hpp"
 
-#include "../Utils/log/Log.hpp"
 #include <thread>
 
 #include "app/ManejadorSDL.hpp"

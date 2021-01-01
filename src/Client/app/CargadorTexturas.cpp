@@ -11,8 +11,6 @@
 
 #include "ManejadorSDL.hpp"
 #include "../../Utils/log/Log.hpp"
-#include "AplicacionCliente.hpp"
-
 
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){

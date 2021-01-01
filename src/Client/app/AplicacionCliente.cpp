@@ -20,7 +20,6 @@ App* App::getInstance(){
 }
 
 void App::inicializarSDL(Log* log){
-
 	ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
 	if( ventanaAplicacion == NULL ){
 		log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
@@ -31,15 +30,7 @@ void App::inicializarSDL(Log* log){
 		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
 	}
 
-	string direccion = "resources/Imagenes/Personajes/IconoHongo.png";
-	SDL_Surface* icono = IMG_Load(direccion.c_str());
-	if(icono == NULL){
-		log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccion, IMG_GetError());
-	}
-	else{
-		SDL_SetWindowIcon(ventanaAplicacion, icono);
-		SDL_FreeSurface(icono);
-	}
+    cargarIcono(ventanaAplicacion);
 }
 
 void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana){

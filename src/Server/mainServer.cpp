@@ -2,15 +2,11 @@
 
 using namespace std;
 
-#include <SDL2/SDL.h>
-
 #include "../Client/app/AplicacionCliente.hpp"
 #include "lector/Lector.hpp"
 
 #include "../Utils/Validaciones.hpp"
 #include "../Server/Servidor.hpp"
-
-#include <getopt.h>
 
 ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;

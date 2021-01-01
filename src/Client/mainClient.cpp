@@ -1,7 +1,6 @@
 #include "../Client/mainClient.hpp"
 #include "../Client/Cliente.hpp"
 
-#include "app/AplicacionCliente.hpp"
 #include "../Utils/Validaciones.hpp"
 
 int mainClient(int argc, char* args[]){

@@ -25,16 +25,23 @@ class Enemigo{
 			posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
 		};
 
-		virtual enemigo_t serializar(){return {0,0,0,0};};
+		virtual enemigo_t serializar(){return {0,0,0,0,0};};
 
 		virtual void actualizarPosicion(){};
 
 		virtual ~Enemigo(){};
 
 	protected:
+
+        float obtenerVelocidad(){
+            return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
+        }
+
 		PosicionMovil* posicionActual;
-		string direccionImagen;
-		Sprite* spriteEnemigo;
+        Sprite* spriteEnemigo;
+        string direccionImagen;//revisar que pasa
+        float velocidadX;
+        int tipoColor;
 };
 
 

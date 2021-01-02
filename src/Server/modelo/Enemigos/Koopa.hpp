@@ -14,6 +14,7 @@ class Koopa : public Enemigo{
 		Koopa(int tipoColor){
 			spriteEnemigo = new SpriteKoopa(tipoColor);
 			this->tipoColor = tipoColor;
+            velocidadX = obtenerVelocidad();
 		}
 
 		~Koopa(){
@@ -27,6 +28,7 @@ class Koopa : public Enemigo{
 			enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
 			enemigoSerializado.numeroRecorteY = tipoColor;
 			enemigoSerializado.tipoEnemigo = TIPO_KOOPA;
+			enemigoSerializado.espejar = velocidadX > 0;
 			return enemigoSerializado;
 		}
 
@@ -34,11 +36,6 @@ class Koopa : public Enemigo{
 			posicionActual->moverHorizontal(velocidadX);
 			spriteEnemigo->actualizarSprite();
 		}
-
-	private:
-		float velocidadX = -0.15;
-		int tipoColor;
-
 };
 
 #endif /* SRC_SERVER_MODELO_ENEMIGOS_KOOPA_HPP_ */

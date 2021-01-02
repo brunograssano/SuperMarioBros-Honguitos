@@ -58,8 +58,9 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
-	    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaEnemigo(tipo,renderizador), &recorteTextura, &rectanguloEnemigo);
-	}
+		SDL_RenderCopyEx(renderizador,cargadorTexturas->obtenerTexturaEnemigo(tipo,renderizador),&recorteTextura,&rectanguloEnemigo,0,
+                         nullptr,enemigo.espejar?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+    }
 }
 
 void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){

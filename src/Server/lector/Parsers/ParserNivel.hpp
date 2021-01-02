@@ -8,9 +8,10 @@ using namespace std;
 #include "ParserEnemigo.hpp"
 #include "ParserPlataforma.hpp"
 
-class ParserNivel{
+class ParserNivel : public Parser{
 	public:
-			static void ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido);
+		void parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido) override;
+        void parsear(pugi::xml_node nodo,Nivel* unNivel,ArchivoLeido* archivoLeido)override{};
 };
 
 

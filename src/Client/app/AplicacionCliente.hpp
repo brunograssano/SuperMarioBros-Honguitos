@@ -30,13 +30,11 @@ class App{
 			Log* log = Log::getInstance();
 			this->cliente = cliente;
 
-			determinarDimensionesPantalla(informacion.anchoVentana, informacion.altoVentana);
+			ancho_pantalla = informacion.anchoVentana;
+            alto_pantalla = informacion.altoVentana;
 			inicializarSDL(log);
 
 			cargadorTexturas = new CargadorTexturas(renderizador);
-
-
-			//int mundos[MAX_CANT_NIVELES]; <- EN INFO PARTIDA T
 
 			for(int i=0; i<informacion.cantidadFondosNiveles; i++){
 				//*Traerme el vector de mundos*//
@@ -97,11 +95,7 @@ class App{
 		void actualizar();
 		void agregarRonda(info_ronda_t info_ronda);
 		void ocurrioUnErrorServidor();
-		void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
 
-		SDL_Renderer* obtenerRenderizador();
-
-		SDL_Rect* obtenerRectCamara();
 		void dibujar();
 		~App();
 

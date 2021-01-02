@@ -3,10 +3,12 @@
 
 #include "../ArchivoLeido.hpp"
 #include "../pugixml.hpp"
+#include "Parser.h"
 
-class ParserUsuario{
+class ParserUsuario : public Parser{
 	public:
-		void parsearUsuario(pugi::xml_node usuario,ArchivoLeido* archivoLeido);
+		void parsear(pugi::xml_node usuario, ArchivoLeido* archivoLeido) override;
+        void parsear(pugi::xml_node nodo,Nivel* unNivel,ArchivoLeido* archivoLeido)override{};
 };
 
 

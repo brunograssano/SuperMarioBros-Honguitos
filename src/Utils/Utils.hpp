@@ -49,8 +49,8 @@ typedef struct enemigo{
 }enemigo_t;
 
 typedef struct bloque{
-    unsigned short posX;
-    unsigned short posY;
+    int posX;
+    int posY;
 	uint8_t numeroRecorteX;
 	uint8_t numeroRecorteY;
 }bloque_t;

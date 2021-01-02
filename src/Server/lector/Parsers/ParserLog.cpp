@@ -1,7 +1,7 @@
 #include "ParserLog.hpp"
 
 
-void ParserLog::ParsearLog(pugi::xml_node log,ArchivoLeido* archivoLeido){
+void ParserLog::parsear(pugi::xml_node log, ArchivoLeido* archivoLeido){
 	string level = log.child_value("level");
 	if(level == "ERROR"){
 		archivoLeido->tipoLog = new Error();

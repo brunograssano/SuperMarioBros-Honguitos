@@ -1,24 +1,23 @@
 #include "ParserVentana.hpp"
-
 #define VALOR_POR_DEFECTO_ANCHO 800
 #define VALOR_POR_DEFECTO_ALTO 600
 
-void ParserVentana::ParsearVentana(pugi::xml_node ventana,ArchivoLeido* archivoLeido){
+bool condicionAnchoVentana(int ancho){
+    return ancho<VALOR_POR_DEFECTO_ANCHO;
+}
+
+bool condicionAltoVentana(int alto){
+    return alto<VALOR_POR_DEFECTO_ALTO;
+}
+
+void ParserVentana::parsear(pugi::xml_node ventana, ArchivoLeido* archivoLeido){
 	string ancho = ventana.child_value("ancho");
 	string alto = ventana.child_value("alto");
-	try{
-		archivoLeido->anchoVentana = stoi(ancho);
-	}catch(std::exception& e){
-		archivoLeido->mensajeError.push_back("El valor de ancho ("+ancho+") enviado no tiene valor valido,se carga el valor por defecto");
-		archivoLeido->anchoVentana = VALOR_POR_DEFECTO_ANCHO;
-	}
 
-	try{
-		archivoLeido->altoVentana = stoi(alto);
-	}catch(std::exception& e){
-		archivoLeido->mensajeError.push_back("El valor de alto ("+alto+") enviado no tiene valor valido,se carga el valor por defecto");
-		archivoLeido->altoVentana = VALOR_POR_DEFECTO_ALTO;
-	}
+	string mensaje = "El valor de ancho ("+ancho+") enviado no tiene valor valido,se carga el valor por defecto";
+    archivoLeido->anchoVentana = intentarObtenerNumero(archivoLeido,ancho,condicionAnchoVentana,mensaje,VALOR_POR_DEFECTO_ANCHO);
 
+    mensaje = "El valor de alto ("+alto+") enviado no tiene valor valido,se carga el valor por defecto";
+    archivoLeido->altoVentana = intentarObtenerNumero(archivoLeido,alto,condicionAltoVentana,mensaje,VALOR_POR_DEFECTO_ALTO);
 }
 

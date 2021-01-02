@@ -33,17 +33,6 @@ void App::inicializarSDL(Log* log){
     cargarIcono(ventanaAplicacion);
 }
 
-void App::determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana){
-	if(posibleAnchoVentana<ANCHO_VENTANA_MINIMO){
-		posibleAnchoVentana = ANCHO_VENTANA_MINIMO;
-	}
-	if(posibleAltoVentana<ALTO_VENTANA_MINIMO){
-		posibleAltoVentana = ALTO_VENTANA_MINIMO;
-	}
-	ancho_pantalla = posibleAnchoVentana;
-	alto_pantalla = posibleAltoVentana;
-}
-
 void App::ocurrioUnErrorServidor(){
 	errorServidor = true;
 }

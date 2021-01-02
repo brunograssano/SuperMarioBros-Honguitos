@@ -4,10 +4,12 @@
 #include <src/Server/modelo/Nivel.hpp>
 #include <src/Server/lector/ArchivoLeido.hpp>
 #include "../pugixml.hpp"
+#include "Parser.h"
 
-class ParserTuberia {
+class ParserTuberia : public Parser{
     public:
-       void parsearTuberia(pugi::xml_node tuberia,Nivel* unNivel,ArchivoLeido* archivoLeido);
+       void parsear(pugi::xml_node tuberia, Nivel* unNivel, ArchivoLeido* archivoLeido) override;
+       void parsear(pugi::xml_node nodo,ArchivoLeido* archivoLeido) override{};
 };
 
 

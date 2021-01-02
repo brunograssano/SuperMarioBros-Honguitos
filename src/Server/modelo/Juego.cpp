@@ -6,10 +6,7 @@
 
 Juego* Juego::instanciaJuego = nullptr;
 
-void Juego::inicializar() {
-
-
-}
+void Juego::inicializar() {}
 
 Juego* Juego::getInstance(){
 	return instanciaJuego;
@@ -63,6 +60,11 @@ list<Plataforma*> Juego::obtenerPlataformas(){
 list<Moneda*> Juego::obtenerMonedas(){
 	return niveles.front()->obtenerMonedas();
 }
+
+list<Tuberia*> Juego::obtenerTuberias() {
+    return niveles.front()->obtenerTuberias();
+}
+
 void Juego::actualizarModelo(){
 	Nivel* nivelActual = niveles.front();
 	nivelActual->actualizarModelo();
@@ -77,13 +79,11 @@ void Juego::sumarPuntosAJugadores(int puntos){
 }
 
 int Juego::obtenerMundoActual(){
-	Nivel* nivelActual = niveles.front();
-	return nivelActual->obtenerMundo();
+    return niveles.front()->obtenerMundo();
 }
 
 int Juego::obtenerPuntoBanderaFinActual(){
-	Nivel* nivelActual = niveles.front();
-	return nivelActual->obtenerPuntoBanderaFin();
+	return niveles.front()->obtenerPuntoBanderaFin();
 }
 
 Juego::~Juego(){
@@ -97,3 +97,4 @@ Juego::~Juego(){
 	jugadores.clear();
 	niveles.clear();
 }
+

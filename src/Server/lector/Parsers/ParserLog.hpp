@@ -11,7 +11,7 @@ using namespace std;
 
 class ParserLog{
 	public:
-			void ParsearLog(pugi::xml_node log,ArchivoLeido* archivoLeido);
+			static void ParsearLog(pugi::xml_node log,ArchivoLeido* archivoLeido);
 };
 
 

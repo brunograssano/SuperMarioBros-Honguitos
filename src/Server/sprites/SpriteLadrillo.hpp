@@ -10,7 +10,7 @@ class SpriteLadrillo : public Sprite{
 	public:
 
 		explicit SpriteLadrillo(int tipo);
-		~SpriteLadrillo() override = default;;
+		~SpriteLadrillo() override = default;
 
 		SDL_Rect obtenerRectanguloActual()override;
 

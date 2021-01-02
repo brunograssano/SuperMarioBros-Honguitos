@@ -2,9 +2,7 @@
 
 #include <vector>
 #include <string>
-#include <iostream>
 
-#include "../modelo/Nivel.hpp"
 #include "ArchivoLeido.hpp"
 #include "Parsers/ParserLog.hpp"
 #include "Parsers/ParserNivel.hpp"

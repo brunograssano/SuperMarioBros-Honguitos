@@ -54,6 +54,7 @@ public:
         list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
+        list<Tuberia*> obtenerTuberias();
 		map<int,Mario*> obtenerMarios();
         int obtenerMundoActual();
 		int obtenerPuntoBanderaFinActual();

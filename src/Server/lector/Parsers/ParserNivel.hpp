@@ -10,7 +10,7 @@ using namespace std;
 
 class ParserNivel{
 	public:
-			void ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido);
+			static void ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido);
 };
 
 

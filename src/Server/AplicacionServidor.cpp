@@ -127,6 +127,17 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 		info_ronda.jugadores[i] = jugadorSerializado;
 	}
 
+	list<Tuberia*> tuberias = juego->obtenerTuberias();
+	int numeroTuberia = 0;
+    for(auto const& tuberia: tuberias){
+        if(estaEnRangoVisible(tuberia->obtenerPosicionX()) &&
+            numeroTuberia<MAX_TUBERIAS){
+            info_ronda.tuberias[numeroTuberia] = tuberia->serializar();
+            numeroTuberia++;
+        }
+    }
+    info_ronda.topeTuberias = numeroTuberia;
+
 	return info_ronda;
 }
 

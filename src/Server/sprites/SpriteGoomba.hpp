@@ -7,7 +7,7 @@ class SpriteGoomba : public Sprite{
 	public:
 
 		explicit SpriteGoomba(int tipo);
-		~SpriteGoomba() override= default;;
+		~SpriteGoomba() override= default;
 
 		SDL_Rect obtenerRectanguloActual()override;
 

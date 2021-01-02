@@ -10,7 +10,7 @@ class SpriteSorpresa : public Sprite{
 	public:
 
 		SpriteSorpresa();
-		~SpriteSorpresa() override= default;;
+		~SpriteSorpresa() override= default;
 
 		SDL_Rect obtenerRectanguloActual()override;
 

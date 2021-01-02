@@ -149,3 +149,27 @@ void Nivel::inicializarPosicionEnemigo(){
 	}
 
 }
+
+void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia) {
+    auto* posibleTuberia = new Tuberia(posicionXNuevaTuberia,tipoTuberia,colorTuberia);
+
+    bool superponeAObjeto = false;
+    for (auto tuberia:tuberias){ // llevar a otra funcion a parte la verificacion de superposicion
+        if(tuberia->colisionaCon(posibleTuberia)){
+            superponeAObjeto = true;
+        }
+    }
+    // mismo chequeo para plataformas?
+
+    if(!superponeAObjeto){
+        tuberias.push_back(posibleTuberia);
+    }
+    else{
+        delete posibleTuberia;
+    }
+
+}
+
+list<Tuberia *> Nivel::obtenerTuberias() {
+    return tuberias;
+}

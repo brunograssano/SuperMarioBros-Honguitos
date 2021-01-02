@@ -6,6 +6,7 @@
 #include<tuple>
 #include <cstdlib>
 #include <utility>
+#include <src/Server/modelo/Bloques/Tuberia.hpp>
 
 #include "Bloques/Bloque.hpp"
 #include "Enemigos/Enemigo.hpp"
@@ -60,6 +61,7 @@ class Nivel{
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
+        list<Tuberia*> obtenerTuberias();
 		string obtenerDireccionFondoActual();
 
 		~Nivel(){
@@ -78,7 +80,9 @@ class Nivel{
 		}
 
 
-	private:
+    void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
+
+private:
 
 		void actualizarPosicionesEnemigos();
 		void actualizarMonedas();
@@ -94,6 +98,7 @@ class Nivel{
 		list<Plataforma*> plataformas;
 		list<Enemigo*> enemigos;
 		list<Moneda*> monedas;
+		list<Tuberia*> tuberias;
 
 		int altoNivel;
 

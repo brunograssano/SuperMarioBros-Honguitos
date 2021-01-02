@@ -1,8 +1,5 @@
-#include "../AplicacionCliente.hpp"
-#include "DibujadorJuego.hpp"
 
-#include "../AplicacionCliente.hpp"
-#include "Dibujadores.hpp"
+#include "DibujadorJuego.hpp"
 
 const float PROPORCION_PISO_EN_IMAGEN = 0.1;
 const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
@@ -20,6 +17,7 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 	this->recorteSpriteKoopa = new RecorteKoopa();
 	this->recorteSpriteMoneda = new RecorteMoneda();
 	this->recorteSpriteBloque = new RecorteBloque();
+    this->recorteSpriteTuberia = new RecorteTuberia();
 	colores[-1] = {150, 150 , 150, 255}; // Gris.
 	colores[0] = {230, 30 , 044, 255}; // Rojo.
 	colores[1] = {69 , 230, 52 , 255}; // Verde.
@@ -30,11 +28,12 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	rectanguloCamara->x = juegoCliente->obtenerPosXCamara();
 	SDL_RenderClear( renderizador );
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, NULL);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, nullptr);
 
 	dibujarEnemigos(rectanguloCamara,juegoCliente);
 	dibujarPlataformas(rectanguloCamara,juegoCliente);
 	dibujarMonedas(rectanguloCamara,juegoCliente);
+	dibujarTuberias(rectanguloCamara,juegoCliente);
 	dibujarMarios(rectanguloCamara,juegoCliente);
 	dibujarTexto(juegoCliente);
 
@@ -89,6 +88,26 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
 	}
 }
 
+void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente) {
+    list<tuberia_t> tuberias = juegoCliente->obtenerTuberias();
+    for (auto const& tuberia : tuberias) {
+        SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.tipo,tuberia.color);
+        SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara->x,
+                                      alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN),
+                                      recorteTuberia.h, recorteTuberia.w};
+        if(tuberia.tipo==0){
+            rectanguloTuberia.h *= 5;
+            rectanguloTuberia.w *= 2;
+        }
+        else{
+            rectanguloTuberia.h *= 3;
+            rectanguloTuberia.w *= 3;
+        }
+        rectanguloTuberia.y -= rectanguloTuberia.h;
+        SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaTuberia(), &recorteTuberia, &rectanguloTuberia);
+    }
+}
+
 void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int idPropio = juegoCliente->obtenerIDPropio();
@@ -138,19 +157,23 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 		if(parClaveJugador.second.mario.recorteImagen == MARIO_GRIS){
 			id = MARIO_GRIS;
 		}
-		renderizarTexto(cuadradoPuntos, textoDePuntos.str().c_str(), colores[id]);
+		renderizarTexto(cuadradoPuntos, textoDePuntos.str(), colores[id]);
 		espacioY += 35;
 	}
 
 	SDL_Rect cuadradoTiempo = { ancho_pantalla - 340, 10, 330, 30 };
 	SDL_Rect cuadradoMundo = { ancho_pantalla - ancho_pantalla/2 - 100, 10, 100, 30 };
 
-	renderizarTexto(cuadradoTiempo, textoDeTiempo.str().c_str(), colorDefault);
-	renderizarTexto(cuadradoMundo, textoDeNivel.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoTiempo, textoDeTiempo.str(), colorDefault);
+	renderizarTexto(cuadradoMundo, textoDeNivel.str(), colorDefault);
 }
 
 DibujadorJuego::~DibujadorJuego(){
 	delete this->recorteSpriteMario;
 	delete this->recorteSpriteGoomba;
 	delete this->recorteSpriteKoopa;
+	delete this->recorteSpriteTuberia;
+	delete this->recorteSpriteMoneda;
+	delete this->recorteSpriteBloque;
 }
+

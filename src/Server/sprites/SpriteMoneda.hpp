@@ -10,7 +10,7 @@ class SpriteMoneda : public Sprite{
 	public:
 
 		SpriteMoneda();
-		~SpriteMoneda() override= default;;
+		~SpriteMoneda() override= default;
 
 		SDL_Rect obtenerRectanguloActual()override;
 

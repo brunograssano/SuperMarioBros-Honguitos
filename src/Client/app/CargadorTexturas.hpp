@@ -41,7 +41,9 @@ class CargadorTexturas{
 		~CargadorTexturas();
 
 
-	private:
+    SDL_Texture *obtenerTexturaTuberia();
+
+private:
 		string direccionFondoActual;
 
 		map<int,SDL_Texture*> texturasMario;
@@ -56,6 +58,7 @@ class CargadorTexturas{
 		SDL_Texture* texturaTitulo = nullptr;
 		SDL_Texture* texturaFondoGameOver = nullptr;
 		SDL_Texture* texturaDefecto = nullptr;
+        SDL_Texture* texturaTuberias = nullptr;
 		map<string,SDL_Texture*> texturasEnemigos;
 		map<string,SDL_Texture*> texturasBloques;
 		map<string,SDL_Texture*> texturasNiveles;
@@ -68,7 +71,6 @@ class CargadorTexturas{
 		SDL_Texture* intentarCarga(string descripcion, string direccion, SDL_Renderer* renderizador);
 
 		bool tengoTexturaCargadaEnMemoria(string spriteDireccionImagen, map<string,SDL_Texture*> texturas);
-
 
 };
 

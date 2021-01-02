@@ -23,7 +23,7 @@ const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, n
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
 
 
-const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25;
+const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 10;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
@@ -41,15 +41,15 @@ typedef struct mensaje_log{
 }mensaje_log_t;
 
 typedef struct enemigo{
-	int posX;
+    unsigned short posX;
 	uint8_t numeroRecorteX;	// 1|2|3|4|5|6|...|
 	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco ,( 4: fuego goomba)
 	uint8_t tipoEnemigo;	// 1 GOOMBA - 2 KOOPA
 }enemigo_t;
 
 typedef struct bloque{
-	int posX;
-	int posY;
+    unsigned short posX;
+    unsigned short posY;
 	uint8_t numeroRecorteX;
 	uint8_t numeroRecorteY;
 }bloque_t;
@@ -73,6 +73,12 @@ typedef struct jugador{
 	unsigned short puntos;
 	mario_t mario;
 }jugador_t;
+
+typedef struct tuberia {
+    unsigned short posX;
+    uint8_t color;
+    uint8_t tipo;
+}tuberia_t;
 
 #define CREDENCIAL 'C'
 typedef struct credencial{
@@ -130,6 +136,7 @@ typedef struct ronda{
 	uint8_t topeBloques;
     uint8_t topeEnemigos;
 	uint8_t topeMonedas;
+    uint8_t topeTuberias;
 	bool ganaron;
 	bool perdieron;
 	unsigned short posXCamara;
@@ -138,6 +145,7 @@ typedef struct ronda{
 	enemigo_t enemigos[MAX_ENEMIGOS];
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
+	tuberia_t tuberias[MAX_TUBERIAS];
 }info_ronda_t;
 
 typedef struct usuario{

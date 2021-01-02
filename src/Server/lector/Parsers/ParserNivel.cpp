@@ -1,4 +1,5 @@
 #include "ParserNivel.hpp"
+#include "ParserTuberia.hpp"
 
 #define VALOR_POR_DEFECTO_MUNDO 1
 #define VALOR_POR_DEFECTO_TIEMPO 300
@@ -22,7 +23,7 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 			mundo = VALOR_POR_DEFECTO_MUNDO;
 		}
 	}catch(std::exception& e){
-		archivoLeido->mensajeError.push_back("El valor de mundo enviado no tiene valor valido, se carga el valor por defecto");
+		archivoLeido->mensajeError.emplace_back("El valor de mundo enviado no tiene valor valido, se carga el valor por defecto");
 		mundo = VALOR_POR_DEFECTO_MUNDO;
 	}
 
@@ -34,7 +35,7 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 			tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 		}
 	}catch(std::exception& e){
-		archivoLeido->mensajeError.push_back("El valor de tiempo del nivel enviado no tiene valor valido, se carga el valor por defecto");
+		archivoLeido->mensajeError.emplace_back("El valor de tiempo del nivel enviado no tiene valor valido, se carga el valor por defecto");
 		tiempoNivel = VALOR_POR_DEFECTO_TIEMPO;
 	}
 
@@ -58,17 +59,17 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 			puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
 		}
 	}catch(std::exception& e){
-		archivoLeido->mensajeError.push_back("El valor de puntoBanderaFin enviado no tiene valor valido, se carga el valor por defecto");
+		archivoLeido->mensajeError.emplace_back("El valor de puntoBanderaFin enviado no tiene valor valido, se carga el valor por defecto");
 		puntoBanderaFin = VALOR_POR_DEFECTO_PUNTO_FIN;
 	}
 
-	Nivel* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin);
+	auto* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin);
 	archivoLeido->niveles.push_back(unNivel);
 	for (pugi::xml_node enemigos: nivel.children("enemigos"))
 	{
 		for (pugi::xml_node enemigo: enemigos.children("enemigo"))
 		{
-			ParserEnemigo* parser = new ParserEnemigo();
+			auto* parser = new ParserEnemigo();
 			parser->ParsearEnemigo(enemigo,unNivel,archivoLeido);
 			delete parser;
 		}
@@ -77,9 +78,16 @@ void ParserNivel::ParsearNivel(pugi::xml_node nivel,ArchivoLeido* archivoLeido){
 	{
 		for (pugi::xml_node plataforma: plataformas.children("plataforma"))
 		{
-			ParserPlataforma* parser = new ParserPlataforma();
+			auto* parser = new ParserPlataforma();
 			parser->ParsearPlataforma(plataforma,unNivel,archivoLeido);
 			delete parser;
 		}
 	}
+
+    for (pugi::xml_node tuberia: nivel.children("tuberia"))
+    {
+        auto* parser = new ParserTuberia();
+        parser->parsearTuberia(tuberia,unNivel,archivoLeido);
+        delete parser;
+    }
 }

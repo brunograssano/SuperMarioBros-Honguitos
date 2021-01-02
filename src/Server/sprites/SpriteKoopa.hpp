@@ -9,7 +9,7 @@ class SpriteKoopa : public Sprite{
 	public:
 
 		explicit SpriteKoopa(int tipo);
-		~SpriteKoopa() override= default;;
+		~SpriteKoopa() override= default;
 
 		SDL_Rect obtenerRectanguloActual()override;
 

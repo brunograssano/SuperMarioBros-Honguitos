@@ -1,13 +1,19 @@
 #ifndef SRC_SERVER_MODELO_MARIO_HPP_
 #define SRC_SERVER_MODELO_MARIO_HPP_
 
-#include "movimiento/MovimientoMario.hpp"
-#include "Posicion.hpp"
 
-#include "../../Utils/Utils.hpp"
+#include "src/Server/modelo/Posicion.hpp"
+#include "src/Utils/log/Log.hpp"
+#include "src/Utils/Utils.hpp"
+
+#include "MovimientoMario.hpp"
+#include "VidaMario.h"
+#include "Modificadores/ModificadorMario.h"
+#include "Modificadores/SinModificador.h"
+#include "Modificadores/MarioDeFuego.h"
 
 class SpriteMario;
-#include "../sprites/SpriteMario.hpp"
+#include "src/Server/sprites/SpriteMario.hpp"
 
 class Mario{
 
@@ -33,6 +39,9 @@ class Mario{
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
 
+        void perderVida();
+        void hacerseDeFuego();
+        void dispararFuego();//agregarle lo que se necesite
 
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
 		void desconectar(){
@@ -47,11 +56,13 @@ class Mario{
 		~Mario();
 
 	private:
+        void swapDeModificador(ModificadorMario *nuevoModificador);
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
 		SpriteMario * spriteMario;
+		ModificadorMario* modificador;
+		VidaMario* vidaMario;
 		int puntos;
-		int cantidadMonedas;
 		int numeroJugador;
 		bool estaConectadoElJugador;
 };

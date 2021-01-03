@@ -7,7 +7,7 @@ using namespace std;
 
 #include <stdio.h>
 
-#include "../../Server/modelo/Mario.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 #include "Assert.hpp"
 class MarioTest{
 

@@ -10,7 +10,7 @@ using namespace std;
 #include <utility>
 
 class Mario;
-#include "../modelo/Mario.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 
 class Juego{
 

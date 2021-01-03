@@ -1,12 +1,12 @@
 #ifndef SRC_SERVER_MODELO_MOVIMIENTO_MOVIMIENTOMARIO_HPP_
 #define SRC_SERVER_MODELO_MOVIMIENTO_MOVIMIENTOMARIO_HPP_
 
-#include "MovimientoHorizontal.hpp"
-#include "MovimientoVertical.hpp"
-#include "../Terreno/Aire.hpp"
-#include "../Terreno/Tierra.hpp"
-#include "../Posicion.hpp"
-#include "../Terreno/Terreno.hpp"
+#include "src/Server/modelo/movimiento/MovimientoHorizontal.hpp"
+#include "src/Server/modelo/movimiento/MovimientoVertical.hpp"
+#include "src/Server/modelo/Terreno/Aire.hpp"
+#include "src/Server/modelo/Terreno/Tierra.hpp"
+#include "src/Server/modelo/Posicion.hpp"
+#include "src/Server/modelo/Terreno/Terreno.hpp"
 
 class MovimientoMario{
 	public:

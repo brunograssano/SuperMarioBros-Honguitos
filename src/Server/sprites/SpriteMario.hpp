@@ -7,7 +7,7 @@
 
 class Mario;
 #include "Sprite.hpp"
-#include "../modelo/Mario.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 
 class SpriteMario : public Sprite{
 

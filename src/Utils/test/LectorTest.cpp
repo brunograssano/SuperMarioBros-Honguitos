@@ -1,7 +1,6 @@
 
 using namespace std;
 #include "LectorTest.hpp"
-#include "../../Server/lector/Lector.hpp"
 #include <iostream>
 
 void LectorTest::ejecutar(Assert* testSuite){
@@ -21,7 +20,7 @@ void LectorTest::ejecutar(Assert* testSuite){
 
 void LectorTest::test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
@@ -37,7 +36,7 @@ void LectorTest::test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite)
 
 void LectorTest::test02CuandoLePedisAlLectorQueLeaTraeElAlto(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
@@ -52,7 +51,7 @@ void LectorTest::test02CuandoLePedisAlLectorQueLeaTraeElAlto(Assert* testSuite){
 }
 void LectorTest::test03CuandoLePedisAlLectorElArchivoSeLeeCorrectamente(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
@@ -67,7 +66,7 @@ void LectorTest::test03CuandoLePedisAlLectorElArchivoSeLeeCorrectamente(Assert* 
 }
 void LectorTest::test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMensajesDeError(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/modeloXML.xml";
 
@@ -83,7 +82,7 @@ void LectorTest::test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMen
 
 void LectorTest::test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "NoExisto.xml";
 
@@ -93,7 +92,7 @@ void LectorTest::test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(Assert* 
 
 	string mensajeError;
 
-	for(string error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido->mensajeError){
 		mensajeError = error;
 	}
 
@@ -106,7 +105,7 @@ void LectorTest::test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(Assert* 
 
 void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/archivoMalFormato.xml";
 
@@ -116,7 +115,7 @@ void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert
 
 	string mensajeError;
 
-	for(string error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido->mensajeError){
 		mensajeError = error;
 	}
 
@@ -129,7 +128,7 @@ void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert
 }
 void LectorTest::test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanzaUnError(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/archivoAnchoMalEnviado.xml";
 
@@ -141,7 +140,7 @@ void LectorTest::test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanza
 
 	string mensajeError;
 
-	for(string error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido->mensajeError){
 		mensajeError = error;
 	}
 
@@ -154,7 +153,7 @@ void LectorTest::test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanza
 }
 void LectorTest::test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanzaUnError(Assert* testSuite){
 
-	Lector* lector = new Lector();
+	auto* lector = new Lector();
 
 	string archivoALeer = "resources/ArchivosXML/archivoAltoMalEnviado.xml";
 
@@ -166,7 +165,7 @@ void LectorTest::test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanza
 
 	string mensajeError;
 
-	for(string error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido->mensajeError){
 		mensajeError = error;
 	}
 

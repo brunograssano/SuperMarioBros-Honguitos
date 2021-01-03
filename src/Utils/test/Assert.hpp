@@ -12,22 +12,22 @@ class Assert{
 		void assert(int obtenido, int esperado, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido==esperado){
-				cout << "todo bien" <<endl;
+				cout << "OK" <<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "todo mal" <<endl;
+				cout << "ERROR" <<endl;
 			}
 			pruebasTotales++;
 		}
 		void assert(float obtenido, float esperado, float delta, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido < esperado + delta && obtenido > esperado - delta){
-				cout << "todo bien" <<endl;
+				cout << "OK" <<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "todo mal" <<endl;
+				cout << "ERROR" <<endl;
 			}
 			pruebasTotales++;
 		}
@@ -35,11 +35,11 @@ class Assert{
 		void assert(bool condicion, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(condicion){
-				cout << "todo bien" <<endl;
+				cout << "OK" <<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "todo mal" <<endl;
+				cout << "ERROR" <<endl;
 			}
 			pruebasTotales++;
 		}
@@ -47,11 +47,11 @@ class Assert{
 		void assert(string obtenido, string esperado, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido.compare(esperado) == 0){
-				cout << "todo bien" <<endl;
+				cout << "OK" <<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "todo mal" <<endl;
+				cout << "ERROR" <<endl;
 			}
 			pruebasTotales++;
 		}

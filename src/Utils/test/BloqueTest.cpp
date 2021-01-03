@@ -14,7 +14,7 @@ void BloqueTest::test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* te
 
 	Bloque* bloque = new Ladrillo(3, 5,0);
 
-	testSuite->assert(bloque->obtenerPosicionX() == 3 && bloque->obtenerPosicionY() == 5,"El Ladrillo se creo correctamente");
+	testSuite->assert(bloque->obtenerPosicionX() == 0 && bloque->obtenerPosicionY() == 0,"El Ladrillo se posiciono correctamente");
 
 	delete bloque;
 }

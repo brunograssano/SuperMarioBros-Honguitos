@@ -22,7 +22,6 @@ class Mario{
 		Mario(int numeroJugador);
 		int obtenerPuntos() const;
 		void agregarPuntos(int unosPuntos);
-		int obtenerMonedas() const;
 		void agregarMoneda();
 
 		SpriteMario* obtenerSpite();
@@ -40,6 +39,7 @@ class Mario{
 		void actualizarDerechaMario();
 
         void perderVida();
+        int obtenerVida();
         void hacerseDeFuego();
         void dispararFuego();//agregarle lo que se necesite
 
@@ -65,6 +65,7 @@ class Mario{
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;
+
 };
 
 

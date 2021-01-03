@@ -126,6 +126,10 @@ void Mario::swapDeModificador(ModificadorMario* nuevoModificador){
     modificador = nuevoModificador;
 }
 
+int Mario::obtenerVida(){
+    return vidaMario->obtenerVida();
+}
+
 void Mario::perderVida() {
     ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
     swapDeModificador(nuevoModificador);

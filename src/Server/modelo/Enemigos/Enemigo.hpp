@@ -4,6 +4,7 @@
 #include "../Posicion.hpp"
 #include <string>
 #include "../../sprites/Sprite.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Enemigo{
 
@@ -25,7 +26,7 @@ class Enemigo{
 			posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
 		};
 
-		virtual enemigo_t serializar(){return {0,0,0,0,0};};
+		virtual enemigo_t serializar(){return {0,0,0,0,0};}
 
 		virtual void actualizarPosicion(){};
 

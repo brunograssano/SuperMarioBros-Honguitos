@@ -1,13 +1,18 @@
 #include "BloqueTest.hpp"
 
+#define CYAN "\u001b[36m"
+#define AZUL_CLARO "\e[1;34m"
+#define RESET "\x1b[0m"
+
 void BloqueTest::ejecutar(Assert* testSuite){
 
-	cout << "========== Comenzando con las pruebas de bloque ==========" << endl;
-
+	cout << CYAN"========== Comenzando con las pruebas de bloque ==========" RESET << endl;
+    cout << AZUL_CLARO"----------TEST 01----------" RESET << endl;
 	test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(testSuite);
+    cout << AZUL_CLARO"----------TEST 02----------" RESET<< endl;
 	test02SeAniadeUnBloqueAUnaPlataforma(testSuite);
 
-	cout << "========== Finalizando con las pruebas de bloque ==========" << endl;
+	cout << CYAN"========== Finalizando con las pruebas de bloque ==========" RESET << endl;
 }
 
 void BloqueTest::test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* testSuite){
@@ -21,7 +26,7 @@ void BloqueTest::test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* te
 
 void BloqueTest::test02SeAniadeUnBloqueAUnaPlataforma(Assert* testSuite){
 
-	Plataforma* plataforma = new Plataforma();
+	auto* plataforma = new Plataforma();
 	Bloque* bloque = new Ladrillo(3,5,0);
 	plataforma->agregarBloque(bloque);
 

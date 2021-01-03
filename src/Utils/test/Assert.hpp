@@ -6,28 +6,32 @@
 #include <stdio.h>
 using namespace std;
 
+#define ROJO  "\x1b[31m"
+#define VERDE "\x1b[32m"
+#define RESET "\x1b[0m"
+
 class Assert{
 	public:
 
 		void assert(int obtenido, int esperado, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido==esperado){
-				cout << "OK" <<endl;
+				cout << VERDE "OK" RESET<<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "ERROR" <<endl;
+				cout <<ROJO "ERROR" RESET<<endl;
 			}
 			pruebasTotales++;
 		}
 		void assert(float obtenido, float esperado, float delta, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido < esperado + delta && obtenido > esperado - delta){
-				cout << "OK" <<endl;
+				cout <<VERDE "OK" RESET<<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "ERROR" <<endl;
+				cout <<ROJO "ERROR" RESET<<endl;
 			}
 			pruebasTotales++;
 		}
@@ -35,11 +39,11 @@ class Assert{
 		void assert(bool condicion, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(condicion){
-				cout << "OK" <<endl;
+				cout <<VERDE "OK" RESET<<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "ERROR" <<endl;
+				cout <<ROJO "ERROR" RESET<<endl;
 			}
 			pruebasTotales++;
 		}
@@ -47,11 +51,11 @@ class Assert{
 		void assert(string obtenido, string esperado, string textoExplicativo){
 			cout << textoExplicativo << ": ";
 			if(obtenido.compare(esperado) == 0){
-				cout << "OK" <<endl;
+				cout <<VERDE "OK" RESET<<endl;
 				pruebasPasadas++;
 			}
 			else{
-				cout << "ERROR" <<endl;
+				cout <<ROJO "ERROR" RESET<<endl;
 			}
 			pruebasTotales++;
 		}

@@ -16,6 +16,8 @@ class Servidor;
 #include "../Utils/Utils.hpp"
 
 #include "modelo/Nivel.hpp"
+#include "modelo/Moneda.hpp"
+
 #include "modelo/Juego.hpp"
 #include "lector/ArchivoLeido.hpp"
 
@@ -45,9 +47,7 @@ class AplicacionServidor{
 	private:
 		bool tengoJugadores(map<int,Mario*> jugadores) const;
 		Servidor* servidor;
-		void revisarSiTerminoNivel(const map<int,Mario*>& jugadores);
-		bool revisarSiPerdieron();
-		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
+		bool perdieron();
 		bool estaEnRangoVisible(int posicionX) const;
 		SDL_Rect* obtenerRectCamara();
 		void moverCamara(const map<int,Mario*>& jugadores);

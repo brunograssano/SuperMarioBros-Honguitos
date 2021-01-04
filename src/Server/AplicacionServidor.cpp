@@ -145,26 +145,6 @@ void AplicacionServidor::iniciarJuego(){
 	comenzoElJuego = true;
 }
 
-void AplicacionServidor::actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada){
-	bool seMovio = false;
-	if(entrada.A){
-		jugador->actualizarIzquierdaMario();
-		seMovio = true;
-	}
-	if(entrada.D){
-		jugador->actualizarDerechaMario();
-		seMovio = true;
-	}
-	if(entrada.W){
-		jugador->actualizarSaltarMario();
-		seMovio = true;
-	}
-	if(entrada.S && !seMovio){
-		jugador->actualizarAgacharseMario();
-	}
-}
-
-
 void AplicacionServidor::gameLoop(){
 	unsigned int microSegundosEspera = 16666;
 	while(!comenzoElJuego){
@@ -180,22 +160,14 @@ void AplicacionServidor::gameLoop(){
 
 			while(!colaDeEntradasUsuario.empty()){
 				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
-				actualizarPosicionDeJugador(jugadores.at(parIDEntrada.id),parIDEntrada.entradas);
+				juego->actualizarJugador(parIDEntrada.id, parIDEntrada.entradas);
 				colaDeEntradasUsuario.pop();
 			}
-
-			for(auto const& parClaveJugador:jugadores){
-				parClaveJugador.second->actualizarPosicion();
-			}
-
-			juego->actualizarModelo();
-
-			revisarSiTerminoNivel(jugadores);
-			if(revisarSiPerdieron()){
-				terminoElJuego = true;
-			}
+			juego->actualizarModelo(&rectanguloCamara, contadorNivel);
 
 			moverCamara(jugadores);
+            ganaron = juego->ganaron();
+			terminoElJuego = ganaron || this->perdieron();
 		}
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
@@ -213,38 +185,8 @@ void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuar
 	this->colaDeEntradasUsuario.push(entradaUsuario);
 }
 
-bool AplicacionServidor::revisarSiPerdieron(){
+bool AplicacionServidor::perdieron(){
 	return ((contadorNivel->tiempoRestante() == 0) && !ganaron);
-}
-
-void AplicacionServidor::revisarSiTerminoNivel(const map<int,Mario*>& jugadores){
-
-	bool pasadoLimite = true;
-	int puntoBandera = juego->obtenerPuntoBanderaFinActual();
-	for(auto const& parClaveJugador:jugadores){
-		Mario* jugador = parClaveJugador.second;
-		if(jugador->obtenerPosicionX()<puntoBandera && jugador->estaConectado()){
-			pasadoLimite = false;
-		}
-	}
-
-	if(pasadoLimite && juego->quedaSoloUnNivel() && tengoJugadores(jugadores)){
-		juego->sumarPuntosAJugadores(contadorNivel->tiempoRestante());
-		ganaron = true;
-		terminoElJuego = true;
-		log->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
-	}
-	else if(pasadoLimite && tengoJugadores(jugadores)){
-		rectanguloCamara.x= 0;
-		rectanguloCamara.y = 0;
-		juego->avanzarNivel();
-		juego->sumarPuntosAJugadores(contadorNivel->tiempoRestante());
-		delete contadorNivel;
-		contadorNivel = new Contador(juego->obtenerNiveles().front()->obtenerTiempo(), SEGUNDOS);
-		contadorNivel->iniciar();
-		log->mostrarMensajeDeInfo("Se avanzo de nivel");
-	}
-
 }
 
 void AplicacionServidor::activarJugador(int idMarioConectandose){

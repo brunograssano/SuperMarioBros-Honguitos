@@ -1,4 +1,3 @@
-
 #include "Nivel.hpp"
 
 #include <string>
@@ -25,9 +24,9 @@ void Nivel::actualizarMonedas(){
 	}
 }
 
-
 void Nivel::actualizarModelo(){
-	actualizarPosicionesEnemigos();
+    //resolverColisiones();
+    actualizarPosicionesEnemigos();
 	actualizarMonedas();
 }
 

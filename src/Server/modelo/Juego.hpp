@@ -11,7 +11,7 @@ using namespace std;
 
 class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"
-
+#include "src/Utils/Contador.hpp"
 class Juego{
 
 	private:
@@ -32,8 +32,13 @@ class Juego{
 				nivel->inicializarPosicionEnemigo();
 			}
 		}
+        bool quedaSoloUnNivel();
+        bool todosEnLaMeta();
+        void avanzarNivel(SDL_Rect* camara, Contador* contador /*TODO: Sacar estos parametros*/);
+        void sumarPuntosAJugadores(int puntos);
 
-		map<int,Mario*> jugadores;
+
+        map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
 
 		static Juego* instanciaJuego;
@@ -44,10 +49,9 @@ public:
 		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
 
 		list<Nivel*> obtenerNiveles();
-		void avanzarNivel();
-		void actualizarModelo();
-		void sumarPuntosAJugadores(int puntos);
-		bool quedaSoloUnNivel();
+        bool ganaron();
+		void actualizarModelo(SDL_Rect* camara, Contador* contador/*TODO: Sacar estos parametros*/);
+        void actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario);
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
 
@@ -57,8 +61,6 @@ public:
         list<Tuberia*> obtenerTuberias();
 		map<int,Mario*> obtenerMarios();
         int obtenerMundoActual();
-		int obtenerPuntoBanderaFinActual();
-
 		~Juego();
 
 };

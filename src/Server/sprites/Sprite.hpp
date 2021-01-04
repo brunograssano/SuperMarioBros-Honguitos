@@ -11,22 +11,16 @@ class Sprite{
 
 	public:
 
-		virtual string direccionImagen(){
-			return direccionTextura;
-		}
-
-		virtual void actualizarSprite(){}
-
-		virtual SDL_Rect obtenerRectanguloActual(){
-			SDL_Rect rectangulo = {20,20,20,20};
-			return rectangulo;
-		};//ver como refactorizar
-
-		int obtenerEstadoActual(){
-			return estadoActual;
-		}
+		virtual void actualizarSprite() = 0;
+		virtual SDL_Rect obtenerRectanguloActual() = 0;
 		virtual ~Sprite(){};
 
+        int obtenerEstadoActual(){
+            return estadoActual;
+        }
+        virtual string direccionImagen(){
+            return direccionTextura;
+        }
 	protected:
 		string direccionTextura;
 		int ciclos = 0;

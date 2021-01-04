@@ -4,45 +4,23 @@
 
 #include "../sprites/Sprite.hpp"
 #include "../sprites/SpriteMoneda.hpp"
+#include "PosicionFija.hpp"
 #include "Posicion.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Moneda{
 
-public:
-	Moneda(int coordenadaX, int coordenadaY){
-		this->posicion = new PosicionFija(coordenadaX, coordenadaY);
-		this->sprite = new SpriteMoneda();
-	}
+    public:
+        Moneda(int coordenadaX, int coordenadaY);
+        ~Moneda();
+        void actualizar();
+        moneda_t serializar();
+        int obtenerPosicionX();
+        int obtenerPosicionY();
 
-	~Moneda(){
-		delete this->posicion;
-		delete this->sprite;
-	}
-
-	void actualizar(){
-		this->sprite->actualizarSprite();
-	}
-
-    moneda_t serializar(){
-		moneda_t monedaSerializada;
-
-		monedaSerializada.posX = posicion->obtenerPosX();
-		monedaSerializada.posY = posicion->obtenerPosY();
-		monedaSerializada.numeroRecorte = sprite->obtenerEstadoActual();
-		return monedaSerializada;
-	}
-
-	int obtenerPosicionX(){
-		return this->posicion->obtenerPosX();
-	}
-
-	int obtenerPosicionY(){
-		return this->posicion->obtenerPosY();
-	}
-
-private:
-	Posicion* posicion;
-	Sprite* sprite;
+    private:
+        Posicion* posicion;
+        Sprite* sprite;
 };
 
 

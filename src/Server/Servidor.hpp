@@ -34,11 +34,10 @@ const int MAX_CONEXIONES = 4;
 class Servidor{
 
 	public:
-		Servidor(ArchivoLeido* archivoLeido,list<string> mensajesErrorOtroArchivo, int puerto, char* ip);
+		Servidor(ArchivoLeido* archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
 		~Servidor();
 
 		void conectarJugadores();
-		int getMaximasConexiones(){return this->cantidadConexiones;}
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);

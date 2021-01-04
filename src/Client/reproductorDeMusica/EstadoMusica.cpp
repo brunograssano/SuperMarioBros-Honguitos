@@ -1,10 +1,6 @@
 #include "EstadoMusica.hpp"
 #include "ReproductorMusica.hpp"
 
-EstadoMusica* EstadoMusica::cambiar() {
-    return new Suena();
-}
-
 EstadoMusica* Suena::cambiar() {
     ReproductorMusica::getInstance()->pausarMusica();
     return new Muteada();

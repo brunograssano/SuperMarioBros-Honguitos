@@ -21,8 +21,8 @@
 class Enviador{
 	public:
 		virtual ~Enviador(){};
-		virtual void enviar(){};
-		virtual void dejarInformacion(void* informacion){};
+		virtual void enviar() = 0;
+		virtual void dejarInformacion(void* informacion) = 0;
 
 		void revisarSiSeMandoCorrectamente(int resultado, string descripcion){
 			if(resultado < 0){

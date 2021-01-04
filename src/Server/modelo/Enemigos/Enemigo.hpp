@@ -1,7 +1,7 @@
 #ifndef SRC_SERVER_MODELO_ENEMIGOS_ENEMIGO_HPP_
 #define SRC_SERVER_MODELO_ENEMIGOS_ENEMIGO_HPP_
 
-#include "../Posicion.hpp"
+#include "../PosicionMovil.hpp"
 #include <string>
 #include "../../sprites/Sprite.hpp"
 #include "src/Utils/Utils.hpp"

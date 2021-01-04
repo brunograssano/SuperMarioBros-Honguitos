@@ -1,9 +1,6 @@
 #include "Log.hpp"
 
-#include <time.h>
-#include <stdio.h>
-#include <string.h>
-
+#include <ctime>
 #include "Debug.hpp"
 #include "Error.hpp"
 #include "Info.hpp"
@@ -12,7 +9,7 @@ Log* Log::log=nullptr;
 
 Log* Log::getInstance(TipoLog* tipo){
 	if(log==nullptr){
-		if(tipo == NULL){
+		if(tipo == nullptr){
 			tipo = new Info();
 		}
 		log = new Log(tipo);
@@ -32,7 +29,7 @@ Log::~Log(){
 }
 
 //DEBUG//
-void Log::mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY){
+void Log::mostrarPosicion(const string& nombreEntidad,int coordenadaX, int coordenadaY){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + to_string(coordenadaX) + "," + to_string(coordenadaY) + ")");
@@ -40,7 +37,7 @@ void Log::mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY)
 	pthread_mutex_unlock(&mutex);
 }
 
-void Log::mostrarAccion(string accion){
+void Log::mostrarAccion(const string& accion){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - " + accion,"");
@@ -49,7 +46,7 @@ void Log::mostrarAccion(string accion){
 }
 
 //INFO//
-void Log::mostrarMensajeDeInfo(string mensajeInfo){
+void Log::mostrarMensajeDeInfo(const string& mensajeInfo){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - " + mensajeInfo,"");
@@ -57,7 +54,7 @@ void Log::mostrarMensajeDeInfo(string mensajeInfo){
 	pthread_mutex_unlock(&mutex);
 }
 
-void Log::mostrarMensajeDeCarga(string idObjetoCargado,string rutaObjetoCargado){
+void Log::mostrarMensajeDeCarga(const string& idObjetoCargado,const string& rutaObjetoCargado){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(" - Se cargo " + idObjetoCargado, " desde la ruta " + rutaObjetoCargado);
@@ -66,7 +63,7 @@ void Log::mostrarMensajeDeCarga(string idObjetoCargado,string rutaObjetoCargado)
 }
 
 //ERRORES//
-void Log::huboUnErrorSDL(string descripcionError, string errorSDL){
+void Log::huboUnErrorSDL(const string& descripcionError, const string& errorSDL){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	string mensaje= armarMensaje(" - " + descripcionError, " ---- " + errorSDL);
@@ -74,7 +71,7 @@ void Log::huboUnErrorSDL(string descripcionError, string errorSDL){
 	pthread_mutex_unlock(&mutex);
 }
 
-void Log::huboUnError(string descripcionError){
+void Log::huboUnError(const string& descripcionError){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	string mensaje = armarMensaje(descripcionError,"");
@@ -82,7 +79,7 @@ void Log::huboUnError(string descripcionError){
 	pthread_mutex_unlock(&mutex);
 }
 
-string Log::armarMensaje(string primeraParte, string segundaParte) {
+string Log::armarMensaje(const string& primeraParte, const string& segundaParte) {
 	string mensaje = "";
 	time(&tiempo);
 	char *tiempoActual = ctime(&tiempo);

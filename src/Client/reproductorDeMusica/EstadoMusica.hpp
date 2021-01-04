@@ -6,21 +6,21 @@ using namespace std;
 
 class EstadoMusica {
     public:
-        virtual ~EstadoMusica(){};
-        virtual EstadoMusica* cambiar();
-        virtual void reproducir(string nombreCancion){};
+        virtual ~EstadoMusica()= default;;
+        virtual EstadoMusica* cambiar() = 0;
+        virtual void reproducir(string nombreCancion) = 0;
 };
 
 class Suena : public EstadoMusica{
     public:
-        EstadoMusica* cambiar();
+        EstadoMusica* cambiar() override;
         void reproducir(string nombreCancion) override;
 
 };
 
 class Muteada : public EstadoMusica{
     public:
-        EstadoMusica* cambiar();
+        EstadoMusica* cambiar() override;
         void reproducir(string nombreCancion) override;
 };
 

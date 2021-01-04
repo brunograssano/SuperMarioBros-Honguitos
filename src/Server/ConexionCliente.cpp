@@ -116,17 +116,17 @@ void ConexionCliente::ejecutar(){
 	actualizarCliente(informacionAMandar);
 	esperarCredenciales();
 
-	while(!esUsuarioValido){
-		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia,false},this);
-		enviarVerificacion(esUsuarioValido);
-		if(esUsuarioValido){
-			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia + " del cliente: " + this->ip);
-		}
-		else{
-			esperarCredenciales();
-		}
-	}
-
+	while(!esUsuarioValido && !terminoJuego) {
+        esUsuarioValido = servidor->esUsuarioValido({nombre, contrasenia, false}, this);
+        enviarVerificacion(esUsuarioValido);
+        if (esUsuarioValido) {
+            Log::getInstance()->mostrarMensajeDeInfo(
+                    "Se acepto el usuario: " + nombre + " con contrasenia: " + contrasenia + " del cliente: " +
+                    this->ip);
+        } else {
+            esperarCredenciales();
+        }
+    }
 	enviarActualizacionesDeRonda();
 }
 

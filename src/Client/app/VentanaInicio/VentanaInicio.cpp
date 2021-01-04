@@ -194,23 +194,23 @@ void VentanaInicio::obtenerEntrada(){
 		this->ponerLosMarios();
 
 		if(ingresoIncorrectoCredenciales || murioElServer){
-			SDL_Color colorRojo = { 214, 40, 57, 0xFF };
-			SDL_Rect rectangulo = {370, 265, 260, 30 };
-			SDL_SetRenderDrawColor(renderer, 162, 177, 205, 0xFF );
-			SDL_RenderFillRect(renderer, &rectangulo);
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
-			SDL_RenderDrawRect(renderer, &rectangulo);
 			if(murioElServer){
 				imprimirMensajeDesconexion();
-			}
-			SDL_Texture* texturaMensaje = cargoTextura(errorDeIngreso, colorRojo, this->renderer, this->fuente);
-			if(texturaMensaje == nullptr){
-				log->huboUnError("No se pudo crear la textura para el mensaje: '" + errorDeIngreso +"'");
+			}else{
+				SDL_Color colorRojo = { 214, 40, 57, 0xFF };
+				SDL_Rect rectangulo = {370, 265, 260, 30 };
+				SDL_SetRenderDrawColor(renderer, 162, 177, 205, 0xFF );
+				SDL_RenderFillRect(renderer, &rectangulo);
+				SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF );
+				SDL_RenderDrawRect(renderer, &rectangulo);
+				SDL_Texture* texturaMensaje = cargoTextura(errorDeIngreso, colorRojo, this->renderer, this->fuente);
+				if(texturaMensaje == nullptr){
+					log->huboUnError("No se pudo crear la textura para el mensaje: '" + errorDeIngreso +"'");
 
+				}
+				renderizar(375, 270, 18, 250, texturaMensaje, renderer);
+				destructorDeTexturas(texturaMensaje);
 			}
-			renderizar(375, 270, 18, 250, texturaMensaje, renderer);
-			destructorDeTexturas(texturaMensaje);
-
 		}
 
 		SDL_RenderPresent( this->renderer );

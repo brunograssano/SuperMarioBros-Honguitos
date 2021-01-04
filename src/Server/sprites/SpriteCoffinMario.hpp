@@ -16,12 +16,12 @@ class SpriteCoffinMario : public Sprite{
 
 		SDL_Rect obtenerRectanguloActual()override;
 
-		int obtenerPosicionX();
+		int obtenerPosicionX() const;
 
-		void actualizarSprite();
+		void actualizarSprite() override;
 
 	private:
-		SDL_Rect estadosPosibles[3];
+		SDL_Rect estadosPosibles[3]{};
 		int posicionX;
 };
 

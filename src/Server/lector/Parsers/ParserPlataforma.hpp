@@ -5,10 +5,12 @@ using namespace std;
 #include <string>
 #include "../pugixml.hpp"
 #include "../ArchivoLeido.hpp"
+#include "Parser.h"
 
-class ParserPlataforma{
+class ParserPlataforma : public Parser{
 	public:
-			void ParsearPlataforma(pugi::xml_node plataforma,Nivel* unNivel,ArchivoLeido* archivoLeido);
+        void parsear(pugi::xml_node plataforma, Nivel* unNivel, ArchivoLeido* archivoLeido) override;
+        void parsear(pugi::xml_node nodo,ArchivoLeido* archivoLeido) override{};
 };
 
 

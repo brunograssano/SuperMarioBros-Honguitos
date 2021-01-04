@@ -14,9 +14,9 @@ using namespace std;
 class BloqueTest{
 
 	public:
-		void ejecutar(Assert* testSuite );
-		void test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* testSuite);
-		void test02SeAniadeUnBloqueAUnaPlataforma(Assert* testSuite);
+		static void ejecutar(Assert* testSuite );
+		static void test01ElBloqueDeLadrilloSeCreaConUnaPosicionCorrecta(Assert* testSuite);
+		static void test02SeAniadeUnBloqueAUnaPlataforma(Assert* testSuite);
 };
 
 #endif /* SRC_UTILS_TEST_BLOQUETEST_HPP_ */

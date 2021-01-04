@@ -43,17 +43,17 @@ class AplicacionServidor{
 		}
 
 	private:
-		bool tengojugadores(map<int,Mario*> jugadores);
+		bool tengoJugadores(map<int,Mario*> jugadores) const;
 		Servidor* servidor;
-		void revisarSiTerminoNivel(map<int,Mario*> jugadores);
+		void revisarSiTerminoNivel(const map<int,Mario*>& jugadores);
 		bool revisarSiPerdieron();
 		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
-		bool estaEnRangoVisible(int posicionX);
+		bool estaEnRangoVisible(int posicionX) const;
 		SDL_Rect* obtenerRectCamara();
-		void moverCamara(map<int,Mario*> jugadores);
+		void moverCamara(const map<int,Mario*>& jugadores);
 		Log* log;
 		Juego* juego;
-		SDL_Rect rectanguloCamara;
+		SDL_Rect rectanguloCamara{};
 		int cantJugadores;
 		int ancho_pantalla;
 		bool terminoElJuego;

@@ -11,8 +11,6 @@
 
 #include "ManejadorSDL.hpp"
 #include "../../Utils/log/Log.hpp"
-#include "AplicacionCliente.hpp"
-
 
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
@@ -40,6 +38,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	texturaFondoGameOver = intentarCarga("el fondo del final del juego","resources/Imagenes/Niveles/fondoGameOver.png",renderizador);
 
 	texturaCoffinMario = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
+
+	texturaTuberias = intentarCarga("la imagen de las tuberias","resources/Imagenes/Bloques/Tuberias.png",renderizador);
 
 	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
 							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
@@ -245,6 +245,7 @@ CargadorTexturas::~CargadorTexturas(){
 	destructorDeTexturas(texturaFuenteJuego);
 	destructorDeTexturas(texturaCoffinMario);
 	destructorDeTexturas(texturaDefecto);
+    destructorDeTexturas(texturaTuberias);
 
 	for (auto const& parClaveMario : texturasMario){
 		destructorDeTexturas(parClaveMario.second);
@@ -271,4 +272,8 @@ CargadorTexturas::~CargadorTexturas(){
 	}
 
 	TTF_CloseFont( fuenteJuego );
+}
+
+SDL_Texture *CargadorTexturas::obtenerTexturaTuberia() {
+    return texturaTuberias;
 }

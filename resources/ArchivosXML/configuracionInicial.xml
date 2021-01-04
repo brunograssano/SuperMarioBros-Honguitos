@@ -27,6 +27,21 @@
                 </enemigo>
 
             </enemigos>
+
+            <tuberia>
+                <color>0</color> <!--0 - VERDE , 1 - INVERTIDO-->
+                <posicionX>100</posicionX>
+                <tipoTuberia>0</tipoTuberia> <!--0 - TUBERIA NORMAL , 1 - TUBERIA GRANDE-->
+            </tuberia>
+
+
+            <tuberia>
+                <color>0</color>
+                <posicionX>250</posicionX>
+                <tipoTuberia>1</tipoTuberia>
+            </tuberia>
+
+
             <plataformas>
 
                 <plataforma>
@@ -924,6 +939,6 @@
 		</usuario>
 
 	</credenciales>
-	<cantidadConexiones>4</cantidadConexiones>
+	<cantidadConexiones>1</cantidadConexiones>
 
 </configuracion>

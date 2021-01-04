@@ -3,8 +3,11 @@
 
 #include <map>
 #include <string>
-#include<tuple>
+#include <tuple>
 #include <cstdlib>
+#include <utility>
+#include "src/Server/modelo/Bloques/Tuberia.hpp"
+#include "Bloques/Plataforma.hpp"
 
 #include "Bloques/Bloque.hpp"
 #include "Enemigos/Enemigo.hpp"
@@ -16,17 +19,16 @@ const int ALTO_NIVEL = 600;
 
 class Nivel{
 
-
 	public:
 		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
 			this->mundo = mundo;
-			this->direccionFondo = direccionFondo;
+			this->direccionFondo = std::move(direccionFondo);
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
 			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
-			this->altoNivel = ALTO_NIVEL;
 		}
 
+        void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
 		void agregarPlataforma(Plataforma* unaPlataforma){
 			plataformas.push_back(unaPlataforma);
 		}
@@ -39,26 +41,24 @@ class Nivel{
 			monedas.push_back(unaMoneda);
 		}
 
-		int obtenerTiempo(){
+		int obtenerTiempo() const{
 			return tiempo;
 		}
 
-		int obtenerMundo(){
+		int obtenerMundo() const{
 			return mundo;
 		}
 
 		void actualizarModelo();
-
 		void inicializarPosicionEnemigo();
 		void inicializarPosicionMonedas();
-
 		void inicializarPosicionesOcupadasPorBloques();
 
-		float obtenerPuntoBanderaFin();
-
+		float obtenerPuntoBanderaFin() const;
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
+        list<Tuberia*> obtenerTuberias();
 		string obtenerDireccionFondoActual();
 
 		~Nivel(){
@@ -76,33 +76,25 @@ class Nivel{
 			monedas.clear();
 		}
 
+    private:
+        void actualizarPosicionesEnemigos();
+        void actualizarMonedas();
+        bool esUnaPosicionXValidaEnemigo(int coordenadaX);
+        bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
 
-	private:
+        map<int, bool> posicionesOcupadasXEnemigos;
+        map<tuple<int, int>, bool> posicionesOcupadas;
 
-		void actualizarPosicionesEnemigos();
-		void actualizarMonedas();
+        list<Plataforma*> plataformas;
+        list<Enemigo*> enemigos;
+        list<Moneda*> monedas;
+        list<Tuberia*> tuberias;
 
-		bool esUnaPosicionXValidaEnemigo(int coordenadaX);
-
-		bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
-
-		map<int, bool> posicionesOcupadasXEnemigos;
-
-		map<tuple<int, int>, bool> posicionesOcupadas;
-
-		list<Plataforma*> plataformas;
-		list<Enemigo*> enemigos;
-		list<Moneda*> monedas;
-
-		int altoNivel;
-
-		int mundo;
-		string direccionFondo;
-		int tiempo;
-		int cantidadMonedas;
-		float puntoBanderaFin;
+        int mundo;
+        string direccionFondo;
+        int tiempo;
+        int cantidadMonedas;
+        float puntoBanderaFin;
 };
-
-
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

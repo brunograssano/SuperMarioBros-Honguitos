@@ -18,11 +18,11 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 }
 
 
-bool JuegoCliente::ganaronElJuego(){
+bool JuegoCliente::ganaronElJuego() const{
 	return this->ganaron;
 }
 
-bool JuegoCliente::perdieronElJuego(){
+bool JuegoCliente::perdieronElJuego() const{
 	return this->perdieron;
 }
 
@@ -34,7 +34,7 @@ void JuegoCliente::agregarRonda(info_ronda_t ronda){
 	pthread_mutex_unlock(&mutex);
 }
 
-int JuegoCliente::obtenerPosXCamara(){
+int JuegoCliente::obtenerPosXCamara() const{
 	return posXCamara;
 }
 
@@ -66,6 +66,7 @@ void JuegoCliente::actualizar(){
 	enemigos.clear();
 	jugadores.clear();
 	monedas.clear();
+	tuberias.clear();
 
 	for(int i=0;i<ronda.topeBloques;i++){
 		bloques.push_front(ronda.bloques[i]);
@@ -76,12 +77,15 @@ void JuegoCliente::actualizar(){
 	for(int i=0;i<ronda.topeMonedas;i++){
 		monedas.push_front(ronda.monedas[i]);
 	}
+    for(int i=0;i<ronda.topeTuberias;i++){
+        tuberias.push_front(ronda.tuberias[i]);
+    }
 	for(int i=0;i<cantidadJugadores;i++){
 		jugadores[i]=ronda.jugadores[i];
 	}
 }
 
-int JuegoCliente::obtenerIDPropio(){
+int JuegoCliente::obtenerIDPropio() const{
 	return idPropio;
 }
 
@@ -101,10 +105,14 @@ list<moneda_t> JuegoCliente::obtenerMonedas(){
 	return monedas;
 }
 
-int JuegoCliente::obtenerTiempoFaltante(){
+int JuegoCliente::obtenerTiempoFaltante() const{
 	return tiempoFaltante;
 }
 
-int JuegoCliente::obtenerMundoActual(){
+int JuegoCliente::obtenerMundoActual() const{
 	return numeroMundo;
+}
+
+list<tuberia_t> JuegoCliente::obtenerTuberias() {
+    return tuberias;
 }

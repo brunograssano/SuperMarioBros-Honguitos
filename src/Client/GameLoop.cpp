@@ -29,9 +29,15 @@ void GameLoop::gameLoop() {
 			if (event.type == SDL_QUIT) {
 				salir = true;
 			}
+			else if (event.type == SDL_KEYDOWN  && event.key.keysym.sym == SDLK_m){
+                ReproductorMusica::getInstance()->cambiarMusica();
+			}
+			else if (event.type == SDL_KEYDOWN  && event.key.keysym.sym == SDLK_n){
+                ReproductorMusica::getInstance()->cambiarSonidos();
+			}
 		}
 		SDL_PumpEvents();
-		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
+		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL); // obtiene un array con el estado del teclado
 		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
 			salir = true;
 		} else {

@@ -4,6 +4,8 @@
 using namespace std;
 #include <string>
 #include "../../Utils/log/Log.hpp"
+#include "EstadoMusica.hpp"
+#include "EstadoSonidos.hpp"
 #include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -26,12 +28,22 @@ class ReproductorMusica{
 		void ReproducirSonidoMarioAgarraHongo();
 		void ReproducirSonidoApareceHongo();
 		void ReproducirSonidoMarioPisaKoopa();
+        void reproducirSonido(string tipoSonido);
+        void ponerMusica(string nombreCancion);
+        void reanudarMusica();
+        void pausarMusica();
+		void cambiarMusica();
+		void cambiarSonidos();
 		~ReproductorMusica();
-	private:
-		static ReproductorMusica* reproductor;
-		ReproductorMusica();
-		map<string,Mix_Chunk*> efectosDeSonido;
-		Mix_Music* cancionReproduciendose = nullptr;
+
+
+    private:
+        EstadoMusica* estadoMusica;
+        EstadoSonidos* estadoSonidos;
+        static ReproductorMusica* reproductor;
+        ReproductorMusica();
+        map<string,Mix_Chunk*> efectosDeSonido;
+        Mix_Music* cancionReproduciendose = nullptr;
 };
 
 

@@ -8,10 +8,12 @@ using namespace std;
 #include "../../../Utils/log/Error.hpp"
 #include "../../../Utils/log/Debug.hpp"
 #include "../../../Utils/log/Info.hpp"
+#include "Parser.h"
 
-class ParserLog{
+class ParserLog : public Parser{
 	public:
-			void ParsearLog(pugi::xml_node log,ArchivoLeido* archivoLeido);
+        void parsear(pugi::xml_node log, ArchivoLeido* archivoLeido) override;
+        void parsear(pugi::xml_node nodo,Nivel* unNivel,ArchivoLeido* archivoLeido)override{};
 };
 
 

@@ -46,7 +46,7 @@ string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
-float Nivel::obtenerPuntoBanderaFin(){
+float Nivel::obtenerPuntoBanderaFin() const{
 	return puntoBanderaFin;
 }
 
@@ -59,12 +59,12 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
-	list<Plataforma*> plataformas = this->obtenerPlataformas();
+
 	for(auto const& plataforma : plataformas){
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 
 		for(auto const& bloque : bloques){
-			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= altoNivel)){
+			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
 				Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
 						+ " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
 				bloque->ubicarEnPosicionDefault();
@@ -80,7 +80,7 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
 void Nivel::inicializarPosicionMonedas(){
 
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	int cantidadMaximaMonedas = (puntoBanderaFin/2)/(TAMANIO_MONEDA);
 
@@ -92,8 +92,8 @@ void Nivel::inicializarPosicionMonedas(){
 
 	int limiteXSuperior = puntoBanderaFin;
 	int limiteXInferior = puntoBanderaFin/10;
-	int limiteYInferior = altoNivel/4;
-	int limiteYSuperior = altoNivel*1/2;
+	int limiteYInferior = ALTO_NIVEL/4;
+	int limiteYSuperior = ALTO_NIVEL*1/2;
 
 	for(int i=0; i<cantidadMonedas && i<cantidadMaximaMonedas; i++){
 
@@ -116,7 +116,7 @@ void Nivel::inicializarPosicionMonedas(){
 
 void Nivel::inicializarPosicionEnemigo(){
 
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	int numeroPosicionX = 0;
 
@@ -131,8 +131,8 @@ void Nivel::inicializarPosicionEnemigo(){
 	if(enemigos.size()>=cantidadMaximaEnemigos){
 			Log::getInstance()->huboUnError("No se pudieron cargar "+ to_string((int)enemigos.size()) +
 				" enemigos, se carga la cantidad maxima permitida para este nivel: " + to_string((int)cantidadMaximaEnemigos));
-			list<Enemigo*>::iterator iterador1 = enemigos.begin();
-			list<Enemigo*>::iterator iterador2 = enemigos.end();
+			auto iterador1 = enemigos.begin();
+			auto iterador2 = enemigos.end();
 			advance(iterador1, cantidadMaximaEnemigos-1);
 			enemigos.erase(iterador1,iterador2);
 	}
@@ -148,4 +148,28 @@ void Nivel::inicializarPosicionEnemigo(){
 		enemigo->agregarPosicion(coordenadaX,coordenadaY);
 	}
 
+}
+
+void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia) {
+    auto* posibleTuberia = new Tuberia(posicionXNuevaTuberia,tipoTuberia,colorTuberia);
+
+    bool superponeAObjeto = false;
+    for (auto tuberia:tuberias){ // llevar a otra funcion a parte la verificacion de superposicion
+        if(tuberia->colisionaCon(posibleTuberia)){
+            superponeAObjeto = true;
+        }
+    }
+    // mismo chequeo para plataformas?
+
+    if(!superponeAObjeto){
+        tuberias.push_back(posibleTuberia);
+    }
+    else{
+        delete posibleTuberia;
+    }
+
+}
+
+list<Tuberia *> Nivel::obtenerTuberias() {
+    return tuberias;
 }

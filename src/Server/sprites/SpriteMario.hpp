@@ -7,15 +7,12 @@
 
 class Mario;
 #include "Sprite.hpp"
-#include "../modelo/Mario.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 
 class SpriteMario : public Sprite{
 
 	public:
-
 		SpriteMario();
-
-		SpriteMario(string direccionImagen);
 
 
 		SDL_Rect obtenerRectanguloActual()override;
@@ -27,15 +24,15 @@ class SpriteMario : public Sprite{
         void actualizarSpriteMarioAgacharse();
 
 	private:
-		SDL_Rect estadosPosibles[14];
-		int proximoEstado;
-		int contadorEvento;
-		int temporizadorMarioAgachado;
+		SDL_Rect estadosPosibles[14]{};
+		int proximoEstado{};
+		int contadorEvento{};
+		int temporizadorMarioAgachado{};
 
-		bool estaCorriendo(Mario* mario, bool btnDerecho);
+		bool estaCorriendo();
 		bool estaSaltando(Mario* mario, bool btnDerecho);
 		bool estaAgachado(Mario* mario, bool btnDerecho);
-		bool estaCambiandoDeDireccion(Mario* mario, bool btnDerecho);
+		bool estaCambiandoDeDireccion(bool btnDerecho);
 
 		bool estaCorriendo(Mario* mario);
 		bool estaSaltando(Mario* mario);

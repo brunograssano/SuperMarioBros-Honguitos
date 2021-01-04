@@ -22,11 +22,11 @@ void EnviadorRonda::enviar(){
 		resultadoEnvio = send(socket, &ronda, sizeof(info_ronda_t), 0);
 		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de informacion de una ronda");
 	}
-};
+}
 
 void EnviadorRonda::dejarInformacion(void* mensajeLog){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	colaRondas.push(*((info_ronda_t*) mensajeLog));
 	pthread_mutex_unlock(&mutex);
-};
+}

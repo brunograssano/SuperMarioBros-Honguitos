@@ -1,36 +1,16 @@
 #include "Cliente.hpp"
 
-#include "../Utils/log/Log.hpp"
 #include <thread>
 
 #include "app/ManejadorSDL.hpp"
+
+#include "UtilidadesCliente.hpp"
 
 #include "EnviadoresCliente/EnviadorEntrada.hpp"
 #include "EnviadoresCliente/EnviadorCredenciales.hpp"
 
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
-	struct sockaddr_in serv_addr;
-	int resultado;
-
-	socketCliente = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (socketCliente < 0){
-		Log::getInstance()->huboUnError("No se pudo crear el socket: Abortamos.");
-		exit(-1);
-	}
-
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(puerto);
-
-	// Convert IPv4 and IPv6 addresses from text to binary form
-	if(inet_pton(AF_INET, ip, &serv_addr.sin_addr)<=0){
-		Log::getInstance()->huboUnError("Dirección inválida / Dirección no soportada: Abortamos.");
-		exit(-1);
-	}
-	resultado = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
-	if (resultado < 0){
-		Log::getInstance()->huboUnErrorSDL("Falló la conexión al servidor. Abortamos.",to_string(errno));
-		exit(-1);
-	}
+	socketCliente = conectarAlServidor(ip, puerto);
 
 	terminoJuego = false;
 	empiezaElJuego = false;
@@ -222,7 +202,7 @@ void Cliente::ejecutar(){
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
-		cerrarSocketCliente();
+		cerrarSocketCliente(socketCliente);
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(-1);
@@ -249,23 +229,12 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 void Cliente::cerradoVentanaInicio() {
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-	cerrarSocketCliente();
-}
-
-void Cliente::cerrarSocketCliente() {
-	int resultado = shutdown(socketCliente, SHUT_RDWR);
-	if (resultado < 0) {
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",to_string(errno));
-	}
-	resultado = close(socketCliente);
-	if (resultado < 0) {
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",to_string(errno));
-	}
+	cerrarSocketCliente(socketCliente);
 }
 
 Cliente::~Cliente(){
 	terminarSDL();
-	cerrarSocketCliente();
+	cerrarSocketCliente(socketCliente);
 	while(!terminoEnviar || !terminoEscuchar){}
 
 	for(auto const& parClaveEscuchador:escuchadores){

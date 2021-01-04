@@ -2,13 +2,33 @@
 
 const int PARTES_DE_IP = 4;
 
+void mostrarAyuda(){
+    cout<<"Las opciones disponibles son las siguientes"<<endl;
+    cout<<"./mario [opciones]"<<endl;
+    cout<<"[opciones]"<<endl;
+    cout<<"-s,--server Iniciara la aplicacion en modo servidor"<<endl;
+    cout<<"-i,--ip Requiere a continuacion de la ip (para conectarse o iniciar un servidor)"<<endl;
+    cout<<"-p,--puerto Requiere a continuacion del puerto (para conectarse o iniciar un servidor)"<<endl;
+    cout<<"-l,--log Permite cambiar el nivel del log entre error, info, o debug. (Cada uno se puede escribir en los formatos error,Error,ERROR)"<<endl;
+    cout<<"-c,--config Solo disponible en modo servidor, requiere de una direccion a un archivo XML a continuacion suyo"<<endl;
+    cout<<"-t,--test Correra los tests realizados"<<endl;
+    cout<<"-h,--help Muestra esta informacion"<<endl;
+    cout<<"Ejemplos"<<endl;
+    cout<<"./mario -s --config direccionConfiguracion -p puerto -i IP "<<endl;
+    cout<<"./mario -l nivelLog --puerto puerto -i IP"<<endl;
+    cout<<"El primer ejemplo iniciara un servidor con las configuraciones indicadas. En el segundo caso se inicia un cliente que se conectara al servidor."<<endl;
+}
+
+
 void manejarEntrada(int argc, char* args[], char ipEntrada[LARGO_IP], char puertoEntrada[LARGO_IP], char nivelLogEntrada[LARGO_ENTRADA]){
 
 	  static struct option opcionesLargas[] = {
-	     {"ip", required_argument, 0, 'i'},
-	     {"puerto", required_argument, 0, 'p'},
-	     {"log", required_argument, 0, 'l'},
-		 {0, 0, 0, 0}
+	     {"ip", required_argument, nullptr, 'i'},
+	     {"puerto", required_argument, nullptr, 'p'},
+	     {"log", required_argument, nullptr, 'l'},
+         {"server", no_argument, nullptr, 's'},
+         {"help",no_argument,nullptr,'h'},
+		 {nullptr, 0, nullptr, 0}
 	  };
 
 	  int argumento;
@@ -25,6 +45,12 @@ void manejarEntrada(int argc, char* args[], char ipEntrada[LARGO_IP], char puert
 	          case LOG:
 				  strcpy(nivelLogEntrada,optarg);
 				  break;
+              case CONFIG:
+                  cout<<"El parametro de configuracion es solo valido en modo servidor"<<endl;
+                  break;
+              case AYUDA:
+                  mostrarAyuda();
+                  break;
 	          default:
 	        	  break;
 
@@ -37,12 +63,14 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLec
 					char ipEntrada[LARGO_IP],char puertoEntrada[LARGO_IP]){
 
 	  static struct option opcionesLargas[] = {
-	     {"config", required_argument, 0, 'c'},
-	     {"ip", required_argument, 0, 'i'},
-	     {"log", required_argument, 0, 'l'},
-	     {"port", required_argument, 0, 'p'},
-		 {"server", required_argument, 0, 's'},
-	     {0, 0, 0, 0}
+	     {"config", required_argument, nullptr, 'c'},
+	     {"ip", required_argument, nullptr, 'i'},
+	     {"log", required_argument, nullptr, 'l'},
+	     {"port", required_argument, nullptr, 'p'},
+		 {"server", required_argument, nullptr, 's'},
+         {"test",no_argument,nullptr,'t'},
+         {"help",no_argument,nullptr,'h'},
+	     {nullptr, 0, nullptr, 0}
 	  };
 
 	  int argumento;
@@ -62,6 +90,12 @@ void manejarEntrada(int cantidadArgumentos, char* argumentos[],char direccionLec
 	          case PUERTO:
 	        	  strcpy(puertoEntrada,optarg);
 	              break;
+              case AYUDA:
+                  mostrarAyuda();
+                  break;
+	          case TEST:
+	              cout<<"Si quiere correr los tests no active el modo servidor"<<endl;
+	              break;
 	          case SERVER:
 	          default:
 	              break;
@@ -80,7 +114,7 @@ TipoLog* determinarNivelLog(char nivelLogEntrada[LARGO_ENTRADA]){
 		return new Info();
 	}
 	else{
-		return NULL;
+		return nullptr;
 	}
 }
 

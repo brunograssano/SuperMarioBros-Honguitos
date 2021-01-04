@@ -23,11 +23,7 @@ public:
 		this->sprite->actualizarSprite();
 	}
 
-	Sprite* obtenerSprite(){
-		return this->sprite;
-	}
-
-	moneda_t serializar(){
+    moneda_t serializar(){
 		moneda_t monedaSerializada;
 
 		monedaSerializada.posX = posicion->obtenerPosX();

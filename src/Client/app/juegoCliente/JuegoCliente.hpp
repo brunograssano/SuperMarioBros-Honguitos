@@ -23,19 +23,22 @@ class JuegoCliente{
 		list<enemigo_t> obtenerEnemigos();
 		list<bloque_t> obtenerBloques();
 		list<moneda_t> obtenerMonedas();
-		int obtenerTiempoFaltante();
-		int obtenerMundoActual();
-		int obtenerIDPropio();
-		int obtenerPosXCamara();
-		bool ganaronElJuego();
-		bool perdieronElJuego();
+        list<tuberia_t> obtenerTuberias();
+		int obtenerTiempoFaltante() const;
+		int obtenerMundoActual() const;
+		int obtenerIDPropio() const;
+		int obtenerPosXCamara() const;
+		bool ganaronElJuego() const;
+		bool perdieronElJuego() const;
 
-	private:
+
+private:
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
 		list<bloque_t> bloques;
 		list<enemigo_t> enemigos;
 		list<moneda_t> monedas;
+        list<tuberia_t> tuberias;
 		int cantidadJugadores;
 		int idPropio;
 

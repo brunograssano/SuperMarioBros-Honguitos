@@ -1,17 +1,17 @@
 #include "ParserLog.hpp"
 
 
-void ParserLog::ParsearLog(pugi::xml_node log,ArchivoLeido* archivoLeido){
+void ParserLog::parsear(pugi::xml_node log, ArchivoLeido* archivoLeido){
 	string level = log.child_value("level");
-	if(level.compare("ERROR") == 0){
+	if(level == "ERROR"){
 		archivoLeido->tipoLog = new Error();
-	}else if(level.compare("DEBUG") == 0){
+	}else if(level == "DEBUG"){
 		archivoLeido->tipoLog = new Debug();
-	}else if(level.compare("INFO") == 0){
+	}else if(level == "INFO"){
 		archivoLeido->tipoLog = new Info();
 	}else{
-		if(level.compare("")==0){
-			archivoLeido->mensajeError.push_back("No se ingreso un nivel de log, se carga el por defecto (ERROR)");
+		if(level.empty()){
+			archivoLeido->mensajeError.emplace_back("No se ingreso un nivel de log, se carga el por defecto (ERROR)");
 		}
 		else{
 			archivoLeido->mensajeError.push_back("El tipo de log ("+level+") ingresado es incorrecto, se carga el por defecto (ERROR)");

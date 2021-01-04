@@ -8,38 +8,10 @@ using namespace std;
 #include "../../sprites/SpriteGoomba.hpp"
 
 class Goomba : public Enemigo{
-
 	public:
-
-		Goomba(int tipoColor){
-			spriteEnemigo = new SpriteGoomba(tipoColor);
-			this->tipoColor = tipoColor;
-		}
-
-
-		void actualizarPosicion()override{
-			posicionActual->moverHorizontal(velocidadX);
-			spriteEnemigo->actualizarSprite();
-		}
-
-		enemigo_t serializar() override{
-			enemigo_t enemigoSerializado;
-			enemigoSerializado.posX = this->obtenerPosicionX();
-			enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
-			enemigoSerializado.numeroRecorteY = tipoColor;
-			enemigoSerializado.tipoEnemigo = TIPO_GOOMBA;
-			return enemigoSerializado;
-		}
-
-
-		~Goomba(){
-			delete posicionActual;
-			delete spriteEnemigo;
-		}
-
-	private:
-		float velocidadX = -0.15;
-		int tipoColor;
+		explicit Goomba(int tipoColor);
+		enemigo_t serializar() override;
+		~Goomba() override;
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_GOOMBA_HP_ */

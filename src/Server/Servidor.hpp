@@ -39,10 +39,10 @@ class Servidor{
 
 		void conectarJugadores();
 		int getMaximasConexiones(){return this->cantidadConexiones;}
-		bool esUsuarioValido(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
-		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, string contrasenia,int idJugador);
+		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, const string& contrasenia,int idJugador);
 		void ejecutar();
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminoElJuego();
@@ -77,13 +77,13 @@ class Servidor{
 		list<usuario_t> usuariosValidos;
 		map<int,usuario_t> usuariosQuePerdieronConexion;
 
-		bool estaDesconectado(string nombre);
+		bool estaDesconectado(const string& nombre);
 
 		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
 		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
-		bool esUsuarioDesconectado(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
-		bool esUsuarioSinConectarse(usuario_t posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
-		bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
+		bool esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		bool esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+		static bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 
 		bool terminoJuego;
 		bool terminoHiloAceptar;

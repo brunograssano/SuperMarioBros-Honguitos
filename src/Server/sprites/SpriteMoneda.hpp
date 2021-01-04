@@ -10,14 +10,14 @@ class SpriteMoneda : public Sprite{
 	public:
 
 		SpriteMoneda();
-		~SpriteMoneda(){};
+		~SpriteMoneda() override= default;
 
 		SDL_Rect obtenerRectanguloActual()override;
 
 		void actualizarSprite()override;
 
 	private:
-		SDL_Rect estadosPosibles[4];
+		SDL_Rect estadosPosibles[4]{};
 };
 
 

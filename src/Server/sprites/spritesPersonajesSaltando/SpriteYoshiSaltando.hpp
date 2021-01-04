@@ -14,7 +14,7 @@ class SpriteYoshiSaltando: public Sprite{
 		SDL_Rect obtenerRectanguloActual()override;
 
 	private:
-		SDL_Rect estadosPosibles[16];
+		SDL_Rect estadosPosibles[16]{};
 		int estadoActual;
 
 };

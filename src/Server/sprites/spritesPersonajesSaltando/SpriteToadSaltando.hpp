@@ -14,7 +14,7 @@ class SpriteToadSaltando: public Sprite{
 		SDL_Rect obtenerRectanguloActual()override;
 
 	private:
-		SDL_Rect estadosPosibles[12];
+		SDL_Rect estadosPosibles[12]{};
 		int estadoActual;
 
 };

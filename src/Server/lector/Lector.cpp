@@ -2,9 +2,7 @@
 
 #include <vector>
 #include <string>
-#include <iostream>
 
-#include "../modelo/Nivel.hpp"
 #include "ArchivoLeido.hpp"
 #include "Parsers/ParserLog.hpp"
 #include "Parsers/ParserNivel.hpp"
@@ -43,15 +41,15 @@ bool calcularPosicionesLinea(offset_data_t& posicionUltimoCaracterPorLinea, cons
 }
 
 int obtenerLineaError(const offset_data_t& posicionUltimoCaracterPorLinea, ptrdiff_t offset){
-    offset_data_t::const_iterator iterador = lower_bound(posicionUltimoCaracterPorLinea.begin(), posicionUltimoCaracterPorLinea.end(), offset);
+    auto iterador = lower_bound(posicionUltimoCaracterPorLinea.begin(), posicionUltimoCaracterPorLinea.end(), offset);
     size_t linea = iterador - posicionUltimoCaracterPorLinea.begin();
 
     return 1+linea;
 }
 
 
-ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
-	ArchivoLeido* archivoLeido = new ArchivoLeido();
+ArchivoLeido* Lector::leerArchivo(const string& nombreArchivo){
+	auto* archivoLeido = new ArchivoLeido();
 	archivoLeido->leidoCorrectamente = true;
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(nombreArchivo.c_str());
@@ -77,28 +75,28 @@ ArchivoLeido* Lector::leerArchivo(string nombreArchivo){
 	}
 
     for (pugi::xml_node log: doc.child("configuracion").children("log")){
-    	ParserLog* parser = new ParserLog();
-		parser->ParsearLog(log,archivoLeido);
+    	auto* parser = new ParserLog();
+        parser->parsear(log, archivoLeido);
 		delete parser;
     }
 
     for (pugi::xml_node ventana: doc.child("configuracion").children("ventana")){
-    	ParserVentana* parser = new ParserVentana();
-    	parser->ParsearVentana(ventana,archivoLeido);
+    	auto* parser = new ParserVentana();
+        parser->parsear(ventana, archivoLeido);
     	delete parser;
     }
 
     for (pugi::xml_node niveles: doc.child("configuracion").children("niveles")){
     	for (pugi::xml_node nivel: niveles.children("nivel")){
-    		ParserNivel* parser = new ParserNivel();
-			parser->ParsearNivel(nivel,archivoLeido);
+    		auto* parser = new ParserNivel();
+            parser->parsear(nivel, archivoLeido);
 			delete parser;
     	}
     }
     for (pugi::xml_node credenciales: doc.child("configuracion").children("credenciales")){
 		for (pugi::xml_node usuario: credenciales.children("usuario")){
-			ParserUsuario* parser = new ParserUsuario();
-			parser->parsearUsuario(usuario,archivoLeido);
+			auto* parser = new ParserUsuario();
+            parser->parsear(usuario, archivoLeido);
 			delete parser;
 		}
 	}

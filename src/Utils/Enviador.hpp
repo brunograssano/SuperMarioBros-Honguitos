@@ -26,7 +26,7 @@ class Enviador{
 
 		void revisarSiSeMandoCorrectamente(int resultado, string descripcion){
 			if(resultado < 0){
-				casoError(resultado, descripcion);
+				casoError(descripcion);
 			}else if(resultado == 0){
 				casoSocketCerrado(descripcion);
 			}else{
@@ -34,7 +34,7 @@ class Enviador{
 			}
 		}
 
-		void casoError(int resultado, string descripcion){
+		void casoError(string descripcion){
 			Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir informacion de: "+ descripcion +", se cierra el socket", to_string(errno));
 			throw runtime_error(descripcion+" Error");
 		};

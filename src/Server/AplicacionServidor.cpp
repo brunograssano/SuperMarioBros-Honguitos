@@ -2,6 +2,8 @@
 
 #include <unistd.h>
 
+#include <utility>
+
 const int ANCHO_FONDO = 8177;
 
 /*
@@ -11,7 +13,7 @@ const int ANCHO_FONDO = 8177;
 const int ANCHO_RANGO = 100;
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
-	juego = Juego::getInstance(niveles,cantidadJugadores);
+	juego = Juego::getInstance(std::move(niveles),cantidadJugadores);
 	cantJugadores = cantidadJugadores;
 	terminoElJuego = false;
 	comenzoElJuego = false;
@@ -60,7 +62,7 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 }
 
 
-bool AplicacionServidor::estaEnRangoVisible(int posicionX){
+bool AplicacionServidor::estaEnRangoVisible(int posicionX) const{
 
 	return (posicionX + ANCHO_RANGO > rectanguloCamara.x) &&
 		   (posicionX < rectanguloCamara.x + rectanguloCamara.w + ANCHO_RANGO);
@@ -125,6 +127,17 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 		info_ronda.jugadores[i] = jugadorSerializado;
 	}
 
+	list<Tuberia*> tuberias = juego->obtenerTuberias();
+	int numeroTuberia = 0;
+    for(auto const& tuberia: tuberias){
+        if(estaEnRangoVisible(tuberia->obtenerPosicionX()) &&
+            numeroTuberia<MAX_TUBERIAS){
+            info_ronda.tuberias[numeroTuberia] = tuberia->serializar();
+            numeroTuberia++;
+        }
+    }
+    info_ronda.topeTuberias = numeroTuberia;
+
 	return info_ronda;
 }
 
@@ -159,9 +172,9 @@ void AplicacionServidor::gameLoop(){
 
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 	contadorNivel->iniciar();
-	Contador* contador = new Contador(microSegundosEspera, USEGUNDOS);
+	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
 	map<int,Mario*> jugadores = juego->obtenerMarios();
-	while(!terminoElJuego || tengojugadores(jugadores)){
+	while(!terminoElJuego || tengoJugadores(jugadores)){
 		contador->iniciar();
 		if(!ganaron){
 
@@ -204,7 +217,7 @@ bool AplicacionServidor::revisarSiPerdieron(){
 	return ((contadorNivel->tiempoRestante() == 0) && !ganaron);
 }
 
-void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
+void AplicacionServidor::revisarSiTerminoNivel(const map<int,Mario*>& jugadores){
 
 	bool pasadoLimite = true;
 	int puntoBandera = juego->obtenerPuntoBanderaFinActual();
@@ -215,13 +228,13 @@ void AplicacionServidor::revisarSiTerminoNivel(map<int,Mario*> jugadores){
 		}
 	}
 
-	if(pasadoLimite && juego->quedaSoloUnNivel() && tengojugadores(jugadores)){
+	if(pasadoLimite && juego->quedaSoloUnNivel() && tengoJugadores(jugadores)){
 		juego->sumarPuntosAJugadores(contadorNivel->tiempoRestante());
 		ganaron = true;
 		terminoElJuego = true;
 		log->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
 	}
-	else if(pasadoLimite && tengojugadores(jugadores)){
+	else if(pasadoLimite && tengoJugadores(jugadores)){
 		rectanguloCamara.x= 0;
 		rectanguloCamara.y = 0;
 		juego->avanzarNivel();
@@ -247,7 +260,7 @@ SDL_Rect* AplicacionServidor::obtenerRectCamara(){
 	return &rectanguloCamara;
 }
 
-bool AplicacionServidor::tengojugadores(map<int,Mario*> jugadores){
+bool AplicacionServidor::tengoJugadores(map<int,Mario*> jugadores) const{
 	int i = 0;
 	bool hayAlguienConectado = false;
 	while(i<cantJugadores && !hayAlguienConectado){
@@ -260,7 +273,7 @@ bool AplicacionServidor::tengojugadores(map<int,Mario*> jugadores){
 
 }
 
-void AplicacionServidor::moverCamara(map<int,Mario*> jugadores){
+void AplicacionServidor::moverCamara(const map<int,Mario*>& jugadores){
 	SDL_Rect* rectanguloCamara = obtenerRectCamara();
 
 	int posicionDelJugadorMasALaDerecha = 0;

@@ -3,34 +3,25 @@
 #define VALOR_POR_DEFECTO_ENEMIGOS 15
 #define VALOR_POR_DEFECTO_COLOR_ENEMIGO 0
 
-void ParserEnemigo::ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,ArchivoLeido* archivoLeido){
+bool condicionCantidadEnemigos(int cantidad){
+    return cantidad < 0;
+}
+
+bool condicionColorEnemigos(int color){
+    return (color < 0) || (color>3);
+}
+
+void ParserEnemigo::parsear(pugi::xml_node enemigo, Nivel* unNivel, ArchivoLeido* archivoLeido){
 	string tipo = enemigo.child_value("tipo");
 	string colorEnemigoString = enemigo.child_value("color");
+    string cantEnemigosString = enemigo.child_value("cantidad");
 
-	int cantidad, colorEnemigoInt;
+    string mensajeCondicion = "El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto";
+	int cantidad = intentarObtenerNumero(archivoLeido, cantEnemigosString,condicionCantidadEnemigos, mensajeCondicion, VALOR_POR_DEFECTO_COLOR_ENEMIGO);
 
-	string cantEnemigosString = enemigo.child_value("cantidad");
-	try{
-		cantidad = stoi(cantEnemigosString);
-		if(cantidad < 0){
-			archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto");
-			cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
-		}
-	}catch(std::exception& e){
-		archivoLeido->mensajeError.push_back("El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto");
-		cantidad = VALOR_POR_DEFECTO_ENEMIGOS;
-	}
+	mensajeCondicion = "El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto";
+    int colorEnemigoInt = intentarObtenerNumero(archivoLeido, colorEnemigoString,condicionColorEnemigos, mensajeCondicion, VALOR_POR_DEFECTO_ENEMIGOS);
 
-	try{
-		colorEnemigoInt = stoi(colorEnemigoString);
-		if((colorEnemigoInt < 0) || (colorEnemigoInt>3)){
-			archivoLeido->mensajeError.push_back("El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto");
-			colorEnemigoInt = VALOR_POR_DEFECTO_COLOR_ENEMIGO;
-		}
-		}catch(std::exception& e){
-			archivoLeido->mensajeError.push_back("El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto");
-			colorEnemigoInt = VALOR_POR_DEFECTO_COLOR_ENEMIGO;
-		}
 
 	if(tipo.compare("Goomba")!=0 && tipo.compare("Koopa")!=0){
 		archivoLeido->mensajeError.push_back("No existe el tipo de enemigo ("+tipo+"), no se cargara ningun otro tipo de enemigo en su remplazo");

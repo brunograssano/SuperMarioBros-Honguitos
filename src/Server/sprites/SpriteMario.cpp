@@ -1,15 +1,7 @@
 #include "SpriteMario.hpp"
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
-#include <string>
-#include <sstream>
-
-
-
-const int ANCHO_IMAGEN_PIXEL = 405;
-const int ALTO_IMAGEN_PIXEL = 32;
 const int ANCHO_SPRITE_PIXEL = 16;
 const int ALTO_SPRITE_PIXEL = 32;
 const int PASO_PROXIMO_SPRITE = 30;
@@ -22,8 +14,7 @@ const int CAMBIO_BRUSCO_IZQ = 2, CAMBIO_BRUSCO_DER = 11;
 const int MOV_DER_1 = 8, MOV_DER_2 = 9, MOV_DER_3 = 10;
 const int MOV_IZQ_1 = 5, MOV_IZQ_2 = 4, MOV_IZQ_3 = 3;
 
-SpriteMario::SpriteMario(string direccionImagen){
-	direccionTextura = direccionImagen;
+SpriteMario::SpriteMario(){
 	estadoActual = QUIETO_DER;
 	proximoEstado = QUIETO_DER;
 	int corrimientoEnImagen = 0;
@@ -32,11 +23,11 @@ SpriteMario::SpriteMario(string direccionImagen){
 	contadorEvento = 0;
 	temporizadorMarioAgachado = 0;
 
-	for(int i=0;i<14;i++){
-		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = 0;
-		estadosPosibles[i].w = ANCHO_SPRITE_PIXEL;
-		estadosPosibles[i].h = ALTO_SPRITE_PIXEL;
+	for(auto & estadosPosible : estadosPosibles){
+		estadosPosible.x = corrimientoEnImagen;
+		estadosPosible.y = 0;
+		estadosPosible.w = ANCHO_SPRITE_PIXEL;
+		estadosPosible.h = ALTO_SPRITE_PIXEL;
 		corrimientoEnImagen+= PASO_PROXIMO_SPRITE;
 	}
 }
@@ -62,7 +53,7 @@ bool SpriteMario::controlDeFlujoSprite() {
 /* Se actualiza estado segun corresponda luego de presionar LEFT o RIGTH */
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-bool SpriteMario::estaCorriendo(Mario* mario, bool btnDerecho) {
+bool SpriteMario::estaCorriendo() {
 
     bool corriendo = false;
 
@@ -108,7 +99,7 @@ bool SpriteMario::estaCorriendo(Mario* mario, bool btnDerecho) {
 }
 
 
-bool SpriteMario::estaCambiandoDeDireccion(Mario* mario, bool btnDerecho) {
+bool SpriteMario::estaCambiandoDeDireccion(bool btnDerecho) {
 	bool cambiandoDirecc = false;
 
 	bool caminandoAIzq = estadoActual > CAMBIO_BRUSCO_IZQ && estadoActual < QUIETO_IZQ;
@@ -332,9 +323,9 @@ void SpriteMario::actualizarSpriteMarioDerecha(Mario* mario) {
 
     if (estaSaltando(mario,true)) { return; }
 
-    if (estaCambiandoDeDireccion(mario,true)) { return; }
+    if (estaCambiandoDeDireccion(true)) { return; }
 
-    if (estaCorriendo(mario, true)) { return; }
+    if (estaCorriendo()) { return; }
 
     if (estaAgachado(mario,true)) { return; }
 }
@@ -343,9 +334,9 @@ void SpriteMario::actualizarSpriteMarioIzquierda(Mario* mario) {
 
     if (estaSaltando(mario,false)) { return; }
 
-    if (estaCambiandoDeDireccion(mario,false)) { return; }
+    if (estaCambiandoDeDireccion(false)) { return; }
 
-    if (estaCorriendo(mario,false)) { return; }
+    if (estaCorriendo()) { return; }
 
     if (estaAgachado(mario,false)) { return; }
 }

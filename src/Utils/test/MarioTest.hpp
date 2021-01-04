@@ -7,17 +7,18 @@ using namespace std;
 
 #include <stdio.h>
 
-#include "../../Server/modelo/Mario.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 #include "Assert.hpp"
 class MarioTest{
 
 	public:
-		void ejecutar(Assert* testSuite);
-		void test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(Assert* testSuite);
-		void test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(Assert* testSuite);
-		void test03MarioEmpiezaConCeroMonedas(Assert* testSuite);
-		void test04MarioEmpiezaConCeroPuntos(Assert* testSuite);
-		void test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite);
+		static void ejecutar(Assert* testSuite);
+		static void test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(Assert* testSuite);
+		static void test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(Assert* testSuite);
+		static void test03AgregarMonedasAMarioSumaCincuentaPuntos(Assert* testSuite);
+		static void test04MarioEmpiezaConCeroPuntos(Assert* testSuite);
+		static void test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite);
+        static void test06MarioEmpiezaCon3VidasYLasPierdedependiendoElCaso(Assert* testSuite);
 };
 
 

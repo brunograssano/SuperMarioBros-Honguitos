@@ -43,7 +43,7 @@ class ConexionCliente {
 		}
 
 		void recibirInformacionRonda(info_ronda_t info_ronda);
-		void enviarActualizacionesDeRonda();
+		void enviarActualizacionesDeRonda() const;
 
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);
@@ -57,7 +57,7 @@ class ConexionCliente {
 		void terminoElJuego();
 
 	private:
-		actualizacion_cantidad_jugadores_t informacionAMandar;
+		actualizacion_cantidad_jugadores_t informacionAMandar{};
 		void enviarVerificacion(bool esUsuarioValido);
 		void esperarCredenciales();
 

@@ -1,6 +1,7 @@
-#include <thread>
 
 #include "ConexionCliente.hpp"
+
+#include <utility>
 #include "EscuchadoresServer/EscuchadorCredenciales.hpp"
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
@@ -15,7 +16,7 @@
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
 	this->servidor = servidor;
 	this->socket = socket;
-	this->ip = ip;
+	this->ip = std::move(ip);
 	this->cantidadConexiones = cantidadConexiones;
 	this->nombre = "";
 	this->contrasenia = "";
@@ -76,9 +77,9 @@ void ConexionCliente::enviar(){
 	terminoJuego = true;
 }
 
-void ConexionCliente::recibirCredencial(string nombre, string contrasenia){
-	this->nombre = nombre;
-	this->contrasenia = contrasenia;
+void ConexionCliente::recibirCredencial(string posibleNombre, string posibleContrasenia){
+	this->nombre = std::move(posibleNombre);
+	this->contrasenia = std::move(posibleContrasenia);
 	recibioCredenciales = true;
 }
 
@@ -88,7 +89,7 @@ void ConexionCliente::esperarCredenciales(){
 	recibioCredenciales = false;
 }
 
-void ConexionCliente::enviarActualizacionesDeRonda(){
+void ConexionCliente::enviarActualizacionesDeRonda() const{
 	while(!terminoJuego){
 	}
 }
@@ -97,27 +98,26 @@ void ConexionCliente::enviarActualizacionesDeRonda(){
 void ConexionCliente::ejecutar(){
 	pthread_t hiloEscuchar;
 	pthread_t hiloEnviar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, ConexionCliente::escuchar_helper, this);
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, ConexionCliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente: " + this->ip);
 		return; // El hilo de ejecutar muere, y queda dando vueltas solamente el objeto ConexionCliente en la lista
 	}
 
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, ConexionCliente::enviar_helper, this);
+	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, ConexionCliente::enviar_helper, this);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del servidor al cliente: " + this->ip);
 		terminoJuego = true; // Muere el hilo de este cliente y el de escuchar, queda el cliente en la lista.
 		return;
 	}
 
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	bool esUsuarioValido = false;
 
 	actualizarCliente(informacionAMandar);
 	esperarCredenciales();
 
 	while(!esUsuarioValido){
-		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia},this);
+		esUsuarioValido = servidor->esUsuarioValido({nombre,contrasenia,false},this);
 		enviarVerificacion(esUsuarioValido);
 		if(esUsuarioValido){
 			Log::getInstance()->mostrarMensajeDeInfo("Se acepto el usuario: "+nombre+" con contrasenia: "+contrasenia + " del cliente: " + this->ip);

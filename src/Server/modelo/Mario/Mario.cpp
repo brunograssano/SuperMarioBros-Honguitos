@@ -1,23 +1,20 @@
 #include "Mario.hpp"
 
-#include <cmath>
-
-#include "../../Utils/log/Log.hpp"
-
-const int COORDENADA_X_DEFAULT = 20;
-const int COORDENADA_Y_DEFAULT = 0;
+const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 0;
 const int MINIMO_COORDENADA_Y = 0;
-const int TERRENO_LIMITE_DERECHO_MAX = 8177;
-const int TERRENO_LIMITE_DERECHO_MIN = 0;
+const int TERRENO_LIMITE_DERECHO_MAX = 8177,TERRENO_LIMITE_DERECHO_MIN = 0;
 const short MARIO_DESCONECTADO = -1;
+
+const int PUNTOS_POR_MONEDA = 50;
 
 Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
 			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
 	this->puntos=0;
-	this->cantidadMonedas = 0;
 	this->movimiento = new MovimientoMario();
-	this->spriteMario = new SpriteMario("../resources/Imagenes/Personajes/mario_grande.png");
+	this->spriteMario = new SpriteMario();
+	this->modificador = new SinModificador();
+	this->vidaMario = new VidaMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;
 }
@@ -61,7 +58,7 @@ int Mario::obtenerPosicionY(){
 	return posicion->obtenerPosY();
 }
 
-int Mario::obtenerPuntos(){
+int Mario::obtenerPuntos() const{
 	return puntos;
 }
 
@@ -69,12 +66,8 @@ void Mario::agregarPuntos(int unosPuntos){
 	puntos+=unosPuntos;
 }
 
-int Mario::obtenerMonedas(){
-	return cantidadMonedas;
-}
-
 void Mario::agregarMoneda(){
-	cantidadMonedas++;
+    puntos+=PUNTOS_POR_MONEDA;
 }
 
 jugador_t Mario::serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen){
@@ -112,7 +105,7 @@ void Mario::actualizarPosicion(){
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
-bool Mario::estaConectado(){
+bool Mario::estaConectado() const{
 	return this->estaConectadoElJugador;
 }
 
@@ -128,8 +121,33 @@ bool Mario::estaEnElPiso(){
 	return this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y;
 }
 
+void Mario::swapDeModificador(ModificadorMario* nuevoModificador){
+    delete modificador;
+    modificador = nuevoModificador;
+}
+
+int Mario::obtenerVida(){
+    return vidaMario->obtenerVida();
+}
+
+void Mario::perderVida() {
+    ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
+    swapDeModificador(nuevoModificador);
+}
+
+void Mario::hacerseDeFuego() {
+    ModificadorMario* nuevoModificador = modificador->hacerseDeFuego();
+    swapDeModificador(nuevoModificador);
+}
+
+void Mario::dispararFuego() {
+    modificador->dispararFuego();//agregar lo que se necesite
+}
+
 Mario::~Mario(){
 	delete this->spriteMario;
 	delete this->posicion;
 	delete this->movimiento;
+	delete this->modificador;
+	delete this->vidaMario;
 }

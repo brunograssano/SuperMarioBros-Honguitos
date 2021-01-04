@@ -7,11 +7,14 @@ using namespace std;
 #include "../ArchivoLeido.hpp"
 #include "../../modelo/Enemigos/Goomba.hpp"
 #include "../../modelo/Enemigos/Koopa.hpp"
+#include "Parser.h"
 
-class ParserEnemigo{
+class ParserEnemigo : public Parser{
 	public:
-			void ParsearEnemigo(pugi::xml_node enemigo,Nivel* unNivel,ArchivoLeido* archivoLeido);
+        void parsear(pugi::xml_node enemigo, Nivel* unNivel, ArchivoLeido* archivoLeido) override;
+        void parsear(pugi::xml_node nodo,ArchivoLeido* archivoLeido) override{};
 };
+
 
 
 

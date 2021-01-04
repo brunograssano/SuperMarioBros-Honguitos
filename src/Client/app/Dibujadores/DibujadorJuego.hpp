@@ -17,6 +17,7 @@ using namespace std;
 #include "../juegoCliente/RecorteBloque.hpp"
 
 #include "Dibujador.hpp"
+#include "src/Client/app/juegoCliente/RecorteTuberia.hpp"
 
 class DibujadorJuego : public Dibujador{
 
@@ -33,13 +34,14 @@ class DibujadorJuego : public Dibujador{
 		stringstream textoDeNivel;
 		stringstream textoDePuntos;
 
-		SDL_Rect rectanguloCamara;
+		SDL_Rect rectanguloCamara{};
 
 		RecorteMario* recorteSpriteMario;
 		RecorteGoomba* recorteSpriteGoomba;
 		RecorteKoopa* recorteSpriteKoopa;
 		RecorteMoneda* recorteSpriteMoneda;
 		RecorteBloque* recorteSpriteBloque;
+		RecorteTuberia *recorteSpriteTuberia;
 
 		map<int, SDL_Color> colores;
 
@@ -48,7 +50,7 @@ class DibujadorJuego : public Dibujador{
 		void dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarTexto(JuegoCliente* juegoCliente);
-
+        void dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

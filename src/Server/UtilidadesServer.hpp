@@ -14,10 +14,12 @@ void iniciarJuego(pthread_t* hiloJuego,AplicacionServidor* aplicacionServidor);
 
 void crearHiloConectarJugadores(Servidor* servidor);
 
-void escribirMensajesDeArchivoLeidoEnLog(list<string> mensajesError);
+void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError);
 
-void unirHilosPrincipalYGameLoop(pthread_t* hiloJuego);
+void unirHilosPrincipalYGameLoop(const pthread_t* hiloJuego);
 
 void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor);
+
+void cerrarServidor(int socketServer);
 
 #endif /* SRC_SERVER_UTILIDADESSERVER_HPP_ */

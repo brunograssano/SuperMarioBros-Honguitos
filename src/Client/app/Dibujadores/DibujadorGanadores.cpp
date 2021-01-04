@@ -63,8 +63,6 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
 		   idColor = MARIO_GRIS;
 	   }
 
-	   parIdJugador.second.mario.idImagen;
-
 	   renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
 
 	   desfase_puntosJugador +=40;

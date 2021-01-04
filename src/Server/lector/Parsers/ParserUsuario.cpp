@@ -1,6 +1,6 @@
 #include "ParserUsuario.hpp"
 
-void ParserUsuario::parsearUsuario(pugi::xml_node usuario,ArchivoLeido* archivoLeido){
+void ParserUsuario::parsear(pugi::xml_node usuario, ArchivoLeido* archivoLeido){
 	string nombreUsuario = usuario.child_value("username");
 	string contraseniaUsuario = usuario.child_value("password");
 

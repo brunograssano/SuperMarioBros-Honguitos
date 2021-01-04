@@ -8,11 +8,11 @@ SpriteCoffinMario::SpriteCoffinMario(){
 	posicionX = 0;
 
 	int corrimientoEnImagen = 0;
-	for(int i=0;i<3;i++){
-		estadosPosibles[i].x = corrimientoEnImagen;
-		estadosPosibles[i].y = 0;
-		estadosPosibles[i].w = 70;
-		estadosPosibles[i].h = 32;
+	for(auto & estadosPosible : estadosPosibles){
+		estadosPosible.x = corrimientoEnImagen;
+		estadosPosible.y = 0;
+		estadosPosible.w = 70;
+		estadosPosible.h = 32;
 		corrimientoEnImagen+= 75;
 	}
 }
@@ -32,7 +32,7 @@ void SpriteCoffinMario::actualizarSprite(){
 	}
 }
 
-int SpriteCoffinMario::obtenerPosicionX(){
+int SpriteCoffinMario::obtenerPosicionX() const{
 	return posicionX;
 }
 

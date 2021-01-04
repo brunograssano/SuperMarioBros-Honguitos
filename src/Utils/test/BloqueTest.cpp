@@ -1,3 +1,6 @@
+#include "src/Server/modelo/Bloques/Ladrillo.hpp"
+#include "src/Server/modelo/Bloques/Sorpresa.hpp"
+#include "src/Server/modelo/Bloques/Plataforma.hpp"
 #include "BloqueTest.hpp"
 
 #define CYAN "\u001b[36m"

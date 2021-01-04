@@ -1,3 +1,6 @@
+#include "src/Server/modelo/Bloques/Ladrillo.hpp"
+#include "src/Server/modelo/Bloques/Sorpresa.hpp"
+#include "src/Server/modelo/Bloques/Plataforma.hpp"
 #include "ParserPlataforma.hpp"
 
 #define VALOR_POR_DEFECTO_CANTIDAD_BLOQUES 5

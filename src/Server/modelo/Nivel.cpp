@@ -64,7 +64,7 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
 		list<Bloque*> bloques = plataforma->obtenerBloques();
 
 		for(auto const& bloque : bloques){
-			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= altoNivel)){
+			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
 				Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
 						+ " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
 				bloque->ubicarEnPosicionDefault();
@@ -92,8 +92,8 @@ void Nivel::inicializarPosicionMonedas(){
 
 	int limiteXSuperior = puntoBanderaFin;
 	int limiteXInferior = puntoBanderaFin/10;
-	int limiteYInferior = altoNivel/4;
-	int limiteYSuperior = altoNivel*1/2;
+	int limiteYInferior = ALTO_NIVEL/4;
+	int limiteYSuperior = ALTO_NIVEL*1/2;
 
 	for(int i=0; i<cantidadMonedas && i<cantidadMaximaMonedas; i++){
 

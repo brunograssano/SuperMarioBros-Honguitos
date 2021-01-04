@@ -10,7 +10,7 @@ class Plataforma : public Bloque {
         void agregarBloque(Bloque* bloque);
 
         list<Bloque*> obtenerBloques();
-
+        bloque_t serializar()override{return {0,0,0,0};};
         list<bloque_t> serializarPlataforma();
 
         ~Plataforma() override;

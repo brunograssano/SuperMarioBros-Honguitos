@@ -7,7 +7,7 @@ using namespace std;
 #include "Client/mainClient.hpp"
 #include "Utils/test/mainTest.hpp"
 
-bool revisarParametro(int cantidadArgumentos, char *argumentos[], char parametroEntero[10]) {
+bool revisarParametro(int cantidadArgumentos, char *argumentos[], const char parametroEntero[10]) {
 	bool esParametro = false;
 	char comandoLargo[12]="--";
     char comandoCorto[5]="-";

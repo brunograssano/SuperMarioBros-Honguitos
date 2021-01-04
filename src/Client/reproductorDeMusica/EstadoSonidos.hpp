@@ -6,20 +6,20 @@ using namespace std;
 
 class EstadoSonidos {
     public:
-        virtual ~EstadoSonidos(){};
-        virtual EstadoSonidos* cambiar(){};
-        virtual void reproducir(string sonidoAReproducir){ };
+        virtual ~EstadoSonidos()= default;;
+        virtual EstadoSonidos* cambiar() = 0;
+        virtual void reproducir(string sonidoAReproducir) = 0;
 };
 
 class SuenanSonidos : public EstadoSonidos{
     public:
-        EstadoSonidos* cambiar();
+        EstadoSonidos* cambiar() override;
         void reproducir(string sonidoAReproducir) override;
 };
 
 class SonidosMuteados : public EstadoSonidos{
     public:
-        EstadoSonidos* cambiar();
+        EstadoSonidos* cambiar() override;
         void reproducir(string sonidoAReproducir) override;
 };
 

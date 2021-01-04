@@ -7,7 +7,7 @@ using namespace std;
 
 #include "../../../Utils/Utils.hpp"
 
-#include "../Posicion.hpp"
+#include "../PosicionFija.hpp"
 #include "../../sprites/Sprite.hpp"
 #include "../../sprites/SpriteSorpresa.hpp"
 #include "../../sprites/SpriteLadrillo.hpp"
@@ -17,7 +17,7 @@ using namespace std;
 class Bloque{
     public:
 
-		virtual ~Bloque(){};
+		virtual ~Bloque()= default;
 
 		int obtenerPosicionX(){
 			return this->posicion->obtenerPosX();
@@ -30,7 +30,7 @@ class Bloque{
 			return this->spriteBloque;
 		}
 
-		virtual bloque_t serializar(){return {0,0,0,0};};
+		virtual bloque_t serializar() = 0;
 
 		void ubicarEnPosicionDefault(){
 			delete this->posicion;

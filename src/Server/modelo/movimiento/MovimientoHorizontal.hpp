@@ -1,7 +1,8 @@
 #ifndef SRC_SERVER_MODELO_MOVIMIENTO_MOVIMIENTOHORIZONTAL_HPP_
 #define SRC_SERVER_MODELO_MOVIMIENTO_MOVIMIENTOHORIZONTAL_HPP_
 
-#include "../Posicion.hpp"
+
+#include "../PosicionMovil.hpp"
 #include "../Terreno/Terreno.hpp"
 
 class MovimientoHorizontal{
@@ -12,8 +13,8 @@ class MovimientoHorizontal{
 		void aceleraraIzquierda(Terreno* terreno);
 		void mover(PosicionMovil* posicion, Terreno* terreno);
 		bool estaQuieto();
-	private:
-		void aplicarCoeficienteDeRozamiento();
+
+    private:
 		float velocidadX;
 		float maximaVelocidadX;
 		float aceleracionX;

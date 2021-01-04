@@ -17,6 +17,7 @@ class SpriteMario : public Sprite{
 
 		SDL_Rect obtenerRectanguloActual()override;
 
+		void actualizarSprite(){};
 		void actualizarSprite(Mario* mario);
         void actualizarSpriteMarioDerecha (Mario* mario);
 		void actualizarSpriteMarioIzquierda(Mario* mario);

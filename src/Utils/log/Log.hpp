@@ -1,18 +1,18 @@
 #ifndef SRC_LOG_H_
 #define SRC_LOG_H_
 
-using namespace std;
 #include <iostream>
 #include <fstream>
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <list>
 #include "TipoLog.hpp"
+using namespace std;
 
 class Log{
 
 	private:
-		Log(TipoLog* tipoLog){
+		explicit Log(TipoLog* tipoLog){
 			this->tipoLog = tipoLog;
 
 			string nombreArchivo = "Log - ";
@@ -23,11 +23,11 @@ class Log{
 			archivoLog.open("logs/"+nombreArchivo);
 		}
 
-		string armarMensaje(string primeraParte, string segundaParte);
+		string armarMensaje(const string& primeraParte, const string& segundaParte);
 
 		TipoLog* tipoLog;
 		ofstream archivoLog;
-		time_t tiempo;
+		time_t tiempo{};
 		static Log* log;
 
 	public:
@@ -37,16 +37,16 @@ class Log{
 		~Log();
 
 		//DEBUG//
-		void mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY);
-		void mostrarAccion(string accion);
+		void mostrarPosicion(const string& nombreEntidad,int coordenadaX, int coordenadaY);
+		void mostrarAccion(const string& accion);
 
 		//INFO//
-		void mostrarMensajeDeInfo(string mensajeInfo);
-		void mostrarMensajeDeCarga(string idObjetoCargado,string rutaObjetoCargado);
+		void mostrarMensajeDeInfo(const string& mensajeInfo);
+		void mostrarMensajeDeCarga(const string& idObjetoCargado,const string& rutaObjetoCargado);
 
 		//ERRORES//
-		void huboUnErrorSDL(string descripcionError, string errorSDL);
-		void huboUnError(string descripcionError);
+		void huboUnErrorSDL(const string& descripcionError, const string& errorSDL);
+		void huboUnError(const string& descripcionError);
 };
 
 

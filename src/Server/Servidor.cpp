@@ -1,16 +1,15 @@
 #include "Servidor.hpp"
 #include <string>
-#include <utility>
 #include <cstring>
 
 #define SIN_JUGAR -1
 
-Servidor::Servidor(ArchivoLeido* archivoLeido, list<string> mensajesErrorOtroArchivo, int puerto, char* ip){
+Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
 	terminoHiloAceptar = false;
 	manejadorIDs = new ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido->tipoLog);
-	escribirMensajesDeArchivoLeidoEnLog(std::move(mensajesErrorOtroArchivo));
+	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
 
 	aplicacionServidor = new AplicacionServidor(this, archivoLeido->niveles, archivoLeido->cantidadConexiones,

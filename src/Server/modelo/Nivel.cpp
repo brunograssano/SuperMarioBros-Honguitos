@@ -82,7 +82,7 @@ void Nivel::inicializarPosicionMonedas(){
 
 	srand(time(nullptr));
 
-	int cantidadMaximaMonedas = (puntoBanderaFin/2)/(TAMANIO_MONEDA);
+	int cantidadMaximaMonedas = (int)(puntoBanderaFin/2)/(TAMANIO_MONEDA);
 
 	if(cantidadMonedas > cantidadMaximaMonedas){
 		Log::getInstance()->huboUnError("No se pueden poner " + to_string(cantidadMonedas) +" monedas, se ponen entonces: " + to_string(cantidadMaximaMonedas));
@@ -90,8 +90,8 @@ void Nivel::inicializarPosicionMonedas(){
 
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
 
-	int limiteXSuperior = puntoBanderaFin;
-	int limiteXInferior = puntoBanderaFin/10;
+	int limiteXSuperior = (int)puntoBanderaFin;
+	int limiteXInferior = (int)puntoBanderaFin/10;
 	int limiteYInferior = ALTO_NIVEL/4;
 	int limiteYSuperior = ALTO_NIVEL*1/2;
 
@@ -120,13 +120,13 @@ void Nivel::inicializarPosicionEnemigo(){
 
 	int numeroPosicionX = 0;
 
-	int limiteXSuperior = puntoBanderaFin;
-	int limiteXInferior = puntoBanderaFin/10;
+	int limiteXSuperior = (int)puntoBanderaFin;
+	int limiteXInferior = (int)puntoBanderaFin/10;
 
 	int coordenadaX = 0;
 	int coordenadaY = 50;
 
-	unsigned int cantidadMaximaEnemigos = (puntoBanderaFin/3)/TAMANIO_ENEMIGO;
+	unsigned int cantidadMaximaEnemigos =  (unsigned int)(puntoBanderaFin/3)/TAMANIO_ENEMIGO;
 
 	if(enemigos.size()>=cantidadMaximaEnemigos){
 			Log::getInstance()->huboUnError("No se pudieron cargar "+ to_string((int)enemigos.size()) +

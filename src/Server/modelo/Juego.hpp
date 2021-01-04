@@ -1,13 +1,13 @@
 #ifndef SRC_SERVER_MODELO_JUEGO_HPP_
 #define SRC_SERVER_MODELO_JUEGO_HPP_
 
-using namespace std;
 #include "../modelo/Nivel.hpp"
 #include <list>
 #include <map>
 #include <iostream>
 #include <string>
 #include <utility>
+using namespace std;
 
 class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"

@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <utility>
 using namespace std;
 
 
@@ -11,7 +12,7 @@ class TipoLog{
 
 	public:
 
-		virtual ~TipoLog(){};
+		virtual ~TipoLog()= default;
 
 		//DEBUG//
 		virtual void mostrarPosicion(string registroPosicion,ofstream& archivo){
@@ -38,10 +39,9 @@ class TipoLog{
 
 	private:
 
-		void escribirEnLog(string tipo,string registroError,ofstream& archivo){
+		static void escribirEnLog(const string& tipo,const string& registroError,ofstream& archivo){
 			archivo << tipo + registroError << endl;
 		}
-
 
 };
 

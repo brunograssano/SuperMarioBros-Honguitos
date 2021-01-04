@@ -23,9 +23,9 @@ class Escuchador{
 			}
 		};
 
-		virtual void casoError(int resultado){};
-		virtual void casoSocketCerrado(){};
-		virtual void casoExitoso(){};
+		virtual void casoError(int resultado) = 0;
+		virtual void casoSocketCerrado() = 0;
+		virtual void casoExitoso() = 0;
 
 	protected:
 		int socket;

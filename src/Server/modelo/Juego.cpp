@@ -83,7 +83,7 @@ int Juego::obtenerMundoActual(){
 }
 
 int Juego::obtenerPuntoBanderaFinActual(){
-	return niveles.front()->obtenerPuntoBanderaFin();
+	return (int)niveles.front()->obtenerPuntoBanderaFin();
 }
 
 Juego::~Juego(){

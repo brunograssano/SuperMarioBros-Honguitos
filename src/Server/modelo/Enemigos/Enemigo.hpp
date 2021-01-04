@@ -9,40 +9,23 @@
 class Enemigo{
 
 	public:
-
-		int obtenerPosicionX(){
-			return posicionActual->obtenerPosX();
-		}
-
-		int obtenerPosicionY(){
-			return posicionActual->obtenerPosY();
-		}
-
-		Sprite* obtenerSprite(){
-			return spriteEnemigo;
-		}
-
-		virtual void agregarPosicion(int coordenadaX,int coordenadaY){
-			posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
-		};
-
-		virtual enemigo_t serializar(){return {0,0,0,0,0};}
-
-		virtual void actualizarPosicion(){};
-
-		virtual ~Enemigo(){};
+        virtual ~Enemigo()= default;
+        virtual enemigo_t serializar() =0 ;
+		int obtenerPosicionX();
+		int obtenerPosicionY();
+		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
+		virtual void actualizarPosicion();
 
 	protected:
 
-        float obtenerVelocidad(){
+        static float obtenerVelocidad(){
             return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
         }
 
-		PosicionMovil* posicionActual;
-        Sprite* spriteEnemigo;
-        string direccionImagen;//revisar que pasa
-        float velocidadX;
-        int tipoColor;
+		PosicionMovil* posicionActual{};
+        Sprite* spriteEnemigo{};
+        float velocidadX{};
+        int tipoColor{};
 };
 
 

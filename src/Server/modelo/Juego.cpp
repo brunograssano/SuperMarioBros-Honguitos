@@ -19,10 +19,6 @@ Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores){
 	return instanciaJuego;
 }
 
-list<Nivel*> Juego::obtenerNiveles(){
-	return niveles;
-}
-
 void Juego::avanzarNivel(Camara* camara){
     if(niveles.empty()) return;
 
@@ -53,11 +49,6 @@ void Juego::desconectarJugador(int idJugador){
 
 void Juego::conectarJugador(int idMarioConectandose){
 	jugadores[idMarioConectandose]->conectar();
-}
-
-
-map<int,Mario*> Juego::obtenerMarios(){
-	return jugadores;
 }
 
 list<Enemigo*> Juego::obtenerEnemigos(){
@@ -176,4 +167,115 @@ void Juego::iniciar(){
 
 bool Juego::perdieron() {
     return ((obtenerTiempoRestante() == 0) && !ganaron());
+}
+
+info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador, Camara* camara){
+    info_partida_t info_partida;
+    memset(&info_partida,0,sizeof(info_partida_t));
+
+    info_partida.altoVentana =  camara->obtenerRectanguloCamara().h;
+    info_partida.anchoVentana = camara->obtenerRectanguloCamara().w;
+    info_partida.cantidadJugadores = jugadores.size();
+    info_partida.idPropio = IDJugador;
+
+    for(int i=0;i<jugadores.size();i++){
+        info_partida.jugadores[i].puntos = 0;
+        info_partida.jugadores[i].mario.idImagen = i;
+        info_partida.jugadores[i].mario.posX = jugadores[i]->obtenerPosicionX();
+        info_partida.jugadores[i].mario.posY = jugadores[i]->obtenerPosicionY();
+        info_partida.jugadores[i].mario.recorteImagen = jugadores[i]->obtenerSpite()->obtenerEstadoActual();
+        strcpy(info_partida.jugadores[i].nombreJugador,mapaIDNombre[i].c_str());
+    }
+
+    int i = 0;
+    for(auto& nivel:niveles){
+        strcpy(info_partida.direccionesFondoNiveles[i], nivel->obtenerDireccionFondoActual().c_str());
+        i++;
+    }
+    info_partida.cantidadFondosNiveles = i;
+
+    info_partida.mundo = obtenerMundoActual();
+
+    return info_partida;
+}
+
+info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre, Camara* camara) {
+    //TODO: Esto debería estar en parte en el nivel, así evitaríamos esos "obtenerBlaBla" y eso.
+    info_ronda_t info_ronda;
+    memset(&info_ronda,0,sizeof(info_ronda_t));
+
+    info_ronda.mundo = obtenerMundoActual();
+    info_ronda.posXCamara = camara->obtenerRectanguloCamara().x;
+    info_ronda.tiempoFaltante = obtenerTiempoRestante();
+    info_ronda.ganaron = ganaron();
+    info_ronda.perdieron = perdieron();
+
+    list<Plataforma*> plataformas = obtenerPlataformas();
+    int numeroBloque = 0;
+    for(auto const& plataforma: plataformas){
+        list<bloque_t> bloques = plataforma->serializarPlataforma();
+
+        for(auto const& bloque: bloques){
+            if(camara->estaEnRangoVisible(bloque.posX) &&
+               numeroBloque<MAX_BLOQUES){
+                info_ronda.bloques[numeroBloque] = bloque;
+                numeroBloque++;
+            }
+        }
+    }
+    info_ronda.topeBloques = numeroBloque;
+
+    int numeroEnemigo = 0;
+    list<Enemigo*> enemigos = obtenerEnemigos();
+    for(auto const& enemigo: enemigos){
+        if(camara->estaEnRangoVisible(enemigo->obtenerPosicionX()) &&
+           numeroEnemigo<MAX_ENEMIGOS){
+            info_ronda.enemigos[numeroEnemigo] = enemigo->serializar();
+            numeroEnemigo++;
+        }
+    }
+    info_ronda.topeEnemigos = numeroEnemigo;
+
+    int numeroMoneda = 0;
+    list<Moneda*> monedas = obtenerMonedas();
+    for(auto const& moneda: monedas){
+        if(camara->estaEnRangoVisible(moneda->obtenerPosicionX()) &&
+           numeroMoneda<MAX_MONEDAS){
+            info_ronda.monedas[numeroMoneda] = moneda->serializar();
+            numeroMoneda++;
+        }
+    }
+    info_ronda.topeMonedas = numeroMoneda;
+
+    jugador_t jugadorSerializado;
+    for(int i=0; i<jugadores.size(); i++){
+        jugadorSerializado = jugadores[i]->serializar(mapaIDNombre[i].c_str(), i);
+        info_ronda.jugadores[i] = jugadorSerializado;
+    }
+
+    list<Tuberia*> tuberias = obtenerTuberias();
+    int numeroTuberia = 0;
+    for(auto const& tuberia: tuberias){
+        if(camara->estaEnRangoVisible(tuberia->obtenerPosicionX()) &&
+           numeroTuberia<MAX_TUBERIAS){
+            info_ronda.tuberias[numeroTuberia] = tuberia->serializar();
+            numeroTuberia++;
+        }
+    }
+    info_ronda.topeTuberias = numeroTuberia;
+
+    return info_ronda;
+}
+
+bool Juego::hayConectados() {
+    int i = 0;
+    bool hayAlguienConectado = false;
+    while(i<jugadores.size() && !hayAlguienConectado){
+        if(jugadores[i]->estaConectado()){
+            hayAlguienConectado = true;
+        }
+        i++;
+    }
+    return hayAlguienConectado;
+
 }

@@ -43,30 +43,35 @@ class Juego{
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
 
+        int obtenerTiempoRestante();
+        int obtenerMundoActual();
+        list<Enemigo*> obtenerEnemigos();
+        list<Plataforma*> obtenerPlataformas();
+        list<Moneda*> obtenerMonedas();
+        list<Tuberia*> obtenerTuberias();
+
 		static Juego* instanciaJuego;
 
 public:
 		Juego(Juego &other) = delete;
+        ~Juego();
 		static Juego* getInstance();
 		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
 
-		list<Nivel*> obtenerNiveles();
 		void iniciar();
+
         bool ganaron();
         bool perdieron();
-		void actualizarModelo(Camara* camara/*TODO: Sacar estos parametros*/);
+        bool hayConectados();
+
+		void actualizarModelo(Camara* camara/*TODO: Sacar este parametros*/);
         void actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario);
+
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
 
-        list<Enemigo*> obtenerEnemigos();
-		list<Plataforma*> obtenerPlataformas();
-		list<Moneda*> obtenerMonedas();
-        list<Tuberia*> obtenerTuberias();
-		map<int,Mario*> obtenerMarios();
-		int obtenerTiempoRestante();
-        int obtenerMundoActual();
-		~Juego();
+        info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador, Camara* camara);
+        info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre, Camara* camara);
 
 };
 

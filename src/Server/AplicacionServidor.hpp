@@ -45,7 +45,6 @@ class AplicacionServidor{
 		}
 
 	private:
-		bool tengoJugadores(map<int,Mario*> jugadores) const;
 		Servidor* servidor;
 		Log* log;
 		Juego* juego;

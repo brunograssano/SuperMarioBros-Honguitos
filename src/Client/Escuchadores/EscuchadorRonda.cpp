@@ -52,8 +52,8 @@ bool EscuchadorRonda::enemigosValidos(enemigo_t enemigos[MAX_ENEMIGOS], int tope
 bool EscuchadorRonda::recibioMensajeValido(){
 	bool ocurrioError = false;
 
-	if(info_ronda.mundo < 1){
-		error = string("El numero del mundo es menor que 1.");
+	if(info_ronda.mundo < 0){
+		error = string("El numero del mundo es menor que 0.");
 		ocurrioError = true;
 	}else if(!bloquesValidos(info_ronda.bloques, info_ronda.topeBloques)){
 		error = string("El vector de bloques posee al menos un bloque invalido.");

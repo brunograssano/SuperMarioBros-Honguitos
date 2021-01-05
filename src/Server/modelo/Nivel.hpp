@@ -8,7 +8,7 @@
 #include <utility>
 #include "src/Server/modelo/Bloques/Tuberia.hpp"
 #include "Bloques/Plataforma.hpp"
-
+#include "src/Utils/Contador.hpp"
 #include "Bloques/Bloque.hpp"
 #include "Enemigos/Enemigo.hpp"
 #include "Moneda.hpp"
@@ -18,17 +18,19 @@ const int ANCHO_FONDO2 = 8177;
 const int ALTO_NIVEL = 600;
 
 class Nivel{
-
+    //TODO: Pasar todo al cpp...
 	public:
-		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
+		Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin){
 			this->mundo = mundo;
 			this->direccionFondo = std::move(direccionFondo);
 			this->tiempo = tiempo;
 			this->cantidadMonedas = cantidadMonedas;
 			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+			this->contador = new Contador(tiempo, SEGUNDOS);
 		}
 
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
+
 		void agregarPlataforma(Plataforma* unaPlataforma){
 			plataformas.push_back(unaPlataforma);
 		}
@@ -47,6 +49,14 @@ class Nivel{
 
 		int obtenerMundo() const{
 			return mundo;
+		}
+
+		int tiempoRestante(){
+		    return contador->tiempoRestante();
+		}
+
+		void iniciar(){
+		    contador->iniciar();
 		}
 
 		void actualizarModelo();
@@ -74,6 +84,7 @@ class Nivel{
 			plataformas.clear();
 			enemigos.clear();
 			monedas.clear();
+			delete contador;
 		}
 
     private:
@@ -90,6 +101,7 @@ class Nivel{
         list<Moneda*> monedas;
         list<Tuberia*> tuberias;
 
+        Contador* contador;
         int mundo;
         string direccionFondo;
         int tiempo;

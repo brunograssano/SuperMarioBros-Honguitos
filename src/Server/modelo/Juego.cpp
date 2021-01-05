@@ -6,7 +6,7 @@
 
 Juego* Juego::instanciaJuego = nullptr;
 
-void Juego::inicializar() {}
+void Juego::inicializar() {} //todo: ¿?
 
 Juego* Juego::getInstance(){
 	return instanciaJuego;
@@ -23,31 +23,29 @@ list<Nivel*> Juego::obtenerNiveles(){
 	return niveles;
 }
 
-void Juego::avanzarNivel(SDL_Rect* rectanguloCamara, Contador* contadorNivel){
-    if(quedaSoloUnNivel()){
-        sumarPuntosAJugadores(contadorNivel->tiempoRestante());
+void Juego::avanzarNivel(SDL_Rect* rectanguloCamara){
+    if(niveles.empty()) return;
+
+    Nivel* nivelViejo = niveles.front();
+    int puntos = nivelViejo->tiempoRestante(); //todo: cambiarlo
+    delete nivelViejo;
+    niveles.pop_front();
+
+    if(niveles.empty()){
+        hanGanado = true;
+        sumarPuntosAJugadores(puntos);
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
-        rectanguloCamara->x= 0;
+        rectanguloCamara->x = 0;
         rectanguloCamara->y = 0;
-        sumarPuntosAJugadores(contadorNivel->tiempoRestante());
-        delete contadorNivel;
-        contadorNivel = new Contador(niveles.front()->obtenerTiempo(), SEGUNDOS);
-        contadorNivel->iniciar();
+        sumarPuntosAJugadores(puntos);
+        niveles.front()->iniciar();
+        for(auto const& parClaveJugador:jugadores){
+            parClaveJugador.second->reiniciarPosicion();
+        }
         Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
     }
-
-	Nivel* nivelViejo = niveles.front();
-	delete nivelViejo;
-	niveles.pop_front();
-	for(auto const& parClaveJugador:jugadores){
-		parClaveJugador.second->reiniciarPosicion();
-	}
-}
-
-bool Juego::quedaSoloUnNivel(){
-	return niveles.size()==1;
 }
 
 void Juego::desconectarJugador(int idJugador){
@@ -64,22 +62,33 @@ map<int,Mario*> Juego::obtenerMarios(){
 }
 
 list<Enemigo*> Juego::obtenerEnemigos(){
+    if(niveles.empty()) return list<Enemigo*>();
 	return niveles.front()->obtenerEnemigos();
 }
 
 list<Plataforma*> Juego::obtenerPlataformas(){
+    if(niveles.empty()) return list<Plataforma*>();
 	return niveles.front()->obtenerPlataformas();
 }
 
 list<Moneda*> Juego::obtenerMonedas(){
+    if(niveles.empty()) return list<Moneda*>();
 	return niveles.front()->obtenerMonedas();
 }
 
 list<Tuberia*> Juego::obtenerTuberias() {
+    if(niveles.empty()) return list<Tuberia*>();
     return niveles.front()->obtenerTuberias();
 }
 
-void Juego::actualizarModelo(SDL_Rect* camara, Contador* contador /*TODO: Sacar estos parametros*/){
+int Juego::obtenerTiempoRestante(){
+    if(niveles.empty()) return 0;
+    return niveles.front()->tiempoRestante();
+}
+
+void Juego::actualizarModelo(SDL_Rect* camara/*TODO: Sacar estos parametros*/){
+    if(niveles.empty()) return;
+
     for(auto const& parClaveJugador:jugadores){
         parClaveJugador.second->actualizarPosicion();
     }
@@ -87,7 +96,7 @@ void Juego::actualizarModelo(SDL_Rect* camara, Contador* contador /*TODO: Sacar 
 	nivelActual->actualizarModelo();
 
     if(todosEnLaMeta()) {
-        avanzarNivel(camara, contador /*TODO: Sacar estos parametros*/);
+        avanzarNivel(camara /*TODO: Sacar estos parametros*/);
     }
 }
 
@@ -101,6 +110,7 @@ void Juego::sumarPuntosAJugadores(int puntos){
 }
 
 int Juego::obtenerMundoActual(){
+    if(niveles.empty()) return 0;
     return niveles.front()->obtenerMundo();
 }
 
@@ -138,6 +148,8 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
 }
 
 bool Juego::todosEnLaMeta() {
+    if(niveles.empty()) return false;
+
     bool alguienConectado = false;
     bool todosEnLaMeta = true;
     int puntoBandera = niveles.front()->obtenerPuntoBanderaFin();
@@ -145,7 +157,7 @@ bool Juego::todosEnLaMeta() {
         Mario* jugador = parClaveJugador.second;
         if(jugador->estaConectado()){
             alguienConectado = true;
-            if(jugador->obtenerPosicionX()<puntoBandera){
+            if(jugador->obtenerPosicionX() < puntoBandera){
                 todosEnLaMeta = false;
             }
         }
@@ -154,6 +166,10 @@ bool Juego::todosEnLaMeta() {
 }
 
 bool Juego::ganaron() {
-    return todosEnLaMeta() && quedaSoloUnNivel();
+    return hanGanado;
 }
 
+void Juego::iniciar(){
+    if(niveles.empty()) return;
+    niveles.front()->iniciar();
+}

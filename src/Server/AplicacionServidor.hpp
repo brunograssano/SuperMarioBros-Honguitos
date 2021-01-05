@@ -61,7 +61,6 @@ class AplicacionServidor{
 		bool ganaron;
 		bool juegoInicializadoCorrectamente;
 		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
-		Contador* contadorNivel;
 };
 
 

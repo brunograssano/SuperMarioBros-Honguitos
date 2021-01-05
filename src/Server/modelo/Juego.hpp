@@ -31,13 +31,14 @@ class Juego{
 				nivel->inicializarPosicionMonedas();
 				nivel->inicializarPosicionEnemigo();
 			}
+
+            hanGanado = false;
 		}
-        bool quedaSoloUnNivel();
         bool todosEnLaMeta();
-        void avanzarNivel(SDL_Rect* camara, Contador* contador /*TODO: Sacar estos parametros*/);
+        void avanzarNivel(SDL_Rect* camara/*TODO: Sacar estos parametros*/);
         void sumarPuntosAJugadores(int puntos);
 
-
+        bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
 
@@ -49,8 +50,9 @@ public:
 		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
 
 		list<Nivel*> obtenerNiveles();
+		void iniciar();
         bool ganaron();
-		void actualizarModelo(SDL_Rect* camara, Contador* contador/*TODO: Sacar estos parametros*/);
+		void actualizarModelo(SDL_Rect* camara/*TODO: Sacar estos parametros*/);
         void actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario);
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
@@ -60,6 +62,7 @@ public:
 		list<Moneda*> obtenerMonedas();
         list<Tuberia*> obtenerTuberias();
 		map<int,Mario*> obtenerMarios();
+		int obtenerTiempoRestante();
         int obtenerMundoActual();
 		~Juego();
 

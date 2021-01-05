@@ -7,5 +7,6 @@
 /Debug/
 .cproject
 .project
+.idea
 .settings/language.settings.xml
 cmake-build-debug/*

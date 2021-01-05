@@ -23,7 +23,6 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 	servidor = server;
 	this->ancho_pantalla = ancho_pantalla;
 	rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
-	contadorNivel = new Contador(juego->obtenerNiveles().front()->obtenerTiempo(), SEGUNDOS);
 }
 
 info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador){
@@ -79,7 +78,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 
 	info_ronda.mundo = juego->obtenerMundoActual();
 	info_ronda.posXCamara = this->rectanguloCamara.x;
-	info_ronda.tiempoFaltante = this->contadorNivel->tiempoRestante();
+	info_ronda.tiempoFaltante = this->juego->obtenerTiempoRestante();
 	info_ronda.ganaron = this->ganaron;
 	info_ronda.perdieron = terminoElJuego && !ganaron;
 
@@ -122,7 +121,7 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 
 	map<int,Mario*> jugadores = juego->obtenerMarios();
 	jugador_t jugadorSerializado;
-	for(unsigned short int i=0; i<cantJugadores; i++){
+	for(int i=0; i<cantJugadores; i++){
 		jugadorSerializado = jugadores[i]->serializar(mapaIDNombre[i].c_str(), i);
 		info_ronda.jugadores[i] = jugadorSerializado;
 	}
@@ -146,24 +145,24 @@ void AplicacionServidor::iniciarJuego(){
 }
 
 void AplicacionServidor::gameLoop(){
-	unsigned int microSegundosEspera = 16666;
+	int microSegundosEspera = 16666;
 	while(!comenzoElJuego){
 	}
 
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
-	contadorNivel->iniciar();
 	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
 	map<int,Mario*> jugadores = juego->obtenerMarios();
+    juego->iniciar();
 	while(!terminoElJuego || tengoJugadores(jugadores)){
-		contador->iniciar();
-		if(!ganaron){
+	    contador->iniciar();
+		if(!terminoElJuego){
 
 			while(!colaDeEntradasUsuario.empty()){
 				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
 				juego->actualizarJugador(parIDEntrada.id, parIDEntrada.entradas);
 				colaDeEntradasUsuario.pop();
 			}
-			juego->actualizarModelo(&rectanguloCamara, contadorNivel);
+			juego->actualizarModelo(&rectanguloCamara);
 
 			moverCamara(jugadores);
             ganaron = juego->ganaron();
@@ -172,9 +171,7 @@ void AplicacionServidor::gameLoop(){
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
 
-
 		usleep(contador->tiempoRestante());
-
 	}
 	delete contador;
 	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
@@ -186,7 +183,7 @@ void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuar
 }
 
 bool AplicacionServidor::perdieron(){
-	return ((contadorNivel->tiempoRestante() == 0) && !ganaron);
+	return ((juego->obtenerTiempoRestante() == 0) && !ganaron);
 }
 
 void AplicacionServidor::activarJugador(int idMarioConectandose){
@@ -273,6 +270,5 @@ void AplicacionServidor::moverCamara(const map<int,Mario*>& jugadores){
 }
 
 AplicacionServidor::~AplicacionServidor(){
-	delete contadorNivel;
 	delete juego;
 }

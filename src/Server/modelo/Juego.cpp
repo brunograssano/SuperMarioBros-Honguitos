@@ -23,7 +23,7 @@ list<Nivel*> Juego::obtenerNiveles(){
 	return niveles;
 }
 
-void Juego::avanzarNivel(SDL_Rect* rectanguloCamara){
+void Juego::avanzarNivel(Camara* camara){
     if(niveles.empty()) return;
 
     Nivel* nivelViejo = niveles.front();
@@ -37,8 +37,7 @@ void Juego::avanzarNivel(SDL_Rect* rectanguloCamara){
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
-        rectanguloCamara->x = 0;
-        rectanguloCamara->y = 0;
+        camara->reiniciar();
         sumarPuntosAJugadores(puntos);
         niveles.front()->iniciar();
         for(auto const& parClaveJugador:jugadores){
@@ -86,7 +85,7 @@ int Juego::obtenerTiempoRestante(){
     return niveles.front()->tiempoRestante();
 }
 
-void Juego::actualizarModelo(SDL_Rect* camara/*TODO: Sacar estos parametros*/){
+void Juego::actualizarModelo(Camara* camara){
     if(niveles.empty()) return;
 
     for(auto const& parClaveJugador:jugadores){
@@ -98,6 +97,7 @@ void Juego::actualizarModelo(SDL_Rect* camara/*TODO: Sacar estos parametros*/){
     if(todosEnLaMeta()) {
         avanzarNivel(camara /*TODO: Sacar estos parametros*/);
     }
+    camara->moverCamara(this->jugadores);
 }
 
 void Juego::sumarPuntosAJugadores(int puntos){

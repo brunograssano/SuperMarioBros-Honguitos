@@ -8,7 +8,7 @@
 #include <map>
 
 #include "../Utils/Contador.hpp"
-
+#include "modelo/Camara/Camara.hpp"
 class Servidor;
 #include "Servidor.hpp"
 
@@ -47,14 +47,10 @@ class AplicacionServidor{
 	private:
 		bool tengoJugadores(map<int,Mario*> jugadores) const;
 		Servidor* servidor;
-		bool estaEnRangoVisible(int posicionX) const;
-		SDL_Rect* obtenerRectCamara();
-		void moverCamara(const map<int,Mario*>& jugadores);
 		Log* log;
 		Juego* juego;
-		SDL_Rect rectanguloCamara{};
+		Camara* camara;
 		int cantJugadores;
-		int ancho_pantalla;
 		bool terminoElJuego;
 		bool comenzoElJuego;
 		bool juegoInicializadoCorrectamente;

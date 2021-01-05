@@ -9,6 +9,14 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
+Nivel::Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
+    this->mundo = mundo;
+    this->direccionFondo = std::move(direccionFondo);
+    this->tiempo = tiempo;
+    this->cantidadMonedas = cantidadMonedas;
+    this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+}
+
 void Nivel::actualizarPosicionesEnemigos(){
 	Log* log = Log::getInstance();
 	int i = 1;
@@ -38,6 +46,7 @@ list<Plataforma*> Nivel::obtenerPlataformas(){
 	return plataformas;
 }
 
+
 list<Moneda*> Nivel::obtenerMonedas(){
 	return monedas;
 }
@@ -50,6 +59,23 @@ float Nivel::obtenerPuntoBanderaFin() const{
 	return puntoBanderaFin;
 }
 
+int Nivel::obtenerTiempo() const{
+    return tiempo;
+}
+
+int Nivel::obtenerMundo() const{
+    return mundo;
+}
+
+void Nivel::agregarPlataforma(Plataforma* unaPlataforma){
+    plataformas.push_back(unaPlataforma);
+}
+void Nivel::agregarEnemigo(Enemigo* unEnemigo){
+    enemigos.push_back(unEnemigo);
+}
+void Nivel::agregarMoneda(Moneda* unaMoneda){
+    monedas.push_back(unaMoneda);
+}
 bool Nivel::esUnaPosicionXValidaEnemigo(int numeroPosicion){
 	return !posicionesOcupadasXEnemigos[numeroPosicion];
 }
@@ -113,7 +139,6 @@ void Nivel::inicializarPosicionMonedas(){
 
 }
 
-
 void Nivel::inicializarPosicionEnemigo(){
 
 	srand(time(nullptr));
@@ -172,4 +197,19 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
 
 list<Tuberia *> Nivel::obtenerTuberias() {
     return tuberias;
+}
+
+Nivel::~Nivel (){
+    for(const auto& plataforma:plataformas){
+        delete plataforma;
+    }
+    for(const auto& moneda:monedas){
+        delete moneda;
+    }
+    for(const auto& enemigo:enemigos){
+        delete enemigo;
+    }
+    plataformas.clear();
+    enemigos.clear();
+    monedas.clear();
 }

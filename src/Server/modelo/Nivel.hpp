@@ -20,61 +20,24 @@ const int ALTO_NIVEL = 600;
 class Nivel{
 
 	public:
-		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
-			this->mundo = mundo;
-			this->direccionFondo = std::move(direccionFondo);
-			this->tiempo = tiempo;
-			this->cantidadMonedas = cantidadMonedas;
-			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
-		}
-
+		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin);
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
-		void agregarPlataforma(Plataforma* unaPlataforma){
-			plataformas.push_back(unaPlataforma);
-		}
-
-		void agregarEnemigo(Enemigo* unEnemigo){
-			enemigos.push_back(unEnemigo);
-		}
-
-		void agregarMoneda(Moneda* unaMoneda){
-			monedas.push_back(unaMoneda);
-		}
-
-		int obtenerTiempo() const{
-			return tiempo;
-		}
-
-		int obtenerMundo() const{
-			return mundo;
-		}
-
+		void agregarPlataforma(Plataforma* unaPlataforma);
+		void agregarEnemigo(Enemigo* unEnemigo);
+		void agregarMoneda(Moneda* unaMoneda);
+		int obtenerTiempo() const;
+		int obtenerMundo() const;
 		void actualizarModelo();
 		void inicializarPosicionEnemigo();
 		void inicializarPosicionMonedas();
 		void inicializarPosicionesOcupadasPorBloques();
-
 		float obtenerPuntoBanderaFin() const;
 		list<Enemigo*> obtenerEnemigos();
 		list<Plataforma*> obtenerPlataformas();
 		list<Moneda*> obtenerMonedas();
         list<Tuberia*> obtenerTuberias();
 		string obtenerDireccionFondoActual();
-
-		~Nivel(){
-			for(const auto& plataforma:plataformas){
-				delete plataforma;
-			}
-			for(const auto& moneda:monedas){
-				delete moneda;
-			}
-			for(const auto& enemigo:enemigos){
-				delete enemigo;
-			}
-			plataformas.clear();
-			enemigos.clear();
-			monedas.clear();
-		}
+		~Nivel();
 
     private:
         void actualizarPosicionesEnemigos();

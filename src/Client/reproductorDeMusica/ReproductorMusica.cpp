@@ -2,6 +2,7 @@
 #include "EstadoMusica.hpp"
 
 #include <string>
+#include <utility>
 
 ReproductorMusica* ReproductorMusica::reproductor = nullptr;
 
@@ -12,17 +13,15 @@ ReproductorMusica::ReproductorMusica(){
 	map<string,string> nombresSonidos;
 	nombresSonidos.insert(std::pair<string,string>("EfectoSalto","resources/Musica/EfectosSonido/EfectoSalto.wav"));
 	nombresSonidos.insert(std::pair<string,string>("AgarrarMoneda","resources/Musica/EfectosSonido/AgarrarMoneda.wav"));
-	nombresSonidos.insert(std::pair<string,string>("InicioJuego","resources/Musica/EfectosSonido/InicioJuego.wav"));
 	nombresSonidos.insert(std::pair<string,string>("SumarVida","resources/Musica/EfectosSonido/SumarVida.wav"));
 	nombresSonidos.insert(std::pair<string,string>("RomperBloque","resources/Musica/EfectosSonido/RomperBloque.wav"));
-	nombresSonidos.insert(std::pair<string,string>("MarioMataGoomba","resources/Musica/EfectosSonido/MarioMataGoomba.wav"));
-	nombresSonidos.insert(std::pair<string,string>("MarioChicoGolpeaLadrillo","resources/Musica/EfectosSonido/MarioChicoGolpeaLadrillo.wav"));
-	nombresSonidos.insert(std::pair<string,string>("MarioLanzaFuego","resources/Musica/EfectosSonido/MarioLanzaFuego.wav"));
+	nombresSonidos.insert(std::pair<string,string>("MataGoomba","resources/Musica/EfectosSonido/MarioMataGoomba.wav"));
+	nombresSonidos.insert(std::pair<string,string>("LanzaFuego","resources/Musica/EfectosSonido/MarioLanzaFuego.wav"));
 	nombresSonidos.insert(std::pair<string,string>("SonidoBandera","resources/Musica/EfectosSonido/SonidoBandera.wav"));
 	nombresSonidos.insert(std::pair<string,string>("AparecePlanta","resources/Musica/EfectosSonido/AparecePlanta.wav"));
-	nombresSonidos.insert(std::pair<string,string>("MarioAgarraHongo","resources/Musica/EfectosSonido/MarioAgarraHongo.wav"));
+	nombresSonidos.insert(std::pair<string,string>("AgarraHongo","resources/Musica/EfectosSonido/MarioAgarraHongo.wav"));
 	nombresSonidos.insert(std::pair<string,string>("ApareceHongo","resources/Musica/EfectosSonido/ApareceHongo.wav"));
-	nombresSonidos.insert(std::pair<string,string>("MarioPisaKoopa","resources/Musica/EfectosSonido/MarioPisaKoopa.wav"));
+	nombresSonidos.insert(std::pair<string,string>("PisaKoopa","resources/Musica/EfectosSonido/MarioPisaKoopa.wav"));
 
 	string nombreArchivo;
 	Mix_Chunk* efecto =nullptr;
@@ -30,7 +29,7 @@ ReproductorMusica::ReproductorMusica(){
 	for (const auto& elemento : nombresSonidos) {
 		nombreArchivo = elemento.second;
 		efecto = Mix_LoadWAV(nombreArchivo.c_str());
-		if(efecto == NULL){
+		if(efecto == nullptr){
 			Log::getInstance()->huboUnError("Hubo un error al intentar cargar el efecto especial en la direccion "+ nombreArchivo);
 		}else{
 			efectosDeSonido.insert(std::pair<string,Mix_Chunk*>(elemento.first ,efecto));
@@ -49,16 +48,16 @@ ReproductorMusica* ReproductorMusica::getInstance(){
 }
 
 void ReproductorMusica::ReproducirMusicaNivel(string nombreCancion){
-    estadoMusica->reproducir(nombreCancion);
+    estadoMusica->reproducir(std::move(nombreCancion));
 }
 
-void ReproductorMusica::ponerMusica(string nombreCancion){
-    Mix_Music* cancion = NULL;
+void ReproductorMusica::ponerMusica(const string& nombreCancion){
+    Mix_Music* cancion = nullptr;
 
     if (cancionReproduciendose == nullptr){
 
         cancion = Mix_LoadMUS( nombreCancion.c_str());
-        if( cancion == NULL ){
+        if( cancion == nullptr ){
             Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
         }else{
             cancionReproduciendose = cancion;
@@ -75,7 +74,7 @@ void ReproductorMusica::ponerMusica(string nombreCancion){
         Mix_Music* cancionABorrar = cancionReproduciendose;
         cancion = Mix_LoadMUS( nombreCancion.c_str());
 
-        if( cancion == NULL ){
+        if( cancion == nullptr ){
             Log::getInstance()->huboUnErrorSDL("Hubo un fallo al intentar cargar la musica en la direccion "+ nombreCancion, Mix_GetError());
         }else{
             cancionReproduciendose = cancion;
@@ -102,53 +101,6 @@ void ReproductorMusica::ReproducirSonidoSalto(){
 	estadoSonidos->reproducir("EfectoSalto");
 }
 
-void ReproductorMusica::ReproducirSonidoAgarrarMoneda(){
-	estadoSonidos->reproducir("AgarrarMoneda");
-}
-void ReproductorMusica::ReproducirSonidoInicioJuego(){
-	estadoSonidos->reproducir("InicioJuego");
-}
-
-void ReproductorMusica::ReproducirSonidoSumarVida(){
-	estadoSonidos->reproducir("SumarVida");
-}
-
-void ReproductorMusica::ReproducirSonidoRomperBloque(){
-	estadoSonidos->reproducir("RomperBloque");
-}
-
-void ReproductorMusica::ReproducirSonidoMarioMataGoomba(){
-	estadoSonidos->reproducir("MarioMataGoomba");
-}
-
-void ReproductorMusica::ReproducirSonidoMarioChicoGolpeaLadrillo(){
-	estadoSonidos->reproducir("MarioChicoGolpeaLadrillo");
-}
-
-void ReproductorMusica::ReproducirSonidoMarioLanzaFuego(){
-    estadoSonidos->reproducir("MarioLanzaFuego");
-}
-
-void ReproductorMusica::ReproducirSonidoBandera(){
-	estadoSonidos->reproducir("SonidoBandera");
-}
-
-void ReproductorMusica::ReproducirSonidoAparecePlanta(){
-	estadoSonidos->reproducir("AparecePlanta");
-}
-
-void ReproductorMusica::ReproducirSonidoMarioAgarraHongo(){
-    estadoSonidos->reproducir("MarioAgarraHongo");
-}
-
-void ReproductorMusica::ReproducirSonidoApareceHongo(){
-	estadoSonidos->reproducir("ApareceHongo");
-}
-
-void ReproductorMusica::ReproducirSonidoMarioPisaKoopa(){
-    estadoSonidos->reproducir("MarioPisaKoopa");
-}
-
 void ReproductorMusica::cambiarMusica(){
     EstadoMusica* nuevoEstadoMusica = estadoMusica->cambiar();
     delete estadoMusica;
@@ -161,7 +113,7 @@ void ReproductorMusica::cambiarSonidos(){
     estadoSonidos = nuevoEstadoSonidos;
 }
 
-void ReproductorMusica::reproducirSonido(string tipoSonido) {
+void ReproductorMusica::reproducirSonido(const string& tipoSonido) {
     Mix_Chunk* efecto = efectosDeSonido.at(tipoSonido);
     Mix_PlayChannel( -1, efecto, 0 );
 }

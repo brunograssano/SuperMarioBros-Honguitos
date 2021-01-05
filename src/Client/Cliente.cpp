@@ -28,6 +28,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
 	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
 	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
+    escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
 
 	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
 	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
@@ -118,7 +119,7 @@ void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t
 		ventanaInicio->actualizarJugadores(actualizacion);
 	}
 }
-void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
+void Cliente::recibirInformacionRonda(info_ronda_t info_ronda) const{
 	if(!cargoLaAplicacion){
 		return;
 	}
@@ -126,12 +127,12 @@ void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
 	aplicacion->agregarRonda(info_ronda);
 }
 
-void Cliente::esperarRecibirInformacionInicio(){
+void Cliente::esperarRecibirInformacionInicio() const{
 	while(!seRecibioInformacionInicio){
 	}
 }
 
-void Cliente::esperarRecibirVerificacion(){
+void Cliente::esperarRecibirVerificacion() const{
 	while(!seRecibioVerificacion){
 	}
 }
@@ -164,14 +165,14 @@ void Cliente::intentarEntrarAlJuego() {
 
 void Cliente::ejecutar(){
 	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, Cliente::escuchar_helper, this);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del server.");
 		return;
 	}
 
 	pthread_t hiloEnviar;
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, Cliente::enviar_helper, this);
+	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, Cliente::enviar_helper, this);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la informacion del cliente al server.");
 		terminoJuego = true;
@@ -227,7 +228,7 @@ void Cliente::enviarCredenciales(credencial_t credenciales){
 
 /////------------------DESTRUCTOR------------------/////
 
-void Cliente::cerradoVentanaInicio() {
+void Cliente::cerradoVentanaInicio() const {
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
 	cerrarSocketCliente(socketCliente);
 }

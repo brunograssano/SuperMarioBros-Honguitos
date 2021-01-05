@@ -11,13 +11,7 @@ Goomba::Goomba(int tipoColor) {
 }
 
 enemigo_t Goomba::serializar() {
-    enemigo_t enemigoSerializado;
-    enemigoSerializado.posX = this->obtenerPosicionX();
-    enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
-    enemigoSerializado.numeroRecorteY = tipoColor;
-    enemigoSerializado.tipoEnemigo = TIPO_GOOMBA;
-    enemigoSerializado.espejar = false;
-    return enemigoSerializado;
+    return serializarEnemigo(TIPO_GOOMBA);
 }
 
 Goomba::~Goomba() {

@@ -19,11 +19,10 @@ class Enemigo{
 		virtual void actualizarPosicion();
 
 	protected:
-
         static float obtenerVelocidad(){
             return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
         }
-
+        enemigo_t serializarEnemigo(int tipo);
 		PosicionMovil* posicionActual{};
         SpriteEnemigo* spriteEnemigo{};
         float velocidadX{};

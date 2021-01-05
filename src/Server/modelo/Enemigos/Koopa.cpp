@@ -14,12 +14,6 @@ Koopa::~Koopa() {
 }
 
 enemigo_t Koopa::serializar() {
-    enemigo_t enemigoSerializado;
-    enemigoSerializado.posX = this->obtenerPosicionX();
-    enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
-    enemigoSerializado.numeroRecorteY = tipoColor;
-    enemigoSerializado.tipoEnemigo = TIPO_KOOPA;
-    enemigoSerializado.espejar = velocidadX > 0;
-    return enemigoSerializado;
+    return serializarEnemigo(TIPO_KOOPA);
 }
 

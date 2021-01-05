@@ -10,6 +10,7 @@
 #include "EnviadoresServer/EnviadorMensajeLog.hpp"
 #include "EnviadoresServer/EnviadorInfoPartida.hpp"
 #include "EnviadoresServer/EnviadorCantidadConexion.hpp"
+#include "EnviadoresServer/EnviadorSonido.hpp"
 
 #define SIN_JUGAR -1
 
@@ -31,6 +32,7 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/
 	enviadores[MENSAJE_LOG] = new EnviadorMensajeLog(socket);
 	enviadores[PARTIDA] = new EnviadorInfoPartida(socket);
 	enviadores[ACTUALIZACION_JUGADORES] = new EnviadorCantidadConexion(socket);
+    enviadores[SONIDO] = new EnviadorSonido(socket);
 	this->informacionAMandar = informacionAMandar;
 }
 
@@ -133,36 +135,36 @@ void ConexionCliente::ejecutar(){
 
 ////---------------------------------ENVIADORES---------------------------------////
 
+void ConexionCliente::agregarCaracterEnCola(char caracter) {
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_lock(&mutex);
+    identificadoresMensajeAEnviar.push(caracter);
+    pthread_mutex_unlock(&mutex);
+}
+
 void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[VERIFICACION]->dejarInformacion(&esUsuarioValido);
-	pthread_mutex_lock(&mutex);
-	identificadoresMensajeAEnviar.push(VERIFICACION);
-	pthread_mutex_unlock(&mutex);
+	agregarCaracterEnCola(VERIFICACION);
 }
 
 void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[RONDA]->dejarInformacion(&info_ronda);
-	pthread_mutex_lock(&mutex);
-	identificadoresMensajeAEnviar.push(RONDA);
-	pthread_mutex_unlock(&mutex);
+    agregarCaracterEnCola(RONDA);
 }
 
 void ConexionCliente::enviarMensajeLog(mensaje_log_t mensaje){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[MENSAJE_LOG]->dejarInformacion(&mensaje);
-	pthread_mutex_lock(&mutex);
-	identificadoresMensajeAEnviar.push(MENSAJE_LOG);
-	pthread_mutex_unlock(&mutex);
+    agregarCaracterEnCola(MENSAJE_LOG);
 }
 
 void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	enviadores[PARTIDA]->dejarInformacion(&info_partida);
-	pthread_mutex_lock(&mutex);
-	identificadoresMensajeAEnviar.push(PARTIDA);
-	pthread_mutex_unlock(&mutex);
+    agregarCaracterEnCola(PARTIDA);
+}
+
+void ConexionCliente::enviarSonido(sonido_t sonido){
+    enviadores[SONIDO]->dejarInformacion(&sonido);
+    agregarCaracterEnCola(SONIDO);
 }
 
 void ConexionCliente::terminoElJuego(){
@@ -180,8 +182,9 @@ void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actua
 	enviadores[ACTUALIZACION_JUGADORES]->dejarInformacion(&actualizacion);
 	pthread_mutex_lock(&mutex);
 	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
-	identificadoresMensajeAEnviar.push(ACTUALIZACION_JUGADORES);
-	pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex);
+	agregarCaracterEnCola(ACTUALIZACION_JUGADORES);
+
 }
 
 ////---------------------------------DESTRUCTOR---------------------------------////

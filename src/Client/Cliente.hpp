@@ -23,6 +23,7 @@ class EscuchadorInfoPartidaInicial;
 #include "../../src/Client/Escuchadores/EscuchadorInfoPartidaInicial.hpp"
 class EscuchadorRonda;
 #include "../../src/Client/Escuchadores/EscuchadorRonda.hpp"
+#include "../../src/Client/Escuchadores/EscuchadorSonido.hpp"
 
 #include "Escuchadores/EscuchadorLog.hpp"
 
@@ -30,9 +31,7 @@ class GameLoop;
 #include "../Client/GameLoop.hpp"
 
 using namespace std;
-
 #define LARGO_IP 20
-
 
 class Cliente{
 
@@ -44,7 +43,7 @@ class Cliente{
 		void escuchar();
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
 		void recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion);
-		void recibirInformacionRonda(info_ronda_t info_ronda);
+		void recibirInformacionRonda(info_ronda_t info_ronda) const;
 		void ejecutar();
 		void agregarEntrada(entrada_usuario_t entradaUsuario);
 		void empezarJuego(info_partida_t info_partida);
@@ -60,10 +59,10 @@ class Cliente{
 
 	private:
 		void enviarCredenciales(credencial_t credencial);
-		void esperarRecibirInformacionInicio();
-		void esperarRecibirVerificacion();
+		void esperarRecibirInformacionInicio() const;
+		void esperarRecibirVerificacion() const;
 		void terminarProcesosDelCliente();
-		void cerradoVentanaInicio();
+		void cerradoVentanaInicio() const;
 		void esperarAQueEmpieceElJuego();
 		void intentarEntrarAlJuego();
 
@@ -74,7 +73,7 @@ class Cliente{
 
 		VentanaInicio* ventanaInicio;
 
-		info_partida_t infoPartida;
+		info_partida_t infoPartida{};
 		verificacion_t pasoVerificacion;
 		bool cargoLaAplicacion;
 		bool seRecibioInformacionInicio;

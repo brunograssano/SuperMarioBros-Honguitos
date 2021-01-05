@@ -14,6 +14,7 @@ using namespace std;
  * C: Credenciales que nos manda el usuario
  * P: Informacion necesaria para iniciar la partida
  * R: Información necesaria para renderizar
+ * S: Sonido a reproducir
  */
 
 
@@ -21,8 +22,7 @@ const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 
 const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
-
-
+const int MAX_NOMBRE_SONIDO = 15;
 const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 10;
 
 const int MAX_JUGADORES = 4;
@@ -155,6 +155,9 @@ typedef struct usuario{
 	bool usado;
 }usuario_t;
 
-
+#define SONIDO 'S'
+typedef struct sonido{
+    char nombre[MAX_NOMBRE_SONIDO];
+}sonido_t;
 
 #endif /* SRC_UTILS_HPP_ */

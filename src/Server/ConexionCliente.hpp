@@ -4,7 +4,6 @@
 class Servidor;
 #include "Servidor.hpp"
 
-
 using namespace std;
 #include <thread>
 #include <string>
@@ -50,6 +49,7 @@ class ConexionCliente {
 		void agregarIDJuego(int IDJugador);
 		void enviarInfoPartida(info_partida_t info_partida);
 		void enviarMensajeLog(mensaje_log_t mensaje);
+        void enviarSonido(sonido_t sonido);
 		string obtenerIP(){
 			return ip;
 		}
@@ -58,6 +58,7 @@ class ConexionCliente {
 
 	private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
+        void agregarCaracterEnCola(char caracter);
 		void enviarVerificacion(bool esUsuarioValido);
 		void esperarCredenciales();
 
@@ -78,9 +79,6 @@ class ConexionCliente {
 		Servidor* servidor;
 		map<char,Escuchador*> escuchadores;
 		map<char,Enviador*> enviadores;
-
-
-
 };
 
 

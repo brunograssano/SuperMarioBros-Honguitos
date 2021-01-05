@@ -3,14 +3,16 @@
 
 #include "../PosicionMovil.hpp"
 #include <string>
-#include "../../sprites/Sprite.hpp"
+#include "../../sprites/SpriteEnemigo.hpp"
 #include "src/Utils/Utils.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 
 class Enemigo{
 
 	public:
         virtual ~Enemigo()= default;
         virtual enemigo_t serializar() =0 ;
+        virtual void morir(Mario *marioQueMatoAlEnemigo);
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
@@ -23,9 +25,10 @@ class Enemigo{
         }
 
 		PosicionMovil* posicionActual{};
-        Sprite* spriteEnemigo{};
+        SpriteEnemigo* spriteEnemigo{};
         float velocidadX{};
         int tipoColor{};
+        int puntos;
 };
 
 

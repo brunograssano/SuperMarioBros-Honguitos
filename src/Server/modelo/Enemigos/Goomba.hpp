@@ -5,7 +5,6 @@
 using namespace std;
 
 #include "Enemigo.hpp"
-#include "../../sprites/SpriteGoomba.hpp"
 
 class Goomba : public Enemigo{
 	public:

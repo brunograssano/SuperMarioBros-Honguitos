@@ -16,3 +16,8 @@ void Enemigo::actualizarPosicion() {
     posicionActual->moverHorizontal(velocidadX);
     spriteEnemigo->actualizarSprite();
 }
+
+void Enemigo::morir(Mario* marioQueMatoAlEnemigo) {
+    marioQueMatoAlEnemigo->agregarPuntos(puntos);
+    spriteEnemigo->morir();
+}

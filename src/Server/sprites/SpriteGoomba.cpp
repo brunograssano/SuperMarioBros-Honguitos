@@ -1,4 +1,5 @@
 #include "SpriteGoomba.hpp"
+#define MUERTO 2
 
 SpriteGoomba::SpriteGoomba(int tipo){
 	direccionTextura = "resources/Imagenes/Personajes/Goombas.png";
@@ -15,6 +16,9 @@ SpriteGoomba::SpriteGoomba(int tipo){
 }
 
 void SpriteGoomba::actualizarSprite(){
+    if(estadoActual == MUERTO){
+        return;
+    }
 	if(ciclos>=20){
 		estadoActual = 1;
 		ciclos = 0;
@@ -27,4 +31,8 @@ void SpriteGoomba::actualizarSprite(){
 
 SDL_Rect SpriteGoomba::obtenerRectanguloActual(){
 	return estadosPosibles[estadoActual];
+}
+
+void SpriteGoomba::morir() {
+    estadoActual = MUERTO;
 }

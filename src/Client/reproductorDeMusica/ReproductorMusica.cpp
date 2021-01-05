@@ -127,8 +127,3 @@ ReproductorMusica::~ReproductorMusica(){
 	delete estadoSonidos;
 	delete estadoMusica;
 }
-
-
-
-
-

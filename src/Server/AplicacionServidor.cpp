@@ -17,7 +17,6 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 	cantJugadores = cantidadJugadores;
 	terminoElJuego = false;
 	comenzoElJuego = false;
-	ganaron = false;
 	juegoInicializadoCorrectamente = false;
 	log = Log::getInstance();
 	servidor = server;
@@ -79,8 +78,8 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	info_ronda.mundo = juego->obtenerMundoActual();
 	info_ronda.posXCamara = this->rectanguloCamara.x;
 	info_ronda.tiempoFaltante = this->juego->obtenerTiempoRestante();
-	info_ronda.ganaron = this->ganaron;
-	info_ronda.perdieron = terminoElJuego && !ganaron;
+	info_ronda.ganaron = juego->ganaron();
+	info_ronda.perdieron = terminoElJuego && !juego->ganaron();
 
 	list<Plataforma*> plataformas = juego->obtenerPlataformas();
 	int numeroBloque = 0;
@@ -165,8 +164,8 @@ void AplicacionServidor::gameLoop(){
 			juego->actualizarModelo(&rectanguloCamara);
 
 			moverCamara(jugadores);
-            ganaron = juego->ganaron();
-			terminoElJuego = ganaron || this->perdieron();
+
+			terminoElJuego = juego->ganaron() || juego->perdieron();
 		}
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
@@ -180,10 +179,6 @@ void AplicacionServidor::gameLoop(){
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
 	this->colaDeEntradasUsuario.push(entradaUsuario);
-}
-
-bool AplicacionServidor::perdieron(){
-	return ((juego->obtenerTiempoRestante() == 0) && !ganaron);
 }
 
 void AplicacionServidor::activarJugador(int idMarioConectandose){

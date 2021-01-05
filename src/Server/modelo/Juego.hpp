@@ -52,6 +52,7 @@ public:
 		list<Nivel*> obtenerNiveles();
 		void iniciar();
         bool ganaron();
+        bool perdieron();
 		void actualizarModelo(SDL_Rect* camara/*TODO: Sacar estos parametros*/);
         void actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario);
 		void desconectarJugador(int idJugador);

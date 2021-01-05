@@ -173,3 +173,7 @@ void Juego::iniciar(){
     if(niveles.empty()) return;
     niveles.front()->iniciar();
 }
+
+bool Juego::perdieron() {
+    return ((obtenerTiempoRestante() == 0) && !ganaron());
+}

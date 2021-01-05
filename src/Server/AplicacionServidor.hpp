@@ -47,7 +47,6 @@ class AplicacionServidor{
 	private:
 		bool tengoJugadores(map<int,Mario*> jugadores) const;
 		Servidor* servidor;
-		bool perdieron();
 		bool estaEnRangoVisible(int posicionX) const;
 		SDL_Rect* obtenerRectCamara();
 		void moverCamara(const map<int,Mario*>& jugadores);
@@ -58,7 +57,6 @@ class AplicacionServidor{
 		int ancho_pantalla;
 		bool terminoElJuego;
 		bool comenzoElJuego;
-		bool ganaron;
 		bool juegoInicializadoCorrectamente;
 		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
 };

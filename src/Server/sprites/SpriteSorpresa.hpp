@@ -9,11 +9,9 @@
 class SpriteSorpresa : public Sprite{
 	public:
 
-		SpriteSorpresa();
+		explicit SpriteSorpresa(bool seUso);
 		~SpriteSorpresa() override= default;
-
 		SDL_Rect obtenerRectanguloActual()override;
-
 		void actualizarSprite()override;
 
 	private:

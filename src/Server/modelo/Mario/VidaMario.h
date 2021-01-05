@@ -5,7 +5,7 @@
 class VidaMario {
     public:
         VidaMario();
-        int obtenerVida();
+        int obtenerVida() const;
         ~VidaMario();
         void perderVida();
 

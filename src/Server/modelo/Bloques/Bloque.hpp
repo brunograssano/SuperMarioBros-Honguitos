@@ -1,9 +1,12 @@
 #ifndef SRC_SERVER_MODELO_BLOQUES_BLOQUE_HPP_
 #define SRC_SERVER_MODELO_BLOQUES_BLOQUE_HPP_
 
-using namespace std;
 #include <list>
 #include <string>
+using namespace std;
+
+#include "ObjetosSorpresa/ObjetoSorpresa.h"
+#include "ObjetosSorpresa/SinSorpresa.h"
 
 #include "../../../Utils/Utils.hpp"
 
@@ -16,34 +19,19 @@ using namespace std;
 
 class Bloque{
     public:
-
 		virtual ~Bloque()= default;
-
-		int obtenerPosicionX(){
-			return this->posicion->obtenerPosX();
-		}
-		int obtenerPosicionY(){
-			return this->posicion->obtenerPosY();
-		}
-
-		Sprite* obtenerSprite(){
-			return this->spriteBloque;
-		}
-
-		virtual bloque_t serializar() = 0;
-
-		void ubicarEnPosicionDefault(){
-			delete this->posicion;
-			this->posicion = new PosicionFija(200, 200);
-		}
+		int obtenerPosicionX();
+		int obtenerPosicionY();
+		Sprite* obtenerSprite();
+		void ubicarEnPosicionDefault();
+		virtual ObjetoSorpresa* colisionaronAbajo();
+        virtual bloque_t serializar();
 
     protected:
-    	Posicion* posicion;
-    	Sprite* spriteBloque;
-
-		static int normalizarCoordenadaIngresada(int coordenada){
-			return (coordenada/40)*40;
-		}
+        int tipoBloque{};
+    	Posicion* posicion{};
+    	Sprite* spriteBloque{};
+		static int normalizarCoordenadaIngresada(int coordenada);
 };
 
 #endif /* SRC_SERVER_MODELO_BLOQUES_BLOQUE_HPP_ */

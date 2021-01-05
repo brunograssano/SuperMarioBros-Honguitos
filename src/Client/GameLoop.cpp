@@ -37,7 +37,7 @@ void GameLoop::gameLoop() {
 			}
 		}
 		SDL_PumpEvents();
-		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL); // obtiene un array con el estado del teclado
+		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(nullptr);
 		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
 			salir = true;
 		} else {

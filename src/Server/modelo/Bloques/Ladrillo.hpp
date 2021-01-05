@@ -8,11 +8,7 @@ class Ladrillo : public Bloque {
 
     public:
         Ladrillo(int coordenadaX, int coordenadaY, int tipo);
-        bloque_t serializar()override;
         ~Ladrillo() override;
-
-    private:
-        int tipoLadrillo;
 
 };
 

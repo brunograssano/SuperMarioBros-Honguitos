@@ -41,15 +41,11 @@ class ConexionCliente {
 			return NULL;
 		}
 
-		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void enviarActualizacionesDeRonda() const;
-
+        void agregarMensajeAEnviar(char caracter, void *mensaje);
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
-		void enviarInfoPartida(info_partida_t info_partida);
-		void enviarMensajeLog(mensaje_log_t mensaje);
-        void enviarSonido(sonido_t sonido);
 		string obtenerIP(){
 			return ip;
 		}
@@ -58,8 +54,6 @@ class ConexionCliente {
 
 	private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
-        void agregarCaracterEnCola(char caracter);
-		void enviarVerificacion(bool esUsuarioValido);
 		void esperarCredenciales();
 
 		queue<char> identificadoresMensajeAEnviar;

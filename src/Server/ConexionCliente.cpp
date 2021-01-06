@@ -120,7 +120,7 @@ void ConexionCliente::ejecutar(){
 
 	while(!esUsuarioValido && !terminoJuego) {
         esUsuarioValido = servidor->esUsuarioValido({nombre, contrasenia, false}, this);
-        enviarVerificacion(esUsuarioValido);
+        agregarMensajeAEnviar(VERIFICACION,&esUsuarioValido);
         if (esUsuarioValido) {
             Log::getInstance()->mostrarMensajeDeInfo(
                     "Se acepto el usuario: " + nombre + " con contrasenia: " + contrasenia + " del cliente: " +
@@ -135,36 +135,12 @@ void ConexionCliente::ejecutar(){
 
 ////---------------------------------ENVIADORES---------------------------------////
 
-void ConexionCliente::agregarCaracterEnCola(char caracter) {
+void ConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
     pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    enviadores[caracter]->dejarInformacion(mensaje);
     pthread_mutex_lock(&mutex);
     identificadoresMensajeAEnviar.push(caracter);
     pthread_mutex_unlock(&mutex);
-}
-
-void ConexionCliente::enviarVerificacion(bool esUsuarioValido){
-	enviadores[VERIFICACION]->dejarInformacion(&esUsuarioValido);
-	agregarCaracterEnCola(VERIFICACION);
-}
-
-void ConexionCliente::recibirInformacionRonda(info_ronda_t info_ronda){
-	enviadores[RONDA]->dejarInformacion(&info_ronda);
-    agregarCaracterEnCola(RONDA);
-}
-
-void ConexionCliente::enviarMensajeLog(mensaje_log_t mensaje){
-	enviadores[MENSAJE_LOG]->dejarInformacion(&mensaje);
-    agregarCaracterEnCola(MENSAJE_LOG);
-}
-
-void ConexionCliente::enviarInfoPartida(info_partida_t info_partida){
-	enviadores[PARTIDA]->dejarInformacion(&info_partida);
-    agregarCaracterEnCola(PARTIDA);
-}
-
-void ConexionCliente::enviarSonido(sonido_t sonido){
-    enviadores[SONIDO]->dejarInformacion(&sonido);
-    agregarCaracterEnCola(SONIDO);
 }
 
 void ConexionCliente::terminoElJuego(){
@@ -179,12 +155,10 @@ void ConexionCliente::agregarIDJuego(int IDJugador){
 
 void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	enviadores[ACTUALIZACION_JUGADORES]->dejarInformacion(&actualizacion);
 	pthread_mutex_lock(&mutex);
 	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
     pthread_mutex_unlock(&mutex);
-	agregarCaracterEnCola(ACTUALIZACION_JUGADORES);
-
+    agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&actualizacion);
 }
 
 ////---------------------------------DESTRUCTOR---------------------------------////

@@ -17,6 +17,7 @@ SpriteGoomba::SpriteGoomba(int tipo){
 
 void SpriteGoomba::actualizarSprite(){
     if(estadoActual == MUERTO){
+        ciclos++;
         return;
     }
 	if(ciclos>=20){
@@ -35,4 +36,9 @@ SDL_Rect SpriteGoomba::obtenerRectanguloActual(){
 
 void SpriteGoomba::morir() {
     estadoActual = MUERTO;
+    ciclos = 0;
+}
+
+bool SpriteGoomba::seMostroElTiempoSuficienteEnPantalla() {
+    return estadoActual==MUERTO && ciclos>20;
 }

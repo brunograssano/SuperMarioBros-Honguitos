@@ -31,3 +31,7 @@ enemigo_t Enemigo::serializarEnemigo(int tipo) {
     enemigoSerializado.espejar = velocidadX > 0;
     return enemigoSerializado;
 }
+
+bool Enemigo::sePuedeEliminar() {
+    return spriteEnemigo->seMostroElTiempoSuficienteEnPantalla();
+}

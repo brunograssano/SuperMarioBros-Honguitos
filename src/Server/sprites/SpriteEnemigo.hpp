@@ -6,6 +6,7 @@
 class SpriteEnemigo : public Sprite{
     public:
         virtual void morir() = 0;
+        virtual bool seMostroElTiempoSuficienteEnPantalla() = 0;
 };
 
 

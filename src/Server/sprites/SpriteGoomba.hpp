@@ -11,6 +11,7 @@ class SpriteGoomba : public SpriteEnemigo{
 		SDL_Rect obtenerRectanguloActual()override;
         void morir() override;
 		void actualizarSprite()override;
+        bool seMostroElTiempoSuficienteEnPantalla()override;
 
 	private:
 		SDL_Rect estadosPosibles[3]{};

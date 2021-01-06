@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "../../Utils/log/Log.hpp"
-
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
@@ -37,6 +35,19 @@ void Nivel::actualizarMonedas(){
 void Nivel::actualizarModelo(){
 	actualizarPosicionesEnemigos();
 	actualizarMonedas();
+}
+
+void Nivel::sacarEnemigosMuertos(){
+    list<Enemigo*> enemigosABorrar;
+    for(auto enemigo : enemigosMuertos){ // se moverian a la lista esta una vez que detectamos colision por arriba
+        if(enemigo->sePuedeEliminar()){ // la otra opcion es mantenerlos en la lista original, e ir verificando si estan muertos
+            enemigosABorrar.push_back(enemigo);
+        }
+    }
+    for(auto enemigo : enemigosABorrar ){
+        enemigosMuertos.remove(enemigo);
+        delete enemigo;
+    }
 }
 
 list<Enemigo*> Nivel::obtenerEnemigos(){

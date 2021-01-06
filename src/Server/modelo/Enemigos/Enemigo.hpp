@@ -17,6 +17,7 @@ class Enemigo{
 		int obtenerPosicionY();
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
 		virtual void actualizarPosicion();
+        virtual bool sePuedeEliminar();
 
 	protected:
         static float obtenerVelocidad(){
@@ -28,6 +29,7 @@ class Enemigo{
         float velocidadX{};
         int tipoColor{};
         int puntos;
+
 };
 
 

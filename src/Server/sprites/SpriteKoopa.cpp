@@ -18,6 +18,7 @@ SpriteKoopa::SpriteKoopa(int tipo){
 
 void SpriteKoopa::actualizarSprite(){
     if(estadoActual == MUERTO){
+        ciclos++;
         return;
     }
     if(ciclos>=20){
@@ -37,4 +38,9 @@ SDL_Rect SpriteKoopa::obtenerRectanguloActual(){
 
 void SpriteKoopa::morir() {
     estadoActual = MUERTO;  // VER CON CUAL OPCION NOS QUEDAMOS DEL SPRITE
+    ciclos = 0;
+}
+
+bool SpriteKoopa::seMostroElTiempoSuficienteEnPantalla() {
+    return estadoActual==MUERTO && ciclos>20;
 }

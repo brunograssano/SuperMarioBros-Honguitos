@@ -40,6 +40,7 @@ class Nivel{
 		~Nivel();
 
     private:
+        void sacarEnemigosMuertos();
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
@@ -52,12 +53,14 @@ class Nivel{
         list<Enemigo*> enemigos;
         list<Moneda*> monedas;
         list<Tuberia*> tuberias;
+        list<Enemigo*>enemigosMuertos;
 
         int mundo;
         string direccionFondo;
         int tiempo;
         int cantidadMonedas;
         float puntoBanderaFin;
+
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

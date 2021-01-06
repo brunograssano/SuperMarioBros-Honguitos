@@ -16,6 +16,8 @@ using namespace std;
 class EscuchadorEntradaTeclado;
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
+#include "EnviadoresServer/EnviadorConexionCliente.h"
+
 class ConexionCliente {
 
 	public:
@@ -34,10 +36,8 @@ class ConexionCliente {
 			return NULL;
 		}
 
-
-		void enviar();
 		static void* enviar_helper(void* ptr){
-			((ConexionCliente*) ptr)->enviar();
+			((EnviadorConexionCliente*) ptr)->enviar();
 			return NULL;
 		}
 
@@ -56,7 +56,7 @@ class ConexionCliente {
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
 		void esperarCredenciales();
 
-		queue<char> identificadoresMensajeAEnviar;
+        EnviadorConexionCliente* enviador;
 
 		string nombre;
 		string contrasenia;
@@ -72,7 +72,6 @@ class ConexionCliente {
 
 		Servidor* servidor;
 		map<char,Escuchador*> escuchadores;
-		map<char,Enviador*> enviadores;
 };
 
 

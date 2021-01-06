@@ -1,16 +1,8 @@
-
 #include "ConexionCliente.hpp"
 
 #include <utility>
 #include "EscuchadoresServer/EscuchadorCredenciales.hpp"
 #include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
-
-#include "EnviadoresServer/EnviadorEstadoCredencial.hpp"
-#include "EnviadoresServer/EnviadorRonda.hpp"
-#include "EnviadoresServer/EnviadorMensajeLog.hpp"
-#include "EnviadoresServer/EnviadorInfoPartida.hpp"
-#include "EnviadoresServer/EnviadorCantidadConexion.hpp"
-#include "EnviadoresServer/EnviadorSonido.hpp"
 
 #define SIN_JUGAR -1
 
@@ -26,13 +18,7 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/
 	recibioCredenciales = false;
 	idPropio = SIN_JUGAR;
 	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
-
-	enviadores[VERIFICACION] = new EnviadorEstadoCredencial(socket);
-	enviadores[RONDA] = new EnviadorRonda(socket);
-	enviadores[MENSAJE_LOG] = new EnviadorMensajeLog(socket);
-	enviadores[PARTIDA] = new EnviadorInfoPartida(socket);
-	enviadores[ACTUALIZACION_JUGADORES] = new EnviadorCantidadConexion(socket);
-    enviadores[SONIDO] = new EnviadorSonido(socket);
+    enviador = new EnviadorConexionCliente(socket,&terminoJuego);
 	this->informacionAMandar = informacionAMandar;
 }
 
@@ -59,23 +45,6 @@ void ConexionCliente::escuchar(){
 		}
 	}
 	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
-	terminoJuego = true;
-}
-
-void ConexionCliente::enviar(){
-	char tipoMensaje;
-	bool hayError = false;
-	while(!terminoJuego && !hayError){
-		if(!identificadoresMensajeAEnviar.empty()){
-			tipoMensaje = identificadoresMensajeAEnviar.front();
-			identificadoresMensajeAEnviar.pop();
-			try{
-				enviadores[tipoMensaje]->enviar();
-			}catch(const std::exception& e){
-				hayError = true;
-			}
-		}
-	}
 	terminoJuego = true;
 }
 
@@ -106,7 +75,7 @@ void ConexionCliente::ejecutar(){
 		return; // El hilo de ejecutar muere, y queda dando vueltas solamente el objeto ConexionCliente en la lista
 	}
 
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, ConexionCliente::enviar_helper, this);
+	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, ConexionCliente::enviar_helper, enviador);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del servidor al cliente: " + this->ip);
 		terminoJuego = true; // Muere el hilo de este cliente y el de escuchar, queda el cliente en la lista.
@@ -136,11 +105,7 @@ void ConexionCliente::ejecutar(){
 ////---------------------------------ENVIADORES---------------------------------////
 
 void ConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    enviadores[caracter]->dejarInformacion(mensaje);
-    pthread_mutex_lock(&mutex);
-    identificadoresMensajeAEnviar.push(caracter);
-    pthread_mutex_unlock(&mutex);
+    enviador->agregarMensajeAEnviar(caracter,mensaje);
 }
 
 void ConexionCliente::terminoElJuego(){
@@ -167,11 +132,8 @@ ConexionCliente::~ConexionCliente(){
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}
-	for(auto const& parClaveEnviador:enviadores){
-		delete parClaveEnviador.second;
-	}
 	escuchadores.clear();
-	enviadores.clear();
+	delete enviador;
 
 	int resultado = shutdown(socket, SHUT_RDWR);
 	if(resultado<0){

@@ -127,14 +127,9 @@ void Cliente::recibirInformacionRonda(info_ronda_t info_ronda) const{
 	aplicacion->agregarRonda(info_ronda);
 }
 
-void Cliente::esperarRecibirInformacionInicio() const{
-	while(!seRecibioInformacionInicio){
-	}
-}
-
-void Cliente::esperarRecibirVerificacion() const{
-	while(!seRecibioVerificacion){
-	}
+void Cliente::esperar(const bool* condicionAEsperar){
+    while(!(*condicionAEsperar)){
+    }
 }
 
 void Cliente::esperarAQueEmpieceElJuego() {
@@ -151,8 +146,9 @@ void Cliente::intentarEntrarAlJuego() {
 	while (!pasoVerificacion && !cerroVentana) {
 		try {
 			ventanaInicio->obtenerEntrada();
-			enviarCredenciales(ventanaInicio->obtenerCredenciales());
-			esperarRecibirVerificacion();
+			credencial_t credenciales = ventanaInicio->obtenerCredenciales();
+            agregarMensajeAEnviar(CREDENCIAL,&credenciales);
+			esperar(&seRecibioVerificacion);
 			if (!pasoVerificacion) {
 				ventanaInicio->imprimirMensajeError();
 				seRecibioVerificacion = false;
@@ -179,7 +175,7 @@ void Cliente::ejecutar(){
 		return;
 	}
 
-	esperarRecibirInformacionInicio();
+	esperar(&seRecibioInformacionInicio);
 	intentarEntrarAlJuego();
 	if(cerroVentana){
 		delete ventanaInicio;
@@ -216,14 +212,9 @@ void Cliente::ejecutar(){
 
 /////------------------ENVIADORES------------------/////
 
-void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
-	enviadores[ENTRADA]->dejarInformacion(&entradaUsuario);
-	identificadoresMensajeAEnviar.push(ENTRADA);
-}
-
-void Cliente::enviarCredenciales(credencial_t credenciales){
-	enviadores[CREDENCIAL]->dejarInformacion(&credenciales);
-	identificadoresMensajeAEnviar.push(CREDENCIAL);
+void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
+    enviadores[tipoMensaje]->dejarInformacion(mensaje);
+    identificadoresMensajeAEnviar.push(tipoMensaje);
 }
 
 /////------------------DESTRUCTOR------------------/////

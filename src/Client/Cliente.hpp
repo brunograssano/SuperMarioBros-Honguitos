@@ -41,11 +41,11 @@ class Cliente{
 
 		void enviar();
 		void escuchar();
+        void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
 		void recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirInformacionRonda(info_ronda_t info_ronda) const;
 		void ejecutar();
-		void agregarEntrada(entrada_usuario_t entradaUsuario);
 		void empezarJuego(info_partida_t info_partida);
 
 		static void* escuchar_helper(void* ptr){
@@ -58,9 +58,7 @@ class Cliente{
 		}
 
 	private:
-		void enviarCredenciales(credencial_t credencial);
-		void esperarRecibirInformacionInicio() const;
-		void esperarRecibirVerificacion() const;
+        static void esperar(const bool *condicionAEsperar);
 		void terminarProcesosDelCliente();
 		void cerradoVentanaInicio() const;
 		void esperarAQueEmpieceElJuego();

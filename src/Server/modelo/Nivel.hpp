@@ -6,6 +6,7 @@
 #include <tuple>
 #include <cstdlib>
 #include <utility>
+#include <src/Server/modelo/Bloques/Pozo.hpp>
 #include "src/Server/modelo/Bloques/Tuberia.hpp"
 #include "Bloques/Plataforma.hpp"
 
@@ -22,6 +23,7 @@ class Nivel{
 	public:
 		Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin);
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
+        void agregarPozo(int posicionX,int tipoPozo);
 		void agregarPlataforma(Plataforma* unaPlataforma);
 		void agregarEnemigo(Enemigo* unEnemigo);
 		void agregarMoneda(Moneda* unaMoneda);
@@ -52,6 +54,7 @@ class Nivel{
         list<Plataforma*> plataformas;
         list<Enemigo*> enemigos;
         list<Moneda*> monedas;
+        list<Pozo*> pozos;
         list<Tuberia*> tuberias;
         list<Enemigo*>enemigosMuertos;
 

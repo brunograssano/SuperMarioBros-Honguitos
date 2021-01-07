@@ -203,9 +203,25 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
     else{
         delete posibleTuberia;
     }
-
 }
 
+void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
+    auto* posiblePozo = new Pozo(posicionXNuevoPozo, tipoPozo);
+
+    bool superponeAObjeto = false;
+    for (auto pozo:pozos){ // llevar a otra funcion a parte la verificacion de superposicion
+        if(pozo->colisionaCon(posiblePozo)){
+            superponeAObjeto = true;
+        }
+    }
+    // mismo chequeo para plataformas?
+    if(!superponeAObjeto){
+        pozos.push_back(posiblePozo);
+    }
+    else{
+        delete posiblePozo;
+    }
+}
 list<Tuberia *> Nivel::obtenerTuberias() {
     return tuberias;
 }

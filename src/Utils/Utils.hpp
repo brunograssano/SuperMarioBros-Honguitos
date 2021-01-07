@@ -23,7 +23,7 @@ const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
 const int MAX_NOMBRE_SONIDO = 15;
-const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 10;
+const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 10,MAX_POZOS = 10;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
@@ -80,6 +80,11 @@ typedef struct tuberia {
     uint8_t color;
     uint8_t tipo;
 }tuberia_t;
+
+typedef struct pozo {
+    unsigned short posX;
+    uint8_t tipo;
+}pozo_t;
 
 #define CREDENCIAL 'C'
 typedef struct credencial{
@@ -147,6 +152,7 @@ typedef struct ronda{
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
 	tuberia_t tuberias[MAX_TUBERIAS];
+	pozo_t pozos [MAX_POZOS];
 }info_ronda_t;
 
 typedef struct usuario{

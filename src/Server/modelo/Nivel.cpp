@@ -6,14 +6,14 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
-			this->mundo = mundo;
-			this->direccionFondo = std::move(direccionFondo);
-			this->tiempo = tiempo;
-			this->cantidadMonedas = cantidadMonedas;
-			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
-			this->contador = new Contador(tiempo, SEGUNDOS);
-		}
+Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin) {
+    this->mundo = mundo;
+    this->direccionFondo = std::move(direccionFondo);
+    this->tiempo = tiempo;
+    this->cantidadMonedas = cantidadMonedas;
+    this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+    this->contador = new Contador(tiempo, SEGUNDOS);
+}
 
 void Nivel::actualizarPosicionesEnemigos(){
 	Log* log = Log::getInstance();
@@ -56,10 +56,6 @@ string Nivel::obtenerDireccionFondoActual(){
 
 float Nivel::obtenerPuntoBanderaFin() const{
 	return puntoBanderaFin;
-}
-
-int Nivel::obtenerTiempo() const{
-    return tiempo;
 }
 
 int Nivel::obtenerMundo() const{

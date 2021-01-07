@@ -22,18 +22,15 @@ class Nivel{
     //TODO: Pasar todo al cpp...
 	public:
 
-		Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
+       Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
 
 		void inicializar();
 
-    void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
-    void agregarPozo(int posicionX,int tipoPozo);
-
+        void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
+        void agregarPozo(int posicionX,int tipoPozo);
 		void agregarPlataforma(Plataforma* unaPlataforma);
-
 		void agregarEnemigo(Enemigo* unEnemigo);
-
-		void agregarMoneda(Moneda* unaMoneda){;
+		void agregarMoneda(Moneda* unaMoneda);
 
 		int obtenerMundo() const;
 
@@ -58,7 +55,7 @@ class Nivel{
          */
 		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* ctx);
 
-    void actualizarModelo();
+        void actualizarModelo();
 
 		float obtenerPuntoBanderaFin() const;
 		string obtenerDireccionFondoActual();

@@ -143,27 +143,34 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 
 	textoDeTiempo.str( "" );
 	int tiempo = juegoCliente->obtenerTiempoFaltante();
-	textoDeTiempo << "Tiempo restante " << tiempo;
+	textoDeTiempo << "Tiempo " << tiempo;
 
 	textoDeNivel.str("");
 	textoDeNivel << "Mundo " << juegoCliente->obtenerMundoActual();
 
 	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
-	int espacioY = 10;
+	int espacioX = 0;
+	int ESPACIO = jugadores.size() == 2 ? 500 : jugadores.size() == 3 ? 250 : 170; // calcular alguna mejor forma
+	SDL_Texture* texturaCorazon = cargadorTexturas->obtenerTexturaCorazon();
 	for(auto const& parClaveJugador:jugadores){
 		textoDePuntos.str("");
-		textoDePuntos << "Puntos de "<< parClaveJugador.second.nombreJugador << ": "<<parClaveJugador.second.puntos;
-		SDL_Rect cuadradoPuntos = { 10, espacioY, 200, 30 };
+		textoDePuntos << parClaveJugador.second.nombreJugador << ": "<<parClaveJugador.second.puntos;
+		SDL_Rect cuadradoPuntos = { 10 + espacioX, 10, 140, 30 };
+        SDL_Rect cuadradoCorazon = { 20 + espacioX, 50, 20, 20 };
 		int id = parClaveJugador.first;
 		if(parClaveJugador.second.mario.recorteImagen == MARIO_GRIS){
 			id = MARIO_GRIS;
 		}
 		renderizarTexto(cuadradoPuntos, textoDePuntos.str(), colores[id]);
-		espacioY += 35;
+        for(int i = 0; i<parClaveJugador.second.mario.vidas;i++){
+            SDL_RenderCopy( renderizador, texturaCorazon, nullptr, &cuadradoCorazon);
+            cuadradoCorazon.x += 25;
+        }
+		espacioX += ESPACIO;
 	}
 
-	SDL_Rect cuadradoTiempo = { ancho_pantalla - 340, 10, 330, 30 };
-	SDL_Rect cuadradoMundo = { ancho_pantalla - ancho_pantalla/2 - 100, 10, 100, 30 };
+	SDL_Rect cuadradoTiempo = { ancho_pantalla - 130, 60, 120, 35 };
+	SDL_Rect cuadradoMundo = { ancho_pantalla - 130, 10, 120, 35 };
 
 	renderizarTexto(cuadradoTiempo, textoDeTiempo.str(), colorDefault);
 	renderizarTexto(cuadradoMundo, textoDeNivel.str(), colorDefault);

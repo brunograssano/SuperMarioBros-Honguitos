@@ -60,7 +60,7 @@ typedef struct mario{
 	unsigned short posX;
 	unsigned short posY;
 	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y
-						//el recorte correspondiente es el gris (DE 0 A 14/18? SON LOS ESTADOS)
+    uint8_t vidas;					//el recorte correspondiente es el gris (DE 0 A 14/18? SON LOS ESTADOS)
 }mario_t;
 
 typedef struct moneda{

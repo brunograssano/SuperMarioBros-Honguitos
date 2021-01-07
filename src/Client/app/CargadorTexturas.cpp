@@ -1,5 +1,3 @@
-
-
 #include "CargadorTexturas.hpp"
 
 #include <SDL2/SDL.h>
@@ -46,6 +44,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
+	texturaCorazon = intentarCarga("la imagen de un corazon","resources/Imagenes/Objetos/Corazon.png",renderizador);
+
 	for(auto const& particula:listaParticulas){
 		SDL_Texture* particulaTextura = intentarCarga("la particula", particula, renderizador);
 		particulas[particula]=particulaTextura;
@@ -65,7 +65,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
 	string direccionFuente = "resources/Fuentes/fuenteSuperMarioBros.ttf";
 	fuenteJuego = TTF_OpenFont( direccionFuente.c_str(), tamanioFuente);
-	if(fuenteJuego==NULL){
+	if(fuenteJuego== nullptr){
 		log->huboUnErrorSDL("No se pudo cargar la fuente del juego en: ", "resources/Fuentes/fuenteSuperMarioBros.ttf");
 	}
 	else{
@@ -81,13 +81,13 @@ SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar,
 	Log* log = Log::getInstance();
 
 	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, textoAMostrar.c_str(), colorTexto );
-	if( superficeDeTexto == NULL ){
+	if( superficeDeTexto == nullptr ){
 		log->huboUnErrorSDL("No se pudo convertir el mensaje a superficie : "+ textoAMostrar +" a una superficie.", TTF_GetError());
-		return NULL;
+		return nullptr;
 	}
 
 	SDL_Texture* texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficeDeTexto );
-	if( texturaCargada == NULL ){
+	if( texturaCargada == nullptr ){
 		log->huboUnErrorSDL( "No se pudo crear una textura a partir de un texto renderizado. ", SDL_GetError() );
 	}
 
@@ -128,14 +128,14 @@ void CargadorTexturas::cargarTexturasNiveles(map<int,string> direccionesNiveles,
 
 
 SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer* renderizador){
-	SDL_Texture*  texturaCargada= NULL;
+	SDL_Texture*  texturaCargada= nullptr;
 	SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
-	if(superficieImagen == NULL){
+	if(superficieImagen == nullptr){
 		Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccion, IMG_GetError());
 	}
 	else{
 		texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficieImagen );
-		if( texturaCargada == NULL ){
+		if( texturaCargada == nullptr ){
 			Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccion, SDL_GetError());
 		}
 		SDL_FreeSurface( superficieImagen );
@@ -145,7 +145,7 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 
 SDL_Texture* CargadorTexturas::intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador){
 	SDL_Texture* texturaCargada =  cargarTextura(direccion, renderizador);
-	if(texturaCargada == NULL){
+	if(texturaCargada == nullptr){
 		texturaCargada = texturaDefecto;
 		Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion + ". Se cargo la textura por defecto.");
 	}else{
@@ -219,23 +219,17 @@ SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
 	return texturaMoneda;
 }
 
-SDL_Texture* CargadorTexturas::obtenerTexturaLadrillo(){
-	return texturaLadrillo;
-}
-
-SDL_Texture* CargadorTexturas::obtenerTexturaSorpresa(){
-	return this->texturaSorpresa;
+SDL_Texture* CargadorTexturas::obtenerTexturaCorazon(){
+    return texturaCorazon;
 }
 
 SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
-
 	return this->texturasNiveles[this->direccionFondoActual];
 }
 
-SDL_Texture* CargadorTexturas::obtenerTexturaFuente(){
-	return texturaFuenteJuego;
+SDL_Texture *CargadorTexturas::obtenerTexturaTuberia() {
+    return texturaTuberias;
 }
-
 
 CargadorTexturas::~CargadorTexturas(){
 	destructorDeTexturas(texturaMoneda);
@@ -246,6 +240,7 @@ CargadorTexturas::~CargadorTexturas(){
 	destructorDeTexturas(texturaCoffinMario);
 	destructorDeTexturas(texturaDefecto);
     destructorDeTexturas(texturaTuberias);
+    destructorDeTexturas(texturaCorazon);
 
 	for (auto const& parClaveMario : texturasMario){
 		destructorDeTexturas(parClaveMario.second);
@@ -272,8 +267,4 @@ CargadorTexturas::~CargadorTexturas(){
 	}
 
 	TTF_CloseFont( fuenteJuego );
-}
-
-SDL_Texture *CargadorTexturas::obtenerTexturaTuberia() {
-    return texturaTuberias;
 }

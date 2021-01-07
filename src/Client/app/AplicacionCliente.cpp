@@ -85,7 +85,7 @@ void App::actualizarServer(const Uint8 *keystate){
 		}
 
 		if(se_movio){
-			cliente->agregarEntrada(entradaUsuario);
+            cliente->agregarMensajeAEnviar(ENTRADA,&entradaUsuario);
 		}
 	}
 }

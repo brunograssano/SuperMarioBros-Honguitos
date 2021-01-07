@@ -41,26 +41,18 @@ class Servidor{
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
-		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, const string& contrasenia,int idJugador);
+		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador);
 		void ejecutar();
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminoElJuego();
 
 		void reconectarJugadoresFaseInicial();
-		static void* reconectarJugadoresFaseInicial_helper(void* ptr){
-			((Servidor*) ptr)->reconectarJugadoresFaseInicial();
-			return nullptr;
-		}
+		static void* reconectarJugadoresFaseInicial_helper(void* ptr);
 		void reconectarJugadoresFaseJuego();
 
-		map<int,string> obtenerMapaJugadores(){
-			return mapaIDNombre;
-		}
+		map<int,string> obtenerMapaJugadores();
 
-		static void *escuchar_helper(void* ptr){
-			((Servidor*) ptr)->conectarJugadores();
-			return NULL;
-		}
+		static void *escuchar_helper(void* ptr);
 
 
 	private:

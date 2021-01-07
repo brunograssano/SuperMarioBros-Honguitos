@@ -6,13 +6,11 @@ VidaMario::VidaMario() {
     vidas = VIDAS_INICIALES;
 }
 
-int VidaMario::obtenerVida() {
+int VidaMario::obtenerVida() const {
     return vidas;
 }
 
-VidaMario::~VidaMario() {
-
-}
+VidaMario::~VidaMario() = default;
 
 void VidaMario::perderVida() {
     vidas--;

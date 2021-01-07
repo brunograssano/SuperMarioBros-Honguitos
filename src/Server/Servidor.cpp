@@ -32,13 +32,15 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesError
 
 void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 	for(auto const& parClaveClienteJugando: clientesJugando){
-		parClaveClienteJugando.second->recibirInformacionRonda(ronda);
+        parClaveClienteJugando.second->agregarMensajeAEnviar(RONDA,&ronda);
 	}
 }
 
 
-void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, const string& contrasenia,int idJugador){
+void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    string nombre = conexionPerdida->obtenerNombre();
+    string contrasenia = conexionPerdida->obtenerContrasenia();
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
 		usuariosQuePerdieronConexion[idJugador] = usuarioDesconectado;
@@ -57,7 +59,7 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,strin
 		mensajeLog.tipo = INFO;
 		for(auto const cliente:clientes){
 			if(cliente != conexionPerdida){
-				cliente->enviarMensajeLog(mensajeLog);
+                cliente->agregarMensajeAEnviar(MENSAJE_LOG,&mensajeLog);
 			}
 		}
 	}
@@ -115,15 +117,14 @@ void Servidor::reconectarJugadoresFaseJuego(){
 				mensajeLog.tipo = INFO;
 
 				for(auto const parClaveCliente:clientesJugando){
-					parClaveCliente.second->enviarMensajeLog(mensajeLog);
+                    parClaveCliente.second->agregarMensajeAEnviar(MENSAJE_LOG,&mensajeLog);
 				}
 
 
 				int idJugador = parClaveUsuario.first;
 				info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
 
-				clientesJugando[parClaveUsuario.first]->enviarInfoPartida(info_partida);
-
+                clientesJugando[parClaveUsuario.first]->agregarMensajeAEnviar(PARTIDA,&info_partida);
 				idsUsuariosReconectados.push_front(idJugador);
 			}
 		}
@@ -289,7 +290,7 @@ void Servidor::intentarIniciarModelo(){
 	for(auto parIDCliente:clientesJugando){
 		int id = parIDCliente.first;
 		info_partida[id] = aplicacionServidor->obtenerInfoPartida(mapaIDNombre,id);
-		parIDCliente.second->enviarInfoPartida(info_partida[id]);
+        parIDCliente.second->agregarMensajeAEnviar(PARTIDA,&info_partida[id]);
 	}
 
 	aplicacionServidor->iniciarJuego();
@@ -327,4 +328,18 @@ Servidor::~Servidor(){
 	delete manejadorIDs;
 	delete aplicacionServidor;
 	delete log;
+}
+
+void *Servidor::reconectarJugadoresFaseInicial_helper(void *ptr) {
+    ((Servidor*) ptr)->reconectarJugadoresFaseInicial();
+    return nullptr;
+}
+
+void *Servidor::escuchar_helper(void *ptr) {
+    ((Servidor*) ptr)->conectarJugadores();
+    return nullptr;
+}
+
+map<int, string> Servidor::obtenerMapaJugadores() {
+    return mapaIDNombre;
 }

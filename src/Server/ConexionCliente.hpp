@@ -4,18 +4,17 @@
 class Servidor;
 #include "Servidor.hpp"
 
-
 using namespace std;
 #include <thread>
 #include <string>
 #include <map>
 
-#include "../Utils/Enviador.hpp"
 #include "../Utils/log/Log.hpp"
-#include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
-class EscuchadorEntradaTeclado;
-#include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
+
+#include "EnviadoresServer/EnviadorConexionCliente.hpp"
+class EscuchadorConexionCliente;
+#include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
 class ConexionCliente {
 
@@ -23,45 +22,28 @@ class ConexionCliente {
 		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
 		~ConexionCliente();
 
-		void escuchar();
-		static void* escuchar_helper(void* ptr){
-			((ConexionCliente*)ptr)->escuchar();
-			return NULL;
-		}
-
+        static void* ejecutar_helper(void* ptr);
+        static void* enviar_helper(void* ptr);
+		static void* escuchar_helper(void* ptr);
 		void ejecutar();
-		static void* ejecutar_helper(void* ptr){
-			((ConexionCliente*) ptr)->ejecutar();
-			return NULL;
-		}
 
-
-		void enviar();
-		static void* enviar_helper(void* ptr){
-			((ConexionCliente*) ptr)->enviar();
-			return NULL;
-		}
-
-		void recibirInformacionRonda(info_ronda_t info_ronda);
 		void enviarActualizacionesDeRonda() const;
-
+        void agregarMensajeAEnviar(char caracter, void *mensaje);
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
-		void enviarInfoPartida(info_partida_t info_partida);
-		void enviarMensajeLog(mensaje_log_t mensaje);
-		string obtenerIP(){
-			return ip;
-		}
-
+		string obtenerIP();
+        string obtenerNombre();
+        string obtenerContrasenia();
 		void terminoElJuego();
 
-	private:
+
+private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
-		void enviarVerificacion(bool esUsuarioValido);
 		void esperarCredenciales();
 
-		queue<char> identificadoresMensajeAEnviar;
+		EscuchadorConexionCliente* escuchador;
+        EnviadorConexionCliente* enviador;
 
 		string nombre;
 		string contrasenia;
@@ -76,11 +58,6 @@ class ConexionCliente {
 		string ip;
 
 		Servidor* servidor;
-		map<char,Escuchador*> escuchadores;
-		map<char,Enviador*> enviadores;
-
-
-
 };
 
 

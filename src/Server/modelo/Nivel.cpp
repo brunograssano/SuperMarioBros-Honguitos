@@ -2,11 +2,18 @@
 
 #include <string>
 
-#include "../../Utils/log/Log.hpp"
-
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
+
+Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
+			this->mundo = mundo;
+			this->direccionFondo = std::move(direccionFondo);
+			this->tiempo = tiempo;
+			this->cantidadMonedas = cantidadMonedas;
+			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+			this->contador = new Contador(tiempo, SEGUNDOS);
+		}
 
 void Nivel::actualizarPosicionesEnemigos(){
 	Log* log = Log::getInstance();
@@ -30,6 +37,19 @@ void Nivel::actualizarModelo(){
 	actualizarMonedas();
 }
 
+void Nivel::sacarEnemigosMuertos(){
+    list<Enemigo*> enemigosABorrar;
+    for(auto enemigo : enemigosMuertos){ // se moverian a la lista esta una vez que detectamos colision por arriba
+        if(enemigo->sePuedeEliminar()){ // la otra opcion es mantenerlos en la lista original, e ir verificando si estan muertos
+            enemigosABorrar.push_back(enemigo);
+        }
+    }
+    for(auto enemigo : enemigosABorrar ){
+        enemigosMuertos.remove(enemigo);
+        delete enemigo;
+    }
+}
+
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
@@ -38,6 +58,23 @@ float Nivel::obtenerPuntoBanderaFin() const{
 	return puntoBanderaFin;
 }
 
+int Nivel::obtenerTiempo() const{
+    return tiempo;
+}
+
+int Nivel::obtenerMundo() const{
+    return mundo;
+}
+
+void Nivel::agregarPlataforma(Plataforma* unaPlataforma){
+    plataformas.push_back(unaPlataforma);
+}
+void Nivel::agregarEnemigo(Enemigo* unEnemigo){
+    enemigos.push_back(unEnemigo);
+}
+void Nivel::agregarMoneda(Moneda* unaMoneda){
+    monedas.push_back(unaMoneda);
+}
 bool Nivel::esUnaPosicionXValidaEnemigo(int numeroPosicion){
 	return !posicionesOcupadasXEnemigos[numeroPosicion];
 }
@@ -106,7 +143,6 @@ void Nivel::inicializarPosicionMonedas(){
 	}
 
 }
-
 
 void Nivel::inicializarPosicionEnemigo(){
 
@@ -213,4 +249,20 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
         }
     }
     ptrInfoRonda->topeTuberias = numeroTuberia;
+}
+
+Nivel::~Nivel (){
+    for(const auto& plataforma:plataformas){
+        delete plataforma;
+    }
+    for(const auto& moneda:monedas){
+        delete moneda;
+     }
+    for(const auto& enemigo:enemigos){
+        delete enemigo;
+    }
+    plataformas.clear();
+    enemigos.clear();
+	  monedas.clear();
+    delete contador;
 }

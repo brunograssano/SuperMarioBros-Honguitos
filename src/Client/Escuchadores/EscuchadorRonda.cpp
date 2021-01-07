@@ -77,4 +77,4 @@ void EscuchadorRonda::casoExitoso(){
 	}
 }
 
-EscuchadorRonda::~EscuchadorRonda(){}
+EscuchadorRonda::~EscuchadorRonda()= default;

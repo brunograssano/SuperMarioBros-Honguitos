@@ -20,34 +20,20 @@ const int ALTO_NIVEL = 600;
 class Nivel{
     //TODO: Pasar todo al cpp...
 	public:
-		Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin){
-			this->mundo = mundo;
-			this->direccionFondo = std::move(direccionFondo);
-			this->tiempo = tiempo;
-			this->cantidadMonedas = cantidadMonedas;
-			this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
-			this->contador = new Contador(tiempo, SEGUNDOS);
-		}
+
+		Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
 
 		void inicializar();
 
-        void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
+    void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
 
-		void agregarPlataforma(Plataforma* unaPlataforma){
-			plataformas.push_back(unaPlataforma);
-		}
+		void agregarPlataforma(Plataforma* unaPlataforma);
 
-		void agregarEnemigo(Enemigo* unEnemigo){
-			enemigos.push_back(unEnemigo);
-		}
+		void agregarEnemigo(Enemigo* unEnemigo);
 
-		void agregarMoneda(Moneda* unaMoneda){
-			monedas.push_back(unaMoneda);
-		}
+		void agregarMoneda(Moneda* unaMoneda){;
 
-		int obtenerMundo() const{
-			return mundo;
-		}
+		int obtenerMundo() const;
 
 		int tiempoRestante(){
 		    return contador->tiempoRestante();
@@ -70,29 +56,15 @@ class Nivel{
          */
 		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* ctx);
 
-        void actualizarModelo();
-
+    void actualizarModelo();
 
 		float obtenerPuntoBanderaFin() const;
 		string obtenerDireccionFondoActual();
 
-		~Nivel(){
-			for(const auto& plataforma:plataformas){
-				delete plataforma;
-			}
-			for(const auto& moneda:monedas){
-				delete moneda;
-			}
-			for(const auto& enemigo:enemigos){
-				delete enemigo;
-			}
-			plataformas.clear();
-			enemigos.clear();
-			monedas.clear();
-			delete contador;
-		}
+		~Nivel();
 
     private:
+        void sacarEnemigosMuertos();
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
@@ -109,6 +81,7 @@ class Nivel{
         list<Enemigo*> enemigos;
         list<Moneda*> monedas;
         list<Tuberia*> tuberias;
+        list<Enemigo*>enemigosMuertos;
 
         Contador* contador;
         int mundo;
@@ -116,6 +89,7 @@ class Nivel{
         int tiempo;
         int cantidadMonedas;
         float puntoBanderaFin;
+
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

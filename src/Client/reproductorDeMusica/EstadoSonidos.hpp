@@ -6,7 +6,7 @@ using namespace std;
 
 class EstadoSonidos {
     public:
-        virtual ~EstadoSonidos()= default;;
+        virtual ~EstadoSonidos()= default;
         virtual EstadoSonidos* cambiar() = 0;
         virtual void reproducir(string sonidoAReproducir) = 0;
 };

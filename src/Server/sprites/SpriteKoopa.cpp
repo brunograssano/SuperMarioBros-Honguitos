@@ -1,5 +1,6 @@
 
 #include "SpriteKoopa.hpp"
+#define MUERTO 2
 
 SpriteKoopa::SpriteKoopa(int tipo){
 	direccionTextura = "resources/Imagenes/Personajes/Koopas.png";
@@ -16,7 +17,11 @@ SpriteKoopa::SpriteKoopa(int tipo){
 }
 
 void SpriteKoopa::actualizarSprite(){
-	if(ciclos>=20){
+    if(estadoActual == MUERTO){
+        ciclos++;
+        return;
+    }
+    if(ciclos>=20){
 		estadoActual = 1;
 		ciclos = 0;
 	}
@@ -29,4 +34,13 @@ void SpriteKoopa::actualizarSprite(){
 
 SDL_Rect SpriteKoopa::obtenerRectanguloActual(){
 	return estadosPosibles[estadoActual];
+}
+
+void SpriteKoopa::morir() {
+    estadoActual = MUERTO;  // VER CON CUAL OPCION NOS QUEDAMOS DEL SPRITE
+    ciclos = 0;
+}
+
+bool SpriteKoopa::seMostroElTiempoSuficienteEnPantalla() {
+    return estadoActual==MUERTO && ciclos>20;
 }

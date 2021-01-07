@@ -12,7 +12,7 @@ bool condicionTipoTuberias(int tipo){
     return tipo < 0 || tipo>CANTIDAD_TIPOS_TUBERIAS;
 }
 
-bool condicionPosicionX(int posX){
+bool condicionPosicionXTuberia(int posX){
     return posX < 0;
 }
 
@@ -28,7 +28,7 @@ void ParserTuberia::parsear(pugi::xml_node tuberia, Nivel* unNivel, ArchivoLeido
     int tipo = intentarObtenerNumero(archivoLeido,tipoString,condicionTipoTuberias,mensaje,TIPO_POR_DEFECTO_TUBERIA);
 
     mensaje = "La posicion ingresada de tuberia ("+posXString+") no es valida, se asigna por defecto uno";
-    int posicionX = intentarObtenerNumero(archivoLeido,posXString,condicionPosicionX,mensaje,POS_POR_DEFECTO_TUBERIA);
+    int posicionX = intentarObtenerNumero(archivoLeido,posXString,condicionPosicionXTuberia,mensaje,POS_POR_DEFECTO_TUBERIA);
 
     unNivel->agregarTuberia(posicionX,tipo,color);
 }

@@ -40,7 +40,11 @@
                 <posicionX>250</posicionX>
                 <tipoTuberia>1</tipoTuberia>
             </tuberia>
-
+		
+	    <pozo>                
+                <posicionX>500</posicionX>
+                <tipoPozo>1</tipoPozo><!--0 - POZO NORMAL , 1 - POZO GRANDE,2 -POZO-->
+            </pozo>
 
             <plataformas>
 
@@ -920,7 +924,7 @@
 
 		<usuario>
 			<username>joaquin</username>
-			<password>123joaco</password>
+			<password>123</password>
 		</usuario>
 
 		<usuario>
@@ -928,15 +932,14 @@
 			<password>prueba</password>
 		</usuario>
 
-    <usuario>
+    		<usuario>
 			<username>prueba2</username>
 			<password>prueba2</password>
 		</usuario>
-
-    <usuario>
-			<username>prueba3</username>
-			<password>prueba3</password>
-		</usuario>
+		<usuario>
+			<username>p</username>
+			<password>p</password>
+		</usuario>    		
 
 	</credenciales>
 	<cantidadConexiones>2</cantidadConexiones>

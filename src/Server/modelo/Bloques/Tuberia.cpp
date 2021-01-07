@@ -1,6 +1,6 @@
 #include "Tuberia.hpp"
 
-const int ANCHO_PRIMERA_TUBERIA = 33, ALTO_TUBERIA = 66,TUBERIA_PEQUENIA=0,ANCHO_SEGUNDA_TUBERIA = 67;
+const int ANCHO_PRIMERA_TUBERIA = 33, ALTO_POZO = 66,TUBERIA_PEQUENIA=0,ANCHO_SEGUNDA_TUBERIA = 67;
 
 Tuberia::Tuberia(int posX, int tipo, int color) {
     //TODO conseguir mejor forma de manejar esto, por ejemplo usar bloques de tuberias con cada parte
@@ -8,8 +8,8 @@ Tuberia::Tuberia(int posX, int tipo, int color) {
     this->tipo = tipo;
     this->color = color;
     dimensiones.x = tipo * ANCHO_PRIMERA_TUBERIA;
-    dimensiones.y = color * ALTO_TUBERIA;
-    dimensiones.h = ALTO_TUBERIA;
+    dimensiones.y = color * ALTO_POZO;
+    dimensiones.h = ALTO_POZO;
 
     if(tipo==TUBERIA_PEQUENIA){
         dimensiones.w = ANCHO_PRIMERA_TUBERIA;

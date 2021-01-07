@@ -27,6 +27,10 @@ class EscuchadorRonda;
 
 #include "Escuchadores/EscuchadorLog.hpp"
 
+class EnviadorCliente;
+#include "../../src/Client/EnviadoresCliente/EnviadorCliente.hpp"
+
+
 class GameLoop;
 #include "../Client/GameLoop.hpp"
 
@@ -39,8 +43,8 @@ class Cliente{
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
 
-		void enviar();
 		void escuchar();
+        void terminarProcesosDelCliente();
         void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
 		void recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion);
@@ -48,27 +52,17 @@ class Cliente{
 		void ejecutar();
 		void empezarJuego(info_partida_t info_partida);
 
-		static void* escuchar_helper(void* ptr){
-			((Cliente*) ptr)->escuchar();
-			return NULL;
-		}
-		static void* enviar_helper(void* ptr){
-			((Cliente*) ptr)->enviar();
-			return NULL;
-		}
+		static void* escuchar_helper(void* ptr);
+		static void* enviar_helper(void* ptr);
 
 	private:
         static void esperar(const bool *condicionAEsperar);
-		void terminarProcesosDelCliente();
 		void cerradoVentanaInicio() const;
 		void esperarAQueEmpieceElJuego();
 		void intentarEntrarAlJuego();
 
-		map<char,Enviador*> enviadores;
 		map<char,Escuchador*> escuchadores;
-
-		queue<char> identificadoresMensajeAEnviar;
-
+        EnviadorCliente* enviador;
 		VentanaInicio* ventanaInicio;
 
 		info_partida_t infoPartida{};

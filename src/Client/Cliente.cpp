@@ -1,13 +1,7 @@
 #include "Cliente.hpp"
-
 #include <thread>
-
 #include "app/ManejadorSDL.hpp"
-
 #include "UtilidadesCliente.hpp"
-
-#include "EnviadoresCliente/EnviadorEntrada.hpp"
-#include "EnviadoresCliente/EnviadorCredenciales.hpp"
 
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	socketCliente = conectarAlServidor(ip, puerto);
@@ -30,9 +24,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
     escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
 
-	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
-	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
-
+    enviador = new EnviadorCliente(socketCliente,this,&terminoJuego,&terminoEnviar);
 	ventanaInicio = nullptr;
 	gameLoop = new GameLoop();
 }
@@ -74,24 +66,6 @@ void Cliente::terminarProcesosDelCliente() {
 		ventanaInicio->seMurioElServer();
 	}
 	pthread_mutex_unlock(&mutex);
-}
-
-void Cliente::enviar(){
-	char tipoMensaje;
-	bool hayError = false;
-	while(!terminoJuego && !hayError){
-		if(!identificadoresMensajeAEnviar.empty()){
-			tipoMensaje = identificadoresMensajeAEnviar.front();
-			identificadoresMensajeAEnviar.pop();
-			try{
-				enviadores[tipoMensaje]->enviar();
-			}catch(const std::exception& e){
-				hayError = true;
-			}
-		}
-	}
-	terminoEnviar = true;
-	terminarProcesosDelCliente();
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){
@@ -168,7 +142,7 @@ void Cliente::ejecutar(){
 	}
 
 	pthread_t hiloEnviar;
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, Cliente::enviar_helper, this);
+	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, Cliente::enviar_helper, enviador);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la informacion del cliente al server.");
 		terminoJuego = true;
@@ -210,11 +184,9 @@ void Cliente::ejecutar(){
 	terminoJuego = true;
 }
 
-/////------------------ENVIADORES------------------/////
 
 void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
-    enviadores[tipoMensaje]->dejarInformacion(mensaje);
-    identificadoresMensajeAEnviar.push(tipoMensaje);
+    enviador->agregarMensajeAEnviar(tipoMensaje,mensaje);
 }
 
 /////------------------DESTRUCTOR------------------/////
@@ -232,12 +204,20 @@ Cliente::~Cliente(){
 	for(auto const& parClaveEscuchador:escuchadores){
 		delete parClaveEscuchador.second;
 	}
-	for(auto const& parClaveEnviador:enviadores){
-		delete parClaveEnviador.second;
-	}
-	escuchadores.clear();
-	enviadores.clear();
 
+	escuchadores.clear();
+
+	delete enviador;
 	delete gameLoop;
 
+}
+
+void *Cliente::enviar_helper(void *ptr) {
+    ((EnviadorCliente*) ptr)->enviar();
+    return nullptr;
+}
+
+void *Cliente::escuchar_helper(void *ptr) {
+    ((Cliente*) ptr)->escuchar();
+    return nullptr;
 }

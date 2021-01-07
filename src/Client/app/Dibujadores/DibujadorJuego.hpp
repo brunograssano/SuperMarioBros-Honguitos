@@ -26,10 +26,9 @@ class DibujadorJuego : public Dibujador{
 
 		void dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujar() override{}
-		virtual ~DibujadorJuego();
+		~DibujadorJuego() override;
 
 	private:
-		Uint32 tiempoDeInicio = 0;
 		stringstream textoDeTiempo;
 		stringstream textoDeNivel;
 		stringstream textoDePuntos;

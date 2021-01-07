@@ -3,13 +3,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-
 #include <string>
-#include <sstream>
 
 #include "ManejadorSDL.hpp"
 #include "../../Utils/log/Log.hpp"
-
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
@@ -27,30 +24,25 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		i++;
 	}
 
-	texturaMoneda = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
+    texturas["Moneda"] = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
+    texturas["FondoInicio"]  = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
+    texturas["Titulo"]  = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
+    texturas["FondoGameOver"]  = intentarCarga("el fondo del final del juego","resources/Imagenes/Niveles/fondoGameOver.png",renderizador);
+    texturas["Coffin"]  = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
+    texturas["Tuberia"]  = intentarCarga("la imagen de las tuberias","resources/Imagenes/Bloques/Tuberias.png",renderizador);
+    texturas["Corazon"]  = intentarCarga("la imagen de un corazon","resources/Imagenes/Objetos/Corazon.png",renderizador);
+    texturas["Bloques"]  = intentarCarga("la imagen de los bloques","resources/Imagenes/Bloques/Bloques.png",renderizador);
+    texturas["Goombas"]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);
+    texturas["Koopas"]  = intentarCarga("la imagen de los Koopas","resources/Imagenes/Personajes/Koopas.png",renderizador);
+    texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
-	texturaFondoInicio = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
+    string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
+                              "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
 
-	texturaTitulo = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
-
-	texturaFondoGameOver = intentarCarga("el fondo del final del juego","resources/Imagenes/Niveles/fondoGameOver.png",renderizador);
-
-	texturaCoffinMario = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
-
-	texturaTuberias = intentarCarga("la imagen de las tuberias","resources/Imagenes/Bloques/Tuberias.png",renderizador);
-
-	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
-							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
-
-	texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
-
-	texturaCorazon = intentarCarga("la imagen de un corazon","resources/Imagenes/Objetos/Corazon.png",renderizador);
-
-	for(auto const& particula:listaParticulas){
+    for(auto const& particula:listaParticulas){
 		SDL_Texture* particulaTextura = intentarCarga("la particula", particula, renderizador);
 		particulas[particula]=particulaTextura;
 	}
-
 
 	string listaPersonajes[]={"resources/Imagenes/PersonajesSaltando/PeachSaltando.png",
 							  "resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png",
@@ -72,12 +64,10 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/Fuentes/fuenteSuperMarioBros.ttf");
 	}
 
-
-	log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes no configurables por el usuario");
+	log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes");
 }
 
-
-SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto){
+SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(const string& textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto){
 	Log* log = Log::getInstance();
 
 	SDL_Surface* superficeDeTexto = TTF_RenderText_Solid( fuenteJuego, textoAMostrar.c_str(), colorTexto );
@@ -96,10 +86,7 @@ SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(string textoAMostrar,
 	return texturaCargada;
 }
 
-
-
-void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string direccionFondo){
-
+void CargadorTexturas::revisarSiCambioNivel(string direccionFondo) {
 	direccionFondo = "resources/Imagenes/Niveles/" + direccionFondo;
 
 	if(direccionFondoActual != direccionFondo){
@@ -109,8 +96,7 @@ void CargadorTexturas::revisarSiCambioNivel(SDL_Renderer* renderizador, string d
 	}
 }
 
-void CargadorTexturas::cargarTexturasNiveles(map<int,string> direccionesNiveles, int cantidadFondosNiveles, SDL_Renderer* renderizador, unsigned short mundo){
-
+void CargadorTexturas::cargarTexturasNiveles(map<int, string> direccionesNiveles, SDL_Renderer *renderizador,unsigned short mundo) {
 	string direccion;
 	SDL_Texture* texturaNueva;
 	string prefijo = "resources/Imagenes/Niveles/";
@@ -123,11 +109,9 @@ void CargadorTexturas::cargarTexturasNiveles(map<int,string> direccionesNiveles,
 
 	texturaFondoActual = this->texturasNiveles[prefijo + direccionesNiveles[mundo]];
 	direccionFondoActual = prefijo + direccionesNiveles[mundo];
-
 }
 
-
-SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer* renderizador){
+SDL_Texture* CargadorTexturas::cargarTextura(const std::string& direccion, SDL_Renderer* renderizador){
 	SDL_Texture*  texturaCargada= nullptr;
 	SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
 	if(superficieImagen == nullptr){
@@ -143,7 +127,7 @@ SDL_Texture* CargadorTexturas::cargarTextura(std::string direccion, SDL_Renderer
 	return texturaCargada;
 }
 
-SDL_Texture* CargadorTexturas::intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador){
+SDL_Texture* CargadorTexturas::intentarCarga(const std::string& descripcion, const std::string& direccion, SDL_Renderer* renderizador){
 	SDL_Texture* texturaCargada =  cargarTextura(direccion, renderizador);
 	if(texturaCargada == nullptr){
 		texturaCargada = texturaDefecto;
@@ -154,45 +138,13 @@ SDL_Texture* CargadorTexturas::intentarCarga(std::string descripcion, std::strin
 	return texturaCargada;
 }
 
-bool CargadorTexturas::tengoTexturaCargadaEnMemoria(string spriteDireccion, map<string,SDL_Texture*> texturas){
-	try{
-		texturas.at(spriteDireccion);
-	}
-	catch(std::out_of_range&){
-		return false;
-	}
-	return true;
-}
-
-SDL_Texture* CargadorTexturas::obtenerTexturaEnemigo(string spriteEnemigoDireccion,SDL_Renderer* renderizador){
-
-	if(!tengoTexturaCargadaEnMemoria(spriteEnemigoDireccion,texturasEnemigos)){
-		SDL_Texture* texturaNueva = intentarCarga("un enemigo", spriteEnemigoDireccion,renderizador);
-		texturasEnemigos[spriteEnemigoDireccion]=texturaNueva;
-	}
-	return texturasEnemigos[spriteEnemigoDireccion];
-}
-
-
-
-SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(string personaje){
+SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(const string& personaje){
 	return texturasPersonajes[personaje];
 }
 
-SDL_Texture* CargadorTexturas::obtenerTexturaBloque(string spriteDireccionBloque,SDL_Renderer* renderizador){
-
-	if(!tengoTexturaCargadaEnMemoria(spriteDireccionBloque,texturasBloques)){
-		SDL_Texture* texturaNueva = intentarCarga("un bloque", spriteDireccionBloque, renderizador);
-		texturasBloques[spriteDireccionBloque]=texturaNueva;
-	}
-	return texturasBloques[spriteDireccionBloque];
-}
-
-
-SDL_Texture* CargadorTexturas::obtenerParticula(string particulaAsociada){
+SDL_Texture* CargadorTexturas::obtenerParticula(const string& particulaAsociada){
 	return particulas[particulaAsociada];
 }
-
 
 ////----------------GETTERS--------------////
 
@@ -200,58 +152,25 @@ SDL_Texture* CargadorTexturas::obtenerTexturaMario(int idMario){
 	return texturasMario[idMario];
 }
 
-SDL_Texture* CargadorTexturas::obtenerTexturaCoffinMario(){
-	return texturaCoffinMario;
-}
-
-SDL_Texture* CargadorTexturas::obtenerTexturaFondoInicio(){
-	return texturaFondoInicio;
-}
-SDL_Texture* CargadorTexturas::obtenerTexturaTitulo(){
-	return texturaTitulo;
-}
-SDL_Texture* CargadorTexturas::obtenerTexturaFondoGameOver(){
-	return texturaFondoGameOver;
-}
-
-
-SDL_Texture* CargadorTexturas::obtenerTexturaMoneda(){
-	return texturaMoneda;
-}
-
-SDL_Texture* CargadorTexturas::obtenerTexturaCorazon(){
-    return texturaCorazon;
+SDL_Texture* CargadorTexturas::obtenerTextura(const string& clave){
+    return texturas[clave];
 }
 
 SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
-	return this->texturasNiveles[this->direccionFondoActual];
-}
-
-SDL_Texture *CargadorTexturas::obtenerTexturaTuberia() {
-    return texturaTuberias;
+	return texturasNiveles[direccionFondoActual];
 }
 
 CargadorTexturas::~CargadorTexturas(){
-	destructorDeTexturas(texturaMoneda);
-	destructorDeTexturas(texturaLadrillo);
-	destructorDeTexturas(texturaSorpresa);
 	destructorDeTexturas(texturaFondoActual);
 	destructorDeTexturas(texturaFuenteJuego);
-	destructorDeTexturas(texturaCoffinMario);
 	destructorDeTexturas(texturaDefecto);
-    destructorDeTexturas(texturaTuberias);
-    destructorDeTexturas(texturaCorazon);
+
+    for (auto const& parClaveTextura : texturas){
+        destructorDeTexturas(parClaveTextura.second);
+    }
 
 	for (auto const& parClaveMario : texturasMario){
 		destructorDeTexturas(parClaveMario.second);
-	}
-
-	for (auto const& parClaveEnemigo : texturasEnemigos){
-		destructorDeTexturas(parClaveEnemigo.second);
-	}
-
-	for (auto const& parClaveBloque : texturasBloques){
-		destructorDeTexturas(parClaveBloque.second);
 	}
 
 	for (auto const& parClaveNivel : texturasNiveles){

@@ -21,7 +21,7 @@ class DibujadorGanadores : public Dibujador{
 	public:
 		DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
 		void dibujar(JuegoCliente* juegoCliente);
-		~DibujadorGanadores();
+		~DibujadorGanadores() override;
 
 	private:
 		void dibujarTextoGanadores(JuegoCliente* juegoCliente);

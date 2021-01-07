@@ -36,4 +36,4 @@ void DibujadorErrorServidor::dibujar(){
 	SDL_RenderPresent( renderizador );
 }
 
-DibujadorErrorServidor::~DibujadorErrorServidor(){}
+DibujadorErrorServidor::~DibujadorErrorServidor()= default;

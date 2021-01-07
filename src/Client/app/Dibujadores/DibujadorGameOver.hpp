@@ -17,7 +17,7 @@ class DibujadorGameOver : public Dibujador{
 	public:
 		DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
 		void dibujar() override;
-		~DibujadorGameOver();
+		~DibujadorGameOver() override;
 
 	private:
 		SpriteCoffinMario* spriteCoffinMario;

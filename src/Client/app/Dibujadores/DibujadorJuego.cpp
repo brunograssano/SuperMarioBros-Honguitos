@@ -43,54 +43,56 @@ void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoClien
 void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<enemigo_t> enemigos = juegoCliente->obtenerEnemigos();
 	string tipo;
+	SDL_Texture* texturaEnemigo = nullptr;
 	for (auto const& enemigo : enemigos) {
 		SDL_Rect recorteTextura;
 		if(enemigo.tipoEnemigo==GOOMBA){
 			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
-			tipo = "resources/Imagenes/Personajes/Goombas.png";
+            texturaEnemigo = cargadorTexturas->obtenerTextura("Goombas");
 		}
 		else{
 			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
-			tipo = "resources/Imagenes/Personajes/Koopas.png";
+            texturaEnemigo = cargadorTexturas->obtenerTextura("Koopas");
 		}
 
 		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
-		SDL_RenderCopyEx(renderizador,cargadorTexturas->obtenerTexturaEnemigo(tipo,renderizador),&recorteTextura,&rectanguloEnemigo,0,
+		SDL_RenderCopyEx(renderizador,texturaEnemigo,&recorteTextura,&rectanguloEnemigo,0,
                          nullptr,enemigo.espejar?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
     }
 }
 
 void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<bloque_t> bloques = juegoCliente->obtenerBloques();
-	string direccionBloque = "resources/Imagenes/Bloques/Bloques.png";
+    SDL_Texture* texturaBloques = cargadorTexturas->obtenerTextura("Bloques");
 	for (auto const& bloque : bloques) {
 
 		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque.posY,
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
-		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaBloque(direccionBloque, renderizador), &recorteBloque, &rectanguloBloque);
+		SDL_RenderCopy( renderizador, texturaBloques, &recorteBloque, &rectanguloBloque);
 	}
 
 }
 
 void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<moneda_t> monedas = juegoCliente->obtenerMonedas();
+    SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura("Moneda");
 	for (auto const& moneda : monedas) {
 		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara->x,
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - moneda.posY,
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.numeroRecorte);
-		SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMoneda(), &recorteMoneda, &rectanguloMoneda);
-
+		SDL_RenderCopy( renderizador, texturaMoneda, &recorteMoneda, &rectanguloMoneda);
 	}
 }
 
 void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente) {
     list<tuberia_t> tuberias = juegoCliente->obtenerTuberias();
+    SDL_Texture* texturaTuberia = cargadorTexturas->obtenerTextura("Tuberia");
     for (auto const& tuberia : tuberias) {
         SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.tipo,tuberia.color);
         SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara->x,
@@ -105,7 +107,7 @@ void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *j
             rectanguloTuberia.w *= 3;
         }
         rectanguloTuberia.y -= rectanguloTuberia.h;
-        SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaTuberia(), &recorteTuberia, &rectanguloTuberia);
+        SDL_RenderCopy( renderizador, texturaTuberia, &recorteTuberia, &rectanguloTuberia);
     }
 }
 
@@ -151,7 +153,7 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int espacioX = 0;
 	int ESPACIO = jugadores.size() == 2 ? 500 : jugadores.size() == 3 ? 250 : 170; // calcular alguna mejor forma
-	SDL_Texture* texturaCorazon = cargadorTexturas->obtenerTexturaCorazon();
+	SDL_Texture* texturaCorazon = cargadorTexturas->obtenerTextura("Corazon");
 	for(auto const& parClaveJugador:jugadores){
 		textoDePuntos.str("");
 		textoDePuntos << parClaveJugador.second.nombreJugador << ": "<<parClaveJugador.second.puntos;

@@ -3,8 +3,6 @@
 #include <list>
 
 App* App::aplicacion = nullptr;
-const int SE_TERMINO_EL_TIEMPO = 0;
-const int ALTO_VENTANA_MINIMO = 600,ANCHO_VENTANA_MINIMO = 800;
 
 #define LIMITE_SALTO 1
 
@@ -21,12 +19,12 @@ App* App::getInstance(){
 
 void App::inicializarSDL(Log* log){
 	ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
-	if( ventanaAplicacion == NULL ){
+	if( ventanaAplicacion == nullptr ){
 		log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
 	}
 
 	renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-	if( renderizador == NULL ){
+	if( renderizador == nullptr ){
 		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
 	}
 
@@ -96,7 +94,7 @@ void App::agregarRonda(info_ronda_t info_ronda){
 
 void App::actualizar(){
 	juegoCliente->actualizar();
-	cargadorTexturas->revisarSiCambioNivel(renderizador, direccionesNiveles[juegoCliente->obtenerMundoActual()]);
+    cargadorTexturas->revisarSiCambioNivel(direccionesNiveles[juegoCliente->obtenerMundoActual()]);
 }
 
 void App::dibujar(){

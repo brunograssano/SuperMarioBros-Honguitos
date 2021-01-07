@@ -40,7 +40,7 @@ class App{
 			}
 
 			//if(informacion.iniciadoCorrectamente){
-			cargadorTexturas->cargarTexturasNiveles(direccionesNiveles,informacion.cantidadFondosNiveles, renderizador, informacion.mundo);
+            cargadorTexturas->cargarTexturasNiveles(direccionesNiveles, renderizador, informacion.mundo);
 			//}
 
 			rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
@@ -69,7 +69,6 @@ class App{
 		Dibujadores* dibujador;
 
 		void inicializarSDL(Log* log);
-		void determinarDimensionesPantalla(int posibleAnchoVentana,int posibleAltoVentana);
 
 		JuegoCliente* juegoCliente;
 

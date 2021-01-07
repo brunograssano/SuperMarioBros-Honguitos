@@ -39,7 +39,6 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
 							ancho_textoFelicitaciones,
 							alto_textoFelicitaciones};
 
-
 	int ancho_puntosJugador = 200;
 	int alto_puntosJugador = 30;
 	int desfase_puntosJugador = 50;
@@ -48,11 +47,8 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
 	stringstream puntosJugador;
 
 	for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
-	   //puntosJugador = parIdJugador.second.puntos;
 	   puntosJugador.str("");
 	   puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
-
-
 
 	   cuadradoPuntos = {ancho_pantalla/2 -ancho_puntosJugador/2,
 	   									alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
@@ -68,12 +64,7 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
 	   desfase_puntosJugador +=40;
 	}
 
-
-
-
-
 	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
-
 }
 
 
@@ -106,7 +97,7 @@ void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
 	SDL_Rect rectanguloCamara = {(ANCHO_FONDO - ancho_pantalla), 0, alto_pantalla, ancho_pantalla};
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, NULL);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, nullptr);
 	dibujarParticulas();
 	dibujarTextoGanadores(juegoCliente);
 	dibujarPersonajes();

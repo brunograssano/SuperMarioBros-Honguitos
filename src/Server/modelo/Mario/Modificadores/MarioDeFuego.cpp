@@ -1,8 +1,7 @@
 #include "MarioDeFuego.h"
 #include "SinModificador.h"
 
-void MarioDeFuego::dispararFuego() {
-    //calculos de la bola de fuego
+void MarioDeFuego::dispararFuego(){
 }
 
 ModificadorMario *MarioDeFuego::perderVida(VidaMario *vidaMario) {

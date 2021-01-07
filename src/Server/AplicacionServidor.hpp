@@ -8,7 +8,6 @@
 #include <map>
 
 #include "../Utils/Contador.hpp"
-
 class Servidor;
 #include "Servidor.hpp"
 
@@ -16,6 +15,8 @@ class Servidor;
 #include "../Utils/Utils.hpp"
 
 #include "modelo/Nivel.hpp"
+#include "modelo/Moneda.hpp"
+
 #include "modelo/Juego.hpp"
 #include "lector/ArchivoLeido.hpp"
 
@@ -43,25 +44,14 @@ class AplicacionServidor{
 		}
 
 	private:
-		bool tengoJugadores(map<int,Mario*> jugadores) const;
 		Servidor* servidor;
-		void revisarSiTerminoNivel(const map<int,Mario*>& jugadores);
-		bool revisarSiPerdieron();
-		void actualizarPosicionDeJugador(Mario* jugador,entrada_usuario_t entrada);
-		bool estaEnRangoVisible(int posicionX) const;
-		SDL_Rect* obtenerRectCamara();
-		void moverCamara(const map<int,Mario*>& jugadores);
 		Log* log;
 		Juego* juego;
-		SDL_Rect rectanguloCamara{};
 		int cantJugadores;
-		int ancho_pantalla;
 		bool terminoElJuego;
 		bool comenzoElJuego;
-		bool ganaron;
 		bool juegoInicializadoCorrectamente;
 		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
-		Contador* contadorNivel;
 };
 
 

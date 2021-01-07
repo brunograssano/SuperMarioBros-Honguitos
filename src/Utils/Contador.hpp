@@ -21,7 +21,7 @@ class Contador{
 			tiempoInicio = time(nullptr);
 		}
 
-		int tiempoRestante(){
+		int tiempoRestante() const{
 			time_t tiempoActual = time(nullptr);
 			double tiempoDesdeElComienzoEnSegundos = difftime(tiempoActual, tiempoInicio);
 			int tiempoDesdeElComienzo = (int) tiempoDesdeElComienzoEnSegundos*unidad;
@@ -31,8 +31,7 @@ class Contador{
 				return (tiempoTotal - tiempoDesdeElComienzo);
 			}
 		}
-		~Contador(){
-		}
+		~Contador()= default;
 
 	private:
 		int tiempoTotal;

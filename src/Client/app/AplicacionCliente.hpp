@@ -15,9 +15,7 @@ using namespace std;
 #include "../../Utils/log/Log.hpp"
 #include "../../Server/lector/ArchivoLeido.hpp"
 #include "../../Client/reproductorDeMusica/ReproductorMusica.hpp"
-
-const int ANCHO_FONDO = 8177;
-
+#include "src/Utils/Constantes.hpp"
 #include "../../Utils/Utils.hpp"
 #include "../Cliente.hpp"
 

@@ -11,14 +11,15 @@ using namespace std;
 
 class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"
-
+#include "Camara/Camara.hpp"
+#include "src/Utils/Contador.hpp"
 class Juego{
 
 	private:
 
 		void inicializar();
 
-		Juego(list<Nivel*> nivelesLector, int cantJugadores){
+		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla){
 
             inicializar();
 			for(int i = 0; i < cantJugadores; i++){
@@ -27,39 +28,46 @@ class Juego{
 			niveles = std::move(nivelesLector);
 
 			for (auto const& nivel : niveles) {
-				nivel->inicializarPosicionesOcupadasPorBloques();
-				nivel->inicializarPosicionMonedas();
-				nivel->inicializarPosicionEnemigo();
+				nivel->inicializar();
 			}
-		}
 
-		map<int,Mario*> jugadores;
+            camara = new Camara(alto_pantalla, ancho_pantalla);
+            hanGanado = false;
+		}
+        bool todosEnLaMeta();
+        void avanzarNivel();
+        void sumarPuntosAJugadores(int puntos);
+
+        Camara* camara;
+        bool hanGanado;
+        map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
+
+        int obtenerTiempoRestante();
+        int obtenerMundoActual();
 
 		static Juego* instanciaJuego;
 
 public:
 		Juego(Juego &other) = delete;
+        ~Juego();
 		static Juego* getInstance();
-		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
+		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores, int alto_pantalla, int ancho_pantalla);
 
-		list<Nivel*> obtenerNiveles();
-		void avanzarNivel();
+		void iniciar();
+
+        bool ganaron();
+        bool perdieron();
+        bool hayConectados();
+
 		void actualizarModelo();
-		void sumarPuntosAJugadores(int puntos);
-		bool quedaSoloUnNivel();
+        void actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario);
+
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
 
-        list<Enemigo*> obtenerEnemigos();
-		list<Plataforma*> obtenerPlataformas();
-		list<Moneda*> obtenerMonedas();
-        list<Tuberia*> obtenerTuberias();
-		map<int,Mario*> obtenerMarios();
-        int obtenerMundoActual();
-		int obtenerPuntoBanderaFinActual();
-
-		~Juego();
+        info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador);
+        info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
 
 };
 

@@ -1,4 +1,3 @@
-
 #include "Nivel.hpp"
 
 #include <string>
@@ -7,12 +6,13 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-Nivel::Nivel(int mundo,string direccionFondo,int tiempo,int cantidadMonedas,int puntoBanderaFin){
+Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin) {
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
     this->tiempo = tiempo;
     this->cantidadMonedas = cantidadMonedas;
     this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+    this->contador = new Contador(tiempo, SEGUNDOS);
 }
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -31,9 +31,9 @@ void Nivel::actualizarMonedas(){
 	}
 }
 
-
 void Nivel::actualizarModelo(){
-	actualizarPosicionesEnemigos();
+    //resolverColisiones();
+    actualizarPosicionesEnemigos();
 	actualizarMonedas();
 }
 
@@ -50,28 +50,12 @@ void Nivel::sacarEnemigosMuertos(){
     }
 }
 
-list<Enemigo*> Nivel::obtenerEnemigos(){
-	return enemigos;
-}
-list<Plataforma*> Nivel::obtenerPlataformas(){
-	return plataformas;
-}
-
-
-list<Moneda*> Nivel::obtenerMonedas(){
-	return monedas;
-}
-
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
 float Nivel::obtenerPuntoBanderaFin() const{
 	return puntoBanderaFin;
-}
-
-int Nivel::obtenerTiempo() const{
-    return tiempo;
 }
 
 int Nivel::obtenerMundo() const{
@@ -93,6 +77,12 @@ bool Nivel::esUnaPosicionXValidaEnemigo(int numeroPosicion){
 
 bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 	return !posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)];
+}
+
+void Nivel::inicializar() {
+    inicializarPosicionesOcupadasPorBloques();
+    inicializarPosicionMonedas();
+    inicializarPosicionEnemigo();
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
@@ -195,7 +185,7 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
             superponeAObjeto = true;
         }
     }
-    // mismo chequeo para plataformas?
+    // mismo chequeo para plataformas? <<< Debería
 
     if(!superponeAObjeto){
         tuberias.push_back(posibleTuberia);
@@ -203,6 +193,57 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
     else{
         delete posibleTuberia;
     }
+}
+
+void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* ctx) {
+    if(!ptrInfoRonda) return;
+
+    ptrInfoRonda->mundo = mundo;
+    ptrInfoRonda->tiempoFaltante = contador->tiempoRestante();
+
+    int numeroBloque = 0;
+    for(auto const& plataforma: plataformas){
+        list<bloque_t> bloques = plataforma->serializarPlataforma();
+
+        for(auto const& bloque: bloques){
+            if(deboAgregarlo(ctx, bloque.posX) &&
+               numeroBloque<MAX_BLOQUES){
+                ptrInfoRonda->bloques[numeroBloque] = bloque;
+                numeroBloque++;
+            }
+        }
+    }
+    ptrInfoRonda->topeBloques = numeroBloque;
+
+    int numeroEnemigo = 0;
+    for(auto const& enemigo: enemigos){
+        if(deboAgregarlo(ctx, enemigo->obtenerPosicionX()) &&
+           numeroEnemigo<MAX_ENEMIGOS){
+            ptrInfoRonda->enemigos[numeroEnemigo] = enemigo->serializar();
+            numeroEnemigo++;
+        }
+    }
+    ptrInfoRonda->topeEnemigos = numeroEnemigo;
+
+    int numeroMoneda = 0;
+    for(auto const& moneda: monedas){
+        if(deboAgregarlo(ctx, moneda->obtenerPosicionX()) &&
+           numeroMoneda<MAX_MONEDAS){
+            ptrInfoRonda->monedas[numeroMoneda] = moneda->serializar();
+            numeroMoneda++;
+        }
+    }
+    ptrInfoRonda->topeMonedas = numeroMoneda;
+
+    int numeroTuberia = 0;
+    for(auto const& tuberia: tuberias){
+        if(deboAgregarlo(ctx, tuberia->obtenerPosicionX()) &&
+           numeroTuberia<MAX_TUBERIAS){
+            ptrInfoRonda->tuberias[numeroTuberia] = tuberia->serializar();
+            numeroTuberia++;
+        }
+    }
+    ptrInfoRonda->topeTuberias = numeroTuberia;
 }
 
 void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
@@ -222,9 +263,6 @@ void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
         delete posiblePozo;
     }
 }
-list<Tuberia *> Nivel::obtenerTuberias() {
-    return tuberias;
-}
 
 Nivel::~Nivel (){
     for(const auto& plataforma:plataformas){
@@ -232,11 +270,12 @@ Nivel::~Nivel (){
     }
     for(const auto& moneda:monedas){
         delete moneda;
-    }
+     }
     for(const auto& enemigo:enemigos){
         delete enemigo;
     }
     plataformas.clear();
     enemigos.clear();
-    monedas.clear();
+	  monedas.clear();
+    delete contador;
 }

@@ -1,9 +1,5 @@
 #include "ConexionCliente.hpp"
 
-#include <utility>
-#include "EscuchadoresServer/EscuchadorCredenciales.hpp"
-#include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
-
 #define SIN_JUGAR -1
 
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
@@ -17,35 +13,9 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/
 	terminoJuego = false;
 	recibioCredenciales = false;
 	idPropio = SIN_JUGAR;
-	escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,this);
+	escuchador = new EscuchadorConexionCliente(socket,&terminoJuego,this,servidor);
     enviador = new EnviadorConexionCliente(socket,&terminoJuego);
 	this->informacionAMandar = informacionAMandar;
-}
-
-void ConexionCliente::escuchar(){
-	char tipoMensaje;
-	int resultado;
-	bool hayError = false;
-	while(!terminoJuego && !hayError){
-
-		resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
-
-		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje en el cliente: " + this->ip, to_string(errno));
-			hayError = true;
-		}else if(resultado == 0){
-			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al cliente: " +this->ip+ " ---- "+ to_string(errno));
-			hayError = true;
-		}else{
-			try{
-				escuchadores[tipoMensaje]->escuchar();
-			}catch(const std::exception& e){
-				hayError = true;
-			}
-		}
-	}
-	servidor->agregarUsuarioDesconectado(this,nombre,contrasenia,idPropio);
-	terminoJuego = true;
 }
 
 void ConexionCliente::recibirCredencial(string posibleNombre, string posibleContrasenia){
@@ -69,7 +39,7 @@ void ConexionCliente::enviarActualizacionesDeRonda() const{
 void ConexionCliente::ejecutar(){
 	pthread_t hiloEscuchar;
 	pthread_t hiloEnviar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, ConexionCliente::escuchar_helper, this);
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, ConexionCliente::escuchar_helper, escuchador);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente: " + this->ip);
 		return; // El hilo de ejecutar muere, y queda dando vueltas solamente el objeto ConexionCliente en la lista
@@ -101,9 +71,6 @@ void ConexionCliente::ejecutar(){
 	enviarActualizacionesDeRonda();
 }
 
-
-////---------------------------------ENVIADORES---------------------------------////
-
 void ConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
     enviador->agregarMensajeAEnviar(caracter,mensaje);
 }
@@ -113,7 +80,7 @@ void ConexionCliente::terminoElJuego(){
 }
 
 void ConexionCliente::agregarIDJuego(int IDJugador){
-	escuchadores[ENTRADA] = new EscuchadorEntradaTeclado(socket,IDJugador,servidor);
+    escuchador->agregarEscuchadorEntrada(IDJugador);
 	puedeJugar = true;
 	idPropio = IDJugador;
 }
@@ -129,10 +96,7 @@ void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actua
 ////---------------------------------DESTRUCTOR---------------------------------////
 
 ConexionCliente::~ConexionCliente(){
-	for(auto const& parClaveEscuchador:escuchadores){
-		delete parClaveEscuchador.second;
-	}
-	escuchadores.clear();
+    delete escuchador;
 	delete enviador;
 
 	int resultado = shutdown(socket, SHUT_RDWR);
@@ -143,4 +107,31 @@ ConexionCliente::~ConexionCliente(){
 	if(resultado<0){
 		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el close del socket del usuario: "+nombre,to_string(errno));
 	}
+}
+
+string ConexionCliente::obtenerContrasenia() {
+    return contrasenia;
+}
+
+string ConexionCliente::obtenerNombre() {
+    return nombre;
+}
+
+void *ConexionCliente::enviar_helper(void *ptr) {
+    ((EnviadorConexionCliente*) ptr)->enviar();
+    return nullptr;
+}
+
+void *ConexionCliente::ejecutar_helper(void *ptr) {
+    ((ConexionCliente*) ptr)->ejecutar();
+    return nullptr;
+}
+
+void *ConexionCliente::escuchar_helper(void *ptr) {
+    ((EscuchadorConexionCliente*)ptr)->escuchar();
+    return nullptr;
+}
+
+string ConexionCliente::obtenerIP() {
+    return ip;
 }

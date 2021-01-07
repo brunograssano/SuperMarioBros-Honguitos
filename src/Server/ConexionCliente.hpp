@@ -9,14 +9,12 @@ using namespace std;
 #include <string>
 #include <map>
 
-#include "../Utils/Enviador.hpp"
 #include "../Utils/log/Log.hpp"
-#include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
-class EscuchadorEntradaTeclado;
-#include "EscuchadoresServer/EscuchadorEntradaTeclado.hpp"
 
-#include "EnviadoresServer/EnviadorConexionCliente.h"
+#include "EnviadoresServer/EnviadorConexionCliente.hpp"
+class EscuchadorConexionCliente;
+#include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
 class ConexionCliente {
 
@@ -24,38 +22,27 @@ class ConexionCliente {
 		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
 		~ConexionCliente();
 
-		void escuchar();
-		static void* escuchar_helper(void* ptr){
-			((ConexionCliente*)ptr)->escuchar();
-			return NULL;
-		}
-
+        static void* ejecutar_helper(void* ptr);
+        static void* enviar_helper(void* ptr);
+		static void* escuchar_helper(void* ptr);
 		void ejecutar();
-		static void* ejecutar_helper(void* ptr){
-			((ConexionCliente*) ptr)->ejecutar();
-			return NULL;
-		}
-
-		static void* enviar_helper(void* ptr){
-			((EnviadorConexionCliente*) ptr)->enviar();
-			return NULL;
-		}
 
 		void enviarActualizacionesDeRonda() const;
         void agregarMensajeAEnviar(char caracter, void *mensaje);
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
-		string obtenerIP(){
-			return ip;
-		}
-
+		string obtenerIP();
+        string obtenerNombre();
+        string obtenerContrasenia();
 		void terminoElJuego();
 
-	private:
+
+private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
 		void esperarCredenciales();
 
+		EscuchadorConexionCliente* escuchador;
         EnviadorConexionCliente* enviador;
 
 		string nombre;
@@ -71,7 +58,6 @@ class ConexionCliente {
 		string ip;
 
 		Servidor* servidor;
-		map<char,Escuchador*> escuchadores;
 };
 
 

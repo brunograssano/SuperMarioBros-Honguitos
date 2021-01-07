@@ -37,8 +37,10 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 }
 
 
-void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,string nombre, const string& contrasenia,int idJugador){
+void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    string nombre = conexionPerdida->obtenerNombre();
+    string contrasenia = conexionPerdida->obtenerContrasenia();
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
 		usuariosQuePerdieronConexion[idJugador] = usuarioDesconectado;
@@ -326,4 +328,18 @@ Servidor::~Servidor(){
 	delete manejadorIDs;
 	delete aplicacionServidor;
 	delete log;
+}
+
+void *Servidor::reconectarJugadoresFaseInicial_helper(void *ptr) {
+    ((Servidor*) ptr)->reconectarJugadoresFaseInicial();
+    return nullptr;
+}
+
+void *Servidor::escuchar_helper(void *ptr) {
+    ((Servidor*) ptr)->conectarJugadores();
+    return nullptr;
+}
+
+map<int, string> Servidor::obtenerMapaJugadores() {
+    return mapaIDNombre;
 }

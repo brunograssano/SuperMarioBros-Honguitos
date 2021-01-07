@@ -55,7 +55,7 @@ class Mario{
 		void actualizarMinimoX(int limite);
 		~Mario();
 
-	private:
+    private:
         void swapDeModificador(ModificadorMario *nuevoModificador);
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
@@ -65,8 +65,7 @@ class Mario{
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;
-
 };
 
 
-#endif
+#endif // SRC_SERVER_MODELO_MARIO_HPP_

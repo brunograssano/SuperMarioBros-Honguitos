@@ -44,7 +44,7 @@ class Cliente{
 
 	private:
         static void esperar(const bool *condicionAEsperar);
-		//void cerradoVentanaInicio() const;
+		void cerradoVentanaInicio() const;
 		void esperarAQueEmpieceElJuego();
 		void intentarEntrarAlJuego();
 

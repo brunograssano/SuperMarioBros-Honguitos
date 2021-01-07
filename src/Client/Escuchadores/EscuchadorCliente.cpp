@@ -17,6 +17,7 @@ EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* te
     this->socketCliente = socketCliente;
     this->terminoJuego = terminoJuego;
     this->terminoEscuchar = terminoEscuchar;
+    this->cliente = cliente;
 }
 
 EscuchadorCliente::~EscuchadorCliente() {

@@ -27,7 +27,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 void Cliente::terminarProcesosDelCliente() {
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
-	terminoJuego = true;        // TIRA SEG FAULT ACA, CLIENTE ES NULL CUANDO LLEGA A ESTE PUNTO
+	terminoJuego = true;
 	//cerroVentana = true;
 	gameLoop->seMurioElServer();
 	if(ventanaInicio!=nullptr){
@@ -121,7 +121,7 @@ void Cliente::ejecutar(){
 	intentarEntrarAlJuego();
 	if(cerroVentana){
 		delete ventanaInicio;
-		//cerradoVentanaInicio();
+		cerradoVentanaInicio();
 		return;
 	}
 
@@ -129,7 +129,7 @@ void Cliente::ejecutar(){
 	delete ventanaInicio;
 	ventanaInicio = nullptr;
 	if(cerroVentana){
-		//cerradoVentanaInicio();
+		cerradoVentanaInicio();
 		return;
 	}
 
@@ -153,14 +153,14 @@ void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
 }
 
 /////------------------DESTRUCTOR------------------/////
-/* me parece que no es necesario ya
+
 void Cliente::cerradoVentanaInicio() const {
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
 	cerrarSocketCliente(socketCliente);
     while(!terminoEnviar || !terminoEscuchar){}
     delete Log::getInstance();
     exit(0);
-}*/
+}
 
 Cliente::~Cliente(){
 	terminarSDL();

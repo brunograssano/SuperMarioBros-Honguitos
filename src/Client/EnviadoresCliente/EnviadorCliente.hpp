@@ -1,7 +1,9 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORCLIENTE_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORCLIENTE_HPP
 
-#include "src/Client/Cliente.hpp"
+class Cliente;
+#include "../Cliente.hpp"
+#include "../../Utils/Enviador.hpp"
 
 class EnviadorCliente {
     public:

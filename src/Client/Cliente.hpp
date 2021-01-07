@@ -10,26 +10,14 @@
 #include <queue>
 #include <map>
 
-#include "../Utils/Escuchador.hpp"
 #include "../Utils/Utils.hpp"
 #include "app/VentanaInicio/VentanaInicio.hpp"
-#include "../Utils/Enviador.hpp"
-
-class EscuchadorVerificacionCredenciales;
-#include "../../src/Client/Escuchadores/EscuchadorVerificacionCredenciales.hpp"
-class EscuchadorActualizacionJugadores;
-#include "../../src/Client/Escuchadores/EscuchadorActualizacionJugadores.hpp"
-class EscuchadorInfoPartidaInicial;
-#include "../../src/Client/Escuchadores/EscuchadorInfoPartidaInicial.hpp"
-class EscuchadorRonda;
-#include "../../src/Client/Escuchadores/EscuchadorRonda.hpp"
-#include "../../src/Client/Escuchadores/EscuchadorSonido.hpp"
-
-#include "Escuchadores/EscuchadorLog.hpp"
 
 class EnviadorCliente;
 #include "../../src/Client/EnviadoresCliente/EnviadorCliente.hpp"
 
+class EscuchadorCliente;
+#include "../../src/Client/Escuchadores/EscuchadorCliente.hpp"
 
 class GameLoop;
 #include "../Client/GameLoop.hpp"
@@ -43,7 +31,6 @@ class Cliente{
 		Cliente(char ip[LARGO_IP], int puerto);
 		~Cliente();
 
-		void escuchar();
         void terminarProcesosDelCliente();
         void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);
 		void recibirVerificacionCredenciales(verificacion_t verificacion);
@@ -57,12 +44,12 @@ class Cliente{
 
 	private:
         static void esperar(const bool *condicionAEsperar);
-		void cerradoVentanaInicio() const;
+		//void cerradoVentanaInicio() const;
 		void esperarAQueEmpieceElJuego();
 		void intentarEntrarAlJuego();
 
-		map<char,Escuchador*> escuchadores;
-        EnviadorCliente* enviador;
+		EscuchadorCliente* escuchador{};
+        EnviadorCliente* enviador{};
 		VentanaInicio* ventanaInicio;
 
 		info_partida_t infoPartida{};
@@ -82,4 +69,5 @@ class Cliente{
 
 		GameLoop* gameLoop;
 };
+
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

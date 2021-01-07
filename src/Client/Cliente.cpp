@@ -17,49 +17,17 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	cerroVentana = false;
 
 	cantidadJugadoresActivos = 0;
-	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
-	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
-	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
-	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
-	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
-    escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
 
+	escuchador = new EscuchadorCliente(socketCliente,this,&terminoJuego,&terminoEscuchar);
     enviador = new EnviadorCliente(socketCliente,this,&terminoJuego,&terminoEnviar);
 	ventanaInicio = nullptr;
 	gameLoop = new GameLoop();
 }
 
-void Cliente::escuchar(){
-	char tipoMensaje;
-	int resultado;
-	bool hayError = false;
-
-	while(!hayError && !terminoJuego){
-		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
-
-		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
-			hayError = true;
-		}else if(resultado == 0){
-			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server. ----- " +to_string(errno));
-			hayError = true;
-		}
-		else{
-			try{
-				escuchadores[tipoMensaje]->escuchar();
-			}catch(const std::exception& e){
-				hayError = true;
-			}
-		}
-	}
-	terminoEscuchar = true;
-	terminarProcesosDelCliente();
-}
-
 void Cliente::terminarProcesosDelCliente() {
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
-	terminoJuego = true;
+	terminoJuego = true;        // TIRA SEG FAULT ACA, CLIENTE ES NULL CUANDO LLEGA A ESTE PUNTO
 	//cerroVentana = true;
 	gameLoop->seMurioElServer();
 	if(ventanaInicio!=nullptr){
@@ -135,7 +103,7 @@ void Cliente::intentarEntrarAlJuego() {
 
 void Cliente::ejecutar(){
 	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, Cliente::escuchar_helper, this);
+	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, Cliente::escuchar_helper, escuchador);
 	if(resultadoCreateEscuchar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del server.");
 		return;
@@ -153,21 +121,16 @@ void Cliente::ejecutar(){
 	intentarEntrarAlJuego();
 	if(cerroVentana){
 		delete ventanaInicio;
-		ventanaInicio = nullptr;
-		cerradoVentanaInicio();
-		while(!terminoEnviar || !terminoEscuchar){}
-		delete Log::getInstance();
-		exit(0);
+		//cerradoVentanaInicio();
+		return;
 	}
 
 	esperarAQueEmpieceElJuego();
 	delete ventanaInicio;
 	ventanaInicio = nullptr;
 	if(cerroVentana){
-		cerradoVentanaInicio();
-		while(!terminoEnviar || !terminoEscuchar){}
-		delete Log::getInstance();
-		exit(0);
+		//cerradoVentanaInicio();
+		return;
 	}
 
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
@@ -190,23 +153,21 @@ void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
 }
 
 /////------------------DESTRUCTOR------------------/////
-
+/* me parece que no es necesario ya
 void Cliente::cerradoVentanaInicio() const {
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
 	cerrarSocketCliente(socketCliente);
-}
+    while(!terminoEnviar || !terminoEscuchar){}
+    delete Log::getInstance();
+    exit(0);
+}*/
 
 Cliente::~Cliente(){
 	terminarSDL();
 	cerrarSocketCliente(socketCliente);
 	while(!terminoEnviar || !terminoEscuchar){}
 
-	for(auto const& parClaveEscuchador:escuchadores){
-		delete parClaveEscuchador.second;
-	}
-
-	escuchadores.clear();
-
+    delete escuchador;
 	delete enviador;
 	delete gameLoop;
 
@@ -218,6 +179,6 @@ void *Cliente::enviar_helper(void *ptr) {
 }
 
 void *Cliente::escuchar_helper(void *ptr) {
-    ((Cliente*) ptr)->escuchar();
+    ((EscuchadorCliente*) ptr)->escuchar();
     return nullptr;
 }

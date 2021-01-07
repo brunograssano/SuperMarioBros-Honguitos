@@ -19,7 +19,7 @@ class Juego{
 
 		void inicializar();
 
-		Juego(list<Nivel*> nivelesLector, int cantJugadores){
+		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla){
 
             inicializar();
 			for(int i = 0; i < cantJugadores; i++){
@@ -31,12 +31,14 @@ class Juego{
 				nivel->inicializar();
 			}
 
+            camara = new Camara(alto_pantalla, ancho_pantalla);
             hanGanado = false;
 		}
         bool todosEnLaMeta();
-        void avanzarNivel(Camara* camara/*TODO: Sacar estos parametros*/);
+        void avanzarNivel();
         void sumarPuntosAJugadores(int puntos);
 
+        Camara* camara;
         bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
@@ -50,7 +52,7 @@ public:
 		Juego(Juego &other) = delete;
         ~Juego();
 		static Juego* getInstance();
-		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores);
+		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores, int alto_pantalla, int ancho_pantalla);
 
 		void iniciar();
 
@@ -58,14 +60,14 @@ public:
         bool perdieron();
         bool hayConectados();
 
-		void actualizarModelo(Camara* camara/*TODO: Sacar este parametros*/);
+		void actualizarModelo();
         void actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario);
 
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
 
-        info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador, Camara* camara);
-        info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre, Camara* camara);
+        info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador);
+        info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
 
 };
 

@@ -8,7 +8,6 @@
 #include <map>
 
 #include "../Utils/Contador.hpp"
-#include "modelo/Camara/Camara.hpp"
 class Servidor;
 #include "Servidor.hpp"
 
@@ -48,7 +47,6 @@ class AplicacionServidor{
 		Servidor* servidor;
 		Log* log;
 		Juego* juego;
-		Camara* camara;
 		int cantJugadores;
 		bool terminoElJuego;
 		bool comenzoElJuego;

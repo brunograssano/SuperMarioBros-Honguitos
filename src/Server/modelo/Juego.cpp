@@ -12,14 +12,14 @@ Juego* Juego::getInstance(){
 	return instanciaJuego;
 }
 
-Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores){
+Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores, int alto_pantalla, int ancho_pantalla){
 	if(instanciaJuego==nullptr){
-		instanciaJuego = new Juego(std::move(niveles),cantJugadores);
+		instanciaJuego = new Juego(std::move(niveles),cantJugadores, alto_pantalla, ancho_pantalla);
 	}
 	return instanciaJuego;
 }
 
-void Juego::avanzarNivel(Camara* camara){
+void Juego::avanzarNivel(){
     if(niveles.empty()) return;
 
     Nivel* nivelViejo = niveles.front();
@@ -56,7 +56,7 @@ int Juego::obtenerTiempoRestante(){
     return niveles.front()->tiempoRestante();
 }
 
-void Juego::actualizarModelo(Camara* camara){
+void Juego::actualizarModelo(){
     if(niveles.empty()) return;
 
     for(auto const& parClaveJugador:jugadores){
@@ -66,7 +66,7 @@ void Juego::actualizarModelo(Camara* camara){
 	nivelActual->actualizarModelo();
 
     if(todosEnLaMeta()) {
-        avanzarNivel(camara /*TODO: Sacar estos parametros*/);
+        avanzarNivel();
     }
     camara->moverCamara(this->jugadores);
 }
@@ -95,6 +95,7 @@ Juego::~Juego(){
 	}
 	jugadores.clear();
 	niveles.clear();
+	delete camara;
 }
 
 void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario) {
@@ -149,7 +150,7 @@ bool Juego::perdieron() {
     return ((obtenerTiempoRestante() == 0) && !ganaron());
 }
 
-info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador, Camara* camara){
+info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador){
     info_partida_t info_partida;
     memset(&info_partida,0,sizeof(info_partida_t));
 
@@ -179,13 +180,13 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
     return info_partida;
 }
 
-info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre, Camara* camara) {
+info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
     info_ronda_t info_ronda;
     memset(&info_ronda,0,sizeof(info_ronda_t));
 
     info_ronda.posXCamara = camara->obtenerRectanguloCamara().x;
     info_ronda.ganaron = ganaron();
-    info_ronda.perdieron = perdieron(); // cambiar este método para eliminar el getter de tiempo en Juego
+    info_ronda.perdieron = perdieron();
 
     jugador_t jugadorSerializado;
     for(int i=0; i<jugadores.size(); i++){

@@ -6,24 +6,23 @@
 
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
-	juego = Juego::getInstance(std::move(niveles),cantidadJugadores);
+	juego = Juego::getInstance(std::move(niveles),cantidadJugadores, alto_pantalla, ancho_pantalla);
 	cantJugadores = cantidadJugadores;
 	terminoElJuego = false;
 	comenzoElJuego = false;
 	juegoInicializadoCorrectamente = false;
 	log = Log::getInstance();
 	servidor = server;
-	this->camara = new Camara(alto_pantalla, ancho_pantalla);
 }
 
 info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador){
 	Log::getInstance()->mostrarMensajeDeInfo("Se prepara la informacion de la partida para el jugador: " + mapaIDNombre[IDJugador]);
-	return juego->obtenerInfoPartida(mapaIDNombre, IDJugador, camara);
+	return juego->obtenerInfoPartida(mapaIDNombre, IDJugador);
 }
 
 info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para enviar.");
-    return juego->obtenerInfoRonda(mapaIDNombre, camara);
+    return juego->obtenerInfoRonda(mapaIDNombre);
 }
 
 void AplicacionServidor::iniciarJuego(){
@@ -47,7 +46,7 @@ void AplicacionServidor::gameLoop(){
 				juego->actualizarJugador(parIDEntrada.id, parIDEntrada.entradas);
 				colaDeEntradasUsuario.pop();
 			}
-			juego->actualizarModelo(camara);
+			juego->actualizarModelo();
 
 			terminoElJuego = juego->ganaron() || juego->perdieron();
 		}
@@ -74,6 +73,5 @@ void AplicacionServidor::desconectarJugador(int idJugador){
 }
 
 AplicacionServidor::~AplicacionServidor(){
-    delete camara;
 	delete juego;
 }

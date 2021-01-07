@@ -29,6 +29,8 @@ class Nivel{
 			this->contador = new Contador(tiempo, SEGUNDOS);
 		}
 
+		void inicializar();
+
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
 
 		void agregarPlataforma(Plataforma* unaPlataforma){
@@ -43,10 +45,6 @@ class Nivel{
 			monedas.push_back(unaMoneda);
 		}
 
-		int obtenerTiempo() const{
-			return tiempo;
-		}
-
 		int obtenerMundo() const{
 			return mundo;
 		}
@@ -59,16 +57,23 @@ class Nivel{
 		    contador->iniciar();
 		}
 
-		void actualizarModelo();
-		void inicializarPosicionEnemigo();
-		void inicializarPosicionMonedas();
-		void inicializarPosicionesOcupadasPorBloques();
+
+		/*
+         * Completará la información de los siguientes campos:
+         *
+         * mundo
+         * tiempoFaltante
+         * bloques[], tope
+         * enemigos[], tope
+         * monedas[], tope
+         * tuberias[], tope
+         */
+		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* ctx);
+
+        void actualizarModelo();
+
 
 		float obtenerPuntoBanderaFin() const;
-		list<Enemigo*> obtenerEnemigos();
-		list<Plataforma*> obtenerPlataformas();
-		list<Moneda*> obtenerMonedas();
-        list<Tuberia*> obtenerTuberias();
 		string obtenerDireccionFondoActual();
 
 		~Nivel(){
@@ -92,6 +97,10 @@ class Nivel{
         void actualizarMonedas();
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
+
+        void inicializarPosicionEnemigo();
+        void inicializarPosicionMonedas();
+        void inicializarPosicionesOcupadasPorBloques();
 
         map<int, bool> posicionesOcupadasXEnemigos;
         map<tuple<int, int>, bool> posicionesOcupadas;

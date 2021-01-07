@@ -28,9 +28,7 @@ class Juego{
 			niveles = std::move(nivelesLector);
 
 			for (auto const& nivel : niveles) {
-				nivel->inicializarPosicionesOcupadasPorBloques();
-				nivel->inicializarPosicionMonedas();
-				nivel->inicializarPosicionEnemigo();
+				nivel->inicializar();
 			}
 
             hanGanado = false;
@@ -45,10 +43,6 @@ class Juego{
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();
-        list<Enemigo*> obtenerEnemigos();
-        list<Plataforma*> obtenerPlataformas();
-        list<Moneda*> obtenerMonedas();
-        list<Tuberia*> obtenerTuberias();
 
 		static Juego* instanciaJuego;
 

@@ -66,11 +66,11 @@ void Camara::moverCamara(const map<int,Mario*>& jugadores) {
     }
 }
 
+SDL_Rect Camara::obtenerRectanguloCamara() {
+    return rectanguloCamara;
+}
+
 bool Camara::estaEnRangoVisible(int posicionX){
     return (posicionX + ANCHO_RANGO > rectanguloCamara.x) &&
            (posicionX < rectanguloCamara.x + rectanguloCamara.w + ANCHO_RANGO);
-}
-
-SDL_Rect Camara::obtenerRectanguloCamara() {
-    return rectanguloCamara;
 }

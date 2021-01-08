@@ -2,6 +2,7 @@
 
 #include <utility>
 
+
 Juego* Juego::instanciaJuego = nullptr;
 
 void Juego::inicializar() {} //todo: ¿?
@@ -21,23 +22,22 @@ void Juego::avanzarNivel(){
     if(niveles.empty()) return;
 
     Nivel* nivelViejo = niveles.front();
-    int puntos = nivelViejo->tiempoRestante(); //todo: cambiarlo
+    nivelViejo->terminar();
     delete nivelViejo;
     niveles.pop_front();
 
     if(niveles.empty()){
         hanGanado = true;
-        sumarPuntosAJugadores(puntos);
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
         camara->reiniciar();
-        sumarPuntosAJugadores(puntos);
         niveles.front()->iniciar();
-        for(auto const& parClaveJugador:jugadores){
-            parClaveJugador.second->reiniciarPosicion();
-        }
         Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
+    }
+
+    for(auto const& parClaveJugador:jugadores){
+        parClaveJugador.second->reiniciarPosicion();
     }
 }
 
@@ -61,39 +61,17 @@ void Juego::actualizarModelo(){
         parClaveJugador.second->actualizarPosicion();
     }
     Nivel* nivelActual = niveles.front();
-	nivelActual->actualizarModelo();
+	nivelActual->actualizarModelo(jugadores);
 
-    if(todosEnLaMeta()) {
+    if(nivelActual->todosEnLaMeta(jugadores) && hayConectados()) {
         avanzarNivel();
     }
     camara->moverCamara(this->jugadores);
 }
 
-void Juego::sumarPuntosAJugadores(int puntos){
-
-	for(auto const& parClaveJugador:jugadores){
-		if(parClaveJugador.second->estaConectado()){
-			parClaveJugador.second->agregarPuntos(puntos);
-		}
-	}
-}
-
 int Juego::obtenerMundoActual(){
     if(niveles.empty()) return 0;
     return niveles.front()->obtenerMundo();
-}
-
-Juego::~Juego(){
-
-	for(auto const& parClaveJugador:jugadores){
-		delete parClaveJugador.second;
-	}
-	for(auto const& nivel:niveles){
-		delete nivel;
-	}
-	jugadores.clear();
-	niveles.clear();
-	delete camara;
 }
 
 void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario) {
@@ -115,24 +93,6 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     if(entradaUsuario.S && !seMovio){
         jugador->actualizarAgacharseMario();
     }
-}
-
-bool Juego::todosEnLaMeta() {
-    if(niveles.empty()) return false;
-
-    bool alguienConectado = false;
-    bool todosEnLaMeta = true;
-    int puntoBandera = niveles.front()->obtenerPuntoBanderaFin();
-    for(auto const& parClaveJugador:jugadores){
-        Mario* jugador = parClaveJugador.second;
-        if(jugador->estaConectado()){
-            alguienConectado = true;
-            if(jugador->obtenerPosicionX() < puntoBandera){
-                todosEnLaMeta = false;
-            }
-        }
-    }
-    return todosEnLaMeta && alguienConectado;
 }
 
 bool Juego::ganaron() {
@@ -210,5 +170,17 @@ bool Juego::hayConectados() {
         i++;
     }
     return hayAlguienConectado;
+}
 
+Juego::~Juego(){
+
+    for(auto const& parClaveJugador:jugadores){
+        delete parClaveJugador.second;
+    }
+    for(auto const& nivel:niveles){
+        delete nivel;
+    }
+    jugadores.clear();
+    niveles.clear();
+    delete camara;
 }

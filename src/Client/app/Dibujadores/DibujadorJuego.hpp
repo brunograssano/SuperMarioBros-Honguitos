@@ -50,6 +50,8 @@ class DibujadorJuego : public Dibujador{
 		void dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarTexto(JuegoCliente* juegoCliente);
         void dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
+
+    void dibujarEfectos(SDL_Rect *pRect, JuegoCliente *pCliente);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

@@ -1,7 +1,8 @@
-#include "MarioDeFuego.h"
-#include "SinModificador.h"
+#include "MarioDeFuego.hpp"
+#include "SinModificador.hpp"
 
-void MarioDeFuego::dispararFuego(){
+Disparo* MarioDeFuego::dispararFuego(Posicion posicionManosMario){
+    return new BolaDeFuego(posicionManosMario);
 }
 
 ModificadorMario *MarioDeFuego::perderVida(VidaMario *vidaMario) {

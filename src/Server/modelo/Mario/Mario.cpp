@@ -141,8 +141,9 @@ void Mario::hacerseDeFuego() {
     swapDeModificador(nuevoModificador);
 }
 
-void Mario::dispararFuego() {
-    modificador->dispararFuego();//agregar lo que se necesite
+Disparo* Mario::dispararFuego() {
+    PosicionFija posicionManosMario(this->obtenerPosicionX(), this->obtenerPosicionY()+20/*todo: ajustar*/);
+    return modificador->dispararFuego(posicionManosMario);
 }
 
 Mario::~Mario(){

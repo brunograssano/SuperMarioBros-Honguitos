@@ -63,6 +63,7 @@ void JuegoCliente::actualizar(){
 	jugadores.clear();
 	monedas.clear();
 	tuberias.clear();
+	efectos.clear();
 
 	for(int i=0;i<ronda.topeBloques;i++){
 		bloques.push_front(ronda.bloques[i]);
@@ -79,6 +80,10 @@ void JuegoCliente::actualizar(){
 	for(int i=0;i<cantidadJugadores;i++){
 		jugadores[i]=ronda.jugadores[i];
 	}
+    for(int i=0;i<ronda.topeEfectos;i++){
+        efectos.push_front(ronda.efectos[i]);
+    }
+
 }
 
 int JuegoCliente::obtenerIDPropio() const{
@@ -111,6 +116,10 @@ int JuegoCliente::obtenerMundoActual() const{
 
 list<tuberia_t> JuegoCliente::obtenerTuberias() {
     return tuberias;
+}
+
+list<efecto_t> JuegoCliente::obtenerEfectos() {
+    return efectos;
 }
 
 void JuegoCliente::agregarNivel(nivel_t nivel) {

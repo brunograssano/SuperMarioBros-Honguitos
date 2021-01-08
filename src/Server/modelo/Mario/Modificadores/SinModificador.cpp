@@ -1,12 +1,12 @@
-#include "SinModificador.h"
-#include "MarioDeFuego.h"
-
-void SinModificador::dispararFuego() {
-    // no se hace nada aca
-}
+#include "SinModificador.hpp"
+#include "MarioDeFuego.hpp"
 
 ModificadorMario *SinModificador::perderVida(VidaMario *vidaMario) {
     vidaMario->perderVida();
     return new SinModificador();
+}
+
+Disparo *SinModificador::dispararFuego(Posicion posicionManosMario) {
+    return new Chispa(posicionManosMario);
 }
 

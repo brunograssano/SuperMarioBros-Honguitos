@@ -24,6 +24,7 @@ class JuegoCliente{
 		list<bloque_t> obtenerBloques();
 		list<moneda_t> obtenerMonedas();
         list<tuberia_t> obtenerTuberias();
+        list<efecto_t> obtenerEfectos();
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
 		int obtenerIDPropio() const;
@@ -32,7 +33,7 @@ class JuegoCliente{
 		bool perdieronElJuego() const;
 
 
-    void agregarNivel(nivel_t nivel);
+        void agregarNivel(nivel_t nivel);
 
 private:
 		queue<info_ronda_t> rondas;
@@ -41,6 +42,7 @@ private:
 		list<enemigo_t> enemigos;
 		list<moneda_t> monedas;
         list<tuberia_t> tuberias;
+        list<efecto_t> efectos;
 		int cantidadJugadores;
 		int idPropio;
 

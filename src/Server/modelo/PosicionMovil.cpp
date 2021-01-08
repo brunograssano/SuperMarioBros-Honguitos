@@ -9,7 +9,7 @@ PosicionMovil::PosicionMovil(int coordenadaX, int coordenadaY, int minimoY, int 
 }
 
 PosicionMovil::PosicionMovil(int coordenadaX, int coordenadaY) : Posicion() {
-    this->posicionX= (float)coordenadaX;
+    this->posicionX= (float) coordenadaX;
     this->posicionY= coordenadaY;
     this->minimoY = 2147483647;
     this->minimoX = -2147483648;

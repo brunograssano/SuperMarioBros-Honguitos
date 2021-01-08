@@ -79,7 +79,7 @@ void App::actualizarServer(const Uint8 *keystate){
 	else if(!terminoElJuego){
 		entrada_usuario_t entradaUsuario = {false,false,false,false};
 		bool se_movio = false;
-		if(keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
+		if(keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
 			entradaUsuario.W = true;
 			se_movio = true;
 
@@ -108,6 +108,16 @@ void App::actualizarServer(const Uint8 *keystate){
 		if((keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_S]) && !se_movio){
 			entradaUsuario.S = true;
 			se_movio = true;
+		}
+
+		if(keystate[SDL_SCANCODE_F]){
+		    entradaUsuario.F = true;
+		    se_movio = true;
+		}
+
+		if(keystate[SDL_SCANCODE_SPACE]){
+            entradaUsuario.ESP = true;
+            se_movio = true;
 		}
 
 		if(se_movio){

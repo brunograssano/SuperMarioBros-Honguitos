@@ -13,6 +13,7 @@ class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"
 #include "Camara/Camara.hpp"
 #include "src/Utils/Contador.hpp"
+
 class Juego{
 
 	private:
@@ -25,6 +26,7 @@ class Juego{
 			for(int i = 0; i < cantJugadores; i++){
 				jugadores[i] = new Mario(i);
 			}
+
 			niveles = std::move(nivelesLector);
 
 			for (auto const& nivel : niveles) {
@@ -34,9 +36,7 @@ class Juego{
             camara = new Camara(alto_pantalla, ancho_pantalla);
             hanGanado = false;
 		}
-        bool todosEnLaMeta();
         void avanzarNivel();
-        void sumarPuntosAJugadores(int puntos);
 
         Camara* camara;
         bool hanGanado;
@@ -68,7 +68,6 @@ public:
 
         info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador);
         info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
-
 };
 
 

@@ -1,10 +1,9 @@
 #ifndef SRC_UTILS_HPP_
 #define SRC_UTILS_HPP_
 
-using namespace std;
 #include <string>
 #include <stdint.h>
-
+using namespace std;
 /* PALABRAS RESERVADAS */
 /*
  * V: Verificacion
@@ -15,6 +14,7 @@ using namespace std;
  * P: Informacion necesaria para iniciar la partida
  * R: Información necesaria para renderizar
  * S: Sonido a reproducir
+ * N: Informacion del nivel nuevo (bloques fijos)
  */
 
 
@@ -152,8 +152,19 @@ typedef struct ronda{
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
 	tuberia_t tuberias[MAX_TUBERIAS];
-	pozo_t pozos [MAX_POZOS];
+	//pozo_t pozos[MAX_POZOS];
 }info_ronda_t;
+
+#define NIVEL 'N'
+typedef struct nivel{
+    uint8_t topeBloques;
+    uint8_t topePozos;
+    uint8_t topeTuberia;
+    bloque_t bloques[MAX_BLOQUES]; //definir contstantes (van a venir todos los bloques ladrillo/tuberias de un nivel)
+    tuberia_t tuberias[MAX_TUBERIAS];
+    pozo_t pozos[MAX_POZOS];
+    //informacion de los puntos para mostrar en la pantalla del medio?
+}nivel_t;
 
 typedef struct usuario{
 	string nombre;

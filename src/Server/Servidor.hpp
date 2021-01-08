@@ -29,7 +29,7 @@ class ConexionCliente;
 
 #include "ManejadorIdentificadores.hpp"
 
-const int MAX_CONEXIONES = 4;
+#include "src/Utils/Constantes.hpp"
 
 class Servidor{
 

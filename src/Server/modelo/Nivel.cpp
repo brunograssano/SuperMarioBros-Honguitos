@@ -13,6 +13,7 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->cantidadMonedas = cantidadMonedas;
     this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
     this->contador = new Contador(tiempo, SEGUNDOS);
+    this->meta = new Meta(this->puntoBanderaFin);
 }
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -31,10 +32,16 @@ void Nivel::actualizarMonedas(){
 	}
 }
 
-void Nivel::actualizarModelo(){
-    //resolverColisiones();
+void Nivel::actualizarModelo(map<int, Mario*> jugadores){
+    //resolverColisiones(jugadores);
     actualizarPosicionesEnemigos();
-	actualizarMonedas();
+    actualizarMonedas();
+    resolverGanadores(jugadores);
+}
+
+void Nivel::resolverGanadores(map<int, Mario *> mapaJugadores) {
+    for(auto const& parClaveJugador:mapaJugadores)
+        meta->agregarSiPasoLaMeta(parClaveJugador.second);
 }
 
 void Nivel::sacarEnemigosMuertos(){
@@ -52,10 +59,6 @@ void Nivel::sacarEnemigosMuertos(){
 
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
-}
-
-float Nivel::obtenerPuntoBanderaFin() const{
-	return puntoBanderaFin;
 }
 
 int Nivel::obtenerMundo() const{
@@ -276,6 +279,15 @@ Nivel::~Nivel (){
     }
     plataformas.clear();
     enemigos.clear();
-	  monedas.clear();
+    monedas.clear();
     delete contador;
+    delete meta;
+}
+
+void Nivel::terminar() {
+    meta->sumarPuntos(contador->tiempoRestante());
+}
+
+bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
+    return meta->todosEnLaMeta(jugadores);
 }

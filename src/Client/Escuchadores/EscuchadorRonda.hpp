@@ -21,9 +21,9 @@ class EscuchadorRonda: public Escuchador{
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 
-		bool bloquesValidos(bloque_t bloques[MAX_BLOQUES], int tope);
-		bool monedasValidas(moneda_t monedas[MAX_MONEDAS], int tope);
-		bool enemigosValidos(enemigo_t enemigos[MAX_ENEMIGOS], int tope);
+		static bool bloquesValidos(bloque_t bloques[MAX_SORPRESAS], int tope);
+		static bool monedasValidas(moneda_t monedas[MAX_MONEDAS], int tope);
+		static bool enemigosValidos(enemigo_t enemigos[MAX_ENEMIGOS], int tope);
 
 		bool recibioMensajeValido();
 	private:

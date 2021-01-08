@@ -123,8 +123,9 @@ void Servidor::reconectarJugadoresFaseJuego(){
 
 				int idJugador = parClaveUsuario.first;
 				info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
-
+                nivel_t nivel = aplicacionServidor->obtenerInfoNivel();
                 clientesJugando[parClaveUsuario.first]->agregarMensajeAEnviar(PARTIDA,&info_partida);
+                clientesJugando[parClaveUsuario.first]->agregarMensajeAEnviar(NIVEL,&nivel);
 				idsUsuariosReconectados.push_front(idJugador);
 			}
 		}
@@ -342,4 +343,10 @@ void *Servidor::escuchar_helper(void *ptr) {
 
 map<int, string> Servidor::obtenerMapaJugadores() {
     return mapaIDNombre;
+}
+
+void Servidor::mandarNivelAClientes(nivel_t nivel) {
+    for(auto parClaveCliente: clientesJugando){
+        parClaveCliente.second->agregarMensajeAEnviar(NIVEL,&nivel);
+    }
 }

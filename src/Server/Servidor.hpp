@@ -55,7 +55,9 @@ class Servidor{
 		static void *escuchar_helper(void* ptr);
 
 
-	private:
+    void mandarNivelAClientes(nivel_t nivel);
+
+private:
 		map<int,string> mapaIDNombre;
 		Log* log;
 		AplicacionServidor* aplicacionServidor;

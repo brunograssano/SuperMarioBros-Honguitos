@@ -21,56 +21,34 @@ const int ALTO_NIVEL = 600;
 
 class Nivel{
 	public:
-
         Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
-
+        ~Nivel();
 		void inicializar();
-
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
         void agregarPozo(int posicionX,int tipoPozo);
 		void agregarPlataforma(Plataforma* unaPlataforma);
 		void agregarEnemigo(Enemigo* unEnemigo);
 		void agregarMoneda(Moneda* unaMoneda);
-
 		int obtenerMundo() const;
+		int tiempoRestante();
+		void iniciar();
 
-		int tiempoRestante(){
-		    return contador->tiempoRestante();
-		}
-        //todo: al cpp
-		void iniciar(){
-		    contador->iniciar();
-		}
-
-
-		/*
-         * Completará la información de los siguientes campos:
-         *
-         * mundo
-         * tiempoFaltante
-         * bloques[], tope
-         * enemigos[], tope
-         * monedas[], tope
-         * tuberias[], tope
-         */
-		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* ctx);
-
+        /* Completará la información de los siguientes campos:
+         * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
+		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* contexto);
         void actualizarModelo(map<int, Mario*> jugadores);
-
         bool todosEnLaMeta(map<int, Mario*> jugadores);
 		string obtenerDireccionFondoActual();
+        void terminar();
+        void completarInformacionNivel(nivel_t *nivel);
 
-		~Nivel();
-
-    void terminar();
-
-private:
+    private:
         void sacarEnemigosMuertos();
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
-
+        void resolverGanadores(map<int, Mario *> map);
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
         void inicializarPosicionesOcupadasPorBloques();
@@ -93,8 +71,6 @@ private:
         int tiempo;
         int cantidadMonedas;
         float puntoBanderaFin;
-
-    void resolverGanadores(map<int, Mario *> map);
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

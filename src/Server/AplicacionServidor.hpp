@@ -33,7 +33,7 @@ class AplicacionServidor{
 		}
 
 		void desconectarJugador(int idJugador);
-
+        nivel_t obtenerInfoNivel();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
 		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
@@ -44,6 +44,8 @@ class AplicacionServidor{
 		}
 
 	private:
+        void revisarSiMandarInfoNivel(int *cantidadNivelesRestantes);
+        void mandarInfoNivel();
 		Servidor* servidor;
 		Log* log;
 		Juego* juego;

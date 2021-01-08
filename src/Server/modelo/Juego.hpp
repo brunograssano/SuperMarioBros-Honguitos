@@ -17,25 +17,7 @@ class Mario;
 class Juego{
 
 	private:
-
-		void inicializar();
-
-		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla){
-
-            inicializar();
-			for(int i = 0; i < cantJugadores; i++){
-				jugadores[i] = new Mario(i);
-			}
-
-			niveles = std::move(nivelesLector);
-
-			for (auto const& nivel : niveles) {
-				nivel->inicializar();
-			}
-
-            camara = new Camara(alto_pantalla, ancho_pantalla);
-            hanGanado = false;
-		}
+		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla);
         void avanzarNivel();
 
         Camara* camara;
@@ -56,7 +38,7 @@ public:
 
 		void iniciar();
 
-        bool ganaron();
+        bool ganaron() const;
         bool perdieron();
         bool hayConectados();
 
@@ -68,6 +50,9 @@ public:
 
         info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador);
         info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
+        nivel_t serializarNivel();
+
+    int cantidadDeNiveles();
 };
 
 

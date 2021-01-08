@@ -23,7 +23,7 @@ const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
 const int MAX_NOMBRE_SONIDO = 15;
-const int MAX_BLOQUES=100,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 10,MAX_POZOS = 10;
+const int MAX_SORPRESAS=15,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 30,MAX_POZOS = 30, MAX_LADRILLOS = 400;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
@@ -138,7 +138,6 @@ typedef struct actualizacion_cantidad_jugadores{
 
 #define RONDA 'R'
 typedef struct ronda{
-	uint8_t mundo;
 	uint8_t topeBloques;
     uint8_t topeEnemigos;
 	uint8_t topeMonedas;
@@ -147,20 +146,19 @@ typedef struct ronda{
 	bool perdieron;
 	unsigned short posXCamara;
 	unsigned short tiempoFaltante;
-	bloque_t bloques[MAX_BLOQUES];
+	bloque_t bloques[MAX_SORPRESAS];
 	enemigo_t enemigos[MAX_ENEMIGOS];
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
-	tuberia_t tuberias[MAX_TUBERIAS];
-	//pozo_t pozos[MAX_POZOS];
 }info_ronda_t;
 
 #define NIVEL 'N'
 typedef struct nivel{
-    uint8_t topeBloques;
+    uint8_t mundo;
+    short topeBloques;
     uint8_t topePozos;
-    uint8_t topeTuberia;
-    bloque_t bloques[MAX_BLOQUES]; //definir contstantes (van a venir todos los bloques ladrillo/tuberias de un nivel)
+    uint8_t topeTuberias;
+    bloque_t bloques[MAX_LADRILLOS]; //definir contstantes (van a venir todos los bloques ladrillo/tuberias de un nivel)
     tuberia_t tuberias[MAX_TUBERIAS];
     pozo_t pozos[MAX_POZOS];
     //informacion de los puntos para mostrar en la pantalla del medio?

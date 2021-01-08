@@ -1,11 +1,23 @@
 #include "Juego.hpp"
-
 #include <utility>
-
 
 Juego* Juego::instanciaJuego = nullptr;
 
-void Juego::inicializar() {} //todo: ¿?
+Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla) {
+    for(int i = 0; i < cantJugadores; i++){
+        jugadores[i] = new Mario(i);
+    }
+
+    niveles = std::move(nivelesLector);
+
+    for (auto const& nivel : niveles) {
+        nivel->inicializar();
+    }
+
+    camara = new Camara(alto_pantalla, ancho_pantalla);
+    hanGanado = false;
+}
+
 
 Juego* Juego::getInstance(){
 	return instanciaJuego;
@@ -95,7 +107,7 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     }
 }
 
-bool Juego::ganaron() {
+bool Juego::ganaron() const {
     return hanGanado;
 }
 
@@ -156,8 +168,14 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
     if(!niveles.empty())
         niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, camara);
     return info_ronda;
+}
 
-
+nivel_t Juego::serializarNivel(){
+    nivel_t nivel;
+    memset(&nivel,0,sizeof(nivel_t));
+    if(!niveles.empty())
+        niveles.front()->completarInformacionNivel(&nivel);
+    return nivel;
 }
 
 bool Juego::hayConectados() {
@@ -183,4 +201,8 @@ Juego::~Juego(){
     jugadores.clear();
     niveles.clear();
     delete camara;
+}
+
+int Juego::cantidadDeNiveles() {
+    return niveles.size();
 }

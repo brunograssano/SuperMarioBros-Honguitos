@@ -6,6 +6,7 @@
 #include <string>
 #include "BotonConTexto.hpp"
 #include "../../../Utils/Utils.hpp"
+#include "EstadoVentana.hpp"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ class VentanaInicio{
 		~VentanaInicio();
 	private:
 
+        EstadoVentana* estadoVentana;
 		bool ingresoIncorrectoCredenciales;
 		string errorDeIngreso;
 		bool salaLlena;
@@ -33,8 +35,7 @@ class VentanaInicio{
 		actualizacion_cantidad_jugadores_t informacionJugadoresConectados;
 		credencial_t credenciales;
 
-		SDL_Texture* texturaTextoUsuario = nullptr;
-		SDL_Texture* texturaTextoContrasenia = nullptr;
+
 		SDL_Texture* fondoPantalla = nullptr;
 
 		TTF_Font* fuente;
@@ -47,15 +48,9 @@ class VentanaInicio{
 
 		bool estaConectado(string nombre);
 		void imprimirMensajeDesconexion();
+        void imprimirErrorIngreso();
 		void ponerLosMarios();
 		SDL_Texture* texturasMarios;
-
-		bool manejarEntradaUsuario(SDL_Event evento,bool* terminar,string* textoIngresadoUsuario,string* textoIngresadoConstrasenia,string** entradaUsuario);
-		void manejarEntradaContrasenia();
-
-		SDL_Texture* cargarTextura(std::string direccion, SDL_Renderer* renderizador);
-		SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador);
-
 
 };
 

@@ -1,6 +1,7 @@
 #include "BotonConTexto.hpp"
 #include "../../../Utils/log/Log.hpp"
 #include "../ManejadorSDL.hpp"
+#define ANCHO_MAXIMO_TEXTO 270
 
 SDL_Texture* BotonConTexto::cargoTextura(string texto){
 	Log* log = Log::getInstance();
@@ -86,7 +87,15 @@ void BotonConTexto::mostrarse(){
 	renderizar(rectangulo.x + 5,rectangulo.y + rectangulo.y *0.05 ,rectangulo.h * 0.7,rectangulo.w * 0.9,texturaTexto,renderer);
 }
 
-void BotonConTexto::mostrarseCambiandoAncho(int nuevoAncho){
+void BotonConTexto::mostrarseCambiandoAncho(){
+    int nuevoAncho = texto.length()*10;
+    if(texto.empty()){
+        nuevoAncho = 30;
+    }
+
+    if(nuevoAncho>ANCHO_MAXIMO_TEXTO){
+        nuevoAncho = ANCHO_MAXIMO_TEXTO;
+    }
 
 	if(clickeado){
 		SDL_SetRenderDrawColor(renderer, 50, 65, 93, 0xFF );

@@ -17,7 +17,13 @@ SDL_Window* crearVentana(const char *titulo, int alto, int ancho);
 
 void cargarIcono(SDL_Window* ventana);
 
-SDL_Texture* cargoTextura(const string& texto, SDL_Color color,SDL_Renderer* renderer,TTF_Font* fuente);
+TTF_Font* cargarFuente(const string& direccion,int tamanio);
+
+SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente);
+
+SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizador);
+
+SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador);
 
 void destructorDeTexturas(SDL_Texture* textura);
 

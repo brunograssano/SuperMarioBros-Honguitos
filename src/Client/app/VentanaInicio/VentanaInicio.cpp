@@ -117,8 +117,6 @@ void VentanaInicio::obtenerEntrada(){
 
 		SDL_RenderPresent( this->renderer );
 	}
-    delete(this->estadoVentana);
-    estadoVentana = new EstadoEspera(renderer,fondoPantalla,fuente);
 	SDL_StopTextInput();
 	const char* punteroTextoIngresadoUsuario = textoIngresadoUsuario.c_str();
 	const char* punteroTextoIngresadoContrasenia = textoIngresadoContrasenia.c_str();
@@ -150,6 +148,9 @@ void VentanaInicio::imprimirMensajeError(){
 }
 
 void VentanaInicio::imprimirMensajeEspera(){
+    delete(this->estadoVentana);
+    estadoVentana = new EstadoEspera(renderer,fondoPantalla,fuente);
+
 	SDL_Event evento;
 	while( SDL_PollEvent( &evento ) != 0 ){
 		if( evento.type == SDL_QUIT ){

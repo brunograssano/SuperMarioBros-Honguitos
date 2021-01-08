@@ -6,6 +6,7 @@
 #include "EnviadorInfoPartida.hpp"
 #include "EnviadorCantidadConexion.hpp"
 #include "EnviadorSonido.hpp"
+#include "EnviadorNivel.hpp"
 
 EnviadorConexionCliente::EnviadorConexionCliente(int socket,bool* terminoElJuego) {
     this->terminoJuego = terminoElJuego;
@@ -15,6 +16,7 @@ EnviadorConexionCliente::EnviadorConexionCliente(int socket,bool* terminoElJuego
     enviadores[PARTIDA] = new EnviadorInfoPartida(socket);
     enviadores[ACTUALIZACION_JUGADORES] = new EnviadorCantidadConexion(socket);
     enviadores[SONIDO] = new EnviadorSonido(socket);
+    enviadores[NIVEL] = new EnviadorNivel(socket);
 }
 
 void EnviadorConexionCliente::enviar() {

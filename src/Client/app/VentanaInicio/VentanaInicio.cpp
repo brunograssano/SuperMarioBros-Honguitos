@@ -54,7 +54,6 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 		cajaTextoContrasenia->ocultaTexto();
 	}
 	texturasMarios = intentarCarga("Textura de colores mario", "resources/Imagenes/Personajes/ColoresMarios.png", renderer);
-	string errorDeIngreso = string(" "); //evita comportamiento indeterminado.
 }
 
 void VentanaInicio::actualizarJugadores(actualizacion_cantidad_jugadores_t actualizacion){

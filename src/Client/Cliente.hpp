@@ -42,7 +42,9 @@ class Cliente{
 		static void* escuchar_helper(void* ptr);
 		static void* enviar_helper(void* ptr);
 
-	private:
+    void recibirInformacionNivel(nivel_t nivel);
+
+private:
         static void esperar(const bool *condicionAEsperar);
 		void cerradoVentanaInicio() const;
 		void esperarAQueEmpieceElJuego();

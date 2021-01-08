@@ -1,5 +1,5 @@
 #include "GameLoop.hpp"
-#include "../Utils/Contador.hpp"
+#include "reproductorDeMusica/ReproductorMusica.hpp"
 
 GameLoop::GameLoop(){
 	salir = false;
@@ -22,7 +22,7 @@ void GameLoop::gameLoop() {
 	App *aplicacion = App::getInstance();
 	SDL_Event event;
 	unsigned int microSegundosEspera = 11000;
-	Contador* contador = new Contador(microSegundosEspera, USEGUNDOS);
+	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
 	while (!salir) {
 		contador->iniciar();
 		while (SDL_PollEvent(&event)) {

@@ -32,6 +32,8 @@ class JuegoCliente{
 		bool perdieronElJuego() const;
 
 
+    void agregarNivel(nivel_t nivel);
+
 private:
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;

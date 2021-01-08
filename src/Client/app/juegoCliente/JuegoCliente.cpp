@@ -1,8 +1,6 @@
 #include "JuegoCliente.hpp"
 
-/* para evitar el delay por renderizar cosas viejas y no nuevas */
-#define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20
-
+#define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20 /* para evitar el delay por renderizar cosas viejas y no nuevas */
 
 JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio){
 	for(int i = 0; i<cantidadJugadores;i++){
@@ -17,7 +15,6 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->perdieron = false;
 }
 
-
 bool JuegoCliente::ganaronElJuego() const{
 	return this->ganaron;
 }
@@ -25,7 +22,6 @@ bool JuegoCliente::ganaronElJuego() const{
 bool JuegoCliente::perdieronElJuego() const{
 	return this->perdieron;
 }
-
 
 void JuegoCliente::agregarRonda(info_ronda_t ronda){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -115,4 +111,8 @@ int JuegoCliente::obtenerMundoActual() const{
 
 list<tuberia_t> JuegoCliente::obtenerTuberias() {
     return tuberias;
+}
+
+void JuegoCliente::agregarNivel(nivel_t nivel) {
+// TODO quedarse con lo que venga
 }

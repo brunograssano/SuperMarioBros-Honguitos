@@ -1,5 +1,6 @@
 #include "AplicacionCliente.hpp"
-
+#include "../../Client/reproductorDeMusica/ReproductorMusica.hpp"
+#include "ManejadorSDL.hpp"
 #include <list>
 
 App* App::aplicacion = nullptr;
@@ -17,17 +18,44 @@ App* App::getInstance(){
 		return aplicacion;
 }
 
-void App::inicializarSDL(Log* log){
-	ventanaAplicacion = SDL_CreateWindow( "Super Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho_pantalla, alto_pantalla, SDL_WINDOW_SHOWN );
-	if( ventanaAplicacion == nullptr ){
-		log->huboUnErrorSDL("No se pudo crear una ventana de SDL", SDL_GetError());
-	}
+App::App(info_partida_t informacion, Cliente *cliente) {
+    Log* log = Log::getInstance();
+    this->cliente = cliente;
 
-	renderizador = SDL_CreateRenderer( ventanaAplicacion, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-	if( renderizador == nullptr ){
-		log->huboUnErrorSDL("No se pudo crear un renderizador de SDL", SDL_GetError());
-	}
+    ancho_pantalla = informacion.anchoVentana;
+    alto_pantalla = informacion.altoVentana;
+    inicializarSDL();
 
+    cargadorTexturas = new CargadorTexturas(renderizador);
+
+    for(int i=0; i<informacion.cantidadFondosNiveles; i++){
+        //*Traerme el vector de mundos*// // TODO QUE SIGNIFICABA ESTO?
+        this->direccionesNiveles[informacion.mundo+i] = string(informacion.direccionesFondoNiveles[i]);
+    }
+
+    cargadorTexturas->cargarTexturasNiveles(direccionesNiveles, renderizador, informacion.mundo);
+
+    rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
+
+    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio);
+
+    sePusoMusicaInicio = false;
+    sonoSalto = false;
+    terminoElJuego = false;
+    comenzoElJuego = false;
+    errorServidor = false;
+    estaReproduciendoMusicaGanadores = false;
+
+    bool juegoInicializadoCorrectamente = true; // TODO SACAR ESTO
+    dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
+
+    log->mostrarMensajeDeInfo("Inicio del juego");
+
+}
+
+void App::inicializarSDL(){
+    ventanaAplicacion = crearVentana("Super Mario Bros",alto_pantalla,ancho_pantalla);
+    renderizador = crearRenderer(ventanaAplicacion);
     cargarIcono(ventanaAplicacion);
 }
 
@@ -136,3 +164,9 @@ App::~App(){
 	delete cargadorTexturas;
 	delete ReproductorMusica::getInstance();
 }
+
+void App::agregarNivel(nivel_t nivel) {
+    juegoCliente->agregarNivel(nivel);
+    // TODO logica para que se muestren las pantallas intermedias?
+}
+

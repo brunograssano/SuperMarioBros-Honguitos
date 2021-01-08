@@ -182,3 +182,9 @@ void *Cliente::escuchar_helper(void *ptr) {
     ((EscuchadorCliente*) ptr)->escuchar();
     return nullptr;
 }
+
+void Cliente::recibirInformacionNivel(nivel_t nivel) {
+    esperar(&cargoLaAplicacion);
+    App* aplicacion = App::getInstance();
+    aplicacion->agregarNivel(nivel);
+}

@@ -13,8 +13,8 @@ class GameLoop{
 		GameLoop();
 		~GameLoop(){};
 
-		bool inicializarAplicacion(info_partida_t informacion,Cliente* cliente);
-		void seMurioElServer();
+		static bool inicializarAplicacion(info_partida_t informacion,Cliente* cliente);
+		static void seMurioElServer();
 		void gameLoop();
 
 	private:

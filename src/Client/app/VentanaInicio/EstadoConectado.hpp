@@ -13,6 +13,7 @@ class EstadoConectado: public EstadoVentana {
     public:
         EstadoConectado(SDL_Renderer* renderer,SDL_Texture* fondoPantalla,TTF_Font* fuente,BotonConTexto* botonEnviar,BotonConTexto* cajaTextoUsuario,BotonConTexto* cajaTextoContrasenia);
         void mostrarse(unsigned short jugadoresConectados, unsigned short jugadoresTotales) override;
+        ~EstadoConectado();
 
     private:
         SDL_Renderer* renderer;

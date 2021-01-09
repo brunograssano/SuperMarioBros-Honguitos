@@ -51,7 +51,11 @@ void EstadoConectado::mostrarse(unsigned short jugadoresConectados, unsigned sho
     if(texturaCantidadJugadores != nullptr ){
         renderizar(380,320,14,250,texturaCantidadJugadores,renderer);
     }
+
+    destructorDeTexturas(texturaCantidadJugadores);
+}
+
+EstadoConectado::~EstadoConectado() {
     destructorDeTexturas(texturaTextoUsuario);
     destructorDeTexturas(texturaTextoContrasenia);
-    destructorDeTexturas(texturaCantidadJugadores);
 }

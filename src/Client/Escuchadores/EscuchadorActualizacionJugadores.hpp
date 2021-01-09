@@ -10,8 +10,6 @@ class EscuchadorActualizacionJugadores: public Escuchador{
 
 	public:
 		EscuchadorActualizacionJugadores(int socketCliente, Cliente* cliente);
-		~EscuchadorActualizacionJugadores();
-		void escuchar();
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

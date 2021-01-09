@@ -16,7 +16,6 @@ class EscuchadorRonda: public Escuchador{
 
 	public:
 		EscuchadorRonda(int socketCliente, Cliente* cliente);
-		virtual ~EscuchadorRonda();
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

@@ -20,7 +20,3 @@ void EscuchadorVerificacionCredenciales::casoSocketCerrado(){
 void EscuchadorVerificacionCredenciales::casoExitoso(){
 	this->cliente->recibirVerificacionCredenciales(verificacion);
 }
-
-EscuchadorVerificacionCredenciales::~EscuchadorVerificacionCredenciales(){
-
-}

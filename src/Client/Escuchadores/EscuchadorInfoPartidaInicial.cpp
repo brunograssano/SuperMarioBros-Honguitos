@@ -41,7 +41,3 @@ bool EscuchadorInfoPartidaInicial::recibioInformacionPartidaValida(){
 
 	return esValidaInfoPartida;
 }
-
-EscuchadorInfoPartidaInicial::~EscuchadorInfoPartidaInicial(){
-}
-

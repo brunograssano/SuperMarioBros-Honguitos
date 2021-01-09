@@ -8,8 +8,7 @@
 
 class EnviadorRonda:public Enviador{
 	public:
-		EnviadorRonda(int socket);
-		~EnviadorRonda(){};
+		explicit EnviadorRonda(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 

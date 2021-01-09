@@ -13,15 +13,13 @@ class EscuchadorLog : public Escuchador{
 
 	public:
 
-		EscuchadorLog(int socket);
-
-		void escuchar();
+		explicit EscuchadorLog(int socket);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 
 	private:
-		mensaje_log_t conjuntoMensajeLog;
+		mensaje_log_t conjuntoMensajeLog{};
 };
 
 

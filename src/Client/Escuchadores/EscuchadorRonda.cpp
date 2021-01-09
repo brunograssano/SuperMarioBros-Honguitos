@@ -73,5 +73,3 @@ void EscuchadorRonda::casoExitoso(){
 		cliente->recibirInformacionRonda(info_ronda);
 	}
 }
-
-EscuchadorRonda::~EscuchadorRonda()= default;

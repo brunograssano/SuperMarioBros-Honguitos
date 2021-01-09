@@ -11,15 +11,12 @@ using namespace std;
 class EnviadorMensajeLog:public Enviador{
 
 	public:
-		EnviadorMensajeLog(int socket);
-		~EnviadorMensajeLog(){};
+		explicit EnviadorMensajeLog(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 
 	private:
 		queue<mensaje_log_t> mensajesLog;
-
-
 };
 
 

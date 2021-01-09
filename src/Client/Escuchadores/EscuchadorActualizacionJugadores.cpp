@@ -52,7 +52,3 @@ void EscuchadorActualizacionJugadores::casoExitoso(){
 		this->cliente->recibirInformacionActualizacion(actualizacion);
 	}
 }
-
-EscuchadorActualizacionJugadores::~EscuchadorActualizacionJugadores(){
-
-}

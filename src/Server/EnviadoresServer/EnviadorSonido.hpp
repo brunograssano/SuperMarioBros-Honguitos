@@ -8,7 +8,6 @@
 class EnviadorSonido : public Enviador{
     public:
         explicit EnviadorSonido(int socket);
-        ~EnviadorSonido() override= default;
         void enviar()override;
         void dejarInformacion(void* informacion)override;
 

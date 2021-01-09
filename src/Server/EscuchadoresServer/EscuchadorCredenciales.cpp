@@ -28,7 +28,3 @@ void EscuchadorCredenciales::casoExitoso(){
 
 	conexionCliente->recibirCredencial(nombre, contrasenia);
 }
-
-EscuchadorCredenciales::~EscuchadorCredenciales(){
-
-}

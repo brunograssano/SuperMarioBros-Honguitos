@@ -69,6 +69,9 @@ class Mario{
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;
+
+		//todo: sólo para probar, cambiarlo por un Contador*
+        int ciclos = 0;
 };
 
 

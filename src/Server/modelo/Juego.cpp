@@ -98,9 +98,6 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
         Disparo* disparo = jugador->dispararFuego();
         niveles.front()->aparecerDisparo(disparo);
     }
-    if(entradaUsuario.F){ // todo: esto se va
-        jugador->hacerseDeFuego();
-    }
 }
 
 bool Juego::ganaron() {

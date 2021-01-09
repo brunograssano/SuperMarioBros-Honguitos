@@ -30,12 +30,12 @@ void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoClien
 	SDL_RenderClear( renderizador );
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, nullptr);
 
-	dibujarEnemigos(rectanguloCamara,juegoCliente);
-	dibujarPlataformas(rectanguloCamara,juegoCliente);
-	dibujarMonedas(rectanguloCamara,juegoCliente);
-	dibujarTuberias(rectanguloCamara,juegoCliente);
-    dibujarEfectos(rectanguloCamara,juegoCliente);
-    dibujarMarios(rectanguloCamara,juegoCliente);
+	dibujarEnemigos(rectanguloCamara, juegoCliente);
+	dibujarPlataformas(rectanguloCamara, juegoCliente);
+	dibujarMonedas(rectanguloCamara, juegoCliente);
+	dibujarTuberias(rectanguloCamara, juegoCliente);
+    dibujarEfectos(rectanguloCamara, juegoCliente);
+    dibujarMarios(rectanguloCamara, juegoCliente);
 	dibujarTexto(juegoCliente);
 
 	SDL_RenderPresent( renderizador );
@@ -192,10 +192,10 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
     list<efecto_t> efectos = juegoCliente->obtenerEfectos();
     SDL_Texture* texturaBolaDeFuego = cargadorTexturas->obtenerTextura("BolaDeFuego");
     for (auto const& efecto : efectos) {
-        SDL_Rect recorteEfecto = {0, 0, 10, 10}; //todo: calibrar
+        SDL_Rect recorteEfecto = {0, 0, 256, 256}; //todo: calibrar
         SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
                                      alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - efecto.posY,
-                                      recorteEfecto.h, recorteEfecto.w};
+                                      20, 20};
         SDL_RenderCopy( renderizador, texturaBolaDeFuego, &recorteEfecto, &rectanguloEfecto);
     }
 }

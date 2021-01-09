@@ -1,8 +1,11 @@
 #include "BolaDeFuego.hpp"
 
-BolaDeFuego::BolaDeFuego(Posicion posicionInicial) {
+BolaDeFuego::BolaDeFuego(PosicionFija posicionInicial, int direccion, float velocidadDeInercia) {
     posicion = new PosicionMovil(posicionInicial.obtenerPosX(), posicionInicial.obtenerPosY());
     sprite = new SpriteBolaDeFuego();
+    velocidadX = direccion==DERECHA?2.6:-2.6;
+    velocidadX += velocidadDeInercia;
+    velocidadY = 0.4;
 }
 
 bool BolaDeFuego::debeDesaparecer() {
@@ -12,8 +15,8 @@ bool BolaDeFuego::debeDesaparecer() {
 
 void BolaDeFuego::actualizar() {
     //todo: calibrar
-    posicion->moverHorizontal(0.5);
-    //posicion->moverVertical(-1);
+    posicion->moverHorizontal(velocidadX);
+    posicion->moverVertical(-velocidadY);
 }
 
 BolaDeFuego::~BolaDeFuego() {

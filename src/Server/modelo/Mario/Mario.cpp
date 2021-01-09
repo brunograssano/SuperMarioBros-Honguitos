@@ -103,6 +103,7 @@ void Mario::actualizarPosicion(){
 		this->movimiento->setVelocidadY(0);
 	}
 	spriteMario->actualizarSprite(this);
+	ciclos++; //todo: Sacar. Sólo testing
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
@@ -142,8 +143,14 @@ void Mario::hacerseDeFuego() {
 }
 
 Disparo* Mario::dispararFuego() {
-    PosicionFija posicionManosMario(this->obtenerPosicionX(), this->obtenerPosicionY()+20/*todo: ajustar*/);
-    return modificador->dispararFuego(posicionManosMario);
+    Posicion posManos = spriteMario->posicionManos();
+    PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),
+                                    obtenerPosicionY() + posManos.obtenerPosY());
+    if(ciclos >= 100){ //todo: Cambiar la lógica.
+        ciclos = 0;
+        return modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
+    }
+    return new Chispa(posicionManosMario); //todo: También cambiar la lógica.
 }
 
 Mario::~Mario(){

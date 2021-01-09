@@ -52,3 +52,7 @@ void MovimientoHorizontal::mover(PosicionMovil* posicion, Terreno* terreno){
 		velocidadX = 0;
 	}
 }
+
+float MovimientoHorizontal::obtenerVelocidadXActual() {
+    return this->velocidadX;
+}

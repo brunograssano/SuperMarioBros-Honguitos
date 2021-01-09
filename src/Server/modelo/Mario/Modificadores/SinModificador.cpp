@@ -6,7 +6,7 @@ ModificadorMario *SinModificador::perderVida(VidaMario *vidaMario) {
     return new SinModificador();
 }
 
-Disparo *SinModificador::dispararFuego(Posicion posicionManosMario) {
-    return new Chispa(posicionManosMario);
+Disparo *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
+    return new BolaDeFuego(posicionManosMario, direccion, velocidadDeMario);
+    //return new Chispa(posicionManosMario); //todo
 }
-

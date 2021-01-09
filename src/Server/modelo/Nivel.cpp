@@ -303,6 +303,10 @@ Nivel::~Nivel (){
     for(const auto& enemigo:enemigos){
         delete enemigo;
     }
+    for(const auto& disparo:disparos){
+        delete disparo;
+    }
+    disparos.clear();
     plataformas.clear();
     enemigos.clear();
     monedas.clear();

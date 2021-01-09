@@ -46,3 +46,7 @@ MovimientoMario::~MovimientoMario(){
 	delete movimientoY;
 	delete terrenoActual;
 }
+
+float MovimientoMario::obtenerVelocidadXActual() {
+    return movimientoX->obtenerVelocidadXActual();
+}

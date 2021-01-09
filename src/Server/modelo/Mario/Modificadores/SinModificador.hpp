@@ -9,9 +9,8 @@
 
 class SinModificador : public ModificadorMario{
     public:
-        Disparo* dispararFuego(Posicion posicionManosMario)override;
+        Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
-
 };
 
 

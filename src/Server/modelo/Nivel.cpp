@@ -299,7 +299,7 @@ Nivel::~Nivel (){
     }
     for(const auto& moneda:monedas){
         delete moneda;
-     }
+    }
     for(const auto& enemigo:enemigos){
         delete enemigo;
     }

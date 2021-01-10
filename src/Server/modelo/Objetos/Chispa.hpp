@@ -6,6 +6,7 @@
 #include "src/Server/sprites/SpriteChispa.hpp"
 
 class Chispa : public Disparo{
+    const int CICLOS_PARA_DESAPARECER = 20;
     public:
         explicit Chispa(Posicion posicionInicial);
         void actualizar() override;
@@ -15,6 +16,7 @@ class Chispa : public Disparo{
 
         bool debeDesaparecer() override;
     private:
+        int ciclos = 0;
         PosicionFija* posicion;
         Sprite* sprite;
 };

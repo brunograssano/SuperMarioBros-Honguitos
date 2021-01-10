@@ -11,6 +11,7 @@ class SinModificador : public ModificadorMario{
     public:
         Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
+        void actualizar()override;
 };
 
 

@@ -2,14 +2,17 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_RECORTEBOLADEFUEGO_HPP
 
 #include <SDL2/SDL.h>
+#include "src/Client/app/juegoCliente/Recortes/Recorte.hpp"
 
-class RecorteBolaDeFuego {
+class RecorteBolaDeFuego : public Recorte{
     static const int CANTIDAD_DE_RECORTES = 4;
     public:
         RecorteBolaDeFuego();
-        SDL_Rect obtenerRecorte(int recorte);
+        SDL_Rect obtenerRecorte(int recorte) override;
+        int obtenerAltura() override;
+        int obtenerAnchura()override;
     private:
-        SDL_Rect estadosPosibles[CANTIDAD_DE_RECORTES];
+        SDL_Rect estadosPosibles[CANTIDAD_DE_RECORTES]{};
 
 };
 

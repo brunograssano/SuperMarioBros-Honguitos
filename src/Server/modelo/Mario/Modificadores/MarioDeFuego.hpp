@@ -6,10 +6,15 @@
 #include "src/Server/modelo/Objetos/Disparo.hpp"
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
 class MarioDeFuego : public ModificadorMario{
+    const int MAX_CICLOS_PARA_DISPARAR = 70;
     public:
         Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
+        void actualizar()override;
 
+    private:
+        int ciclosDisparo = 0;
+        bool yaPuedeDisparar();
 };
 
 

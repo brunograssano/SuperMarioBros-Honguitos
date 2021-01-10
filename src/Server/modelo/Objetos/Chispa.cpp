@@ -1,23 +1,27 @@
 #include "Chispa.hpp"
 
 Chispa::Chispa(Posicion posicionInicial) {
-    posicion = new PosicionFija(posicionInicial.obtenerPosX(), posicionInicial.obtenerPosY());
+    int desfaseX = 20;
+    posicion = new PosicionFija(posicionInicial.obtenerPosX()+desfaseX, posicionInicial.obtenerPosY());
     sprite = new SpriteChispa();
 
 }
 
 bool Chispa::debeDesaparecer() {
-    return true;
+    return ciclos >= CICLOS_PARA_DESAPARECER;
 }
 
 Chispa::~Chispa() = default;
 
-void Chispa::actualizar() {}
+void Chispa::actualizar() {
+    ciclos++;
+    sprite->actualizarSprite();
+}
 
 efecto_t Chispa::serializar() {
     auto posX = (unsigned short ) posicion->obtenerPosX();
     auto posY = (unsigned short ) posicion->obtenerPosY();
-    return {posX, posY, CHISPA};
+    return {posX, posY, static_cast<uint8_t>(sprite->obtenerEstadoActual()), CHISPA};
 }
 
 int Chispa::obtenerPosicionX() {

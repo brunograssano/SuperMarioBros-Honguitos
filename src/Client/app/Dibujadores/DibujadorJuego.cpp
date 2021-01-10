@@ -18,7 +18,11 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
     this->recorteSpriteMoneda = new RecorteMoneda();
     this->recorteSpriteBloque = new RecorteBloque();
     this->recorteSpriteTuberia = new RecorteTuberia();
-    this->recorteSpriteBolaDeFuego = new RecorteBolaDeFuego();
+    recorteEfectos[BOLA_DE_FUEGO] = new RecorteBolaDeFuego();
+    clavesEfectos[BOLA_DE_FUEGO] = "BolaDeFuego";
+    recorteEfectos[CHISPA] = new RecorteChispa();
+    clavesEfectos[CHISPA] = "Chispa";
+
     colores[-1] = {150, 150 , 150, 255}; // Gris.
     colores[0] = {230, 30 , 044, 255}; // Rojo.
 	colores[1] = {69 , 230, 52 , 255}; // Verde.
@@ -144,13 +148,17 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 
 void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
     list<efecto_t> efectos = juegoCliente->obtenerEfectos();
-    SDL_Texture* texturaBolaDeFuego = cargadorTexturas->obtenerTextura("BolaDeFuego");
     for (auto const& efecto : efectos) {
-        SDL_Rect recorteEfecto = recorteSpriteBolaDeFuego->obtenerRecorte(efecto.numeroRecorte);
-        SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
-                                     alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - efecto.posY,
-                                     20, 20};
-        SDL_RenderCopy( renderizador, texturaBolaDeFuego, &recorteEfecto, &rectanguloEfecto);
+        if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA) {
+            SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipoDeEfecto]);
+            Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
+            SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
+            SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
+                                         alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) -
+                                         efecto.posY,
+                                         recorteEfecto->obtenerAnchura(), recorteEfecto->obtenerAltura()};
+            SDL_RenderCopy(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto);
+        }
     }
 }
 
@@ -199,5 +207,9 @@ DibujadorJuego::~DibujadorJuego(){
 	delete this->recorteSpriteTuberia;
 	delete this->recorteSpriteMoneda;
 	delete this->recorteSpriteBloque;
-	delete this->recorteSpriteBolaDeFuego;
+    for(auto& parClaveRecorte: recorteEfectos){
+        delete parClaveRecorte.second;
+    }
+    recorteEfectos.clear();
+    clavesEfectos.clear();
 }

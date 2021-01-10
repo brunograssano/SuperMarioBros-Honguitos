@@ -7,6 +7,7 @@ ModificadorMario *SinModificador::perderVida(VidaMario *vidaMario) {
 }
 
 Disparo *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
-    return new BolaDeFuego(posicionManosMario, direccion, velocidadDeMario);
-    //return new Chispa(posicionManosMario); //todo
+    return new Chispa(posicionManosMario);
 }
+
+void SinModificador::actualizar(){}

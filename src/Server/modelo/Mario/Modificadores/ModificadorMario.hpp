@@ -12,6 +12,7 @@ class ModificadorMario {
         virtual Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) = 0;
         virtual ModificadorMario* perderVida(VidaMario* vidaMario)=0;
         virtual ModificadorMario* hacerseDeFuego();
+        virtual void actualizar() = 0;
 };
 
 

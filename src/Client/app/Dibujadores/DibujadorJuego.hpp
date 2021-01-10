@@ -16,6 +16,7 @@ using namespace std;
 #include "../juegoCliente/RecorteMoneda.hpp"
 #include "../juegoCliente/RecorteBloque.hpp"
 #include "../juegoCliente/RecorteBolaDeFuego.hpp"
+#include "../juegoCliente/RecorteChispa.hpp"
 
 #include "Dibujador.hpp"
 #include "src/Client/app/juegoCliente/RecorteTuberia.hpp"
@@ -42,7 +43,9 @@ class DibujadorJuego : public Dibujador{
 		RecorteMoneda* recorteSpriteMoneda;
 		RecorteBloque* recorteSpriteBloque;
 		RecorteTuberia* recorteSpriteTuberia;
-		RecorteBolaDeFuego* recorteSpriteBolaDeFuego;
+
+		map<int, Recorte*> recorteEfectos;
+		map<int, string> clavesEfectos;
 
 		map<int, SDL_Color> colores;
 

@@ -9,7 +9,7 @@ BolaDeFuego::BolaDeFuego(PosicionFija posicionInicial, int direccion, float velo
 }
 
 bool BolaDeFuego::debeDesaparecer() {
-    return rebotes > 1 && posicion->obtenerPosY() <= sprite->obtenerRectanguloActual().h;
+    return rebotes > 1 && posicion->obtenerPosY() <= 0;
     // Cuando pasen x segundos o **>> choque contra algo <<** (tubería, bloque, enemigo, piso...)debería desaparecer ... diría.
 }
 
@@ -18,7 +18,7 @@ void BolaDeFuego::actualizar() {
     posicion->moverVertical(velocidadY);
     sprite->actualizarSprite();
     velocidadY += EFECTO_GRAVITACIONAL;
-    if(posicion->obtenerPosY() <= sprite->obtenerRectanguloActual().h && rebotes <= 1){
+    if(posicion->obtenerPosY() <= sprite->obtenerRectanguloActual().h && rebotes < 1){
         posicion->moverVertical(sprite->obtenerRectanguloActual().h-posicion->obtenerPosY());
         velocidadY = -velocidadY/1.3;
         velocidadY = velocidadY>3?3:velocidadY;

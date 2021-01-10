@@ -92,6 +92,7 @@ typedef struct pozo {
 typedef struct efecto{
     unsigned short posX;
     unsigned short posY;
+    uint8_t numeroRecorte;
     uint8_t tipoDeEfecto;
 }efecto_t;
 

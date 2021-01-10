@@ -10,13 +10,14 @@ BolaDeFuego::BolaDeFuego(PosicionFija posicionInicial, int direccion, float velo
 
 bool BolaDeFuego::debeDesaparecer() {
     // Cuando pasen x segundos o **>> choque contra algo <<** (tubería, bloque, enemigo, piso...)debería desaparecer ... diría.
-    return posicion->obtenerPosY() <= 0;
+    return posicion->obtenerPosY() <= 0; //todo: sumarle la altura de la bola de fuego. Que son 15 píxeles, pero ese número está del lado del cliente T.T
 }
 
 void BolaDeFuego::actualizar() {
-    //todo: calibrar
     posicion->moverHorizontal(velocidadX);
+    /* todo: Agregar gravedad. */
     posicion->moverVertical(-velocidadY);
+    sprite->actualizarSprite();
 }
 
 BolaDeFuego::~BolaDeFuego() {
@@ -27,7 +28,7 @@ BolaDeFuego::~BolaDeFuego() {
 efecto_t BolaDeFuego::serializar() {
     auto posX = (unsigned short ) posicion->obtenerPosX();
     auto posY = (unsigned short ) posicion->obtenerPosY();
-    return {posX, posY, BOLA_DE_FUEGO};
+    return {posX, posY, static_cast<uint8_t>(sprite->obtenerEstadoActual()), BOLA_DE_FUEGO};
 }
 
 int BolaDeFuego::obtenerPosicionX() {

@@ -8,18 +8,19 @@ const int LARGO_BLOQUE = 40;
 const int GOOMBA = 1, KOOPA = 2;
 
 DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
-	this->cargadorTexturas = cargadorTexturas;
-	this->renderizador = renderizador;
-	this->alto_pantalla = alto_pantalla;
-	this->ancho_pantalla = ancho_pantalla;
-	this->recorteSpriteMario = new RecorteMario();
-	this->recorteSpriteGoomba = new RecorteGoomba();
-	this->recorteSpriteKoopa = new RecorteKoopa();
-	this->recorteSpriteMoneda = new RecorteMoneda();
-	this->recorteSpriteBloque = new RecorteBloque();
+    this->cargadorTexturas = cargadorTexturas;
+    this->renderizador = renderizador;
+    this->alto_pantalla = alto_pantalla;
+    this->ancho_pantalla = ancho_pantalla;
+    this->recorteSpriteMario = new RecorteMario();
+    this->recorteSpriteGoomba = new RecorteGoomba();
+    this->recorteSpriteKoopa = new RecorteKoopa();
+    this->recorteSpriteMoneda = new RecorteMoneda();
+    this->recorteSpriteBloque = new RecorteBloque();
     this->recorteSpriteTuberia = new RecorteTuberia();
-	colores[-1] = {150, 150 , 150, 255}; // Gris.
-	colores[0] = {230, 30 , 044, 255}; // Rojo.
+    this->recorteSpriteBolaDeFuego = new RecorteBolaDeFuego();
+    colores[-1] = {150, 150 , 150, 255}; // Gris.
+    colores[0] = {230, 30 , 044, 255}; // Rojo.
 	colores[1] = {69 , 230, 52 , 255}; // Verde.
 	colores[2] = {179, 25 , 252, 255}; // Violeta.
 	colores[3] = {76 , 225, 252, 255}; // Celeste.
@@ -141,6 +142,18 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario, &rectanguloMario);
 }
 
+void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
+    list<efecto_t> efectos = juegoCliente->obtenerEfectos();
+    SDL_Texture* texturaBolaDeFuego = cargadorTexturas->obtenerTextura("BolaDeFuego");
+    for (auto const& efecto : efectos) {
+        SDL_Rect recorteEfecto = recorteSpriteBolaDeFuego->obtenerRecorte(efecto.numeroRecorte);
+        SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
+                                     alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - efecto.posY,
+                                     20, 20};
+        SDL_RenderCopy( renderizador, texturaBolaDeFuego, &recorteEfecto, &rectanguloEfecto);
+    }
+}
+
 void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 
@@ -186,17 +199,5 @@ DibujadorJuego::~DibujadorJuego(){
 	delete this->recorteSpriteTuberia;
 	delete this->recorteSpriteMoneda;
 	delete this->recorteSpriteBloque;
+	delete this->recorteSpriteBolaDeFuego;
 }
-
-void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
-    list<efecto_t> efectos = juegoCliente->obtenerEfectos();
-    SDL_Texture* texturaBolaDeFuego = cargadorTexturas->obtenerTextura("BolaDeFuego");
-    for (auto const& efecto : efectos) {
-        SDL_Rect recorteEfecto = {0, 0, 256, 256}; //todo: calibrar
-        SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
-                                     alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - efecto.posY,
-                                      20, 20};
-        SDL_RenderCopy( renderizador, texturaBolaDeFuego, &recorteEfecto, &rectanguloEfecto);
-    }
-}
-

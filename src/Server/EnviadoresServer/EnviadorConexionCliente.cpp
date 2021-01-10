@@ -8,8 +8,8 @@
 #include "EnviadorSonido.hpp"
 #include "EnviadorNivel.hpp"
 
-EnviadorConexionCliente::EnviadorConexionCliente(int socket,bool* terminoElJuego) {
-    this->terminoJuego = terminoElJuego;
+EnviadorConexionCliente::EnviadorConexionCliente(int socket,ConexionCliente* cliente) {
+    this->cliente = cliente;
     enviadores[VERIFICACION] = new EnviadorEstadoCredencial(socket);
     enviadores[RONDA] = new EnviadorRonda(socket);
     enviadores[MENSAJE_LOG] = new EnviadorMensajeLog(socket);
@@ -22,7 +22,7 @@ EnviadorConexionCliente::EnviadorConexionCliente(int socket,bool* terminoElJuego
 void EnviadorConexionCliente::enviar() {
     char tipoMensaje;
     bool hayError = false;
-    while(!(*terminoJuego) && !hayError){
+    while(!cliente->terminoElJuego() && !hayError){
         if(!identificadoresMensajeAEnviar.empty()){
             tipoMensaje = identificadoresMensajeAEnviar.front();
             identificadoresMensajeAEnviar.pop();
@@ -33,7 +33,7 @@ void EnviadorConexionCliente::enviar() {
             }
         }
     }
-    (*terminoJuego) = true;
+    cliente->terminarElJuego();
 }
 
 

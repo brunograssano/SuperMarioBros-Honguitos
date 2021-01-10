@@ -6,16 +6,15 @@
 
 class EscuchadorConexionCliente {
     public:
-        EscuchadorConexionCliente(int socket,bool* terminoJuego,ConexionCliente* cliente,Servidor* servidor);
+        EscuchadorConexionCliente(int socket,ConexionCliente* cliente);
         ~EscuchadorConexionCliente();
         void escuchar();
-        void agregarEscuchadorEntrada(int IDjugador);
+        void agregarEscuchadorEntrada(int IDjugador,Servidor* servidor);
     private:
         Servidor* servidor;
         ConexionCliente* cliente;
         map<char,Escuchador*> escuchadores;
         int socket;
-        bool* terminoJuego;
         int idJugador;
 };
 

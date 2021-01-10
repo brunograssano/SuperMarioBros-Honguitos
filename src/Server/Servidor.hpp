@@ -41,7 +41,7 @@ class Servidor{
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
-		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador);
+		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,string contrasenia);
 		void ejecutar();
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminoElJuego();

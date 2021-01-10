@@ -28,15 +28,12 @@ void EscuchadorInfoPartidaInicial::casoExitoso(){
 bool EscuchadorInfoPartidaInicial::recibioInformacionPartidaValida(){
 	bool esValidaInfoPartida = true;
 
-	if(info_partida.mundo < 1){
-		esValidaInfoPartida = false;
-		error = string("El valor del mundo recibido es menor a 1");
-	}else if(info_partida.cantidadJugadores > 4 || info_partida.cantidadJugadores < 0){
+    if(info_partida.cantidadJugadores > 4 || info_partida.cantidadJugadores < 0){
 		esValidaInfoPartida = false;
 		error = string("La cantidad de jugadores recibida es menor a 1 o mayor a 4");
 	}else if(info_partida.idPropio > 3 || info_partida.idPropio < 0){
 		esValidaInfoPartida = false;
-		error = string("EL id propio recibido es menor a 0 o mayor a 3");
+		error = string("El id propio recibido es menor a 0 o mayor a 3");
 	}
 
 	return esValidaInfoPartida;

@@ -4,17 +4,18 @@
 #include <map>
 #include <queue>
 #include "src/Utils/Enviador.hpp"
+#include "../ConexionCliente.hpp"
 
 class EnviadorConexionCliente {
 
     public:
-        EnviadorConexionCliente(int socket,bool* terminoElJuego);
+        EnviadorConexionCliente(int socket,ConexionCliente* cliente);
         ~EnviadorConexionCliente();
         void enviar();
         void agregarMensajeAEnviar(char caracter,void* mensaje);
 
     private:
-        bool* terminoJuego;
+        ConexionCliente* cliente;
         queue<char> identificadoresMensajeAEnviar;
         map<char,Enviador*> enviadores;
 

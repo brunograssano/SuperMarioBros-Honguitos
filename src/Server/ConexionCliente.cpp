@@ -2,6 +2,8 @@
 
 #define SIN_JUGAR -1
 
+pthread_cond_t variableCondicionalConexionCliente=PTHREAD_COND_INITIALIZER;
+
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
 	this->servidor = servidor;
 	this->socket = socket;
@@ -13,8 +15,8 @@ ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/
 	terminoJuego = false;
 	recibioCredenciales = false;
 	idPropio = SIN_JUGAR;
-	escuchador = new EscuchadorConexionCliente(socket,&terminoJuego,this,servidor);
-    enviador = new EnviadorConexionCliente(socket,&terminoJuego);
+	escuchador = new EscuchadorConexionCliente(socket,this);
+    enviador = new EnviadorConexionCliente(socket,this);
 	this->informacionAMandar = informacionAMandar;
 }
 
@@ -25,13 +27,18 @@ void ConexionCliente::recibirCredencial(string posibleNombre, string posibleCont
 }
 
 void ConexionCliente::esperarCredenciales(){
+    pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
 	while(!recibioCredenciales && !terminoJuego){
 	}
 	recibioCredenciales = false;
 }
 
 void ConexionCliente::enviarActualizacionesDeRonda() const{
+    pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
 	while(!terminoJuego){
+        pthread_mutex_lock(&mutexServer);
+        pthread_cond_wait(&variableCondicionalConexionCliente, &mutexServer);
+        pthread_mutex_unlock(&mutexServer);
 	}
 }
 
@@ -48,7 +55,7 @@ void ConexionCliente::ejecutar(){
 	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, ConexionCliente::enviar_helper, enviador);
 	if(resultadoCreateEnviar != 0){
 		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del servidor al cliente: " + this->ip);
-		terminoJuego = true; // Muere el hilo de este cliente y el de escuchar, queda el cliente en la lista.
+        terminoJuego = true;
 		return;
 	}
 
@@ -75,12 +82,20 @@ void ConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
     enviador->agregarMensajeAEnviar(caracter,mensaje);
 }
 
-void ConexionCliente::terminoElJuego(){
+bool ConexionCliente::terminoElJuego(){
+    return terminoJuego;
+}
+
+void ConexionCliente::terminarElJuego(){
+    pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_lock(&mutexServer);
 	terminoJuego = true;
+    pthread_cond_signal(&variableCondicionalConexionCliente);
+    pthread_mutex_unlock(&mutexServer);
 }
 
 void ConexionCliente::agregarIDJuego(int IDJugador){
-    escuchador->agregarEscuchadorEntrada(IDJugador);
+    escuchador->agregarEscuchadorEntrada(IDJugador,servidor);
 	puedeJugar = true;
 	idPropio = IDJugador;
 }
@@ -109,14 +124,6 @@ ConexionCliente::~ConexionCliente(){
 	}
 }
 
-string ConexionCliente::obtenerContrasenia() {
-    return contrasenia;
-}
-
-string ConexionCliente::obtenerNombre() {
-    return nombre;
-}
-
 void *ConexionCliente::enviar_helper(void *ptr) {
     ((EnviadorConexionCliente*) ptr)->enviar();
     return nullptr;
@@ -134,4 +141,8 @@ void *ConexionCliente::escuchar_helper(void *ptr) {
 
 string ConexionCliente::obtenerIP() {
     return ip;
+}
+
+void ConexionCliente::desconectarse() {
+    servidor->agregarUsuarioDesconectado(this,idPropio,nombre,contrasenia);
 }

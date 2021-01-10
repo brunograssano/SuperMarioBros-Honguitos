@@ -12,6 +12,7 @@ using namespace std;
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
 
+class EnviadorConexionCliente;
 #include "EnviadoresServer/EnviadorConexionCliente.hpp"
 class EscuchadorConexionCliente;
 #include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
@@ -33,10 +34,10 @@ class ConexionCliente {
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
 		string obtenerIP();
-        string obtenerNombre();
-        string obtenerContrasenia();
-		void terminoElJuego();
+		void terminarElJuego();
+        bool terminoElJuego();
 
+        void desconectarse();
 
 private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
@@ -58,6 +59,7 @@ private:
 		string ip;
 
 		Servidor* servidor;
+
 };
 
 

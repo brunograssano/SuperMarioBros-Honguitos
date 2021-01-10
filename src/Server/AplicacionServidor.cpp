@@ -54,7 +54,6 @@ void AplicacionServidor::gameLoop(){
 	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
     juego->iniciar();
     int cantidadNivelesRestantes = juego->cantidadDeNiveles();
-    cout<<(cantidadNivelesRestantes)<<endl;
     mandarInfoNivel();
 	while(!terminoElJuego || juego->hayConectados()){
 	    contador->iniciar();

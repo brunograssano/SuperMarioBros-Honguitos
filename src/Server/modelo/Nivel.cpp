@@ -252,7 +252,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     ptrInfoRonda->topeMonedas = numeroMoneda;
     int numeroEfecto = 0;
     for(auto const& disparo : disparos){
-        if(deboAgregarlo(ctx, disparo->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, disparo->obtenerPosicionX()) &&
             numeroEfecto<MAX_EFECTOS){
             ptrInfoRonda->efectos[numeroEfecto] = disparo->serializar();
             numeroEfecto++;

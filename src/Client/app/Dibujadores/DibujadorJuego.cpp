@@ -157,7 +157,9 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
                                          alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) -
                                          efecto.posY,
                                          recorteEfecto->obtenerAnchura(), recorteEfecto->obtenerAltura()};
-            SDL_RenderCopy(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto);
+            SDL_RendererFlip flip = recorteEfecto->direccion(efecto.numeroRecorte) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL;
+            SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
+            //SDL_RenderCopy(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto);
         }
     }
 }

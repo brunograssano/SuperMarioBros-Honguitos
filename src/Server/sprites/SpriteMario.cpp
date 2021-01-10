@@ -380,7 +380,11 @@ void SpriteMario::actualizarSpriteMarioAgacharse() {
 }
 
 Posicion SpriteMario::posicionManos() {
-    return PosicionFija(estadosPosibles[this->estadoActual].w,this->estadosPosibles[estadoActual].h*3/2);
+    if(direccionMirada() == DERECHA){
+        return PosicionFija(estadosPosibles[this->estadoActual].w,this->estadosPosibles[estadoActual].h*3/2);
+    }else{
+        return PosicionFija(0,this->estadosPosibles[estadoActual].h*3/2);
+    }
 }
 
 int SpriteMario::direccionMirada() {

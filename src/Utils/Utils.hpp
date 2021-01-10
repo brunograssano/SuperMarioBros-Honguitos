@@ -87,6 +87,7 @@ typedef struct pozo {
 }pozo_t;
 
 
+#define NADA 0
 #define BOLA_DE_FUEGO 1
 #define CHISPA 2
 typedef struct efecto{

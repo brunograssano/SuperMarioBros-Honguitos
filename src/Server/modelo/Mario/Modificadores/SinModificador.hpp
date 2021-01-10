@@ -8,10 +8,15 @@
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 
 class SinModificador : public ModificadorMario{
+    const int MAX_CICLOS_PARA_CHISPEAR = 30;
     public:
         Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
         void actualizar()override;
+
+    private:
+        int ciclosChispa = 0;
+        bool yaPuedeChispear();
 };
 
 

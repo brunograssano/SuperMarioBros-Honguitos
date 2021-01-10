@@ -15,7 +15,7 @@ class Sprite{
 		virtual SDL_Rect obtenerRectanguloActual() = 0;
 		virtual ~Sprite(){};
 
-        int obtenerEstadoActual(){
+        virtual int obtenerEstadoActual(){
             return estadoActual;
         }
         virtual string direccionImagen(){

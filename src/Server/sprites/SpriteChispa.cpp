@@ -2,11 +2,11 @@
 
 #define ESTADO_INICIAL 0
 
-
-SpriteChispa::SpriteChispa(){
+SpriteChispa::SpriteChispa(int direccion){
     this->direccionTextura = "resources/Imagenes/Objetos/Chispa.png";
     this->ciclos = 0;
     this->estadoActual = ESTADO_INICIAL;
+    this->direccion = direccion;
 
     int corrimientoEnImagen = 0;
     for(auto & estadosPosible : estadosPosibles){
@@ -16,6 +16,7 @@ SpriteChispa::SpriteChispa(){
         estadosPosible.h = 22;
         corrimientoEnImagen+= 32;
     }
+
 }
 void SpriteChispa::cambiarSprite() {
     if(estadoActual == 3){
@@ -35,6 +36,14 @@ void SpriteChispa::actualizarSprite() {
 
 SDL_Rect SpriteChispa::obtenerRectanguloActual() {
     return estadosPosibles[estadoActual];
+}
+
+int SpriteChispa::obtenerEstadoActual() {
+    if(direccion == DERECHA){
+        return estadoActual;
+    }else{
+        return estadoActual + 4; //Implica que está mirando hacia la izquierda.
+    }
 }
 
 

@@ -1,10 +1,9 @@
 #include "Chispa.hpp"
 
-Chispa::Chispa(Posicion posicionInicial) {
-    int desfaseX = 20;
+Chispa::Chispa(Posicion posicionInicial, int direccion) {
+    int desfaseX = direccion==DERECHA?20:-60;
     posicion = new PosicionFija(posicionInicial.obtenerPosX()+desfaseX, posicionInicial.obtenerPosY());
-    sprite = new SpriteChispa();
-
+    sprite = new SpriteChispa(direccion);
 }
 
 bool Chispa::debeDesaparecer() {

@@ -4,11 +4,12 @@
 #include "src/Server/modelo/Objetos/Disparo.hpp"
 #include "src/Server/modelo/PosicionFija.hpp"
 #include "src/Server/sprites/SpriteChispa.hpp"
+#include "src/Utils/Constantes.hpp"
 
 class Chispa : public Disparo{
     const int CICLOS_PARA_DESAPARECER = 20;
     public:
-        explicit Chispa(Posicion posicionInicial);
+        explicit Chispa(Posicion posicionInicial, int direccion);
         void actualizar() override;
         efecto_t serializar() override;
         int obtenerPosicionX() override;

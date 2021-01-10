@@ -14,11 +14,10 @@ RecorteChispa::RecorteChispa() {
         estadosPosibles[i].h = ALTO_IMAGEN_PIXEL;
         corrimientoEnImagen+= PASO_PROXIMO_SPRITE;
     }
-
 }
 
 SDL_Rect RecorteChispa::obtenerRecorte(int recorte) {
-    return estadosPosibles[recorte];
+    return estadosPosibles[recorte<CANTIDAD_DE_RECORTES?recorte:recorte-CANTIDAD_DE_RECORTES];
 }
 
 int RecorteChispa::obtenerAltura() {
@@ -27,4 +26,8 @@ int RecorteChispa::obtenerAltura() {
 
 int RecorteChispa::obtenerAnchura() {
     return 64;
+}
+
+int RecorteChispa::direccion(int recorte){
+    return recorte<CANTIDAD_DE_RECORTES?DERECHA:IZQUIERDA;
 }

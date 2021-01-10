@@ -110,7 +110,7 @@ void App::actualizarServer(const Uint8 *keystate){
 			se_movio = true;
 		}
 
-		if(keystate[SDL_SCANCODE_F]){
+		if(keystate[SDL_SCANCODE_F]){ //todo: desaparece
 		    entradaUsuario.F = true;
 		    se_movio = true;
 		}

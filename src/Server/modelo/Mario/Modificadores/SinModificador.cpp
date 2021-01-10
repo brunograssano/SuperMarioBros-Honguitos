@@ -7,7 +7,21 @@ ModificadorMario *SinModificador::perderVida(VidaMario *vidaMario) {
 }
 
 Disparo *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
-    return new Chispa(posicionManosMario);
+    if(yaPuedeChispear()){
+        ciclosChispa = 0;
+        return new Chispa(posicionManosMario, direccion);
+    }else {
+        return new Nada();
+    }
 }
 
-void SinModificador::actualizar(){}
+void SinModificador::actualizar(){
+    ciclosChispa++;
+    if(ciclosChispa > MAX_CICLOS_PARA_CHISPEAR){
+        ciclosChispa = MAX_CICLOS_PARA_CHISPEAR;
+    }
+}
+
+bool SinModificador::yaPuedeChispear() {
+    return ciclosChispa == MAX_CICLOS_PARA_CHISPEAR;
+}

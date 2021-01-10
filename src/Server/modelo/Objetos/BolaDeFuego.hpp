@@ -10,7 +10,7 @@
 class BolaDeFuego : public Disparo{
     const float VELOCIDAD_X_INICIAL = 3.5;
     const float VELOCIDAD_Y_INICIAL = 0;
-    const float EFECTO_GRAVITACIONAL = -0.05;
+    const float EFECTO_GRAVITACIONAL = -0.1;
     public:
         explicit BolaDeFuego(PosicionFija posicionInicial, int direccion, float velocidadDeInercia);
 
@@ -25,6 +25,7 @@ class BolaDeFuego : public Disparo{
         Sprite* sprite;
         float velocidadX;
         float velocidadY;
+        int rebotes = 0;
 };
 
 

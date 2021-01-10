@@ -3,9 +3,9 @@
 BolaDeFuego::BolaDeFuego(PosicionFija posicionInicial, int direccion, float velocidadDeInercia) {
     posicion = new PosicionMovil(posicionInicial.obtenerPosX(), posicionInicial.obtenerPosY());
     sprite = new SpriteBolaDeFuego();
-    velocidadX = direccion==DERECHA?2.6:-2.6;
+    velocidadX = direccion==DERECHA?VELOCIDAD_X_INICIAL:-VELOCIDAD_X_INICIAL;
     velocidadX += velocidadDeInercia;
-    velocidadY = 0.4;
+    velocidadY = VELOCIDAD_Y_INICIAL;
 }
 
 bool BolaDeFuego::debeDesaparecer() {
@@ -15,9 +15,9 @@ bool BolaDeFuego::debeDesaparecer() {
 
 void BolaDeFuego::actualizar() {
     posicion->moverHorizontal(velocidadX);
-    /* todo: Agregar gravedad. */
-    posicion->moverVertical(-velocidadY);
+    posicion->moverVertical(velocidadY);
     sprite->actualizarSprite();
+    velocidadY += EFECTO_GRAVITACIONAL;
 }
 
 BolaDeFuego::~BolaDeFuego() {

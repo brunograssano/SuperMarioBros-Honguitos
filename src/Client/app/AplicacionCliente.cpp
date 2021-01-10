@@ -37,7 +37,7 @@ App::App(info_partida_t informacion, Cliente *cliente) {
 
     rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
-    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio);
+    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,ancho_pantalla);
 
     sePusoMusicaInicio = false;
     sonoSalto = false;

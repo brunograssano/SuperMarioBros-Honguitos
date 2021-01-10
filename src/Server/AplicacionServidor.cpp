@@ -25,8 +25,24 @@ info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
     return juego->obtenerInfoRonda(mapaIDNombre);
 }
 
+nivel_t AplicacionServidor::obtenerInfoNivel(){
+    return juego->serializarNivel();
+}
+
 void AplicacionServidor::iniciarJuego(){
 	comenzoElJuego = true;
+}
+
+void AplicacionServidor::mandarInfoNivel() {
+    nivel_t nivel = juego->serializarNivel();
+    servidor->mandarNivelAClientes(nivel);
+}
+
+void AplicacionServidor::revisarSiMandarInfoNivel(int* cantidadNivelesRestantes){
+    if((*cantidadNivelesRestantes)>juego->cantidadDeNiveles()){
+        (*cantidadNivelesRestantes) = juego->cantidadDeNiveles();
+        mandarInfoNivel();
+    }
 }
 
 void AplicacionServidor::gameLoop(){
@@ -37,6 +53,9 @@ void AplicacionServidor::gameLoop(){
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
 	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
     juego->iniciar();
+    int cantidadNivelesRestantes = juego->cantidadDeNiveles();
+    cout<<(cantidadNivelesRestantes)<<endl;
+    mandarInfoNivel();
 	while(!terminoElJuego || juego->hayConectados()){
 	    contador->iniciar();
 		if(!terminoElJuego){
@@ -50,6 +69,7 @@ void AplicacionServidor::gameLoop(){
 
 			terminoElJuego = juego->ganaron() || juego->perdieron();
 		}
+		revisarSiMandarInfoNivel(&cantidadNivelesRestantes);
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
 

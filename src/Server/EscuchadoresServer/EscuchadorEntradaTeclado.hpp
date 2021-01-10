@@ -14,7 +14,6 @@ class EscuchadorEntradaTeclado:public Escuchador{
 
 	public:
 		EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor);
-		void escuchar();
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

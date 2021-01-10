@@ -37,5 +37,3 @@ bool EscuchadorSonido::recibioMensajeValido() {
     }//Revisar que sea alguno de los validos
     return !ocurrioError;
 }
-
-EscuchadorSonido::~EscuchadorSonido() = default;

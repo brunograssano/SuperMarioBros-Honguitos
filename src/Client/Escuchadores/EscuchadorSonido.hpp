@@ -6,7 +6,6 @@
 class EscuchadorSonido : public Escuchador{
     public:
         explicit EscuchadorSonido(int socketCliente);
-        ~EscuchadorSonido() override;
         void casoError(int resultado)override;
         void casoSocketCerrado()override;
         void casoExitoso()override;
@@ -14,8 +13,7 @@ class EscuchadorSonido : public Escuchador{
     private:
         sonido_t sonido;
         string error;
-
-    bool recibioMensajeValido();
+        bool recibioMensajeValido();
 };
 
 

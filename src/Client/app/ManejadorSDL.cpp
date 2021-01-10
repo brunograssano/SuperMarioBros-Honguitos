@@ -45,6 +45,15 @@ void cargarIcono(SDL_Window* ventana){
 	}
 }
 
+TTF_Font* cargarFuente(const string& direccion,int tamanio){
+    Log* log = Log::getInstance();
+    TTF_Font* fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
+    if( fuente == NULL ) {
+        log->huboUnErrorSDL("No se pudo cargar la fuente", SDL_GetError());
+    }
+    return fuente;
+}
+
 SDL_Window* crearVentana(const char *titulo, int alto, int ancho){
     SDL_Window* ventanaAplicacion = SDL_CreateWindow( titulo, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ancho, alto, SDL_WINDOW_SHOWN );
     if( ventanaAplicacion == nullptr ){
@@ -53,7 +62,7 @@ SDL_Window* crearVentana(const char *titulo, int alto, int ancho){
     return ventanaAplicacion;
 }
 
-SDL_Texture* cargoTextura(const string& texto, SDL_Color color,SDL_Renderer* renderer,TTF_Font* fuente){
+SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente){
 	Log* log = Log::getInstance();
 	SDL_Texture* texturaACargar;
 	SDL_Surface* textSurface = TTF_RenderText_Solid( fuente, texto.c_str(), color );
@@ -70,6 +79,35 @@ SDL_Texture* cargoTextura(const string& texto, SDL_Color color,SDL_Renderer* ren
 	}
 	return texturaACargar;
 }
+
+SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizador){
+    SDL_Texture*  texturaCargada= NULL;
+    SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
+    if(superficieImagen == NULL){
+        Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccion, IMG_GetError());
+    }
+    else{
+        texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficieImagen );
+        if( texturaCargada == NULL ){
+            Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccion, SDL_GetError());
+        }
+        SDL_FreeSurface( superficieImagen );
+    }
+    return texturaCargada;
+}
+
+SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador){
+    SDL_Texture* texturaCargada = cargarTexturaImagen(direccion, renderizador);
+    if(texturaCargada == NULL){
+        //texturaCargada = texturaDefecto; TODO: Fijarse si es necesario.
+        Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion + ". Se cargo la textura por defecto.");
+    }else{
+        Log::getInstance()->mostrarMensajeDeCarga(descripcion, direccion);
+    }
+    return texturaCargada;
+}
+
+
 
 void renderizar(int coordenadaX,int coordenadaY,int alto,int ancho,SDL_Texture* textura,SDL_Renderer* renderer){
 		SDL_Rect renderQuad = { coordenadaX, coordenadaY, ancho, alto };

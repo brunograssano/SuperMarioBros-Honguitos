@@ -34,7 +34,7 @@ class BotonConTexto
 
 		void mostrarse();
 
-		void mostrarseCambiandoAncho( int nuevoAncho);
+		void mostrarseCambiandoAncho();
 
 		void seleccionarCajaTexto();
 

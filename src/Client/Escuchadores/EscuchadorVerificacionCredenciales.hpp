@@ -11,13 +11,11 @@ class EscuchadorVerificacionCredenciales : public Escuchador{
 
 	public:
 		EscuchadorVerificacionCredenciales(int socketCliente, Cliente* cliente);
-		virtual ~EscuchadorVerificacionCredenciales();
-		void escuchar();
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 	private:
-		verificacion_t verificacion;
+		verificacion_t verificacion{};
 		Cliente* cliente;
 };
 

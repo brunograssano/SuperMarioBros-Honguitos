@@ -6,8 +6,7 @@
 class EnviadorCantidadConexion :public Enviador {
 
 	public:
-		EnviadorCantidadConexion(int socket);
-		~EnviadorCantidadConexion(){};
+		explicit EnviadorCantidadConexion(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 

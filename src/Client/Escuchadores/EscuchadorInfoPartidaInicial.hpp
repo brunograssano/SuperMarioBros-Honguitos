@@ -10,8 +10,6 @@ class EscuchadorInfoPartidaInicial : public Escuchador{
 
 	public:
 		EscuchadorInfoPartidaInicial(int socket,Cliente* cliente);
-		virtual ~EscuchadorInfoPartidaInicial();
-		void escuchar();
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

@@ -214,19 +214,16 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
     }
 }
 
-void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* ctx) {
+void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* contexto) {
     if(!ptrInfoRonda) return;
 
-    ptrInfoRonda->mundo = mundo;
     ptrInfoRonda->tiempoFaltante = contador->tiempoRestante();
 
     int numeroBloque = 0;
     for(auto const& plataforma: plataformas){
         list<bloque_t> bloques = plataforma->serializarPlataforma();
-
         for(auto const& bloque: bloques){
-            if(deboAgregarlo(ctx, bloque.posX) &&
-               numeroBloque<MAX_BLOQUES){
+            if(bloque.numeroRecorteY == SORPRESA && deboAgregarlo(contexto, bloque.posX) && numeroBloque < MAX_SORPRESAS){
                 ptrInfoRonda->bloques[numeroBloque] = bloque;
                 numeroBloque++;
             }
@@ -236,7 +233,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroEnemigo = 0;
     for(auto const& enemigo: enemigos){
-        if(deboAgregarlo(ctx, enemigo->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, enemigo->obtenerPosicionX()) &&
            numeroEnemigo<MAX_ENEMIGOS){
             ptrInfoRonda->enemigos[numeroEnemigo] = enemigo->serializar();
             numeroEnemigo++;
@@ -246,24 +243,13 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroMoneda = 0;
     for(auto const& moneda: monedas){
-        if(deboAgregarlo(ctx, moneda->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, moneda->obtenerPosicionX()) &&
            numeroMoneda<MAX_MONEDAS){
             ptrInfoRonda->monedas[numeroMoneda] = moneda->serializar();
             numeroMoneda++;
         }
     }
     ptrInfoRonda->topeMonedas = numeroMoneda;
-
-    int numeroTuberia = 0;
-    for(auto const& tuberia: tuberias){
-        if(deboAgregarlo(ctx, tuberia->obtenerPosicionX()) &&
-           numeroTuberia<MAX_TUBERIAS){
-            ptrInfoRonda->tuberias[numeroTuberia] = tuberia->serializar();
-            numeroTuberia++;
-        }
-    }
-    ptrInfoRonda->topeTuberias = numeroTuberia;
-
     int numeroEfecto = 0;
     for(auto const& disparo : disparos){
         if(deboAgregarlo(ctx, disparo->obtenerPosicionX()) &&
@@ -293,6 +279,44 @@ void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
     }
 }
 
+void Nivel::terminar() {
+    meta->sumarPuntos(contador->tiempoRestante());
+}
+
+bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
+    return meta->todosEnLaMeta(jugadores);
+}
+
+void Nivel::completarInformacionNivel(nivel_t *nivel) {
+    nivel->mundo = mundo;
+    for(auto const& tuberia: tuberias){
+        if(nivel->topeTuberias<MAX_TUBERIAS){
+            nivel->tuberias[nivel->topeTuberias] = tuberia->serializar();
+            nivel->topeTuberias++;
+        }
+    }
+
+    for(auto const& pozo: pozos){
+        if(nivel->topePozos<MAX_POZOS){
+            nivel->pozos[nivel->topePozos] = pozo->serializar();
+            nivel->topePozos++;
+        }
+    }
+
+    for(auto const& plataforma: plataformas){
+        list<bloque_t>  bloques = plataforma->serializarPlataforma();
+        for(auto const& bloque: bloques){
+            if(nivel->topeBloques<MAX_LADRILLOS && bloque.numeroRecorteY!=SORPRESA){
+                nivel->bloques[nivel->topeBloques] = bloque;
+                nivel->topeBloques++;
+            }
+        }
+    }
+
+
+    // TODO ver que mas agregamos
+}
+
 Nivel::~Nivel (){
     for(const auto& plataforma:plataformas){
         delete plataforma;
@@ -314,12 +338,12 @@ Nivel::~Nivel (){
     delete meta;
 }
 
-void Nivel::terminar() {
-    meta->sumarPuntos(contador->tiempoRestante());
+void Nivel::iniciar() {
+    contador->iniciar();
 }
 
-bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
-    return meta->todosEnLaMeta(jugadores);
+int Nivel::tiempoRestante() {
+    return contador->tiempoRestante();
 }
 
 /* todo Refactor: Aparecer objetoFugaz */

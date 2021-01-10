@@ -9,13 +9,7 @@ EnviadorEstadoCredencial::EnviadorEstadoCredencial(int socket){
 }
 
 void EnviadorEstadoCredencial::enviar(){
-	char caracterMensaje = VERIFICACION;
-
-	int resultadoEnvio = send(socket, &caracterMensaje, sizeof(char), 0);
-	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de verificacion de credencial");
-
-	resultadoEnvio = send(socket, &estadoCredencial , sizeof(verificacion_t), 0);
-	this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de verificacion de credencial");
+    Enviador::enviar(VERIFICACION,&estadoCredencial,sizeof(verificacion_t));
 }
 
 void EnviadorEstadoCredencial::dejarInformacion(void* estadoDeLaCredencial){

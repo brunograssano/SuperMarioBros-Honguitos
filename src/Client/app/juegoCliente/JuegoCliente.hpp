@@ -1,21 +1,19 @@
 #ifndef SRC_CLIENT_APP_JUEGOCLIENTE_JUEGOCLIENTE_HPP_
 #define SRC_CLIENT_APP_JUEGOCLIENTE_JUEGOCLIENTE_HPP_
 
-
-using namespace std;
 #include <queue>
 #include <map>
 #include <string>
 #include <list>
-
+using namespace std;
 
 #include "../../../Utils/Utils.hpp"
 
 class JuegoCliente{
 
 	public:
-		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio);
-		~JuegoCliente();
+		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla);
+		~JuegoCliente() = default;
 
 		void agregarRonda(info_ronda_t ronda);
 		void actualizar();
@@ -31,14 +29,14 @@ class JuegoCliente{
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
-
-
-        void agregarNivel(nivel_t nivel);
-
-private:
+    void agregarNivel(nivel_t nivel);
+  private:
+    bool enRango(int posX) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
 		list<bloque_t> bloques;
+        list<bloque_t> ladrillos;
+        list<pozo_t> pozos;
 		list<enemigo_t> enemigos;
 		list<moneda_t> monedas;
         list<tuberia_t> tuberias;
@@ -46,11 +44,14 @@ private:
 		int cantidadJugadores;
 		int idPropio;
 
+		int anchoVista;
 		int numeroMundo;
 		int tiempoFaltante;
 		int posXCamara;
 		bool ganaron;
 		bool perdieron;
+
+
 };
 
 

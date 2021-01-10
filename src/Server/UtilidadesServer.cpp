@@ -9,12 +9,13 @@
 
 #include "../Utils/log/Log.hpp"
 #include "UtilidadesServer.hpp"
+#include "Servidor.hpp"
 
 const int TAMANIO_COLA = 4;
 
 void salir(string mensajeLog){
 	Log* log = Log::getInstance();
-	cout << "No se pudo iniciar el server, cerrando la aplicacion" << endl;
+	cout << "No se pudo iniciar el server, cerrando la aplicacion, mire el log para mas detalles" << endl;
 	log->huboUnError(std::move(mensajeLog));
 	delete log;
 	exit(EXIT_FAILURE);
@@ -53,17 +54,6 @@ int iniciarSocketServidor(int puerto, char* ip){
 	return socketServer;
 }
 
-void iniciarJuego(pthread_t* hiloJuego,AplicacionServidor* aplicacionServidor){
-	int resultadoCreate = pthread_create(hiloJuego, nullptr, AplicacionServidor::gameLoop_helper, aplicacionServidor);
-
-	if(resultadoCreate!= 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para el juego, el codigo de error es: " + to_string(resultadoCreate));
-	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo del juego: (" + to_string(*hiloJuego) +").");
-	}
-
-}
-
 void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError){
 	Log* log = Log::getInstance();
 	for(auto const& mensaje:mensajesError){
@@ -71,24 +61,12 @@ void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError){
 	}
 }
 
-void crearHiloConectarJugadores(Servidor* servidor){
-	pthread_t hiloEscuchar;
-	int resultadoCreate = pthread_create(&hiloEscuchar, nullptr, Servidor::escuchar_helper, servidor);
-	if(resultadoCreate!= 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar, el codigo de error es: " + to_string(resultadoCreate));
-	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar: (" + to_string(hiloEscuchar) +").");
-	}
-}
-
-void unirHilosPrincipalYGameLoop(const pthread_t* hiloJuego){
-	int resultadoJoin = pthread_join((*hiloJuego), nullptr);
-	if(resultadoJoin != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al juntar los hilos main y gameLoop, el codigo de error es: " + to_string(resultadoJoin));
-		pthread_cancel((*hiloJuego));
-	}else{
-		Log::getInstance()->mostrarMensajeDeInfo("Se juntaron los hilos main y gameLoop.");
-	}
+void empezarHilo(Thread* hilo,string nombreHilo){
+    try{
+        hilo->empezarHilo(nombreHilo);
+    }catch(const std::exception& e){
+        salir("Ocurrio un error creando el hilo "+nombreHilo+", no se va a poder ejecutar el server correctamente. Terminando el servidor");
+    }
 }
 
 void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor){

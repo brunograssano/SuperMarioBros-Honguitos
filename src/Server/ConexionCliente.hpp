@@ -11,23 +11,20 @@ using namespace std;
 
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
+#include "../Utils/Thread.hpp"
 
 class EnviadorConexionCliente;
 #include "EnviadoresServer/EnviadorConexionCliente.hpp"
 class EscuchadorConexionCliente;
 #include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
-class ConexionCliente {
+class ConexionCliente : public Thread{
 
 	public:
 		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
 		~ConexionCliente();
 
-        static void* ejecutar_helper(void* ptr);
-        static void* enviar_helper(void* ptr);
-		static void* escuchar_helper(void* ptr);
-		void ejecutar();
-
+		void ejecutar() override;
 		void enviarActualizacionesDeRonda() const;
         void agregarMensajeAEnviar(char caracter, void *mensaje);
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
@@ -35,7 +32,7 @@ class ConexionCliente {
 		void agregarIDJuego(int IDJugador);
 		string obtenerIP();
 		void terminarElJuego();
-        bool terminoElJuego();
+        bool terminoElJuego() const;
 
         void desconectarse();
 

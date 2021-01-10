@@ -1,9 +1,9 @@
 #ifndef SRC_SERVER_SERVIDOR_HPP_
 #define SRC_SERVER_SERVIDOR_HPP_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -31,20 +31,22 @@ class ConexionCliente;
 
 #include "src/Utils/Constantes.hpp"
 
+class AceptadorDeConexiones;
+#include "AceptadorDeConexiones.hpp"
+
 class Servidor{
 
 	public:
 		Servidor(ArchivoLeido* archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
 		~Servidor();
 
-		void conectarJugadores();
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
-		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,string contrasenia);
+		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia);
 		void ejecutar();
 		void guardarRondaParaEnvio(info_ronda_t ronda);
-		void terminoElJuego();
+		void terminarElJuego();
 
 		void reconectarJugadoresFaseInicial();
 		static void* reconectarJugadoresFaseInicial_helper(void* ptr);
@@ -52,12 +54,15 @@ class Servidor{
 
 		map<int,string> obtenerMapaJugadores();
 
-		static void *escuchar_helper(void* ptr);
+		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
+        void mandarNivelAClientes(nivel_t nivel);
+        bool terminoElJuego() const;
+        void guardarConexion(ConexionCliente *conexionCliente);
 
+        int cantidadUsuariosLogueados() const;
 
-    void mandarNivelAClientes(nivel_t nivel);
-
-private:
+    private:
+        AceptadorDeConexiones* aceptadorDeConexiones;
 		map<int,string> mapaIDNombre;
 		Log* log;
 		AplicacionServidor* aplicacionServidor;
@@ -72,20 +77,14 @@ private:
 
 		bool estaDesconectado(const string& nombre);
 
-		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
-		int crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados);
 		bool esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		static bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 
 		bool terminoJuego;
-		bool terminoHiloAceptar;
 		list<ConexionCliente*> clientes;
 		list<ConexionCliente*> conexionesPerdidas;
 		map<int,ConexionCliente*> clientesJugando;
-
 };
-
-
 
 #endif /* SRC_SERVER_SERVIDOR_HPP_ */

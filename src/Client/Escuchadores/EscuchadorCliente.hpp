@@ -3,12 +3,13 @@
 
 #include "../Cliente.hpp"
 #include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Thread.hpp"
 
-class EscuchadorCliente {
+class EscuchadorCliente : public Thread{
     public:
         EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar);
         ~EscuchadorCliente();
-        void escuchar();
+        void ejecutar()override;
 
     private:
         Cliente* cliente{};

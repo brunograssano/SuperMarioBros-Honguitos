@@ -7,8 +7,7 @@
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
 	juego = Juego::getInstance(std::move(niveles),cantidadJugadores, alto_pantalla, ancho_pantalla);
-	cantJugadores = cantidadJugadores;
-	terminoElJuego = false;
+    terminoElJuego = false;
 	comenzoElJuego = false;
 	juegoInicializadoCorrectamente = false;
 	log = Log::getInstance();
@@ -21,7 +20,7 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 }
 
 info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
-	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para enviar.");
+	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para ejecutar.");
     return juego->obtenerInfoRonda(mapaIDNombre);
 }
 
@@ -45,7 +44,7 @@ void AplicacionServidor::revisarSiMandarInfoNivel(int* cantidadNivelesRestantes)
     }
 }
 
-void AplicacionServidor::gameLoop(){
+void AplicacionServidor::ejecutar(){
 	int microSegundosEspera = 16666;
 	while(!comenzoElJuego){
 	}
@@ -76,7 +75,7 @@ void AplicacionServidor::gameLoop(){
 	}
 	delete contador;
 	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
-	servidor->terminoElJuego();
+    servidor->terminarElJuego();
 }
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
@@ -93,4 +92,8 @@ void AplicacionServidor::desconectarJugador(int idJugador){
 
 AplicacionServidor::~AplicacionServidor(){
 	delete juego;
+}
+
+bool AplicacionServidor::empezoElJuego() {
+    return comenzoElJuego;
 }

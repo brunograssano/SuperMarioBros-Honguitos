@@ -4,14 +4,15 @@
 #include <map>
 #include <queue>
 #include "src/Utils/Enviador.hpp"
+#include "src/Utils/Thread.hpp"
 #include "../ConexionCliente.hpp"
 
-class EnviadorConexionCliente {
+class EnviadorConexionCliente : public Thread{
 
     public:
         EnviadorConexionCliente(int socket,ConexionCliente* cliente);
         ~EnviadorConexionCliente();
-        void enviar();
+        void ejecutar()override;
         void agregarMensajeAEnviar(char caracter,void* mensaje);
 
     private:

@@ -1,5 +1,4 @@
 #include "ConexionCliente.hpp"
-
 #define SIN_JUGAR -1
 
 pthread_cond_t variableCondicionalConexionCliente=PTHREAD_COND_INITIALIZER;
@@ -42,21 +41,13 @@ void ConexionCliente::enviarActualizacionesDeRonda() const{
 	}
 }
 
-
 void ConexionCliente::ejecutar(){
-	pthread_t hiloEscuchar;
-	pthread_t hiloEnviar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, ConexionCliente::escuchar_helper, escuchador);
-	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del cliente: " + this->ip);
-		return; // El hilo de ejecutar muere, y queda dando vueltas solamente el objeto ConexionCliente en la lista
-	}
-
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, ConexionCliente::enviar_helper, enviador);
-	if(resultadoCreateEnviar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar informacion del servidor al cliente: " + this->ip);
+	try{
+        enviador->empezarHilo("Enviador");
+        escuchador->empezarHilo("Escuchador");
+	}catch(const std::exception& e){
         terminoJuego = true;
-		return;
+        return;
 	}
 
 	bool esUsuarioValido = false;
@@ -82,7 +73,7 @@ void ConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
     enviador->agregarMensajeAEnviar(caracter,mensaje);
 }
 
-bool ConexionCliente::terminoElJuego(){
+bool ConexionCliente::terminoElJuego() const{
     return terminoJuego;
 }
 
@@ -108,7 +99,13 @@ void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actua
     agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&actualizacion);
 }
 
-////---------------------------------DESTRUCTOR---------------------------------////
+string ConexionCliente::obtenerIP() {
+    return ip;
+}
+
+void ConexionCliente::desconectarse() {
+    servidor->agregarUsuarioDesconectado(this,idPropio,nombre,contrasenia);
+}
 
 ConexionCliente::~ConexionCliente(){
     delete escuchador;
@@ -122,27 +119,4 @@ ConexionCliente::~ConexionCliente(){
 	if(resultado<0){
 		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el close del socket del usuario: "+nombre,to_string(errno));
 	}
-}
-
-void *ConexionCliente::enviar_helper(void *ptr) {
-    ((EnviadorConexionCliente*) ptr)->enviar();
-    return nullptr;
-}
-
-void *ConexionCliente::ejecutar_helper(void *ptr) {
-    ((ConexionCliente*) ptr)->ejecutar();
-    return nullptr;
-}
-
-void *ConexionCliente::escuchar_helper(void *ptr) {
-    ((EscuchadorConexionCliente*)ptr)->escuchar();
-    return nullptr;
-}
-
-string ConexionCliente::obtenerIP() {
-    return ip;
-}
-
-void ConexionCliente::desconectarse() {
-    servidor->agregarUsuarioDesconectado(this,idPropio,nombre,contrasenia);
 }

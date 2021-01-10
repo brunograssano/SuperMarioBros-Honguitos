@@ -19,7 +19,7 @@ EnviadorConexionCliente::EnviadorConexionCliente(int socket,ConexionCliente* cli
     enviadores[NIVEL] = new EnviadorNivel(socket);
 }
 
-void EnviadorConexionCliente::enviar() {
+void EnviadorConexionCliente::ejecutar() {
     char tipoMensaje;
     bool hayError = false;
     while(!cliente->terminoElJuego() && !hayError){

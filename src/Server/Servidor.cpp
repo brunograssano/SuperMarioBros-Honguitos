@@ -7,7 +7,6 @@ pthread_cond_t variableCondicionalServer=PTHREAD_COND_INITIALIZER;
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
-	terminoHiloAceptar = false;
 	manejadorIDs = new ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido->tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
@@ -26,7 +25,7 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesError
 	socketServer = iniciarSocketServidor(puerto,ip);
 
     log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
-
+    aceptadorDeConexiones = new AceptadorDeConexiones(this,socketServer);
 	delete archivoLeido;
 }
 
@@ -38,7 +37,7 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 }
 
 
-void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,string contrasenia){
+void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
@@ -149,54 +148,11 @@ void Servidor::reconectarJugadoresFaseJuego(){
 }
 
 void Servidor::ejecutar(){
-	pthread_t hiloJuego;
-	iniciarJuego(&hiloJuego,aplicacionServidor);
-	crearHiloConectarJugadores(this);
+	empezarHilo(aplicacionServidor,"GameLoop");
+	empezarHilo(aceptadorDeConexiones,"AceptadorDeConexiones");
 	crearHiloReconectarJugadoresFaseInicial(this);
 	intentarIniciarModelo();
 	reconectarJugadoresFaseJuego();
-}
-
-int Servidor::crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados) {
-	if (socketConexionEntrante < 0) {
-		log->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
-	} else {
-		log->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
-		actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
-
-		auto *conexion = new ConexionCliente(this,socketConexionEntrante, this->cantUsuariosLogueados, (string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
-
-		pthread_t hilo;
-		if (pthread_create(&hilo, nullptr, ConexionCliente::ejecutar_helper,conexion) != 0) {
-			Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo que escucha al usuario: "+ to_string(usuariosConectados) + "\n\t Cliente: "+ (string) (inet_ntoa(addressCliente.sin_addr))
-											+ " ; Puerto: " + to_string(ntohs(addressCliente.sin_port)) + ".");
-			delete conexion;
-		} else {
-			Log::getInstance()->mostrarMensajeDeInfo("Se creó el hilo para escuchar al usuario: "+ to_string(usuariosConectados) + "\n\t Cliente: "+ (string) (inet_ntoa(addressCliente.sin_addr))
-														+ " ; Puerto: "+ to_string(ntohs(addressCliente.sin_port)) + ".");
-
-			usuariosConectados++;
-			clientes.push_back(conexion);
-		}
-	}
-
-	return usuariosConectados;
-}
-
-void Servidor::conectarJugadores(){
-	int usuariosConectados = 0;
-	int socketConexionEntrante = 0;
-	socklen_t addressStructure = 0;
-	struct sockaddr_in addressCliente{};
-	memset(&addressCliente,0,sizeof(sockaddr_in));
-
-	while(!terminoJuego){
-		socketConexionEntrante = accept(socketServer, (struct sockaddr *) &addressCliente, &addressStructure);
-		if(!terminoJuego){
-			usuariosConectados = crearCliente(socketConexionEntrante,addressCliente, usuariosConectados);
-		}
-	}
-	terminoHiloAceptar = true;
 }
 
 bool Servidor::estaDesconectado(const string& nombre){
@@ -312,11 +268,38 @@ void Servidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
 	this->aplicacionServidor->encolarEntradaUsuario(entradaUsuario);
 }
 
-void Servidor::terminoElJuego(){
+void Servidor::terminarElJuego(){
 	for(auto const cliente:conexionesPerdidas){
         cliente->terminarElJuego();
 	}
 	terminoJuego = true;
+}
+
+bool Servidor::terminoElJuego() const{
+    return terminoJuego;
+}
+
+void *Servidor::reconectarJugadoresFaseInicial_helper(void *ptr) {
+    ((Servidor*) ptr)->reconectarJugadoresFaseInicial();
+    return nullptr;
+}
+
+map<int, string> Servidor::obtenerMapaJugadores() {
+    return mapaIDNombre;
+}
+
+void Servidor::mandarNivelAClientes(nivel_t nivel) {
+    for(auto parClaveCliente: clientesJugando){
+        parClaveCliente.second->agregarMensajeAEnviar(NIVEL,&nivel);
+    }
+}
+
+void Servidor::guardarConexion(ConexionCliente *conexionCliente) {
+    clientes.push_back(conexionCliente);
+}
+
+int Servidor::cantidadUsuariosLogueados() const {
+    return cantUsuariosLogueados;
 }
 
 Servidor::~Servidor(){
@@ -335,29 +318,9 @@ Servidor::~Servidor(){
 
 	cerrarServidor(socketServer);
 
-	while(!terminoHiloAceptar){}
-
+	while(!aceptadorDeConexiones->terminoAceptar()){}
+    delete aceptadorDeConexiones;
 	delete manejadorIDs;
 	delete aplicacionServidor;
 	delete log;
-}
-
-void *Servidor::reconectarJugadoresFaseInicial_helper(void *ptr) {
-    ((Servidor*) ptr)->reconectarJugadoresFaseInicial();
-    return nullptr;
-}
-
-void *Servidor::escuchar_helper(void *ptr) {
-    ((Servidor*) ptr)->conectarJugadores();
-    return nullptr;
-}
-
-map<int, string> Servidor::obtenerMapaJugadores() {
-    return mapaIDNombre;
-}
-
-void Servidor::mandarNivelAClientes(nivel_t nivel) {
-    for(auto parClaveCliente: clientesJugando){
-        parClaveCliente.second->agregarMensajeAEnviar(NIVEL,&nivel);
-    }
 }

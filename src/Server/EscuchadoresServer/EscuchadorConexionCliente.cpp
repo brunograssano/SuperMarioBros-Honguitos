@@ -10,7 +10,6 @@ EscuchadorConexionCliente::EscuchadorConexionCliente(int socket,ConexionCliente*
     escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,cliente);
     this->socket = socket;
     this->cliente = cliente;
-    this->servidor = servidor;
     idJugador = SIN_JUGAR;
 }
 
@@ -21,7 +20,7 @@ EscuchadorConexionCliente::~EscuchadorConexionCliente() {
     escuchadores.clear();
 }
 
-void EscuchadorConexionCliente::escuchar() {
+void EscuchadorConexionCliente::ejecutar() {
     char tipoMensaje;
     int resultado;
     bool hayError = false;

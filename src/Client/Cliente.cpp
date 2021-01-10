@@ -102,20 +102,13 @@ void Cliente::intentarEntrarAlJuego() {
 }
 
 void Cliente::ejecutar(){
-	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, nullptr, Cliente::escuchar_helper, escuchador);
-	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del server.");
-		return;
-	}
-
-	pthread_t hiloEnviar;
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, nullptr, Cliente::enviar_helper, enviador);
-	if(resultadoCreateEnviar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la informacion del cliente al server.");
-		terminoJuego = true;
-		return;
-	}
+    try{
+        enviador->empezarHilo("Enviador");
+        escuchador->empezarHilo("Escuchador");
+    }catch(const std::exception& e){
+        terminoJuego = true;
+        return;
+    }
 
 	esperar(&seRecibioInformacionInicio);
 	intentarEntrarAlJuego();
@@ -152,8 +145,6 @@ void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
     enviador->agregarMensajeAEnviar(tipoMensaje,mensaje);
 }
 
-/////------------------DESTRUCTOR------------------/////
-
 void Cliente::cerradoVentanaInicio() const {
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
 	cerrarSocketCliente(socketCliente);
@@ -171,16 +162,6 @@ Cliente::~Cliente(){
 	delete enviador;
 	delete gameLoop;
 
-}
-
-void *Cliente::enviar_helper(void *ptr) {
-    ((EnviadorCliente*) ptr)->enviar();
-    return nullptr;
-}
-
-void *Cliente::escuchar_helper(void *ptr) {
-    ((EscuchadorCliente*) ptr)->escuchar();
-    return nullptr;
 }
 
 void Cliente::recibirInformacionNivel(nivel_t nivel) {

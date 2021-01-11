@@ -10,6 +10,8 @@ class Thread {
         virtual ~Thread() = default;
         void empezarHilo(std::string nombreHilo);
         void join(std::string nombreHilo) const;
+        void dormirHilo();
+        void despertarHilo();
         virtual void ejecutar() = 0;
         static void* ejecutar_helper(void* ptr);
         Thread(const Thread&) = delete;
@@ -18,6 +20,7 @@ class Thread {
         Thread& operator=(Thread&& otroThread) noexcept ;
     private:
         pthread_t hilo{};
+        pthread_cond_t variableCondicional=PTHREAD_COND_INITIALIZER;
 };
 
 

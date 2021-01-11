@@ -1,22 +1,18 @@
 #include <cstdlib>
-#include <utility>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <pthread.h>
 #include <arpa/inet.h>
 
 #include "../Utils/log/Log.hpp"
 #include "UtilidadesServer.hpp"
-#include "Servidor.hpp"
 
 const int TAMANIO_COLA = 4;
 
-void salir(string mensajeLog){
+void salir(const string& mensajeLog){
 	Log* log = Log::getInstance();
 	cout << "No se pudo iniciar el server, cerrando la aplicacion, mire el log para mas detalles" << endl;
-	log->huboUnError(std::move(mensajeLog));
+	log->huboUnError(mensajeLog);
 	delete log;
 	exit(EXIT_FAILURE);
 }
@@ -61,21 +57,12 @@ void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError){
 	}
 }
 
-void empezarHilo(Thread* hilo,string nombreHilo){
+void empezarHilo(Thread* hilo,const string& nombreHilo){
     try{
         hilo->empezarHilo(nombreHilo);
     }catch(const std::exception& e){
         salir("Ocurrio un error creando el hilo "+nombreHilo+", no se va a poder ejecutar el server correctamente. Terminando el servidor");
     }
-}
-
-void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor){
-	pthread_t hilo;
-	if (pthread_create(&hilo, nullptr, Servidor::reconectarJugadoresFaseInicial_helper, servidor) != 0) {
-		Log::getInstance()->huboUnError("No se logro crear el hilo para reconectar los jugadores en fase de inicio.");
-	} else {
-		Log::getInstance()->mostrarMensajeDeInfo("Se creo el hilo para reconectar los jugadores en fase de inicio correctamente.");
-	}
 }
 
 void cerrarServidor(int socketServer){
@@ -88,4 +75,10 @@ void cerrarServidor(int socketServer){
 		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
 	}
 	cout<<"Se cerro el servidor"<<endl;
+}
+
+
+bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario){
+    return posibleUsuario.nombre == usuario.nombre && posibleUsuario.contrasenia == usuario.contrasenia &&
+               !usuario.usado;
 }

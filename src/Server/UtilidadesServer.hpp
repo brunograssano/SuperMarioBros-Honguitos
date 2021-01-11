@@ -1,7 +1,8 @@
 #ifndef SRC_SERVER_UTILIDADESSERVER_HPP_
 #define SRC_SERVER_UTILIDADESSERVER_HPP_
 
-
+#include <list>
+#include "src/Utils/Utils.hpp"
 #include "src/Utils/Thread.hpp"
 class AceptadorDeConexiones;
 class Servidor;
@@ -12,11 +13,11 @@ class Servidor;
  */
 int iniciarSocketServidor(int puerto, char* ip);
 
-void empezarHilo(Thread* hilo,string nombreHilo);
+void empezarHilo(Thread* hilo,const string& nombreHilo);
 
 void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError);
 
-void crearHiloReconectarJugadoresFaseInicial(Servidor* servidor);
+bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 
 void cerrarServidor(int socketServer);
 

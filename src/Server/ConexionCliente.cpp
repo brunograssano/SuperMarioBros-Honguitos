@@ -1,7 +1,8 @@
 #include "ConexionCliente.hpp"
 #define SIN_JUGAR -1
-
-pthread_cond_t variableCondicionalConexionCliente=PTHREAD_COND_INITIALIZER;
+#include "Servidor.hpp"
+#include "EnviadoresServer/EnviadorConexionCliente.hpp"
+#include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
 ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
 	this->servidor = servidor;
@@ -32,12 +33,9 @@ void ConexionCliente::esperarCredenciales(){
 	recibioCredenciales = false;
 }
 
-void ConexionCliente::enviarActualizacionesDeRonda() const{
-    pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
+void ConexionCliente::enviarActualizacionesDeRonda(){
 	while(!terminoJuego){
-        pthread_mutex_lock(&mutexServer);
-        pthread_cond_wait(&variableCondicionalConexionCliente, &mutexServer);
-        pthread_mutex_unlock(&mutexServer);
+        dormirHilo();
 	}
 }
 
@@ -81,8 +79,8 @@ void ConexionCliente::terminarElJuego(){
     pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_lock(&mutexServer);
 	terminoJuego = true;
-    pthread_cond_signal(&variableCondicionalConexionCliente);
     pthread_mutex_unlock(&mutexServer);
+    despertarHilo();
 }
 
 void ConexionCliente::agregarIDJuego(int IDJugador){

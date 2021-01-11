@@ -14,7 +14,6 @@
 #include <thread>
 #include <map>
 
-
 #include "../Utils/log/Log.hpp"
 #include "modelo/Juego.hpp"
 
@@ -34,6 +33,9 @@ class ConexionCliente;
 class AceptadorDeConexiones;
 #include "AceptadorDeConexiones.hpp"
 
+class ReconectadorDeConexiones;
+#include "ReconectadorDeConexiones.hpp"
+
 class Servidor{
 
 	public:
@@ -48,10 +50,6 @@ class Servidor{
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminarElJuego();
 
-		void reconectarJugadoresFaseInicial();
-		static void* reconectarJugadoresFaseInicial_helper(void* ptr);
-		void reconectarJugadoresFaseJuego();
-
 		map<int,string> obtenerMapaJugadores();
 
 		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
@@ -60,8 +58,12 @@ class Servidor{
         void guardarConexion(ConexionCliente *conexionCliente);
 
         int cantidadUsuariosLogueados() const;
+        bool empezoElJuego();
+        void mandarActualizacionAClientes();
+        void reconectarJugador(mensaje_log_t mensaje, const int idJugador);
 
-    private:
+private:
+        ReconectadorDeConexiones* reconectador;
         AceptadorDeConexiones* aceptadorDeConexiones;
 		map<int,string> mapaIDNombre;
 		Log* log;
@@ -73,13 +75,9 @@ class Servidor{
 		int cantUsuariosLogueados = 0;
 
 		list<usuario_t> usuariosValidos;
-		map<int,usuario_t> usuariosQuePerdieronConexion;
-
-		bool estaDesconectado(const string& nombre);
 
 		bool esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
-		static bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 
 		bool terminoJuego;
 		list<ConexionCliente*> clientes;

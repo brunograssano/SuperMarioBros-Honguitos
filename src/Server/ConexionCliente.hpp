@@ -2,7 +2,6 @@
 #define SRC_SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
-#include "Servidor.hpp"
 
 using namespace std;
 #include <thread>
@@ -14,18 +13,17 @@ using namespace std;
 #include "../Utils/Thread.hpp"
 
 class EnviadorConexionCliente;
-#include "EnviadoresServer/EnviadorConexionCliente.hpp"
 class EscuchadorConexionCliente;
-#include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
+
 
 class ConexionCliente : public Thread{
 
 	public:
 		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
-		~ConexionCliente();
+		~ConexionCliente() override;
 
 		void ejecutar() override;
-		void enviarActualizacionesDeRonda() const;
+		void enviarActualizacionesDeRonda();
         void agregarMensajeAEnviar(char caracter, void *mensaje);
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);

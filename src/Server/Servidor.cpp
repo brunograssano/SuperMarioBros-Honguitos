@@ -3,7 +3,6 @@
 #include <cstring>
 
 #define SIN_JUGAR -1
-pthread_cond_t variableCondicionalServer=PTHREAD_COND_INITIALIZER;
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
@@ -26,6 +25,7 @@ Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesError
 
     log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
     aceptadorDeConexiones = new AceptadorDeConexiones(this,socketServer);
+    reconectador = new ReconectadorDeConexiones(this);
 	delete archivoLeido;
 }
 
@@ -40,8 +40,7 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia){
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
-		usuario_t usuarioDesconectado = {nombre,contrasenia,false};
-		usuariosQuePerdieronConexion[idJugador] = usuarioDesconectado;
+		reconectador->agregarUsuarioDesconectado(nombre,contrasenia,idJugador);
 		clientesJugando.erase(idJugador);
 		log->mostrarMensajeDeInfo("Se perdio la conexion con el usuario: " + nombre);
 		pthread_mutex_lock(&mutex);
@@ -64,105 +63,39 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int i
 	pthread_mutex_lock(&mutex);
 	conexionesPerdidas.push_front(conexionPerdida);
 	clientes.remove(conexionPerdida);
-    pthread_cond_signal(&variableCondicionalServer);
 	pthread_mutex_unlock(&mutex);
+	reconectador->despertarHilo();
 
-	actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
-	for(auto const& cliente:clientes){
-		cliente->actualizarCliente(actualizacion);
-	}
+    mandarActualizacionAClientes();
 }
 
-void Servidor::reconectarJugadoresFaseInicial(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	list<int> idsUsuariosReconectados;
-	while(!this->aplicacionServidor->empezoElJuego()){
-	    while(usuariosQuePerdieronConexion.empty()){
-            pthread_mutex_lock(&mutex);
-            pthread_cond_wait(&variableCondicionalServer, &mutex);
-            pthread_mutex_unlock(&mutex);
-	    }
-		for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
-			usuario_t usuario = parClaveUsuario.second;
-			if(usuario.usado){
-				int idJugador = parClaveUsuario.first;
-				pthread_mutex_lock(&mutex);
-				idsUsuariosReconectados.push_front(idJugador);
-				pthread_mutex_unlock(&mutex);
-				actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
-				for(auto const& cliente:clientes){
-					cliente->actualizarCliente(actualizacion);
-				}
-			}
-
-		}
-		for(auto const id:idsUsuariosReconectados){
-			usuariosQuePerdieronConexion.erase(id);
-		}
-		if(!idsUsuariosReconectados.empty()){
-			idsUsuariosReconectados.clear();
-		}
-	}
+void Servidor::mandarActualizacionAClientes() {
+    actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
+    for(auto const& cliente:clientes){
+        cliente->actualizarCliente(actualizacion);
+    }
 }
 
-void Servidor::reconectarJugadoresFaseJuego(){
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	list<int> idsUsuariosReconectados;
-	while(!terminoJuego){
-        while(usuariosQuePerdieronConexion.empty()){
-            pthread_mutex_lock(&mutex);
-            pthread_cond_wait(&variableCondicionalServer, &mutex);
-            pthread_mutex_unlock(&mutex);
-        }
-		for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
-			usuario_t usuario = parClaveUsuario.second;
-			if(usuario.usado){
+bool Servidor::empezoElJuego(){
+    return aplicacionServidor->empezoElJuego();
+}
 
-				mensaje_log_t mensajeLog;
-				memset(&mensajeLog, 0, sizeof(mensaje_log_t));
-
-				usuario.nombre.insert(0, "Se reconecto el usuario: ");
-				strcpy(mensajeLog.mensajeParaElLog,usuario.nombre.c_str());
-				mensajeLog.tipo = INFO;
-
-				for(auto const parClaveCliente:clientesJugando){
-                    parClaveCliente.second->agregarMensajeAEnviar(MENSAJE_LOG,&mensajeLog);
-				}
-
-
-				int idJugador = parClaveUsuario.first;
-				info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
-                nivel_t nivel = aplicacionServidor->obtenerInfoNivel();
-                clientesJugando[parClaveUsuario.first]->agregarMensajeAEnviar(PARTIDA,&info_partida);
-                clientesJugando[parClaveUsuario.first]->agregarMensajeAEnviar(NIVEL,&nivel);
-				idsUsuariosReconectados.push_front(idJugador);
-			}
-		}
-		for(auto const id:idsUsuariosReconectados){
-			usuariosQuePerdieronConexion.erase(id);
-		}
-		if(!idsUsuariosReconectados.empty()){
-			idsUsuariosReconectados.clear();
-		}
-	}
+void Servidor::reconectarJugador(mensaje_log_t mensajeLog,const int idJugador){
+    for(auto const parClaveCliente:clientesJugando){
+        parClaveCliente.second->agregarMensajeAEnviar(MENSAJE_LOG,&mensajeLog);
+    }
+    info_partida_t info_partida = aplicacionServidor->obtenerInfoPartida(mapaIDNombre, idJugador);
+    nivel_t nivel = aplicacionServidor->obtenerInfoNivel();
+    clientesJugando[idJugador]->agregarMensajeAEnviar(PARTIDA,&info_partida);
+    clientesJugando[idJugador]->agregarMensajeAEnviar(NIVEL,&nivel);
 }
 
 void Servidor::ejecutar(){
 	empezarHilo(aplicacionServidor,"GameLoop");
 	empezarHilo(aceptadorDeConexiones,"AceptadorDeConexiones");
-	crearHiloReconectarJugadoresFaseInicial(this);
+	empezarHilo(reconectador,"ReconectadorDeConexiones");
 	intentarIniciarModelo();
-	reconectarJugadoresFaseJuego();
-}
-
-bool Servidor::estaDesconectado(const string& nombre){
-	bool estaDesconectado = false;
-	for(auto const& parClaveUsuario:usuariosQuePerdieronConexion){
-		if(nombre == parClaveUsuario.second.nombre && !parClaveUsuario.second.usado){
-			estaDesconectado = true;
-		}
-	}
-	return estaDesconectado;
+    aplicacionServidor->join("GameLoop");
 }
 
 actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PASAR A USAR EL MANEJADOR DE KEYS
@@ -174,7 +107,7 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 		par_id_nombre_t par_id_nombre;
 		strcpy(par_id_nombre.nombre, idNombre.second.c_str());
 		par_id_nombre.id = i;
-		par_id_nombre.conectado = !estaDesconectado(idNombre.second);
+		par_id_nombre.conectado = !reconectador->estaDesconectado(idNombre.second);
 
 		actualizacion.pares_id_nombre[i] = par_id_nombre;
 		i++;
@@ -187,27 +120,20 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 
 
 bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	for(auto& parClaveUsuario:usuariosQuePerdieronConexion){
-		if(coincidenCredenciales(posibleUsuario, parClaveUsuario.second)){
-			pthread_mutex_lock(&mutex);
-			cantUsuariosLogueados++;
-			parClaveUsuario.second.usado = true;
-			clientesJugando[parClaveUsuario.first] = conexionClienteConPosibleUsuario;
-			conexionClienteConPosibleUsuario->agregarIDJuego(parClaveUsuario.first);
-			aplicacionServidor->activarJugador(parClaveUsuario.first);
-            pthread_cond_signal(&variableCondicionalServer);
-			pthread_mutex_unlock(&mutex);
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Servidor::coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario) {
-	return posibleUsuario.nombre == usuario.nombre &&
-		   posibleUsuario.contrasenia == usuario.contrasenia &&
-		   !usuario.usado;
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    int idJugador;
+    bool seConecto = false;
+    if(reconectador->coincideAlgunaCredencial(posibleUsuario,&idJugador)){
+        pthread_mutex_lock(&mutex);
+        cantUsuariosLogueados++;
+        clientesJugando[idJugador] = conexionClienteConPosibleUsuario;
+        conexionClienteConPosibleUsuario->agregarIDJuego(idJugador);
+        aplicacionServidor->activarJugador(idJugador);
+        pthread_mutex_unlock(&mutex);
+        reconectador->despertarHilo();
+        seConecto = true;
+    }
+    return seConecto;
 }
 
 bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
@@ -216,9 +142,7 @@ bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCl
 	}
 
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
 	for(auto& usuario:usuariosValidos){
-
 		if (coincidenCredenciales(posibleUsuario, usuario)) {
 			pthread_mutex_lock(&mutex);
 			int id = manejadorIDs->obtenerIDNueva();
@@ -279,11 +203,6 @@ bool Servidor::terminoElJuego() const{
     return terminoJuego;
 }
 
-void *Servidor::reconectarJugadoresFaseInicial_helper(void *ptr) {
-    ((Servidor*) ptr)->reconectarJugadoresFaseInicial();
-    return nullptr;
-}
-
 map<int, string> Servidor::obtenerMapaJugadores() {
     return mapaIDNombre;
 }
@@ -317,10 +236,11 @@ Servidor::~Servidor(){
 	conexionesPerdidas.clear();
 
 	cerrarServidor(socketServer);
-
-	while(!aceptadorDeConexiones->terminoAceptar()){}
+    reconectador->terminarReconectarConexiones();
+	while(!aceptadorDeConexiones->terminoAceptar() || !reconectador->terminoHiloReconectar()){}
     delete aceptadorDeConexiones;
 	delete manejadorIDs;
 	delete aplicacionServidor;
+	delete reconectador;
 	delete log;
 }

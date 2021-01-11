@@ -17,6 +17,19 @@ Mario::Mario(int numeroJugador){
 	this->vidaMario = new VidaMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;
+    inicializarMapasDeColision();
+}
+
+void Mario::inicializarMapasDeColision(){
+    Colisionable::FuncionDeColision pPerderVida = (void (Colisionable::*)())&Mario::perderVida;
+    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = pPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
+
+    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = pPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
+
+    mapaColisionesPorAbajo[COLISION_ID_KOOPA] = pPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -154,4 +167,8 @@ Mario::~Mario(){
 	delete this->movimiento;
 	delete this->modificador;
 	delete this->vidaMario;
+}
+
+string Mario::obtenerColisionID() {
+    return COLISION_ID_MARIO;
 }

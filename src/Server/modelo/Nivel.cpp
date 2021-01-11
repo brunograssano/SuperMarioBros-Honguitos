@@ -288,6 +288,7 @@ bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
 }
 
 void Nivel::completarInformacionNivel(nivel_t *nivel) {
+
     nivel->mundo = mundo;
     for(auto const& tuberia: tuberias){
         if(nivel->topeTuberias<MAX_TUBERIAS){

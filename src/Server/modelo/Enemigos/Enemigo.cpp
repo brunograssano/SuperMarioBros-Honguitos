@@ -1,4 +1,5 @@
 #include "Enemigo.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 
 int Enemigo::obtenerPosicionX() {
     return posicionActual->obtenerPosX();
@@ -34,4 +35,8 @@ enemigo_t Enemigo::serializarEnemigo(int tipo) {
 
 bool Enemigo::sePuedeEliminar() {
     return spriteEnemigo->seMostroElTiempoSuficienteEnPantalla();
+}
+
+void Enemigo::inicializarMapasDeColision() {
+
 }

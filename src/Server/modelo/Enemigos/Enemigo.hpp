@@ -5,9 +5,12 @@
 #include <string>
 #include "../../sprites/SpriteEnemigo.hpp"
 #include "src/Utils/Utils.hpp"
-#include "src/Server/modelo/Mario/Mario.hpp"
+class Mario;
 
-class Enemigo{
+#include "src/Server/modelo/Colisionable.hpp"
+
+
+class Enemigo : public Colisionable{
 
 	public:
         virtual ~Enemigo()= default;
@@ -18,6 +21,7 @@ class Enemigo{
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
 		virtual void actualizarPosicion();
         virtual bool sePuedeEliminar();
+        string obtenerColisionID() override = 0;
 
 	protected:
         static float obtenerVelocidad(){
@@ -29,7 +33,8 @@ class Enemigo{
         float velocidadX{};
         int tipoColor{};
         int puntos;
-
+    private:
+        void inicializarMapasDeColision() override;
 };
 
 

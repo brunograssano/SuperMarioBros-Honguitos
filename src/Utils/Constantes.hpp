@@ -1,9 +1,13 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_CONSTANTES_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_CONSTANTES_HPP
+#include <string>
 
 const int ANCHO_FONDO = 8177;
 #define IZQUIERDA -1
 #define DERECHA 1
 #define MAX_CONEXIONES 4
+const std::string COLISION_ID_MARIO = "Mario";
+const std::string COLISION_ID_KOOPA = "Koopa";
+const std::string COLISION_ID_GOOMBA = "Goomba";
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_CONSTANTES_HPP

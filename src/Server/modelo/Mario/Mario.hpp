@@ -19,10 +19,11 @@ class SpriteMario;
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 
-class Mario{
+#include "src/Server/modelo/Colisionable.hpp"
+
+class Mario : public Colisionable {
 
 	public:
-
 		Mario(int numeroJugador);
 		int obtenerPuntos() const;
 		void agregarPuntos(int unosPuntos);
@@ -42,7 +43,7 @@ class Mario{
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
 
-        void perderVida();
+        void perderVida(void );
         int obtenerVida();
         void hacerseDeFuego();
         Disparo* dispararFuego();
@@ -57,9 +58,13 @@ class Mario{
 		void serArrastrado(int corrimiento);
 		void actualizarMaximoX(int limite);
 		void actualizarMinimoX(int limite);
+
+        string obtenerColisionID() override;
+
 		~Mario();
 
-    private:
+private:
+        void inicializarMapasDeColision() override;
         void swapDeModificador(ModificadorMario *nuevoModificador);
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;

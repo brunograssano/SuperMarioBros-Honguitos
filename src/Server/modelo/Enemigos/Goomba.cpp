@@ -1,6 +1,6 @@
 #include "Goomba.hpp"
 #include "../../sprites/SpriteGoomba.hpp"
-
+#include "src/Utils/Constantes.hpp"
 #define PUNTOS_GOOMBA 500
 
 Goomba::Goomba(int tipoColor) {
@@ -17,4 +17,8 @@ enemigo_t Goomba::serializar() {
 Goomba::~Goomba() {
     delete posicionActual;
     delete spriteEnemigo;
+}
+
+string Goomba::obtenerColisionID() {
+    return COLISION_ID_GOOMBA;
 }

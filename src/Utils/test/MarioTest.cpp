@@ -3,6 +3,11 @@
 #define AZUL_CLARO "\e[1;34m"
 #define RESET "\x1b[0m"
 
+#include "src/Server/modelo/Mario/Mario.hpp"
+#include "src/Server/modelo/Enemigos/Koopa.hpp"
+#include "src/Server/modelo/Enemigos/Goomba.hpp"
+
+
 void MarioTest::ejecutar(Assert* testSuite){
 
 	cout << CYAN"========== Comenzando con las pruebas de Mario ==========" RESET << endl;
@@ -18,7 +23,10 @@ void MarioTest::ejecutar(Assert* testSuite){
 	test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(testSuite);
     cout << AZUL_CLARO"----------TEST 06----------" RESET<< endl;
 	test06MarioEmpiezaCon3VidasYLasPierdedependiendoElCaso(testSuite);
+    cout << AZUL_CLARO"----------TEST 07----------" RESET<< endl;
+    test07MarioPierdeUnaVidaCuandoChocaConPorDerechaConUnKoopa(testSuite);
 	cout << CYAN"========== Finalizando con las pruebas de Mario ==========" RESET<< endl;
+
 
 }
 
@@ -84,4 +92,13 @@ void MarioTest::test06MarioEmpiezaCon3VidasYLasPierdedependiendoElCaso(Assert *t
     mario->perderVida();
     testSuite->assert(mario->obtenerVida(),1,"Mario es normal, pierde vida, le queda 1");
     delete mario;
+}
+
+void MarioTest::test07MarioPierdeUnaVidaCuandoChocaConPorDerechaConUnKoopa(Assert *testSuite){
+    Mario* mario = new Mario(0);
+    Koopa* koopa = new Koopa(1);
+    mario->chocarPorDerechaCon(koopa);
+    testSuite->assert(mario->obtenerVida(), 2, "Mario pierde una vida al chocar con koopa.");
+    delete mario;
+    delete koopa;
 }

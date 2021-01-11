@@ -23,7 +23,8 @@ const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
 const int MAX_NOMBRE_SONIDO = 15;
-const int MAX_SORPRESAS=15,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 30,MAX_POZOS = 30, MAX_LADRILLOS = 400;
+
+const int MAX_SORPRESAS=15,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 30,MAX_POZOS = 30, MAX_LADRILLOS = 400,MAX_EFECTOS = 20;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
@@ -86,6 +87,17 @@ typedef struct pozo {
     uint8_t tipo;
 }pozo_t;
 
+
+#define NADA 0
+#define BOLA_DE_FUEGO 1
+#define CHISPA 2
+typedef struct efecto{
+    unsigned short posX;
+    unsigned short posY;
+    uint8_t numeroRecorte;
+    uint8_t tipoDeEfecto;
+}efecto_t;
+
 #define CREDENCIAL 'C'
 typedef struct credencial{
 	char nombre[MAX_NOMBRE];
@@ -98,6 +110,8 @@ typedef struct entrada_usuario{
 	bool S;
 	bool D;
 	bool W;
+	bool ESP;
+	bool F;
 }entrada_usuario_t;
 
 #define VERIFICACION 'V'
@@ -142,6 +156,7 @@ typedef struct ronda{
     uint8_t topeEnemigos;
 	uint8_t topeMonedas;
     uint8_t topeTuberias;
+    uint8_t topeEfectos;
 	bool ganaron;
 	bool perdieron;
 	unsigned short posXCamara;
@@ -150,6 +165,7 @@ typedef struct ronda{
 	enemigo_t enemigos[MAX_ENEMIGOS];
 	moneda_t monedas[MAX_MONEDAS];
 	jugador_t jugadores[MAX_JUGADORES];
+	efecto_t efectos[MAX_EFECTOS];
 }info_ronda_t;
 
 #define NIVEL 'N'

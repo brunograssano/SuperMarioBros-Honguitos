@@ -22,16 +22,16 @@ class JuegoCliente{
 		list<bloque_t> obtenerBloques();
 		list<moneda_t> obtenerMonedas();
         list<tuberia_t> obtenerTuberias();
+        list<efecto_t> obtenerEfectos();
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
 		int obtenerIDPropio() const;
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
-        void agregarNivel(nivel_t nivel);
-
-    private:
-        bool enRango(int posX) const;
+    void agregarNivel(nivel_t nivel);
+  private:
+    bool enRango(int posX) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
 		list<bloque_t> bloques;
@@ -40,6 +40,7 @@ class JuegoCliente{
 		list<enemigo_t> enemigos;
 		list<moneda_t> monedas;
         list<tuberia_t> tuberias;
+        list<efecto_t> efectos;
 		int cantidadJugadores;
 		int idPropio;
 

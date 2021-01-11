@@ -10,14 +10,14 @@ class Posicion{
 		}
 
 		int obtenerPosY() const{
-			return this->posicionY;
+			return (int)this->posicionY;
 		}
 
 		virtual ~Posicion() = default;
 
 protected:
 		float posicionX{};
-		int posicionY{};
+		float posicionY{};
 		int minimoY{};
 
 };

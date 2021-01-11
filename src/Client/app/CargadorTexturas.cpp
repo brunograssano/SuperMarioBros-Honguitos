@@ -31,6 +31,8 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     texturas["Coffin"]  = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
     texturas["Tuberia"]  = intentarCarga("la imagen de las tuberias","resources/Imagenes/Bloques/Tuberias.png",renderizador);
     texturas["Corazon"]  = intentarCarga("la imagen de un corazon","resources/Imagenes/Objetos/Corazon.png",renderizador);
+    texturas["BolaDeFuego"] = intentarCarga("la imagen de la bola de fuego", "resources/Imagenes/Objetos/BolaDeFuego.png", renderizador);
+    texturas["Chispa"] = intentarCarga("la imagen de la chispa", "resources/Imagenes/Objetos/Chispa.png", renderizador);
     texturas["Bloques"]  = intentarCarga("la imagen de los bloques","resources/Imagenes/Bloques/Bloques.png",renderizador);
     texturas["Goombas"]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);
     texturas["Koopas"]  = intentarCarga("la imagen de los Koopas","resources/Imagenes/Personajes/Koopas.png",renderizador);

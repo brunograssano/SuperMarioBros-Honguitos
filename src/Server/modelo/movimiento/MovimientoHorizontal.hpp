@@ -14,7 +14,9 @@ class MovimientoHorizontal{
 		void mover(PosicionMovil* posicion, Terreno* terreno);
 		bool estaQuieto();
 
-    private:
+    float obtenerVelocidadXActual();
+
+private:
 		float velocidadX;
 		float maximaVelocidadX;
 		float aceleracionX;

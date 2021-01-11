@@ -8,6 +8,8 @@
 class Mario;
 #include "Sprite.hpp"
 #include "src/Server/modelo/Mario/Mario.hpp"
+#include "src/Utils/Constantes.hpp"
+
 
 class SpriteMario : public Sprite{
 
@@ -23,8 +25,11 @@ class SpriteMario : public Sprite{
 		void actualizarSpriteMarioIzquierda(Mario* mario);
 		void actualizarSpriteMarioSaltar();
         void actualizarSpriteMarioAgacharse();
+        Posicion posicionManos();
 
-	private:
+    int direccionMirada();
+
+private:
 		SDL_Rect estadosPosibles[14]{};
 		int proximoEstado{};
 		int contadorEvento{};

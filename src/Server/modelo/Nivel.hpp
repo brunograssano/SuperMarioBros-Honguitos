@@ -41,11 +41,13 @@ class Nivel{
 		string obtenerDireccionFondoActual();
         void terminar();
         void completarInformacionNivel(nivel_t *nivel);
+    void aparecerDisparo(Disparo* disparo);
 
     private:
         void sacarEnemigosMuertos();
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
+        void actualizarDisparos();
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
         void resolverGanadores(map<int, Mario *> map);
@@ -63,6 +65,10 @@ class Nivel{
         list<Tuberia*> tuberias;
         list<Enemigo*>enemigosMuertos;
 
+        //todo ->
+        list<Disparo*> disparos;               //Refactor: proximamente tendra objetosFugaces: flores, disparos, otros objetos(Moneda de bloque)
+        //list<ObjetoFugaz*> objetosFugaces;   // y esta debería ser la lista. Estos objetos podrán desaparecer, para ello
+                                               // habrá que preguntar si "debeDesaparecer()" y si es así quitarlo... :S
         Meta* meta;
         Contador* contador;
 

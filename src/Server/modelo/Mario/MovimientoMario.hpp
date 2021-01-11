@@ -19,9 +19,12 @@ class MovimientoMario{
 		void setVelocidadY(int velocidad){
 			this->movimientoY->setVelocidadY(velocidad);
 		}
+        float obtenerVelocidadXActual();
 		void mover(PosicionMovil* posicion);
 
-	private:
+
+
+private:
 		MovimientoHorizontal* movimientoX;
 		MovimientoVertical* movimientoY;
 		Terreno* terrenoActual;

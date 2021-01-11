@@ -9,9 +9,9 @@ PosicionMovil::PosicionMovil(int coordenadaX, int coordenadaY, int minimoY, int 
 }
 
 PosicionMovil::PosicionMovil(int coordenadaX, int coordenadaY) : Posicion() {
-    this->posicionX= (float)coordenadaX;
+    this->posicionX= (float) coordenadaX;
     this->posicionY= coordenadaY;
-    this->minimoY = 2147483647;
+    this->minimoY = -2147483647;
     this->minimoX = -2147483648;
     this->maximoX = 2147483647;
 }
@@ -21,12 +21,11 @@ void PosicionMovil::moverHorizontal(float cantidadAMover) {
         this->posicionX+=cantidadAMover;
 }
 
-void PosicionMovil::moverVertical(int cantidadAMover) {
-    if(posicionY + cantidadAMover < minimoY){
-        posicionY = minimoY;
-    }else{
+void PosicionMovil::moverVertical(float cantidadAMover) {
+    if(((posicionY + cantidadAMover) >= (float)minimoY))
         this->posicionY+=cantidadAMover;
-    }
+    else
+        this->posicionY=minimoY;
 }
 
 void PosicionMovil::actualizarLimiteTerrenoIzq(int limite) {

@@ -8,12 +8,16 @@
 
 #include "MovimientoMario.hpp"
 #include "VidaMario.h"
-#include "Modificadores/ModificadorMario.h"
-#include "Modificadores/SinModificador.h"
-#include "Modificadores/MarioDeFuego.h"
+#include "Modificadores/ModificadorMario.hpp"
+#include "Modificadores/SinModificador.hpp"
+#include "Modificadores/MarioDeFuego.hpp"
 
 class SpriteMario;
 #include "src/Server/sprites/SpriteMario.hpp"
+
+#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
+#include "src/Server/modelo/Objetos/Chispa.hpp"
 
 class Mario{
 
@@ -41,7 +45,7 @@ class Mario{
         void perderVida();
         int obtenerVida();
         void hacerseDeFuego();
-        void dispararFuego();//agregarle lo que se necesite
+        Disparo* dispararFuego();
 
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
 		void desconectar(){

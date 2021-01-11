@@ -11,6 +11,7 @@ using namespace std;
 
 class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"
+#include "src/Server/modelo/Objetos/Disparo.hpp"
 #include "Camara/Camara.hpp"
 #include "src/Utils/Contador.hpp"
 
@@ -30,7 +31,7 @@ class Juego{
 
 		static Juego* instanciaJuego;
 
-public:
+    public:
 		Juego(Juego &other) = delete;
         ~Juego();
 		static Juego* getInstance();

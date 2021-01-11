@@ -32,9 +32,25 @@ void Nivel::actualizarMonedas(){
 	}
 }
 
+void Nivel::actualizarDisparos() {
+    list<Disparo*> disparosABorrar;
+    for(auto const& disparo: disparos){
+        disparo->actualizar();
+        if(disparo->debeDesaparecer()){
+            disparosABorrar.push_back(disparo);
+        }
+    }
+    for(auto disparo : disparosABorrar){
+        disparos.remove(disparo);
+        delete disparo;
+    }
+
+}
+
 void Nivel::actualizarModelo(map<int, Mario*> jugadores){
     //resolverColisiones(jugadores);
     actualizarPosicionesEnemigos();
+    actualizarDisparos();
     actualizarMonedas();
     resolverGanadores(jugadores);
 }
@@ -234,7 +250,15 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
         }
     }
     ptrInfoRonda->topeMonedas = numeroMoneda;
-
+    int numeroEfecto = 0;
+    for(auto const& disparo : disparos){
+        if(deboAgregarlo(contexto, disparo->obtenerPosicionX()) &&
+            numeroEfecto<MAX_EFECTOS){
+            ptrInfoRonda->efectos[numeroEfecto] = disparo->serializar();
+            numeroEfecto++;
+        }
+    }
+    ptrInfoRonda->topeEfectos = numeroEfecto;
 }
 
 void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
@@ -299,10 +323,14 @@ Nivel::~Nivel (){
     }
     for(const auto& moneda:monedas){
         delete moneda;
-     }
+    }
     for(const auto& enemigo:enemigos){
         delete enemigo;
     }
+    for(const auto& disparo:disparos){
+        delete disparo;
+    }
+    disparos.clear();
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
@@ -316,4 +344,9 @@ void Nivel::iniciar() {
 
 int Nivel::tiempoRestante() {
     return contador->tiempoRestante();
+}
+
+/* todo Refactor: Aparecer objetoFugaz */
+void Nivel::aparecerDisparo(Disparo* disparo) {
+    disparos.push_back(disparo);
 }

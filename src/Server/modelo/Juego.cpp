@@ -87,6 +87,7 @@ int Juego::obtenerMundoActual(){
 }
 
 void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entradaUsuario) {
+    if(niveles.empty()) return;
 
     Mario* jugador = jugadores[idJugador];
     bool seMovio = false;
@@ -104,6 +105,13 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     }
     if(entradaUsuario.S && !seMovio){
         jugador->actualizarAgacharseMario();
+    }
+    if(entradaUsuario.F){
+        jugador->hacerseDeFuego();
+    }
+    if(entradaUsuario.ESP){ //todo: tener un boton para esto je
+        Disparo* disparo = jugador->dispararFuego();
+        niveles.front()->aparecerDisparo(disparo);
     }
 }
 

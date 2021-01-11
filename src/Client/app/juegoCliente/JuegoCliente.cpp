@@ -63,6 +63,7 @@ void JuegoCliente::actualizar(){
 	enemigos.clear();
 	jugadores.clear();
 	monedas.clear();
+	efectos.clear();
 
 	for(int i=0;i<ronda.topeBloques;i++){ // TODO PENSAR FORMA DE SACAR LO REPETIDO // sizeof(objeto), comienzo del vector
 		bloques.push_front(ronda.bloques[i]);
@@ -76,6 +77,10 @@ void JuegoCliente::actualizar(){
 	for(int i=0;i<cantidadJugadores;i++){
 		jugadores[i]=ronda.jugadores[i];
 	}
+    for(int i=0;i<ronda.topeEfectos;i++){
+        efectos.push_front(ronda.efectos[i]);
+    }
+
 }
 
 int JuegoCliente::obtenerIDPropio() const{
@@ -123,6 +128,10 @@ list<tuberia_t> JuegoCliente::obtenerTuberias() {
         }
     }
     return tuberiasAMostrar;
+}
+
+list<efecto_t> JuegoCliente::obtenerEfectos() {
+    return efectos;
 }
 
 void JuegoCliente::agregarNivel(nivel_t nivel) {

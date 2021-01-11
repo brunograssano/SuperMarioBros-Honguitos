@@ -11,8 +11,7 @@ class PosicionMovil : public Posicion{
         ~PosicionMovil() override = default;
 
         void moverHorizontal(float cantidadAMover);
-        void moverVertical(int cantidadAMover);
-
+        void moverVertical(float cantidadAMover);
         void actualizarLimiteTerrenoIzq(int limite);
         void actualizarLimiteTerrenoDer(int limite);
 

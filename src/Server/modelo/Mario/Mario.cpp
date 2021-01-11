@@ -103,6 +103,7 @@ void Mario::actualizarPosicion(){
 		this->movimiento->setVelocidadY(0);
 	}
 	spriteMario->actualizarSprite(this);
+	modificador->actualizar();
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
@@ -141,8 +142,10 @@ void Mario::hacerseDeFuego() {
     swapDeModificador(nuevoModificador);
 }
 
-void Mario::dispararFuego() {
-    modificador->dispararFuego();//agregar lo que se necesite
+Disparo* Mario::dispararFuego() {
+    Posicion posManos = spriteMario->posicionManos();
+    PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),obtenerPosicionY() + posManos.obtenerPosY());
+    return modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
 }
 
 Mario::~Mario(){

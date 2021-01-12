@@ -9,6 +9,7 @@ Koopa::Koopa(int tipoColor) {
     this->tipoColor = tipoColor;
     velocidadX = obtenerVelocidad();
     puntos = PUNTOS_KOOPA;
+    this->inicializarMapasDeColision();
 }
 
 Koopa::~Koopa() {
@@ -22,4 +23,9 @@ enemigo_t Koopa::serializar() {
 
 string Koopa::obtenerColisionID() {
     return COLISION_ID_KOOPA;
+}
+
+void Koopa::inicializarMapasDeColision() {
+    Colisionable::FuncionDeColision pMorir = (void (Colisionable::*)())&Koopa::morir;
+    mapaColisionesPorAbajo[COLISION_ID_MARIO] = pMorir;
 }

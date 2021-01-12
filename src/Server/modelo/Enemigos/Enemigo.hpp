@@ -15,13 +15,14 @@ class Enemigo : public Colisionable{
 	public:
         virtual ~Enemigo()= default;
         virtual enemigo_t serializar() =0 ;
-        virtual void morir(Mario *marioQueMatoAlEnemigo);
+        virtual void morir();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
 		virtual void actualizarPosicion();
         virtual bool sePuedeEliminar();
         string obtenerColisionID() override = 0;
+        rectangulo_t obtenerRectangulo() override;
 
 	protected:
         static float obtenerVelocidad(){
@@ -33,8 +34,8 @@ class Enemigo : public Colisionable{
         float velocidadX{};
         int tipoColor{};
         int puntos;
-    private:
-        void inicializarMapasDeColision() override;
+        void inicializarMapasDeColision() override = 0;
+
 };
 
 

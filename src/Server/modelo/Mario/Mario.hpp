@@ -59,6 +59,7 @@ class Mario : public Colisionable {
 		void actualizarMaximoX(int limite);
 		void actualizarMinimoX(int limite);
 
+        rectangulo_t obtenerRectangulo() override;
         string obtenerColisionID() override;
 
 		~Mario();
@@ -66,6 +67,7 @@ class Mario : public Colisionable {
 private:
         void inicializarMapasDeColision() override;
         void swapDeModificador(ModificadorMario *nuevoModificador);
+        void impulsar();
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
 		SpriteMario * spriteMario;
@@ -74,6 +76,7 @@ private:
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;
+
 };
 
 

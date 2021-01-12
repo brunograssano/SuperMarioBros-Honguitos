@@ -1,5 +1,6 @@
-#include <src/Server/modelo/Enemigos/Goomba.hpp>
-#include <src/Server/modelo/Enemigos/Koopa.hpp>
+#include "src/Server/modelo/Enemigos/Goomba.hpp"
+#include "src/Server/modelo/Enemigos/Koopa.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 #include "EnemigoTest.hpp"
 
 #define CYAN "\u001b[36m"
@@ -10,6 +11,8 @@ void EnemigoTest::ejecutar(Assert *testSuite) {
     cout << CYAN"========== Comenzando con las pruebas de los enemigos ==========" RESET << endl;
     cout << AZUL_CLARO"----------TEST 01----------" RESET<< endl;
     test01LosEnemigosSePuedenMover(testSuite);
+    cout << AZUL_CLARO"----------TEST 02----------" RESET<< endl;
+    test02SeChocaMarioPorArribaConUnEnemigoYElEnemigoMuere(testSuite);
     cout << CYAN"========== Finalizando con las pruebas de los enemigos ==========" RESET << endl;
 }
 
@@ -28,4 +31,19 @@ void EnemigoTest::test01LosEnemigosSePuedenMover(Assert *testSuite) {
 
     testSuite->assert(goomba->obtenerPosicionX()!=posInicialGoomba,"El Goomba se puede mover");
     testSuite->assert(koopa->obtenerPosicionX()!=posInicialKoopa,"El Koopa se puede mover");
+}
+
+void EnemigoTest::test02SeChocaMarioPorArribaConUnEnemigoYElEnemigoMuere(Assert* testSuite){
+    auto* goomba = new Goomba(0);
+    goomba->agregarPosicion(5,5);
+    auto* mario = new Mario(0);
+
+    goomba->chocarPorAbajoCon(mario);
+
+    for(int i = 0; i < 100; i++){
+        goomba->actualizarPosicion();
+    }
+
+    testSuite->assert(goomba->sePuedeEliminar(), "Se murio el Goomba");
+
 }

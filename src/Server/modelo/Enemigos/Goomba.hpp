@@ -12,6 +12,9 @@ class Goomba : public Enemigo{
 		enemigo_t serializar() override;
 		~Goomba() override;
         string obtenerColisionID() override;
+
+    private:
+        void inicializarMapasDeColision() override;
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_GOOMBA_HP_ */

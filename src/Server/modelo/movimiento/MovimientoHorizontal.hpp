@@ -16,6 +16,8 @@ class MovimientoHorizontal{
 
     float obtenerVelocidadXActual();
 
+    void setVelocidad(int velocidad);
+
 private:
 		float velocidadX;
 		float maximaVelocidadX;

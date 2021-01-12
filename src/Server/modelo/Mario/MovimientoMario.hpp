@@ -23,6 +23,9 @@ class MovimientoMario{
 		void mover(PosicionMovil* posicion);
 
 
+    void impulsarY();
+
+    void reiniciar();
 
 private:
 		MovimientoHorizontal* movimientoX;

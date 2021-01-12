@@ -65,6 +65,9 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
 									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
+        SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F );
+		SDL_RenderDrawRect(renderizador, &rectanguloEnemigo);
+
 		SDL_RenderCopyEx(renderizador,texturaEnemigo,&recorteTextura,&rectanguloEnemigo,0,
                          nullptr,enemigo.espejar?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
     }
@@ -133,6 +136,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 				idMario = mario.recorteImagen;
 				recorteMario = recorteSpriteMario->obtenerRecorte(0);
 			}
+
 			SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(idMario), &recorteMario, &rectanguloMario);
 		}
 	}
@@ -143,6 +147,8 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 												ANCHO_MARIO, ALTO_MARIO};
 
 	SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+    SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F );
+    SDL_RenderDrawRect(renderizador, &rectanguloMario);
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario, &rectanguloMario);
 }
 

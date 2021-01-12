@@ -18,8 +18,7 @@ void Enemigo::actualizarPosicion() {
     spriteEnemigo->actualizarSprite();
 }
 
-void Enemigo::morir(Mario* marioQueMatoAlEnemigo) {
-    marioQueMatoAlEnemigo->agregarPuntos(puntos);
+void Enemigo::morir() {
     spriteEnemigo->morir();
 }
 
@@ -37,6 +36,14 @@ bool Enemigo::sePuedeEliminar() {
     return spriteEnemigo->seMostroElTiempoSuficienteEnPantalla();
 }
 
-void Enemigo::inicializarMapasDeColision() {
+rectangulo_t Enemigo::obtenerRectangulo() {
+    int x = this->obtenerPosicionX();
+    int y = this->obtenerPosicionY();
 
+    int h = 10; //todo obtener el valor
+    int w = 20;
+    rectangulo_t rectangulo = {x,x+w,y,y+h, w, h};
+    return rectangulo;
 }
+
+

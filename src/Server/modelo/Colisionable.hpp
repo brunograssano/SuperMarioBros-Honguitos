@@ -4,11 +4,13 @@
 #include <map>
 #include <string>
 #include <typeinfo>
+
+#include "src/Utils/colisiones/Colisionador.hpp"
+#include "src/Utils/Utils.hpp"
+
 using namespace std;
 
 class Colisionable{
-
-
 
     public:
         typedef void(Colisionable::*FuncionDeColision)();
@@ -17,6 +19,8 @@ class Colisionable{
         virtual void chocarPorArribaCon(Colisionable* colisionable);
         virtual void chocarPorAbajoCon(Colisionable* colisionable);
         virtual string obtenerColisionID() = 0;
+        virtual rectangulo_t obtenerRectangulo() = 0;
+
     protected:
         map<std::string, Colisionable::FuncionDeColision> mapaColisionesPorDerecha;
         map<std::string, Colisionable::FuncionDeColision> mapaColisionesPorIzquierda;

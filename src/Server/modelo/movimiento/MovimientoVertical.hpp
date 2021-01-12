@@ -14,7 +14,8 @@ class MovimientoVertical{
 			this->velocidadY = (float)velocidad;
 		}
 
-	private:
+
+private:
 		void aplicarGravedad();
 		float velocidadY;
 		float fuerza;

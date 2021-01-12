@@ -1,5 +1,5 @@
 #include "Nivel.hpp"
-
+#include "src/Utils/colisiones/Colisionador.hpp"
 #include <string>
 
 const int TAMANIO_MONEDA = 40;
@@ -48,11 +48,21 @@ void Nivel::actualizarDisparos() {
 }
 
 void Nivel::actualizarModelo(map<int, Mario*> jugadores){
-    //resolverColisiones(jugadores);
+    resolverColisiones(jugadores);
     actualizarPosicionesEnemigos();
     actualizarDisparos();
     actualizarMonedas();
+    sacarEnemigosMuertos();
     resolverGanadores(jugadores);
+}
+
+void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
+    for(auto const& parClaveJugador: jugadores){
+        Mario* jugador = parClaveJugador.second;
+        for(auto const& enemigo: enemigos){
+            chocar(jugador, enemigo);
+        }
+    }
 }
 
 void Nivel::resolverGanadores(map<int, Mario *> mapaJugadores) {

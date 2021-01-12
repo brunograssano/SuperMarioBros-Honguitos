@@ -32,6 +32,14 @@ const int MAX_MENSAJE = 75;
 const int TIPO_GOOMBA = 1;
 const int TIPO_KOOPA = 2;
 
+typedef struct rectangulo{
+    int x1;
+    int x2;
+    int y1;
+    int y2;
+    int h;
+    int w;
+}rectangulo_t;
 
 #define TIPO_ERROR 'E'
 #define INFO 'I'

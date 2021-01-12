@@ -13,5 +13,7 @@ int VidaMario::obtenerVida() const {
 VidaMario::~VidaMario() = default;
 
 void VidaMario::perderVida() {
-    vidas--;
+    if(vidas >= 1){
+        vidas--;
+    }
 }

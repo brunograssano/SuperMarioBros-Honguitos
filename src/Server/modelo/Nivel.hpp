@@ -14,6 +14,7 @@
 #include "Enemigos/Enemigo.hpp"
 #include "Moneda.hpp"
 #include "Meta.hpp"
+
 using namespace std;
 
 const int ANCHO_FONDO2 = 8177;
@@ -48,12 +49,14 @@ class Nivel{
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
         void actualizarDisparos();
+        void resolverColisiones(map<int,Mario*> jugadores);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
         void resolverGanadores(map<int, Mario *> map);
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
         void inicializarPosicionesOcupadasPorBloques();
+
 
         map<int, bool> posicionesOcupadasXEnemigos;
         map<tuple<int, int>, bool> posicionesOcupadas;

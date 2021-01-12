@@ -8,6 +8,7 @@ Goomba::Goomba(int tipoColor) {
     this->tipoColor = tipoColor;
     velocidadX = obtenerVelocidad();
     puntos = PUNTOS_GOOMBA;
+    this->inicializarMapasDeColision();
 }
 
 enemigo_t Goomba::serializar() {
@@ -21,4 +22,9 @@ Goomba::~Goomba() {
 
 string Goomba::obtenerColisionID() {
     return COLISION_ID_GOOMBA;
+}
+
+void Goomba::inicializarMapasDeColision() {
+    Colisionable::FuncionDeColision pMorir = (void (Colisionable::*)())&Goomba::morir;
+    mapaColisionesPorAbajo[COLISION_ID_MARIO] = pMorir;
 }

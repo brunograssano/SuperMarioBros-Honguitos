@@ -7,6 +7,11 @@ const short MARIO_DESCONECTADO = -1;
 
 const int PUNTOS_POR_MONEDA = 50;
 
+void Mario::impulsar(){
+    movimiento->impulsarY();
+    spriteMario->actualizarSpriteMarioSaltar();
+}
+
 Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
 			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
@@ -22,14 +27,19 @@ Mario::Mario(int numeroJugador){
 
 void Mario::inicializarMapasDeColision(){
     Colisionable::FuncionDeColision pPerderVida = (void (Colisionable::*)())&Mario::perderVida;
+    Colisionable::FuncionDeColision pSaltar = (void (Colisionable::*)())&Mario::impulsar;
+
     mapaColisionesPorDerecha[COLISION_ID_KOOPA] = pPerderVida;
     mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
 
     mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = pPerderVida;
-    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = pPerderVida;
 
     mapaColisionesPorAbajo[COLISION_ID_KOOPA] = pPerderVida;
-    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
+    mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = pPerderVida;
+
+    mapaColisionesPorArriba[COLISION_ID_KOOPA] = pSaltar;
+    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = pSaltar;
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -147,6 +157,8 @@ int Mario::obtenerVida(){
 
 void Mario::perderVida() {
     ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
+    posicion->reiniciar();
+    movimiento->reiniciar();
     swapDeModificador(nuevoModificador);
 }
 
@@ -171,4 +183,13 @@ Mario::~Mario(){
 
 string Mario::obtenerColisionID() {
     return COLISION_ID_MARIO;
+}
+
+rectangulo_t Mario::obtenerRectangulo() {
+    int x = this->obtenerPosicionX();
+    int y = this->obtenerPosicionY();
+    int h = 20; //todo: obtener correctamente las dimensiones
+    int w = 20;
+    rectangulo_t rectangulo = {x,x+w,y,y+h, w, h};
+    return rectangulo;
 }

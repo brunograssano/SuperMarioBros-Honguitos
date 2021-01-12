@@ -19,3 +19,4 @@ void MovimientoVertical::mover(PosicionMovil* posicion){
 	posicion->moverVertical(desplazamientoY);
 	aplicarGravedad();
 }
+

@@ -1,3 +1,4 @@
+#include <src/Server/modelo/Terreno/CabezaEnemigo.hpp>
 #include "MovimientoMario.hpp"
 
 const float MAXIMA_VELOCIDAD_X = 5;
@@ -49,4 +50,19 @@ MovimientoMario::~MovimientoMario(){
 
 float MovimientoMario::obtenerVelocidadXActual() {
     return movimientoX->obtenerVelocidadXActual();
+}
+
+void MovimientoMario::impulsarY() {
+    Terreno* cabezaEnemigo = new CabezaEnemigo();
+    this->movimientoY->saltar(cabezaEnemigo);
+    delete cabezaEnemigo;
+    delete terrenoActual;
+    terrenoActual = new Aire();
+}
+
+void MovimientoMario::reiniciar() {
+    delete terrenoActual;
+    setVelocidadY(0);
+    this->movimientoX->setVelocidad(0);
+    terrenoActual = new Tierra();
 }

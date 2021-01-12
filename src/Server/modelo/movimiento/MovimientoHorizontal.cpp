@@ -56,3 +56,7 @@ void MovimientoHorizontal::mover(PosicionMovil* posicion, Terreno* terreno){
 float MovimientoHorizontal::obtenerVelocidadXActual() {
     return this->velocidadX;
 }
+
+void MovimientoHorizontal::setVelocidad(int velocidad) {
+    this->velocidadX = velocidad;
+}

@@ -35,3 +35,8 @@ void PosicionMovil::actualizarLimiteTerrenoIzq(int limite) {
 void PosicionMovil::actualizarLimiteTerrenoDer(int limite) {
     maximoX = limite;
 }
+
+void PosicionMovil::reiniciar() {
+    posicionX = minimoX;
+    posicionY = minimoY;
+}

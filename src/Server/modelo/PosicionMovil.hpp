@@ -14,6 +14,7 @@ class PosicionMovil : public Posicion{
         void moverVertical(float cantidadAMover);
         void actualizarLimiteTerrenoIzq(int limite);
         void actualizarLimiteTerrenoDer(int limite);
+        void reiniciar();
 
     private:
         int minimoX;

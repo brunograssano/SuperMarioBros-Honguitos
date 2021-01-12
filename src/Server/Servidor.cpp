@@ -64,7 +64,6 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int i
 	conexionesPerdidas.push_front(conexionPerdida);
 	clientes.remove(conexionPerdida);
 	pthread_mutex_unlock(&mutex);
-	reconectador->despertarHilo();
 
     mandarActualizacionAClientes();
 }
@@ -91,9 +90,9 @@ void Servidor::reconectarJugador(mensaje_log_t mensajeLog,const int idJugador){
 }
 
 void Servidor::ejecutar(){
-	empezarHilo(aplicacionServidor,"GameLoop");
-	empezarHilo(aceptadorDeConexiones,"AceptadorDeConexiones");
-	empezarHilo(reconectador,"ReconectadorDeConexiones");
+	::empezarHilo(aplicacionServidor,"GameLoop");
+	::empezarHilo(aceptadorDeConexiones,"AceptadorDeConexiones");
+	::empezarHilo(reconectador,"ReconectadorDeConexiones");
 	intentarIniciarModelo();
     aplicacionServidor->join("GameLoop");
 }
@@ -156,6 +155,7 @@ bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCl
 			for(auto const& cliente:clientes){
 				cliente->actualizarCliente(actualizacion);
 			}
+			despertarHilo();
 			return true;
 		}
 	}
@@ -175,6 +175,7 @@ bool Servidor::esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* 
 void Servidor::intentarIniciarModelo(){
 	info_partida_t info_partida[cantidadConexiones];
 	while(mapaIDNombre.size() < cantidadConexiones){
+	    dormirHilo();
 	}
 
 	log->mostrarMensajeDeInfo("Se va a iniciar el envio de informacion inicial a los jugadores.");
@@ -237,6 +238,7 @@ Servidor::~Servidor(){
 
 	cerrarServidor(socketServer);
     reconectador->terminarReconectarConexiones();
+    reconectador->despertarHilo();
 	while(!aceptadorDeConexiones->terminoAceptar() || !reconectador->terminoHiloReconectar()){}
     delete aceptadorDeConexiones;
 	delete manejadorIDs;

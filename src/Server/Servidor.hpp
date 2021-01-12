@@ -36,7 +36,7 @@ class AceptadorDeConexiones;
 class ReconectadorDeConexiones;
 #include "ReconectadorDeConexiones.hpp"
 
-class Servidor{
+class Servidor : public Thread{
 
 	public:
 		Servidor(ArchivoLeido* archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
@@ -46,7 +46,7 @@ class Servidor{
 		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia);
-		void ejecutar();
+		void ejecutar() override;
 		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminarElJuego();
 

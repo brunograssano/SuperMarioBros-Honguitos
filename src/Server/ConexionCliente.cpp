@@ -24,11 +24,12 @@ void ConexionCliente::recibirCredencial(string posibleNombre, string posibleCont
 	this->nombre = std::move(posibleNombre);
 	this->contrasenia = std::move(posibleContrasenia);
 	recibioCredenciales = true;
+	despertarHilo();
 }
 
 void ConexionCliente::esperarCredenciales(){
-    pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
 	while(!recibioCredenciales && !terminoJuego){
+	    dormirHilo();
 	}
 	recibioCredenciales = false;
 }

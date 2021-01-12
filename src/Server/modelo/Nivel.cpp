@@ -77,12 +77,19 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
             objeto->usarse(jugador);
             if(objeto->fueUsado()){
                 objetosSorpresa.remove(objeto);
+                delete objeto;
             }
             else{
                 objetosSorpresa.push_front(objeto);
             }
         }
 
+    }
+
+    for(auto& enemigo:enemigos){
+        for(auto const& bloque:plataformas){
+            chocar(enemigo, bloque);
+        }
     }
 }
 
@@ -367,6 +374,9 @@ Nivel::~Nivel (){
     }
     for(const auto& disparo:disparos){
         delete disparo;
+    }
+    for(const auto& objeto:objetosSorpresa){
+        delete objeto;
     }
     disparos.clear();
     plataformas.clear();

@@ -25,6 +25,11 @@ void Enemigo::morir(void* ptr) {
     this->velocidadX = 0;
 }
 
+
+void Enemigo::cambiarOrientacion(void *ptr) {
+    velocidadX = -velocidadX;
+}
+
 enemigo_t Enemigo::serializarEnemigo(int tipo) {
     enemigo_t enemigoSerializado;
     enemigoSerializado.posX = this->obtenerPosicionX();
@@ -56,8 +61,19 @@ bool Enemigo::estaMuerto() const{
 
 void Enemigo::inicializarMapasDeColision() {
     auto pMorir = (void (Colisionable::*)(void*))&Enemigo::morir;
+    auto pCambiarVelocidad = (void (Colisionable::*)(void*))&Enemigo::cambiarOrientacion;
     Colisionable::parFuncionColisionContexto_t parFuncionColisionContexto = {pMorir, nullptr};
+    Colisionable::parFuncionColisionContexto_t parFuncionColisioBloque = {pCambiarVelocidad, nullptr};
     mapaColisionesPorArriba[COLISION_ID_MARIO] = parFuncionColisionContexto;
+    mapaColisionesPorDerecha[COLISION_ID_LADRILLO] = parFuncionColisioBloque;
+    mapaColisionesPorDerecha[COLISION_ID_SORPRESA] = parFuncionColisioBloque;
+    mapaColisionesPorIzquierda[COLISION_ID_LADRILLO] = parFuncionColisioBloque;
+    mapaColisionesPorIzquierda[COLISION_ID_SORPRESA] = parFuncionColisioBloque;
 }
+
+float Enemigo::obtenerVelocidad() {
+    return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
+}
+
 
 

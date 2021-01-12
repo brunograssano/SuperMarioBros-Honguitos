@@ -26,9 +26,8 @@ class Enemigo : public Colisionable{
         bool estaMuerto() const;
 
     protected:
-        static float obtenerVelocidad(){
-            return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
-        }
+        void cambiarOrientacion(void* ptr = nullptr);
+        static float obtenerVelocidad();
         enemigo_t serializarEnemigo(int tipo);
 		PosicionMovil* posicionActual{};
         SpriteEnemigo* spriteEnemigo{};

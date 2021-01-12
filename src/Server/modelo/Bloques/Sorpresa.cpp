@@ -49,5 +49,7 @@ void Sorpresa::chocarPorAbajoCon(Colisionable *colisionable) {
 Sorpresa::~Sorpresa() {
     delete this->posicion;
     delete this->spriteBloque;
-    delete this->objetoSorpresa;
+    if(!usado){
+        delete this->objetoSorpresa;
+    }
 }

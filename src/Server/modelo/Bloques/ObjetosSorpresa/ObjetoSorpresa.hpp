@@ -10,6 +10,7 @@ class ObjetoSorpresa {
         virtual ~ObjetoSorpresa() = default;
         virtual void usarse(Mario* mario) {};
         virtual bool fueUsado(){return usado;}
+
     protected:
         bool usado;
 };

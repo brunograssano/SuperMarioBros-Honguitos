@@ -11,7 +11,7 @@ EnviadorCliente::EnviadorCliente(int socketCliente,Cliente* cliente,bool* termin
     this->cliente = cliente;
 }
 
-void EnviadorCliente::enviar() {
+void EnviadorCliente::ejecutar() {
     char tipoMensaje;
     bool hayError = false;
     while(!(*terminoJuego) && !hayError){

@@ -5,7 +5,6 @@ EnviadorMensajeLog::EnviadorMensajeLog(int socket){
 }
 
 void EnviadorMensajeLog::enviar(){
-	char caracterMensaje = MENSAJE_LOG;
 	mensaje_log_t mensaje;
 	memset(&mensaje,0,sizeof(mensaje_log_t));
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -14,7 +13,7 @@ void EnviadorMensajeLog::enviar(){
 		mensaje = mensajesLog.front();
 		mensajesLog.pop();
 		pthread_mutex_unlock(&mutex);
-        Enviador::enviar(MENSAJE_LOG,&caracterMensaje,sizeof(mensaje_log_t));
+        Enviador::enviar(MENSAJE_LOG,&mensaje,sizeof(mensaje_log_t));
 	}
 
 }

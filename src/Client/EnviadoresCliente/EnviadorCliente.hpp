@@ -4,12 +4,13 @@
 class Cliente;
 #include "../Cliente.hpp"
 #include "../../Utils/Enviador.hpp"
+#include "../../Utils/Thread.hpp"
 
-class EnviadorCliente {
+class EnviadorCliente  : public Thread{
     public:
         EnviadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar);
         ~EnviadorCliente();
-        void enviar();
+        void ejecutar()override;
         void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);
 
     private:

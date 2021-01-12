@@ -8,6 +8,7 @@ using namespace std;
 #include "LectorTest.hpp"
 #include "EnemigoTest.hpp"
 #include "ColisionadorTest.hpp"
+#include "MonedaTest.hpp"
 #include "Assert.hpp"
 
 
@@ -19,6 +20,8 @@ int mainTest(){
 	LectorTest::ejecutar(testSuite);
 	EnemigoTest::ejecutar(testSuite);
 	ColisionadorTest::ejecutar(testSuite);
+	MonedaTest::ejecutar(testSuite);
+
 
 	cout << "Pasaron " << testSuite->getPruebasPasadas() << " pruebas de "<< testSuite->getPruebasTotales() << endl;
 	delete testSuite;

@@ -1,15 +1,14 @@
 #include "Koopa.hpp"
-#define PUNTOS_KOOPA 1000
 #include "../../sprites/SpriteKoopa.hpp"
-
 #include "src/Utils/Constantes.hpp"
 
 Koopa::Koopa(int tipoColor) {
     spriteEnemigo = new SpriteKoopa(tipoColor);
     this->tipoColor = tipoColor;
     velocidadX = obtenerVelocidad();
-    puntos = PUNTOS_KOOPA;
+    loMataron = false;
     this->inicializarMapasDeColision();
+    posicionActual = new PosicionMovil(0, 0);
 }
 
 Koopa::~Koopa() {
@@ -23,9 +22,4 @@ enemigo_t Koopa::serializar() {
 
 string Koopa::obtenerColisionID() {
     return COLISION_ID_KOOPA;
-}
-
-void Koopa::inicializarMapasDeColision() {
-    Colisionable::FuncionDeColision pMorir = (void (Colisionable::*)())&Koopa::morir;
-    mapaColisionesPorAbajo[COLISION_ID_MARIO] = pMorir;
 }

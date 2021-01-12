@@ -1,14 +1,14 @@
 #include "Goomba.hpp"
 #include "../../sprites/SpriteGoomba.hpp"
 #include "src/Utils/Constantes.hpp"
-#define PUNTOS_GOOMBA 500
 
 Goomba::Goomba(int tipoColor) {
     spriteEnemigo = new SpriteGoomba(tipoColor);
     this->tipoColor = tipoColor;
     velocidadX = obtenerVelocidad();
-    puntos = PUNTOS_GOOMBA;
-    this->inicializarMapasDeColision();
+    loMataron = false;
+    inicializarMapasDeColision();
+    posicionActual = new PosicionMovil(0, 0);
 }
 
 enemigo_t Goomba::serializar() {
@@ -22,9 +22,4 @@ Goomba::~Goomba() {
 
 string Goomba::obtenerColisionID() {
     return COLISION_ID_GOOMBA;
-}
-
-void Goomba::inicializarMapasDeColision() {
-    Colisionable::FuncionDeColision pMorir = (void (Colisionable::*)())&Goomba::morir;
-    mapaColisionesPorAbajo[COLISION_ID_MARIO] = pMorir;
 }

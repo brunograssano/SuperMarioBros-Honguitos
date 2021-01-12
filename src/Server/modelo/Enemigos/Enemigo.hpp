@@ -15,7 +15,7 @@ class Enemigo : public Colisionable{
 	public:
         virtual ~Enemigo()= default;
         virtual enemigo_t serializar() =0 ;
-        virtual void morir();
+        void morir(void* ptr = nullptr);
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
@@ -23,8 +23,9 @@ class Enemigo : public Colisionable{
         virtual bool sePuedeEliminar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
+        bool estaMuerto() const;
 
-	protected:
+    protected:
         static float obtenerVelocidad(){
             return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
         }
@@ -33,9 +34,8 @@ class Enemigo : public Colisionable{
         SpriteEnemigo* spriteEnemigo{};
         float velocidadX{};
         int tipoColor{};
-        int puntos;
-        void inicializarMapasDeColision() override = 0;
-
+        void inicializarMapasDeColision() override;
+        bool loMataron = false;
 };
 
 

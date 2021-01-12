@@ -46,6 +46,7 @@ class Nivel{
 
     private:
         void sacarEnemigosMuertos();
+        void sacarMonedasAgarradas();
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
         void actualizarDisparos();
@@ -66,7 +67,6 @@ class Nivel{
         list<Moneda*> monedas;
         list<Pozo*> pozos;
         list<Tuberia*> tuberias;
-        list<Enemigo*>enemigosMuertos;
 
         //todo ->
         list<Disparo*> disparos;               //Refactor: proximamente tendra objetosFugaces: flores, disparos, otros objetos(Moneda de bloque)

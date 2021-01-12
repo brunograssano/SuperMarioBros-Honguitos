@@ -14,3 +14,7 @@ float Tierra::obtenerImpulsoHorizontal(float aceleracion){
 float Tierra::obtenerImpulsoVertical(float fuerza){
 	return fuerza;
 }
+
+float Tierra::amortiguarVelocidad(float velocidadY) {
+    return 0;
+}

@@ -5,8 +5,6 @@ using namespace std;
 #include <iostream>
 #include <string>
 
-#include <stdio.h>
-
 #include "../../Server/modelo/Bloques/Bloque.hpp"
 #include "Assert.hpp"
 

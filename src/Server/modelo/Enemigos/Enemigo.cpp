@@ -10,7 +10,8 @@ int Enemigo::obtenerPosicionY() {
 }
 
 void Enemigo::agregarPosicion(int coordenadaX, int coordenadaY) {
-    posicionActual = new PosicionMovil(coordenadaX,coordenadaY);
+    delete posicionActual;
+    posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
 }
 
 void Enemigo::actualizarPosicion() {
@@ -18,13 +19,16 @@ void Enemigo::actualizarPosicion() {
     spriteEnemigo->actualizarSprite();
 }
 
-void Enemigo::morir() {
+void Enemigo::morir(void* ptr) {
+    loMataron = true;
     spriteEnemigo->morir();
+    this->velocidadX = 0;
 }
 
 enemigo_t Enemigo::serializarEnemigo(int tipo) {
     enemigo_t enemigoSerializado;
     enemigoSerializado.posX = this->obtenerPosicionX();
+    enemigoSerializado.posY = this->obtenerPosicionY();
     enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
     enemigoSerializado.numeroRecorteY = tipoColor;
     enemigoSerializado.tipoEnemigo = tipo;
@@ -40,10 +44,20 @@ rectangulo_t Enemigo::obtenerRectangulo() {
     int x = this->obtenerPosicionX();
     int y = this->obtenerPosicionY();
 
-    int h = 10; //todo obtener el valor
-    int w = 20;
-    rectangulo_t rectangulo = {x,x+w,y,y+h, w, h};
+    int h = ALTO_ENEMIGOS;
+    int w = ANCHO_ENEMIGOS;
+    rectangulo_t rectangulo = { x,x+w, y,y+h, h, w};
     return rectangulo;
+}
+
+bool Enemigo::estaMuerto() const{
+    return loMataron;
+}
+
+void Enemigo::inicializarMapasDeColision() {
+    auto pMorir = (void (Colisionable::*)(void*))&Enemigo::morir;
+    Colisionable::parFuncionColisionContexto_t parFuncionColisionContexto = {pMorir, nullptr};
+    mapaColisionesPorArriba[COLISION_ID_MARIO] = parFuncionColisionContexto;
 }
 
 

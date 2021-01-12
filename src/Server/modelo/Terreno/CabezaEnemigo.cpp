@@ -18,3 +18,7 @@ float CabezaEnemigo::obtenerImpulsoHorizontal(float aceleracion){
 float CabezaEnemigo::obtenerImpulsoVertical(float fuerza){
     return fuerza/2;
 }
+
+float CabezaEnemigo::amortiguarVelocidad(float velocidadY) {
+    return 0;
+}

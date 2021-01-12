@@ -10,8 +10,6 @@ class Koopa : public Enemigo{
 		~Koopa() override;
 		enemigo_t serializar() override;
         string obtenerColisionID() override;
-    private:
-        void inicializarMapasDeColision() override;
 };
 
 #endif /* SRC_SERVER_MODELO_ENEMIGOS_KOOPA_HPP_ */

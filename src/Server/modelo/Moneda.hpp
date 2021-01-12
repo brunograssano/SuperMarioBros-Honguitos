@@ -6,8 +6,10 @@
 #include "PosicionFija.hpp"
 #include "Posicion.hpp"
 #include "src/Utils/Utils.hpp"
+#include "src/Server/modelo/Colisionable.hpp"
+#include "src/Utils/Constantes.hpp"
 
-class Moneda{
+class Moneda : public Colisionable{
 
     public:
         Moneda(int coordenadaX, int coordenadaY);
@@ -16,10 +18,15 @@ class Moneda{
         moneda_t serializar();
         int obtenerPosicionX();
         int obtenerPosicionY();
-
+        string obtenerColisionID() override;
+        rectangulo_t obtenerRectangulo() override;
+        bool fueAgarrada();
     private:
+        void inicializarMapasDeColision() override;
+        void agarrar(void* ptr = nullptr);
         Posicion* posicion;
         Sprite* sprite;
+        bool agarrada;
 };
 
 

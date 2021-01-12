@@ -53,15 +53,25 @@ void Nivel::actualizarModelo(map<int, Mario*> jugadores){
     actualizarDisparos();
     actualizarMonedas();
     sacarEnemigosMuertos();
+    sacarMonedasAgarradas();
     resolverGanadores(jugadores);
 }
 
 void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
     for(auto const& parClaveJugador: jugadores){
         Mario* jugador = parClaveJugador.second;
+        //todo: refactor colisionar(jugador, list<Colisionable*>
         for(auto const& enemigo: enemigos){
-            chocar(jugador, enemigo);
+            if(!enemigo->estaMuerto()){
+                chocar(jugador, enemigo);
+            }
         }
+        for(auto const& moneda: monedas){
+            if(!moneda->fueAgarrada()){
+                chocar(jugador, moneda);
+            }
+        }
+
     }
 }
 
@@ -72,16 +82,29 @@ void Nivel::resolverGanadores(map<int, Mario *> mapaJugadores) {
 
 void Nivel::sacarEnemigosMuertos(){
     list<Enemigo*> enemigosABorrar;
-    for(auto enemigo : enemigosMuertos){ // se moverian a la lista esta una vez que detectamos colision por arriba
-        if(enemigo->sePuedeEliminar()){ // la otra opcion es mantenerlos en la lista original, e ir verificando si estan muertos
+    for(auto enemigo : enemigos){
+        if(enemigo->sePuedeEliminar()){
             enemigosABorrar.push_back(enemigo);
         }
     }
     for(auto enemigo : enemigosABorrar ){
-        enemigosMuertos.remove(enemigo);
+        enemigos.remove(enemigo);
         delete enemigo;
     }
 }
+void Nivel::sacarMonedasAgarradas() {
+    list<Moneda*> monedasABorrar;
+    for(auto moneda : monedas){
+        if(moneda->fueAgarrada()){
+            monedasABorrar.push_back(moneda);
+        }
+    }
+    for(auto moneda : monedasABorrar ){
+        monedas.remove(moneda);
+        delete moneda;
+    }
+}
+
 
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
@@ -179,7 +202,7 @@ void Nivel::inicializarPosicionEnemigo(){
 	int limiteXInferior = (int)puntoBanderaFin/10;
 
 	int coordenadaX = 0;
-	int coordenadaY = 50;
+	int coordenadaY = 0;
 
 	unsigned int cantidadMaximaEnemigos =  (unsigned int)(puntoBanderaFin/3)/TAMANIO_ENEMIGO;
 

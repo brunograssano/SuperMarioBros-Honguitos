@@ -51,6 +51,7 @@ typedef struct mensaje_log{
 
 typedef struct enemigo{
     unsigned short posX;
+    unsigned short posY;
 	uint8_t numeroRecorteX;	// 1|2|3|4|5|6|...|
 	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco ,( 4: fuego goomba)
 	uint8_t tipoEnemigo;	// 1 GOOMBA - 2 KOOPA

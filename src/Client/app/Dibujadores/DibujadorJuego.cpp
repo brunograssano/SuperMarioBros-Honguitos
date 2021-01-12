@@ -1,12 +1,5 @@
-
 #include "DibujadorJuego.hpp"
-
-const float PROPORCION_PISO_EN_IMAGEN = 0.1;
-const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
-const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
-const int LARGO_BLOQUE = 40;
-const int GOOMBA = 1, KOOPA = 2;
-
+#include "src/Utils/Constantes.hpp"
 DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
     this->cargadorTexturas = cargadorTexturas;
     this->renderizador = renderizador;
@@ -62,7 +55,7 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
 		}
 
 		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - ALTO_ENEMIGOS,
+									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - enemigo.posY - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
         SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F );
@@ -79,7 +72,7 @@ void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente*
 	for (auto const& bloque : bloques) {
 
 		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque.posY,
+									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque.posY - LARGO_BLOQUE,
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
 		SDL_RenderCopy( renderizador, texturaBloques, &recorteBloque, &rectanguloBloque);
@@ -92,7 +85,7 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
     SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura("Moneda");
 	for (auto const& moneda : monedas) {
 		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - moneda.posY,
+									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - moneda.posY - LARGO_BLOQUE,
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.numeroRecorte);
 		SDL_RenderCopy( renderizador, texturaMoneda, &recorteMoneda, &rectanguloMoneda);
@@ -160,12 +153,10 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
             Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
             SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
-                                         alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) -
-                                         efecto.posY,
+                                         alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) - efecto.posY - recorteEfecto->obtenerAltura(),
                                          recorteEfecto->obtenerAnchura(), recorteEfecto->obtenerAltura()};
             SDL_RendererFlip flip = recorteEfecto->direccion(efecto.numeroRecorte) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL;
             SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
-            //SDL_RenderCopy(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto);
         }
     }
 }

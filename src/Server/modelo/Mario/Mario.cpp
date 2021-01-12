@@ -1,16 +1,11 @@
 #include "Mario.hpp"
+#include "src/Utils/Constantes.hpp"
 
 const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 0;
 const int MINIMO_COORDENADA_Y = 0;
 const int TERRENO_LIMITE_DERECHO_MAX = 8177,TERRENO_LIMITE_DERECHO_MIN = 0;
 const short MARIO_DESCONECTADO = -1;
 
-const int PUNTOS_POR_MONEDA = 50;
-
-void Mario::impulsar(){
-    movimiento->impulsarY();
-    spriteMario->actualizarSpriteMarioSaltar();
-}
 
 Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
@@ -26,20 +21,31 @@ Mario::Mario(int numeroJugador){
 }
 
 void Mario::inicializarMapasDeColision(){
-    Colisionable::FuncionDeColision pPerderVida = (void (Colisionable::*)())&Mario::perderVida;
-    Colisionable::FuncionDeColision pSaltar = (void (Colisionable::*)())&Mario::impulsar;
+    auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
+    auto pMatar = (void (Colisionable::*)(void*)) &Mario::matarEnemigo;
+    auto pGanarPuntos = (void (Colisionable::*)(void*)) &Mario::agregarPuntos;
 
-    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = pPerderVida;
-    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = pPerderVida;
+    Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
+    Colisionable::parFuncionColisionContexto_t parMatarGoomba = {pMatar, (void *) &PUNTOS_GOOMBA};
+    Colisionable::parFuncionColisionContexto_t parMatarKoopa = {pMatar, (void *) &PUNTOS_KOOPA};
+    Colisionable::parFuncionColisionContexto_t parAgarrarMoneda = {pGanarPuntos, (void* ) &PUNTOS_POR_MONEDA};
 
-    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = pPerderVida;
-    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = pPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_MONEDA] = parAgarrarMoneda;
 
-    mapaColisionesPorAbajo[COLISION_ID_KOOPA] = pPerderVida;
-    mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = pPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_MONEDA] = parAgarrarMoneda;
 
-    mapaColisionesPorArriba[COLISION_ID_KOOPA] = pSaltar;
-    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = pSaltar;
+    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorArriba[COLISION_ID_MONEDA] = parAgarrarMoneda;
+
+    mapaColisionesPorAbajo[COLISION_ID_KOOPA] = parMatarKoopa;
+    mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = parMatarGoomba;
+    mapaColisionesPorAbajo[COLISION_ID_MONEDA] = parAgarrarMoneda;
+
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -155,7 +161,7 @@ int Mario::obtenerVida(){
     return vidaMario->obtenerVida();
 }
 
-void Mario::perderVida() {
+void Mario::perderVida(void* ptr) {
     ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
     posicion->reiniciar();
     movimiento->reiniciar();
@@ -188,8 +194,22 @@ string Mario::obtenerColisionID() {
 rectangulo_t Mario::obtenerRectangulo() {
     int x = this->obtenerPosicionX();
     int y = this->obtenerPosicionY();
-    int h = 20; //todo: obtener correctamente las dimensiones
-    int w = 20;
-    rectangulo_t rectangulo = {x,x+w,y,y+h, w, h};
+    int h = ALTO_MARIO;
+    int w = ANCHO_MARIO;
+    rectangulo_t rectangulo = {x,x+w,y,y+h, h, w};
     return rectangulo;
+}
+
+void Mario::agregarPuntos(void *puntos) {
+    if(puntos != nullptr){
+        agregarPuntos(*((int*) puntos));
+    }
+}
+
+void Mario::matarEnemigo(void* puntos){
+    movimiento->impulsarY();
+    if(puntos != nullptr) {
+        agregarPuntos(*((int *) puntos));
+    }
+    spriteMario->actualizarSpriteMarioSaltar();
 }

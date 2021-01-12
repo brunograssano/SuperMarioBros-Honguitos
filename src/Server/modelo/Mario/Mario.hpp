@@ -43,7 +43,7 @@ class Mario : public Colisionable {
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
 
-        void perderVida(void );
+        void perderVida(void* ptr = nullptr);
         int obtenerVida();
         void hacerseDeFuego();
         Disparo* dispararFuego();
@@ -66,8 +66,9 @@ class Mario : public Colisionable {
 
 private:
         void inicializarMapasDeColision() override;
+        void agregarPuntos(void* puntos = nullptr);
         void swapDeModificador(ModificadorMario *nuevoModificador);
-        void impulsar();
+        void matarEnemigo(void* puntos = nullptr);
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
 		SpriteMario * spriteMario;

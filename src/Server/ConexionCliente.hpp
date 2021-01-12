@@ -2,7 +2,6 @@
 #define SRC_SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
-#include "Servidor.hpp"
 
 using namespace std;
 #include <thread>
@@ -11,32 +10,29 @@ using namespace std;
 
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
+#include "../Utils/Thread.hpp"
 
-#include "EnviadoresServer/EnviadorConexionCliente.hpp"
+class EnviadorConexionCliente;
 class EscuchadorConexionCliente;
-#include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
-class ConexionCliente {
+
+class ConexionCliente : public Thread{
 
 	public:
 		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
-		~ConexionCliente();
+		~ConexionCliente() override;
 
-        static void* ejecutar_helper(void* ptr);
-        static void* enviar_helper(void* ptr);
-		static void* escuchar_helper(void* ptr);
-		void ejecutar();
-
-		void enviarActualizacionesDeRonda() const;
+		void ejecutar() override;
+		void enviarActualizacionesDeRonda();
         void agregarMensajeAEnviar(char caracter, void *mensaje);
 		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
 		void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
 		string obtenerIP();
-        string obtenerNombre();
-        string obtenerContrasenia();
-		void terminoElJuego();
+		void terminarElJuego();
+        bool terminoElJuego() const;
 
+        void desconectarse();
 
 private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
@@ -58,6 +54,7 @@ private:
 		string ip;
 
 		Servidor* servidor;
+
 };
 
 

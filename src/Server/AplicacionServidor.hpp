@@ -13,35 +13,24 @@ class Servidor;
 
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
-
-#include "modelo/Nivel.hpp"
-#include "modelo/Moneda.hpp"
+#include "../Utils/Thread.hpp"
 
 #include "modelo/Juego.hpp"
 #include "lector/ArchivoLeido.hpp"
 
-class AplicacionServidor{
+class AplicacionServidor : public Thread{
 	public:
 		AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla);
 		~AplicacionServidor();
-
 		void iniciarJuego();
-
-		static void* gameLoop_helper(void* ptr){
-			((AplicacionServidor*) ptr)->gameLoop();
-			return NULL;
-		}
-
 		void desconectarJugador(int idJugador);
         nivel_t obtenerInfoNivel();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
 		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
-		void gameLoop();
+		void ejecutar() override;
 		void activarJugador(int idMarioConectandose);
-		bool empezoElJuego(){
-			return comenzoElJuego;
-		}
+		bool empezoElJuego();
 
 	private:
         void revisarSiMandarInfoNivel(int *cantidadNivelesRestantes);
@@ -49,8 +38,7 @@ class AplicacionServidor{
 		Servidor* servidor;
 		Log* log;
 		Juego* juego;
-		int cantJugadores;
-		bool terminoElJuego;
+        bool terminoElJuego;
 		bool comenzoElJuego;
 		bool juegoInicializadoCorrectamente;
 		queue<entrada_usuario_id_t> colaDeEntradasUsuario;

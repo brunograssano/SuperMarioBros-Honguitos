@@ -29,7 +29,7 @@ EscuchadorCliente::~EscuchadorCliente() {
     escuchadores.clear();
 }
 
-void EscuchadorCliente::escuchar() {
+void EscuchadorCliente::ejecutar() {
     char tipoMensaje;
     int resultado;
     bool hayError = false;

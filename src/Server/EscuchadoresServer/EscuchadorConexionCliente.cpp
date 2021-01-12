@@ -6,12 +6,10 @@ class EscuchadorEntradaTeclado;
 
 #define SIN_JUGAR -1
 
-EscuchadorConexionCliente::EscuchadorConexionCliente(int socket,bool* terminoJuego,ConexionCliente* cliente,Servidor* servidor) {
+EscuchadorConexionCliente::EscuchadorConexionCliente(int socket,ConexionCliente* cliente) {
     escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,cliente);
     this->socket = socket;
     this->cliente = cliente;
-    this->servidor = servidor;
-    this->terminoJuego = terminoJuego;
     idJugador = SIN_JUGAR;
 }
 
@@ -22,11 +20,11 @@ EscuchadorConexionCliente::~EscuchadorConexionCliente() {
     escuchadores.clear();
 }
 
-void EscuchadorConexionCliente::escuchar() {
+void EscuchadorConexionCliente::ejecutar() {
     char tipoMensaje;
     int resultado;
     bool hayError = false;
-    while(!(*terminoJuego) && !hayError){
+    while(!cliente->terminoElJuego() && !hayError){
 
         resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
@@ -44,11 +42,11 @@ void EscuchadorConexionCliente::escuchar() {
             }
         }
     }
-    servidor->agregarUsuarioDesconectado(cliente,idJugador);
-    (*terminoJuego) = true;
+    cliente->desconectarse();
+    cliente->terminarElJuego();
 }
 
-void EscuchadorConexionCliente::agregarEscuchadorEntrada(int IDjugador) {
+void EscuchadorConexionCliente::agregarEscuchadorEntrada(int IDjugador,Servidor* servidor) {
     escuchadores[ENTRADA] = new EscuchadorEntradaTeclado(socket,IDjugador,servidor);
     idJugador = IDjugador;
 }

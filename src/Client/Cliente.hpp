@@ -38,11 +38,7 @@ class Cliente{
 		void recibirInformacionRonda(info_ronda_t info_ronda) const;
 		void ejecutar();
 		void empezarJuego(info_partida_t info_partida);
-
-		static void* escuchar_helper(void* ptr);
-		static void* enviar_helper(void* ptr);
-
-    void recibirInformacionNivel(nivel_t nivel);
+        void recibirInformacionNivel(nivel_t nivel);
 
 private:
         static void esperar(const bool *condicionAEsperar);

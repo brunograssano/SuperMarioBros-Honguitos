@@ -3,14 +3,17 @@
 #include <string>
 
 const int ANCHO_FONDO = 8177;
-#define IZQUIERDA -1
-#define DERECHA 1
+#define IZQUIERDA 1
+#define DERECHA 2
+#define ARRIBA 3
+#define ABAJO 4
 #define MAX_CONEXIONES 4
 const std::string COLISION_ID_MARIO = "Mario";
 const std::string COLISION_ID_KOOPA = "Koopa";
 const std::string COLISION_ID_GOOMBA = "Goomba";
 const std::string COLISION_ID_MONEDA = "Moneda";
-
+const std::string COLISION_ID_LADRILLO = "Ladrillo";
+const std::string COLISION_ID_SORPRESA = "Sorpresa";
 
 
 const int PUNTOS_KOOPA = 1000;

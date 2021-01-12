@@ -71,6 +71,17 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
                 chocar(jugador, moneda);
             }
         }
+        for(auto const& bloque: plataformas){
+            chocar(jugador, bloque);
+            ObjetoSorpresa* objeto = bloque->colisionaronAbajo();
+            objeto->usarse(jugador);
+            if(objeto->fueUsado()){
+                objetosSorpresa.remove(objeto);
+            }
+            else{
+                objetosSorpresa.push_front(objeto);
+            }
+        }
 
     }
 }
@@ -114,8 +125,8 @@ int Nivel::obtenerMundo() const{
     return mundo;
 }
 
-void Nivel::agregarPlataforma(Plataforma* unaPlataforma){
-    plataformas.push_back(unaPlataforma);
+void Nivel::agregarPlataforma(list<Bloque *> unaPlataforma){
+    plataformas.splice(plataformas.end(),unaPlataforma);
 }
 void Nivel::agregarEnemigo(Enemigo* unEnemigo){
     enemigos.push_back(unEnemigo);
@@ -139,20 +150,16 @@ void Nivel::inicializar() {
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
-	for(auto const& plataforma : plataformas){
-		list<Bloque*> bloques = plataforma->obtenerBloques();
+    for(auto const& bloque : plataformas){
+        if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
+            Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
+                    + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
+            bloque->ubicarEnPosicionDefault();
+        }
 
-		for(auto const& bloque : bloques){
-			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
-				Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
-						+ " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
-				bloque->ubicarEnPosicionDefault();
-			}
+        posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
+    }
 
-			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
-		}
-
-	}
 }
 
 //rand() % (MAXIMO + 1 - MINIMO) + MINIMO
@@ -253,14 +260,13 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     ptrInfoRonda->tiempoFaltante = contador->tiempoRestante();
 
     int numeroBloque = 0;
-    for(auto const& plataforma: plataformas){
-        list<bloque_t> bloques = plataforma->serializarPlataforma();
-        for(auto const& bloque: bloques){
-            if(bloque.numeroRecorteY == SORPRESA && deboAgregarlo(contexto, bloque.posX) && numeroBloque < MAX_SORPRESAS){
-                ptrInfoRonda->bloques[numeroBloque] = bloque;
-                numeroBloque++;
-            }
+    for(auto const& bloque: plataformas){
+        bloque_t bloqueSerializado = bloque->serializar();
+        if(bloqueSerializado.numeroRecorteY == SORPRESA && deboAgregarlo(contexto, bloqueSerializado.posX) && numeroBloque < MAX_SORPRESAS){
+            ptrInfoRonda->bloques[numeroBloque] = bloqueSerializado;
+            numeroBloque++;
         }
+
     }
     ptrInfoRonda->topeBloques = numeroBloque;
 
@@ -337,13 +343,11 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
-    for(auto const& plataforma: plataformas){
-        list<bloque_t>  bloques = plataforma->serializarPlataforma();
-        for(auto const& bloque: bloques){
-            if(nivel->topeBloques<MAX_LADRILLOS && bloque.numeroRecorteY!=SORPRESA){
-                nivel->bloques[nivel->topeBloques] = bloque;
-                nivel->topeBloques++;
-            }
+    for(auto const& bloque: plataformas){
+        bloque_t  bloquesSerializado = bloque->serializar();
+        if(nivel->topeBloques<MAX_LADRILLOS && bloquesSerializado.numeroRecorteY!=SORPRESA){
+            nivel->bloques[nivel->topeBloques] = bloquesSerializado;
+            nivel->topeBloques++;
         }
     }
 

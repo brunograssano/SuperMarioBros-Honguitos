@@ -13,8 +13,6 @@ class CabezaEnemigo : public Terreno{
         float obtenerImpulsoVertical(float fuerza) override;
         float amortiguarVelocidad(float velocidadY) override;
 
-    private:
-        float coeficienteDeRozamiento;
 };
 
 

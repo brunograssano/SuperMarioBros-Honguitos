@@ -3,7 +3,7 @@
 
 
 #include "src/Server/modelo/Posicion.hpp"
-#include "ObjetoSorpresa.h"
+#include "ObjetoSorpresa.hpp"
 
 class FlorDeFuego : public ObjetoSorpresa{
 
@@ -13,6 +13,7 @@ class FlorDeFuego : public ObjetoSorpresa{
     private:
         Posicion posicionFija;
         SDL_Rect recorte{};
+        bool agarraronFlor;
 };
 
 

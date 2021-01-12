@@ -1,5 +1,6 @@
 #include "Mario.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "src/Server/sprites/SpriteMario.hpp"
 
 const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 0;
 const int MINIMO_COORDENADA_Y = 0;
@@ -149,7 +150,7 @@ bool Mario::estaQuietoX(){
 }
 
 bool Mario::estaEnElPiso(){
-	return this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y;
+    return !movimiento->estaEnElAire();
 }
 
 void Mario::swapDeModificador(ModificadorMario* nuevoModificador){
@@ -212,4 +213,63 @@ void Mario::matarEnemigo(void* puntos){
         agregarPuntos(*((int *) puntos));
     }
     spriteMario->actualizarSpriteMarioSaltar();
+}
+
+void Mario::chocarPorDerechaCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnX(colisionable->obtenerRectangulo(),IZQUIERDA);
+    }
+    else{
+        Colisionable::chocarPorDerechaCon(colisionable);
+    }
+}
+
+void Mario::chocarPorIzquierdaCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnX(colisionable->obtenerRectangulo(),DERECHA);
+    }
+    else{
+        Colisionable::chocarPorIzquierdaCon(colisionable);
+    }
+}
+
+void Mario::chocarPorArribaCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnY(colisionable->obtenerRectangulo(),ABAJO);
+    }
+    else {
+        Colisionable::chocarPorArribaCon(colisionable);
+    }
+}
+
+void Mario::chocarPorAbajoCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnY(colisionable->obtenerRectangulo(),ARRIBA);
+    }
+    else{
+        Colisionable::chocarPorAbajoCon(colisionable);
+    }
+}
+
+void Mario::empujarEnX(rectangulo_t rectanguloBloque,int direccion){
+    movimiento->setVelocidadX(0);
+    rectangulo_t rectanguloMario = obtenerRectangulo();
+    if(direccion == DERECHA){
+        this->posicion->moverHorizontal(rectanguloBloque.x2-rectanguloMario.x1);
+    }
+    else{
+        this->posicion->moverHorizontal(-(rectanguloMario.x2-rectanguloBloque.x1));
+    }
+}
+
+void Mario::empujarEnY(rectangulo_t rectanguloBloque, int direccion) {
+    movimiento->setVelocidadY(0);
+    rectangulo_t rectanguloMario = obtenerRectangulo();
+    if(direccion == ABAJO){
+        this->posicion->moverVertical(-(rectanguloMario.y2-rectanguloBloque.y1));
+    }
+    else{
+        this->posicion->moverVertical(rectanguloBloque.y2-rectanguloMario.y1);
+        this->movimiento->teParasteEnBloque();
+    }
 }

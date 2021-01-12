@@ -8,11 +8,12 @@ FlorDeFuego::FlorDeFuego(int posX, int posY) {
     usado = false;
     int color = rand()%CANTIDAD_COLORES;
     recorte = {color*ANCHO_FLOR,0,ANCHO_FLOR,ANCHO_FLOR};
+    agarraronFlor = false;
 }
 
 void FlorDeFuego::usarse(Mario *mario) {
-    //if(colision de mario con flor, mario no es de fuego, y la flor no esta usada){
+    if(agarraronFlor && !usado){
         mario->hacerseDeFuego();
         usado = true;
-    //}
+    }
 }

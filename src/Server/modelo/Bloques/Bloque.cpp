@@ -33,3 +33,11 @@ bloque_t Bloque::serializar() {
     bloqueSerializado.numeroRecorteY = tipoBloque;
     return bloqueSerializado;
 }
+
+rectangulo_t Bloque::obtenerRectangulo() {
+    int x = posicion->obtenerPosX();
+    int y = posicion->obtenerPosY();
+    int h = LARGO_BLOQUE;
+    int w = LARGO_BLOQUE;
+    return {x,x+w,y,y+h,h,w};
+}

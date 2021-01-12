@@ -1,20 +1,19 @@
-
 #include "SpriteLadrillo.hpp"
+#define TODO_ROTO 4
+
 
 SpriteLadrillo::SpriteLadrillo(int tipo){
-	this->direccionTextura = "resources/Imagenes/Bloques/Bloques.png";
-	this->rectanguloLadrillo.x = 0;
-	this->rectanguloLadrillo.y = tipo*16;
-	this->rectanguloLadrillo.w = 16;
-	this->rectanguloLadrillo.h = 16;
-
+    estadoActual = 0;
 }
 
 void SpriteLadrillo::actualizarSprite(){
-	// Por ahora no se actualiza este sprite (queda en estado 0)
+	if(estadoActual >= TODO_ROTO){
+	    return;
+	}
+	estadoActual++;
 }
 
 
-SDL_Rect SpriteLadrillo::obtenerRectanguloActual(){
-	return rectanguloLadrillo;
+SDL_Rect SpriteLadrillo::obtenerRectanguloActual(){ // TODO BORRAR ESTE METODO
+	return {0,0,0,0};
 }

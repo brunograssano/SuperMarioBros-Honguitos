@@ -1,6 +1,7 @@
 #include "Colisionador.hpp"
 #include "src/Server/modelo/Colisionable.hpp"
 #include "SDL2/SDL.h"
+#include "../Constantes.hpp"
 
 int tipoDeChoque(rectangulo_t rect1, rectangulo_t rect2) {
 
@@ -69,4 +70,8 @@ void chocar(Colisionable* colisionable1, Colisionable* colisionable2) {
             break;
     }
 
+}
+
+bool esUnBloque(string idColisionable){
+    return idColisionable == COLISION_ID_LADRILLO || idColisionable == COLISION_ID_SORPRESA;
 }

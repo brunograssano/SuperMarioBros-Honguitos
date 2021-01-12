@@ -1,6 +1,6 @@
 #include "Sorpresa.hpp"
 #include "ObjetosSorpresa/FlorDeFuego.h"
-#include "ObjetosSorpresa/MonedaSorpresa.h"
+#include "ObjetosSorpresa/MonedaSorpresa.hpp"
 
 Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     tipoBloque = SORPRESA;
@@ -10,7 +10,12 @@ Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     this->spriteBloque = new SpriteSorpresa(false);
     SDL_Rect rectangulo = spriteBloque->obtenerRectanguloActual();
     this->objetoSorpresa = obtenerObjetoSorpresa(posicion->obtenerPosX(), posicion->obtenerPosY() + rectangulo.h);
+    usado = false;
+    entregado = false;
+    inicializarMapasDeColision();
 }
+
+void Sorpresa::inicializarMapasDeColision(){}
 
 ObjetoSorpresa* Sorpresa::obtenerObjetoSorpresa(int posX, int posY) {
     ObjetoSorpresa* objeto;
@@ -24,11 +29,21 @@ ObjetoSorpresa* Sorpresa::obtenerObjetoSorpresa(int posX, int posY) {
 }
 
 ObjetoSorpresa* Sorpresa::colisionaronAbajo() {
-    ObjetoSorpresa* objetoADar = objetoSorpresa;
-    objetoSorpresa = new SinSorpresa();
+    if(usado && !entregado){
+        entregado = true;
+        return objetoSorpresa;
+    }
+    return new SinSorpresa();
+}
+
+string Sorpresa::obtenerColisionID() {
+    return COLISION_ID_SORPRESA;
+}
+
+void Sorpresa::chocarPorAbajoCon(Colisionable *colisionable) {
     delete spriteBloque;
     spriteBloque = new SpriteSorpresa(true);
-    return objetoADar;
+    usado = true;
 }
 
 Sorpresa::~Sorpresa() {

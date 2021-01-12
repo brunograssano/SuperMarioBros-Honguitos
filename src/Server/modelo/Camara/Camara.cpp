@@ -1,4 +1,5 @@
 #include "Camara.hpp"
+#include "src/Server/sprites/SpriteMario.hpp"
 
 Camara::Camara(int alto_pantalla, int ancho_pantalla) {
     rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};

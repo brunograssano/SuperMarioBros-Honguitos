@@ -5,8 +5,9 @@
 #include <string>
 using namespace std;
 
-#include "ObjetosSorpresa/ObjetoSorpresa.h"
-#include "ObjetosSorpresa/SinSorpresa.h"
+#include "ObjetosSorpresa/ObjetoSorpresa.hpp"
+#include "ObjetosSorpresa/SinSorpresa.hpp"
+#include "src/Server/modelo/Colisionable.hpp"
 
 #include "../../../Utils/Utils.hpp"
 
@@ -17,7 +18,7 @@ using namespace std;
 
 #define SORPRESA 0
 
-class Bloque{
+class Bloque : public Colisionable{
     public:
 		virtual ~Bloque()= default;
 		int obtenerPosicionX();
@@ -26,12 +27,15 @@ class Bloque{
 		void ubicarEnPosicionDefault();
 		virtual ObjetoSorpresa* colisionaronAbajo();
         virtual bloque_t serializar();
+        string obtenerColisionID() override = 0;
+        rectangulo_t obtenerRectangulo() override;
 
     protected:
         int tipoBloque{};
     	Posicion* posicion{};
     	Sprite* spriteBloque{};
 		static int normalizarCoordenadaIngresada(int coordenada);
+        void inicializarMapasDeColision() override = 0;
 };
 
 #endif /* SRC_SERVER_MODELO_BLOQUES_BLOQUE_HPP_ */

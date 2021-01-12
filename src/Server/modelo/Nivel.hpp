@@ -6,11 +6,11 @@
 #include <tuple>
 #include <cstdlib>
 #include <utility>
-#include <src/Server/modelo/Bloques/Pozo.hpp>
+#include "src/Server/modelo/Bloques/Pozo.hpp"
 #include "src/Server/modelo/Bloques/Tuberia.hpp"
-#include "Bloques/Plataforma.hpp"
 #include "src/Utils/Contador.hpp"
 #include "Bloques/Bloque.hpp"
+#include "Bloques/ObjetosSorpresa/ObjetoSorpresa.hpp"
 #include "Enemigos/Enemigo.hpp"
 #include "Moneda.hpp"
 #include "Meta.hpp"
@@ -27,7 +27,7 @@ class Nivel{
 		void inicializar();
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
         void agregarPozo(int posicionX,int tipoPozo);
-		void agregarPlataforma(Plataforma* unaPlataforma);
+		void agregarPlataforma(list<Bloque *> unaPlataforma);
 		void agregarEnemigo(Enemigo* unEnemigo);
 		void agregarMoneda(Moneda* unaMoneda);
 		int obtenerMundo() const;
@@ -42,7 +42,7 @@ class Nivel{
 		string obtenerDireccionFondoActual();
         void terminar();
         void completarInformacionNivel(nivel_t *nivel);
-    void aparecerDisparo(Disparo* disparo);
+        void aparecerDisparo(Disparo* disparo);
 
     private:
         void sacarEnemigosMuertos();
@@ -62,11 +62,12 @@ class Nivel{
         map<int, bool> posicionesOcupadasXEnemigos;
         map<tuple<int, int>, bool> posicionesOcupadas;
 
-        list<Plataforma*> plataformas;
+        list<Bloque*> plataformas;
         list<Enemigo*> enemigos;
         list<Moneda*> monedas;
         list<Pozo*> pozos;
         list<Tuberia*> tuberias;
+        list<ObjetoSorpresa*> objetosSorpresa;
 
         //todo ->
         list<Disparo*> disparos;               //Refactor: proximamente tendra objetosFugaces: flores, disparos, otros objetos(Moneda de bloque)

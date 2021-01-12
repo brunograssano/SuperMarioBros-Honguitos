@@ -1,4 +1,5 @@
 #include "Juego.hpp"
+#include "src/Server/sprites/SpriteMario.hpp"
 #include <utility>
 
 Juego* Juego::instanciaJuego = nullptr;

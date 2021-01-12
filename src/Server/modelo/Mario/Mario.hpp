@@ -13,7 +13,6 @@
 #include "Modificadores/MarioDeFuego.hpp"
 
 class SpriteMario;
-#include "src/Server/sprites/SpriteMario.hpp"
 
 #include "src/Server/modelo/Objetos/Disparo.hpp"
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
@@ -24,7 +23,7 @@ class SpriteMario;
 class Mario : public Colisionable {
 
 	public:
-		Mario(int numeroJugador);
+		explicit Mario(int numeroJugador);
 		int obtenerPuntos() const;
 		void agregarPuntos(int unosPuntos);
 		void agregarMoneda();
@@ -62,9 +61,16 @@ class Mario : public Colisionable {
         rectangulo_t obtenerRectangulo() override;
         string obtenerColisionID() override;
 
+        void chocarPorDerechaCon(Colisionable* colisionable) override;
+        void chocarPorIzquierdaCon(Colisionable* colisionable) override;
+        void chocarPorArribaCon(Colisionable* colisionable) override;
+        void chocarPorAbajoCon(Colisionable* colisionable) override;
+
 		~Mario();
 
-private:
+    private:
+        void empujarEnX(rectangulo_t rectanguloBloque,int direccion);
+        void empujarEnY(rectangulo_t rectanguloBloque,int direccion);
         void inicializarMapasDeColision() override;
         void agregarPuntos(void* puntos = nullptr);
         void swapDeModificador(ModificadorMario *nuevoModificador);

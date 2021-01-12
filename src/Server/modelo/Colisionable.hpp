@@ -20,6 +20,7 @@ class Colisionable{
             void* contexto;
         }parFuncionColisionContexto_t;
 
+        virtual ~Colisionable() = default;
         virtual void chocarPorDerechaCon(Colisionable* colisionable);
         virtual void chocarPorIzquierdaCon(Colisionable* colisionable);
         virtual void chocarPorArribaCon(Colisionable* colisionable);

@@ -1,4 +1,9 @@
 #include "Aire.hpp"
+
+Aire::Aire() {
+    coeficienteDeRozamiento = 0.08;
+}
+
 float Aire::aplicarCoeficienteDeRozamiento(float velocidadX){
 	if(velocidadX < 0)
 		return (velocidadX + coeficienteDeRozamiento);

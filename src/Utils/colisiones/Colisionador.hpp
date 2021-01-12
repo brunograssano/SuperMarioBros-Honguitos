@@ -13,6 +13,6 @@ class Colisionable;
 
 void chocar(Colisionable* colisionable1, Colisionable* colisionable2);
 int tipoDeChoque(rectangulo_t rectangulo1, rectangulo_t rectangulo2);
-
+bool esUnBloque(string idColisionable);
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_COLISIONADOR_HPP

@@ -1,18 +1,13 @@
 #include "RecortePeachSaltando.hpp"
+#define ESTADOS_PEACH 14
+#define DESPLAZAMIENTO_X 20
+#define ALTO 30
+#define ANCHO 19
 
 RecortePeachSaltando::RecortePeachSaltando(){
 	estadoActual = 0;
-	int corrimientoEnImagen = 0;
-	for(auto & estadosPosible : estadosPosibles){
-		estadosPosible.x = corrimientoEnImagen;
-		estadosPosible.y = 0;
-		estadosPosible.w = 19;
-		estadosPosible.h = 30;
-		corrimientoEnImagen+= 20;
-	}
+	inicializarEstados(ESTADOS_PEACH,DESPLAZAMIENTO_X,ALTO,ANCHO);
 }
-
-
 
 void RecortePeachSaltando::actualizarSprite(){
 	if(ciclos%5==0){
@@ -24,16 +19,6 @@ void RecortePeachSaltando::actualizarSprite(){
 	ciclos++;
 }
 
-SDL_Rect RecortePeachSaltando::obtenerRecorte(int recorte){
-	return estadosPosibles[estadoActual];
+SDL_Rect RecortePeachSaltando::obtenerRecorte(int recorte) {
+    return Recorte::obtenerRecorte(estadoActual);
 }
-
-int RecortePeachSaltando::obtenerAnchura() {
-    return estadosPosibles[estadoActual].h;
-}
-
-int RecortePeachSaltando::obtenerAltura() {
-    return estadosPosibles[estadoActual].w;
-}
-
-

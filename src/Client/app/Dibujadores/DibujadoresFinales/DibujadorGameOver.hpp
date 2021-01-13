@@ -8,8 +8,8 @@
 #include <string>
 #include <sstream>
 
-#include "Dibujador.hpp"
-#include "Recortes/RecorteCoffinMario.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteCoffinMario.hpp"
 
 
 class DibujadorGameOver : public Dibujador{

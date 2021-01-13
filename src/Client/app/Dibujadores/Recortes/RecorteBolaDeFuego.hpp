@@ -5,14 +5,11 @@
 #include "Recorte.hpp"
 
 class RecorteBolaDeFuego : public Recorte{
-    static const int CANTIDAD_DE_RECORTES = 7;
+
     public:
         RecorteBolaDeFuego();
-        SDL_Rect obtenerRecorte(int recorte) override;
-        int obtenerAltura() override;
-        int obtenerAnchura()override;
-    private:
-        SDL_Rect estadosPosibles[CANTIDAD_DE_RECORTES]{};
+        int obtenerAnchuraParaDibujarImagen()override;
+        int obtenerAlturaParaDibujarImagen()override;
 
 };
 

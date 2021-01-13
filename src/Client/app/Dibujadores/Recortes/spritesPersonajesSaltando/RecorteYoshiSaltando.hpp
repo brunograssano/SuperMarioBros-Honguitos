@@ -8,15 +8,11 @@ class RecorteYoshiSaltando: public Recorte{
 	public:
 		RecorteYoshiSaltando();
 		void actualizarSprite()override;
-		SDL_Rect obtenerRecorte(int recorte)override;
-        int obtenerAltura() override;
-        int obtenerAnchura() override;
+        SDL_Rect obtenerRecorte(int recorte)override;
 
 	private:
-		SDL_Rect estadosPosibles[16]{};
 		int estadoActual;
         int ciclos{};
-
 
 };
 

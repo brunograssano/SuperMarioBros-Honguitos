@@ -1,7 +1,7 @@
 #include "DibujadorGanadores.hpp"
-#include "Recortes/spritesPersonajesSaltando/RecortePeachSaltando.hpp"
-#include "Recortes/spritesPersonajesSaltando/RecorteToadSaltando.hpp"
-#include "Recortes/spritesPersonajesSaltando/RecorteYoshiSaltando.hpp"
+#include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecortePeachSaltando.hpp"
+#include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecorteToadSaltando.hpp"
+#include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecorteYoshiSaltando.hpp"
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;

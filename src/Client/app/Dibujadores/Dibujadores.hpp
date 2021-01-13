@@ -13,12 +13,12 @@ using namespace std;
 #include "../CargadorTexturas.hpp"
 #include "../../../Server/sprites/SpriteMario.hpp"
 
-#include "DibujadorGameOver.hpp"
-#include "DibujadorInicio.hpp"
-#include "DibujadorGanadores.hpp"
-#include "DibujadorJuego.hpp"
-#include "DibujadorError.hpp"
-#include "DibujadorErrorServidor.hpp"
+#include "src/Client/app/Dibujadores/DibujadoresFinales/DibujadorGameOver.hpp"
+#include "src/Client/app/Dibujadores/DibujadoresJuego/DibujadorInicio.hpp"
+#include "src/Client/app/Dibujadores/DibujadoresFinales/DibujadorGanadores.hpp"
+#include "src/Client/app/Dibujadores/DibujadoresJuego/DibujadorJuego.hpp"
+#include "src/Client/app/Dibujadores/DibujadoresError/DibujadorError.hpp"
+#include "src/Client/app/Dibujadores/DibujadoresError/DibujadorErrorServidor.hpp"
 
 class Dibujadores{
 

@@ -1,13 +1,18 @@
 #include "RecorteFlor.hpp"
 
-SDL_Rect RecorteFlor::obtenerRecorte(int recorte) {
-    return {0, 0, 16, 16};
+#define CANTIDAD_FLORES 4
+#define ANCHO_FLOR_SPRITE 16
+#define ALTO_FLOR_SPRITE 16
+#define DESPLAZAMIENTO_FLOR 16 //todo revisar
+
+RecorteFlor::RecorteFlor() {
+    inicializarEstados(CANTIDAD_FLORES,DESPLAZAMIENTO_FLOR,ALTO_FLOR_SPRITE,ANCHO_FLOR_SPRITE);
 }
 
-int RecorteFlor::obtenerAltura() {
-    return 40; //todo: a constantes
+int RecorteFlor::obtenerAnchuraParaDibujarImagen() {
+    return ANCHO_FLOR;
 }
 
-int RecorteFlor::obtenerAnchura() {
-    return 40;
+int RecorteFlor::obtenerAlturaParaDibujarImagen() {
+    return ALTO_FLOR;
 }

@@ -1,8 +1,8 @@
 #ifndef SRC_CLIENT_APP_DIBUJADORES_DIBUJADORERROR_HPP_
 #define SRC_CLIENT_APP_DIBUJADORES_DIBUJADORERROR_HPP_
 
-#include "Dibujador.hpp"
-#include "../CargadorTexturas.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
+#include "src/Client/app/CargadorTexturas.hpp"
 
 class DibujadorError : public Dibujador{
 	public:

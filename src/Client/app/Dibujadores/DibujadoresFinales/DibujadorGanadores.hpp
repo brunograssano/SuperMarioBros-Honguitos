@@ -7,11 +7,11 @@
 #include <string>
 #include <sstream>
 
-#include "Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
 #include "ParticulaGanadores.hpp"
 
-#include "../juegoCliente/JuegoCliente.hpp"
-#include "Recortes/Recorte.hpp"
+#include "src/Client/app/juegoCliente/JuegoCliente.hpp"
+#include "src/Client/app/Dibujadores/Recortes/Recorte.hpp"
 
 
 class DibujadorGanadores : public Dibujador{

@@ -9,19 +9,19 @@
 
 using namespace std;
 
-#include "../juegoCliente/JuegoCliente.hpp"
-#include "../juegoCliente/RecorteMario.hpp"
-#include "../juegoCliente/RecorteKoopa.hpp"
-#include "../juegoCliente/RecorteGoomba.hpp"
-#include "../juegoCliente/RecorteMoneda.hpp"
-#include "../juegoCliente/RecorteBloque.hpp"
+#include "src/Client/app/juegoCliente/JuegoCliente.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteMario.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteKoopa.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteGoomba.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteMoneda.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteBloque.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteBolaDeFuego.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteChispa.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteFlor.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteMonedaFlotante.hpp"
 
-#include "Dibujador.hpp"
-#include "src/Client/app/juegoCliente/RecorteTuberia.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteTuberia.hpp"
 
 class DibujadorJuego : public Dibujador{
 

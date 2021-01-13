@@ -161,8 +161,10 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
             Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
             SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
-                                         alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) - efecto.posY - recorteEfecto->obtenerAltura(),
-                                         recorteEfecto->obtenerAnchura(), recorteEfecto->obtenerAltura()};
+                                         alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) - efecto.posY -
+                                                 recorteEfecto->obtenerAlturaParaDibujarImagen(),
+                                         recorteEfecto->obtenerAnchuraParaDibujarImagen(),
+                                         recorteEfecto->obtenerAlturaParaDibujarImagen()};
             SDL_RendererFlip flip = recorteEfecto->direccion(efecto.numeroRecorte) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL;
             SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
         }

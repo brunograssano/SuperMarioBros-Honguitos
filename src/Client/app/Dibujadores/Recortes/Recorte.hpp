@@ -3,17 +3,22 @@
 
 #include <SDL2/SDL.h>
 #include "src/Utils/Constantes.hpp"
+#include <list>
+
 class Recorte {
     public:
         virtual ~Recorte() = default;
-        virtual SDL_Rect obtenerRecorte(int recorte) = 0;
-        virtual int obtenerAltura() = 0;
-        virtual int obtenerAnchura() = 0;
-        virtual int direccion(int recorte) {
-            return DERECHA;
-        }
+        virtual SDL_Rect obtenerRecorte(int recorte);
+        virtual SDL_Rect obtenerRecorte(int recorte, int tipoBloque);
+        virtual int obtenerAlturaParaDibujarImagen();
+        virtual int obtenerAnchuraParaDibujarImagen();
+        virtual int direccion(int recorte);
+        virtual void actualizarSprite(){};
 
-    virtual void actualizarSprite(){};
+    protected:
+        void inicializarEstados(int cantidadEstados,int desplazamientoEnX,int alto, int ancho);
+        std::list<SDL_Rect> estadosPosibles;
+
 };
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_RECORTE_HPP

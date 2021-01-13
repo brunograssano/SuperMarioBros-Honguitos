@@ -5,9 +5,10 @@
 #include "Recorte.hpp"
 
 class RecorteFlor : public Recorte{
-    SDL_Rect obtenerRecorte(int recorte) override;
-    int obtenerAltura() override;
-    int obtenerAnchura() override;
+    public:
+        RecorteFlor();
+        int obtenerAnchuraParaDibujarImagen()override;
+        int obtenerAlturaParaDibujarImagen()override;
 };
 
 

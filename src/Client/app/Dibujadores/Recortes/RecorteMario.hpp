@@ -2,13 +2,12 @@
 #define SRC_CLIENT_APP_JUEGOCLIENTE_RECORTEMARIO_HPP_
 
 #include <SDL2/SDL.h>
+#include "Recorte.hpp"
 
-class RecorteMario{
+class RecorteMario : public Recorte{
 	public:
 		RecorteMario();
-		SDL_Rect obtenerRecorte(int recorte);
-	private:
-		SDL_Rect estadosPosibles[14];
+
 };
 
 

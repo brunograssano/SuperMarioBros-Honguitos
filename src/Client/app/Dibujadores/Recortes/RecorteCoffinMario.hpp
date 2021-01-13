@@ -13,14 +13,11 @@ class RecorteCoffinMario : public Recorte{
 	public:
 
 		RecorteCoffinMario();
-		SDL_Rect obtenerRecorte(int recorte)override;
 		int obtenerPosicionX() const;
 		void actualizarSprite() override;
-        int obtenerAltura() override;
-        int obtenerAnchura() override;
+        SDL_Rect obtenerRecorte(int recorte)override;
 
 	private:
-        SDL_Rect estadosPosibles[3]{};
         int ciclos;
         int estadoActual;
 		int posicionX;

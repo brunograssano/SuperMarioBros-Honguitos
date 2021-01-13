@@ -1,7 +1,7 @@
 #ifndef SRC_CLIENT_APP_DIBUJADORES_DIBUJADORERRORSERVIDOR_HPP_
 #define SRC_CLIENT_APP_DIBUJADORES_DIBUJADORERRORSERVIDOR_HPP_
 
-#include "Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
 
 class DibujadorErrorServidor: public Dibujador{
 	public:

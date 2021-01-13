@@ -1,23 +1,14 @@
 #include "RecorteCoffinMario.hpp"
-
+#define ESTADOS_COFFIN 3
+#define DESPLAZAMIENTO_X 75
+#define ALTO_COFFIN 32
+#define ANCHO_COFFIN 70
 
 RecorteCoffinMario::RecorteCoffinMario(){
 	estadoActual = 0;
 	ciclos = 0;
 	posicionX = 0;
-
-	int corrimientoEnImagen = 0;
-	for(auto & estadosPosible : estadosPosibles){
-		estadosPosible.x = corrimientoEnImagen;
-		estadosPosible.y = 0;
-		estadosPosible.w = 70;
-		estadosPosible.h = 32;
-		corrimientoEnImagen+= 75;
-	}
-}
-
-SDL_Rect RecorteCoffinMario::obtenerRecorte(int recorte){
-	return estadosPosibles[estadoActual];
+	inicializarEstados(ESTADOS_COFFIN,DESPLAZAMIENTO_X,ALTO_COFFIN,ANCHO_COFFIN);
 }
 
 void RecorteCoffinMario::actualizarSprite(){
@@ -35,11 +26,6 @@ int RecorteCoffinMario::obtenerPosicionX() const{
 	return posicionX;
 }
 
-int RecorteCoffinMario::obtenerAltura() {
-    return estadosPosibles[estadoActual].h;
+SDL_Rect RecorteCoffinMario::obtenerRecorte(int recorte) {
+    return Recorte::obtenerRecorte(estadoActual);
 }
-
-int RecorteCoffinMario::obtenerAnchura() {
-    return estadosPosibles[estadoActual].w;
-}
-

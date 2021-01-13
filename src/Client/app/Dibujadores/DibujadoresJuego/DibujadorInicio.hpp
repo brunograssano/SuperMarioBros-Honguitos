@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 
-#include "Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
 
 class DibujadorInicio : public Dibujador{
 

@@ -8,14 +8,11 @@ class RecorteToadSaltando: public Recorte{
 	public:
 		RecorteToadSaltando();
 		void actualizarSprite()override;
-        int obtenerAltura() override;
-        int obtenerAnchura() override;
-		SDL_Rect obtenerRecorte(int recorte)override;
+        SDL_Rect obtenerRecorte(int recorte)override;
 
 	private:
-		SDL_Rect estadosPosibles[12]{};
 		int estadoActual;
-        int ciclos;
+        int ciclos{};
 
 };
 

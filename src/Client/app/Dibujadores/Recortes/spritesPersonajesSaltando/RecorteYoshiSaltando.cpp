@@ -1,17 +1,14 @@
 #include "RecorteYoshiSaltando.hpp"
 
+#define ESTADOS_YOSHI 16
+#define DESPLAZAMIENTO_X 20
+#define ALTO 29
+#define ANCHO 20
+
 RecorteYoshiSaltando::RecorteYoshiSaltando(){
 	estadoActual = 0;
-	int corrimientoEnImagen = 0;
-	for(auto & estadosPosible : estadosPosibles){
-		estadosPosible.x = corrimientoEnImagen;
-		estadosPosible.y = 0;
-		estadosPosible.w = 20;
-		estadosPosible.h = 29;
-		corrimientoEnImagen+= 20;
-	}
+	inicializarEstados(ESTADOS_YOSHI,DESPLAZAMIENTO_X,ALTO,ANCHO);
 }
-
 
 void RecorteYoshiSaltando::actualizarSprite(){
 	if(ciclos%5==0){
@@ -23,16 +20,6 @@ void RecorteYoshiSaltando::actualizarSprite(){
 	ciclos++;
 }
 
-SDL_Rect RecorteYoshiSaltando::obtenerRecorte(int recorte){
-	return estadosPosibles[estadoActual];
+SDL_Rect RecorteYoshiSaltando::obtenerRecorte(int recorte) {
+    return Recorte::obtenerRecorte(estadoActual);
 }
-
-int RecorteYoshiSaltando::obtenerAltura() {
-    return estadosPosibles[estadoActual].h;
-}
-
-int RecorteYoshiSaltando::obtenerAnchura() {
-    return estadosPosibles[estadoActual].w;
-}
-
-

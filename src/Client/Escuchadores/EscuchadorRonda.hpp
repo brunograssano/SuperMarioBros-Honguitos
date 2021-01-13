@@ -5,11 +5,6 @@
 class Cliente;
 #include "../Cliente.hpp"
 
-#include "../app/juegoCliente/RecorteBloque.hpp"
-#include "../app/juegoCliente/RecorteMoneda.hpp"
-#include "../app/juegoCliente/RecorteGoomba.hpp"
-#include "../app/juegoCliente/RecorteKoopa.hpp"
-
 #include "../../Utils/Escuchador.hpp"
 
 class EscuchadorRonda: public Escuchador{

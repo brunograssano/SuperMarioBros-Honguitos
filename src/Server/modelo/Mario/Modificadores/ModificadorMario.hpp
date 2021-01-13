@@ -11,7 +11,7 @@ class ModificadorMario {
         virtual ~ModificadorMario()= default;
         virtual ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) = 0;
         virtual ModificadorMario* perderVida(VidaMario* vidaMario)=0;
-        virtual ModificadorMario* hacerseDeFuego();
+        virtual ModificadorMario* hacerseDeFuego() = 0;
         virtual void actualizar() = 0;
 };
 

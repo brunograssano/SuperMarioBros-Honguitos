@@ -1,12 +1,14 @@
 #include "BolaDeFuego.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
 
 #define MAX_REBOTES 1
 
 const float VELOCIDAD_X_INICIAL = 3.5;
 const float VELOCIDAD_Y_INICIAL = 0;
 
-BolaDeFuego::BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia) {
+BolaDeFuego::BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia, Mario* mario) {
+    marioQueDisparo = mario;
     posicion = new PosicionMovil(posicionInicial.obtenerPosX(), posicionInicial.obtenerPosY());
     sprite = new SpriteBolaDeFuego();
     velocidadX = direccion==DERECHA?VELOCIDAD_X_INICIAL:-VELOCIDAD_X_INICIAL;
@@ -69,6 +71,10 @@ void BolaDeFuego::inicializarMapasDeColision() {
     auto pRebotar = (void (Colisionable::*)(void*))&BolaDeFuego::rebotar;
     Colisionable::parFuncionColisionContexto_t parRebotar = {pRebotar, nullptr};
 
+    auto pMatarEnemigo = (void (Colisionable::*)(void*))&BolaDeFuego::matarEnemigo;
+    Colisionable::parFuncionColisionContexto_t parMatarKoopa = {pMatarEnemigo, (void*) &PUNTOS_KOOPA};
+    Colisionable::parFuncionColisionContexto_t parMatarGoomba = {pMatarEnemigo, (void*) &PUNTOS_GOOMBA};
+
     mapaColisionesPorDerecha[COLISION_ID_SORPRESA] = parExplotar;
     mapaColisionesPorIzquierda[COLISION_ID_SORPRESA] = parExplotar;
     mapaColisionesPorArriba[COLISION_ID_SORPRESA] = parExplotar;
@@ -79,15 +85,15 @@ void BolaDeFuego::inicializarMapasDeColision() {
     mapaColisionesPorArriba[COLISION_ID_LADRILLO] = parExplotar;
     mapaColisionesPorAbajo[COLISION_ID_LADRILLO] = parRebotar;
 
-    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parExplotar;
-    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parExplotar;
-    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parExplotar;
-    mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = parExplotar;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parMatarGoomba;
+    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parMatarGoomba;
+    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parMatarGoomba;
+    mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = parMatarGoomba;
 
-    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parExplotar;
-    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parExplotar;
-    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parExplotar;
-    mapaColisionesPorAbajo[COLISION_ID_KOOPA] = parExplotar;
+    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parMatarKoopa;
+    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parMatarKoopa;
+    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parMatarKoopa;
+    mapaColisionesPorAbajo[COLISION_ID_KOOPA] = parMatarKoopa;
 }
 
 void BolaDeFuego::explotar(void *pVoid) {
@@ -105,4 +111,10 @@ void BolaDeFuego::rebotar(void *pVoid) {
         velocidadY = velocidadY>3?3:velocidadY;
         rebotes++;
     }
+}
+
+void BolaDeFuego::matarEnemigo(void *pVoid) {
+    int puntos = * ((int*) pVoid);
+    marioQueDisparo->agregarPuntos(puntos);
+    explotar(nullptr);
 }

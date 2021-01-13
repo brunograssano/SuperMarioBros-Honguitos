@@ -19,6 +19,7 @@ using namespace std;
 #include "DibujadorJuego.hpp"
 #include "DibujadorError.hpp"
 #include "DibujadorErrorServidor.hpp"
+#include "DibujadorFinNivel.hpp"
 
 class Dibujadores{
 
@@ -28,6 +29,7 @@ class Dibujadores{
 		void dibujarGameOver();
 		void dibujarInicio();
 		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
+		void dibujarPantallaFinNivel(JuegoCliente *juegoCliente);
 		void dibujarErrorServidor();
 		~Dibujadores();
 
@@ -38,6 +40,7 @@ class Dibujadores{
 		DibujadorJuego* dibujadorJuego;
 		DibujadorError* dibujadorError;
 		DibujadorErrorServidor* dibujadorErrorServidor;
+		DibujadorFinNivel* dibujadorFinNivel;
 		bool archivoBienLeido;
 };
 

@@ -15,6 +15,7 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->ganaron = false;
 	this->perdieron = false;
 	this->anchoVista = anchoPantalla;
+	this->hayQueMostrarPuntosDeNivel = false;
 }
 
 bool JuegoCliente::ganaronElJuego() const{
@@ -135,6 +136,7 @@ list<efecto_t> JuegoCliente::obtenerEfectos() {
 }
 
 void JuegoCliente::agregarNivel(nivel_t nivel) {
+    if(numeroMundo != 0 ){this->hayQueMostrarPuntosDeNivel = true;}
     pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_lock(&mutex);
     numeroMundo = nivel.mundo;

@@ -9,8 +9,8 @@ Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* render
 	this->dibujadorError = nullptr;
 	this->dibujadorError = new DibujadorError(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 	this->dibujadorErrorServidor = new DibujadorErrorServidor(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+    this->dibujadorFinNivel = new DibujadorFinNivel(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
-
 
 void Dibujadores::dibujarPantallaGanadores(JuegoCliente* juegoCliente){
 	dibujadorGanadores->dibujar(juegoCliente);
@@ -24,6 +24,11 @@ void Dibujadores::dibujarInicio(){
 		dibujadorError->dibujar();
 	}
 }
+
+void Dibujadores::dibujarPantallaFinNivel(JuegoCliente* juegoCliente){
+    dibujadorFinNivel->dibujar(juegoCliente);
+}
+
 
 void Dibujadores::dibujarGameOver(){
 	dibujadorGameOver->dibujar();

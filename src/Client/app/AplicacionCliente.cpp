@@ -139,9 +139,9 @@ void App::dibujar(){
 
 	if(this->errorServidor){
 		dibujador->dibujarErrorServidor();
-	}else if(!comenzoElJuego){
-		dibujador->dibujarInicio();
-	}else{
+	}else if(!comenzoElJuego) {
+        dibujador->dibujarInicio();
+    }else{
 		if(juegoCliente->ganaronElJuego()){
 
 			if(!this->estaReproduciendoMusicaGanadores){
@@ -151,12 +151,14 @@ void App::dibujar(){
 			dibujador->dibujarPantallaGanadores(juegoCliente);
 			terminoElJuego = true;
 		}
-		else if(juegoCliente->perdieronElJuego()){
-			if(!terminoElJuego){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
-				terminoElJuego = true;
-			}
-			dibujador->dibujarGameOver();
+		else if(juegoCliente->perdieronElJuego()) {
+            if (!terminoElJuego) {
+                ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
+                terminoElJuego = true;
+            }
+            dibujador->dibujarGameOver();
+        }else if(juegoCliente->hayQueMostrarPuntosDeNivel){
+                dibujador->dibujarPantallaFinNivel(juegoCliente);
 		}else if(!terminoElJuego){
 			dibujador->dibujarJuego(&rectanguloCamara,juegoCliente);
 		}

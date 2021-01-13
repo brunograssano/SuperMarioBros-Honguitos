@@ -29,6 +29,8 @@ class JuegoCliente{
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
+        bool hayQueMostrarPuntosDeNivel;
+
     void agregarNivel(nivel_t nivel);
   private:
     bool enRango(int posX) const;
@@ -50,7 +52,6 @@ class JuegoCliente{
 		int posXCamara;
 		bool ganaron;
 		bool perdieron;
-
 
 };
 

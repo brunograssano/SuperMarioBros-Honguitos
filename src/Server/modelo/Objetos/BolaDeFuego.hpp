@@ -6,9 +6,11 @@
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/sprites/SpriteBolaDeFuego.hpp"
 
+class Mario;
+
 class BolaDeFuego : public ObjetoFugaz{
     public:
-        explicit BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia);
+        explicit BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia, Mario* marioQueDisparo);
 
         void actualizar() override;
         efecto_t serializar() override;
@@ -30,8 +32,10 @@ class BolaDeFuego : public ObjetoFugaz{
         float efecto_gravitacional = -0.1;
         int rebotes = 0;
         bool exploto;
+        Mario* marioQueDisparo;
         void explotar(void *pVoid);
         void rebotar(void *pVoid);
+        void matarEnemigo(void *pVoid);
 };
 
 

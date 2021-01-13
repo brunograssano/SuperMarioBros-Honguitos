@@ -14,7 +14,7 @@ Mario::Mario(int numeroJugador){
 	this->puntos=0;
 	this->movimiento = new MovimientoMario();
 	this->spriteMario = new SpriteMario();
-	this->modificador = new SinModificador();
+	this->modificador = new SinModificador(this);
 	this->vidaMario = new VidaMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;

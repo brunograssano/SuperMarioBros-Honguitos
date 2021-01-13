@@ -1,9 +1,11 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_MONEDASORPRESA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_MONEDASORPRESA_HPP
 
+
 #include "ObjetoSorpresa.hpp"
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/modelo/movimiento/MovimientoVertical.hpp"
+#include <src/Server/sprites/SpriteMonedaFlotante.hpp>
 
 class MonedaSorpresa : public ObjetoSorpresa{
     public:
@@ -20,6 +22,7 @@ class MonedaSorpresa : public ObjetoSorpresa{
         void inicializarMapasDeColision() override;
         PosicionMovil posicion = PosicionMovil(0, 0, 0, 0, 0);
         MovimientoVertical movimiento = MovimientoVertical(0);
+        SpriteMonedaFlotante sprite;
         int posYInicial;
 };
 

@@ -2,7 +2,7 @@
 #include "src/Utils/Constantes.hpp"
 #include "src/Utils/Utils.hpp"
 
-const int FUERZA = 5;
+const int FUERZA = 30;
 
 MonedaSorpresa::MonedaSorpresa(Posicion* posicionInicial) {
     _debeDesaparecer = false;
@@ -10,8 +10,10 @@ MonedaSorpresa::MonedaSorpresa(Posicion* posicionInicial) {
     posicion = PosicionMovil(posicionInicial->obtenerPosX(), posicionInicial->obtenerPosY(),
                              posicionInicial->obtenerPosY(), posicionInicial->obtenerPosX(), posicionInicial->obtenerPosX());
     movimiento = MovimientoVertical(FUERZA);
+    Terreno* tierra = new Tierra();
+    movimiento.saltar(tierra);
+    delete tierra;
     inicializarMapasDeColision();
-    //todo: sprite feat.
 }
 
 void MonedaSorpresa::usarse(Mario *mario) {
@@ -21,7 +23,8 @@ void MonedaSorpresa::usarse(Mario *mario) {
 efecto_t MonedaSorpresa::serializar() {
     unsigned short x = posicion.obtenerPosX();
     unsigned short y = posicion.obtenerPosY();
-    return {x, y, 0/*todo: sprite*/, MONEDA_FLOTANTE};
+    uint8_t recorte = sprite.obtenerEstadoActual();
+    return {x, y, recorte, MONEDA_FLOTANTE};
 }
 
 void MonedaSorpresa::actualizar() {
@@ -29,11 +32,11 @@ void MonedaSorpresa::actualizar() {
     if(posicion.obtenerPosY() == posYInicial){
         _debeDesaparecer = true;
     }
-    //todo: sprite feat.
+    sprite.actualizarSprite();
 }
 
 int MonedaSorpresa::obtenerPosicionX() {
-    return posicion.obtenerPosX();;
+    return posicion.obtenerPosX();
 }
 
 string MonedaSorpresa::obtenerColisionID() {

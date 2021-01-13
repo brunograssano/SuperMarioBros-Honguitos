@@ -1,8 +1,8 @@
 #include "RecorteMonedaFlotante.hpp"
 #include "src/Utils/Constantes.hpp"
-const int ALTO_IMAGEN_PIXEL = 32;
-const int ANCHO_IMAGEN_PIXEL = 31;
-const int PASO_PROXIMO_SPRITE = 32;
+const int ALTO_IMAGEN_PIXEL = 16;
+const int ANCHO_IMAGEN_PIXEL = 16;
+const int PASO_PROXIMO_SPRITE = 16;
 
 
 RecorteMonedaFlotante::RecorteMonedaFlotante() {

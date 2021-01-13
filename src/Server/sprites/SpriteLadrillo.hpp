@@ -4,14 +4,19 @@
 
 #include <SDL2/SDL.h>
 
-#include "Sprite.hpp"
+#include "SpriteBloque.hpp"
 
-class SpriteLadrillo : public Sprite{
+class SpriteLadrillo : public SpriteBloque{
 	public:
-		explicit SpriteLadrillo(int tipo);
+		SpriteLadrillo();
 		~SpriteLadrillo() override = default;
 		SDL_Rect obtenerRectanguloActual()override;
 		void actualizarSprite()override;
+		void usarse() override;
+		bool cambioElSprite() override;
+
+    private:
+        int estadoAnterior;
 
 };
 

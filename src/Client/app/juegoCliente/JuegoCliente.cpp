@@ -3,6 +3,11 @@
 #define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20 /* para evitar el delay por renderizar cosas viejas y no nuevas */
 #define RANGO_VISTA 100
 
+bool operator == (const bloque_t &bloque1, const bloque_t &bloque2){
+    return bloque1.posX == bloque2.posX && bloque1.posY == bloque2.posY && bloque1.numeroRecorteY == bloque2.numeroRecorteY;
+}
+
+
 JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla){
 	for(int i = 0; i<cantidadJugadores;i++){
 		this->jugadores[jugadores[i].mario.idImagen] = jugadores[i];
@@ -81,6 +86,31 @@ void JuegoCliente::actualizar(){
         efectos.push_front(ronda.efectos[i]);
     }
 
+    list<bloque_t> ladrillosASacar;
+    list<bloque_t> ladrillosNuevos;
+    bool agregado = false;
+    for(auto ladrillo: ladrillos){
+        if(enRango(ladrillo.posX)){
+            for(auto bloque : bloques) {
+                if(ladrillo == bloque){
+                    ladrillosASacar.push_front(ladrillo);
+                    ladrillosNuevos.push_front(bloque);
+                    agregado = true;
+                }
+            }
+            if(!agregado){
+                bloques.push_front(ladrillo);
+            }
+            agregado = false;
+        }
+    }
+    for (auto ladrillo : ladrillosASacar){
+        ladrillos.remove(ladrillo);
+    }
+    for (auto ladrillo : ladrillosNuevos){
+        ladrillos.push_front(ladrillo);
+    }
+
 }
 
 int JuegoCliente::obtenerIDPropio() const{
@@ -96,11 +126,6 @@ list<enemigo_t> JuegoCliente::obtenerEnemigos(){
 }
 
 list<bloque_t> JuegoCliente::obtenerBloques(){
-    for(auto bloque:ladrillos){
-        if(enRango(bloque.posX)){
-            bloques.push_front(bloque);
-        }
-    }
 	return bloques;
 }
 

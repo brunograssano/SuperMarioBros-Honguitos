@@ -4,15 +4,17 @@
 
 #include <SDL2/SDL.h>
 
-#include "Sprite.hpp"
+#include "SpriteBloque.hpp"
 
-class SpriteSorpresa : public Sprite{
+class SpriteSorpresa : public SpriteBloque{
 	public:
 
-		explicit SpriteSorpresa(bool seUso);
+		explicit SpriteSorpresa();
 		~SpriteSorpresa() override= default;
 		SDL_Rect obtenerRectanguloActual()override;
 		void actualizarSprite()override;
+		void usarse() override;
+		bool cambioElSprite() override;
 
 	private:
 		SDL_Rect estadosPosibles[5]{};

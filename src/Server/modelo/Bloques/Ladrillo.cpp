@@ -6,13 +6,13 @@ Ladrillo::Ladrillo(int coordenadaX, int coordenadaY, int tipo) {
 
     posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
     tipoBloque = tipo;
-    spriteBloque = new SpriteLadrillo(tipo);
+    spriteBloque = new SpriteLadrillo();
     inicializarMapasDeColision();
 }
 
 
 void Ladrillo::romperse(void *ptr) {
-    spriteBloque->actualizarSprite();
+    spriteBloque->usarse();
 }
 
 void Ladrillo::inicializarMapasDeColision() {

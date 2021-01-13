@@ -42,6 +42,14 @@ rectangulo_t Bloque::obtenerRectangulo() {
     return {x,x+w,y,y+h,h,w};
 }
 
+bool Bloque::cambioElSprite() {
+    return spriteBloque->cambioElSprite();
+}
+
 bool Bloque::debeColisionar() {
     return true;
+}
+
+void Bloque::actualizar() {
+    spriteBloque->actualizarSprite();
 }

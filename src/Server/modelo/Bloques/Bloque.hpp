@@ -12,7 +12,7 @@ using namespace std;
 #include "../../../Utils/Utils.hpp"
 
 #include "../PosicionFija.hpp"
-#include "../../sprites/Sprite.hpp"
+#include "../../sprites/SpriteBloque.hpp"
 #include "../../sprites/SpriteSorpresa.hpp"
 #include "../../sprites/SpriteLadrillo.hpp"
 
@@ -21,6 +21,7 @@ using namespace std;
 class Bloque : public Colisionable{
     public:
 		virtual ~Bloque()= default;
+		void actualizar();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		Sprite* obtenerSprite();
@@ -30,12 +31,12 @@ class Bloque : public Colisionable{
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
+        bool cambioElSprite();
 
-
-protected:
+    protected:
         int tipoBloque{};
     	Posicion* posicion{};
-    	Sprite* spriteBloque{};
+    	SpriteBloque* spriteBloque{};
 		static int normalizarCoordenadaIngresada(int coordenada);
         void inicializarMapasDeColision() override = 0;
 };

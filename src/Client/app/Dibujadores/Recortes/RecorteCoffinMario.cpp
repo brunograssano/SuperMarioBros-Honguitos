@@ -1,8 +1,7 @@
-#include "SpriteCoffinMario.hpp"
+#include "RecorteCoffinMario.hpp"
 
 
-SpriteCoffinMario::SpriteCoffinMario(){
-	direccionTextura = "resources/Imagenes/Personajes/MarioCoffinDance.png";
+RecorteCoffinMario::RecorteCoffinMario(){
 	estadoActual = 0;
 	ciclos = 0;
 	posicionX = 0;
@@ -17,11 +16,11 @@ SpriteCoffinMario::SpriteCoffinMario(){
 	}
 }
 
-SDL_Rect SpriteCoffinMario::obtenerRectanguloActual(){
+SDL_Rect RecorteCoffinMario::obtenerRecorte(int recorte){
 	return estadosPosibles[estadoActual];
 }
 
-void SpriteCoffinMario::actualizarSprite(){
+void RecorteCoffinMario::actualizarSprite(){
 	if(ciclos>=20){
 		estadoActual == 2? estadoActual = 0 : estadoActual++;
 		posicionX+=5;
@@ -32,7 +31,15 @@ void SpriteCoffinMario::actualizarSprite(){
 	}
 }
 
-int SpriteCoffinMario::obtenerPosicionX() const{
+int RecorteCoffinMario::obtenerPosicionX() const{
 	return posicionX;
+}
+
+int RecorteCoffinMario::obtenerAltura() {
+    return estadosPosibles[estadoActual].h;
+}
+
+int RecorteCoffinMario::obtenerAnchura() {
+    return estadosPosibles[estadoActual].w;
 }
 

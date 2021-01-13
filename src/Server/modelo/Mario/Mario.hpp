@@ -48,12 +48,8 @@ class Mario : public Colisionable {
         ObjetoFugaz* dispararFuego();
 
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
-		void desconectar(){
-			estaConectadoElJugador = false;
-		}
-		void conectar(){
-			estaConectadoElJugador = true;
-		}
+		void desconectar();
+		void conectar();
 		void serArrastrado(int corrimiento);
 		void actualizarMaximoX(int limite);
 		void actualizarMinimoX(int limite);
@@ -67,9 +63,11 @@ class Mario : public Colisionable {
         void chocarPorArribaCon(Colisionable* colisionable) override;
         void chocarPorAbajoCon(Colisionable* colisionable) override;
 
-		~Mario();
+		~Mario() override;
 
-    private:
+        void alternarModoTest();
+
+private:
         void empujarEnX(rectangulo_t rectanguloBloque,int direccion);
         void empujarEnY(rectangulo_t rectanguloBloque,int direccion);
         void hacerseDeFuego(void* pVoid);
@@ -87,6 +85,5 @@ class Mario : public Colisionable {
 		bool estaConectadoElJugador;
 
 };
-
 
 #endif // SRC_SERVER_MODELO_MARIO_HPP_

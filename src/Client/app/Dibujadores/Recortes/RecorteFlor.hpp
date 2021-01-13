@@ -2,7 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_RECORTEFLOR_HPP
 
 
-#include <src/Client/app/juegoCliente/Recortes/Recorte.hpp>
+#include "Recorte.hpp"
 
 class RecorteFlor : public Recorte{
     SDL_Rect obtenerRecorte(int recorte) override;

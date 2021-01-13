@@ -1,9 +1,8 @@
 
-#include "SpriteToadSaltando.hpp"
+#include "RecorteToadSaltando.hpp"
 
 
-SpriteToadSaltando::SpriteToadSaltando(){
-	direccionTextura = "resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png";
+RecorteToadSaltando::RecorteToadSaltando(){
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
 	for(auto & estadosPosible : estadosPosibles){
@@ -17,7 +16,7 @@ SpriteToadSaltando::SpriteToadSaltando(){
 
 
 
-void SpriteToadSaltando::actualizarSprite(){
+void RecorteToadSaltando::actualizarSprite(){
 	if(ciclos%5==0){
 		estadoActual++;
 		if(estadoActual==11 && ciclos%5==0){
@@ -27,8 +26,16 @@ void SpriteToadSaltando::actualizarSprite(){
 	ciclos++;
 }
 
-SDL_Rect SpriteToadSaltando::obtenerRectanguloActual(){
+SDL_Rect RecorteToadSaltando::obtenerRecorte(int recorte){
 	return estadosPosibles[estadoActual];
+}
+
+int RecorteToadSaltando::obtenerAltura() {
+    return estadosPosibles[estadoActual].h;
+}
+
+int RecorteToadSaltando::obtenerAnchura() {
+    return estadosPosibles[estadoActual].w;
 }
 
 

@@ -3,7 +3,7 @@
 #include "src/Utils/Constantes.hpp"
 
 Goomba::Goomba(int tipoColor) {
-    spriteEnemigo = new SpriteGoomba(tipoColor);
+    spriteEnemigo = new SpriteGoomba();
     this->tipoColor = tipoColor;
     velocidadX = obtenerVelocidad();
     loMataron = false;

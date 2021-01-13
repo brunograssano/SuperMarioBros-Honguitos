@@ -158,11 +158,6 @@ bool Mario::estaEnElPiso(){
     return !movimiento->estaEnElAire();
 }
 
-void Mario::swapDeModificador(ModificadorMario* nuevoModificador){
-    delete modificador;
-    modificador = nuevoModificador;
-}
-
 int Mario::obtenerVida(){
     return vidaMario->obtenerVida();
 }
@@ -172,6 +167,11 @@ void Mario::perderVida(void* ptr) {
     posicion->reiniciar();
     movimiento->reiniciar();
     swapDeModificador(nuevoModificador);
+}
+
+void Mario::swapDeModificador(ModificadorMario* nuevoModificador){
+    delete modificador;
+    modificador = nuevoModificador;
 }
 
 void Mario::hacerseDeFuego() {
@@ -186,14 +186,6 @@ ObjetoFugaz* Mario::dispararFuego() {
     Posicion posManos = spriteMario->posicionManos();
     PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),obtenerPosicionY() + posManos.obtenerPosY());
     return modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
-}
-
-Mario::~Mario(){
-	delete this->spriteMario;
-	delete this->posicion;
-	delete this->movimiento;
-	delete this->modificador;
-	delete this->vidaMario;
 }
 
 string Mario::obtenerColisionID() {
@@ -284,4 +276,24 @@ void Mario::empujarEnY(rectangulo_t rectanguloBloque, int direccion) {
 
 bool Mario::debeColisionar() {
     return estaConectadoElJugador && vidaMario->obtenerVida() > 0;
+}
+
+void Mario::alternarModoTest() {
+    //todo completar con el modo test
+}
+
+void Mario::desconectar() {
+    estaConectadoElJugador = false;
+}
+
+void Mario::conectar() {
+    estaConectadoElJugador = true;
+}
+
+Mario::~Mario(){
+    delete this->spriteMario;
+    delete this->posicion;
+    delete this->movimiento;
+    delete this->modificador;
+    delete this->vidaMario;
 }

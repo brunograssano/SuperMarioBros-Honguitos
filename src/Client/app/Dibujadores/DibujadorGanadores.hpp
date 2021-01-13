@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
 
@@ -11,10 +11,7 @@
 #include "ParticulaGanadores.hpp"
 
 #include "../juegoCliente/JuegoCliente.hpp"
-
-#include "../../../Server/sprites/spritesPersonajesSaltando/SpritePeachSaltando.hpp"
-#include "../../../Server/sprites/spritesPersonajesSaltando/SpriteToadSaltando.hpp"
-#include "../../../Server/sprites/spritesPersonajesSaltando/SpriteYoshiSaltando.hpp"
+#include "Recortes/Recorte.hpp"
 
 
 class DibujadorGanadores : public Dibujador{
@@ -29,9 +26,9 @@ class DibujadorGanadores : public Dibujador{
 		void dibujarPersonajes();
 
 		map<int, SDL_Color> colores;
-		SpritePeachSaltando* spritePeach;
-		SpriteToadSaltando* spriteToad;
-		SpriteYoshiSaltando* spriteYoshi;
+        Recorte* spritePeach;
+        Recorte* spriteToad;
+        Recorte* spriteYoshi;
 		list<ParticulaGanadores*> particulas;
 };
 

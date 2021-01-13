@@ -10,10 +10,6 @@ SpriteLadrillo::SpriteLadrillo(){
 void SpriteLadrillo::actualizarSprite(){
 }
 
-SDL_Rect SpriteLadrillo::obtenerRectanguloActual(){ // TODO BORRAR ESTE METODO
-	return {0,0,0,0};
-}
-
 void SpriteLadrillo::usarse() {
     if(estadoActual >= TODO_ROTO){
         return;

@@ -122,7 +122,7 @@ typedef struct entrada_usuario{
 	bool D;
 	bool W;
 	bool ESP;
-	bool F;
+	bool T;
 }entrada_usuario_t;
 
 #define VERIFICACION 'V'

@@ -1,12 +1,12 @@
 #include "CargadorTexturas.hpp"
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
 
 #include "ManejadorSDL.hpp"
 #include "../../Utils/log/Log.hpp"
+#include "../../Utils/Constantes.hpp"
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
@@ -24,21 +24,26 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		i++;
 	}
 
-    texturas["Moneda"] = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
-    texturas["FondoInicio"]  = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
-    texturas["Titulo"]  = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
-    texturas["FondoGameOver"]  = intentarCarga("el fondo del final del juego","resources/Imagenes/Niveles/fondoGameOver.png",renderizador);
-    texturas["Coffin"]  = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
-    texturas["Tuberia"]  = intentarCarga("la imagen de las tuberias","resources/Imagenes/Bloques/Tuberias.png",renderizador);
-    texturas["Corazon"]  = intentarCarga("la imagen de un corazon","resources/Imagenes/Objetos/Corazon.png",renderizador);
-    texturas["BolaDeFuego"] = intentarCarga("la imagen de la bola de fuego", "resources/Imagenes/Objetos/BolaDeFuego.png", renderizador);
-    texturas["Chispa"] = intentarCarga("la imagen de la chispa", "resources/Imagenes/Objetos/Chispa.png", renderizador);
-    texturas["Flor"] = intentarCarga("la imagen de las flores", "resources/Imagenes/Objetos/Flores.png", renderizador);
+    texturas[CLAVE_TEXTURA_MONEDA] = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
+    texturas[CLAVE_TEXTURA_FONDO_INICIO]  = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
+    texturas[CLAVE_TEXTURA_TITULO]  = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
+    texturas[CLAVE_TEXTURA_GAMEOVER]  = intentarCarga("el fondo del final del juego","resources/Imagenes/Niveles/fondoGameOver.png",renderizador);
+    texturas[CLAVE_TEXTURA_COFFIN_MARIO]  = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);
+    texturas[CLAVE_TEXTURA_TUBERIAS]  = intentarCarga("la imagen de las tuberias","resources/Imagenes/Bloques/Tuberias.png",renderizador);
+    texturas[CLAVE_TEXTURA_CORAZON]  = intentarCarga("la imagen de un corazon","resources/Imagenes/Objetos/Corazon.png",renderizador);
+    texturas[CLAVE_TEXTURA_BOLA_DE_FUEGO] = intentarCarga("la imagen de la bola de fuego", "resources/Imagenes/Objetos/BolaDeFuego.png", renderizador);
+    texturas[CLAVE_TEXTURA_CHISPA] = intentarCarga("la imagen de la chispa", "resources/Imagenes/Objetos/Chispa.png", renderizador);
+    texturas[CLAVE_TEXTURA_FLOR] = intentarCarga("la imagen de las flores", "resources/Imagenes/Objetos/Flores.png", renderizador);
 
-    texturas["Bloques"]  = intentarCarga("la imagen de los bloques","resources/Imagenes/Bloques/Bloques.png",renderizador);
-    texturas["Goombas"]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);
-    texturas["Koopas"]  = intentarCarga("la imagen de los Koopas","resources/Imagenes/Personajes/Koopas.png",renderizador);
-    texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
+    texturas[CLAVE_TEXTURA_BLOQUES]  = intentarCarga("la imagen de los bloques","resources/Imagenes/Bloques/Bloques.png",renderizador);
+    texturas[CLAVE_TEXTURA_GOOMBA]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);
+    texturas[CLAVE_TEXTURA_KOOPAS]  = intentarCarga("la imagen de los Koopas","resources/Imagenes/Personajes/Koopas.png",renderizador);
+
+    texturas[CLAVE_TEXTURA_PEACH_SALTANDO]  = intentarCarga("la imagen de Peach saltando","resources/Imagenes/PersonajesSaltando/PeachSaltando.png",renderizador);
+    texturas[CLAVE_TEXTURA_TOAD_SALTANDO]  = intentarCarga("la imagen de Toad saltando","resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png",renderizador);
+    texturas[CLAVE_TEXTURA_YOSHI_SALTANDO]  = intentarCarga("la imagen de Yoshi saltando","resources/Imagenes/PersonajesSaltando/YoshiSaltando.png",renderizador);
+
+    texturaDefecto = intentarCarga("la imagen por defecto","resources/Imagenes/ImagenError.png",renderizador);
 
     string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
                               "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
@@ -46,15 +51,6 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     for(auto const& particula:listaParticulas){
 		SDL_Texture* particulaTextura = intentarCarga("la particula", particula, renderizador);
 		particulas[particula]=particulaTextura;
-	}
-
-	string listaPersonajes[]={"resources/Imagenes/PersonajesSaltando/PeachSaltando.png",
-							  "resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png",
-							  "resources/Imagenes/PersonajesSaltando/YoshiSaltando.png"};
-
-	for(auto const& personaje:listaPersonajes){
-		SDL_Texture* personajeTextura = intentarCarga("el personaje", personaje, renderizador);
-		texturasPersonajes[personaje]=personajeTextura;
 	}
 
 	int tamanioFuente = 20;
@@ -68,7 +64,18 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 		log->mostrarMensajeDeCarga("Fuente de texto del juego", "resources/Fuentes/fuenteSuperMarioBros.ttf");
 	}
 
-	log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes");
+    revisarCargaCorrecta(texturas);
+    revisarCargaCorrecta(particulas);
+
+    log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes");
+}
+
+void CargadorTexturas::revisarCargaCorrecta(map<string, SDL_Texture *> texturasCargadas) {
+    for(auto parClaveTextura:texturasCargadas){
+        if(parClaveTextura.second==nullptr){
+            parClaveTextura.second = texturaDefecto;
+        }
+    }
 }
 
 SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(const string& textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto){
@@ -90,12 +97,12 @@ SDL_Texture* CargadorTexturas::cargarFuenteDeTextoATextura(const string& textoAM
 	return texturaCargada;
 }
 
-void CargadorTexturas::revisarSiCambioNivel(string direccionFondo) {
-	direccionFondo = "resources/Imagenes/Niveles/" + direccionFondo;
+void CargadorTexturas::revisarSiCambioNivel(string nombreFondo) {
+    nombreFondo = DIRECCION_BASE_NIVELES + nombreFondo;
 
-	if(direccionFondoActual != direccionFondo){
+	if(direccionFondoActual != nombreFondo){
 		destructorDeTexturas(texturaFondoActual);
-		direccionFondoActual = direccionFondo;
+		direccionFondoActual = nombreFondo;
 		texturaFondoActual = this->texturasNiveles[direccionFondoActual];
 	}
 }
@@ -103,47 +110,16 @@ void CargadorTexturas::revisarSiCambioNivel(string direccionFondo) {
 void CargadorTexturas::cargarTexturasNiveles(map<int, string> direccionesNiveles, SDL_Renderer *renderizador,unsigned short mundo) {
 	string direccion;
 	SDL_Texture* texturaNueva;
-	string prefijo = "resources/Imagenes/Niveles/";
+	string prefijo = DIRECCION_BASE_NIVELES;
 
 	for (auto const& parMundoDireccion : direccionesNiveles){
 	  direccion = prefijo + parMundoDireccion.second;
 	  texturaNueva = intentarCarga("Fondo Nivel", direccion, renderizador);
-	  texturasNiveles[direccion] = texturaNueva;
+	  texturasNiveles[direccion] = texturaNueva == nullptr ? texturaDefecto : texturaNueva;
 	}
 
 	texturaFondoActual = this->texturasNiveles[prefijo + direccionesNiveles[mundo]];
 	direccionFondoActual = prefijo + direccionesNiveles[mundo];
-}
-
-SDL_Texture* CargadorTexturas::cargarTextura(const std::string& direccion, SDL_Renderer* renderizador){
-	SDL_Texture*  texturaCargada= nullptr;
-	SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
-	if(superficieImagen == nullptr){
-		Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccion, IMG_GetError());
-	}
-	else{
-		texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficieImagen );
-		if( texturaCargada == nullptr ){
-			Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccion, SDL_GetError());
-		}
-		SDL_FreeSurface( superficieImagen );
-	}
-	return texturaCargada;
-}
-
-SDL_Texture* CargadorTexturas::intentarCarga(const std::string& descripcion, const std::string& direccion, SDL_Renderer* renderizador){
-	SDL_Texture* texturaCargada =  cargarTextura(direccion, renderizador);
-	if(texturaCargada == nullptr){
-		texturaCargada = texturaDefecto;
-		Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion + ". Se cargo la textura por defecto.");
-	}else{
-		Log::getInstance()->mostrarMensajeDeCarga(descripcion, direccion);
-	}
-	return texturaCargada;
-}
-
-SDL_Texture* CargadorTexturas::obtenerTexturaPersonaje(const string& personaje){
-	return texturasPersonajes[personaje];
 }
 
 SDL_Texture* CargadorTexturas::obtenerParticula(const string& particulaAsociada){
@@ -164,30 +140,23 @@ SDL_Texture* CargadorTexturas::obtenerTexturaFondo(){
 	return texturasNiveles[direccionFondoActual];
 }
 
+void CargadorTexturas::destruirTexturasEnMapa(const map<string, SDL_Texture *>& mapaDeTexturas) {
+    for (auto const& parClaveTextura : mapaDeTexturas){
+        destructorDeTexturas(parClaveTextura.second);
+    }
+}
+
 CargadorTexturas::~CargadorTexturas(){
 	destructorDeTexturas(texturaFondoActual);
 	destructorDeTexturas(texturaFuenteJuego);
 	destructorDeTexturas(texturaDefecto);
 
-    for (auto const& parClaveTextura : texturas){
-        destructorDeTexturas(parClaveTextura.second);
+    destruirTexturasEnMapa(texturas);
+    destruirTexturasEnMapa(texturasNiveles);
+    destruirTexturasEnMapa(particulas);
+    for (auto const& parClaveMario : texturasMario){
+        destructorDeTexturas(parClaveMario.second);
     }
-
-	for (auto const& parClaveMario : texturasMario){
-		destructorDeTexturas(parClaveMario.second);
-	}
-
-	for (auto const& parClaveNivel : texturasNiveles){
-		destructorDeTexturas(parClaveNivel.second);
-	}
-
-	for (auto const& parClaveParticula : particulas){
-		destructorDeTexturas(parClaveParticula.second);
-	}
-
-	for (auto const& parClavePesonaje : texturasPersonajes){
-		destructorDeTexturas(parClavePesonaje.second);
-	}
 
 	TTF_CloseFont( fuenteJuego );
 }

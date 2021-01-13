@@ -8,11 +8,11 @@ const int PASO_PROXIMO_SPRITE = 32;
 RecorteChispa::RecorteChispa() {
     int corrimientoEnImagen = 0;
 
-    for(int i=0;i<CANTIDAD_DE_RECORTES;i++){
-        estadosPosibles[i].x = corrimientoEnImagen;
-        estadosPosibles[i].y = 0;
-        estadosPosibles[i].w = ANCHO_IMAGEN_PIXEL;
-        estadosPosibles[i].h = ALTO_IMAGEN_PIXEL;
+    for(auto & estadosPosible : estadosPosibles){
+        estadosPosible.x = corrimientoEnImagen;
+        estadosPosible.y = 0;
+        estadosPosible.w = ANCHO_IMAGEN_PIXEL;
+        estadosPosible.h = ALTO_IMAGEN_PIXEL;
         corrimientoEnImagen+= PASO_PROXIMO_SPRITE;
     }
 }

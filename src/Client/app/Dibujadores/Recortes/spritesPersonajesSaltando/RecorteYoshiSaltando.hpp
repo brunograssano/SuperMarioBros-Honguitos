@@ -1,21 +1,22 @@
-
 #ifndef SRC_SERVER_SPRITES_SPRITESPERSONAJESSALTANDO_SPRITEYOSHISALTANDO_HPP_
 #define SRC_SERVER_SPRITES_SPRITESPERSONAJESSALTANDO_SPRITEYOSHISALTANDO_HPP_
 
+#include "src/Client/app/Dibujadores/Recortes/Recorte.hpp"
 
-#include "../Sprite.hpp"
-
-class SpriteYoshiSaltando: public Sprite{
+class RecorteYoshiSaltando: public Recorte{
 
 	public:
-		SpriteYoshiSaltando();
+		RecorteYoshiSaltando();
 		void actualizarSprite()override;
-
-		SDL_Rect obtenerRectanguloActual()override;
+		SDL_Rect obtenerRecorte(int recorte)override;
+        int obtenerAltura() override;
+        int obtenerAnchura() override;
 
 	private:
 		SDL_Rect estadosPosibles[16]{};
 		int estadoActual;
+        int ciclos{};
+
 
 };
 

@@ -1,12 +1,10 @@
 #include "Camara.hpp"
 #include "src/Server/sprites/SpriteMario.hpp"
 
+const int ANCHO_SPRITE_PIXEL_MARIO = 16;
+
 Camara::Camara(int alto_pantalla, int ancho_pantalla) {
     rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
-}
-
-Camara::~Camara() {
-
 }
 
 void Camara::reiniciar(){
@@ -56,9 +54,8 @@ void Camara::moverCamara(const map<int,Mario*>& jugadores) {
                 jugador->serArrastrado(rectanguloCamara.x-jugador->obtenerPosicionX());
             }
 
-            int anchoJugador = jugador->obtenerSpite()->obtenerRectanguloActual().w;
             jugador->actualizarMaximoX(rectanguloCamara.x);
-            jugador->actualizarMinimoX(rectanguloCamara.x + rectanguloCamara.w - anchoJugador*2);
+            jugador->actualizarMinimoX(rectanguloCamara.x + rectanguloCamara.w - ANCHO_SPRITE_PIXEL_MARIO*2);
         }
     }
 
@@ -71,7 +68,11 @@ SDL_Rect Camara::obtenerRectanguloCamara() {
     return rectanguloCamara;
 }
 
-bool Camara::estaEnRangoVisible(int posicionX){
+bool Camara::estaEnRangoVisible(int posicionX) const{
     return (posicionX + ANCHO_RANGO > rectanguloCamara.x) &&
            (posicionX < rectanguloCamara.x + rectanguloCamara.w + ANCHO_RANGO);
+}
+
+bool Camara::estaEnRangoHelper(void *ptr, int x) {
+    return (((Camara*) ptr)->estaEnRangoVisible(x));
 }

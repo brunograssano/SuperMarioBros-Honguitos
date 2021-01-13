@@ -1,21 +1,21 @@
-
-
 #ifndef SRC_SERVER_SPRITES_SPRITESPERSONAJESSALTANDO_SPRITETOADSALTANDO_HPP_
 #define SRC_SERVER_SPRITES_SPRITESPERSONAJESSALTANDO_SPRITETOADSALTANDO_HPP_
 
-#include "../Sprite.hpp"
+#include "src/Client/app/Dibujadores/Recortes/Recorte.hpp"
 
-class SpriteToadSaltando: public Sprite{
+class RecorteToadSaltando: public Recorte{
 
 	public:
-		SpriteToadSaltando();
+		RecorteToadSaltando();
 		void actualizarSprite()override;
-
-		SDL_Rect obtenerRectanguloActual()override;
+        int obtenerAltura() override;
+        int obtenerAnchura() override;
+		SDL_Rect obtenerRecorte(int recorte)override;
 
 	private:
 		SDL_Rect estadosPosibles[12]{};
 		int estadoActual;
+        int ciclos;
 
 };
 

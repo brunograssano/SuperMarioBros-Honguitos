@@ -3,7 +3,7 @@
 #include "src/Utils/Constantes.hpp"
 
 Koopa::Koopa(int tipoColor) {
-    spriteEnemigo = new SpriteKoopa(tipoColor);
+    spriteEnemigo = new SpriteKoopa();
     this->tipoColor = tipoColor;
     velocidadX = obtenerVelocidad();
     loMataron = false;

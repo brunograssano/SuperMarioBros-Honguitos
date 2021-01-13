@@ -1,5 +1,6 @@
 #include "Enemigo.hpp"
 #include "src/Server/modelo/Mario/Mario.hpp"
+#include <cmath>
 
 int Enemigo::obtenerPosicionX() {
     return posicionActual->obtenerPosX();

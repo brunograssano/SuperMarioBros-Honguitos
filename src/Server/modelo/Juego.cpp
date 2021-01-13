@@ -107,8 +107,8 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     if(entradaUsuario.S && !seMovio){
         jugador->actualizarAgacharseMario();
     }
-    if(entradaUsuario.F){
-        jugador->hacerseDeFuego();
+    if(entradaUsuario.T){
+        jugador->alternarModoTest();
     }
     if(entradaUsuario.ESP){ //todo: tener un boton para esto je
         ObjetoFugaz* disparo = jugador->dispararFuego();

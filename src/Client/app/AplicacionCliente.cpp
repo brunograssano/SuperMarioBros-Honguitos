@@ -1,5 +1,6 @@
 #include "AplicacionCliente.hpp"
 #include "../../Client/reproductorDeMusica/ReproductorMusica.hpp"
+#include "src/Utils/Constantes.hpp"
 #include "ManejadorSDL.hpp"
 #include <list>
 
@@ -66,14 +67,14 @@ void App::ocurrioUnErrorServidor(){
 void App::actualizarServer(const Uint8 *keystate){
 
 	if(!sePusoMusicaInicio){
-		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaInicio.mp3"); //TODO: refactorizar a otro método.
+		ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_INICIO); //TODO: refactorizar a otro método.
 		sePusoMusicaInicio = true;
 	}
 
 	if(!comenzoElJuego){
 		if(keystate[SDL_SCANCODE_RETURN]){
 			comenzoElJuego = true;
-			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
+			ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_NIVEL1); //TODO: refactorizar a otro método.
 		}
 	}
 	else if(!terminoElJuego){
@@ -110,8 +111,8 @@ void App::actualizarServer(const Uint8 *keystate){
 			se_movio = true;
 		}
 
-		if(keystate[SDL_SCANCODE_F]){ //todo: desaparece
-		    entradaUsuario.F = true;
+		if(keystate[SDL_SCANCODE_T]){
+		    entradaUsuario.T = true;
 		    se_movio = true;
 		}
 
@@ -145,7 +146,7 @@ void App::dibujar(){
 		if(juegoCliente->ganaronElJuego()){
 
 			if(!this->estaReproduciendoMusicaGanadores){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.mp3");
+				ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_VICTORIA);
 				estaReproduciendoMusicaGanadores = true;
 			}
 			dibujador->dibujarPantallaGanadores(juegoCliente);
@@ -153,7 +154,7 @@ void App::dibujar(){
 		}
 		else if(juegoCliente->perdieronElJuego()){
 			if(!terminoElJuego){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
+				ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_GAMEOVER);
 				terminoElJuego = true;
 			}
 			dibujador->dibujarGameOver();
@@ -161,6 +162,11 @@ void App::dibujar(){
 			dibujador->dibujarJuego(&rectanguloCamara,juegoCliente);
 		}
 	}
+}
+
+void App::agregarNivel(nivel_t nivel) {
+    juegoCliente->agregarNivel(nivel);
+    // TODO logica para que se muestren las pantallas intermedias?
 }
 
 App::~App(){
@@ -174,9 +180,3 @@ App::~App(){
 	delete cargadorTexturas;
 	delete ReproductorMusica::getInstance();
 }
-
-void App::agregarNivel(nivel_t nivel) {
-    juegoCliente->agregarNivel(nivel);
-    // TODO logica para que se muestren las pantallas intermedias?
-}
-

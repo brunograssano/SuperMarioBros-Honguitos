@@ -4,13 +4,13 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
 
 #include "Dibujador.hpp"
-#include "../../../Server/sprites/Sprite.hpp"
-#include "../../../Server/sprites/SpriteCoffinMario.hpp"
+#include "Recortes/RecorteCoffinMario.hpp"
+
 
 class DibujadorGameOver : public Dibujador{
 
@@ -20,7 +20,7 @@ class DibujadorGameOver : public Dibujador{
 		~DibujadorGameOver() override;
 
 	private:
-		SpriteCoffinMario* spriteCoffinMario;
+		RecorteCoffinMario* spriteCoffinMario;
 };
 
 

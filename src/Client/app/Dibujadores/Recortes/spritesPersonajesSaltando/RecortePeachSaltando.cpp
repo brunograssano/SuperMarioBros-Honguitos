@@ -1,8 +1,6 @@
-#include "SpritePeachSaltando.hpp"
+#include "RecortePeachSaltando.hpp"
 
-
-SpritePeachSaltando::SpritePeachSaltando(){
-	direccionTextura = "resources/Imagenes/PersonajesSaltando/PeachSaltando.png";
+RecortePeachSaltando::RecortePeachSaltando(){
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
 	for(auto & estadosPosible : estadosPosibles){
@@ -16,7 +14,7 @@ SpritePeachSaltando::SpritePeachSaltando(){
 
 
 
-void SpritePeachSaltando::actualizarSprite(){
+void RecortePeachSaltando::actualizarSprite(){
 	if(ciclos%5==0){
 		estadoActual++;
 		if(estadoActual==13 && ciclos%5==0){
@@ -26,8 +24,16 @@ void SpritePeachSaltando::actualizarSprite(){
 	ciclos++;
 }
 
-SDL_Rect SpritePeachSaltando::obtenerRectanguloActual(){
+SDL_Rect RecortePeachSaltando::obtenerRecorte(int recorte){
 	return estadosPosibles[estadoActual];
+}
+
+int RecortePeachSaltando::obtenerAnchura() {
+    return estadosPosibles[estadoActual].h;
+}
+
+int RecortePeachSaltando::obtenerAltura() {
+    return estadosPosibles[estadoActual].w;
 }
 
 

@@ -15,9 +15,9 @@ using namespace std;
 #include "../juegoCliente/RecorteGoomba.hpp"
 #include "../juegoCliente/RecorteMoneda.hpp"
 #include "../juegoCliente/RecorteBloque.hpp"
-#include "../juegoCliente/RecorteBolaDeFuego.hpp"
-#include "../juegoCliente/RecorteChispa.hpp"
-#include "../juegoCliente/RecorteFlor.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteBolaDeFuego.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteChispa.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteFlor.hpp"
 
 #include "Dibujador.hpp"
 #include "src/Client/app/juegoCliente/RecorteTuberia.hpp"

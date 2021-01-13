@@ -2,17 +2,8 @@
 #include "SpriteMoneda.hpp"
 
 SpriteMoneda::SpriteMoneda(){
-	this->direccionTextura = "resources/Imagenes/Bloques/Monedas.png";
-	this->ciclos = 0;
+    this->ciclos = 0;
 	this->estadoActual = 2;
-	int desplazamiento = 0;
-	for(auto & estadosPosible : this->estadosPosibles){
-		estadosPosible.x = desplazamiento;
-		estadosPosible.y = 0;
-		estadosPosible.w = 16;
-		estadosPosible.h = 17;
-		desplazamiento += 16;
-	}
 }
 
 
@@ -30,9 +21,4 @@ void SpriteMoneda::actualizarSprite(){
 	ciclos++;
 }
 
-
-
-SDL_Rect SpriteMoneda::obtenerRectanguloActual(){
-	return estadosPosibles[estadoActual];
-}
 

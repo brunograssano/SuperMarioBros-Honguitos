@@ -1,11 +1,6 @@
+#include "RecorteYoshiSaltando.hpp"
 
-
-
-#include "SpriteYoshiSaltando.hpp"
-
-
-SpriteYoshiSaltando::SpriteYoshiSaltando(){
-	direccionTextura = "resources/Imagenes/PersonajesSaltando/YoshiSaltando.png";
+RecorteYoshiSaltando::RecorteYoshiSaltando(){
 	estadoActual = 0;
 	int corrimientoEnImagen = 0;
 	for(auto & estadosPosible : estadosPosibles){
@@ -18,8 +13,7 @@ SpriteYoshiSaltando::SpriteYoshiSaltando(){
 }
 
 
-
-void SpriteYoshiSaltando::actualizarSprite(){
+void RecorteYoshiSaltando::actualizarSprite(){
 	if(ciclos%5==0){
 		estadoActual++;
 		if(estadoActual==15 && ciclos%5==0){
@@ -29,8 +23,16 @@ void SpriteYoshiSaltando::actualizarSprite(){
 	ciclos++;
 }
 
-SDL_Rect SpriteYoshiSaltando::obtenerRectanguloActual(){
+SDL_Rect RecorteYoshiSaltando::obtenerRecorte(int recorte){
 	return estadosPosibles[estadoActual];
+}
+
+int RecorteYoshiSaltando::obtenerAltura() {
+    return estadosPosibles[estadoActual].h;
+}
+
+int RecorteYoshiSaltando::obtenerAnchura() {
+    return estadosPosibles[estadoActual].w;
 }
 
 

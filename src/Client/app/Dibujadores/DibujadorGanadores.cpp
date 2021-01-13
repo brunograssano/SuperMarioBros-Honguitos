@@ -1,5 +1,7 @@
 #include "DibujadorGanadores.hpp"
-const int ANCHO_FONDO = 8177;
+#include "Recortes/spritesPersonajesSaltando/RecortePeachSaltando.hpp"
+#include "Recortes/spritesPersonajesSaltando/RecorteToadSaltando.hpp"
+#include "Recortes/spritesPersonajesSaltando/RecorteYoshiSaltando.hpp"
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;
@@ -16,9 +18,9 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 		particulas.push_front(new ParticulaGanadores(posX,posY,listaParticulas[i%4],factorAvance));
 	}
 
-	spritePeach = new SpritePeachSaltando();
-	spriteToad = new SpriteToadSaltando();
-	spriteYoshi = new SpriteYoshiSaltando();
+	spritePeach = new RecortePeachSaltando();
+	spriteToad = new RecorteToadSaltando();
+	spriteYoshi = new RecorteYoshiSaltando();
 
 	colores[-1] = {150, 150 , 150, 255}; // Gris.
 	colores[0] = {230, 30 , 044, 255}; // Rojo.
@@ -59,19 +61,19 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
 		   idColor = MARIO_GRIS;
 	   }
 
-	   renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+	   renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
 
 	   desfase_puntosJugador +=40;
 	}
 
-	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoFin, textoFelicitaciones.str(), colorDefault);
 }
 
 
 void DibujadorGanadores::dibujarParticulas(){
-	SDL_Rect* clip = NULL;
+	SDL_Rect* clip = nullptr;
 	double angle = 0.0;
-	SDL_Point* center = NULL;
+	SDL_Point* center = nullptr;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	for(auto const& particula:particulas){
 		SDL_Rect renderQuad = { particula->obtenerX(), particula->obtenerY(), 10, 10 };
@@ -83,12 +85,12 @@ void DibujadorGanadores::dibujarPersonajes(){
 	SDL_Rect rectanguloPeach = {40, alto_pantalla - (int)(alto_pantalla*0.1)-80, 52, 80};
 	SDL_Rect rectanguloToad = {200, alto_pantalla - (int)(alto_pantalla*0.1)-83 , 52, 80};
 	SDL_Rect rectanguloYoshi = {400, alto_pantalla - (int)(alto_pantalla*0.1)-83, 52, 80};
-	SDL_Rect recortePeach = spritePeach->obtenerRectanguloActual();
-	SDL_Rect recorteToad = spriteToad->obtenerRectanguloActual();
-	SDL_Rect recorteYoshi = spriteYoshi->obtenerRectanguloActual();
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje(spritePeach->direccionImagen()), &recortePeach , &rectanguloPeach);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje(spriteToad->direccionImagen()), &recorteToad , &rectanguloToad);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaPersonaje(spriteYoshi->direccionImagen()), &recorteYoshi , &rectanguloYoshi);
+	SDL_Rect recortePeach = spritePeach->obtenerRecorte(0);
+	SDL_Rect recorteToad = spriteToad->obtenerRecorte(0);
+	SDL_Rect recorteYoshi = spriteYoshi->obtenerRecorte(0);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("PeachSaltando"), &recortePeach , &rectanguloPeach);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("ToadSaltando"), &recorteToad , &rectanguloToad);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("YoshiSaltando"), &recorteYoshi , &rectanguloYoshi);
 
 }
 

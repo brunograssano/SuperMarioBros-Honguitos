@@ -2,7 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_RECORTEBOLADEFUEGO_HPP
 
 #include <SDL2/SDL.h>
-#include "src/Client/app/juegoCliente/Recortes/Recorte.hpp"
+#include "Recorte.hpp"
 
 class RecorteBolaDeFuego : public Recorte{
     static const int CANTIDAD_DE_RECORTES = 7;

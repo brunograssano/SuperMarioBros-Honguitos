@@ -70,6 +70,12 @@ void Enemigo::inicializarMapasDeColision() {
     mapaColisionesPorDerecha[COLISION_ID_SORPRESA] = cambiarVelocidad;
     mapaColisionesPorIzquierda[COLISION_ID_LADRILLO] = cambiarVelocidad;
     mapaColisionesPorIzquierda[COLISION_ID_SORPRESA] = cambiarVelocidad;
+
+    mapaColisionesPorDerecha[COLISION_ID_BOLA_DE_FUEGO] = morir;
+    mapaColisionesPorIzquierda[COLISION_ID_BOLA_DE_FUEGO] = morir;
+    mapaColisionesPorArriba[COLISION_ID_BOLA_DE_FUEGO] = morir;
+    mapaColisionesPorAbajo[COLISION_ID_BOLA_DE_FUEGO] = morir;
+
 }
 
 float Enemigo::obtenerVelocidad() {

@@ -5,27 +5,33 @@
 #include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/sprites/SpriteBolaDeFuego.hpp"
-#include "src/Utils/Constantes.hpp"
 
 class BolaDeFuego : public ObjetoFugaz{
-    const float VELOCIDAD_X_INICIAL = 3.5;
-    const float VELOCIDAD_Y_INICIAL = 0;
-    const float EFECTO_GRAVITACIONAL = -0.1;
     public:
-        explicit BolaDeFuego(PosicionFija posicionInicial, int direccion, float velocidadDeInercia);
+        explicit BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia);
 
-    void actualizar() override;
+        void actualizar() override;
         efecto_t serializar() override;
         int obtenerPosicionX() override;
+        bool debeDesaparecer() override;
         ~BolaDeFuego() override;
 
-        bool debeDesaparecer() override;
+        string obtenerColisionID() override;
+        rectangulo_t obtenerRectangulo() override;
+        bool debeColisionar() override;
+
+
     private:
+        void inicializarMapasDeColision() override;
         PosicionMovil* posicion;
-        Sprite* sprite;
+        SpriteBolaDeFuego* sprite;
         float velocidadX;
         float velocidadY;
+        float efecto_gravitacional = -0.1;
         int rebotes = 0;
+        bool exploto;
+        void explotar(void *pVoid);
+        void rebotar(void *pVoid);
 };
 
 

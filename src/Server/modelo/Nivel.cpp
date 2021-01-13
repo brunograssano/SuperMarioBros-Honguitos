@@ -58,9 +58,15 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
         chocarContraTodos(jugador, (void*)&enemigos, nullptr, nullptr);
         chocarContraTodos(jugador, (void*)&monedas, nullptr, nullptr);
         chocarContraTodos(jugador, (void*)&plataformas,&Nivel::agregarObjeto_helper, this);
+        chocarContraTodos(jugador, (void*)&objetosFugaces, nullptr, nullptr);
     }
     for(auto& enemigo:enemigos){
+        chocarContraTodos(enemigo, (void*)&objetosFugaces, nullptr, nullptr);
         chocarContraTodos(enemigo, (void*)&plataformas, nullptr, nullptr);
+    }
+
+    for(auto& objeto: objetosFugaces){
+        chocarContraTodos(objeto, (void*)&plataformas, nullptr, nullptr);
     }
 }
 

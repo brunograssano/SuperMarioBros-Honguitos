@@ -14,10 +14,16 @@ class FlorDeFuego : public ObjetoSorpresa{
         efecto_t serializar() override;
         void actualizar() override;
         int obtenerPosicionX() override;
+
+        string obtenerColisionID() override;
+        rectangulo_t obtenerRectangulo() override;
+        bool debeColisionar() override;
+
     private:
+        void inicializarMapasDeColision() override;
         Posicion posicionFija;
-        SDL_Rect recorte{};
-        bool agarraronFlor;
+        uint8_t color;
+        void agarrar(void* ptr = nullptr);
 };
 
 

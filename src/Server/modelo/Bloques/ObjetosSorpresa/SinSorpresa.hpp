@@ -10,8 +10,14 @@ class SinSorpresa : public ObjetoSorpresa{
             _debeDesaparecer = true;
         }
         efecto_t serializar() override {return {0, 0, 0, 0};}
-        virtual void actualizar() override {}
-        virtual int obtenerPosicionX() override {return 0;}
+        void actualizar() override {}
+        int obtenerPosicionX() override {return 0;}
+        string obtenerColisionID() override {return  COLISION_ID_NADA;}
+        rectangulo_t obtenerRectangulo() override{return {0,0,0,0,0,0};}
+        bool debeColisionar() override {return false;}
+
+private:
+        void inicializarMapasDeColision() override {}
 };
 
 

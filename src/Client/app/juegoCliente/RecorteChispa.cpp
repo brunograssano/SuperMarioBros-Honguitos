@@ -1,4 +1,5 @@
 #include "RecorteChispa.hpp"
+#include "src/Utils/Constantes.hpp"
 
 const int ALTO_IMAGEN_PIXEL = 22;
 const int ANCHO_IMAGEN_PIXEL = 31;
@@ -21,11 +22,11 @@ SDL_Rect RecorteChispa::obtenerRecorte(int recorte) {
 }
 
 int RecorteChispa::obtenerAltura() {
-    return 44;
+    return ALTO_CHISPA;
 }
 
 int RecorteChispa::obtenerAnchura() {
-    return 64;
+    return ANCHO_CHISPA;
 }
 
 int RecorteChispa::direccion(int recorte){

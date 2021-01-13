@@ -101,6 +101,7 @@ typedef struct pozo {
 #define BOLA_DE_FUEGO 1
 #define CHISPA 2
 #define FLOR 3
+#define MONEDA_FLOTANTE 4
 typedef struct efecto{
     unsigned short posX;
     unsigned short posY;

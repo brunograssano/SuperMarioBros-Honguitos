@@ -87,8 +87,8 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
     SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura("Moneda");
 	for (auto const& moneda : monedas) {
 		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - moneda.posY - LARGO_BLOQUE,
-									LARGO_BLOQUE, LARGO_BLOQUE};
+									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - moneda.posY - LARGO_MONEDA,
+                                     LARGO_MONEDA, LARGO_MONEDA};
 		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.numeroRecorte);
 		SDL_RenderCopy( renderizador, texturaMoneda, &recorteMoneda, &rectanguloMoneda);
 	}

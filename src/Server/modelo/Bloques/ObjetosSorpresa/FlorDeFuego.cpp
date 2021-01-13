@@ -1,14 +1,13 @@
 #include "src/Server/modelo/PosicionFija.hpp"
 #include "FlorDeFuego.hpp"
 
-const int CANTIDAD_COLORES = 4,ANCHO_FLOR = 16;
+const int CANTIDAD_COLORES = 4;
 
 FlorDeFuego::FlorDeFuego(int posX, int posY) {
     posicionFija = PosicionFija(posX,posY);
     _debeDesaparecer = false;
-    int color = rand()%CANTIDAD_COLORES;
-    recorte = {color*ANCHO_FLOR,0,ANCHO_FLOR,ANCHO_FLOR};
-    agarraronFlor = false;
+    this->color = rand()%CANTIDAD_COLORES;
+    inicializarMapasDeColision();
 }
 
 void FlorDeFuego::usarse(Mario *mario){}
@@ -16,11 +15,41 @@ void FlorDeFuego::usarse(Mario *mario){}
 efecto_t FlorDeFuego::serializar() {
     unsigned short x = posicionFija.obtenerPosX();
     unsigned short y = posicionFija.obtenerPosY();
-    return {x,y, 0,FLOR};
+    return {x,y, color,FLOR};
 }
 
 void FlorDeFuego::actualizar() {}
 
 int FlorDeFuego::obtenerPosicionX() {
     return posicionFija.obtenerPosX();
+}
+
+string FlorDeFuego::obtenerColisionID() {
+    return COLISION_ID_FLOR;
+}
+
+rectangulo_t FlorDeFuego::obtenerRectangulo() {
+    int x = posicionFija.obtenerPosX();
+    int y = posicionFija.obtenerPosY();
+    int w = ANCHO_FLOR;
+    int h = ALTO_FLOR;
+    return {x, x+w, y, y+h, h, w};
+}
+
+bool FlorDeFuego::debeColisionar() {
+    return !_debeDesaparecer;
+}
+
+void FlorDeFuego::inicializarMapasDeColision() {
+    auto pAgarrar = (void (Colisionable::*)(void*))&FlorDeFuego::agarrar;
+    Colisionable::parFuncionColisionContexto_t parAgarrar = {pAgarrar, nullptr};
+
+    mapaColisionesPorDerecha[COLISION_ID_MARIO] = parAgarrar;
+    mapaColisionesPorIzquierda[COLISION_ID_MARIO] = parAgarrar;
+    mapaColisionesPorArriba[COLISION_ID_MARIO] = parAgarrar;
+    mapaColisionesPorAbajo[COLISION_ID_MARIO] = parAgarrar;
+}
+
+void FlorDeFuego::agarrar(void *ptr) {
+    _debeDesaparecer = true;
 }

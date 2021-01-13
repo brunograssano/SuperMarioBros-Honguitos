@@ -25,28 +25,33 @@ void Mario::inicializarMapasDeColision(){
     auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
     auto pMatar = (void (Colisionable::*)(void*)) &Mario::matarEnemigo;
     auto pGanarPuntos = (void (Colisionable::*)(void*)) &Mario::agregarPuntos;
+    auto pHacerseDeFuego = (void (Colisionable::*)(void*)) &Mario::hacerseDeFuego;
 
     Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
     Colisionable::parFuncionColisionContexto_t parMatarGoomba = {pMatar, (void *) &PUNTOS_GOOMBA};
     Colisionable::parFuncionColisionContexto_t parMatarKoopa = {pMatar, (void *) &PUNTOS_KOOPA};
     Colisionable::parFuncionColisionContexto_t parAgarrarMoneda = {pGanarPuntos, (void* ) &PUNTOS_POR_MONEDA};
+    Colisionable::parFuncionColisionContexto_t parHacerseDeFuego = {pHacerseDeFuego, nullptr};
 
     mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parPerderVida;
     mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorDerecha[COLISION_ID_MONEDA] = parAgarrarMoneda;
+    mapaColisionesPorDerecha[COLISION_ID_FLOR] = parHacerseDeFuego;
 
     mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parPerderVida;
     mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorIzquierda[COLISION_ID_MONEDA] = parAgarrarMoneda;
+    mapaColisionesPorIzquierda[COLISION_ID_FLOR] = parHacerseDeFuego;
 
     mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_MONEDA] = parAgarrarMoneda;
+    mapaColisionesPorArriba[COLISION_ID_FLOR] = parHacerseDeFuego;
 
     mapaColisionesPorAbajo[COLISION_ID_KOOPA] = parMatarKoopa;
     mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = parMatarGoomba;
     mapaColisionesPorAbajo[COLISION_ID_MONEDA] = parAgarrarMoneda;
-
+    mapaColisionesPorAbajo[COLISION_ID_FLOR] = parHacerseDeFuego;
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -172,6 +177,9 @@ void Mario::perderVida(void* ptr) {
 void Mario::hacerseDeFuego() {
     ModificadorMario* nuevoModificador = modificador->hacerseDeFuego();
     swapDeModificador(nuevoModificador);
+}
+void Mario::hacerseDeFuego(void *pVoid) {
+    this->hacerseDeFuego();
 }
 
 ObjetoFugaz* Mario::dispararFuego() {

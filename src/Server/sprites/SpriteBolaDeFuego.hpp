@@ -10,9 +10,14 @@ class SpriteBolaDeFuego : public Sprite{
         ~SpriteBolaDeFuego() override = default;
         SDL_Rect obtenerRectanguloActual() override;
         void actualizarSprite() override;
-    private:
+        void explotar();
+        bool terminoDeExplotar();
+
+private:
         void cambiarSprite();
         SDL_Rect estadosPosibles[4]{};
+        bool exploto;
+        bool _terminoDeExplotar;
 };
 
 

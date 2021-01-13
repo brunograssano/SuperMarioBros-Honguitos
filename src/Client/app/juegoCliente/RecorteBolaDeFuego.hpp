@@ -5,7 +5,7 @@
 #include "src/Client/app/juegoCliente/Recortes/Recorte.hpp"
 
 class RecorteBolaDeFuego : public Recorte{
-    static const int CANTIDAD_DE_RECORTES = 4;
+    static const int CANTIDAD_DE_RECORTES = 7;
     public:
         RecorteBolaDeFuego();
         SDL_Rect obtenerRecorte(int recorte) override;

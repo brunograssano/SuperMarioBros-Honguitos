@@ -16,7 +16,11 @@ class ObjetoSorpresa : public ObjetoFugaz{
         virtual void actualizar() override = 0;
         virtual int obtenerPosicionX() override = 0;
 
+        virtual string obtenerColisionID() override = 0;
+        virtual rectangulo_t obtenerRectangulo() override = 0;
+        virtual bool debeColisionar() override = 0;
     protected:
+        void inicializarMapasDeColision() override = 0;
         bool _debeDesaparecer;
 };
 

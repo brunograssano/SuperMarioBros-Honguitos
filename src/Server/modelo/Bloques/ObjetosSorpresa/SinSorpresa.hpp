@@ -6,9 +6,12 @@
 
 class SinSorpresa : public ObjetoSorpresa{
     public:
-        SinSorpresa(){
-            usado = true;
+        SinSorpresa() {
+            _debeDesaparecer = true;
         }
+        efecto_t serializar() override {return {0, 0, 0, 0};}
+        virtual void actualizar() override {}
+        virtual int obtenerPosicionX() override {return 0;}
 };
 
 

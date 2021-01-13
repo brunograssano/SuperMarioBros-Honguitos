@@ -11,7 +11,7 @@ using namespace std;
 
 class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "Camara/Camara.hpp"
 #include "src/Utils/Contador.hpp"
 

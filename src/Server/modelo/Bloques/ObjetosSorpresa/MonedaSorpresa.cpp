@@ -1,12 +1,20 @@
 #include "MonedaSorpresa.hpp"
 
 MonedaSorpresa::MonedaSorpresa() {
-    usado = false;
+    _debeDesaparecer = true;
 }
 
 void MonedaSorpresa::usarse(Mario *mario) {
-    if(!usado){
-        mario->agregarMoneda();
-        usado = true;
-    }
+    mario->agregarMoneda();
+}
+
+efecto_t MonedaSorpresa::serializar() {
+    return {0, 0, 0, 0};
+}
+
+void MonedaSorpresa::actualizar() {
+}
+
+int MonedaSorpresa::obtenerPosicionX() {
+    return 0;
 }

@@ -63,3 +63,7 @@ bool Moneda::fueAgarrada() {
 void Moneda::agarrar(void *ptr) {
     agarrada = true;
 }
+
+bool Moneda::debeColisionar() {
+    return !agarrada;
+}

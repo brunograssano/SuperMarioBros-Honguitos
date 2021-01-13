@@ -2,12 +2,12 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_BOLADEFUEGO_HPP
 
 #include <src/Server/modelo/PosicionFija.hpp>
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/sprites/SpriteBolaDeFuego.hpp"
 #include "src/Utils/Constantes.hpp"
 
-class BolaDeFuego : public Disparo{
+class BolaDeFuego : public ObjetoFugaz{
     const float VELOCIDAD_X_INICIAL = 3.5;
     const float VELOCIDAD_Y_INICIAL = 0;
     const float EFECTO_GRAVITACIONAL = -0.1;

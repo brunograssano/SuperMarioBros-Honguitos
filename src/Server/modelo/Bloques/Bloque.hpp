@@ -29,8 +29,10 @@ class Bloque : public Colisionable{
         virtual bloque_t serializar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
+        bool debeColisionar() override;
 
-    protected:
+
+protected:
         int tipoBloque{};
     	Posicion* posicion{};
     	Sprite* spriteBloque{};

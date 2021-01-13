@@ -8,8 +8,7 @@ class VidaMario {
         int obtenerVida() const;
         ~VidaMario();
         void perderVida();
-
-    private:
+private:
         int vidas;
 };
 

@@ -41,3 +41,7 @@ rectangulo_t Bloque::obtenerRectangulo() {
     int w = LARGO_BLOQUE;
     return {x,x+w,y,y+h,h,w};
 }
+
+bool Bloque::debeColisionar() {
+    return true;
+}

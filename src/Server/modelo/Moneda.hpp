@@ -20,6 +20,7 @@ class Moneda : public Colisionable{
         int obtenerPosicionY();
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
+        bool debeColisionar() override;
         bool fueAgarrada();
     private:
         void inicializarMapasDeColision() override;

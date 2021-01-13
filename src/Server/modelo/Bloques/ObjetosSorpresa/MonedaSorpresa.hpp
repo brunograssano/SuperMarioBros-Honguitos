@@ -8,6 +8,9 @@ class MonedaSorpresa : public ObjetoSorpresa{
     public:
         MonedaSorpresa();
         void usarse(Mario* mario)override;
+        efecto_t serializar() override;
+        void actualizar() override;
+        int obtenerPosicionX() override;
 };
 
 

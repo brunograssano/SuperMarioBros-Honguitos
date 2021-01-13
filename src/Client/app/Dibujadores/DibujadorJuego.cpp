@@ -15,6 +15,8 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
     clavesEfectos[BOLA_DE_FUEGO] = "BolaDeFuego";
     recorteEfectos[CHISPA] = new RecorteChispa();
     clavesEfectos[CHISPA] = "Chispa";
+    recorteEfectos[FLOR] = new RecorteFlor();
+    clavesEfectos[FLOR] = "Flor";
 
     colores[-1] = {150, 150 , 150, 255}; // Gris.
     colores[0] = {230, 30 , 044, 255}; // Rojo.
@@ -148,7 +150,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
     list<efecto_t> efectos = juegoCliente->obtenerEfectos();
     for (auto const& efecto : efectos) {
-        if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA) {
+        if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA || efecto.tipoDeEfecto == FLOR) {
             SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipoDeEfecto]);
             Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);

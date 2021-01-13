@@ -4,12 +4,12 @@
 
 #include <VidaMario.h>
 #include <src/Server/modelo/PosicionFija.hpp>
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/Posicion.hpp"
 class ModificadorMario {
     public:
         virtual ~ModificadorMario()= default;
-        virtual Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) = 0;
+        virtual ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) = 0;
         virtual ModificadorMario* perderVida(VidaMario* vidaMario)=0;
         virtual ModificadorMario* hacerseDeFuego();
         virtual void actualizar() = 0;

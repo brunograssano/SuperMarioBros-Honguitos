@@ -23,6 +23,7 @@ class Enemigo : public Colisionable{
         virtual bool sePuedeEliminar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
+        bool debeColisionar() override;
         bool estaMuerto() const;
 
     protected:

@@ -72,6 +72,21 @@ void chocar(Colisionable* colisionable1, Colisionable* colisionable2) {
 
 }
 
+void chocarContraTodos(Colisionable* colisionable, void* ptr_colisionables, FuncionLuegoDeColisionar funcionLuegoDeColisionar, void* contexto){
+    if(!colisionable->debeColisionar()){
+        return;
+    }
+    list<Colisionable*> colisionables = *(list<Colisionable*>*) ptr_colisionables;
+    for(auto segundo_colisionable: colisionables){
+        if(segundo_colisionable->debeColisionar()){
+            chocar(colisionable, segundo_colisionable);
+            if(funcionLuegoDeColisionar){
+                funcionLuegoDeColisionar(colisionable, segundo_colisionable, contexto);
+            }
+        }
+    }
+}
+
 bool esUnBloque(string idColisionable){
     return idColisionable == COLISION_ID_LADRILLO || idColisionable == COLISION_ID_SORPRESA;
 }

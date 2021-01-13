@@ -1,9 +1,9 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_NADA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_NADA_HPP
 
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 
-class Nada : public Disparo{
+class Nada : public ObjetoFugaz{
     public:
         explicit Nada();
         void actualizar() override;

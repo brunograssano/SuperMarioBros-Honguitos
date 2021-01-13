@@ -1,5 +1,5 @@
 #include "Sorpresa.hpp"
-#include "ObjetosSorpresa/FlorDeFuego.h"
+#include "ObjetosSorpresa/FlorDeFuego.hpp"
 #include "ObjetosSorpresa/MonedaSorpresa.hpp"
 
 Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {

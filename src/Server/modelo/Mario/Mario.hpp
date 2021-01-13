@@ -14,7 +14,7 @@
 
 class SpriteMario;
 
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 
@@ -45,7 +45,7 @@ class Mario : public Colisionable {
         void perderVida(void* ptr = nullptr);
         int obtenerVida();
         void hacerseDeFuego();
-        Disparo* dispararFuego();
+        ObjetoFugaz* dispararFuego();
 
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
 		void desconectar(){
@@ -60,6 +60,7 @@ class Mario : public Colisionable {
 
         rectangulo_t obtenerRectangulo() override;
         string obtenerColisionID() override;
+        bool debeColisionar() override;
 
         void chocarPorDerechaCon(Colisionable* colisionable) override;
         void chocarPorIzquierdaCon(Colisionable* colisionable) override;

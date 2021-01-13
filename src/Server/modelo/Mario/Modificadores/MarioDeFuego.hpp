@@ -3,7 +3,7 @@
 
 #include "ModificadorMario.hpp"
 #include "src/Server/modelo/Posicion.hpp"
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 #include "src/Server/modelo/Objetos/Nada.hpp"
@@ -12,7 +12,7 @@ class MarioDeFuego : public ModificadorMario{
     const int MAX_CICLOS_PARA_DISPARAR = 70;
     const int MAX_CICLOS_PARA_CHISPEAR = 30;
     public:
-        Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
+        ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
         void actualizar()override;
 

@@ -6,7 +6,7 @@ ModificadorMario *SinModificador::perderVida(VidaMario *vidaMario) {
     return new SinModificador();
 }
 
-Disparo *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
+ObjetoFugaz *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
     if(yaPuedeChispear()){
         ciclosChispa = 0;
         return new Chispa(posicionManosMario, direccion);

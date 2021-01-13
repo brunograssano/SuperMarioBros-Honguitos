@@ -27,7 +27,7 @@ class Colisionable{
         virtual void chocarPorAbajoCon(Colisionable* colisionable);
         virtual string obtenerColisionID() = 0;
         virtual rectangulo_t obtenerRectangulo() = 0;
-
+        virtual bool debeColisionar() = 0;
     protected:
         map<std::string, parFuncionColisionContexto_t> mapaColisionesPorDerecha;
         map<std::string, parFuncionColisionContexto_t> mapaColisionesPorIzquierda;

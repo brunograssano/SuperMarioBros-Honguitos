@@ -174,7 +174,7 @@ void Mario::hacerseDeFuego() {
     swapDeModificador(nuevoModificador);
 }
 
-Disparo* Mario::dispararFuego() {
+ObjetoFugaz* Mario::dispararFuego() {
     Posicion posManos = spriteMario->posicionManos();
     PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),obtenerPosicionY() + posManos.obtenerPosY());
     return modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
@@ -272,4 +272,8 @@ void Mario::empujarEnY(rectangulo_t rectanguloBloque, int direccion) {
         this->posicion->moverVertical(rectanguloBloque.y2-rectanguloMario.y1);
         this->movimiento->teParasteEnBloque();
     }
+}
+
+bool Mario::debeColisionar() {
+    return estaConectadoElJugador && vidaMario->obtenerVida() > 0;
 }

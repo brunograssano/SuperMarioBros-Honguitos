@@ -19,7 +19,7 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
 void Nivel::actualizarPosicionesEnemigos(){
 	Log* log = Log::getInstance();
 	int i = 1;
-	for (auto const& enemigo : enemigos) {
+	for (auto& enemigo : enemigos) {
 	    enemigo->actualizarPosicion();
 	    log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
 	    i++;
@@ -27,69 +27,40 @@ void Nivel::actualizarPosicionesEnemigos(){
 }
 
 void Nivel::actualizarMonedas(){
-	for(auto const& moneda : monedas){
+	for(auto& moneda : monedas){
 		moneda->actualizar();
 	}
 }
 
-void Nivel::actualizarDisparos() {
-    list<Disparo*> disparosABorrar;
-    for(auto const& disparo: disparos){
-        disparo->actualizar();
-        if(disparo->debeDesaparecer()){
-            disparosABorrar.push_back(disparo);
-        }
+void Nivel::actualizarObjetosFugaces() {
+    for(auto& objeto: objetosFugaces) {
+        objeto->actualizar();
     }
-    for(auto disparo : disparosABorrar){
-        disparos.remove(disparo);
-        delete disparo;
-    }
-
 }
 
 void Nivel::actualizarModelo(map<int, Mario*> jugadores){
     resolverColisiones(jugadores);
+
     actualizarPosicionesEnemigos();
-    actualizarDisparos();
+    actualizarObjetosFugaces();
     actualizarMonedas();
+
     sacarEnemigosMuertos();
+    sacarObjetosFugaces();
     sacarMonedasAgarradas();
+
     resolverGanadores(jugadores);
 }
 
 void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
-    for(auto const& parClaveJugador: jugadores){
+    for(auto& parClaveJugador: jugadores){
         Mario* jugador = parClaveJugador.second;
-        //todo: refactor colisionar(jugador, list<Colisionable*>
-        for(auto const& enemigo: enemigos){
-            if(!enemigo->estaMuerto()){
-                chocar(jugador, enemigo);
-            }
-        }
-        for(auto const& moneda: monedas){
-            if(!moneda->fueAgarrada()){
-                chocar(jugador, moneda);
-            }
-        }
-        for(auto const& bloque: plataformas){
-            chocar(jugador, bloque);
-            ObjetoSorpresa* objeto = bloque->colisionaronAbajo();
-            objeto->usarse(jugador);
-            if(objeto->fueUsado()){
-                objetosSorpresa.remove(objeto);
-                delete objeto;
-            }
-            else{
-                objetosSorpresa.push_front(objeto);
-            }
-        }
-
+        chocarContraTodos(jugador, (void*)&enemigos, nullptr, nullptr);
+        chocarContraTodos(jugador, (void*)&monedas, nullptr, nullptr);
+        chocarContraTodos(jugador, (void*)&plataformas,&Nivel::agregarObjeto_helper, this);
     }
-
     for(auto& enemigo:enemigos){
-        for(auto const& bloque:plataformas){
-            chocar(enemigo, bloque);
-        }
+        chocarContraTodos(enemigo, (void*)&plataformas, nullptr, nullptr);
     }
 }
 
@@ -120,6 +91,19 @@ void Nivel::sacarMonedasAgarradas() {
     for(auto moneda : monedasABorrar ){
         monedas.remove(moneda);
         delete moneda;
+    }
+}
+
+void Nivel::sacarObjetosFugaces() {
+    list<ObjetoFugaz*> objetosABorrar;
+    for(auto const& objeto: objetosFugaces){
+        if(objeto->debeDesaparecer()){
+            objetosABorrar.push_back(objeto);
+        }
+    }
+    for(auto objeto : objetosABorrar){
+        objetosFugaces.remove(objeto);
+        delete objeto;
     }
 }
 
@@ -297,7 +281,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     }
     ptrInfoRonda->topeMonedas = numeroMoneda;
     int numeroEfecto = 0;
-    for(auto const& disparo : disparos){
+    for(auto const& disparo : objetosFugaces){
         if(deboAgregarlo(contexto, disparo->obtenerPosicionX()) &&
             numeroEfecto<MAX_EFECTOS){
             ptrInfoRonda->efectos[numeroEfecto] = disparo->serializar();
@@ -372,13 +356,10 @@ Nivel::~Nivel (){
     for(const auto& enemigo:enemigos){
         delete enemigo;
     }
-    for(const auto& disparo:disparos){
+    for(const auto& disparo:objetosFugaces){
         delete disparo;
     }
-    for(const auto& objeto:objetosSorpresa){
-        delete objeto;
-    }
-    disparos.clear();
+    objetosFugaces.clear();
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
@@ -395,6 +376,21 @@ int Nivel::tiempoRestante() {
 }
 
 /* todo Refactor: Aparecer objetoFugaz */
-void Nivel::aparecerDisparo(Disparo* disparo) {
-    disparos.push_back(disparo);
+void Nivel::aparecerDisparo(ObjetoFugaz* disparo) {
+    objetosFugaces.push_back(disparo);
+}
+
+void Nivel::agregarObjeto_helper(void* ptr_jugador, void *ptr_bloque, void *ptr_nivel) {
+    ((Nivel *) ptr_nivel)->utilizarSorpresa((Mario *) ptr_jugador, (Bloque *) ptr_bloque);
+}
+
+void Nivel::utilizarSorpresa(Mario* jugador, Bloque *bloque) {
+    ObjetoSorpresa* objeto = bloque->colisionaronAbajo();
+    objeto->usarse(jugador);
+    if(objeto->debeDesaparecer()){
+        delete objeto;
+    }
+    else{
+        objetosFugaces.push_front(objeto);
+    }
 }

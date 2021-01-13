@@ -17,6 +17,7 @@ using namespace std;
 #include "../juegoCliente/RecorteBloque.hpp"
 #include "../juegoCliente/RecorteBolaDeFuego.hpp"
 #include "../juegoCliente/RecorteChispa.hpp"
+#include "../juegoCliente/RecorteFlor.hpp"
 
 #include "Dibujador.hpp"
 #include "src/Client/app/juegoCliente/RecorteTuberia.hpp"

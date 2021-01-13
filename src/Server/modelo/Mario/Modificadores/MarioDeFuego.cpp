@@ -1,7 +1,7 @@
  #include "MarioDeFuego.hpp"
 #include "SinModificador.hpp"
 
-Disparo* MarioDeFuego::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
+ObjetoFugaz* MarioDeFuego::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
     if(yaPuedeDisparar()){
         ciclosDisparo = 0;
         ciclosChispa = 0;

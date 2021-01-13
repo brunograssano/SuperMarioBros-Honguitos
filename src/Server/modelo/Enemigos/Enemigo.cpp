@@ -62,17 +62,22 @@ bool Enemigo::estaMuerto() const{
 void Enemigo::inicializarMapasDeColision() {
     auto pMorir = (void (Colisionable::*)(void*))&Enemigo::morir;
     auto pCambiarVelocidad = (void (Colisionable::*)(void*))&Enemigo::cambiarOrientacion;
-    Colisionable::parFuncionColisionContexto_t parFuncionColisionContexto = {pMorir, nullptr};
-    Colisionable::parFuncionColisionContexto_t parFuncionColisioBloque = {pCambiarVelocidad, nullptr};
-    mapaColisionesPorArriba[COLISION_ID_MARIO] = parFuncionColisionContexto;
-    mapaColisionesPorDerecha[COLISION_ID_LADRILLO] = parFuncionColisioBloque;
-    mapaColisionesPorDerecha[COLISION_ID_SORPRESA] = parFuncionColisioBloque;
-    mapaColisionesPorIzquierda[COLISION_ID_LADRILLO] = parFuncionColisioBloque;
-    mapaColisionesPorIzquierda[COLISION_ID_SORPRESA] = parFuncionColisioBloque;
+    Colisionable::parFuncionColisionContexto_t morir = {pMorir, nullptr};
+    Colisionable::parFuncionColisionContexto_t cambiarVelocidad = {pCambiarVelocidad, nullptr};
+
+    mapaColisionesPorArriba[COLISION_ID_MARIO] = morir;
+    mapaColisionesPorDerecha[COLISION_ID_LADRILLO] = cambiarVelocidad;
+    mapaColisionesPorDerecha[COLISION_ID_SORPRESA] = cambiarVelocidad;
+    mapaColisionesPorIzquierda[COLISION_ID_LADRILLO] = cambiarVelocidad;
+    mapaColisionesPorIzquierda[COLISION_ID_SORPRESA] = cambiarVelocidad;
 }
 
 float Enemigo::obtenerVelocidad() {
     return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
+}
+
+bool Enemigo::debeColisionar() {
+    return !estaMuerto();
 }
 
 

@@ -2,6 +2,7 @@
 #define SRC_SERVER_MODELO_NIVEL_HPP_
 
 #include <map>
+#include <memory>
 #include <string>
 #include <tuple>
 #include <cstdlib>
@@ -42,14 +43,14 @@ class Nivel{
 		string obtenerDireccionFondoActual();
         void terminar();
         void completarInformacionNivel(nivel_t *nivel);
-        void aparecerDisparo(Disparo* disparo);
+        void aparecerDisparo(ObjetoFugaz* disparo);
 
     private:
         void sacarEnemigosMuertos();
         void sacarMonedasAgarradas();
         void actualizarPosicionesEnemigos();
         void actualizarMonedas();
-        void actualizarDisparos();
+        void actualizarObjetosFugaces();
         void resolverColisiones(map<int,Mario*> jugadores);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
@@ -57,7 +58,8 @@ class Nivel{
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
         void inicializarPosicionesOcupadasPorBloques();
-
+        static void agregarObjeto_helper(void* ptr_jugador, void* ptr_bloque, void* ptr_nivel);
+        void utilizarSorpresa(Mario* jugador, Bloque* bloque);
 
         map<int, bool> posicionesOcupadasXEnemigos;
         map<tuple<int, int>, bool> posicionesOcupadas;
@@ -67,12 +69,9 @@ class Nivel{
         list<Moneda*> monedas;
         list<Pozo*> pozos;
         list<Tuberia*> tuberias;
-        list<ObjetoSorpresa*> objetosSorpresa;
 
-        //todo ->
-        list<Disparo*> disparos;               //Refactor: proximamente tendra objetosFugaces: flores, disparos, otros objetos(Moneda de bloque)
-        //list<ObjetoFugaz*> objetosFugaces;   // y esta debería ser la lista. Estos objetos podrán desaparecer, para ello
-                                               // habrá que preguntar si "debeDesaparecer()" y si es así quitarlo... :S
+        list<ObjetoFugaz*> objetosFugaces;
+
         Meta* meta;
         Contador* contador;
 
@@ -81,6 +80,8 @@ class Nivel{
         int tiempo;
         int cantidadMonedas;
         float puntoBanderaFin;
+
+    void sacarObjetosFugaces();
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

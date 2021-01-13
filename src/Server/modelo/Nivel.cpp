@@ -32,6 +32,12 @@ void Nivel::actualizarMonedas(){
 	}
 }
 
+void Nivel::actualizarBloques() {
+    for(auto& bloque : plataformas){
+        bloque->actualizar();
+    }
+}
+
 void Nivel::actualizarObjetosFugaces() {
     for(auto& objeto: objetosFugaces) {
         objeto->actualizar();
@@ -44,6 +50,7 @@ void Nivel::actualizarModelo(map<int, Mario*> jugadores){
     actualizarPosicionesEnemigos();
     actualizarObjetosFugaces();
     actualizarMonedas();
+    actualizarBloques();
 
     sacarEnemigosMuertos();
     sacarObjetosFugaces();
@@ -259,7 +266,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     int numeroBloque = 0;
     for(auto const& bloque: plataformas){
         bloque_t bloqueSerializado = bloque->serializar();
-        if(bloqueSerializado.numeroRecorteY == SORPRESA && deboAgregarlo(contexto, bloqueSerializado.posX) && numeroBloque < MAX_SORPRESAS){
+        if(bloque->cambioElSprite() && deboAgregarlo(contexto, bloqueSerializado.posX) && numeroBloque < MAX_SORPRESAS){
             ptrInfoRonda->bloques[numeroBloque] = bloqueSerializado;
             numeroBloque++;
         }

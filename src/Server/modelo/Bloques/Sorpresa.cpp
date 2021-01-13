@@ -7,7 +7,7 @@ Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
     int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
     this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
-    this->spriteBloque = new SpriteSorpresa(false);
+    this->spriteBloque = new SpriteSorpresa();
     this->objetoSorpresa = obtenerObjetoSorpresa(posicion->obtenerPosX(), posicion->obtenerPosY() + LARGO_BLOQUE);
     usado = false;
     entregado = false;
@@ -41,8 +41,7 @@ string Sorpresa::obtenerColisionID() {
 }
 
 void Sorpresa::chocarPorAbajoCon(Colisionable *colisionable) {
-    delete spriteBloque;
-    spriteBloque = new SpriteSorpresa(true);
+    spriteBloque->usarse();
     usado = true;
 }
 

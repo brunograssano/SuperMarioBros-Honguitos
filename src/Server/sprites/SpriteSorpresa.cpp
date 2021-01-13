@@ -2,13 +2,10 @@
 
 const int USADO = 3;
 
-SpriteSorpresa::SpriteSorpresa(bool seUso){
+SpriteSorpresa::SpriteSorpresa(){
 	direccionTextura = "resources/Imagenes/Bloques/BloqueSorpresa.png";
 	estadoActual = 0;
 	ciclos=0;
-	if(seUso){
-        estadoActual = USADO;
-	}
 	int corrimientoEnImagen = 0;
 	for(auto & estadosPosible : estadosPosibles){
 		estadosPosible.x = corrimientoEnImagen;
@@ -23,14 +20,14 @@ void SpriteSorpresa::actualizarSprite(){
     if(estadoActual == USADO){
         return;
     }
-    if(ciclos>=30){
+    if(ciclos>=50){
         estadoActual = 0;
         ciclos = 0;
     }
-    else if(ciclos>=20){
+    else if(ciclos>=40){
         estadoActual = 2;
     }
-    else if(ciclos>=10){
+    else if(ciclos>=30){
         estadoActual = 1;
     }
     ciclos++;
@@ -38,4 +35,12 @@ void SpriteSorpresa::actualizarSprite(){
 
 SDL_Rect SpriteSorpresa::obtenerRectanguloActual(){
 	return estadosPosibles[estadoActual];
+}
+
+void SpriteSorpresa::usarse() {
+    estadoActual = USADO;
+}
+
+bool SpriteSorpresa::cambioElSprite() {
+    return true;
 }

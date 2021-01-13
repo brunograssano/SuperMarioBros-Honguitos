@@ -81,7 +81,8 @@ class Nivel{
         int cantidadMonedas;
         float puntoBanderaFin;
 
-    void sacarObjetosFugaces();
+        void sacarObjetosFugaces();
+        void actualizarBloques();
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

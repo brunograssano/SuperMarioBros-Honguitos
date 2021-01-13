@@ -26,6 +26,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
     texturas["Moneda"] = intentarCarga("la imagen de moneda", "resources/Imagenes/Bloques/Monedas.png", renderizador);
     texturas["FondoInicio"]  = intentarCarga("el fondo del inicio del juego", "resources/Imagenes/Niveles/fondoInicio.png", renderizador);
+    texturas["FondoNivelTerminado"]  = intentarCarga("el fondo de finalizacion de nivel", "resources/Imagenes/Niveles/fondoNivelTerminado.png", renderizador);
     texturas["Titulo"]  = intentarCarga("el titulo", "resources/Imagenes/Titulos/Super_Mario_Bros_Titulo.png", renderizador);
     texturas["FondoGameOver"]  = intentarCarga("el fondo del final del juego","resources/Imagenes/Niveles/fondoGameOver.png",renderizador);
     texturas["Coffin"]  = intentarCarga("la imagen de Coffin Mario", "resources/Imagenes/Personajes/MarioCoffinDance.png", renderizador);

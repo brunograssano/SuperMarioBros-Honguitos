@@ -1,5 +1,6 @@
 #include "DibujadorFinNivel.hpp"
-const int ANCHO_FONDO = 8177;
+const int ANCHO_IMAGEN_FONDO = 800;
+const int ALTO_IMAGEN_FONDO = 800;
 
 DibujadorFinNivel::DibujadorFinNivel(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
     this->alto_pantalla = alto_pantalla;
@@ -19,10 +20,11 @@ DibujadorFinNivel::DibujadorFinNivel(CargadorTexturas* cargadorTexturas, SDL_Ren
 void DibujadorFinNivel::dibujar(JuegoCliente* juegoCliente){
     SDL_RenderClear( renderizador );
 
-    SDL_Rect rectanguloCamara = {(ANCHO_FONDO - ancho_pantalla), 0, alto_pantalla, ancho_pantalla};
-    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, nullptr);
+    SDL_Rect rectanguloFondo = {0, 0, ANCHO_IMAGEN_FONDO, ALTO_IMAGEN_FONDO};
+    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoNivelTerminado"), &rectanguloFondo, nullptr);
 
     dibujarTextoFinNivel(juegoCliente);
+
     SDL_RenderPresent( renderizador );
     ciclosDibujado++;
     if(ciclosDibujado >= 200) {
@@ -41,7 +43,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
     int ancho_textoFinNivel = 400;
     int alto_textoFinNivel = 60;
 
-    SDL_Rect cuadradoFin = {ancho_pantalla/2 -ancho_textoFinNivel/2,
+    SDL_Rect cuadradoFinNivel = {ancho_pantalla/2 -ancho_textoFinNivel/2,
                             alto_pantalla/2 - alto_textoFinNivel/2 - 100,
                             ancho_textoFinNivel,
                             alto_textoFinNivel};
@@ -50,17 +52,30 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
     int alto_puntosJugador = 30;
     int desfase_puntosJugador = 50;
     SDL_Rect cuadradoPuntos;
+    SDL_Rect cuadradoCorazon;
 
     stringstream puntosJugador;
+    int corrimientoCorazon = 120;
+    int corrimiento = 100;
 
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
         puntosJugador.str("");
         puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
 
-        cuadradoPuntos = {ancho_pantalla/2 -ancho_puntosJugador/2,
-                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
+        cuadradoPuntos = {ancho_pantalla/3 - ancho_puntosJugador/2,
+                          alto_pantalla/2 + alto_puntosJugador + desfase_puntosJugador - corrimiento,
                           ancho_puntosJugador,
                           alto_puntosJugador};
+        cuadradoCorazon = { ancho_pantalla/3 - ancho_puntosJugador/2 + ancho_puntosJugador + corrimientoCorazon,
+                            alto_pantalla/2 + alto_puntosJugador + desfase_puntosJugador - corrimiento,
+                            20,
+                            20 };
+
+        for(int i = 0; i<parIdJugador.second.mario.vidas; i++){
+            SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Corazon"), nullptr, &cuadradoCorazon);
+            cuadradoCorazon.x += 25;
+        }
+
         int idColor = parIdJugador.first;
 
         if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
@@ -70,6 +85,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
         desfase_puntosJugador +=40;
     }
 
-    renderizarTexto(cuadradoFin, textoFinNivel.str().c_str(), colorDefault);
+    renderizarTexto(cuadradoFinNivel, textoFinNivel.str().c_str(), colorDefault);
 }
+
 

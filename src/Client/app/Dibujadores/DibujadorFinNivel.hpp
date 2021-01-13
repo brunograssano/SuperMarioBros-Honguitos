@@ -18,6 +18,7 @@ class DibujadorFinNivel : public Dibujador{
         void dibujarTextoFinNivel(JuegoCliente *juegoCliente);
         map<int, SDL_Color> colores;
         int ciclosDibujado;
+        void dibujarCorazones(JuegoCliente *juegoCliente);
 };
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_DIBUJADORFINNIVEL_HPP

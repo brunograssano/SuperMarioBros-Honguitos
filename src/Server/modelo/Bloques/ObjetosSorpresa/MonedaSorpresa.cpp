@@ -2,13 +2,16 @@
 #include "src/Utils/Constantes.hpp"
 #include "src/Utils/Utils.hpp"
 
+const int FUERZA = 5;
+
 MonedaSorpresa::MonedaSorpresa(Posicion* posicionInicial) {
-    _debeDesaparecer = true; //todo: false [Movimiento vertical feat]
+    _debeDesaparecer = false;
+    posYInicial = posicionInicial->obtenerPosY();
     posicion = PosicionMovil(posicionInicial->obtenerPosX(), posicionInicial->obtenerPosY(),
                              posicionInicial->obtenerPosY(), posicionInicial->obtenerPosX(), posicionInicial->obtenerPosX());
+    movimiento = MovimientoVertical(FUERZA);
     inicializarMapasDeColision();
     //todo: sprite feat.
-    //todo: movimiento vertical feat.
 }
 
 void MonedaSorpresa::usarse(Mario *mario) {
@@ -22,7 +25,10 @@ efecto_t MonedaSorpresa::serializar() {
 }
 
 void MonedaSorpresa::actualizar() {
-    //todo: movimiento vertical feat.
+    movimiento.mover(&posicion);
+    if(posicion.obtenerPosY() == posYInicial){
+        _debeDesaparecer = true;
+    }
     //todo: sprite feat.
 }
 

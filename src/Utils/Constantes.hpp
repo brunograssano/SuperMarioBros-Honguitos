@@ -46,6 +46,7 @@ const int GOOMBA = 1, KOOPA = 2;
 #define CLAVE_TEXTURA_BOLA_DE_FUEGO "BolaDeFuego"
 #define CLAVE_TEXTURA_CHISPA "Chispa"
 #define CLAVE_TEXTURA_FLOR "Flor"
+#define CLAVE_TEXTURA_MONEDA_FLOTANTE "MonedaFlotante"
 #define CLAVE_TEXTURA_BLOQUES "Bloques"
 #define CLAVE_TEXTURA_GOOMBA "Goombas"
 #define CLAVE_TEXTURA_KOOPAS "Koopas"

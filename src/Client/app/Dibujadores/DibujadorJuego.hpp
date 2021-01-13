@@ -18,6 +18,7 @@ using namespace std;
 #include "src/Client/app/Dibujadores/Recortes/RecorteBolaDeFuego.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteChispa.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteFlor.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecorteMonedaFlotante.hpp"
 
 #include "Dibujador.hpp"
 #include "src/Client/app/juegoCliente/RecorteTuberia.hpp"

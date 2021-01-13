@@ -11,18 +11,24 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
     this->recorteSpriteMoneda = new RecorteMoneda();
     this->recorteSpriteBloque = new RecorteBloque();
     this->recorteSpriteTuberia = new RecorteTuberia();
+
     recorteEfectos[BOLA_DE_FUEGO] = new RecorteBolaDeFuego();
-    clavesEfectos[BOLA_DE_FUEGO] = "BolaDeFuego";
+    clavesEfectos[BOLA_DE_FUEGO] = CLAVE_TEXTURA_BOLA_DE_FUEGO;
+
+    recorteEfectos[MONEDA_FLOTANTE] = new RecorteMonedaFlotante();
+    clavesEfectos[MONEDA_FLOTANTE] = CLAVE_TEXTURA_MONEDA_FLOTANTE;
+
     recorteEfectos[CHISPA] = new RecorteChispa();
-    clavesEfectos[CHISPA] = "Chispa";
+    clavesEfectos[CHISPA] = CLAVE_TEXTURA_CHISPA;
+
     recorteEfectos[FLOR] = new RecorteFlor();
-    clavesEfectos[FLOR] = "Flor";
+    clavesEfectos[FLOR] = CLAVE_TEXTURA_FLOR;
 
     colores[-1] = {150, 150 , 150, 255}; // Gris.
-    colores[0] = {230, 30 , 044, 255}; // Rojo.
-	colores[1] = {69 , 230, 52 , 255}; // Verde.
-	colores[2] = {179, 25 , 252, 255}; // Violeta.
-	colores[3] = {76 , 225, 252, 255}; // Celeste.
+    colores[0] = {230, 30 , 044, 255};   // Rojo.
+	colores[1] = {69 , 230, 52 , 255};   // Verde.
+	colores[2] = {179, 25 , 252, 255};   // Violeta.
+	colores[3] = {76 , 225, 252, 255};   // Celeste.
 }
 
 void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
@@ -150,7 +156,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
     list<efecto_t> efectos = juegoCliente->obtenerEfectos();
     for (auto const& efecto : efectos) {
-        if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA || efecto.tipoDeEfecto == FLOR) {
+        if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA || efecto.tipoDeEfecto == FLOR || efecto.tipoDeEfecto == MONEDA_FLOTANTE) {
             SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipoDeEfecto]);
             Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);

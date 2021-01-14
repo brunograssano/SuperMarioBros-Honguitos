@@ -1,14 +1,14 @@
 #include "Goomba.hpp"
 #include "../../sprites/SpriteGoomba.hpp"
 #include "src/Utils/Constantes.hpp"
+#define DEFAULT 100
 
 Goomba::Goomba(int tipoColor) {
     spriteEnemigo = new SpriteGoomba();
     this->tipoColor = tipoColor;
-    velocidadX = obtenerVelocidad();
     loMataron = false;
-    inicializarMapasDeColision();
-    posicionActual = new PosicionMovil(0, 0);
+    Enemigo::inicializarMapasDeColision();
+    posicionActual = new PosicionMovil(DEFAULT, DEFAULT);
 }
 
 enemigo_t Goomba::serializar() {

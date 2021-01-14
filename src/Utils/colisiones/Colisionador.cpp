@@ -87,6 +87,6 @@ void chocarContraTodos(Colisionable* colisionable, void* ptr_colisionables, Func
     }
 }
 
-bool esUnBloque(string idColisionable){
-    return idColisionable == COLISION_ID_LADRILLO || idColisionable == COLISION_ID_SORPRESA;
+bool esUnBloque(const string& idColisionable){
+    return idColisionable == COLISION_ID_LADRILLO || idColisionable == COLISION_ID_SORPRESA || idColisionable == COLISION_ID_PLATAFORMA;
 }

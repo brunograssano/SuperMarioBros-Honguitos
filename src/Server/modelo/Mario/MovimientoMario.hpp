@@ -24,8 +24,7 @@ class MovimientoMario{
         void reiniciar();
         void setVelocidadX(int velocidadNueva);
         void teParasteEnBloque();
-
-    bool estaEnElAire();
+        bool estaEnElAire();
 
 private:
 		MovimientoHorizontal* movimientoX;

@@ -6,14 +6,15 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin) {
+Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso) {
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
     this->tiempo = tiempo;
     this->cantidadMonedas = cantidadMonedas;
-    this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+    this->puntoBanderaFin = ANCHO_FONDO* (float) puntoBanderaFin /100;
     this->contador = new Contador(tiempo, SEGUNDOS);
     this->meta = new Meta(this->puntoBanderaFin);
+    this->piso = Piso(altoPiso);
 }
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -45,9 +46,9 @@ void Nivel::actualizarObjetosFugaces() {
 }
 
 void Nivel::actualizarModelo(map<int, Mario*> jugadores){
+    actualizarPosicionesEnemigos();
     resolverColisiones(jugadores);
 
-    actualizarPosicionesEnemigos();
     actualizarObjetosFugaces();
     actualizarMonedas();
     actualizarBloques();
@@ -60,16 +61,19 @@ void Nivel::actualizarModelo(map<int, Mario*> jugadores){
 }
 
 void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
+    list<Colisionable*> plataformasPiso = piso.obtenerPiso();
     for(auto& parClaveJugador: jugadores){
         Mario* jugador = parClaveJugador.second;
         chocarContraTodos(jugador, (void*)&enemigos, nullptr, nullptr);
         chocarContraTodos(jugador, (void*)&monedas, nullptr, nullptr);
         chocarContraTodos(jugador, (void*)&plataformas,&Nivel::agregarObjeto_helper, this);
         chocarContraTodos(jugador, (void*)&objetosFugaces, nullptr, nullptr);
+        chocarContraTodos(jugador,(void*) &plataformasPiso,nullptr, nullptr);
     }
     for(auto& enemigo:enemigos){
         chocarContraTodos(enemigo, (void*)&objetosFugaces, nullptr, nullptr);
         chocarContraTodos(enemigo, (void*)&plataformas, nullptr, nullptr);
+        chocarContraTodos(enemigo,(void*)&plataformasPiso,nullptr, nullptr);
     }
     for(auto& objeto: objetosFugaces){
         chocarContraTodos(objeto, (void*)&plataformas, nullptr, nullptr);
@@ -149,6 +153,7 @@ void Nivel::inicializar() {
     inicializarPosicionesOcupadasPorBloques();
     inicializarPosicionMonedas();
     inicializarPosicionEnemigo();
+    piso.inicializar();
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
@@ -208,7 +213,7 @@ void Nivel::inicializarPosicionEnemigo(){
 	int limiteXInferior = (int)puntoBanderaFin/10;
 
 	int coordenadaX = 0;
-	int coordenadaY = 0;
+	int coordenadaY = 100;
 
 	unsigned int cantidadMaximaEnemigos =  (unsigned int)(puntoBanderaFin/3)/TAMANIO_ENEMIGO;
 
@@ -300,21 +305,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 }
 
 void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
-    auto* posiblePozo = new Pozo(posicionXNuevoPozo, tipoPozo);
-
-    bool superponeAObjeto = false;
-    for (auto pozo:pozos){ // llevar a otra funcion a parte la verificacion de superposicion
-        if(pozo->colisionaCon(posiblePozo)){
-            superponeAObjeto = true;
-        }
-    }
-    // mismo chequeo para plataformas?
-    if(!superponeAObjeto){
-        pozos.push_back(posiblePozo);
-    }
-    else{
-        delete posiblePozo;
-    }
+    piso.agregarPozo(posicionXNuevoPozo,tipoPozo);
 }
 
 void Nivel::terminar() {
@@ -335,9 +326,10 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
+    list<pozo_t> pozos = piso.serializar();
     for(auto const& pozo: pozos){
         if(nivel->topePozos<MAX_POZOS){
-            nivel->pozos[nivel->topePozos] = pozo->serializar();
+            nivel->pozos[nivel->topePozos] = pozo;
             nivel->topePozos++;
         }
     }
@@ -383,7 +375,6 @@ int Nivel::tiempoRestante() {
     return contador->tiempoRestante();
 }
 
-/* todo Refactor: Aparecer objetoFugaz */
 void Nivel::aparecerDisparo(ObjetoFugaz* disparo) {
     objetosFugaces.push_back(disparo);
 }

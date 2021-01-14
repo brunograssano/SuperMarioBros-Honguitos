@@ -2,7 +2,7 @@
 #include "src/Utils/Constantes.hpp"
 #include "src/Server/sprites/SpriteMario.hpp"
 
-const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 0;
+const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 300;
 const int MINIMO_COORDENADA_Y = 0;
 const int TERRENO_LIMITE_DERECHO_MAX = 8177,TERRENO_LIMITE_DERECHO_MIN = 0;
 const short MARIO_DESCONECTADO = -1;
@@ -18,7 +18,7 @@ Mario::Mario(int numeroJugador){
 	this->vidaMario = new VidaMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;
-    inicializarMapasDeColision();
+    Mario::inicializarMapasDeColision();
 }
 
 void Mario::inicializarMapasDeColision(){
@@ -136,7 +136,7 @@ void Mario::actualizarPosicion(){
     spriteMario->actualizarSprite(this);
 	this->movimiento->mover(this->posicion);
 	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){
-		this->movimiento->setVelocidadY(0);
+		this->perderVida();
 	}
 	modificador->actualizar();
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());

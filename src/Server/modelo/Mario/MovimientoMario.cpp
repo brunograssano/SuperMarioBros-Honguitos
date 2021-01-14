@@ -33,14 +33,8 @@ void MovimientoMario::saltar(){
 
 void MovimientoMario::mover(PosicionMovil* posicion){
     this->movimientoX->mover(posicion, terrenos[terrenoActual]);
-
 	this->movimientoY->mover(posicion);
-	if(posicion->obtenerPosY() == 0){
-		terrenoActual = TIERRA;
-	}
-	else if(terrenoActual == BLOQUE){
-	    terrenoActual = AIRE;
-    }
+	terrenoActual = AIRE;
 }
 
 bool MovimientoMario::estaQuieto(){
@@ -59,7 +53,7 @@ void MovimientoMario::impulsarY() {
 void MovimientoMario::reiniciar() {
     setVelocidadY(0);
     this->movimientoX->setVelocidad(0);
-    terrenoActual = TIERRA;
+    terrenoActual = AIRE;
 }
 
 void MovimientoMario::setVelocidadX(int velocidadNueva) {

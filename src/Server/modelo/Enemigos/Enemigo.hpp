@@ -8,6 +8,7 @@
 class Mario;
 
 #include "src/Server/modelo/Colisionable.hpp"
+#include "MovimientoEnemigo.hpp"
 
 
 class Enemigo : public Colisionable{
@@ -25,18 +26,19 @@ class Enemigo : public Colisionable{
         rectangulo_t obtenerRectangulo() override;
         void chocarPorDerechaCon(Colisionable *colisionable) override;
         void chocarPorIzquierdaCon(Colisionable *colisionable) override;
+        void chocarPorAbajoCon(Colisionable* colisionable) override;
         bool debeColisionar() override;
         bool estaMuerto() const;
 
     protected:
+        void empujarEnY(rectangulo_t rectanguloBloque, int direccion); // TODO generalizar junto a mario
         void empujarEnX(rectangulo_t rectanguloBloque, int direccion);
         void inicializarMapasDeColision() override;
         void cambiarOrientacion();
-        static float obtenerVelocidad();
         enemigo_t serializarEnemigo(int tipo);
 		PosicionMovil* posicionActual{};
         SpriteEnemigo* spriteEnemigo{};
-        float velocidadX{};
+        MovimientoEnemigo movimientoEnemigo;
         int tipoColor{};
         bool loMataron = false;
 };

@@ -23,7 +23,7 @@ class Camara {
         bool estaEnRangoVisible(int posicionX) const;
         SDL_Rect obtenerRectanguloCamara();
     private:
-        SDL_Rect rectanguloCamara;
+        SDL_Rect rectanguloCamara{};
 };
 
 

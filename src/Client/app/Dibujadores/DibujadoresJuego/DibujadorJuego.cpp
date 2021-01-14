@@ -63,11 +63,11 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
 		}
 
 		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - enemigo.posY - ALTO_ENEMIGOS,
+									alto_pantalla - enemigo.posY - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
-        SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F );
-		SDL_RenderDrawRect(renderizador, &rectanguloEnemigo);
+        //SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F );
+		//SDL_RenderDrawRect(renderizador, &rectanguloEnemigo);
 
 		SDL_RenderCopyEx(renderizador,texturaEnemigo,&recorteTextura,&rectanguloEnemigo,0,
                          nullptr,enemigo.espejar?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
@@ -80,7 +80,7 @@ void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente*
 	for (auto const& bloque : bloques) {
 
 		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - bloque.posY - LARGO_BLOQUE,
+									alto_pantalla - bloque.posY - LARGO_BLOQUE,
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
 		SDL_RenderCopy( renderizador, texturaBloques, &recorteBloque, &rectanguloBloque);
@@ -93,7 +93,7 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
     SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura("Moneda");
 	for (auto const& moneda : monedas) {
 		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara->x,
-									alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) - moneda.posY - LARGO_MONEDA,
+									alto_pantalla - moneda.posY - LARGO_MONEDA,
                                      LARGO_MONEDA, LARGO_MONEDA};
 		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.numeroRecorte);
 		SDL_RenderCopy( renderizador, texturaMoneda, &recorteMoneda, &rectanguloMoneda);
@@ -106,7 +106,7 @@ void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *j
     for (auto const& tuberia : tuberias) {
         SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.tipo,tuberia.color);
         SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara->x,
-                                      alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN),
+                                      alto_pantalla,
                                       recorteTuberia.h, recorteTuberia.w};
         if(tuberia.tipo==0){
             rectanguloTuberia.h *= 5;
@@ -129,7 +129,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 		if(mario.idImagen != idPropio){
 			int idMario = mario.idImagen;
 			SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
-											alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario.posY,
+											alto_pantalla -ALTO_MARIO- mario.posY,
 											ANCHO_MARIO, ALTO_MARIO};
 
 			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
@@ -144,7 +144,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 
 	mario_t mario = jugadores[idPropio].mario;
 	SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
-												alto_pantalla - (int)(alto_pantalla*PROPORCION_PISO_EN_IMAGEN) -ALTO_MARIO- mario.posY,
+												alto_pantalla -ALTO_MARIO- mario.posY,
 												ANCHO_MARIO, ALTO_MARIO};
 
 	SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
@@ -161,7 +161,7 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
             Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
             SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
-                                         alto_pantalla - (int) (alto_pantalla * PROPORCION_PISO_EN_IMAGEN) - efecto.posY -
+                                         alto_pantalla - efecto.posY -
                                                  recorteEfecto->obtenerAlturaParaDibujarImagen(),
                                          recorteEfecto->obtenerAnchuraParaDibujarImagen(),
                                          recorteEfecto->obtenerAlturaParaDibujarImagen()};

@@ -15,15 +15,15 @@
 #include "Enemigos/Enemigo.hpp"
 #include "Moneda.hpp"
 #include "Meta.hpp"
+#include "Piso.hpp"
 
 using namespace std;
 
-const int ANCHO_FONDO2 = 8177;
 const int ALTO_NIVEL = 600;
 
 class Nivel{
 	public:
-        Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin);
+        Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso);
         ~Nivel();
 		void inicializar();
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
@@ -67,10 +67,9 @@ class Nivel{
         list<Bloque*> plataformas;
         list<Enemigo*> enemigos;
         list<Moneda*> monedas;
-        list<Pozo*> pozos;
         list<Tuberia*> tuberias;
-
         list<ObjetoFugaz*> objetosFugaces;
+        Piso piso = Piso(0);
 
         Meta* meta;
         Contador* contador;

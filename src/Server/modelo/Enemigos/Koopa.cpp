@@ -1,14 +1,14 @@
 #include "Koopa.hpp"
 #include "../../sprites/SpriteKoopa.hpp"
 #include "src/Utils/Constantes.hpp"
+#define DEFAULT 100
 
 Koopa::Koopa(int tipoColor) {
     spriteEnemigo = new SpriteKoopa();
     this->tipoColor = tipoColor;
-    velocidadX = obtenerVelocidad();
     loMataron = false;
     this->inicializarMapasDeColision();
-    posicionActual = new PosicionMovil(0, 0);
+    posicionActual = new PosicionMovil(DEFAULT, DEFAULT);
 }
 
 Koopa::~Koopa() {

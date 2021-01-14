@@ -1,6 +1,6 @@
 #include "Enemigo.hpp"
 #include "src/Server/modelo/Mario/Mario.hpp"
-#include <cmath>
+#define MINIMO_COORDENADA_Y 0
 
 int Enemigo::obtenerPosicionX() {
     return posicionActual->obtenerPosX();
@@ -16,19 +16,23 @@ void Enemigo::agregarPosicion(int coordenadaX, int coordenadaY) {
 }
 
 void Enemigo::actualizarPosicion() {
-    posicionActual->moverHorizontal(velocidadX);
+    if(posicionActual->obtenerPosY() <= MINIMO_COORDENADA_Y){
+        morir();
+        return;
+    }
+    movimientoEnemigo.mover(posicionActual);
     spriteEnemigo->actualizarSprite();
 }
 
 void Enemigo::morir(void* ptr) {
     loMataron = true;
     spriteEnemigo->morir();
-    this->velocidadX = 0;
+    movimientoEnemigo.morir();
 }
 
 
 void Enemigo::cambiarOrientacion() {
-    velocidadX = -velocidadX;
+    movimientoEnemigo.cambiarOrientacion();
 }
 
 enemigo_t Enemigo::serializarEnemigo(int tipo) {
@@ -38,7 +42,7 @@ enemigo_t Enemigo::serializarEnemigo(int tipo) {
     enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
     enemigoSerializado.numeroRecorteY = tipoColor;
     enemigoSerializado.tipoEnemigo = tipo;
-    enemigoSerializado.espejar = velocidadX > 0;
+    enemigoSerializado.espejar = movimientoEnemigo.debeEspejarse();
     return enemigoSerializado;
 }
 
@@ -69,10 +73,6 @@ void Enemigo::inicializarMapasDeColision() {
     mapaColisionesPorIzquierda[COLISION_ID_BOLA_DE_FUEGO] = morir;
     mapaColisionesPorArriba[COLISION_ID_BOLA_DE_FUEGO] = morir;
     mapaColisionesPorAbajo[COLISION_ID_BOLA_DE_FUEGO] = morir;
-}
-
-float Enemigo::obtenerVelocidad() {
-    return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
 }
 
 bool Enemigo::debeColisionar() {
@@ -106,5 +106,25 @@ void Enemigo::empujarEnX(rectangulo_t rectanguloBloque,int direccion){
     }
     else{
         this->posicionActual->moverHorizontal(-(rectanguloEnemigo.x2-rectanguloBloque.x1));
+    }
+}
+
+void Enemigo::chocarPorAbajoCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnY(colisionable->obtenerRectangulo(),ARRIBA);
+    }
+    else{
+        Colisionable::chocarPorAbajoCon(colisionable);
+    }
+}
+
+void Enemigo::empujarEnY(rectangulo_t rectanguloBloque, int direccion) {
+    movimientoEnemigo.setVelocidadY(0);
+    rectangulo_t rectanguloEnemigo = obtenerRectangulo();
+    if(direccion == ABAJO){
+        this->posicionActual->moverVertical(-(rectanguloEnemigo.y2-rectanguloBloque.y1));
+    }
+    else{
+        this->posicionActual->moverVertical(rectanguloBloque.y2-rectanguloEnemigo.y1);
     }
 }

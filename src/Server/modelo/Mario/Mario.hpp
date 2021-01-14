@@ -7,7 +7,7 @@
 #include "src/Utils/Utils.hpp"
 
 #include "MovimientoMario.hpp"
-#include "VidaMario.h"
+#include "VidaMario.hpp"
 #include "Modificadores/ModificadorMario.hpp"
 #include "Modificadores/SinModificador.hpp"
 #include "Modificadores/MarioDeFuego.hpp"

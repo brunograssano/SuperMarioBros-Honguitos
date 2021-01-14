@@ -20,6 +20,9 @@ const int ANCHO_FONDO = 8177;
 #define COLISION_ID_BOLA_DE_FUEGO "Nada"
 #define COLISION_ID_CHISPA "Nada"
 #define COLISION_ID_NADA "Nada"
+#define COLISION_ID_PLATAFORMA "Plataforma"
+
+const int ANCHO_POZO = 200, ALTO_POZO = 0;
 
 
 const int PUNTOS_KOOPA = 1000;

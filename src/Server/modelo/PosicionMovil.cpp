@@ -1,4 +1,5 @@
 #include "PosicionMovil.hpp"
+#define COORDENADA_Y_DEFAULT 300
 
 PosicionMovil::PosicionMovil(int coordenadaX, int coordenadaY, int minimoY, int minimoX, int maximoX) : Posicion() {
     this->posicionX= (float)coordenadaX;
@@ -38,5 +39,5 @@ void PosicionMovil::actualizarLimiteTerrenoDer(int limite) {
 
 void PosicionMovil::reiniciar() {
     posicionX = minimoX;
-    posicionY = minimoY;
+    posicionY = COORDENADA_Y_DEFAULT;
 }

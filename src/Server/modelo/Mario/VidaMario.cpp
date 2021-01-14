@@ -1,4 +1,4 @@
-#include "VidaMario.h"
+#include "VidaMario.hpp"
 
 const int VIDAS_INICIALES = 3;
 
@@ -16,4 +16,8 @@ void VidaMario::perderVida() {
     if(vidas >= 1){
         vidas--;
     }
+}
+
+bool VidaMario::estaMuerto() {
+    return vidas == 0;
 }

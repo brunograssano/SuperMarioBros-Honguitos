@@ -2,7 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_MODIFICADORMARIO_HPP
 
 
-#include <VidaMario.h>
+#include <VidaMario.hpp>
 #include <src/Server/modelo/PosicionFija.hpp>
 #include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/Posicion.hpp"

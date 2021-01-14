@@ -64,6 +64,7 @@ int Mario::obtenerPuntos() const{
 
 void Mario::agregarPuntos(int unosPuntos){
 	puntos+=unosPuntos;
+	this->notificar();
 }
 
 void Mario::agregarMoneda(){

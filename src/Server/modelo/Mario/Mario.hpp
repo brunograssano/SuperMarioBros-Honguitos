@@ -18,8 +18,9 @@ class SpriteMario;
 #include "src/Server/modelo/Objetos/Disparo.hpp"
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
 #include "src/Server/modelo/Objetos/Chispa.hpp"
+#include "src/Utils/Observable.hpp"
 
-class Mario{
+class Mario: public Observable{
 
 	public:
 

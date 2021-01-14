@@ -44,32 +44,43 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
     int alto_textoFinNivel = 60;
 
     SDL_Rect cuadradoFinNivel = {ancho_pantalla/2 -ancho_textoFinNivel/2,
-                            alto_pantalla/2 - alto_textoFinNivel/2 - 100,
+                            alto_pantalla/2 - alto_textoFinNivel/2 - 130,
                             ancho_textoFinNivel,
                             alto_textoFinNivel};
 
     int ancho_puntosJugador = 200;
     int alto_puntosJugador = 30;
-    int desfase_puntosJugador = 50;
+    int desfase_puntosJugador = 20;
+
     SDL_Rect cuadradoPuntos;
     SDL_Rect cuadradoCorazon;
 
     stringstream puntosJugador;
-    int corrimientoCorazon = 120;
+    int corrimientoCorazon = 200;
     int corrimiento = 100;
 
+    int alto_borde_puntos = (alto_puntosJugador+desfase_puntosJugador+5) * juegoCliente->obtenerJugadores().size();
+    SDL_Rect borde_puntos = {ancho_pantalla/3 - ancho_puntosJugador/2 - 30,
+                           alto_pantalla/2 + alto_puntosJugador - corrimiento,
+                           4*ancho_pantalla/6,
+                           alto_borde_puntos};
+
+    SDL_SetRenderDrawColor(renderizador, 51, 51, 51, 100);
+    SDL_RenderFillRect(renderizador, &borde_puntos);
+
+    int textosDibujados = 1;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
         puntosJugador.str("");
         puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
 
         cuadradoPuntos = {ancho_pantalla/3 - ancho_puntosJugador/2,
-                          alto_pantalla/2 + alto_puntosJugador + desfase_puntosJugador - corrimiento,
+                          alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
                           ancho_puntosJugador,
                           alto_puntosJugador};
-        cuadradoCorazon = { ancho_pantalla/3 - ancho_puntosJugador/2 + ancho_puntosJugador + corrimientoCorazon,
-                            alto_pantalla/2 + alto_puntosJugador + desfase_puntosJugador - corrimiento,
-                            20,
-                            20 };
+        cuadradoCorazon = {ancho_pantalla/3 - ancho_puntosJugador/2 + ancho_puntosJugador + corrimientoCorazon,
+                           alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
+                           20,
+                           20 };
 
         for(int i = 0; i<parIdJugador.second.mario.vidas; i++){
             SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Corazon"), nullptr, &cuadradoCorazon);
@@ -82,7 +93,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
             idColor = MARIO_GRIS;
         }
         renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
-        desfase_puntosJugador +=40;
+        textosDibujados++;
     }
 
     renderizarTexto(cuadradoFinNivel, textoFinNivel.str().c_str(), colorDefault);

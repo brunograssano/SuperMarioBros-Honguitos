@@ -35,6 +35,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     texturas[CLAVE_TEXTURA_CHISPA] = intentarCarga("la imagen de la chispa", "resources/Imagenes/Objetos/Chispa.png", renderizador);
     texturas[CLAVE_TEXTURA_FLOR] = intentarCarga("la imagen de las flores", "resources/Imagenes/Objetos/Flores.png", renderizador);
     texturas[CLAVE_TEXTURA_MONEDA_FLOTANTE] = intentarCarga("la imagen de la moneda sorpresa", "resources/Imagenes/Objetos/MonedaFlotante.png", renderizador);
+    texturas[CLAVE_TEXTURA_POZO]  = intentarCarga("la imagen de los pozos","resources/Imagenes/Bloques/Pozos.png",renderizador);
 
     texturas[CLAVE_TEXTURA_BLOQUES]  = intentarCarga("la imagen de los bloques","resources/Imagenes/Bloques/Bloques.png",renderizador);
     texturas[CLAVE_TEXTURA_GOOMBA]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);

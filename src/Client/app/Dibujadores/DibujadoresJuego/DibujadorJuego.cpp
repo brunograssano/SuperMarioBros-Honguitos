@@ -1,5 +1,7 @@
 #include "DibujadorJuego.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "src/Client/app/Dibujadores/Recortes/RecortePozo.hpp"
+
 DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
     this->cargadorTexturas = cargadorTexturas;
     this->renderizador = renderizador;
@@ -11,17 +13,18 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
     this->recorteSpriteMoneda = new RecorteMoneda();
     this->recorteSpriteBloque = new RecorteBloque();
     this->recorteSpriteTuberia = new RecorteTuberia();
+    recortes[POZO_RECORTE] = new RecortePozo();
 
-    recorteEfectos[BOLA_DE_FUEGO] = new RecorteBolaDeFuego();
+    recortes[BOLA_DE_FUEGO] = new RecorteBolaDeFuego();
     clavesEfectos[BOLA_DE_FUEGO] = CLAVE_TEXTURA_BOLA_DE_FUEGO;
 
-    recorteEfectos[MONEDA_FLOTANTE] = new RecorteMonedaFlotante();
+    recortes[MONEDA_FLOTANTE] = new RecorteMonedaFlotante();
     clavesEfectos[MONEDA_FLOTANTE] = CLAVE_TEXTURA_MONEDA_FLOTANTE;
 
-    recorteEfectos[CHISPA] = new RecorteChispa();
+    recortes[CHISPA] = new RecorteChispa();
     clavesEfectos[CHISPA] = CLAVE_TEXTURA_CHISPA;
 
-    recorteEfectos[FLOR] = new RecorteFlor();
+    recortes[FLOR] = new RecorteFlor();
     clavesEfectos[FLOR] = CLAVE_TEXTURA_FLOR;
 
     colores[-1] = {150, 150 , 150, 255}; // Gris.
@@ -42,6 +45,7 @@ void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoClien
 	dibujarTuberias(rectanguloCamara, juegoCliente);
     dibujarEfectos(rectanguloCamara, juegoCliente);
     dibujarMarios(rectanguloCamara, juegoCliente);
+    dibujarPozos(rectanguloCamara,juegoCliente);
 	dibujarTexto(juegoCliente);
 
 	SDL_RenderPresent( renderizador );
@@ -76,7 +80,7 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
 
 void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	list<bloque_t> bloques = juegoCliente->obtenerBloques();
-    SDL_Texture* texturaBloques = cargadorTexturas->obtenerTextura("Bloques");
+    SDL_Texture* texturaBloques = cargadorTexturas->obtenerTextura("Bloques"); // TODO PASAR A USAR LAS CTE
 	for (auto const& bloque : bloques) {
 
 		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
@@ -86,6 +90,18 @@ void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente*
 		SDL_RenderCopy( renderizador, texturaBloques, &recorteBloque, &rectanguloBloque);
 	}
 
+}
+
+void DibujadorJuego::dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+    list<pozo_t> pozos = juegoCliente->obtenerPozos();
+    SDL_Texture* texturaPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_POZO);
+    for (auto const& pozo : pozos) {
+        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara->x,
+                                     alto_pantalla - ALTO_POZO,
+                                     ANCHO_POZO, ALTO_POZO};
+        SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.tipo);
+        SDL_RenderCopy( renderizador, texturaPozos, &recortePozo, &rectanguloPozo);
+    }
 }
 
 void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
@@ -158,7 +174,7 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
     for (auto const& efecto : efectos) {
         if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA || efecto.tipoDeEfecto == FLOR || efecto.tipoDeEfecto == MONEDA_FLOTANTE) {
             SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipoDeEfecto]);
-            Recorte* recorteEfecto = recorteEfectos[efecto.tipoDeEfecto];
+            Recorte* recorteEfecto = recortes[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
             SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
                                          alto_pantalla - efecto.posY -
@@ -216,9 +232,9 @@ DibujadorJuego::~DibujadorJuego(){
 	delete this->recorteSpriteTuberia;
 	delete this->recorteSpriteMoneda;
 	delete this->recorteSpriteBloque;
-    for(auto& parClaveRecorte: recorteEfectos){
+    for(auto& parClaveRecorte: recortes){
         delete parClaveRecorte.second;
     }
-    recorteEfectos.clear();
+    recortes.clear();
     clavesEfectos.clear();
 }

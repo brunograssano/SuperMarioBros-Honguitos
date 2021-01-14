@@ -22,7 +22,7 @@ const int ANCHO_FONDO = 8177;
 #define COLISION_ID_NADA "Nada"
 #define COLISION_ID_PLATAFORMA "Plataforma"
 
-const int ANCHO_POZO = 200, ALTO_POZO = 0;
+const int ANCHO_POZO = 200, ALTO_POZO = 50;
 
 
 const int PUNTOS_KOOPA = 1000;
@@ -39,6 +39,10 @@ const int ALTO_BOLA = 20, ANCHO_BOLA = 20;
 const int ALTO_CHISPA = 44, ANCHO_CHISPA = 64;
 const int GOOMBA = 1, KOOPA = 2;
 
+#define POZO_RECORTE 10 // todo mejorar el mapa
+
+
+#define CLAVE_TEXTURA_POZO "Pozo"
 #define CLAVE_TEXTURA_MONEDA "Moneda"
 #define CLAVE_TEXTURA_FONDO_INICIO "FondoInicio"
 #define CLAVE_TEXTURA_TITULO "Titulo"

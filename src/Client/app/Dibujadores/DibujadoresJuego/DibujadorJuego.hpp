@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
 
@@ -46,7 +46,7 @@ class DibujadorJuego : public Dibujador{
 		RecorteBloque* recorteSpriteBloque;
 		RecorteTuberia* recorteSpriteTuberia;
 
-		map<int, Recorte*> recorteEfectos;
+		map<int, Recorte*> recortes;
 		map<int, string> clavesEfectos;
 
 		map<int, SDL_Color> colores;
@@ -57,8 +57,8 @@ class DibujadorJuego : public Dibujador{
 		void dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
 		void dibujarTexto(JuegoCliente* juegoCliente);
         void dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
-
-    void dibujarEfectos(SDL_Rect *pRect, JuegoCliente *pCliente);
+        void dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
+        void dibujarEfectos(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

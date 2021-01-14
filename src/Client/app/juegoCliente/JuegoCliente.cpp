@@ -145,6 +145,17 @@ int JuegoCliente::obtenerMundoActual() const{
 	return numeroMundo;
 }
 
+list<pozo_t> JuegoCliente::obtenerPozos() {
+    list<pozo_t> pozosAMostrar;
+    for(auto pozo:pozos){
+        if(enRango(pozo.posX)){
+            pozosAMostrar.push_front(pozo);
+        }
+    }
+    return pozosAMostrar;
+}
+
+
 list<tuberia_t> JuegoCliente::obtenerTuberias() {
     list<tuberia_t> tuberiasAMostrar;
     for(auto tuberia:tuberias){

@@ -14,6 +14,8 @@
 #include "Enemigos/Enemigo.hpp"
 #include "Moneda.hpp"
 #include "Meta.hpp"
+#include "Podio.hpp"
+
 using namespace std;
 
 const int ANCHO_FONDO2 = 8177;
@@ -31,7 +33,7 @@ class Nivel{
 		void agregarMoneda(Moneda* unaMoneda);
 		int obtenerMundo() const;
 		int tiempoRestante();
-		void iniciar();
+		void iniciar(map<int, Mario*> jugadores);
 
         /* Completará la información de los siguientes campos:
          * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
@@ -71,6 +73,7 @@ class Nivel{
                                                // habrá que preguntar si "debeDesaparecer()" y si es así quitarlo... :S
         Meta* meta;
         Contador* contador;
+        Podio* podio;
 
         int mundo;
         string direccionFondo;

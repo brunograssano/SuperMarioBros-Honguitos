@@ -8,6 +8,7 @@ using namespace std;
 #include "LectorTest.hpp"
 #include "EnemigoTest.hpp"
 #include "Assert.hpp"
+#include "PodioTest.hpp"
 
 
 int mainTest(){
@@ -17,7 +18,7 @@ int mainTest(){
 	BloqueTest::ejecutar(testSuite);
 	LectorTest::ejecutar(testSuite);
 	EnemigoTest::ejecutar(testSuite);
-
+    PodioTest::ejecutar(testSuite);
 	cout << "Pasaron " << testSuite->getPruebasPasadas() << " pruebas de "<< testSuite->getPruebasTotales() << endl;
 	delete testSuite;
 	return 0;

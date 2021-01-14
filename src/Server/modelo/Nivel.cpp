@@ -14,6 +14,7 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
     this->contador = new Contador(tiempo, SEGUNDOS);
     this->meta = new Meta(this->puntoBanderaFin);
+    this->podio = new Podio();
 }
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -48,7 +49,7 @@ void Nivel::actualizarDisparos() {
 }
 
 void Nivel::actualizarModelo(map<int, Mario*> jugadores){
-    //resolverColisiones(jugadores);
+    //resolverColisiones(jugadores);usarse
     actualizarPosicionesEnemigos();
     actualizarDisparos();
     actualizarMonedas();
@@ -338,8 +339,12 @@ Nivel::~Nivel (){
     delete meta;
 }
 
-void Nivel::iniciar() {
+void Nivel::iniciar(map<int, Mario*> jugadores) {
     contador->iniciar();
+    podio->recibirJugadores(jugadores);
+    for(auto const& parJugador:jugadores){
+        parJugador.second->agregar(podio);
+    }
 }
 
 int Nivel::tiempoRestante() {

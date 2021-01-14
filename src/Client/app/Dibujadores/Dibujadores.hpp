@@ -31,6 +31,7 @@ class Dibujadores{
 		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
 		void dibujarPantallaFinNivel(JuegoCliente *juegoCliente);
 		void dibujarErrorServidor();
+		void agregarEventoADibujadores(SDL_Event eventoClick);
 		~Dibujadores();
 
 	private:

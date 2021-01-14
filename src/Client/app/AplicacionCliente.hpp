@@ -52,6 +52,7 @@ class App{
         void agregarNivel(nivel_t nivel);
 		void ocurrioUnErrorServidor();
 		void dibujar();
+		void manejarClick(SDL_Event eventoClick);
 };
 
 #endif /* SRC_APP_APP_HPP_ */

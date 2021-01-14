@@ -1,4 +1,6 @@
 #include "DibujadorGanadores.hpp"
+#include "src/Client/app/ManejadorSDL.hpp"
+
 const int ANCHO_FONDO = 8177;
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
@@ -6,8 +8,12 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	this->renderizador= renderizador;
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
+	this->nivelAMostrarPuntos = 0;
 
-	string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
+	this->botonIzquierdo = new BotonConTexto(50,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+    this->botonDerecho = new BotonConTexto(310,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+
+    string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
 							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
 	for(int i=0;i<700;i++){
 		int posX = rand() % ancho_pantalla;
@@ -27,44 +33,101 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	colores[3] = {76 , 225, 252, 255}; // Celeste.
 }
 
+void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
+    botonIzquierdo->mostrarse();
+    botonDerecho->mostrarse();
+    int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
+    dibujarTitulo();
+    if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
+        disminuirNivelAMostrarPuntos(ultimoNivel);
+        this->eventoMouse.type = NULL;
+    } else if (botonDerecho->botonClickeado(this->eventoMouse)) {
+        aumentarNivelAMostrarPuntos(ultimoNivel);
+       this->eventoMouse.type = NULL;
+    }
+    dibujarPuntos(juegoCliente);
+}
 
-void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente){
-	stringstream textoFelicitaciones;
-	textoFelicitaciones.str("");
-	textoFelicitaciones << "GANARON EL JUEGO!";
-	int ancho_textoFelicitaciones = 400;
-	int alto_textoFelicitaciones = 60;
-	SDL_Rect cuadradoFin = {ancho_pantalla/2 -ancho_textoFelicitaciones/2,
-							alto_pantalla/2 - alto_textoFelicitaciones/2 - 100,
-							ancho_textoFelicitaciones,
-							alto_textoFelicitaciones};
+void DibujadorGanadores::dibujarTitulo(){
+    stringstream textoFelicitaciones;
+    textoFelicitaciones.str("");
+    textoFelicitaciones << "GANARON EL JUEGO!";
+    int ancho_textoFelicitaciones = 400;
+    int alto_textoFelicitaciones = 60;
 
-	int ancho_puntosJugador = 200;
-	int alto_puntosJugador = 30;
-	int desfase_puntosJugador = 50;
-	SDL_Rect cuadradoPuntos;
+    SDL_Rect cuadradoFin = {ancho_pantalla/2 -ancho_textoFelicitaciones/2,
+                            alto_pantalla/2 - alto_textoFelicitaciones/2 - 225,
+                            ancho_textoFelicitaciones,
+                            alto_textoFelicitaciones};
+    renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
+}
 
-	stringstream puntosJugador;
+void DibujadorGanadores::aumentarNivelAMostrarPuntos (int ultimoNivel){
+    if(nivelAMostrarPuntos < ultimoNivel){
+        nivelAMostrarPuntos++;
+    }else{
+        nivelAMostrarPuntos = 0;
+    }
+}
 
-	for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
-	   puntosJugador.str("");
-	   puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
+void DibujadorGanadores::disminuirNivelAMostrarPuntos(int ultimoNivel){
+    if(nivelAMostrarPuntos > 0){
+        nivelAMostrarPuntos--;
+    }else{
+        nivelAMostrarPuntos = ultimoNivel;
+    }
+}
 
-	   cuadradoPuntos = {ancho_pantalla/2 -ancho_puntosJugador/2,
-	   									alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
-	   									ancho_puntosJugador,
-	   									alto_puntosJugador};
-	   int idColor = parIdJugador.first;
-	   if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
-		   idColor = MARIO_GRIS;
-	   }
+void DibujadorGanadores::dibujarPuntos(JuegoCliente *juegoCliente) {
 
-	   renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+    if(nivelAMostrarPuntos == 0){
+        dibujarPuntosTotales(juegoCliente);
+    }else {
+        dibujarPuntosDelNivel(juegoCliente); //UtilizarNivelAMostrarPuntos, capaz no necesite juegoCliente;
+    }
 
-	   desfase_puntosJugador +=40;
-	}
+}
 
-	renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
+
+
+void DibujadorGanadores::dibujarPuntosTotales(JuegoCliente* juegoCliente){
+
+    int ancho_puntosJugador = 200;
+    int alto_puntosJugador = 30;
+    int desfase_puntosJugador = 50;
+    SDL_Rect cuadradoPuntos;
+
+    stringstream puntosJugador;
+
+    stringstream tituloPuntos;
+    tituloPuntos << "Puntos Totales";
+
+    SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
+                                     alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
+                                     ancho_puntosJugador,
+                                     alto_puntosJugador};
+
+    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
+
+    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+        puntosJugador.str("");
+        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
+
+        cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
+                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
+                          ancho_puntosJugador,
+                          alto_puntosJugador};
+
+        int idColor = parIdJugador.first;
+        if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+            idColor = MARIO_GRIS;
+        }
+
+        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+
+        desfase_puntosJugador +=40;
+    }
+
 }
 
 
@@ -115,4 +178,48 @@ DibujadorGanadores::~DibujadorGanadores(){
 		delete particula;
 	}
 	particulas.clear();
+}
+
+void DibujadorGanadores::agregarEventoDeClick(SDL_Event eventoClick) {
+    this->eventoMouse = eventoClick;
+}
+
+void DibujadorGanadores::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
+
+    int ancho_puntosJugador = 200;
+    int alto_puntosJugador = 30;
+    int desfase_puntosJugador = 50;
+    SDL_Rect cuadradoPuntos;
+
+    stringstream puntosJugador;
+
+    stringstream tituloPuntos;
+    tituloPuntos << "Puntos nivel " <<to_string(this->nivelAMostrarPuntos);
+
+    SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
+                                     alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
+                                     ancho_puntosJugador,
+                                     alto_puntosJugador};
+
+    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
+
+    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+        puntosJugador.str("");
+        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << 100; /**/
+
+        cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
+                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
+                          ancho_puntosJugador,
+                          alto_puntosJugador};
+
+        int idColor = parIdJugador.first;
+        if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+            idColor = MARIO_GRIS;
+        }
+
+        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+
+        desfase_puntosJugador +=40;
+    }
+
 }

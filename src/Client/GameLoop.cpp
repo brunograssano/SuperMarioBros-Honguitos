@@ -34,6 +34,8 @@ void GameLoop::gameLoop() {
 			}
 			else if (event.type == SDL_KEYDOWN  && event.key.keysym.sym == SDLK_n){
                 ReproductorMusica::getInstance()->cambiarSonidos();
+			}else if(event.type == SDL_MOUSEBUTTONDOWN){
+			    aplicacion->manejarClick(event);
 			}
 		}
 		SDL_PumpEvents();

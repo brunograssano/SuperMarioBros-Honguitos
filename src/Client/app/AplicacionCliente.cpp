@@ -18,6 +18,10 @@ App* App::getInstance(){
 		return aplicacion;
 }
 
+void App::manejarClick(SDL_Event eventoClick) {
+    this->dibujador->agregarEventoADibujadores(eventoClick);
+}
+
 App::App(info_partida_t informacion, Cliente *cliente) {
     Log* log = Log::getInstance();
     this->cliente = cliente;
@@ -29,7 +33,6 @@ App::App(info_partida_t informacion, Cliente *cliente) {
     cargadorTexturas = new CargadorTexturas(renderizador);
 
     for(int i=0; i<informacion.cantidadFondosNiveles; i++){
-        //*Traerme el vector de mundos*// // TODO QUE SIGNIFICABA ESTO?
         this->direccionesNiveles[informacion.mundo+i] = string(informacion.direccionesFondoNiveles[i]);
     }
 

@@ -16,6 +16,7 @@
 #include "../../../Server/sprites/spritesPersonajesSaltando/SpriteToadSaltando.hpp"
 #include "../../../Server/sprites/spritesPersonajesSaltando/SpriteYoshiSaltando.hpp"
 
+#include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
 
 class DibujadorGanadores : public Dibujador{
 	public:
@@ -23,16 +24,30 @@ class DibujadorGanadores : public Dibujador{
 		void dibujar(JuegoCliente* juegoCliente);
 		~DibujadorGanadores() override;
 
-	private:
+    void agregarEventoDeClick(SDL_Event eventoClick);
+
+private:
 		void dibujarTextoGanadores(JuegoCliente* juegoCliente);
+        void dibujarPuntosTotales(JuegoCliente *juegoCliente);
 		void dibujarParticulas();
 		void dibujarPersonajes();
+		void dibujarPuntos(JuegoCliente* juegoCliente);
+		void dibujarTitulo();
+        void dibujarPuntosDelNivel(JuegoCliente *juegoCliente);
+        void disminuirNivelAMostrarPuntos(int ultimoNivel);
+        void aumentarNivelAMostrarPuntos(int ultimoNivel);
+
+		BotonConTexto* botonIzquierdo;
+		BotonConTexto* botonDerecho;
+		SDL_Event eventoMouse;
+		int nivelAMostrarPuntos;
 
 		map<int, SDL_Color> colores;
 		SpritePeachSaltando* spritePeach;
 		SpriteToadSaltando* spriteToad;
 		SpriteYoshiSaltando* spriteYoshi;
 		list<ParticulaGanadores*> particulas;
+
 };
 
 

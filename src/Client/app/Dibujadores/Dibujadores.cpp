@@ -42,6 +42,10 @@ void Dibujadores::dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCli
 	dibujadorJuego->dibujar(rectanguloCamara,juegoCliente);
 }
 
+void Dibujadores::agregarEventoADibujadores(SDL_Event eventoClick){
+    dibujadorGanadores->agregarEventoDeClick(eventoClick);
+}
+
 Dibujadores::~Dibujadores(){
 	delete dibujadorGameOver;
 	delete dibujadorInicio;

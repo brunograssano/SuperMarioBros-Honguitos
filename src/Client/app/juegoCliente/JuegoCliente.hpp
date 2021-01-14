@@ -25,6 +25,7 @@ class JuegoCliente{
         list<efecto_t> obtenerEfectos();
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
+		int obtenerNivelesJugados() ;
 		int obtenerIDPropio() const;
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
@@ -52,6 +53,7 @@ class JuegoCliente{
 		int posXCamara;
 		bool ganaron;
 		bool perdieron;
+		int nivelesJugados;
 
 };
 

@@ -12,6 +12,7 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->tiempoFaltante = 0;
 	this->numeroMundo = 0;
 	this->posXCamara = 0;
+	this->nivelesJugados = 0;
 	this->ganaron = false;
 	this->perdieron = false;
 	this->anchoVista = anchoPantalla;
@@ -153,4 +154,9 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
         pozos.push_front(nivel.pozos[i]);
     }
     pthread_mutex_unlock(&mutex);
+    nivelesJugados++;
+}
+
+int JuegoCliente::obtenerNivelesJugados()  {
+    return nivelesJugados;
 }

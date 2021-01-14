@@ -38,7 +38,7 @@ void mostrarMensajeInicial(){
 int main( int cantidadArgumentos, char* argumentos[]){
 
 	signal(SIGPIPE, SIG_IGN);
-
+    srand(time(nullptr));
 	mostrarMensajeInicial();
 
 	if(revisarParametro(cantidadArgumentos, argumentos, "server")){

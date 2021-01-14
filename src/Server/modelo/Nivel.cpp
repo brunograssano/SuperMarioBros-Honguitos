@@ -169,8 +169,6 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
 void Nivel::inicializarPosicionMonedas(){
 
-	srand(time(nullptr));
-
 	int cantidadMaximaMonedas = (int)(puntoBanderaFin/2)/(TAMANIO_MONEDA);
 
 	if(cantidadMonedas > cantidadMaximaMonedas){
@@ -203,8 +201,6 @@ void Nivel::inicializarPosicionMonedas(){
 }
 
 void Nivel::inicializarPosicionEnemigo(){
-
-	srand(time(nullptr));
 
 	int numeroPosicionX = 0;
 

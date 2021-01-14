@@ -114,6 +114,10 @@ list<moneda_t> JuegoCliente::obtenerMonedas(){
 	return monedas;
 }
 
+vector<podio_t> JuegoCliente::obtenerPodios(){
+    return this->podios;
+}
+
 int JuegoCliente::obtenerTiempoFaltante() const{
 	return tiempoFaltante;
 }
@@ -152,6 +156,9 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     }
     for(int i=0;i<nivel.topePozos;i++){
         pozos.push_front(nivel.pozos[i]);
+    }
+    for(int i=0; i<nivel.podio.cantidadJugadores; i++){
+        podios.push_back(nivel.podio);
     }
     pthread_mutex_unlock(&mutex);
     nivelesJugados++;

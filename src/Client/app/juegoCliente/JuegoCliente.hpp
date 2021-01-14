@@ -30,7 +30,8 @@ class JuegoCliente{
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
-        bool hayQueMostrarPuntosDeNivel;
+        vector<podio_t> obtenerPodios();
+        bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador
 
     void agregarNivel(nivel_t nivel);
   private:
@@ -44,6 +45,7 @@ class JuegoCliente{
 		list<moneda_t> monedas;
         list<tuberia_t> tuberias;
         list<efecto_t> efectos;
+        vector<podio_t> podios;
 		int cantidadJugadores;
 		int idPropio;
 
@@ -54,7 +56,6 @@ class JuegoCliente{
 		bool ganaron;
 		bool perdieron;
 		int nivelesJugados;
-
 };
 
 

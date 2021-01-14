@@ -316,7 +316,11 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
-
+    nivel->podio.cantidadJugadores = 0;
+    for(int i = 0; i < podio->getPodioNivel().size(); i++) {
+        nivel->podio.puntosNivel[i] = podio->getPodioNivel().at(i).second;
+        nivel->podio.cantidadJugadores++;
+    }
     // TODO ver que mas agregamos
 }
 

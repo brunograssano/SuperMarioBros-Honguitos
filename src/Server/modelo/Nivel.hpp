@@ -43,7 +43,7 @@ class Nivel{
 		string obtenerDireccionFondoActual();
         void terminar();
         void completarInformacionNivel(nivel_t *nivel);
-    void aparecerDisparo(Disparo* disparo);
+        void aparecerDisparo(Disparo* disparo);
 
     private:
         void sacarEnemigosMuertos();

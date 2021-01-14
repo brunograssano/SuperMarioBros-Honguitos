@@ -87,6 +87,11 @@ typedef struct pozo {
     uint8_t tipo;
 }pozo_t;
 
+typedef struct podio {
+    //unsigned short numeroJugador[MAX_JUGADORES];
+    unsigned short puntosNivel[MAX_JUGADORES];
+    unsigned short cantidadJugadores;
+}podio_t;
 
 #define NADA 0
 #define BOLA_DE_FUEGO 1
@@ -177,6 +182,7 @@ typedef struct nivel{
     bloque_t bloques[MAX_LADRILLOS]; //definir contstantes (van a venir todos los bloques ladrillo/tuberias de un nivel)
     tuberia_t tuberias[MAX_TUBERIAS];
     pozo_t pozos[MAX_POZOS];
+    podio_t podio;
     //informacion de los puntos para mostrar en la pantalla del medio?
 }nivel_t;
 

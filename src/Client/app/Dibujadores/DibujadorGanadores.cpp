@@ -202,10 +202,11 @@ void DibujadorGanadores::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
                                      alto_puntosJugador};
 
     renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
-
+    int i = 0;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+
         puntosJugador.str("");
-        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << 100; /**/
+        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << juegoCliente->obtenerPodios().at(nivelAMostrarPuntos-1).puntosNivel[i];
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                           alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
@@ -220,6 +221,7 @@ void DibujadorGanadores::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
         renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
 
         desfase_puntosJugador +=40;
+        i++;
     }
 
 }

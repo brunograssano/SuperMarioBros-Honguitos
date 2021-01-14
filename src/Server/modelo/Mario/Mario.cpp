@@ -133,11 +133,11 @@ void Mario::reiniciarPosicion(){
 
 
 void Mario::actualizarPosicion(){
+    spriteMario->actualizarSprite(this);
 	this->movimiento->mover(this->posicion);
-	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){ //TODO Ojo cuando vayamos a trabajar con floats... y el "==". Cambiar por un intervalo.
+	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){
 		this->movimiento->setVelocidadY(0);
 	}
-	spriteMario->actualizarSprite(this);
 	modificador->actualizar();
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }

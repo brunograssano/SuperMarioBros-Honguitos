@@ -13,7 +13,7 @@ class Mario;
 class Enemigo : public Colisionable{
 
 	public:
-        virtual ~Enemigo()= default;
+        ~Enemigo() override = default;
         virtual enemigo_t serializar() =0 ;
         void morir(void* ptr = nullptr);
 		int obtenerPosicionX();
@@ -23,18 +23,21 @@ class Enemigo : public Colisionable{
         virtual bool sePuedeEliminar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
+        void chocarPorDerechaCon(Colisionable *colisionable) override;
+        void chocarPorIzquierdaCon(Colisionable *colisionable) override;
         bool debeColisionar() override;
         bool estaMuerto() const;
 
     protected:
-        void cambiarOrientacion(void* ptr = nullptr);
+        void empujarEnX(rectangulo_t rectanguloBloque, int direccion);
+        void inicializarMapasDeColision() override;
+        void cambiarOrientacion();
         static float obtenerVelocidad();
         enemigo_t serializarEnemigo(int tipo);
 		PosicionMovil* posicionActual{};
         SpriteEnemigo* spriteEnemigo{};
         float velocidadX{};
         int tipoColor{};
-        void inicializarMapasDeColision() override;
         bool loMataron = false;
 };
 

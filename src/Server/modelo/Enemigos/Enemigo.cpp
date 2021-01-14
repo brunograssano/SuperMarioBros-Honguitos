@@ -27,7 +27,7 @@ void Enemigo::morir(void* ptr) {
 }
 
 
-void Enemigo::cambiarOrientacion(void *ptr) {
+void Enemigo::cambiarOrientacion() {
     velocidadX = -velocidadX;
 }
 
@@ -62,21 +62,13 @@ bool Enemigo::estaMuerto() const{
 
 void Enemigo::inicializarMapasDeColision() {
     auto pMorir = (void (Colisionable::*)(void*))&Enemigo::morir;
-    auto pCambiarVelocidad = (void (Colisionable::*)(void*))&Enemigo::cambiarOrientacion;
     Colisionable::parFuncionColisionContexto_t morir = {pMorir, nullptr};
-    Colisionable::parFuncionColisionContexto_t cambiarVelocidad = {pCambiarVelocidad, nullptr};
 
     mapaColisionesPorArriba[COLISION_ID_MARIO] = morir;
-    mapaColisionesPorDerecha[COLISION_ID_LADRILLO] = cambiarVelocidad;
-    mapaColisionesPorDerecha[COLISION_ID_SORPRESA] = cambiarVelocidad;
-    mapaColisionesPorIzquierda[COLISION_ID_LADRILLO] = cambiarVelocidad;
-    mapaColisionesPorIzquierda[COLISION_ID_SORPRESA] = cambiarVelocidad;
-
     mapaColisionesPorDerecha[COLISION_ID_BOLA_DE_FUEGO] = morir;
     mapaColisionesPorIzquierda[COLISION_ID_BOLA_DE_FUEGO] = morir;
     mapaColisionesPorArriba[COLISION_ID_BOLA_DE_FUEGO] = morir;
     mapaColisionesPorAbajo[COLISION_ID_BOLA_DE_FUEGO] = morir;
-
 }
 
 float Enemigo::obtenerVelocidad() {
@@ -88,4 +80,31 @@ bool Enemigo::debeColisionar() {
 }
 
 
+void Enemigo::chocarPorDerechaCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnX(colisionable->obtenerRectangulo(),IZQUIERDA);
+    }
+    else{
+        Colisionable::chocarPorDerechaCon(colisionable);
+    }
+}
 
+void Enemigo::chocarPorIzquierdaCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarEnX(colisionable->obtenerRectangulo(),DERECHA);
+    }
+    else{
+        Colisionable::chocarPorIzquierdaCon(colisionable);
+    }
+}
+
+void Enemigo::empujarEnX(rectangulo_t rectanguloBloque,int direccion){
+    cambiarOrientacion();
+    rectangulo_t rectanguloEnemigo = obtenerRectangulo();
+    if(direccion == DERECHA){
+        this->posicionActual->moverHorizontal(rectanguloBloque.x2-rectanguloEnemigo.x1);
+    }
+    else{
+        this->posicionActual->moverHorizontal(-(rectanguloEnemigo.x2-rectanguloBloque.x1));
+    }
+}

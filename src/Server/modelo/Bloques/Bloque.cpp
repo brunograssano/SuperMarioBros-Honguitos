@@ -8,10 +8,6 @@ int Bloque::obtenerPosicionY() {
     return this->posicion->obtenerPosY();
 }
 
-Sprite *Bloque::obtenerSprite() {
-    return this->spriteBloque;
-}
-
 void Bloque::ubicarEnPosicionDefault() {
     delete this->posicion;
     this->posicion = new PosicionFija(200, 200);
@@ -52,4 +48,11 @@ bool Bloque::debeColisionar() {
 
 void Bloque::actualizar() {
     spriteBloque->actualizarSprite();
+}
+
+void Bloque::elevar(int y) {
+    int yAnt = posicion->obtenerPosY();
+    int xAnt = posicion->obtenerPosX();
+    delete posicion;
+    posicion = new PosicionFija(xAnt, yAnt + y);
 }

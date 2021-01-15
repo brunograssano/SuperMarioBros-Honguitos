@@ -24,7 +24,6 @@ class Bloque : public Colisionable{
 		void actualizar();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
-		Sprite* obtenerSprite();
 		void ubicarEnPosicionDefault();
 		virtual ObjetoSorpresa* colisionaronAbajo();
         virtual bloque_t serializar();
@@ -32,6 +31,7 @@ class Bloque : public Colisionable{
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
         bool cambioElSprite();
+        virtual void elevar(int y);
 
     protected:
         int tipoBloque{};

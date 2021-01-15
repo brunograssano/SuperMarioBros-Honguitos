@@ -21,6 +21,7 @@ class BolaDeFuego : public ObjetoFugaz{
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
+        void chocarPorAbajoCon(Colisionable* colisionable) override;
 
 
     private:
@@ -33,6 +34,7 @@ class BolaDeFuego : public ObjetoFugaz{
         int rebotes = 0;
         bool exploto;
         Mario* marioQueDisparo;
+        void empujarY(rectangulo_t rectangulo);
         void explotar(void *pVoid);
         void rebotar(void *pVoid);
         void matarEnemigo(void *pVoid);

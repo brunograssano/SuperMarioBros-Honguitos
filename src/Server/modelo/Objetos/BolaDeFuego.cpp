@@ -19,7 +19,7 @@ BolaDeFuego::BolaDeFuego(const PosicionFija& posicionInicial, int direccion, flo
 }
 
 bool BolaDeFuego::debeDesaparecer() {
-    return (rebotes > MAX_REBOTES && posicion->obtenerPosY() <= 0) || sprite->terminoDeExplotar();
+    return sprite->terminoDeExplotar() || posicion->obtenerPosY() == 0;
 }
 
 void BolaDeFuego::actualizar() {
@@ -85,6 +85,12 @@ void BolaDeFuego::inicializarMapasDeColision() {
     mapaColisionesPorArriba[COLISION_ID_LADRILLO] = parExplotar;
     mapaColisionesPorAbajo[COLISION_ID_LADRILLO] = parRebotar;
 
+    mapaColisionesPorDerecha[COLISION_ID_PLATAFORMA] = parExplotar;
+    mapaColisionesPorIzquierda[COLISION_ID_PLATAFORMA] = parExplotar;
+    mapaColisionesPorArriba[COLISION_ID_PLATAFORMA] = parExplotar;
+    mapaColisionesPorAbajo[COLISION_ID_PLATAFORMA] = parRebotar;
+
+
     mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parMatarGoomba;
     mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parMatarGoomba;
     mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parMatarGoomba;
@@ -95,6 +101,16 @@ void BolaDeFuego::inicializarMapasDeColision() {
     mapaColisionesPorArriba[COLISION_ID_KOOPA] = parMatarKoopa;
     mapaColisionesPorAbajo[COLISION_ID_KOOPA] = parMatarKoopa;
 }
+
+void BolaDeFuego::chocarPorAbajoCon(Colisionable *colisionable) {
+    if(esUnBloque(colisionable->obtenerColisionID())){
+        empujarY(colisionable->obtenerRectangulo());
+        rebotar(nullptr);
+    }else{
+        Colisionable::chocarPorAbajoCon(colisionable);
+    }
+}
+
 
 void BolaDeFuego::explotar(void *pVoid) {
     velocidadY = 0;
@@ -107,9 +123,10 @@ void BolaDeFuego::explotar(void *pVoid) {
 void BolaDeFuego::rebotar(void *pVoid) {
     if(rebotes < MAX_REBOTES){
         velocidadY /= -1.3;
-        //todo: sacar -> velocidadY = -velocidadY/1.3;
         velocidadY = velocidadY>3?3:velocidadY;
         rebotes++;
+    }else{
+        explotar(nullptr);
     }
 }
 
@@ -117,4 +134,10 @@ void BolaDeFuego::matarEnemigo(void *pVoid) {
     int puntos = * ((int*) pVoid);
     marioQueDisparo->agregarPuntos(puntos);
     explotar(nullptr);
+}
+
+void BolaDeFuego::empujarY(rectangulo_t rectanguloEmpujador) {
+    rectangulo_t rectanguloBola = obtenerRectangulo();
+    int desplazamiento = rectanguloEmpujador.y2 - rectanguloBola.y1;
+    this->posicion->moverVertical(desplazamiento);
 }

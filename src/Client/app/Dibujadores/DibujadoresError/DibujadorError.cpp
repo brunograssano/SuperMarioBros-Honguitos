@@ -24,7 +24,7 @@ void DibujadorError::dibujar(){
 
 
 
-	renderizarTexto(cuadradoFin, textoError.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoFin, textoError.str(), colorDefault);
 
 	SDL_RenderPresent( renderizador );
 }

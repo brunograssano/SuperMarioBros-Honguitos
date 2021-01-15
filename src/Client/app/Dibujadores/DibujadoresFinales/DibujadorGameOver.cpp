@@ -6,7 +6,7 @@ DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Ren
 	this->ancho_pantalla = ancho_pantalla;
 	this->cargadorTexturas = cargadorTexturas;
 	this->renderizador = renderizador;
-	this->spriteCoffinMario = new RecorteCoffinMario();
+	this->spriteCoffinMario = RecorteCoffinMario();
 }
 
 
@@ -14,9 +14,9 @@ void DibujadorGameOver::dibujar(){
 	SDL_RenderClear( renderizador );
 
 	SDL_Rect rectanguloCamara = {0, 0, alto_pantalla, ancho_pantalla};
-	this->spriteCoffinMario->actualizarSprite();
-	int posicionXCoffinMario = this->spriteCoffinMario->obtenerPosicionX();
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoGameOver"), &rectanguloCamara, nullptr);
+	this->spriteCoffinMario.actualizarSprite();
+	int posicionXCoffinMario = this->spriteCoffinMario.obtenerPosicionX();
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_GAMEOVER), &rectanguloCamara, nullptr);
 
 	stringstream textoGameOver;
 	textoGameOver.str("");
@@ -31,12 +31,8 @@ void DibujadorGameOver::dibujar(){
 	renderizarTexto(cuadradoGameOver, textoGameOver.str(), colorDefault);
 	int piso = 440;
 	SDL_Rect rectanguloCoffinMario = {posicionXCoffinMario, piso, 3*70, 3*32};
-	SDL_Rect recorteCoffinMario = this->spriteCoffinMario->obtenerRecorte(0);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Coffin"), &recorteCoffinMario , &rectanguloCoffinMario);
+	SDL_Rect recorteCoffinMario = this->spriteCoffinMario.obtenerRecorte(0);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_COFFIN_MARIO), &recorteCoffinMario , &rectanguloCoffinMario);
 
 	SDL_RenderPresent(renderizador);
-}
-
-DibujadorGameOver::~DibujadorGameOver(){
-	delete this->spriteCoffinMario;
 }

@@ -15,7 +15,7 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 		int posX = rand() % ancho_pantalla;
 		int posY = rand() % alto_pantalla;
 		float factorAvance = rand() % 3 + 1;
-		particulas.push_front(new ParticulaGanadores(posX,posY,listaParticulas[i%4],factorAvance));
+		particulas.push_front(ParticulaGanadores(posX,posY,listaParticulas[i%4],factorAvance));
 	}
 
 	spritePeach = new RecortePeachSaltando();
@@ -75,9 +75,9 @@ void DibujadorGanadores::dibujarParticulas(){
 	double angle = 0.0;
 	SDL_Point* center = nullptr;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	for(auto const& particula:particulas){
-		SDL_Rect renderQuad = { particula->obtenerX(), particula->obtenerY(), 10, 10 };
-		SDL_RenderCopyEx( renderizador, cargadorTexturas->obtenerParticula(particula->particulaAsociada()), clip, &renderQuad, angle, center, flip );
+	for(auto particula:particulas){
+		SDL_Rect renderQuad = { particula.obtenerX(), particula.obtenerY(), 10, 10 };
+		SDL_RenderCopyEx( renderizador, cargadorTexturas->obtenerParticula(particula.particulaAsociada()), clip, &renderQuad, angle, center, flip );
 	}
 }
 
@@ -88,9 +88,9 @@ void DibujadorGanadores::dibujarPersonajes(){
 	SDL_Rect recortePeach = spritePeach->obtenerRecorte(0);
 	SDL_Rect recorteToad = spriteToad->obtenerRecorte(0);
 	SDL_Rect recorteYoshi = spriteYoshi->obtenerRecorte(0);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("PeachSaltando"), &recortePeach , &rectanguloPeach);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("ToadSaltando"), &recorteToad , &rectanguloToad);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("YoshiSaltando"), &recorteYoshi , &rectanguloYoshi);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_PEACH_SALTANDO), &recortePeach , &rectanguloPeach);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_TOAD_SALTANDO), &recorteToad , &rectanguloToad);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_YOSHI_SALTANDO), &recorteYoshi , &rectanguloYoshi);
 
 }
 
@@ -104,8 +104,8 @@ void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	dibujarTextoGanadores(juegoCliente);
 	dibujarPersonajes();
 	SDL_RenderPresent( renderizador );
-	for(auto const& particula:particulas){
-		particula->actualizarPosicion(alto_pantalla);
+	for(auto particula:particulas){
+		particula.actualizarPosicion(alto_pantalla);
 	}
 	spritePeach->actualizarSprite();
 	spriteToad->actualizarSprite();
@@ -113,8 +113,5 @@ void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 }
 
 DibujadorGanadores::~DibujadorGanadores(){
-	for(auto const& particula:particulas){
-		delete particula;
-	}
 	particulas.clear();
 }

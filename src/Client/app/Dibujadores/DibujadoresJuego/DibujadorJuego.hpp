@@ -59,6 +59,7 @@ class DibujadorJuego : public Dibujador{
         void dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
         void dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
         void dibujarEfectos(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
+        static int obtenerEspaciado(int cantidadJugadores);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

@@ -14,7 +14,7 @@ class DibujadorInicio : public Dibujador{
 	public:
 		DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
 		void dibujar() override;
-		~DibujadorInicio();
+		~DibujadorInicio() override;
 		int alto_fondo;
 		int ancho_fondo;
 		int posicion_x_fondo;

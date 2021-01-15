@@ -29,7 +29,7 @@ class DibujadorGanadores : public Dibujador{
         Recorte* spritePeach;
         Recorte* spriteToad;
         Recorte* spriteYoshi;
-		list<ParticulaGanadores*> particulas;
+		list<ParticulaGanadores> particulas;
 };
 
 

@@ -80,6 +80,11 @@ void BolaDeFuego::inicializarMapasDeColision() {
     mapaColisionesPorArriba[COLISION_ID_SORPRESA] = parExplotar;
     mapaColisionesPorAbajo[COLISION_ID_SORPRESA] = parRebotar;
 
+    mapaColisionesPorDerecha[COLISION_ID_PIEZA_TUBERIA] = parExplotar;
+    mapaColisionesPorIzquierda[COLISION_ID_PIEZA_TUBERIA] = parExplotar;
+    mapaColisionesPorArriba[COLISION_ID_PIEZA_TUBERIA] = parExplotar;
+    mapaColisionesPorAbajo[COLISION_ID_PIEZA_TUBERIA] = parRebotar;
+
     mapaColisionesPorDerecha[COLISION_ID_LADRILLO] = parExplotar;
     mapaColisionesPorIzquierda[COLISION_ID_LADRILLO] = parExplotar;
     mapaColisionesPorArriba[COLISION_ID_LADRILLO] = parExplotar;

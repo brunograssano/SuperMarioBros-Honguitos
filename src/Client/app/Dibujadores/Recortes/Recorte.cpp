@@ -29,12 +29,12 @@ SDL_Rect Recorte::obtenerRecorte(int recorte) {
     return estado;
 }
 
-int Recorte::obtenerAnchuraParaDibujarImagen() {
+int Recorte::obtenerAnchuraParaDibujarImagen(int tipo) {
     SDL_Rect rectangulo = estadosPosibles.front();
     return rectangulo.w;
 }
 
-int Recorte::obtenerAlturaParaDibujarImagen() {
+int Recorte::obtenerAlturaParaDibujarImagen(int tipo) {
     SDL_Rect rectangulo = estadosPosibles.front();
     return rectangulo.h;
 }

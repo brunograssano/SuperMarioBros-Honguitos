@@ -122,17 +122,9 @@ void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *j
     for (auto const& tuberia : tuberias) {
         SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.tipo,tuberia.color);
         SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara->x,
-                                      alto_pantalla,
-                                      recorteTuberia.h, recorteTuberia.w};
-        if(tuberia.tipo==0){
-            rectanguloTuberia.h *= 5;
-            rectanguloTuberia.w *= 2;
-        }
-        else{
-            rectanguloTuberia.h *= 3;
-            rectanguloTuberia.w *= 3;
-        }
-        rectanguloTuberia.y -= rectanguloTuberia.h;
+                                      alto_pantalla - recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.tipo) - tuberia.posY,
+                                      recorteSpriteTuberia->obtenerAnchuraParaDibujarImagen(tuberia.tipo),
+                                      recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.tipo)};
         SDL_RenderCopy( renderizador, texturaTuberia, &recorteTuberia, &rectanguloTuberia);
     }
 }
@@ -178,9 +170,9 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
             SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
                                          alto_pantalla - efecto.posY -
-                                                 recorteEfecto->obtenerAlturaParaDibujarImagen(),
-                                         recorteEfecto->obtenerAnchuraParaDibujarImagen(),
-                                         recorteEfecto->obtenerAlturaParaDibujarImagen()};
+                                                 recorteEfecto->obtenerAlturaParaDibujarImagen(0),
+                                         recorteEfecto->obtenerAnchuraParaDibujarImagen(0),
+                                         recorteEfecto->obtenerAlturaParaDibujarImagen(0)};
             SDL_RendererFlip flip = recorteEfecto->direccion(efecto.numeroRecorte) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL;
             SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
         }

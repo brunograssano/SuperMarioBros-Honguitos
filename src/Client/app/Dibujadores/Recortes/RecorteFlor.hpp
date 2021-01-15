@@ -7,8 +7,8 @@
 class RecorteFlor : public Recorte{
     public:
         RecorteFlor();
-        int obtenerAnchuraParaDibujarImagen()override;
-        int obtenerAlturaParaDibujarImagen()override;
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
 };
 
 

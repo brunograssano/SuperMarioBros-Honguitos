@@ -1,35 +1,38 @@
 #include "Tuberia.hpp"
+#include "src/Utils/Constantes.hpp"
 
-const int ANCHO_PRIMERA_TUBERIA = 33, ALTO_TUBERIA = 66,TUBERIA_PEQUENIA=0,ANCHO_SEGUNDA_TUBERIA = 67;
+#define PIXEL_DESFASE 2
 
 Tuberia::Tuberia(int posX, int tipo, int color) {
-    //TODO conseguir mejor forma de manejar esto, por ejemplo usar bloques de tuberias con cada parte
-    this->posicionX =  posX;
+    posicion = PosicionFija(posX, 0);
     this->tipo = tipo;
     this->color = color;
-    dimensiones.x = tipo * ANCHO_PRIMERA_TUBERIA;
-    dimensiones.y = color * ALTO_TUBERIA;
-    dimensiones.h = ALTO_TUBERIA;
-
-    if(tipo==TUBERIA_PEQUENIA){
-        dimensiones.w = ANCHO_PRIMERA_TUBERIA;
-    }
-    else{
-        dimensiones.w = ANCHO_SEGUNDA_TUBERIA;
-    }
-
+    crearColisionables(posX, tipo);
 }
 
+void Tuberia::crearColisionables(int x, int tipo) {
+    if(tipo == TUBERIA_CHICA){
+        piezas.push_back(new PiezaDeTuberia(x, 0, ANCHO_TUBERIA_CHICA, ALTO_TUBERIA_CHICA));
+        dimensiones = {x, 0, ANCHO_TUBERIA_CHICA, ALTO_TUBERIA_CHICA}; //todo: migrar a rectangulo_t
+    }else{
+        piezas.push_back(new PiezaDeTuberia(x, 0, ANCHO_TUBERIA_CHICA, ALTO_TUBERIA_CHICA - PIXEL_DESFASE));
+        piezas.push_back(new PiezaDeTuberia(x + ANCHO_TUBERIA_CHICA, 0, ANCHO_TUBERIA_CHICA - 2*PIXEL_DESFASE, ALTO_TUBERIA_GRANDE));
+        dimensiones = {x, 0, ANCHO_TUBERIA_GRANDE, ALTO_TUBERIA_GRANDE}; //todo: migrar a rectangulo_t
+    }
+}
+
+
 bool Tuberia::colisionaCon(Tuberia *otraTuberia) {
+    //todo: migrar a rectangulo_t
     unsigned short posXotraTuberia = otraTuberia->obtenerPosicionX();
     SDL_Rect dimensionesOtraTuberia = otraTuberia->obtenerDimensiones();
     dimensionesOtraTuberia.x += posXotraTuberia;
     dimensionesOtraTuberia.w += posXotraTuberia;
-    return SDL_HasIntersection(&dimensiones,&dimensionesOtraTuberia);
+    return SDL_HasIntersection(&dimensiones, &dimensionesOtraTuberia);
 }
 
 unsigned short Tuberia::obtenerPosicionX() const {
-    return posicionX;
+    return posicion.obtenerPosX();
 }
 
 SDL_Rect Tuberia::obtenerDimensiones() {
@@ -37,5 +40,19 @@ SDL_Rect Tuberia::obtenerDimensiones() {
 }
 
 tuberia_t Tuberia::serializar(){
-    return {posicionX,color,tipo};
+    unsigned short x = posicion.obtenerPosX();
+    unsigned short y = posicion.obtenerPosY();
+    return {x, y, color, tipo};
+}
+
+void Tuberia::elevar(int y) {
+    posicion = PosicionFija(posicion.obtenerPosX(), posicion.obtenerPosY() + y);
+    dimensiones.y += y; //todo: Migrar a rectangulo_t
+    for(auto& pieza: piezas){
+        pieza->elevar(y);
+    }
+}
+
+list<PiezaDeTuberia *> Tuberia::obtenerPiezas() {
+    return piezas;
 }

@@ -53,3 +53,39 @@ void FlorDeFuego::inicializarMapasDeColision() {
 void FlorDeFuego::agarrar(void *ptr) {
     _debeDesaparecer = true;
 }
+
+void FlorDeFuego::chocarPorDerechaCon(Colisionable *colisionable) {
+    if(colisionable->obtenerColisionID() == COLISION_ID_MARIO){
+        if(!(((Mario *) colisionable)->puedeAgarrarFlor())){
+            return;
+        }
+    }
+    Colisionable::chocarPorDerechaCon(colisionable);
+}
+
+void FlorDeFuego::chocarPorIzquierdaCon(Colisionable *colisionable) {
+    if(colisionable->obtenerColisionID() == COLISION_ID_MARIO){
+        if(!(((Mario *) colisionable)->puedeAgarrarFlor())){
+            return;
+        }
+    }
+    Colisionable::chocarPorIzquierdaCon(colisionable);
+}
+
+void FlorDeFuego::chocarPorArribaCon(Colisionable *colisionable) {
+    if(colisionable->obtenerColisionID() == COLISION_ID_MARIO){
+        if(!(((Mario *) colisionable)->puedeAgarrarFlor())){
+            return;
+        }
+    }
+    Colisionable::chocarPorArribaCon(colisionable);
+}
+
+void FlorDeFuego::chocarPorAbajoCon(Colisionable *colisionable) {
+    if(colisionable->obtenerColisionID() == COLISION_ID_MARIO){
+        if(!(((Mario *) colisionable)->puedeAgarrarFlor())){
+            return;
+        }
+    }
+    Colisionable::chocarPorAbajoCon(colisionable);
+}

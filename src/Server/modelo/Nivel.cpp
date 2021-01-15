@@ -2,6 +2,8 @@
 #include "src/Utils/colisiones/Colisionador.hpp"
 #include <string>
 
+#include "src/Server/modelo/Bloques/PiezaDeTuberia.hpp"
+
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
@@ -62,6 +64,15 @@ void Nivel::actualizarModelo(map<int, Mario*> jugadores){
 
 void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
     list<Colisionable*> plataformasPiso = piso.obtenerPiso();
+
+    //todo: mejorar esto:
+    list<PiezaDeTuberia*> piezasDeTuberia;
+    for(auto& tuberia: tuberias){
+        list<PiezaDeTuberia*> piezasTuberiaActual = tuberia->obtenerPiezas();
+        piezasDeTuberia.insert(piezasDeTuberia.end(), piezasTuberiaActual.begin(), piezasTuberiaActual.end());
+    }
+
+
     for(auto& parClaveJugador: jugadores){
         Mario* jugador = parClaveJugador.second;
         chocarContraTodos(jugador, (void*)&enemigos, nullptr, nullptr);
@@ -69,15 +80,18 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
         chocarContraTodos(jugador, (void*)&plataformas,&Nivel::agregarObjeto_helper, this);
         chocarContraTodos(jugador, (void*)&objetosFugaces, nullptr, nullptr);
         chocarContraTodos(jugador,(void*) &plataformasPiso,nullptr, nullptr);
+        chocarContraTodos(jugador, (void*) &piezasDeTuberia,nullptr, nullptr);
     }
     for(auto& enemigo:enemigos){
         chocarContraTodos(enemigo, (void*)&objetosFugaces, nullptr, nullptr);
         chocarContraTodos(enemigo, (void*)&plataformas, nullptr, nullptr);
         chocarContraTodos(enemigo,(void*)&plataformasPiso,nullptr, nullptr);
+        chocarContraTodos(enemigo, (void*)&piezasDeTuberia,nullptr, nullptr);
     }
     for(auto& objeto: objetosFugaces){
         chocarContraTodos(objeto, (void*) &plataformasPiso, nullptr, nullptr);
         chocarContraTodos(objeto, (void*)&plataformas, nullptr, nullptr);
+        chocarContraTodos(objeto, (void*) &piezasDeTuberia,nullptr, nullptr);
     }
 }
 
@@ -151,16 +165,25 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 }
 
 void Nivel::inicializar() {
+    elevarObstaculos();
     inicializarPosicionesOcupadasPorBloques();
     inicializarPosicionMonedas();
     inicializarPosicionEnemigo();
     piso.inicializar();
 }
 
+void Nivel::elevarObstaculos() {
+    for(auto& bloque: plataformas){
+        bloque->elevar(piso.obtenerAltura());
+    }
+    for(auto& tuberia: tuberias){
+        tuberia->elevar(piso.obtenerAltura());
+    }
+}
+
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
     for(auto const& bloque : plataformas){
-        bloque->elevar(piso.obtenerAltura());
         if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
             Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
                     + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");

@@ -27,6 +27,19 @@
                 </enemigo>
 
             </enemigos>
+			
+			<tuberia>
+            		<color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+            		<tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+            		<posicionX>1040</posicionX>
+        	</tuberia>
+
+			<tuberia>
+            		<color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+            		<tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+            		<posicionX>1280</posicionX>
+        	</tuberia>
+
             <plataformas>
 
                 <plataforma>

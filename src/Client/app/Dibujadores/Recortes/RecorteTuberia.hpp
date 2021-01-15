@@ -9,6 +9,8 @@ const unsigned short MAX_TIPOS = 2;
 class RecorteTuberia: public Recorte {
     public:
         RecorteTuberia();
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
 };
 
 

@@ -17,10 +17,11 @@ const int ANCHO_FONDO = 8177;
 #define COLISION_ID_SORPRESA  "Sorpresa"
 #define COLISION_ID_FLOR "Flor"
 #define COLISION_ID_MONEDA_FLOTANTE "Moneda flotante"
-#define COLISION_ID_BOLA_DE_FUEGO "Nada"
-#define COLISION_ID_CHISPA "Nada"
+#define COLISION_ID_BOLA_DE_FUEGO "Bola de fuego"
+#define COLISION_ID_CHISPA "Chispa"
 #define COLISION_ID_NADA "Nada"
 #define COLISION_ID_PLATAFORMA "Plataforma"
+#define COLISION_ID_PIEZA_TUBERIA "Pieza tuberia"
 
 const int ANCHO_POZO = 200, ALTO_POZO = 50;
 
@@ -37,7 +38,13 @@ const int LARGO_MONEDA = 40;
 const int ALTO_FLOR = 40, ANCHO_FLOR = 40;
 const int ALTO_BOLA = 20, ANCHO_BOLA = 20;
 const int ALTO_CHISPA = 44, ANCHO_CHISPA = 64;
+const int ALTO_TUBERIA_CHICA = 90, ANCHO_TUBERIA_CHICA = 90;
+const int ALTO_TUBERIA_GRANDE = ALTO_TUBERIA_CHICA*2, ANCHO_TUBERIA_GRANDE = ANCHO_TUBERIA_CHICA*2;
 const int GOOMBA = 1, KOOPA = 2;
+
+#define TUBERIA_CHICA 0
+#define TUBERIA_GRANDE 1
+
 
 #define POZO_RECORTE 10 // todo mejorar el mapa
 

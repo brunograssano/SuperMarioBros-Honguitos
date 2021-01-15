@@ -34,3 +34,7 @@ bool SinModificador::yaPuedeChispear() {
 ModificadorMario *SinModificador::hacerseDeFuego() {
     return new MarioDeFuego(marioAsociado);
 }
+
+bool SinModificador::puedeAgarrarFlor() {
+    return true;
+}

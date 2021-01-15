@@ -55,6 +55,7 @@ class Nivel{
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
         void resolverGanadores(map<int, Mario *> map);
+        void elevarObstaculos();
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
         void inicializarPosicionesOcupadasPorBloques();

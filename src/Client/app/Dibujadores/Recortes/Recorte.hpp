@@ -10,8 +10,8 @@ class Recorte {
         virtual ~Recorte() = default;
         virtual SDL_Rect obtenerRecorte(int recorte);
         virtual SDL_Rect obtenerRecorte(int recorte, int tipoBloque);
-        virtual int obtenerAlturaParaDibujarImagen();
-        virtual int obtenerAnchuraParaDibujarImagen();
+        virtual int obtenerAlturaParaDibujarImagen(int tipo);
+        virtual int obtenerAnchuraParaDibujarImagen(int tipo);
         virtual int direccion(int recorte);
         virtual void actualizarSprite(){};
 

@@ -9,10 +9,10 @@ RecorteFlor::RecorteFlor() {
     inicializarEstados(CANTIDAD_FLORES,DESPLAZAMIENTO_FLOR,ALTO_FLOR_SPRITE,ANCHO_FLOR_SPRITE);
 }
 
-int RecorteFlor::obtenerAnchuraParaDibujarImagen() {
+int RecorteFlor::obtenerAnchuraParaDibujarImagen(int tipo) {
     return ANCHO_FLOR;
 }
 
-int RecorteFlor::obtenerAlturaParaDibujarImagen() {
+int RecorteFlor::obtenerAlturaParaDibujarImagen(int tipo) {
     return ALTO_FLOR;
 }

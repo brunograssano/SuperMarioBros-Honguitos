@@ -13,7 +13,7 @@ class ModificadorMario {
         virtual ModificadorMario* perderVida(VidaMario* vidaMario)=0;
         virtual ModificadorMario* hacerseDeFuego() = 0;
         virtual void actualizar() = 0;
+        virtual bool puedeAgarrarFlor() = 0;
 };
-
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_MODIFICADORMARIO_HPP

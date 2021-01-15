@@ -19,6 +19,11 @@ class FlorDeFuego : public ObjetoSorpresa{
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
 
+        void chocarPorDerechaCon(Colisionable* colisionable) override;
+        void chocarPorIzquierdaCon(Colisionable* colisionable) override;
+        void chocarPorArribaCon(Colisionable* colisionable) override;
+        void chocarPorAbajoCon(Colisionable* colisionable) override;
+
     private:
         void inicializarMapasDeColision() override;
         Posicion posicionFija;

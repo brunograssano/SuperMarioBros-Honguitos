@@ -17,10 +17,10 @@ int RecorteChispa::direccion(int recorte){
     return recorte<CANTIDAD_DE_RECORTES?DERECHA:IZQUIERDA;
 }
 
-int RecorteChispa::obtenerAlturaParaDibujarImagen() {
+int RecorteChispa::obtenerAlturaParaDibujarImagen(int tipo) {
     return ALTO_CHISPA;
 }
 
-int RecorteChispa::obtenerAnchuraParaDibujarImagen() {
+int RecorteChispa::obtenerAnchuraParaDibujarImagen(int tipo) {
     return ANCHO_CHISPA;
 }

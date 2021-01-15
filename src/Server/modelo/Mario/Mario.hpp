@@ -43,6 +43,7 @@ class Mario : public Colisionable {
 		void actualizarDerechaMario();
 
 		bool estaVivo();
+        bool puedeAgarrarFlor();
         void perderVida(void* ptr = nullptr);
         int obtenerVida();
         void hacerseDeFuego();
@@ -68,6 +69,7 @@ class Mario : public Colisionable {
 
         void alternarModoTest();
 
+
 private:
         void empujarEnX(rectangulo_t rectanguloBloque,int direccion);
         void empujarEnY(rectangulo_t rectanguloBloque,int direccion);
@@ -84,7 +86,7 @@ private:
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;
-
+        bool agarreUnaFlorEnEsteInstante;
 };
 
 #endif // SRC_SERVER_MODELO_MARIO_HPP_

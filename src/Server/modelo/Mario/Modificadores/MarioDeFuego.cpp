@@ -46,3 +46,7 @@ bool MarioDeFuego::yaPuedeChispear() const {
 ModificadorMario *MarioDeFuego::hacerseDeFuego() {
     return new MarioDeFuego(marioAsociado);
 }
+
+bool MarioDeFuego::puedeAgarrarFlor() {
+    return false;
+}

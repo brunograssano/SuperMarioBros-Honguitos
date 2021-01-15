@@ -17,6 +17,7 @@ class SinModificador : public ModificadorMario{
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
         void actualizar()override;
         ModificadorMario* hacerseDeFuego() override;
+        bool puedeAgarrarFlor() override;
 
     private:
         int ciclosChispa = 0;

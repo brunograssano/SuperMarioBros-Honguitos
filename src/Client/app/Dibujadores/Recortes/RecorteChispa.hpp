@@ -10,8 +10,8 @@ class RecorteChispa : public Recorte{
         RecorteChispa();
         SDL_Rect obtenerRecorte(int recorte) override;
         int direccion(int recorte) override;
-        int obtenerAnchuraParaDibujarImagen()override;
-        int obtenerAlturaParaDibujarImagen()override;
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
 };
 
 

@@ -6,8 +6,8 @@ class RecorteMonedaFlotante : public Recorte{
 
     public:
         RecorteMonedaFlotante();
-        int obtenerAlturaParaDibujarImagen() override;
-        int obtenerAnchuraParaDibujarImagen() override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
 };
 
 

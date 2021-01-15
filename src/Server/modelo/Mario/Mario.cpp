@@ -18,6 +18,7 @@ Mario::Mario(int numeroJugador){
 	this->vidaMario = new VidaMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;
+    agarreUnaFlorEnEsteInstante = false;
     Mario::inicializarMapasDeColision();
 }
 
@@ -158,6 +159,12 @@ bool Mario::estaEnElPiso(){
     return !movimiento->estaEnElAire();
 }
 
+bool Mario::puedeAgarrarFlor() {
+    bool retorno = agarreUnaFlorEnEsteInstante || modificador->puedeAgarrarFlor();
+    agarreUnaFlorEnEsteInstante = false;
+    return retorno;
+}
+
 int Mario::obtenerVida(){
     return vidaMario->obtenerVida();
 }
@@ -179,7 +186,10 @@ void Mario::hacerseDeFuego() {
     swapDeModificador(nuevoModificador);
 }
 void Mario::hacerseDeFuego(void *pVoid) {
-    this->hacerseDeFuego();
+    if(modificador->puedeAgarrarFlor()) {
+        agarreUnaFlorEnEsteInstante = true;
+        this->hacerseDeFuego();
+    }
 }
 
 ObjetoFugaz* Mario::dispararFuego() {

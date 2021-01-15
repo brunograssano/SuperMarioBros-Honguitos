@@ -87,6 +87,7 @@ typedef struct jugador{
 
 typedef struct tuberia {
     unsigned short posX;
+    unsigned short posY;
     uint8_t color;
     uint8_t tipo;
 }tuberia_t;

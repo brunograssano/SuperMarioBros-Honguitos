@@ -34,12 +34,16 @@ void Juego::avanzarNivel(){
     if(niveles.empty()) return;
 
     Nivel* nivelViejo = niveles.front();
+
+    this->podios.push_back(nivelViejo->obtenerPodio());
+
     nivelViejo->terminar();
     delete nivelViejo;
     niveles.pop_front();
 
     if(niveles.empty()){
         hanGanado = true;
+        //ENVIAR UN NIVEL MAS??????
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
@@ -181,8 +185,21 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
 nivel_t Juego::serializarNivel(){
     nivel_t nivel;
     memset(&nivel,0,sizeof(nivel_t));
+
     if(!niveles.empty())
         niveles.front()->completarInformacionNivel(&nivel);
+
+    if(!podios.empty()){
+        Podio* podioAEnviar = this->podios.back();
+        nivel.podio.cantidadJugadores = 0;
+
+        for(int i = 0; i < podioAEnviar->getPodioNivel().size(); i++) {
+            nivel.podio.puntosNivel[i] = podioAEnviar->getPodioNivel().at(i).second;
+            nivel.podio.cantidadJugadores++;
+        }
+        podios.pop_back();
+    }
+
     return nivel;
 }
 

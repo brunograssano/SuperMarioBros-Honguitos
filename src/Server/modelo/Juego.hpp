@@ -25,6 +25,7 @@ class Juego{
         bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
+		list<Podio*> podios;
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();

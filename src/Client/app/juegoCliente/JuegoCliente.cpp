@@ -157,9 +157,9 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     for(int i=0;i<nivel.topePozos;i++){
         pozos.push_front(nivel.pozos[i]);
     }
-    for(int i=0; i<nivel.podio.cantidadJugadores; i++){
-        podios.push_back(nivel.podio);
-    }
+
+    podios.push_back(nivel.podio);
+
     pthread_mutex_unlock(&mutex);
     nivelesJugados++;
 }

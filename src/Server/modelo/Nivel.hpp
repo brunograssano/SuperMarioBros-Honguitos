@@ -44,6 +44,7 @@ class Nivel{
         void terminar();
         void completarInformacionNivel(nivel_t *nivel);
         void aparecerDisparo(Disparo* disparo);
+        Podio* obtenerPodio();
 
     private:
         void sacarEnemigosMuertos();
@@ -80,6 +81,7 @@ class Nivel{
         int tiempo;
         int cantidadMonedas;
         float puntoBanderaFin;
+
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

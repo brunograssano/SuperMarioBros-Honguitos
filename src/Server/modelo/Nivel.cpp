@@ -316,11 +316,6 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
-    nivel->podio.cantidadJugadores = 0;
-    for(int i = 0; i < podio->getPodioNivel().size(); i++) {
-        nivel->podio.puntosNivel[i] = podio->getPodioNivel().at(i).second;
-        nivel->podio.cantidadJugadores++;
-    }
     // TODO ver que mas agregamos
 }
 
@@ -351,6 +346,10 @@ void Nivel::iniciar(map<int, Mario*> jugadores) {
     for(auto const& parJugador:jugadores){
         parJugador.second->agregar(podio);
     }
+}
+
+Podio* Nivel::obtenerPodio(){
+    return this->podio;
 }
 
 int Nivel::tiempoRestante() {

@@ -22,9 +22,9 @@ void Camara::moverCamara(const map<int,Mario*>& jugadores) {
     for(auto const& parClaveJugador: jugadores){
         jugador = parClaveJugador.second;
 
-        if(jugador->estaConectado() && jugador->obtenerPosicionX() <= rectanguloCamara.x) {
+        if(jugador->estaConectado() && jugador->obtenerPosicionX() <= rectanguloCamara.x && jugador->estaVivo()) {
             sePuedeMoverLaCamara = false;
-        }else if(jugador->estaConectado()){
+        }else if(jugador->estaConectado() && jugador->estaVivo()){
             if(jugador->obtenerPosicionX() > posicionDelJugadorMasALaDerecha){
                 posicionDelJugadorMasALaDerecha = jugador->obtenerPosicionX();
             }

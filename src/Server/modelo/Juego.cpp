@@ -91,6 +91,8 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     if(niveles.empty()) return;
 
     Mario* jugador = jugadores[idJugador];
+    if(!jugador->estaVivo()){return;}
+
     bool seMovio = false;
     if(entradaUsuario.A){
         jugador->actualizarIzquierdaMario();
@@ -110,7 +112,7 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     if(entradaUsuario.T){
         jugador->alternarModoTest();
     }
-    if(entradaUsuario.ESP){ //todo: tener un boton para esto je
+    if(entradaUsuario.ESP){
         ObjetoFugaz* disparo = jugador->dispararFuego();
         niveles.front()->aparecerDisparo(disparo);
     }

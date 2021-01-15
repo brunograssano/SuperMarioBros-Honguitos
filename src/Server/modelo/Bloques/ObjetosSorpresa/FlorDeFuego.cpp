@@ -7,7 +7,7 @@ FlorDeFuego::FlorDeFuego(int posX, int posY) {
     posicionFija = PosicionFija(posX,posY);
     _debeDesaparecer = false;
     this->color = rand()%CANTIDAD_COLORES;
-    inicializarMapasDeColision();
+    FlorDeFuego::inicializarMapasDeColision();
 }
 
 void FlorDeFuego::usarse(Mario *mario){}

@@ -134,6 +134,7 @@ void Mario::reiniciarPosicion(){
 
 
 void Mario::actualizarPosicion(){
+    if(!estaVivo() || !estaConectado()){return;}
     spriteMario->actualizarSprite(this);
 	this->movimiento->mover(this->posicion);
 	if(this->posicion->obtenerPosY() == MINIMO_COORDENADA_Y){
@@ -212,7 +213,7 @@ rectangulo_t Mario::obtenerRectangulo() {
 }
 
 void Mario::agregarPuntos(void *puntos) {
-    if(puntos != nullptr){
+    if(puntos != nullptr && estaVivo()){
         agregarPuntos(*((int*) puntos));
     }
 }

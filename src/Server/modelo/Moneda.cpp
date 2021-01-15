@@ -1,37 +1,33 @@
 #include "Moneda.hpp"
+#include "PosicionFija.hpp"
 
 
 Moneda::Moneda(int coordenadaX, int coordenadaY) {
-    this->posicion = new PosicionFija(coordenadaX, coordenadaY);
-    this->sprite = new SpriteMoneda();
+    this->posicion = PosicionFija(coordenadaX, coordenadaY);
+    this->sprite = SpriteMoneda();
     agarrada = false;
-    inicializarMapasDeColision();
-}
-
-Moneda::~Moneda() {
-    delete this->posicion;
-    delete this->sprite;
+    Moneda::inicializarMapasDeColision();
 }
 
 void Moneda::actualizar() {
-    this->sprite->actualizarSprite();
+    this->sprite.actualizarSprite();
 }
 
 moneda_t Moneda::serializar() {
     moneda_t monedaSerializada;
 
-    monedaSerializada.posX = posicion->obtenerPosX();
-    monedaSerializada.posY = posicion->obtenerPosY();
-    monedaSerializada.numeroRecorte = sprite->obtenerEstadoActual();
+    monedaSerializada.posX = posicion.obtenerPosX();
+    monedaSerializada.posY = posicion.obtenerPosY();
+    monedaSerializada.numeroRecorte = sprite.obtenerEstadoActual();
     return monedaSerializada;
 }
 
 int Moneda::obtenerPosicionX() {
-    return this->posicion->obtenerPosX();
+    return this->posicion.obtenerPosX();
 }
 
 int Moneda::obtenerPosicionY() {
-    return this->posicion->obtenerPosY();
+    return this->posicion.obtenerPosY();
 }
 
 string Moneda::obtenerColisionID() {
@@ -39,8 +35,8 @@ string Moneda::obtenerColisionID() {
 }
 
 rectangulo_t Moneda::obtenerRectangulo() {
-    int x = posicion->obtenerPosX();
-    int y = posicion->obtenerPosY();
+    int x = posicion.obtenerPosX();
+    int y = posicion.obtenerPosY();
     int w = LARGO_MONEDA;
     int h = LARGO_MONEDA;
     return {x, x+w, y, y+h, h, w};
@@ -56,7 +52,7 @@ void Moneda::inicializarMapasDeColision() {
     mapaColisionesPorAbajo[COLISION_ID_MARIO] = parAgarrarMoneda;
 }
 
-bool Moneda::fueAgarrada() {
+bool Moneda::fueAgarrada() const {
     return agarrada;
 }
 

@@ -8,17 +8,17 @@
 
 class ObjetoSorpresa : public ObjetoFugaz{
     public:
-        virtual ~ObjetoSorpresa() = default;
+        ~ObjetoSorpresa() override = default;
         virtual void usarse(Mario* mario) {};
 
         bool debeDesaparecer() override;
-        virtual efecto_t serializar() override = 0;
-        virtual void actualizar() override = 0;
-        virtual int obtenerPosicionX() override = 0;
+        efecto_t serializar() override = 0;
+        void actualizar() override = 0;
+        int obtenerPosicionX() override = 0;
 
-        virtual string obtenerColisionID() override = 0;
-        virtual rectangulo_t obtenerRectangulo() override = 0;
-        virtual bool debeColisionar() override = 0;
+        string obtenerColisionID() override = 0;
+        rectangulo_t obtenerRectangulo() override = 0;
+        bool debeColisionar() override = 0;
     protected:
         void inicializarMapasDeColision() override = 0;
         bool _debeDesaparecer;

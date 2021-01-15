@@ -14,8 +14,8 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->tiempo = tiempo;
     this->cantidadMonedas = cantidadMonedas;
     this->puntoBanderaFin = ANCHO_FONDO* (float) puntoBanderaFin /100;
-    this->contador = new Contador(tiempo, SEGUNDOS);
-    this->meta = new Meta(this->puntoBanderaFin);
+    this->contador = Contador(tiempo, SEGUNDOS);
+    this->meta = Meta(this->puntoBanderaFin);
     this->piso = Piso(altoPiso);
 }
 
@@ -97,7 +97,7 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
 
 void Nivel::resolverGanadores(map<int, Mario *> mapaJugadores) {
     for(auto const& parClaveJugador:mapaJugadores)
-        meta->agregarSiPasoLaMeta(parClaveJugador.second);
+        meta.agregarSiPasoLaMeta(parClaveJugador.second);
 }
 
 void Nivel::sacarEnemigosMuertos(){
@@ -286,7 +286,7 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
 void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* contexto) {
     if(!ptrInfoRonda) return;
 
-    ptrInfoRonda->tiempoFaltante = contador->tiempoRestante();
+    ptrInfoRonda->tiempoFaltante = contador.tiempoRestante();
 
     int numeroBloque = 0;
     for(auto const& bloque: plataformas){
@@ -334,11 +334,11 @@ void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
 }
 
 void Nivel::terminar() {
-    meta->sumarPuntos(contador->tiempoRestante());
+    meta.sumarPuntos(contador.tiempoRestante());
 }
 
 bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
-    return meta->todosEnLaMeta(jugadores);
+    return meta.todosEnLaMeta(jugadores);
 }
 
 void Nivel::completarInformacionNivel(nivel_t *nivel) {
@@ -388,16 +388,14 @@ Nivel::~Nivel (){
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
-    delete contador;
-    delete meta;
 }
 
 void Nivel::iniciar() {
-    contador->iniciar();
+    contador.iniciar();
 }
 
 int Nivel::tiempoRestante() {
-    return contador->tiempoRestante();
+    return contador.tiempoRestante();
 }
 
 void Nivel::aparecerDisparo(ObjetoFugaz* disparo) {

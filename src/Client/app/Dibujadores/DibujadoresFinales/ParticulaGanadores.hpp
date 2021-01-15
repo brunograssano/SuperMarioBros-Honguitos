@@ -21,10 +21,10 @@ class ParticulaGanadores{
 			posicionY += factorAvance;
 		}
 
-		 int obtenerX(){
+		 int obtenerX() const{
 			return posicionX;
 		 }
-		 int obtenerY(){
+		 int obtenerY() const{
 			return posicionY;
 		 }
 

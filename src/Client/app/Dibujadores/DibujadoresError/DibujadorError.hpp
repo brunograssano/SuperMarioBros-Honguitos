@@ -7,8 +7,8 @@
 class DibujadorError : public Dibujador{
 	public:
 		DibujadorError(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
-		void dibujar();
-		~DibujadorError() override{};
+		void dibujar() override;
+		~DibujadorError() override= default;
 
 };
 

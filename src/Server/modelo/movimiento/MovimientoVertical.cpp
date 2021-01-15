@@ -21,3 +21,7 @@ void MovimientoVertical::mover(PosicionMovil* posicion){
 	aplicarGravedad();
 }
 
+void MovimientoVertical::setVelocidadY(int velocidad) {
+    this->velocidadY = (float)velocidad;
+}
+

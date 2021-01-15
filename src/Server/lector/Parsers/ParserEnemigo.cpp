@@ -23,15 +23,15 @@ void ParserEnemigo::parsear(pugi::xml_node enemigo, Nivel* unNivel, ArchivoLeido
     int colorEnemigoInt = intentarObtenerNumero(archivoLeido, colorEnemigoString,condicionColorEnemigos, mensajeCondicion, VALOR_POR_DEFECTO_ENEMIGOS);
 
 
-	if(tipo.compare("Goomba")!=0 && tipo.compare("Koopa")!=0){
+	if(tipo!="Goomba" && tipo!="Koopa"){
 		archivoLeido->mensajeError.push_back("No existe el tipo de enemigo ("+tipo+"), no se cargara ningun otro tipo de enemigo en su remplazo");
 	}
 	else{
 		for(int i=0;i<cantidad;i++){
 				Enemigo* unEnemigo;
-				if(tipo.compare("Goomba")==0){
+				if(tipo=="Goomba"){
 					unEnemigo = new Goomba(colorEnemigoInt);
-				}else if(tipo.compare("Koopa")==0){
+				}else if(tipo=="Koopa"){
 					unEnemigo = new Koopa(colorEnemigoInt);
 				}
 				unNivel->agregarEnemigo(unEnemigo);

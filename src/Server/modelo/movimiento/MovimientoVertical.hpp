@@ -10,12 +10,9 @@ class MovimientoVertical{
 		explicit MovimientoVertical(float fuerza);
 		void saltar(Terreno* terreno);
 		void mover(PosicionMovil* posicion);
-		void setVelocidadY(int velocidad){
-			this->velocidadY = (float)velocidad;
-		}
+		void setVelocidadY(int velocidad);
 
-
-private:
+    private:
 		void aplicarGravedad();
 		float velocidadY;
 		float fuerza;

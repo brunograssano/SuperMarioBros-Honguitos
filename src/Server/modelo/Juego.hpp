@@ -21,7 +21,7 @@ class Juego{
 		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla);
         void avanzarNivel();
 
-        Camara* camara;
+        Camara camara = Camara(0, 0);
         bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;

@@ -48,27 +48,29 @@ void ParserNivel::parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido){
 
 	auto* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin,(int)((float)archivoLeido->altoVentana*FACTOR_PISO));
 	archivoLeido->niveles.push_back(unNivel);
-	for (pugi::xml_node enemigos: nivel.children("enemigos")){
-		for (pugi::xml_node enemigo: enemigos.children("enemigo")){
-			auto parser = ParserEnemigo();
-            parser.parsear(enemigo, unNivel, archivoLeido);
-		}
-	}
-	for (pugi::xml_node plataformas: nivel.children("plataformas")){
-		for (pugi::xml_node plataforma: plataformas.children("plataforma")){
-			auto parser = ParserPlataforma();
-            parser.parsear(plataforma, unNivel, archivoLeido);
-		}
-	}
+    ParserPlataforma parserPlataforma = ParserPlataforma();
+    parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "plataformas", "plataforma",&parserPlataforma);
 
-    for (pugi::xml_node tuberia: nivel.children("tuberia")){
-        auto parser = ParserTuberia();
-        parser.parsear(tuberia, unNivel, archivoLeido);
+    ParserEnemigo parserEnemigo = ParserEnemigo();
+    parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "enemigos", "enemigo",&parserEnemigo);
+
+    ParserTuberia parserTuberias = ParserTuberia();
+    parsearUnNivel(nivel, archivoLeido, unNivel, "tuberia", &parserTuberias);
+
+    ParserPozo parserPozos = ParserPozo();
+    parsearUnNivel(nivel, archivoLeido, unNivel, "pozo", &parserPozos);
+}
+
+void ParserNivel::parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelAParsear, Parser *parser) {
+    for (pugi::xml_node tuberia: nivel.children(nivelAParsear.c_str())){
+        parser->parsear(tuberia, unNivel, archivoLeido);
     }
+}
 
-    for (pugi::xml_node pozo: nivel.children("pozo")){
-        auto parser = ParserPozo();
-        parser.parsear(pozo, unNivel, archivoLeido);
+void ParserNivel::parsearMultiplesNiveles(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelSuperior, string nivelInferior, Parser* parser) {
+    for (pugi::xml_node nodoSuperior: nivel.children(nivelSuperior.c_str())){
+        for (pugi::xml_node nodo: nodoSuperior.children(nivelInferior.c_str())){
+            parser->parsear(nodo, unNivel, archivoLeido);
+        }
     }
-
 }

@@ -1,9 +1,7 @@
 #ifndef SRC_SERVER_MODELO_MONEDA_HPP_
 #define SRC_SERVER_MODELO_MONEDA_HPP_
 
-#include "../sprites/Sprite.hpp"
 #include "../sprites/SpriteMoneda.hpp"
-#include "PosicionFija.hpp"
 #include "Posicion.hpp"
 #include "src/Utils/Utils.hpp"
 #include "src/Server/modelo/Colisionable.hpp"
@@ -13,7 +11,7 @@ class Moneda : public Colisionable{
 
     public:
         Moneda(int coordenadaX, int coordenadaY);
-        ~Moneda();
+        ~Moneda() override = default;
         void actualizar();
         moneda_t serializar();
         int obtenerPosicionX();
@@ -21,12 +19,12 @@ class Moneda : public Colisionable{
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
-        bool fueAgarrada();
+        bool fueAgarrada() const;
     private:
         void inicializarMapasDeColision() override;
         void agarrar(void* ptr = nullptr);
-        Posicion* posicion;
-        Sprite* sprite;
+        Posicion posicion;
+        SpriteMoneda sprite;
         bool agarrada;
 };
 

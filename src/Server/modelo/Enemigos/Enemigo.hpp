@@ -36,7 +36,7 @@ class Enemigo : public Colisionable{
         void inicializarMapasDeColision() override;
         void cambiarOrientacion();
         enemigo_t serializarEnemigo(int tipo);
-		PosicionMovil* posicionActual{};
+		PosicionMovil posicionActual = PosicionMovil(0,0);
         SpriteEnemigo* spriteEnemigo{};
         MovimientoEnemigo movimientoEnemigo;
         int tipoColor{};

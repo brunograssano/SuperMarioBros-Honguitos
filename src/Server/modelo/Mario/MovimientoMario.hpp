@@ -24,11 +24,11 @@ class MovimientoMario{
         void reiniciar();
         void setVelocidadX(int velocidadNueva);
         void teParasteEnBloque();
-        bool estaEnElAire();
+        bool estaEnElAire() const;
 
-private:
-		MovimientoHorizontal* movimientoX;
-		MovimientoVertical* movimientoY;
+    private:
+		MovimientoHorizontal movimientoX = MovimientoHorizontal(0, 0);
+		MovimientoVertical movimientoY = MovimientoVertical(0);
 		std::map<int,Terreno*> terrenos;
 		int terrenoActual;
 };

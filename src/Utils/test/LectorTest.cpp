@@ -31,162 +31,128 @@ void LectorTest::ejecutar(Assert* testSuite){
 }
 
 void LectorTest::test01CuandoLePedisAlLectorQueLeaTraeElAncho(Assert* testSuite){
-
-	auto* lector = new Lector();
+    auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/configuracionDefault.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	int anchoEsperado = archivoLeido->anchoVentana;
+	int anchoEsperado = archivoLeido.anchoVentana;
 
 	testSuite->assert(anchoEsperado,800,"El ancho es de 800 px en conf default");
-
-	delete lector;
-	delete archivoLeido;
 }
 
 void LectorTest::test02CuandoLePedisAlLectorQueLeaTraeElAlto(Assert* testSuite){
-
-	auto* lector = new Lector();
+    auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/configuracionDefault.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	int anchoEsperado = archivoLeido->altoVentana;
+	int anchoEsperado = archivoLeido.altoVentana;
 
 	testSuite->assert(anchoEsperado,600,"El alto es de 600 px en config default");
-
-	delete lector;
-	delete archivoLeido;
 }
 void LectorTest::test03CuandoLePedisAlLectorElArchivoSeLeeCorrectamente(Assert* testSuite){
-
-	auto* lector = new Lector();
+    auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/configuracionDefault.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+	bool leidoCorrectamente = archivoLeido.leidoCorrectamente;
 
 	testSuite->assert(leidoCorrectamente,"El archivo de configuracion default se lee correctamente");
-
-	delete lector;
-	delete archivoLeido;
 }
 void LectorTest::test04CuandoLePedisAlLectorElArchivoSeLeeCorrectamenteNoTraeMensajesDeError(Assert* testSuite){
-
-	auto* lector = new Lector();
+    auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/configuracionDefault.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	bool noHayMensajesDeError = archivoLeido->mensajeError.empty();
+	bool noHayMensajesDeError = archivoLeido.mensajeError.empty();
 
 	testSuite->assert(noHayMensajesDeError,"No hay mensajes de error en la config default");
-
-	delete lector;
-	delete archivoLeido;
 }
 
 void LectorTest::test05CuandoLeEnviasUnArchivoQueNoExisteSeLanzaUnError(Assert* testSuite){
-
-	auto* lector = new Lector();
+    auto lector = Lector();
 
 	string archivoALeer = "NoExisto.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+	bool leidoCorrectamente = archivoLeido.leidoCorrectamente;
 
 	string mensajeError;
 
-	for(const string& error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido.mensajeError){
 		mensajeError = error;
 	}
 
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
 	testSuite->assert(mensajeError,"El archivo pedido en la direccion: NoExisto.xml no existe,se carga el archivo por defecto","El mensaje de error es el correcto");
-
-	delete lector;
-	delete archivoLeido;
 }
 
 void LectorTest::test06CuandoLeEnviasUnArchivoMalFormateadoSeLanzaUnError(Assert* testSuite){
-
-	auto* lector = new Lector();
+	auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/archivoMalFormato.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+	bool leidoCorrectamente = archivoLeido.leidoCorrectamente;
 
 	string mensajeError;
 
-	for(const string& error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido.mensajeError){
 		mensajeError = error;
 	}
 
 
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
 	testSuite->assert(mensajeError,"Hay un error en la linea 57 del archivo resources/ArchivosXML/archivoMalFormato.xml,se carga el archivo por defecto","El mensaje de error es el correcto");
-
-	delete lector;
-	delete archivoLeido;
 }
 void LectorTest::test07CuandoLeEnviasUnArchivoMalElAnchoSeCargaElDefaultYSeLanzaUnError(Assert* testSuite){
-
-	auto* lector = new Lector();
+	auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/archivoAnchoMalEnviado.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	int anchoEsperado = archivoLeido->anchoVentana;
+	int anchoEsperado = archivoLeido.anchoVentana;
 
-	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+	bool leidoCorrectamente = archivoLeido.leidoCorrectamente;
 
 	string mensajeError;
 
-	for(const string& error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido.mensajeError){
 		mensajeError = error;
 	}
 
 	testSuite->assert(anchoEsperado,800,"El ancho es de 800 px");
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
-	//testSuite->assert(mensajeError,"El valor de ancho enviado no tiene valor valido,se carga el valor por defecto","El mensaje de error es el correcto");
-
-	delete lector;
-	delete archivoLeido;
 }
 void LectorTest::test08CuandoLeEnviasUnArchivoMalElAltooSeCargaElDefaultYSeLanzaUnError(Assert* testSuite){
-
-	auto* lector = new Lector();
+	auto lector = Lector();
 
 	string archivoALeer = "resources/ArchivosXML/archivoAltoMalEnviado.xml";
 
-	ArchivoLeido* archivoLeido = lector->leerArchivo(archivoALeer);
+	ArchivoLeido archivoLeido = lector.leerArchivo(archivoALeer);
 
-	int altoEsperado = archivoLeido->altoVentana;
+	int altoEsperado = archivoLeido.altoVentana;
 
-	bool leidoCorrectamente = archivoLeido->leidoCorrectamente;
+	bool leidoCorrectamente = archivoLeido.leidoCorrectamente;
 
 	string mensajeError;
 
-	for(const string& error: archivoLeido->mensajeError){
+	for(const string& error: archivoLeido.mensajeError){
 		mensajeError = error;
 	}
 
 	testSuite->assert(altoEsperado,600,"El alto es de 600 px");
 	testSuite->assert(!leidoCorrectamente,"El archivo no se lee correctamente");
-	//testSuite->assert(mensajeError,"El valor de alto enviado no tiene valor valido,se carga el valor por defecto","El mensaje de error es el correcto");
-
-	delete lector;
-	delete archivoLeido;
 }
 
 

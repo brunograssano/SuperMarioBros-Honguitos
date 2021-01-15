@@ -9,7 +9,7 @@ class VidaMario {
         ~VidaMario();
         void perderVida();
         bool estaVivo();
-private:
+    private:
         int vidas;
 };
 

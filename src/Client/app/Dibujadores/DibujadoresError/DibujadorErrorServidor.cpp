@@ -30,8 +30,8 @@ void DibujadorErrorServidor::dibujar(){
 							ancho_texto-100,
 							alto_texto};
 
-	renderizarTexto(rectanguloTextoError, textoError.str().c_str(), colorDefault);
-	renderizarTexto(rectanguloTextoInfo, textoInfo.str().c_str(), colorDefault);
+	renderizarTexto(rectanguloTextoError, textoError.str(), colorDefault);
+	renderizarTexto(rectanguloTextoInfo, textoInfo.str(), colorDefault);
 
 	SDL_RenderPresent( renderizador );
 }

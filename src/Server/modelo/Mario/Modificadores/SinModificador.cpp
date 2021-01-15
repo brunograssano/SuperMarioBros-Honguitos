@@ -2,6 +2,8 @@
 #include "MarioDeFuego.hpp"
 #include "src/Server/modelo/Mario/Mario.hpp"
 
+const int MAX_CICLOS_PARA_CHISPEAR = 30;
+
 SinModificador::SinModificador(Mario *marioAsociado) {
     this->marioAsociado = marioAsociado;
 }
@@ -27,7 +29,7 @@ void SinModificador::actualizar(){
     }
 }
 
-bool SinModificador::yaPuedeChispear() {
+bool SinModificador::yaPuedeChispear() const {
     return ciclosChispa == MAX_CICLOS_PARA_CHISPEAR;
 }
 

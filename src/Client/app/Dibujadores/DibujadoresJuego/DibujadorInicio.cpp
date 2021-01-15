@@ -1,5 +1,5 @@
 #include "DibujadorInicio.hpp"
-
+#include "src/Utils/Constantes.hpp"
 #define DESFASE 20
 
 DibujadorInicio::DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
@@ -7,7 +7,7 @@ DibujadorInicio::DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Rendere
 	this->renderizador= renderizador;
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
-	SDL_QueryTexture(cargadorTexturas->obtenerTextura("FondoInicio"), (unsigned int*) nullptr, (int*)nullptr, &(this->ancho_fondo), &(this->alto_fondo));
+	SDL_QueryTexture(cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_INICIO), (unsigned int*) nullptr, (int*)nullptr, &(this->ancho_fondo), &(this->alto_fondo));
 	this->posicion_x_fondo = 0;
 	this->ticks_salto_imagen = 0;
 	this->ticks_salto_triangulo = 0;
@@ -35,7 +35,7 @@ void DibujadorInicio::dibujar(){
 		posicion_x_fondo = 0;		//OJO: Esta transición "fluida" sólo sucede si la pantalla tiene las dimensiones mínimas (800 de ancho).
 	}
 	SDL_Rect rectanguloCamara = {(int)posicion_x_fondo, 0, alto_pantalla, ancho_pantalla};
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoInicio"), &rectanguloCamara, NULL);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_INICIO), &rectanguloCamara, NULL);
 
 	ticks_salto_imagen++;
 	if(ticks_salto_imagen >= 50){
@@ -44,7 +44,7 @@ void DibujadorInicio::dibujar(){
 	}
 	int ancho_titulo;
 	int alto_titulo;
-	SDL_QueryTexture(cargadorTexturas->obtenerTextura("Titulo"), (unsigned int*)nullptr, (int*)nullptr, &(ancho_titulo), &(alto_titulo));
+	SDL_QueryTexture(cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_TITULO), (unsigned int*)nullptr, (int*)nullptr, &(ancho_titulo), &(alto_titulo));
 	ancho_titulo /= 1.5;
 	alto_titulo /= 1.5;
 	SDL_Rect rectanguloTitulo = {ancho_pantalla/2 - ancho_titulo/2,
@@ -66,7 +66,7 @@ void DibujadorInicio::dibujar(){
 								ancho_indicacion,
 								alto_indicacion};
 
-	renderizarTexto(cuadradoIndicacion, indicacion.str().c_str(), colorDefault);
+	renderizarTexto(cuadradoIndicacion, indicacion.str(), colorDefault);
 	SDL_RenderPresent(renderizador);
 }
 

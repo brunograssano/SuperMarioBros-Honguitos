@@ -8,11 +8,7 @@
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 #include "src/Server/modelo/Objetos/Nada.hpp"
 
-class Mario;
-
 class MarioDeFuego : public ModificadorMario{
-    const int MAX_CICLOS_PARA_DISPARAR = 70;
-    const int MAX_CICLOS_PARA_CHISPEAR = 30;
     public:
         explicit MarioDeFuego(Mario* marioAsociado);
         ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
@@ -22,7 +18,6 @@ class MarioDeFuego : public ModificadorMario{
         bool puedeAgarrarFlor() override;
 
     private:
-        Mario *marioAsociado;
         int ciclosDisparo = 0;
         int ciclosChispa = 0;
         bool yaPuedeDisparar() const;

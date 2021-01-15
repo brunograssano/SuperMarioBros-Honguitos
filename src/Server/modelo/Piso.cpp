@@ -45,3 +45,7 @@ Piso::~Piso() {
         delete plataforma;
     }
 }
+
+int Piso::obtenerAltura() {
+    return alto;
+}

@@ -52,3 +52,9 @@ Sorpresa::~Sorpresa() {
         delete this->objetoSorpresa;
     }
 }
+
+void Sorpresa::elevar(int y) {
+    Bloque::elevar(y);
+    delete objetoSorpresa;
+    objetoSorpresa = obtenerObjetoSorpresa(posicion->obtenerPosX(), posicion->obtenerPosY() + LARGO_BLOQUE);
+}

@@ -10,6 +10,7 @@ class Sorpresa : public Bloque{
         ObjetoSorpresa* colisionaronAbajo()override;
         string obtenerColisionID() override;
         void chocarPorAbajoCon(Colisionable* colisionable) override;
+        void elevar(int y) override;
         ~Sorpresa() override;
 
     private:

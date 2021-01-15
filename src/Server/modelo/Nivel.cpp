@@ -76,6 +76,7 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
         chocarContraTodos(enemigo,(void*)&plataformasPiso,nullptr, nullptr);
     }
     for(auto& objeto: objetosFugaces){
+        chocarContraTodos(objeto, (void*) &plataformasPiso, nullptr, nullptr);
         chocarContraTodos(objeto, (void*)&plataformas, nullptr, nullptr);
     }
 }
@@ -159,6 +160,7 @@ void Nivel::inicializar() {
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
     for(auto const& bloque : plataformas){
+        bloque->elevar(piso.obtenerAltura());
         if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
             Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
                     + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");

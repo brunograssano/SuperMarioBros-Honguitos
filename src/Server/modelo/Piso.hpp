@@ -7,12 +7,13 @@
 class Piso {
 
     public:
-        Piso(int altoPiso);
+        explicit Piso(int altoPiso);
         void inicializar();
         ~Piso();
         void agregarPozo(int posicionPozo,int tipoPozo);
         list<Colisionable*> obtenerPiso();
         list<pozo_t> serializar();
+        int obtenerAltura();
 
     private:
         int alto;

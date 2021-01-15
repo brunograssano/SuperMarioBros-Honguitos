@@ -27,25 +27,6 @@
                 </enemigo>
 
             </enemigos>
-
-            <tuberia>
-                <color>0</color> <!--0 - VERDE , 1 - INVERTIDO-->
-                <posicionX>100</posicionX>
-                <tipoTuberia>0</tipoTuberia> <!--0 - TUBERIA NORMAL , 1 - TUBERIA GRANDE-->
-            </tuberia>
-
-
-            <tuberia>
-                <color>0</color>
-                <posicionX>250</posicionX>
-                <tipoTuberia>1</tipoTuberia>
-            </tuberia>
-		
-	    <pozo>                
-                <posicionX>500</posicionX>
-                <tipoPozo>1</tipoPozo><!--0 - POZO NORMAL , 1 - POZO GRANDE,2 -POZO-->
-            </pozo>
-
             <plataformas>
 
                 <plataforma>
@@ -387,7 +368,7 @@
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4000</coordenadaX>
-                    <coordenadaY>6</coordenadaY>
+                    <coordenadaY>0</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
@@ -395,35 +376,35 @@
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>6</coordenadaY>
+                    <coordenadaY>0</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>56</coordenadaY>
+                    <coordenadaY>40</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>96</coordenadaY>
+                    <coordenadaY>80</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>136</coordenadaY>
+                    <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>4240</coordenadaX>
-                    <coordenadaY>96</coordenadaY>
+                    <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
@@ -431,28 +412,28 @@
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4360</coordenadaX>
-                    <coordenadaY>6</coordenadaY>
+                    <coordenadaY>0</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4360</coordenadaX>
-                    <coordenadaY>56</coordenadaY>
+                    <coordenadaY>40</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4360</coordenadaX>
-                    <coordenadaY>96</coordenadaY>
+                    <coordenadaY>80</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4360</coordenadaX>
-                    <coordenadaY>136</coordenadaY>
+                    <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
@@ -519,7 +500,7 @@
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
                     <coordenadaX>400</coordenadaX>
-                    <coordenadaY>320</coordenadaY>
+                    <coordenadaY>280</coordenadaY>
                     <cantidadBloques>7</cantidadBloques>
                 </plataforma>
 
@@ -572,7 +553,7 @@
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
                     <coordenadaX>2760</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
+                    <coordenadaY>80</coordenadaY>
                     <cantidadBloques>3</cantidadBloques>
                 </plataforma>
 
@@ -731,7 +712,7 @@
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>2040</coordenadaX>
-                    <coordenadaY>160</coordenadaY>
+                    <coordenadaY>240</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 
@@ -924,7 +905,7 @@
 
 		<usuario>
 			<username>joaquin</username>
-			<password>123</password>
+			<password>123joaco</password>
 		</usuario>
 
 		<usuario>
@@ -932,16 +913,17 @@
 			<password>prueba</password>
 		</usuario>
 
-    		<usuario>
+    <usuario>
 			<username>prueba2</username>
 			<password>prueba2</password>
 		</usuario>
-		<usuario>
-			<username>p</username>
-			<password>p</password>
-		</usuario>    		
+
+    <usuario>
+			<username>prueba3</username>
+			<password>prueba3</password>
+		</usuario>
 
 	</credenciales>
-	<cantidadConexiones>2</cantidadConexiones>
+	<cantidadConexiones>1</cantidadConexiones>
 
 </configuracion>

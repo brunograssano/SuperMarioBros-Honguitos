@@ -6,12 +6,12 @@
 #define RESET "\x1b[0m"
 
 void PodioTest::ejecutar(Assert *testSuite) {
-    cout << CYAN"========== Comenzando con las pruebas del Lector ==========" RESET << endl;
+    cout << CYAN"========== Comenzando con las pruebas del Podio ==========" RESET << endl;
     cout << AZUL_CLARO"----------TEST 01----------" RESET << endl;
     test01CuandoLePedisAlPodioQueTeDeElPodioParcialElPrimeroEsElDeMayorPuntaje(testSuite);
     cout << AZUL_CLARO"----------TEST 01----------" RESET << endl;
     test02CuandoLePedisAlPodioQueTeDeElPodioParcialElPrimeroEsElDeMayorPuntaje(testSuite);
-    cout << CYAN"========== Finalizando con las pruebas del Lector ==========" RESET << endl;
+    cout << CYAN"========== Finalizando con las pruebas del Podio ==========" RESET << endl;
 }
 
 void PodioTest::test01CuandoLePedisAlPodioQueTeDeElPodioParcialElPrimeroEsElDeMayorPuntaje(Assert *testSuite) {

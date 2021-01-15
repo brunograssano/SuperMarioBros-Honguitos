@@ -13,7 +13,6 @@ using namespace std;
 
 #define ANCHO_PANTALLA 650
 #define ALTO_PANTALLA 450
-#define ANCHO_MAXIMO_TEXTO 270
 
 const SDL_Color COLOR_BLANCO = {255, 255, 255, 0xFF };
 const SDL_Color COLOR_NEGRO = { 0, 0, 0, 0xFF };

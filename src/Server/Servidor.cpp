@@ -2,7 +2,6 @@
 #include <string>
 #include <cstring>
 
-#define SIN_JUGAR -1
 
 Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;

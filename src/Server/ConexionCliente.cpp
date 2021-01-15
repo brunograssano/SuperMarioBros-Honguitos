@@ -1,5 +1,5 @@
 #include "ConexionCliente.hpp"
-#define SIN_JUGAR -1
+
 #include "Servidor.hpp"
 #include "EnviadoresServer/EnviadorConexionCliente.hpp"
 #include "EscuchadoresServer/EscuchadorConexionCliente.hpp"

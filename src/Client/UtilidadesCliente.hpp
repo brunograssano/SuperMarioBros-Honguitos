@@ -1,7 +1,8 @@
 #ifndef SRC_CLIENT_UTILIDADESCLIENTE_HPP_
 #define SRC_CLIENT_UTILIDADESCLIENTE_HPP_
 
-#define LARGO_IP 20
+#include "../Utils/Constantes.hpp"
+
 
 int conectarAlServidor(char ip[LARGO_IP], int puerto);
 

@@ -4,8 +4,6 @@ class EscuchadorEntradaTeclado;
 #include "EscuchadorEntradaTeclado.hpp"
 #include "EscuchadorCredenciales.hpp"
 
-#define SIN_JUGAR -1
-
 EscuchadorConexionCliente::EscuchadorConexionCliente(int socket,ConexionCliente* cliente) {
     escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,cliente);
     this->socket = socket;

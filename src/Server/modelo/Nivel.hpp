@@ -18,7 +18,6 @@
 
 using namespace std;
 
-const int ANCHO_FONDO2 = 8177;
 const int ALTO_NIVEL = 600;
 
 class Nivel{

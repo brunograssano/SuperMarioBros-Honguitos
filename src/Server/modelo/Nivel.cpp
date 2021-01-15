@@ -11,7 +11,7 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->direccionFondo = std::move(direccionFondo);
     this->tiempo = tiempo;
     this->cantidadMonedas = cantidadMonedas;
-    this->puntoBanderaFin = ANCHO_FONDO2* (float) puntoBanderaFin /100;
+    this->puntoBanderaFin = ANCHO_FONDO * (float) puntoBanderaFin / 100;
     this->contador = new Contador(tiempo, SEGUNDOS);
     this->meta = new Meta(this->puntoBanderaFin);
     this->podio = new Podio();

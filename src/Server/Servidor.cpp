@@ -4,29 +4,28 @@
 
 #define SIN_JUGAR -1
 
-Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
+Servidor::Servidor(ArchivoLeido archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
 	manejadorIDs = new ManejadorIdentificadores();
-	log = Log::getInstance(archivoLeido->tipoLog);
+	log = Log::getInstance(archivoLeido.tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
-	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
+	escribirMensajesDeArchivoLeidoEnLog(archivoLeido.mensajeError);
 
-	aplicacionServidor = new AplicacionServidor(this, archivoLeido->niveles, archivoLeido->cantidadConexiones,
-												 archivoLeido->anchoVentana, archivoLeido->altoVentana);
+	aplicacionServidor = new AplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones,
+												 archivoLeido.anchoVentana, archivoLeido.altoVentana);
 
-	usuariosValidos = archivoLeido->usuariosValidos;
-	if(archivoLeido->cantidadConexiones>MAX_CONEXIONES){
-		log->huboUnError("No se permite la cantidad de conexiones enviada ("+to_string(archivoLeido->cantidadConexiones)+"), el maximo es de " + to_string(MAX_CONEXIONES)+".");
-		archivoLeido->cantidadConexiones = MAX_CONEXIONES;
+	usuariosValidos = archivoLeido.usuariosValidos;
+	if(archivoLeido.cantidadConexiones>MAX_CONEXIONES){
+		log->huboUnError("No se permite la cantidad de conexiones enviada ("+to_string(archivoLeido.cantidadConexiones)+"), el maximo es de " + to_string(MAX_CONEXIONES)+".");
+		archivoLeido.cantidadConexiones = MAX_CONEXIONES;
 	}
-	cantidadConexiones = archivoLeido->cantidadConexiones;
+	cantidadConexiones = archivoLeido.cantidadConexiones;
 
 	socketServer = iniciarSocketServidor(puerto,ip);
 
     log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
     aceptadorDeConexiones = new AceptadorDeConexiones(this,socketServer);
     reconectador = new ReconectadorDeConexiones(this);
-	delete archivoLeido;
 }
 
 

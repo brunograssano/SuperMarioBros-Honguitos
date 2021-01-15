@@ -13,7 +13,7 @@ MonedaSorpresa::MonedaSorpresa(Posicion* posicionInicial) {
     Terreno* tierra = new Tierra();
     movimiento.saltar(tierra);
     delete tierra;
-    inicializarMapasDeColision();
+    MonedaSorpresa::inicializarMapasDeColision();
 }
 
 void MonedaSorpresa::usarse(Mario *mario) {

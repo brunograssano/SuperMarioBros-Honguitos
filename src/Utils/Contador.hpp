@@ -1,7 +1,7 @@
 #ifndef SRC_SERVER_CONTADOR_HPP_
 #define SRC_SERVER_CONTADOR_HPP_
 
-#include <time.h>
+#include <ctime>
 
 /* No tocar */
 #define SEGUNDOS  1				// segundos

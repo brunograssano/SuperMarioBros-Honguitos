@@ -71,8 +71,8 @@ class Nivel{
         list<ObjetoFugaz*> objetosFugaces;
         Piso piso = Piso(0);
 
-        Meta* meta;
-        Contador* contador;
+        Meta meta = Meta(0);
+        Contador contador = Contador(0, 0);
 
         int mundo;
         string direccionFondo;

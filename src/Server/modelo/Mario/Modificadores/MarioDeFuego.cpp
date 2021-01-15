@@ -2,6 +2,9 @@
 #include "SinModificador.hpp"
 #include "src/Server/modelo/Mario/Mario.hpp"
 
+const int MAX_CICLOS_PARA_DISPARAR = 70;
+const int MAX_CICLOS_PARA_CHISPEAR = 30;
+
 MarioDeFuego::MarioDeFuego(Mario* referenciaAMario) {
     this->marioAsociado = referenciaAMario;
 }

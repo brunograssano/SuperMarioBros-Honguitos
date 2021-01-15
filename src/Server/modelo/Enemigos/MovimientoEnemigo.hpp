@@ -15,7 +15,7 @@ class MovimientoEnemigo {
         void morir();
         void cambiarOrientacion();
 
-private:
+    private:
         static float obtenerVelocidad();
         MovimientoHorizontalIdeal movimientoHorizontal = MovimientoHorizontalIdeal(0.2);
         MovimientoVertical movimientoVertical = MovimientoVertical(0);

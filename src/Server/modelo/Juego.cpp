@@ -15,7 +15,7 @@ Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, 
         nivel->inicializar();
     }
 
-    camara = new Camara(alto_pantalla, ancho_pantalla);
+    camara = Camara(alto_pantalla, ancho_pantalla);
     hanGanado = false;
 }
 
@@ -44,7 +44,7 @@ void Juego::avanzarNivel(){
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
-        camara->reiniciar();
+        camara.reiniciar();
         niveles.front()->iniciar();
         Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
     }
@@ -79,7 +79,7 @@ void Juego::actualizarModelo(){
     if(nivelActual->todosEnLaMeta(jugadores) && hayConectados()) {
         avanzarNivel();
     }
-    camara->moverCamara(this->jugadores);
+    camara.moverCamara(this->jugadores);
 }
 
 int Juego::obtenerMundoActual(){
@@ -135,8 +135,8 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
     info_partida_t info_partida;
     memset(&info_partida,0,sizeof(info_partida_t));
 
-    info_partida.altoVentana =  camara->obtenerRectanguloCamara().h;
-    info_partida.anchoVentana = camara->obtenerRectanguloCamara().w;
+    info_partida.altoVentana =  camara.obtenerRectanguloCamara().h;
+    info_partida.anchoVentana = camara.obtenerRectanguloCamara().w;
     info_partida.cantidadJugadores = jugadores.size();
     info_partida.idPropio = IDJugador;
 
@@ -165,7 +165,7 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
     info_ronda_t info_ronda;
     memset(&info_ronda,0,sizeof(info_ronda_t));
 
-    info_ronda.posXCamara = camara->obtenerRectanguloCamara().x;
+    info_ronda.posXCamara = camara.obtenerRectanguloCamara().x;
     info_ronda.ganaron = ganaron();
     info_ronda.perdieron = perdieron();
 
@@ -177,7 +177,7 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
 
 
     if(!niveles.empty())
-        niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, camara);
+        niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, &camara);
     return info_ronda;
 }
 
@@ -201,19 +201,6 @@ bool Juego::hayConectados() {
     return hayAlguienConectado;
 }
 
-Juego::~Juego(){
-
-    for(auto const& parClaveJugador:jugadores){
-        delete parClaveJugador.second;
-    }
-    for(auto const& nivel:niveles){
-        delete nivel;
-    }
-    jugadores.clear();
-    niveles.clear();
-    delete camara;
-}
-
 int Juego::cantidadDeNiveles() {
     return niveles.size();
 }
@@ -225,4 +212,15 @@ bool Juego::murieronTodos() {
         }
     }
     return true;
+}
+
+Juego::~Juego(){
+    for(auto const& parClaveJugador:jugadores){
+        delete parClaveJugador.second;
+    }
+    for(auto const& nivel:niveles){
+        delete nivel;
+    }
+    jugadores.clear();
+    niveles.clear();
 }

@@ -7,7 +7,7 @@ using namespace std;
 #include "../ArchivoLeido.hpp"
 #include "../../modelo/Enemigos/Goomba.hpp"
 #include "../../modelo/Enemigos/Koopa.hpp"
-#include "Parser.h"
+#include "Parser.hpp"
 
 class ParserEnemigo : public Parser{
 	public:

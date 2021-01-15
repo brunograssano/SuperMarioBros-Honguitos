@@ -20,7 +20,7 @@ using namespace std;
 
 class Bloque : public Colisionable{
     public:
-		virtual ~Bloque()= default;
+		~Bloque() override = default;
 		void actualizar();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
@@ -35,7 +35,7 @@ class Bloque : public Colisionable{
 
     protected:
         int tipoBloque{};
-    	Posicion* posicion{};
+    	Posicion posicion;
     	SpriteBloque* spriteBloque{};
 		static int normalizarCoordenadaIngresada(int coordenada);
         void inicializarMapasDeColision() override = 0;

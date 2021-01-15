@@ -39,7 +39,7 @@ class ReconectadorDeConexiones;
 class Servidor : public Thread{
 
 	public:
-		Servidor(ArchivoLeido* archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
+		Servidor(ArchivoLeido archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
 		~Servidor();
 
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);

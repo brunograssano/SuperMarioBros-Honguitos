@@ -3,24 +3,23 @@
 #define MINIMO_COORDENADA_Y 0
 
 int Enemigo::obtenerPosicionX() {
-    return posicionActual->obtenerPosX();
+    return posicionActual.obtenerPosX();
 }
 
 int Enemigo::obtenerPosicionY() {
-    return posicionActual->obtenerPosY();
+    return posicionActual.obtenerPosY();
 }
 
 void Enemigo::agregarPosicion(int coordenadaX, int coordenadaY) {
-    delete posicionActual;
-    posicionActual = new PosicionMovil(coordenadaX, coordenadaY);
+    posicionActual = PosicionMovil(coordenadaX, coordenadaY);
 }
 
 void Enemigo::actualizarPosicion() {
-    if(posicionActual->obtenerPosY() <= MINIMO_COORDENADA_Y){
+    if(posicionActual.obtenerPosY() <= MINIMO_COORDENADA_Y){
         morir();
         return;
     }
-    movimientoEnemigo.mover(posicionActual);
+    movimientoEnemigo.mover(&posicionActual);
     spriteEnemigo->actualizarSprite();
 }
 
@@ -102,10 +101,10 @@ void Enemigo::empujarEnX(rectangulo_t rectanguloBloque,int direccion){
     cambiarOrientacion();
     rectangulo_t rectanguloEnemigo = obtenerRectangulo();
     if(direccion == DERECHA){
-        this->posicionActual->moverHorizontal(rectanguloBloque.x2-rectanguloEnemigo.x1);
+        this->posicionActual.moverHorizontal(rectanguloBloque.x2-rectanguloEnemigo.x1);
     }
     else{
-        this->posicionActual->moverHorizontal(-(rectanguloEnemigo.x2-rectanguloBloque.x1));
+        this->posicionActual.moverHorizontal(-(rectanguloEnemigo.x2-rectanguloBloque.x1));
     }
 }
 
@@ -122,9 +121,9 @@ void Enemigo::empujarEnY(rectangulo_t rectanguloBloque, int direccion) {
     movimientoEnemigo.setVelocidadY(0);
     rectangulo_t rectanguloEnemigo = obtenerRectangulo();
     if(direccion == ABAJO){
-        this->posicionActual->moverVertical(-(rectanguloEnemigo.y2-rectanguloBloque.y1));
+        this->posicionActual.moverVertical(-(rectanguloEnemigo.y2-rectanguloBloque.y1));
     }
     else{
-        this->posicionActual->moverVertical(rectanguloBloque.y2-rectanguloEnemigo.y1);
+        this->posicionActual.moverVertical(rectanguloBloque.y2-rectanguloEnemigo.y1);
     }
 }

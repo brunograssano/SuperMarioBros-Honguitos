@@ -6,12 +6,12 @@ Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     tipoBloque = SORPRESA;
     int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
     int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
-    this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
+    this->posicion = PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
     this->spriteBloque = new SpriteSorpresa();
-    this->objetoSorpresa = obtenerObjetoSorpresa(posicion->obtenerPosX(), posicion->obtenerPosY() + LARGO_BLOQUE);
+    this->objetoSorpresa = obtenerObjetoSorpresa(posicion.obtenerPosX(), posicion.obtenerPosY() + LARGO_BLOQUE);
     usado = false;
     entregado = false;
-    inicializarMapasDeColision();
+    Sorpresa::inicializarMapasDeColision();
 }
 
 void Sorpresa::inicializarMapasDeColision(){}
@@ -46,7 +46,6 @@ void Sorpresa::chocarPorAbajoCon(Colisionable *colisionable) {
 }
 
 Sorpresa::~Sorpresa() {
-    delete this->posicion;
     delete this->spriteBloque;
     if(!usado){
         delete this->objetoSorpresa;
@@ -56,5 +55,5 @@ Sorpresa::~Sorpresa() {
 void Sorpresa::elevar(int y) {
     Bloque::elevar(y);
     delete objetoSorpresa;
-    objetoSorpresa = obtenerObjetoSorpresa(posicion->obtenerPosX(), posicion->obtenerPosY() + LARGO_BLOQUE);
+    objetoSorpresa = obtenerObjetoSorpresa(posicion.obtenerPosX(), posicion.obtenerPosY() + LARGO_BLOQUE);
 }

@@ -8,7 +8,7 @@ Goomba::Goomba(int tipoColor) {
     this->tipoColor = tipoColor;
     loMataron = false;
     Enemigo::inicializarMapasDeColision();
-    posicionActual = new PosicionMovil(DEFAULT, DEFAULT);
+    posicionActual = PosicionMovil(DEFAULT, DEFAULT);
 }
 
 enemigo_t Goomba::serializar() {
@@ -16,7 +16,6 @@ enemigo_t Goomba::serializar() {
 }
 
 Goomba::~Goomba() {
-    delete posicionActual;
     delete spriteEnemigo;
 }
 

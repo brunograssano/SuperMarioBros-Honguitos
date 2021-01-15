@@ -7,7 +7,7 @@ using namespace std;
 
 class Lector{
 	public:
-		static ArchivoLeido* leerArchivo(const string& nombreArchivo);
+		static ArchivoLeido leerArchivo(const string& nombreArchivo);
 };
 
 

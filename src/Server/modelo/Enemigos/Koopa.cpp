@@ -8,12 +8,11 @@ Koopa::Koopa(int tipoColor) {
     this->tipoColor = tipoColor;
     loMataron = false;
     this->inicializarMapasDeColision();
-    posicionActual = new PosicionMovil(DEFAULT, DEFAULT);
+    posicionActual = PosicionMovil(DEFAULT, DEFAULT);
 }
 
 Koopa::~Koopa() {
     delete spriteEnemigo;
-    delete posicionActual;
 }
 
 enemigo_t Koopa::serializar() {

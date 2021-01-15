@@ -290,6 +290,10 @@ void Mario::conectar() {
     estaConectadoElJugador = true;
 }
 
+bool Mario::estaVivo() {
+    return vidaMario->estaVivo();
+}
+
 Mario::~Mario(){
     delete this->spriteMario;
     delete this->posicion;

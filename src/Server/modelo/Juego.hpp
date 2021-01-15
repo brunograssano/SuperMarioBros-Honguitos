@@ -28,7 +28,7 @@ class Juego{
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();
-
+        bool murieronTodos();
 		static Juego* instanciaJuego;
 
     public:
@@ -53,7 +53,7 @@ class Juego{
         info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
         nivel_t serializarNivel();
 
-    int cantidadDeNiveles();
+        int cantidadDeNiveles();
 };
 
 

@@ -42,6 +42,7 @@ class Mario : public Colisionable {
 		void actualizarIzquierdaMario();
 		void actualizarDerechaMario();
 
+		bool estaVivo();
         void perderVida(void* ptr = nullptr);
         int obtenerVida();
         void hacerseDeFuego();

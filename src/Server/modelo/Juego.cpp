@@ -126,7 +126,7 @@ void Juego::iniciar(){
 }
 
 bool Juego::perdieron() {
-    return ((obtenerTiempoRestante() == 0) && !ganaron());
+    return ((obtenerTiempoRestante() == 0) && !ganaron()) || murieronTodos();
 }
 
 info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador){
@@ -214,4 +214,13 @@ Juego::~Juego(){
 
 int Juego::cantidadDeNiveles() {
     return niveles.size();
+}
+
+bool Juego::murieronTodos() {
+    for(auto const& parClaveJugador:jugadores){
+        if(parClaveJugador.second->estaVivo()){
+            return false;
+        }
+    }
+    return true;
 }

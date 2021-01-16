@@ -34,7 +34,7 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
         dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
         this->eventoMouse.type = NULL;
     }
-    dibujadorPuntos->dibujarPuntos(juegoCliente);
+    dibujadorPuntos->dibujarPuntosGameOver(juegoCliente);
 	/**/
 
 	stringstream textoGameOver;

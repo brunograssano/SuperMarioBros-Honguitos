@@ -145,3 +145,56 @@ void DibujadorPuntos::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar,
     destructorDeTexturas(texto);
 
 };
+
+void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
+
+    int ancho_puntosJugador = 200;
+    int alto_puntosJugador = 30;
+    int desfase_puntosJugador = 50;
+    SDL_Rect cuadradoPuntos;
+
+    stringstream puntosJugador;
+
+    stringstream tituloPuntos;
+    tituloPuntos << "Puntos totales";
+
+    SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
+                                     alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
+                                     ancho_puntosJugador,
+                                     alto_puntosJugador};
+
+    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
+    int indiceJugador = 0;
+    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+
+        puntosJugador.str("");
+        //int id;
+        string nombreJugador = parIdJugador.second.nombreJugador;
+        puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.puntos;
+
+        cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
+                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
+                          ancho_puntosJugador,
+                          alto_puntosJugador};
+
+        int idColor = parIdJugador.second.mario.idImagen;
+
+        if( parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+            idColor = MARIO_GRIS;
+        }
+
+        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+
+        desfase_puntosJugador +=40;
+        indiceJugador++;
+    }
+
+}
+
+void DibujadorPuntos::dibujarPuntosGameOver(JuegoCliente *juegoCliente) {
+    if(nivelAMostrarPuntos == 0){
+        dibujarPuntosTotalesGameOver(juegoCliente);
+    }else {
+        dibujarPuntosDelNivel(juegoCliente);
+    }
+}

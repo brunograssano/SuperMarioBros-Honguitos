@@ -10,6 +10,7 @@ class DibujadorPuntos{
     public:
         DibujadorPuntos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
         void dibujarPuntos(JuegoCliente* juegoCliente);
+        void dibujarPuntosGameOver(JuegoCliente* juegoCliente);
         void disminuirNivelAMostrarPuntos(int ultimoNivel);
         void aumentarNivelAMostrarPuntos (int ultimoNivel);
         void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color);
@@ -23,6 +24,8 @@ class DibujadorPuntos{
 
         void dibujarPuntosTotales(JuegoCliente *juegoCliente);
         void dibujarPuntosDelNivel(JuegoCliente *juegoCliente);
+        void dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente);
+
 };
 
 

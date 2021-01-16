@@ -69,9 +69,13 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
     SDL_RenderFillRect(renderizador, &borde_puntos);
 
     int textosDibujados = 1;
-    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+    int indiceJugador = 0;
+    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()) {
+
+        podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
         puntosJugador.str("");
-        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
+        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        puntosJugador << "Puntos de " << nombreJugador << ": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/3 - ancho_puntosJugador/2,
                           alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
@@ -87,13 +91,14 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
             cuadradoCorazon.x += 25;
         }
 
-        int idColor = parIdJugador.first;
+        int idColor = podio.ids[indiceJugador];
 
-        if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+        if (juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS) {
             idColor = MARIO_GRIS;
         }
         renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
         textosDibujados++;
+        indiceJugador++;
     }
 
     renderizarTexto(cuadradoFinNivel, textoFinNivel.str().c_str(), colorDefault);

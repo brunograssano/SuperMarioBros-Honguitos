@@ -75,9 +75,11 @@ private:
         void empujarEnY(rectangulo_t rectanguloBloque,int direccion);
         void hacerseDeFuego(void* pVoid);
         void inicializarMapasDeColision() override;
+        void inicializarMapaMorirPorEnemigos();
         void agregarPuntos(void* puntos = nullptr);
         void swapDeModificador(ModificadorMario *nuevoModificador);
         void matarEnemigo(void* puntos = nullptr);
+
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
 		SpriteMario * spriteMario;
@@ -87,6 +89,7 @@ private:
 		int numeroJugador;
 		bool estaConectadoElJugador;
         bool agarreUnaFlorEnEsteInstante;
+        bool estaEnModoTest;
 };
 
 #endif // SRC_SERVER_MODELO_MARIO_HPP_

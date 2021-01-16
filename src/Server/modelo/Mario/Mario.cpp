@@ -18,34 +18,28 @@ Mario::Mario(int numeroJugador){
 	this->vidaMario = new VidaMario();
 	this->numeroJugador = numeroJugador;
 	this->estaConectadoElJugador = true;
-    agarreUnaFlorEnEsteInstante = false;
+    this->agarreUnaFlorEnEsteInstante = false;
+    this->estaEnModoTest = false;
     Mario::inicializarMapasDeColision();
 }
 
 void Mario::inicializarMapasDeColision(){
-    auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
     auto pMatar = (void (Colisionable::*)(void*)) &Mario::matarEnemigo;
     auto pGanarPuntos = (void (Colisionable::*)(void*)) &Mario::agregarPuntos;
     auto pHacerseDeFuego = (void (Colisionable::*)(void*)) &Mario::hacerseDeFuego;
 
-    Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
     Colisionable::parFuncionColisionContexto_t parMatarGoomba = {pMatar, (void *) &PUNTOS_GOOMBA};
     Colisionable::parFuncionColisionContexto_t parMatarKoopa = {pMatar, (void *) &PUNTOS_KOOPA};
     Colisionable::parFuncionColisionContexto_t parAgarrarMoneda = {pGanarPuntos, (void* ) &PUNTOS_POR_MONEDA};
     Colisionable::parFuncionColisionContexto_t parHacerseDeFuego = {pHacerseDeFuego, nullptr};
 
-    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parPerderVida;
-    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parPerderVida;
+
     mapaColisionesPorDerecha[COLISION_ID_MONEDA] = parAgarrarMoneda;
     mapaColisionesPorDerecha[COLISION_ID_FLOR] = parHacerseDeFuego;
 
-    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parPerderVida;
-    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorIzquierda[COLISION_ID_MONEDA] = parAgarrarMoneda;
     mapaColisionesPorIzquierda[COLISION_ID_FLOR] = parHacerseDeFuego;
 
-    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
-    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_MONEDA] = parAgarrarMoneda;
     mapaColisionesPorArriba[COLISION_ID_FLOR] = parHacerseDeFuego;
 
@@ -53,6 +47,8 @@ void Mario::inicializarMapasDeColision(){
     mapaColisionesPorAbajo[COLISION_ID_GOOMBA] = parMatarGoomba;
     mapaColisionesPorAbajo[COLISION_ID_MONEDA] = parAgarrarMoneda;
     mapaColisionesPorAbajo[COLISION_ID_FLOR] = parHacerseDeFuego;
+
+    inicializarMapaMorirPorEnemigos();
 }
 
 SpriteMario* Mario::obtenerSpite(){
@@ -172,10 +168,12 @@ int Mario::obtenerVida(){
 }
 
 void Mario::perderVida(void* ptr) {
-    ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
-    posicion->reiniciar();
+    posicion->reiniciar();  //todo: Piso más cercano.
     movimiento->reiniciar();
-    swapDeModificador(nuevoModificador);
+    if(!this->estaEnModoTest){
+        ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
+        swapDeModificador(nuevoModificador);
+    }
 }
 
 void Mario::swapDeModificador(ModificadorMario* nuevoModificador){
@@ -291,7 +289,22 @@ bool Mario::debeColisionar() {
 }
 
 void Mario::alternarModoTest() {
-    //todo completar con el modo test
+    auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
+    Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
+
+    this->estaEnModoTest = !this->estaEnModoTest;
+
+    if(estaEnModoTest){
+        mapaColisionesPorArriba.erase(COLISION_ID_KOOPA);
+        mapaColisionesPorArriba.erase(COLISION_ID_GOOMBA);
+        mapaColisionesPorDerecha.erase(COLISION_ID_KOOPA);
+        mapaColisionesPorDerecha.erase(COLISION_ID_GOOMBA);
+        mapaColisionesPorIzquierda.erase(COLISION_ID_KOOPA);
+        mapaColisionesPorIzquierda.erase(COLISION_ID_GOOMBA);
+    }else{
+        inicializarMapaMorirPorEnemigos();
+    }
+
 }
 
 void Mario::desconectar() {
@@ -312,4 +325,16 @@ Mario::~Mario(){
     delete this->movimiento;
     delete this->modificador;
     delete this->vidaMario;
+}
+
+void Mario::inicializarMapaMorirPorEnemigos() {
+    auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
+    Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
+
+    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
 }

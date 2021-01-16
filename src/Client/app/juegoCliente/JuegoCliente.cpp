@@ -3,7 +3,7 @@
 #define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20 /* para evitar el delay por renderizar cosas viejas y no nuevas */
 #define RANGO_VISTA 100
 
-JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla){
+JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla, podio_t podios[MAX_CANT_NIVELES], unsigned short topePodios, podio_t podioPuntosAcumulados){
 	for(int i = 0; i<cantidadJugadores;i++){
 		this->jugadores[jugadores[i].mario.idImagen] = jugadores[i];
 	}
@@ -17,6 +17,13 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->perdieron = false;
 	this->anchoVista = anchoPantalla;
 	this->hayQueMostrarPuntosDeNivel = false;
+
+	for(int i =0; i<topePodios; i++){
+	    this->podios.push_back(podios[i]);
+	    nivelesJugados++;
+	}
+
+	this->podioPuntosTotales = podioPuntosAcumulados;
 }
 
 bool JuegoCliente::ganaronElJuego() const{
@@ -141,9 +148,10 @@ list<efecto_t> JuegoCliente::obtenerEfectos() {
 }
 
 void JuegoCliente::agregarNivel(nivel_t nivel) {
-    if(numeroMundo != 0 ){this->hayQueMostrarPuntosDeNivel = true;}
+
     pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_lock(&mutex);
+    if(numeroMundo != 0 ){this->hayQueMostrarPuntosDeNivel = true;}
     numeroMundo = nivel.mundo;
     ladrillos.clear();
     tuberias.clear();
@@ -159,11 +167,28 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     }
 
     podios.push_back(nivel.podio);
+    podioPuntosTotales = nivel.podioPuntosAcumulados;
+    nivelesJugados++;
 
     pthread_mutex_unlock(&mutex);
-    nivelesJugados++;
+
 }
 
 int JuegoCliente::obtenerNivelesJugados()  {
     return nivelesJugados;
+}
+
+void JuegoCliente::agregarInfoFinJuego(info_fin_juego_t infoFinJuego) {
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_lock(&mutex);
+    this->infoFinJuego = infoFinJuego;
+    pthread_mutex_unlock(&mutex);
+}
+
+info_fin_juego_t JuegoCliente::obtenerInfoFinJuego() {
+    return infoFinJuego;
+}
+
+podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
+    return this->podioPuntosTotales;
 }

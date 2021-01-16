@@ -16,6 +16,7 @@ Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, 
 
     camara = new Camara(alto_pantalla, ancho_pantalla);
     hanGanado = false;
+    // TODO: INICIALIZAR PODIO ACUMULADO COMO VACIO?, QUE PASA SI PIERDEN ANTES DEL PRIMER NIVEL??
 }
 
 
@@ -43,7 +44,6 @@ void Juego::avanzarNivel(){
 
     if(niveles.empty()){
         hanGanado = true;
-        //ENVIAR UN NIVEL MAS??????
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
@@ -141,6 +141,32 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
     info_partida.cantidadJugadores = jugadores.size();
     info_partida.idPropio = IDJugador;
 
+    int indicePodio = 0;
+    if(!podios.empty()) {
+        for (auto const &podio: podios) {
+            info_partida.podios[indicePodio].cantidadJugadores = 0;
+            for (int indiceJugador = 0; indiceJugador < podio->getPodioNivel().size(); indiceJugador++) {
+                info_partida.podios[indicePodio].puntosNivel[indiceJugador] = podio->getPodioNivel().at(
+                        indiceJugador).second;
+                info_partida.podios[indicePodio].ids[indiceJugador] = podio->getPodioNivel().at(
+                        indiceJugador).first->obtenerNumeroJugador();
+                info_partida.podios[indicePodio].cantidadJugadores++;
+            }
+            indicePodio++;
+        }
+        Podio* ultimoPodio = podios.back();
+        info_partida.podioPuntosAcumulados.cantidadJugadores = 0;
+        for(int indiceJugador = 0; indiceJugador < ultimoPodio->getPodioTotal().size(); indiceJugador++){
+            info_partida.podioPuntosAcumulados.puntosNivel[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).second;
+            info_partida.podioPuntosAcumulados.ids[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
+            info_partida.podioPuntosAcumulados.cantidadJugadores++;
+        }
+
+
+    }
+    info_partida.topePodios = indicePodio;
+
+
     for(int i=0;i<jugadores.size();i++){
         info_partida.jugadores[i].puntos = 0;
         info_partida.jugadores[i].mario.idImagen = i;
@@ -156,7 +182,6 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
         i++;
     }
     info_partida.cantidadFondosNiveles = i;
-
     info_partida.mundo = obtenerMundoActual();
 
     return info_partida;
@@ -176,7 +201,6 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
         info_ronda.jugadores[i] = jugadorSerializado;
     }
 
-
     if(!niveles.empty())
         niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, camara);
     return info_ronda;
@@ -189,15 +213,23 @@ nivel_t Juego::serializarNivel(){
     if(!niveles.empty())
         niveles.front()->completarInformacionNivel(&nivel);
 
+    //SE AGREGA EL ULTIMO PODIO DE NIVEL Y SE ACTUALIZA EL PODIO PUNTOS TOTALES
     if(!podios.empty()){
         Podio* podioAEnviar = this->podios.back();
         nivel.podio.cantidadJugadores = 0;
 
-        for(int i = 0; i < podioAEnviar->getPodioNivel().size(); i++) {
-            nivel.podio.puntosNivel[i] = podioAEnviar->getPodioNivel().at(i).second;
+        for(int indiceJugador = 0; indiceJugador < podioAEnviar->getPodioNivel().size(); indiceJugador++) {
+            nivel.podio.puntosNivel[indiceJugador] = podioAEnviar->getPodioNivel().at(indiceJugador).second;
+            nivel.podio.ids[indiceJugador] = podioAEnviar->getPodioNivel().at(indiceJugador).first->obtenerNumeroJugador();
             nivel.podio.cantidadJugadores++;
         }
-        podios.pop_back();
+
+        Podio* ultimoPodio = this->podios.back();
+        for(int indiceJugador = 0; indiceJugador < ultimoPodio->getPodioTotal().size(); indiceJugador++){
+            nivel.podioPuntosAcumulados.puntosNivel[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).second;
+            nivel.podioPuntosAcumulados.ids[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
+            nivel.podioPuntosAcumulados.cantidadJugadores++;
+        }
     }
 
     return nivel;

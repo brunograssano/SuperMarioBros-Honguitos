@@ -39,6 +39,7 @@ class Cliente{
 		void ejecutar();
 		void empezarJuego(info_partida_t info_partida);
         void recibirInformacionNivel(nivel_t nivel);
+        void recibirInformacionFinJuego(info_fin_juego_t infoFinJuego);
 
 private:
         static void esperar(const bool *condicionAEsperar);
@@ -66,6 +67,8 @@ private:
 		unsigned short cantidadJugadoresActivos;
 
 		GameLoop* gameLoop;
+
+
 };
 
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

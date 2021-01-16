@@ -40,7 +40,8 @@ App::App(info_partida_t informacion, Cliente *cliente) {
 
     rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
-    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,ancho_pantalla);
+    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,ancho_pantalla,
+                                    informacion.podios, informacion.topePodios, informacion.podioPuntosAcumulados);
 
     sePusoMusicaInicio = false;
     sonoSalto = false;
@@ -185,3 +186,6 @@ void App::agregarNivel(nivel_t nivel) {
     // TODO logica para que se muestren las pantallas intermedias?
 }
 
+void App::agregarInfoFinJuego(info_fin_juego_t infoFinJuego){
+    juegoCliente->agregarInfoFinJuego(infoFinJuego);
+}

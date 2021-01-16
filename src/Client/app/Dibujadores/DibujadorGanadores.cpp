@@ -100,7 +100,7 @@ void DibujadorGanadores::dibujarPuntosTotales(JuegoCliente* juegoCliente){
     stringstream puntosJugador;
 
     stringstream tituloPuntos;
-    tituloPuntos << "Puntos Totales";
+    tituloPuntos << "Puntos totales";
 
     SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                                      alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
@@ -108,25 +108,32 @@ void DibujadorGanadores::dibujarPuntosTotales(JuegoCliente* juegoCliente){
                                      alto_puntosJugador};
 
     renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
-
+    int indiceJugador = 0;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
+
+        podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
         puntosJugador.str("");
-        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << parIdJugador.second.puntos;
+        //int id;
+        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                           alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
                           ancho_puntosJugador,
                           alto_puntosJugador};
 
-        int idColor = parIdJugador.first;
-        if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+        int idColor = podio.ids[indiceJugador];
+
+        if( juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS){
             idColor = MARIO_GRIS;
         }
 
         renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
 
         desfase_puntosJugador +=40;
+        indiceJugador++;
     }
+
 
 }
 
@@ -205,17 +212,20 @@ void DibujadorGanadores::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
     int indiceJugador = 0;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
 
+        podio_t podio = juegoCliente->obtenerPodios().at(nivelAMostrarPuntos);
         puntosJugador.str("");
-        NOMBRE: juegoCliente->obtenerJugadores()[]
-        puntosJugador << "Puntos de "<< parIdJugador.second.nombreJugador <<": " << juegoCliente->obtenerPodios().at(nivelAMostrarPuntos).puntosNivel[indiceJugador];
+        //int id;
+        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                           alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
                           ancho_puntosJugador,
                           alto_puntosJugador};
 
-        int idColor = parIdJugador.first;
-        if(parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
+        int idColor = podio.ids[indiceJugador];
+
+        if( juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS){
             idColor = MARIO_GRIS;
         }
 

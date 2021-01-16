@@ -51,7 +51,10 @@ void PodioTest::test02CuandoLePedisAlPodioQueTeDeElPodioParcialElPrimeroEsElDeMa
     algunMario->agregarPuntos(500);
     vector<pair<Mario*, int>> resultados = podio->getPodioNivel();
     int puntosEsperados = resultados.at(0).second;
+    vector<pair<Mario*, int>> resultadosTotales = podio->getPodioTotal();
+    int puntosTotales = resultadosTotales.at(0).second;
     testSuite->assert(puntosEsperados,500,"El jugador que tiene mas puntos tiene 500");
     puntosEsperados = resultados.at(2).second;
     testSuite->assert(puntosEsperados,50,"El jugador que tiene menos puntos tiene 50");
+    testSuite->assert(puntosTotales,500,"El  jugador que tiene mas puntos totales tiene 500");
 }

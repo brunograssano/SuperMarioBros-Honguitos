@@ -12,7 +12,7 @@ using namespace std;
 class JuegoCliente{
 
 	public:
-		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla);
+		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla, podio_t podios[MAX_CANT_NIVELES], unsigned short topePodios, podio_t podioPuntosTotales);
 		~JuegoCliente() = default;
 
 		void agregarRonda(info_ronda_t ronda);
@@ -23,6 +23,7 @@ class JuegoCliente{
 		list<moneda_t> obtenerMonedas();
         list<tuberia_t> obtenerTuberias();
         list<efecto_t> obtenerEfectos();
+        info_fin_juego_t obtenerInfoFinJuego();
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
 		int obtenerNivelesJugados() ;
@@ -30,11 +31,15 @@ class JuegoCliente{
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
+		podio_t obtenerPodioPuntosAcumulados();
         vector<podio_t> obtenerPodios();
         bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador
 
     void agregarNivel(nivel_t nivel);
-  private:
+
+    void agregarInfoFinJuego(info_fin_juego_t juego);
+
+private:
     bool enRango(int posX) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
@@ -46,6 +51,8 @@ class JuegoCliente{
         list<tuberia_t> tuberias;
         list<efecto_t> efectos;
         vector<podio_t> podios;
+        podio_t podioPuntosTotales;
+        info_fin_juego_t infoFinJuego;
 		int cantidadJugadores;
 		int idPropio;
 

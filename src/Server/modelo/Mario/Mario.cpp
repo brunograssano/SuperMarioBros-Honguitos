@@ -23,6 +23,10 @@ SpriteMario* Mario::obtenerSpite(){
 	return spriteMario;
 }
 
+int Mario::obtenerNumeroJugador(){
+    return this->numeroJugador;
+}
+
 void Mario::actualizarSaltarMario(){
 	movimiento->saltar();
 	spriteMario->actualizarSpriteMarioSaltar();

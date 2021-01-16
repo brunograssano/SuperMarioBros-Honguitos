@@ -7,6 +7,7 @@
 #include "EscuchadorSonido.hpp"
 #include "EscuchadorLog.hpp"
 #include "EscuchadorNivel.hpp"
+#include "EscuchadorFinDeJuego.hpp"
 
 EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar) {
     escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, cliente);
@@ -16,6 +17,7 @@ EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* te
     escuchadores[RONDA] = new EscuchadorRonda(socketCliente, cliente);
     escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
     escuchadores[NIVEL] = new EscuchadorNivel(socketCliente,cliente);
+    escuchadores[INFO_FIN_JUEGO] = new EscuchadorFinDeJuego(socketCliente, cliente);
     this->socketCliente = socketCliente;
     this->terminoJuego = terminoJuego;
     this->terminoEscuchar = terminoEscuchar;

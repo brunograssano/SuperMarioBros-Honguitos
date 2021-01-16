@@ -46,6 +46,8 @@ class Mario: public Observable{
         void perderVida();
         int obtenerVida();
         void hacerseDeFuego();
+        int obtenerNumeroJugador();
+
         Disparo* dispararFuego();
 
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);
@@ -70,6 +72,7 @@ class Mario: public Observable{
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;
+
 };
 
 

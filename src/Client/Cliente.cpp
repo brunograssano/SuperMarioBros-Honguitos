@@ -164,6 +164,11 @@ Cliente::~Cliente(){
 
 }
 
+void Cliente::recibirInformacionFinJuego(info_fin_juego_t infoFinJuego){
+    App* aplicacion = App::getInstance();
+    aplicacion->agregarInfoFinJuego(infoFinJuego);
+}
+
 void Cliente::recibirInformacionNivel(nivel_t nivel) {
     esperar(&cargoLaAplicacion);
     App* aplicacion = App::getInstance();

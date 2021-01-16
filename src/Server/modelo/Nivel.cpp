@@ -329,8 +329,8 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     ptrInfoRonda->topeEfectos = numeroEfecto;
 }
 
-void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
-    piso.agregarPozo(posicionXNuevoPozo,tipoPozo);
+void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
+    piso.agregarPozo(posicionX, tipoPozo, fondo);
 }
 
 void Nivel::terminar() {

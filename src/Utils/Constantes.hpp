@@ -69,6 +69,7 @@ const uint8_t SIN_MODIFICADOR = 0, MODIFICADOR_FUEGO = 1;
 #define CLAVE_TEXTURA_PEACH_SALTANDO "PeachSaltando"
 #define CLAVE_TEXTURA_TOAD_SALTANDO "ToadSaltando"
 #define CLAVE_TEXTURA_YOSHI_SALTANDO "YoshiSaltando"
+#define CLAVE_TEXTURA_FONDO_POZO "FondoPozo"
 
 #define MUSICA_VICTORIA "resources/Musica/MusicaVictoria.mp3"
 #define MUSICA_GAMEOVER "resources/Musica/CoffinDance8Bits.mp3"

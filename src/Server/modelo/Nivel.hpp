@@ -27,7 +27,7 @@ class Nivel{
         ~Nivel();
 		void inicializar();
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
-        void agregarPozo(int posicionX,int tipoPozo);
+        void agregarPozo(int posicionX, int tipoPozo, int fondo);
 		void agregarPlataforma(list<Bloque *> unaPlataforma);
 		void agregarEnemigo(Enemigo* unEnemigo);
 		void agregarMoneda(Moneda* unaMoneda);

@@ -104,7 +104,7 @@ void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	dibujarTextoGanadores(juegoCliente);
 	dibujarPersonajes();
 	SDL_RenderPresent( renderizador );
-	for(auto particula:particulas){
+	for(auto& particula:particulas){
 		particula.actualizarPosicion(alto_pantalla);
 	}
 	spritePeach->actualizarSprite();

@@ -39,10 +39,11 @@ void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoClien
 	SDL_RenderClear( renderizador );
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, nullptr);
 
-	dibujarEnemigos(rectanguloCamara, juegoCliente);
 	dibujarPlataformas(rectanguloCamara, juegoCliente);
+    dibujarFondoPozos(rectanguloCamara, juegoCliente);
+    dibujarTuberias(rectanguloCamara, juegoCliente);
 	dibujarMonedas(rectanguloCamara, juegoCliente);
-	dibujarTuberias(rectanguloCamara, juegoCliente);
+    dibujarEnemigos(rectanguloCamara, juegoCliente);
     dibujarEfectos(rectanguloCamara, juegoCliente);
     dibujarMarios(rectanguloCamara, juegoCliente);
     dibujarPozos(rectanguloCamara,juegoCliente);
@@ -91,6 +92,20 @@ void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente*
 	}
 
 }
+
+void DibujadorJuego::dibujarFondoPozos(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente) {
+    list<pozo_t> pozos = juegoCliente->obtenerPozos();
+    SDL_Texture* texturaFondoPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_POZO);
+    for (auto const& pozo : pozos) {
+        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara->x,
+                                   alto_pantalla - (int)(alto_pantalla*0.12),
+                                   ANCHO_POZO, (int)(alto_pantalla*0.12)};
+        SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.fondo);
+        recortePozo.y += 1; // TODO acomodar o crear un nuevo recorte, agarra una parte de la imagen de arriba
+        SDL_RenderCopy( renderizador, texturaFondoPozos, &recortePozo, &rectanguloPozo);
+    }
+}
+
 
 void DibujadorJuego::dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
     list<pozo_t> pozos = juegoCliente->obtenerPozos();
@@ -231,6 +246,6 @@ DibujadorJuego::~DibujadorJuego(){
     clavesEfectos.clear();
 }
 
-int DibujadorJuego::obtenerEspaciado(int cantidadJugadores) {
+int DibujadorJuego::obtenerEspaciado(int cantidadJugadores) { // TODO HACER QUE SE ACOMODEN LOS VALORES DE ACUERDO AL ANCHO PANTALLA
     return cantidadJugadores == 2 ? 500 : cantidadJugadores == 3 ? 250 : 170;
 }

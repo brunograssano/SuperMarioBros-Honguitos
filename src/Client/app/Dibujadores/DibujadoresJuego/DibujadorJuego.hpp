@@ -60,6 +60,7 @@ class DibujadorJuego : public Dibujador{
         void dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
         void dibujarEfectos(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
         static int obtenerEspaciado(int cantidadJugadores);
+        void dibujarFondoPozos(SDL_Rect *rectanguloCamara, JuegoCliente *juagoCliente);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

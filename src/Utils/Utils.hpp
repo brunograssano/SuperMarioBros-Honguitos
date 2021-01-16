@@ -95,6 +95,7 @@ typedef struct tuberia {
 
 typedef struct pozo {
     unsigned short posX;
+    uint8_t fondo;
     uint8_t tipo;
 }pozo_t;
 

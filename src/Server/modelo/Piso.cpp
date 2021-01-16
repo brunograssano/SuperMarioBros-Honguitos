@@ -8,8 +8,8 @@ Piso::Piso(int altoPiso) {
     alto = altoPiso;
 }
 
-void Piso::agregarPozo(int posicionXPozo,int tipoPozo) {
-    auto pozo = Pozo(posicionXPozo, tipoPozo);
+void Piso::agregarPozo(int posicionPozo, int tipoPozo, int fondo) {
+    auto pozo = Pozo(posicionPozo, tipoPozo, fondo);
     pozos.push_back(pozo);
 }
 

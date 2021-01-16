@@ -1,8 +1,9 @@
 #include "Pozo.hpp"
 
-Pozo::Pozo(int posX, int tipo) {
-    this->posicionX =  posX;
+Pozo::Pozo(int posicionX, int tipo, int fondo) {
+    this->posicionX =  posicionX;
     this->tipo = tipo;
+    this->fondo = fondo;
 }
 
 unsigned short Pozo::obtenerPosicionX() const {
@@ -10,5 +11,5 @@ unsigned short Pozo::obtenerPosicionX() const {
 }
 
 pozo_t Pozo::serializar(){
-    return {posicionX,tipo};
+    return {posicionX,fondo,tipo};
 }

@@ -6,7 +6,7 @@
 class Pozo {
 
 public:
-    Pozo(int posicionX, int tipo);
+    Pozo(int posicionX, int tipo, int fondo);
     unsigned short obtenerPosicionX() const;
 
     pozo_t serializar();
@@ -14,6 +14,7 @@ public:
 private:
     unsigned short posicionX;
     uint8_t tipo;
+    uint8_t fondo;
 };
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_POZO_HPP

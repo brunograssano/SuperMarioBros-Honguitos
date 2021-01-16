@@ -10,7 +10,7 @@ class Piso {
         explicit Piso(int altoPiso);
         void inicializar();
         ~Piso();
-        void agregarPozo(int posicionPozo,int tipoPozo);
+        void agregarPozo(int posicionPozo, int tipoPozo, int fondo);
         list<Colisionable*> obtenerPiso();
         list<pozo_t> serializar();
         int obtenerAltura();

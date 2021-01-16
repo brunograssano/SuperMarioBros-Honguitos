@@ -30,8 +30,8 @@ void Dibujadores::dibujarPantallaFinNivel(JuegoCliente* juegoCliente){
 }
 
 
-void Dibujadores::dibujarGameOver(){
-	dibujadorGameOver->dibujar();
+void Dibujadores::dibujarGameOver(JuegoCliente* juegoCliente){
+	dibujadorGameOver->dibujar(juegoCliente);
 }
 
 void Dibujadores::dibujarErrorServidor(){
@@ -44,6 +44,7 @@ void Dibujadores::dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCli
 
 void Dibujadores::agregarEventoADibujadores(SDL_Event eventoClick){
     dibujadorGanadores->agregarEventoDeClick(eventoClick);
+    dibujadorGameOver->agregarEventoDeClick(eventoClick);
 }
 
 Dibujadores::~Dibujadores(){

@@ -7,10 +7,14 @@ DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Ren
 	this->cargadorTexturas = cargadorTexturas;
 	this->renderizador = renderizador;
 	this->spriteCoffinMario = new SpriteCoffinMario();
+    this->botonIzquierdo = new BotonConTexto(50,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+    this->botonDerecho = new BotonConTexto(310,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
 
 
-void DibujadorGameOver::dibujar(){
+void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
+
 	SDL_RenderClear( renderizador );
 
 	SDL_Rect rectanguloCamara = {0, 0, alto_pantalla, ancho_pantalla};
@@ -18,13 +22,28 @@ void DibujadorGameOver::dibujar(){
 	int posicionXCoffinMario = this->spriteCoffinMario->obtenerPosicionX();
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoGameOver"), &rectanguloCamara, NULL);
 
+	/*MODULARIZAR*/
+    botonIzquierdo->mostrarse();
+    botonDerecho->mostrarse();
+    int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
+
+    if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
+        dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
+        this->eventoMouse.type = NULL;
+    } else if (botonDerecho->botonClickeado(this->eventoMouse)) {
+        dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
+        this->eventoMouse.type = NULL;
+    }
+    dibujadorPuntos->dibujarPuntos(juegoCliente);
+	/**/
+
 	stringstream textoGameOver;
 	textoGameOver.str("");
 	textoGameOver << "GAME OVER";
 	int ancho_textoGameOver = 450;
 	int alto_textoGameOver = 80;
 	SDL_Rect cuadradoGameOver = {ancho_pantalla/2 -ancho_textoGameOver/2,
-							alto_pantalla/2 - alto_textoGameOver/2,
+							alto_pantalla/7,
 							ancho_textoGameOver,
 							alto_textoGameOver}; //Los coloco en el centro.
 
@@ -39,4 +58,11 @@ void DibujadorGameOver::dibujar(){
 
 DibujadorGameOver::~DibujadorGameOver(){
 	delete this->spriteCoffinMario;
+	delete this->dibujadorPuntos;
+	delete this->botonIzquierdo;
+	delete this->botonDerecho;
+}
+
+void DibujadorGameOver::agregarEventoDeClick(SDL_Event eventoClick) {
+    this->eventoMouse = eventoClick;
 }

@@ -1,6 +1,7 @@
 #include "DibujadorGanadores.hpp"
 #include "src/Client/app/ManejadorSDL.hpp"
 
+
 const int ANCHO_FONDO = 8177;
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
@@ -8,7 +9,7 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	this->renderizador= renderizador;
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
-	this->nivelAMostrarPuntos = 0;
+	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 
 	this->botonIzquierdo = new BotonConTexto(50,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
     this->botonDerecho = new BotonConTexto(310,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
@@ -26,11 +27,6 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	spriteToad = new SpriteToadSaltando();
 	spriteYoshi = new SpriteYoshiSaltando();
 
-	colores[-1] = {150, 150 , 150, 255}; // Gris.
-	colores[0] = {230, 30 , 044, 255}; // Rojo.
-	colores[1] = {69 , 230, 52 , 255}; // Verde.
-	colores[2] = {179, 25 , 252, 255}; // Violeta.
-	colores[3] = {76 , 225, 252, 255}; // Celeste.
 }
 
 void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
@@ -38,14 +34,15 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
     botonDerecho->mostrarse();
     int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
     dibujarTitulo();
+
     if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
-        disminuirNivelAMostrarPuntos(ultimoNivel);
+        dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
         this->eventoMouse.type = NULL;
     } else if (botonDerecho->botonClickeado(this->eventoMouse)) {
-        aumentarNivelAMostrarPuntos(ultimoNivel);
-       this->eventoMouse.type = NULL;
+        dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
+        this->eventoMouse.type = NULL;
     }
-    dibujarPuntos(juegoCliente);
+    dibujadorPuntos->dibujarPuntos(juegoCliente);
 }
 
 void DibujadorGanadores::dibujarTitulo(){
@@ -62,80 +59,9 @@ void DibujadorGanadores::dibujarTitulo(){
     renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
 }
 
-void DibujadorGanadores::aumentarNivelAMostrarPuntos (int ultimoNivel){
-    if(nivelAMostrarPuntos < ultimoNivel){
-        nivelAMostrarPuntos++;
-    }else{
-        nivelAMostrarPuntos = 0;
-    }
-}
-
-void DibujadorGanadores::disminuirNivelAMostrarPuntos(int ultimoNivel){
-    if(nivelAMostrarPuntos > 0){
-        nivelAMostrarPuntos--;
-    }else{
-        nivelAMostrarPuntos = ultimoNivel;
-    }
-}
-
-void DibujadorGanadores::dibujarPuntos(JuegoCliente *juegoCliente) {
-
-    if(nivelAMostrarPuntos == 0){
-        dibujarPuntosTotales(juegoCliente);
-    }else {
-        dibujarPuntosDelNivel(juegoCliente); //UtilizarNivelAMostrarPuntos, capaz no necesite juegoCliente;
-    }
-
-}
 
 
 
-void DibujadorGanadores::dibujarPuntosTotales(JuegoCliente* juegoCliente){
-
-    int ancho_puntosJugador = 200;
-    int alto_puntosJugador = 30;
-    int desfase_puntosJugador = 50;
-    SDL_Rect cuadradoPuntos;
-
-    stringstream puntosJugador;
-
-    stringstream tituloPuntos;
-    tituloPuntos << "Puntos totales";
-
-    SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
-                                     alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
-                                     ancho_puntosJugador,
-                                     alto_puntosJugador};
-
-    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
-    int indiceJugador = 0;
-    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
-
-        podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
-        puntosJugador.str("");
-        //int id;
-        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
-        puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
-
-        cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
-                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
-                          ancho_puntosJugador,
-                          alto_puntosJugador};
-
-        int idColor = podio.ids[indiceJugador];
-
-        if( juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS){
-            idColor = MARIO_GRIS;
-        }
-
-        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
-
-        desfase_puntosJugador +=40;
-        indiceJugador++;
-    }
-
-
-}
 
 
 void DibujadorGanadores::dibujarParticulas(){
@@ -185,54 +111,11 @@ DibujadorGanadores::~DibujadorGanadores(){
 		delete particula;
 	}
 	particulas.clear();
+	delete this->dibujadorPuntos;
+	delete this->botonDerecho;
+	delete this->botonIzquierdo;
 }
 
 void DibujadorGanadores::agregarEventoDeClick(SDL_Event eventoClick) {
     this->eventoMouse = eventoClick;
-}
-
-void DibujadorGanadores::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
-
-    int ancho_puntosJugador = 200;
-    int alto_puntosJugador = 30;
-    int desfase_puntosJugador = 50;
-    SDL_Rect cuadradoPuntos;
-
-    stringstream puntosJugador;
-
-    stringstream tituloPuntos;
-    tituloPuntos << "Puntos nivel " <<to_string(this->nivelAMostrarPuntos);
-
-    SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
-                                     alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
-                                     ancho_puntosJugador,
-                                     alto_puntosJugador};
-
-    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
-    int indiceJugador = 0;
-    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
-
-        podio_t podio = juegoCliente->obtenerPodios().at(nivelAMostrarPuntos);
-        puntosJugador.str("");
-        //int id;
-        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
-        puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
-
-        cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
-                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
-                          ancho_puntosJugador,
-                          alto_puntosJugador};
-
-        int idColor = podio.ids[indiceJugador];
-
-        if( juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS){
-            idColor = MARIO_GRIS;
-        }
-
-        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
-
-        desfase_puntosJugador +=40;
-        indiceJugador++;
-    }
-
 }

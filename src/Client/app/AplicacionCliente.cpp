@@ -160,7 +160,7 @@ void App::dibujar(){
                 ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
                 terminoElJuego = true;
             }
-            dibujador->dibujarGameOver();
+            dibujador->dibujarGameOver(juegoCliente);
         }else if(juegoCliente->hayQueMostrarPuntosDeNivel){
                 dibujador->dibujarPantallaFinNivel(juegoCliente);
 		}else if(!terminoElJuego){

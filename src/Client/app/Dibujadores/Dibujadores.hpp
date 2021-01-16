@@ -26,7 +26,7 @@ class Dibujadores{
 	public:
 		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, bool leidoCorrectamente);
 		void dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarGameOver();
+		void dibujarGameOver(JuegoCliente* juegoCliente);
 		void dibujarInicio();
 		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
 		void dibujarPantallaFinNivel(JuegoCliente *juegoCliente);

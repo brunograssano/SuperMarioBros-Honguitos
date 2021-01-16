@@ -4,9 +4,6 @@
 using namespace std;
 
 void Podio::recibirJugadores(map<int, Mario *> jugadores) {
-    //for (auto& elemento : jugadores) {
-    //    puntajeTotal.push_back(elemento); //ESTO ESTA MAL NO?
-    //}
     for(auto parJugador:jugadores){
         puntajeParcial.push_back(make_pair(parJugador.second,0));
         puntajeNivelAnterior.push_back(make_pair(parJugador.second,parJugador.second->obtenerPuntos()));

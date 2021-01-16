@@ -12,7 +12,7 @@ using namespace std;
 class JuegoCliente{
 
 	public:
-		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla, podio_t podios[MAX_CANT_NIVELES], unsigned short topePodios, podio_t podioPuntosTotales);
+		JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla, podio_t podios[], unsigned short topePodios, podio_t podioPuntosTotales);
 		~JuegoCliente() = default;
 
 		void agregarRonda(info_ronda_t ronda);
@@ -23,7 +23,6 @@ class JuegoCliente{
 		list<moneda_t> obtenerMonedas();
         list<tuberia_t> obtenerTuberias();
         list<efecto_t> obtenerEfectos();
-        info_fin_juego_t obtenerInfoFinJuego();
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
 		int obtenerNivelesJugados() ;

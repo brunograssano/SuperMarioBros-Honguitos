@@ -25,7 +25,8 @@ class Juego{
         bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
-		list<Podio*> podios;
+		vector<podio_t> podios;
+		podio_t podioAcumulado;
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();
@@ -55,6 +56,8 @@ class Juego{
         nivel_t serializarNivel();
 
     int cantidadDeNiveles();
+
+    void guardarPodio(Podio *podio);
 };
 
 

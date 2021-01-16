@@ -3,7 +3,7 @@
 #define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20 /* para evitar el delay por renderizar cosas viejas y no nuevas */
 #define RANGO_VISTA 100
 
-JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla, podio_t podios[MAX_CANT_NIVELES], unsigned short topePodios, podio_t podioPuntosAcumulados){
+JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla, podio_t podios[], unsigned short topePodios, podio_t podioPuntosAcumulados){
 	for(int i = 0; i<cantidadJugadores;i++){
 		this->jugadores[jugadores[i].mario.idImagen] = jugadores[i];
 	}
@@ -19,6 +19,10 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->hayQueMostrarPuntosDeNivel = false;
 
 	for(int i =0; i<topePodios; i++){
+	    if(i == 0){ //TODO: VER COMO SOLUCIONAR ESTO, SE RECIBE UN PODIO DE MAS
+	        podio_t unPodioVacio;
+	        this->podios.push_back(unPodioVacio);
+	    }
 	    this->podios.push_back(podios[i]);
 	    nivelesJugados++;
 	}
@@ -185,9 +189,6 @@ void JuegoCliente::agregarInfoFinJuego(info_fin_juego_t infoFinJuego) {
     pthread_mutex_unlock(&mutex);
 }
 
-info_fin_juego_t JuegoCliente::obtenerInfoFinJuego() {
-    return infoFinJuego;
-}
 
 podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
     return this->podioPuntosTotales;

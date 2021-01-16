@@ -36,9 +36,9 @@ void Juego::avanzarNivel(){
 
     Nivel* nivelViejo = niveles.front();
 
-    this->podios.push_back(nivelViejo->obtenerPodio());
-
     nivelViejo->terminar();
+    guardarPodio(nivelViejo->obtenerPodio());
+
     delete nivelViejo;
     niveles.pop_front();
 
@@ -144,25 +144,10 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
     int indicePodio = 0;
     if(!podios.empty()) {
         for (auto const &podio: podios) {
-            info_partida.podios[indicePodio].cantidadJugadores = 0;
-            for (int indiceJugador = 0; indiceJugador < podio->getPodioNivel().size(); indiceJugador++) {
-                info_partida.podios[indicePodio].puntosNivel[indiceJugador] = podio->getPodioNivel().at(
-                        indiceJugador).second;
-                info_partida.podios[indicePodio].ids[indiceJugador] = podio->getPodioNivel().at(
-                        indiceJugador).first->obtenerNumeroJugador();
-                info_partida.podios[indicePodio].cantidadJugadores++;
-            }
+            info_partida.podios[indicePodio] = podio;
             indicePodio++;
         }
-        Podio* ultimoPodio = podios.back();
-        info_partida.podioPuntosAcumulados.cantidadJugadores = 0;
-        for(int indiceJugador = 0; indiceJugador < ultimoPodio->getPodioTotal().size(); indiceJugador++){
-            info_partida.podioPuntosAcumulados.puntosNivel[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).second;
-            info_partida.podioPuntosAcumulados.ids[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
-            info_partida.podioPuntosAcumulados.cantidadJugadores++;
-        }
-
-
+        info_partida.podioPuntosAcumulados = this->podioAcumulado;
     }
     info_partida.topePodios = indicePodio;
 
@@ -215,21 +200,8 @@ nivel_t Juego::serializarNivel(){
 
     //SE AGREGA EL ULTIMO PODIO DE NIVEL Y SE ACTUALIZA EL PODIO PUNTOS TOTALES
     if(!podios.empty()){
-        Podio* podioAEnviar = this->podios.back();
-        nivel.podio.cantidadJugadores = 0;
-
-        for(int indiceJugador = 0; indiceJugador < podioAEnviar->getPodioNivel().size(); indiceJugador++) {
-            nivel.podio.puntosNivel[indiceJugador] = podioAEnviar->getPodioNivel().at(indiceJugador).second;
-            nivel.podio.ids[indiceJugador] = podioAEnviar->getPodioNivel().at(indiceJugador).first->obtenerNumeroJugador();
-            nivel.podio.cantidadJugadores++;
-        }
-
-        Podio* ultimoPodio = this->podios.back();
-        for(int indiceJugador = 0; indiceJugador < ultimoPodio->getPodioTotal().size(); indiceJugador++){
-            nivel.podioPuntosAcumulados.puntosNivel[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).second;
-            nivel.podioPuntosAcumulados.ids[indiceJugador] = ultimoPodio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
-            nivel.podioPuntosAcumulados.cantidadJugadores++;
-        }
+        nivel.podio = this->podios.back();
+        nivel.podioPuntosAcumulados = this->podioAcumulado;
     }
 
     return nivel;
@@ -262,4 +234,22 @@ Juego::~Juego(){
 
 int Juego::cantidadDeNiveles() {
     return niveles.size();
+}
+
+void Juego::guardarPodio(Podio *podio) {
+    podio_t podioSerializado;
+    podioSerializado.cantidadJugadores = 0;
+    for(int indiceJugador = 0; indiceJugador < podio->getPodioNivel().size(); indiceJugador++) {
+        podioSerializado.puntosNivel[indiceJugador] = podio->getPodioNivel().at(indiceJugador).second;
+        podioSerializado.ids[indiceJugador] = podio->getPodioNivel().at(indiceJugador).first->obtenerNumeroJugador();
+        podioSerializado.cantidadJugadores++;
+    }
+    this->podios.push_back(podioSerializado);
+
+    podioAcumulado.cantidadJugadores = 0;
+    for(int indiceJugador = 0; indiceJugador < podio->getPodioTotal().size(); indiceJugador++){
+        this->podioAcumulado.puntosNivel[indiceJugador] = podio->getPodioTotal().at(indiceJugador).second;
+        this->podioAcumulado.ids[indiceJugador] = podio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
+        this->podioAcumulado.cantidadJugadores++;
+    }
 }

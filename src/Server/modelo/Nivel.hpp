@@ -37,7 +37,7 @@ class Nivel{
 
         /* Completará la información de los siguientes campos:
          * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
-		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* contexto);
+		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto);
         void actualizarModelo(map<int, Mario*> jugadores);
         bool todosEnLaMeta(map<int, Mario*> jugadores);
 		string obtenerDireccionFondoActual();

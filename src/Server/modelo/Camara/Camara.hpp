@@ -19,11 +19,11 @@ class Camara {
         ~Camara() = default;
         void reiniciar();
         void moverCamara(const map<int,Mario*>& jugadores);
-        static bool estaEnRangoHelper(void* ptr, int x);
-        bool estaEnRangoVisible(int posicionX) const;
+        static bool estaEnRangoHelper(void* ptr, rectangulo_t rect);
+        bool estaEnRangoVisible(rectangulo_t rect) const;
         SDL_Rect obtenerRectanguloCamara();
     private:
-        SDL_Rect rectanguloCamara{};
+        rectangulo_t rectanguloCamara{};
 };
 
 

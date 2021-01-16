@@ -19,5 +19,6 @@ void chocar(Colisionable* colisionable1, Colisionable* colisionable2);
 void chocarContraTodos(Colisionable* colisionable, void* colisionables, FuncionLuegoDeColisionar funcion, void* contexto);
 int tipoDeChoque(rectangulo_t rectangulo1, rectangulo_t rectangulo2);
 bool esUnBloque(const string& idColisionable);
+bool colisionan(rectangulo_t rect1, rectangulo_t rect2);
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_COLISIONADOR_HPP

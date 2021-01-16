@@ -3,6 +3,12 @@
 #include "SDL2/SDL.h"
 #include "../Constantes.hpp"
 
+bool colisionan(rectangulo_t rect1, rectangulo_t rect2){
+    SDL_Rect sdl_rect1 = {rect1.x1, rect1.y1, rect1.w, rect1.h};
+    SDL_Rect sdl_rect2 = {rect2.x1, rect2.y1, rect2.w, rect2.h};
+    return SDL_HasIntersection(&sdl_rect1, &sdl_rect2);
+}
+
 int tipoDeChoque(rectangulo_t rect1, rectangulo_t rect2) {
 
     bool derecha = rect1.x1 > rect2.x1 && rect1.x1 < rect2.x2;

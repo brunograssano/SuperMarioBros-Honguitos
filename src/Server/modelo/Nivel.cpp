@@ -283,7 +283,7 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
     }
 }
 
-void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* contexto) {
+void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto) {
     if(!ptrInfoRonda) return;
 
     ptrInfoRonda->tiempoFaltante = contador.tiempoRestante();
@@ -291,17 +291,16 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     int numeroBloque = 0;
     for(auto const& bloque: plataformas){
         bloque_t bloqueSerializado = bloque->serializar();
-        if(bloque->cambioElSprite() && deboAgregarlo(contexto, bloqueSerializado.posX) && numeroBloque < MAX_SORPRESAS){
+        if(bloque->cambioElSprite() && deboAgregarlo(contexto, bloque->obtenerRectangulo()) && numeroBloque < MAX_SORPRESAS){
             ptrInfoRonda->bloques[numeroBloque] = bloqueSerializado;
             numeroBloque++;
         }
-
     }
     ptrInfoRonda->topeBloques = numeroBloque;
 
     int numeroEnemigo = 0;
     for(auto const& enemigo: enemigos){
-        if(deboAgregarlo(contexto, enemigo->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, enemigo->obtenerRectangulo()) &&
            numeroEnemigo<MAX_ENEMIGOS){
             ptrInfoRonda->enemigos[numeroEnemigo] = enemigo->serializar();
             numeroEnemigo++;
@@ -311,16 +310,17 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroMoneda = 0;
     for(auto const& moneda: monedas){
-        if(deboAgregarlo(contexto, moneda->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, moneda->obtenerRectangulo()) &&
            numeroMoneda<MAX_MONEDAS){
             ptrInfoRonda->monedas[numeroMoneda] = moneda->serializar();
             numeroMoneda++;
         }
     }
+
     ptrInfoRonda->topeMonedas = numeroMoneda;
     int numeroEfecto = 0;
     for(auto const& disparo : objetosFugaces){
-        if(deboAgregarlo(contexto, disparo->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, disparo->obtenerRectangulo()) &&
             numeroEfecto<MAX_EFECTOS){
             ptrInfoRonda->efectos[numeroEfecto] = disparo->serializar();
             numeroEfecto++;

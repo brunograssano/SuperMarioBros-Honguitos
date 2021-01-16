@@ -32,7 +32,7 @@ class JuegoCliente{
 		bool perdieronElJuego() const;
         void agregarNivel(nivel_t nivel);
     private:
-        bool enRango(int posX) const;
+        bool enRango(int posX, int w) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
 		list<bloque_t> bloques;

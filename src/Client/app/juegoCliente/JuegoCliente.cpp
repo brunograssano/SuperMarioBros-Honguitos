@@ -1,4 +1,5 @@
 #include "JuegoCliente.hpp"
+#include "src/Utils/Constantes.hpp"
 
 #define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20 /* para evitar el delay por renderizar cosas viejas y no nuevas */
 #define RANGO_VISTA 100
@@ -90,7 +91,7 @@ void JuegoCliente::actualizar(){
     list<bloque_t> ladrillosNuevos;
     bool agregado = false;
     for(auto ladrillo: ladrillos){
-        if(enRango(ladrillo.posX)){
+        if(enRango(ladrillo.posX, LARGO_BLOQUE)){
             for(auto bloque : bloques) {
                 if(ladrillo == bloque){
                     ladrillosASacar.push_front(ladrillo);
@@ -129,8 +130,8 @@ list<bloque_t> JuegoCliente::obtenerBloques(){
 	return bloques;
 }
 
-bool JuegoCliente::enRango(int posX) const {
-    return (posXCamara - RANGO_VISTA) <= posX && posX <= (posXCamara + anchoVista + RANGO_VISTA);
+bool JuegoCliente::enRango(int posX, int w) const {
+    return (posXCamara - RANGO_VISTA) <= posX + w && posX <= (posXCamara + anchoVista + RANGO_VISTA);
 }
 
 list<moneda_t> JuegoCliente::obtenerMonedas(){
@@ -148,7 +149,7 @@ int JuegoCliente::obtenerMundoActual() const{
 list<pozo_t> JuegoCliente::obtenerPozos() {
     list<pozo_t> pozosAMostrar;
     for(auto pozo:pozos){
-        if(enRango(pozo.posX)){
+        if(enRango(pozo.posX, ANCHO_POZO)){
             pozosAMostrar.push_front(pozo);
         }
     }
@@ -159,7 +160,8 @@ list<pozo_t> JuegoCliente::obtenerPozos() {
 list<tuberia_t> JuegoCliente::obtenerTuberias() {
     list<tuberia_t> tuberiasAMostrar;
     for(auto tuberia:tuberias){
-        if(enRango(tuberia.posX)){
+        int ancho = tuberia.tipo==TUBERIA_CHICA?ANCHO_TUBERIA_CHICA:ANCHO_TUBERIA_GRANDE;
+        if(enRango(tuberia.posX, ancho)){
             tuberiasAMostrar.push_front(tuberia);
         }
     }

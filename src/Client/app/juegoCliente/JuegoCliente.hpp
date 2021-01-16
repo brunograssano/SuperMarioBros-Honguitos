@@ -33,8 +33,8 @@ class JuegoCliente{
 		podio_t obtenerPodioPuntosAcumulados();
         vector<podio_t> obtenerPodios();
         bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador
-
-    void agregarNivel(nivel_t nivel);
+        bool hayQueCargarPodioNivel;
+        void agregarNivel(nivel_t nivel);
 
     void agregarInfoFinJuego(info_fin_juego_t juego);
 

@@ -16,6 +16,7 @@ class SinModificador : public ModificadorMario{
         void actualizar()override;
         ModificadorMario* hacerseDeFuego() override;
         bool puedeAgarrarFlor() override;
+        uint8_t serializar() override;
 
     private:
         int ciclosChispa = 0;

@@ -40,3 +40,7 @@ ModificadorMario *SinModificador::hacerseDeFuego() {
 bool SinModificador::puedeAgarrarFlor() {
     return true;
 }
+
+uint8_t SinModificador::serializar() {
+    return SIN_MODIFICADOR;
+}

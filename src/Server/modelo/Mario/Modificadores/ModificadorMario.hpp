@@ -15,7 +15,8 @@ class ModificadorMario {
         virtual ModificadorMario* hacerseDeFuego() = 0;
         virtual void actualizar() = 0;
         virtual bool puedeAgarrarFlor() = 0;
-    protected:
+        virtual uint8_t serializar() = 0;
+protected:
         Mario* marioAsociado;
 
 };

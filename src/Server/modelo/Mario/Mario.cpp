@@ -116,6 +116,7 @@ jugador_t Mario::serializar(const char nombreJugador[MAX_NOMBRE], unsigned short
 	marioSerializado.posY = posicion->obtenerPosY();
 	marioSerializado.recorteImagen = spriteMario->obtenerEstadoActual();
     marioSerializado.vidas = vidaMario->obtenerVida();
+    marioSerializado.modificador = modificador->serializar();
 	if(!estaConectadoElJugador){
 		marioSerializado.recorteImagen = MARIO_DESCONECTADO;
 	}

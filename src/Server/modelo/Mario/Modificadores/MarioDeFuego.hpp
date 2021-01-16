@@ -16,6 +16,7 @@ class MarioDeFuego : public ModificadorMario{
         void actualizar()override;
         ModificadorMario* hacerseDeFuego() override;
         bool puedeAgarrarFlor() override;
+        uint8_t serializar() override;
 
     private:
         int ciclosDisparo = 0;

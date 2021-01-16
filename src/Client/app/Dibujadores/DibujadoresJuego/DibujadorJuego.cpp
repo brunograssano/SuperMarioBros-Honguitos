@@ -139,8 +139,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 			SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
 											alto_pantalla -ALTO_MARIO- mario.posY,
 											ANCHO_MARIO, ALTO_MARIO};
-
-			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen, mario.modificador);
 			if(mario.recorteImagen==MARIO_GRIS){
 				idMario = mario.recorteImagen;
 				recorteMario = recorteSpriteMario->obtenerRecorte(0);
@@ -155,7 +154,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
         SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,alto_pantalla - ALTO_MARIO - mario.posY,
                                     ANCHO_MARIO, ALTO_MARIO};
 
-        SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen);
+        SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen, mario.modificador);
         //SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F);
         //SDL_RenderDrawRect(renderizador, &rectanguloMario);
         SDL_RenderCopy(renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario,&rectanguloMario);

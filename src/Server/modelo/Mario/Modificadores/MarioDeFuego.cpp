@@ -53,3 +53,7 @@ ModificadorMario *MarioDeFuego::hacerseDeFuego() {
 bool MarioDeFuego::puedeAgarrarFlor() {
     return false;
 }
+
+uint8_t MarioDeFuego::serializar() {
+    return MODIFICADOR_FUEGO;
+}

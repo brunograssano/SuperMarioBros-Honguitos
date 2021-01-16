@@ -9,7 +9,7 @@ class Recorte {
     public:
         virtual ~Recorte() = default;
         virtual SDL_Rect obtenerRecorte(int recorte);
-        virtual SDL_Rect obtenerRecorte(int recorte, int tipoBloque);
+        virtual SDL_Rect obtenerRecorte(int recorte, int color);
         virtual int obtenerAlturaParaDibujarImagen(int tipo);
         virtual int obtenerAnchuraParaDibujarImagen(int tipo);
         virtual int direccion(int recorte);

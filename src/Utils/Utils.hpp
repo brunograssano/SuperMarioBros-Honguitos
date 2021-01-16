@@ -67,6 +67,7 @@ typedef struct bloque{
 
 typedef struct mario{
 	uint8_t idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
+	uint8_t modificador; // 0 Nada - 1 Fuego
 	unsigned short posX;
 	unsigned short posY;
 	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y

@@ -9,13 +9,13 @@ class Sorpresa : public Bloque{
 		Sorpresa(int coordenadaX, int coordenadaY);
         ObjetoSorpresa* colisionaronAbajo()override;
         string obtenerColisionID() override;
-        void chocarPorAbajoCon(Colisionable* colisionable) override;
         void elevar(int y) override;
         ~Sorpresa() override;
 
     private:
         void inicializarMapasDeColision() override;
         static ObjetoSorpresa * obtenerObjetoSorpresa(int posicionBloque, int altoBloque);
+        void usarse(void* pVoid);
         ObjetoSorpresa* objetoSorpresa;
         bool usado;
         bool entregado;

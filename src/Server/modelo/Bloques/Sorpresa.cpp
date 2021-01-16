@@ -14,7 +14,12 @@ Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     Sorpresa::inicializarMapasDeColision();
 }
 
-void Sorpresa::inicializarMapasDeColision(){}
+void Sorpresa::inicializarMapasDeColision(){
+    auto pUsarse = (void (Colisionable::*)(void*)) &Sorpresa::usarse;
+    Colisionable::parFuncionColisionContexto_t parUsarse = {pUsarse, nullptr};
+
+    mapaColisionesPorAbajo[COLISION_ID_MARIO] = parUsarse;
+}
 
 ObjetoSorpresa* Sorpresa::obtenerObjetoSorpresa(int posX, int posY) {
     ObjetoSorpresa* objeto;
@@ -40,11 +45,6 @@ string Sorpresa::obtenerColisionID() {
     return COLISION_ID_SORPRESA;
 }
 
-void Sorpresa::chocarPorAbajoCon(Colisionable *colisionable) {
-    spriteBloque->usarse();
-    usado = true;
-}
-
 Sorpresa::~Sorpresa() {
     delete this->spriteBloque;
     if(!usado){
@@ -56,4 +56,9 @@ void Sorpresa::elevar(int y) {
     Bloque::elevar(y);
     delete objetoSorpresa;
     objetoSorpresa = obtenerObjetoSorpresa(posicion.obtenerPosX(), posicion.obtenerPosY() + LARGO_BLOQUE);
+}
+
+void Sorpresa::usarse(void* pVoid) {
+    spriteBloque->usarse();
+    usado = true;
 }

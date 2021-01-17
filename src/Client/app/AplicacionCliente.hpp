@@ -50,7 +50,6 @@ class App{
 		void actualizar();
 		void agregarRonda(info_ronda_t info_ronda);
         void agregarNivel(nivel_t nivel);
-        void agregarInfoFinJuego(info_fin_juego_t infoFinJuego);
 		void ocurrioUnErrorServidor();
 		void dibujar();
 		void manejarClick(SDL_Event eventoClick);

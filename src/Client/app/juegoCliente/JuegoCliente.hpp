@@ -36,8 +36,6 @@ class JuegoCliente{
         bool hayQueCargarPodioNivel;
         void agregarNivel(nivel_t nivel);
 
-    void agregarInfoFinJuego(info_fin_juego_t juego);
-
 private:
     bool enRango(int posX) const;
 		queue<info_ronda_t> rondas;
@@ -51,7 +49,6 @@ private:
         list<efecto_t> efectos;
         vector<podio_t> podios;
         podio_t podioPuntosTotales;
-        info_fin_juego_t infoFinJuego;
 		int cantidadJugadores;
 		int idPropio;
 

@@ -189,12 +189,6 @@ int JuegoCliente::obtenerNivelesJugados()  {
     return nivelesJugados;
 }
 
-void JuegoCliente::agregarInfoFinJuego(info_fin_juego_t infoFinJuego) {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_lock(&mutex);
-    this->infoFinJuego = infoFinJuego;
-    pthread_mutex_unlock(&mutex);
-}
 
 
 podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {

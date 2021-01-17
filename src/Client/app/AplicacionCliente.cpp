@@ -186,6 +186,3 @@ void App::agregarNivel(nivel_t nivel) {
     // TODO logica para que se muestren las pantallas intermedias?
 }
 
-void App::agregarInfoFinJuego(info_fin_juego_t infoFinJuego){
-    juegoCliente->agregarInfoFinJuego(infoFinJuego);
-}

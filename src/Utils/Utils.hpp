@@ -93,13 +93,6 @@ typedef struct podio {
     int ids[MAX_JUGADORES];
 }podio_t;
 
-
-#define INFO_FIN_JUEGO 'F'
-typedef struct info_fin_juego{
-    podio_t podios[MAX_CANT_NIVELES];
-    int topePodios;
-}info_fin_juego_t;
-
 #define NADA 0
 #define BOLA_DE_FUEGO 1
 #define CHISPA 2

@@ -16,6 +16,7 @@ class Moneda : public Colisionable{
         moneda_t serializar();
         int obtenerPosicionX();
         int obtenerPosicionY();
+        void elevar(int y);
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;

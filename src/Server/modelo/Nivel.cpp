@@ -165,10 +165,10 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 }
 
 void Nivel::inicializar() {
-    elevarObstaculos();
     inicializarPosicionesOcupadasPorBloques();
     inicializarPosicionMonedas();
     inicializarPosicionEnemigo();
+    elevarObstaculos();
     piso.inicializar();
 }
 
@@ -178,6 +178,9 @@ void Nivel::elevarObstaculos() {
     }
     for(auto& tuberia: tuberias){
         tuberia->elevar(piso.obtenerAltura());
+    }
+    for(auto& moneda: monedas){
+        moneda->elevar(piso.obtenerAltura());
     }
 }
 
@@ -209,8 +212,8 @@ void Nivel::inicializarPosicionMonedas(){
 
 	int limiteXSuperior = (int)puntoBanderaFin;
 	int limiteXInferior = (int)puntoBanderaFin/10;
-	int limiteYInferior = ALTO_NIVEL/4;
-	int limiteYSuperior = ALTO_NIVEL*1/2;
+	int limiteYInferior = ALTO_NIVEL/6;
+	int limiteYSuperior = (ALTO_NIVEL*2)/5;
 
 	for(int i=0; i<cantidadMonedas && i<cantidadMaximaMonedas; i++){
 

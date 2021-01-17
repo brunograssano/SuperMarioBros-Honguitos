@@ -58,6 +58,7 @@ class Nivel{
         void elevarObstaculos();
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
+        void inicializarPosicionOcupadasPorTuberias();
         void inicializarPosicionesOcupadasPorBloques();
         static void agregarObjeto_helper(void* ptr_jugador, void* ptr_bloque, void* ptr_nivel);
         void utilizarSorpresa(Mario* jugador, Bloque* bloque);
@@ -83,6 +84,7 @@ class Nivel{
 
         void sacarObjetosFugaces();
         void actualizarBloques();
+
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

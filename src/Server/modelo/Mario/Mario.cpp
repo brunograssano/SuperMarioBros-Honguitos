@@ -8,7 +8,7 @@ const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 300;
 const int MINIMO_COORDENADA_Y = 0;
 const int TERRENO_LIMITE_DERECHO_MAX = 8177,TERRENO_LIMITE_DERECHO_MIN = 0;
 const short MARIO_DESCONECTADO = -1;
-
+const int SIN_INMUNIDAD = 180, EMPIEZA_INMUNIDAD = 0, PIERDE_INMUNIDAD = 179;
 
 Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
@@ -24,6 +24,7 @@ Mario::Mario(int numeroJugador){
     this->estaEnModoTest = false;
     Mario::inicializarMapasDeColision();
     manejadorSonido = ManejadorDeSonidoMario(numeroJugador);
+    ticksInmunidad = SIN_INMUNIDAD;
 }
 
 void Mario::inicializarMapasDeColision(){
@@ -145,6 +146,13 @@ void Mario::actualizarPosicion(){
 		this->perderVida();
 	}
 	modificador->actualizar();
+	if(ticksInmunidad<PIERDE_INMUNIDAD && ticksInmunidad != SIN_INMUNIDAD){
+        ticksInmunidad++;
+	}
+	else if (ticksInmunidad == PIERDE_INMUNIDAD && !estaEnModoTest){
+        ticksInmunidad = SIN_INMUNIDAD;
+        inicializarMapasDeColision();
+	}
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
@@ -182,6 +190,8 @@ void Mario::perderVida(void* ptr) {
         swapDeModificador(nuevoModificador);
         manejadorSonido.activarSonidoFlor();
         manejadorSonido.reproducirSonidoMuerte();
+        ticksInmunidad = EMPIEZA_INMUNIDAD;
+        desactivarMapaColisionesEnemigos();
     }
 }
 
@@ -306,20 +316,38 @@ bool Mario::debeColisionar() {
 void Mario::alternarModoTest() {
     auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
     Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
-
     this->estaEnModoTest = !this->estaEnModoTest;
-
     if(estaEnModoTest){
-        mapaColisionesPorArriba.erase(COLISION_ID_KOOPA);
-        mapaColisionesPorArriba.erase(COLISION_ID_GOOMBA);
-        mapaColisionesPorDerecha.erase(COLISION_ID_KOOPA);
-        mapaColisionesPorDerecha.erase(COLISION_ID_GOOMBA);
-        mapaColisionesPorIzquierda.erase(COLISION_ID_KOOPA);
-        mapaColisionesPorIzquierda.erase(COLISION_ID_GOOMBA);
+        desactivarMapaColisionesEnemigos();
     }else{
         inicializarMapaMorirPorEnemigos();
     }
 
+}
+
+void Mario::desactivarMapaColisionesEnemigos() {
+    mapaColisionesPorArriba.erase(COLISION_ID_KOOPA);
+    mapaColisionesPorArriba.erase(COLISION_ID_GOOMBA);
+    mapaColisionesPorDerecha.erase(COLISION_ID_KOOPA);
+    mapaColisionesPorDerecha.erase(COLISION_ID_GOOMBA);
+    mapaColisionesPorIzquierda.erase(COLISION_ID_KOOPA);
+    mapaColisionesPorIzquierda.erase(COLISION_ID_GOOMBA);
+}
+
+void Mario::inicializarMapaMorirPorEnemigos() {
+    auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
+    Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
+
+    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
+    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
+    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
+}
+
+int Mario::obtenerID() {
+    return numeroJugador;
 }
 
 void Mario::desconectar() {
@@ -340,20 +368,4 @@ Mario::~Mario(){
     delete this->movimiento;
     delete this->modificador;
     delete this->vidaMario;
-}
-
-void Mario::inicializarMapaMorirPorEnemigos() {
-    auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
-    Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
-
-    mapaColisionesPorDerecha[COLISION_ID_KOOPA] = parPerderVida;
-    mapaColisionesPorDerecha[COLISION_ID_GOOMBA] = parPerderVida;
-    mapaColisionesPorIzquierda[COLISION_ID_KOOPA] = parPerderVida;
-    mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
-    mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
-    mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
-}
-
-int Mario::obtenerID() {
-    return numeroJugador;
 }

@@ -117,7 +117,7 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 }
 
 
-bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario, ConexionCliente* conexionClienteConPosibleUsuario){
     pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     int idJugador;
     bool seConecto = false;
@@ -248,6 +248,8 @@ Servidor::~Servidor(){
 
 void Servidor::enviarSonidosA(const int id, list<sonido_t> sonidos) {
     for(auto const& sonido: sonidos){
-        clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);
+        if(clientesJugando.count(id) != 0) {
+            clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);
+        }
     }
 }

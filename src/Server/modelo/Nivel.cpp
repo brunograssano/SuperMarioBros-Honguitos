@@ -166,6 +166,7 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 
 void Nivel::inicializar() {
     inicializarPosicionesOcupadasPorBloques();
+    inicializarPosicionOcupadasPorTuberias();
     inicializarPosicionMonedas();
     inicializarPosicionEnemigo();
     elevarObstaculos();
@@ -196,6 +197,22 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
         posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
     }
 
+}
+
+void Nivel::inicializarPosicionOcupadasPorTuberias(){
+    //Esto esta feo, funcionara?
+    int posicionesQueOcupaUnaTuberia = 5;
+    int posicionXOcupada;
+    int posicionYOcupada;
+    for(auto const& tuberia : tuberias){
+        posicionXOcupada = tuberia->obtenerPosicionX()/TAMANIO_BLOQUE;
+        posicionYOcupada = 0;
+        for(int i = 0; i < posicionesQueOcupaUnaTuberia; i++) {
+            for(int j = 0; j < posicionesQueOcupaUnaTuberia; j++){
+                posicionesOcupadas[make_tuple(posicionXOcupada+i, posicionYOcupada+j)] = true;
+            }
+        }
+    }
 }
 
 //rand() % (MAXIMO + 1 - MINIMO) + MINIMO

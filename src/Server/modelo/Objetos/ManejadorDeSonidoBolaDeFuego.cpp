@@ -14,3 +14,11 @@ ManejadorDeSonidoBolaDeFuego::ManejadorDeSonidoBolaDeFuego(int idMario) {
     mapaSonidoColisionPorArriba[COLISION_ID_GOOMBA] = "MataGoomba";
     mapaSonidoColisionPorAbajo[COLISION_ID_GOOMBA] = "MataGoomba";
 }
+
+void ManejadorDeSonidoBolaDeFuego::reproducirExplosion() {
+    Botonera::getInstance()->agregarSonido("Explosion", id);
+}
+
+void ManejadorDeSonidoBolaDeFuego::reproducirRebote() {
+    Botonera::getInstance()->agregarSonido("Rebote", id);
+}

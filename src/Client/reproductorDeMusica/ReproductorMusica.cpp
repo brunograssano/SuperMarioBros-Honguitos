@@ -16,13 +16,16 @@ ReproductorMusica::ReproductorMusica(){
 	nombresSonidos.insert(std::pair<string,string>("SumarVida","resources/Musica/EfectosSonido/SumarVida.wav"));
 	nombresSonidos.insert(std::pair<string,string>("RomperBloque","resources/Musica/EfectosSonido/RomperBloque.wav"));
 	nombresSonidos.insert(std::pair<string,string>("MataGoomba","resources/Musica/EfectosSonido/MarioMataGoomba.wav"));
-	nombresSonidos.insert(std::pair<string,string>("LanzaFuego","resources/Musica/EfectosSonido/MarioLanzaFuego.wav"));
 	nombresSonidos.insert(std::pair<string,string>("SonidoBandera","resources/Musica/EfectosSonido/SonidoBandera.wav"));
-	nombresSonidos.insert(std::pair<string,string>("AparecePlanta","resources/Musica/EfectosSonido/AparecePlanta.wav"));
-	nombresSonidos.insert(std::pair<string,string>("AgarraHongo","resources/Musica/EfectosSonido/MarioAgarraHongo.wav"));
-	nombresSonidos.insert(std::pair<string,string>("ApareceHongo","resources/Musica/EfectosSonido/ApareceHongo.wav"));
-	nombresSonidos.insert(std::pair<string,string>("PisaKoopa","resources/Musica/EfectosSonido/MarioPisaKoopa.wav"));
-	nombresSonidos.insert(std::pair<string,string>("MarioMorir","resources/Musica/EfectosSonido/MarioMorir.wav"));
+    nombresSonidos.insert(std::pair<string,string>("AparecePlanta","resources/Musica/EfectosSonido/AparecePlanta.wav"));
+    nombresSonidos.insert(std::pair<string,string>("AgarraHongo","resources/Musica/EfectosSonido/MarioAgarraHongo.wav"));
+    nombresSonidos.insert(std::pair<string,string>("ApareceHongo","resources/Musica/EfectosSonido/ApareceHongo.wav"));
+    nombresSonidos.insert(std::pair<string,string>("PisaKoopa","resources/Musica/EfectosSonido/MarioPisaKoopa.wav"));
+    nombresSonidos.insert(std::pair<string,string>("MarioMorir","resources/Musica/EfectosSonido/MarioMorir.wav"));
+    nombresSonidos.insert(std::pair<string,string>("LanzaFuego","resources/Musica/EfectosSonido/MarioLanzaFuego.wav"));
+    nombresSonidos.insert(std::pair<string,string>("Chispazo","resources/Musica/EfectosSonido/Chispazo.wav"));
+    nombresSonidos.insert(std::pair<string,string>("Rebote","resources/Musica/EfectosSonido/ReboteBolaDeFuego.wav"));
+	nombresSonidos.insert(std::pair<string,string>("Explosion","resources/Musica/EfectosSonido/ExplosionBolaDeFuego.wav"));
 
 	string nombreArchivo;
 	Mix_Chunk* efecto =nullptr;

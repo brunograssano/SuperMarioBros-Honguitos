@@ -40,6 +40,8 @@ void ManejadorDeSonidoMario::reproducirSonidoMuerte() {
 void ManejadorDeSonidoMario::reproducirSonidoDisparo(int tipo){
     if(tipo == BOLA_DE_FUEGO){
         Botonera::getInstance()->agregarSonido("LanzaFuego", id);
+    }else if(tipo == CHISPA){
+        Botonera::getInstance()->agregarSonido("Chispazo", id);
     }
 }
 

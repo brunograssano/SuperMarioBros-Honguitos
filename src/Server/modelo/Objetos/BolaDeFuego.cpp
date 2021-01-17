@@ -140,6 +140,7 @@ void BolaDeFuego::explotar(void *pVoid) {
     velocidadX = 0;
     efecto_gravitacional = 0;
     sprite->explotar();
+    manejadorSonido.reproducirExplosion();
     exploto = true;
 }
 
@@ -148,6 +149,7 @@ void BolaDeFuego::rebotar(void *pVoid) {
         velocidadY /= -1.3;
         velocidadY = velocidadY>3?3:velocidadY;
         rebotes++;
+        manejadorSonido.reproducirRebote();
     }else{
         explotar(nullptr);
     }

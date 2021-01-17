@@ -8,6 +8,8 @@
 class ManejadorDeSonidoBolaDeFuego : public ManejadorDeSonido {
     public:
         explicit ManejadorDeSonidoBolaDeFuego(int idMario);
+        void reproducirExplosion();
+        void reproducirRebote();
     private:
 };
 

@@ -7,8 +7,8 @@ Meta::Meta(int puntoBandera) {
 }
 
 void Meta::agregarSiPasoLaMeta(Mario *jugador) {
-    if(!yaLLegoALaMeta(jugador) && estaEnLaMeta(jugador) && jugador->estaConectado()){
-        ganadores.push_back(jugador);4;
+    if(!yaLLegoALaMeta(jugador) && estaEnLaMeta(jugador) && jugador->estaConectado() && jugador->estaVivo()){
+        ganadores.push_back(jugador);
         Botonera::getInstance()->agregarSonido(SONIDO_LLEGAR_A_LA_META, jugador->obtenerID());
     }
 }

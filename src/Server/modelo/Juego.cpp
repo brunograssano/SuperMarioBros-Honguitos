@@ -16,7 +16,6 @@ Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, 
 
     camara = new Camara(alto_pantalla, ancho_pantalla);
     hanGanado = false;
-    // TODO: INICIALIZAR PODIO ACUMULADO COMO VACIO?, QUE PASA SI PIERDEN ANTES DEL PRIMER NIVEL??
 }
 
 
@@ -198,7 +197,6 @@ nivel_t Juego::serializarNivel(){
     if(!niveles.empty())
         niveles.front()->completarInformacionNivel(&nivel);
 
-    //SE AGREGA EL ULTIMO PODIO DE NIVEL Y SE ACTUALIZA EL PODIO PUNTOS TOTALES
     if(!podios.empty()){
         nivel.podio = this->podios.back();
         nivel.podioPuntosAcumulados = this->podioAcumulado;

@@ -338,7 +338,7 @@ Nivel::~Nivel (){
     monedas.clear();
     delete contador;
     delete meta;
-    delete podio;
+    // delete podio; DESCOMENTAR ESTO GENERA SEG FAULT, TAL VEZ NO ES NECESARIO SI MARIO BORRA EL PODIO
 }
 
 void Nivel::iniciar(map<int, Mario*> jugadores) {

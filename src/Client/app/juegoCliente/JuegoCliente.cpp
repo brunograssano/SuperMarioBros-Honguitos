@@ -18,10 +18,10 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPro
 	this->anchoVista = anchoPantalla;
 	this->hayQueMostrarPuntosDeNivel = false;
 	this->hayQueCargarPodioNivel = true;
-	for(int i =0; i<topePodios; i++){
-	    if(i == 0){ //TODO: VER COMO SOLUCIONAR ESTO, SE RECIBE UN PODIO DE MAS
-	        podio_t unPodioVacio;
-	        this->podios.push_back(unPodioVacio);
+	for(int i = 0; i<topePodios; i++){
+	    if(i == 0){
+	        podio_t primerPodio;
+	        this->podios.push_back(primerPodio);
 	    }
 	    this->hayQueCargarPodioNivel = false;
 	    this->podios.push_back(podios[i]);
@@ -171,7 +171,6 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
         pozos.push_front(nivel.pozos[i]);
     }
 
-
     if(!hayQueCargarPodioNivel){
         hayQueCargarPodioNivel = true;
     }else{
@@ -188,8 +187,6 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
 int JuegoCliente::obtenerNivelesJugados()  {
     return nivelesJugados;
 }
-
-
 
 podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
     return this->podioPuntosTotales;

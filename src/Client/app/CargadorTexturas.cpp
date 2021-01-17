@@ -38,6 +38,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     texturas["Goombas"]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);
     texturas["Koopas"]  = intentarCarga("la imagen de los Koopas","resources/Imagenes/Personajes/Koopas.png",renderizador);
     texturas["Creditos"] = intentarCarga("los creditos", "resources/Imagenes/Creditos.png", renderizador);
+    texturas["FondoGanadores"] = intentarCarga("el fondo de los ganadores", "resources/Imagenes/Niveles/fondoGanadores.png", renderizador);
     texturaDefecto = cargarTextura("resources/Imagenes/ImagenError.png", renderizador);
 
     string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",

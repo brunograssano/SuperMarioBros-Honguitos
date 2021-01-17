@@ -94,8 +94,7 @@ void DibujadorGanadores::dibujarPersonajes(){
 void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
-	SDL_Rect rectanguloCamara = {(ANCHO_FONDO - ancho_pantalla), 0, alto_pantalla, ancho_pantalla};
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, nullptr);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoGanadores"), nullptr, nullptr);
 
 	dibujarParticulas();
 	dibujarTextoGanadores(juegoCliente);

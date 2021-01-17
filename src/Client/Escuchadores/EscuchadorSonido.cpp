@@ -31,25 +31,9 @@ void EscuchadorSonido::casoExitoso() {
 
 bool EscuchadorSonido::recibioMensajeValido() {
     bool ocurrioError = false;
-    if(!sonidoValido(sonido.tipoSonido)){
+    if(!esUnSonidoValido(sonido)){
         error = string("el sonido es inválido.");
         ocurrioError = true;
     }
     return !ocurrioError;
-}
-
-bool EscuchadorSonido::sonidoValido(uint8_t tipo) {
-    if(
-        tipo == SONIDO_SALTO            || tipo == SONIDO_AGARRAR_MONEDA        ||
-        tipo == SONIDO_MATAR_GOOMBA     || tipo == SONIDO_MATAR_KOOPA           ||
-        tipo == SONIDO_APARECE_FLOR     || tipo == SONIDO_AGARRA_POWERUP        ||
-        tipo == SONIDO_MORIR            || tipo == SONIDO_LANZAR_BOLA_DE_FUEGO  ||
-        tipo == SONIDO_LANZAR_CHISPA    || tipo == SONIDO_REBOTE_BOLA_DE_FUEGO  ||
-        tipo == SONIDO_EXPLOSION_BOLA_DE_FUEGO)
-    {
-        return true;
-    }else
-    {
-        return false;
-    }
 }

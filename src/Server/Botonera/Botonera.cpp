@@ -1,10 +1,10 @@
 #include "Botonera.hpp"
 #include <cstring>
 
-Botonera* Botonera::botonera=nullptr;
+Botonera* Botonera::botonera = nullptr;
 
 Botonera* Botonera::getInstance() {
-    if(botonera==nullptr){
+    if(botonera == nullptr){
         botonera = new Botonera();
     }
     return botonera;
@@ -13,7 +13,9 @@ Botonera* Botonera::getInstance() {
 void Botonera::agregarSonido(uint8_t claveSonido, int idDetonante) {
     sonido_t sonido;
     sonido.tipoSonido = claveSonido;
-    sonidos[idDetonante].push_back(sonido);
+    if(esUnSonidoValido(sonido)){
+        sonidos[idDetonante].push_back(sonido);
+    }
 }
 
 std::list<sonido_t> Botonera::obtenerSonidosDe(int idDetonante) {

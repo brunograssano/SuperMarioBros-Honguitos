@@ -11,14 +11,14 @@ class DibujadorCreditos{
 public:
     DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
     void dibujarCreditos();
-    void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color);
 private:
     int alto_pantalla;
     int ancho_pantalla;
     CargadorTexturas* cargadorTexturas;
     SDL_Renderer* renderizador;
     void dibujarRectanguloCreditos();
-
+    void dibujarTexto();
+    int ciclosDibujado = 0;
     int xRectanguloTransparente;
     int yRectanguloTransparente;
     int anchoRectanguloTransparente;

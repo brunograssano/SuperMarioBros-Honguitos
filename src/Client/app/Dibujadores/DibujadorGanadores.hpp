@@ -18,6 +18,7 @@
 
 #include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
 #include "DibujadorPuntos.hpp"
+#include "DibujadorCreditos.hpp"
 
 class DibujadorGanadores : public Dibujador{
 	public:
@@ -42,6 +43,7 @@ private:
 		SpriteYoshiSaltando* spriteYoshi;
 		list<ParticulaGanadores*> particulas;
 		DibujadorPuntos* dibujadorPuntos;
+		DibujadorCreditos* dibujadorCreditos;
 
 };
 

@@ -7,10 +7,24 @@ DibujadorCreditos::DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Ren
     this->ancho_pantalla = ancho_pantalla;
     this->cargadorTexturas = cargadorTexturas;
     this->renderizador = renderizador;
+    this->ciclosDibujado = 0;
 }
 
 void DibujadorCreditos::dibujarCreditos(){
     dibujarRectanguloCreditos();
+    dibujarTexto();
+    this->ciclosDibujado++;
+}
+
+void DibujadorCreditos::dibujarTexto(){
+    this->cargadorTexturas->obtenerTextura("Creditos");
+
+    SDL_Rect recorteCreditos{0,ciclosDibujado/10, anchoRectanguloTransparente, altoRectanguloTransparente};
+
+    SDL_Rect rectanguloTexto{xRectanguloTransparente, yRectanguloTransparente, anchoRectanguloTransparente, altoRectanguloTransparente };
+
+    SDL_RenderCopy(renderizador, this->cargadorTexturas->obtenerTextura("Creditos"),
+                   &recorteCreditos, &rectanguloTexto);
 
 }
 

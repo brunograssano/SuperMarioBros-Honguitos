@@ -10,6 +10,7 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
 	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+    this->dibujadorCreditos = new DibujadorCreditos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 
     this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
     this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
@@ -43,6 +44,7 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
         this->eventoMouse.type = NULL;
     }
     dibujadorPuntos->dibujarPuntos(juegoCliente);
+    dibujadorCreditos->dibujarCreditos();
 }
 
 void DibujadorGanadores::dibujarTitulo(){
@@ -94,6 +96,7 @@ void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
 	SDL_RenderClear( renderizador );
 	SDL_Rect rectanguloCamara = {(ANCHO_FONDO - ancho_pantalla), 0, alto_pantalla, ancho_pantalla};
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, nullptr);
+
 	dibujarParticulas();
 	dibujarTextoGanadores(juegoCliente);
 	dibujarPersonajes();

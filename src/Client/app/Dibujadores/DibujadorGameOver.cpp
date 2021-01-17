@@ -10,6 +10,7 @@ DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Ren
     this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
     this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
 	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+    this->dibujadorCreditos = new DibujadorCreditos(cargadorTexturas,renderizador,ancho_pantalla,alto_pantalla);
 }
 
 
@@ -22,6 +23,7 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
 	int posicionXCoffinMario = this->spriteCoffinMario->obtenerPosicionX();
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoGameOver"), &rectanguloCamara, NULL);
 
+    this->dibujadorCreditos-> dibujarCreditos();
 	/*MODULARIZAR*/
     botonIzquierdo->mostrarse();
     botonDerecho->mostrarse();
@@ -59,6 +61,7 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
 DibujadorGameOver::~DibujadorGameOver(){
 	delete this->spriteCoffinMario;
 	delete this->dibujadorPuntos;
+	delete this->dibujadorCreditos;
 	delete this->botonIzquierdo;
 	delete this->botonDerecho;
 }

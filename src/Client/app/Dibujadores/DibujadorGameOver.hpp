@@ -13,6 +13,7 @@
 #include "../../../Server/sprites/SpriteCoffinMario.hpp"
 #include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
 #include "DibujadorPuntos.hpp"
+#include "DibujadorCreditos.hpp"
 
 class DibujadorGameOver : public Dibujador{
 
@@ -28,6 +29,7 @@ class DibujadorGameOver : public Dibujador{
         BotonConTexto* botonDerecho;
         SDL_Event eventoMouse;
         DibujadorPuntos* dibujadorPuntos;
+        DibujadorCreditos* dibujadorCreditos;
 };
 
 

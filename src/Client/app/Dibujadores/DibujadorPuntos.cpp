@@ -46,6 +46,14 @@ void DibujadorPuntos::dibujarPuntosTotales(JuegoCliente *juegoCliente) {
     int desfase_puntosJugador = 50;
     SDL_Rect cuadradoPuntos;
 
+    SDL_Rect rectanguloTransparente = {ancho_pantalla/4 - ancho_puntosJugador/2-25,
+                                       alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150 - 25,
+                                       ancho_puntosJugador + 50,
+                                       (alto_puntosJugador + desfase_puntosJugador)*4+50};
+
+    SDL_SetRenderDrawColor(renderizador, 51, 51, 51, 20);
+    SDL_RenderFillRect(renderizador, &rectanguloTransparente);
+
     stringstream puntosJugador;
 
     stringstream tituloPuntos;
@@ -91,6 +99,15 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
     int desfase_puntosJugador = 50;
     SDL_Rect cuadradoPuntos;
 
+    SDL_Rect rectanguloTransparente = {ancho_pantalla/4 - ancho_puntosJugador/2-25,
+                                       alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150 - 25,
+                                       ancho_puntosJugador + 50,
+                                       (alto_puntosJugador + desfase_puntosJugador)*4+50};
+
+    SDL_SetRenderDrawColor(renderizador, 51, 51, 51, 20);
+    SDL_RenderFillRect(renderizador, &rectanguloTransparente);
+
+
     stringstream puntosJugador;
 
     stringstream tituloPuntos;
@@ -100,6 +117,7 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
                                      alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
                                      ancho_puntosJugador,
                                      alto_puntosJugador};
+
 
     renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
     int indiceJugador = 0;
@@ -146,6 +164,16 @@ void DibujadorPuntos::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar,
 
 };
 
+void DibujadorPuntos::dibujarRectanguloPuntos(int ancho_puntosJugador,int alto_puntosJugador, int desfase_puntosJugador ){
+    SDL_Rect rectanguloTransparente = {ancho_pantalla/4 - ancho_puntosJugador/2 - 25,
+                                       alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150 - 25,
+                                       ancho_puntosJugador + 50,
+                                       (alto_puntosJugador + desfase_puntosJugador)*4+50};
+    SDL_SetRenderDrawBlendMode(renderizador, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderizador, 220, 220, 220, 120);
+    SDL_RenderFillRect(renderizador, &rectanguloTransparente);
+}
+
 void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
 
     int ancho_puntosJugador = 200;
@@ -154,6 +182,8 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
     SDL_Rect cuadradoPuntos;
 
     stringstream puntosJugador;
+
+    dibujarRectanguloPuntos(ancho_puntosJugador,alto_puntosJugador,desfase_puntosJugador);
 
     stringstream tituloPuntos;
     tituloPuntos << "Puntos totales";

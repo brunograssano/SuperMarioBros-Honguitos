@@ -7,8 +7,8 @@ DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Ren
 	this->cargadorTexturas = cargadorTexturas;
 	this->renderizador = renderizador;
 	this->spriteCoffinMario = new SpriteCoffinMario();
-    this->botonIzquierdo = new BotonConTexto(50,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
-    this->botonDerecho = new BotonConTexto(310,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+    this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+    this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
 	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
 

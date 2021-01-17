@@ -25,7 +25,7 @@ class DibujadorPuntos{
         void dibujarPuntosTotales(JuegoCliente *juegoCliente);
         void dibujarPuntosDelNivel(JuegoCliente *juegoCliente);
         void dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente);
-
+        void dibujarRectanguloPuntos(int ancho_puntosJugador, int alto_puntosJugador, int desfase_puntosJugador);
 };
 
 

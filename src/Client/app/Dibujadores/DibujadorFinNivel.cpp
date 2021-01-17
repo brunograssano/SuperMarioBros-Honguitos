@@ -16,7 +16,6 @@ DibujadorFinNivel::DibujadorFinNivel(CargadorTexturas* cargadorTexturas, SDL_Ren
     ciclosDibujado = 0;
 }
 
-
 void DibujadorFinNivel::dibujar(JuegoCliente* juegoCliente){
     SDL_RenderClear( renderizador );
 
@@ -60,7 +59,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
     int corrimiento = 100;
 
     int alto_borde_puntos = (alto_puntosJugador+desfase_puntosJugador+5) * juegoCliente->obtenerJugadores().size();
-    SDL_Rect borde_puntos = {ancho_pantalla/3 - ancho_puntosJugador/2 - 30,
+    SDL_Rect borde_puntos = {ancho_pantalla/6,
                            alto_pantalla/2 + alto_puntosJugador - corrimiento,
                            4*ancho_pantalla/6,
                            alto_borde_puntos};
@@ -77,11 +76,11 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
         string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de " << nombreJugador << ": " << podio.puntosNivel[indiceJugador];
 
-        cuadradoPuntos = {ancho_pantalla/3 - ancho_puntosJugador/2,
+        cuadradoPuntos = {ancho_pantalla/6 + 50,
                           alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
                           ancho_puntosJugador,
                           alto_puntosJugador};
-        cuadradoCorazon = {ancho_pantalla/3 - ancho_puntosJugador/2 + ancho_puntosJugador + corrimientoCorazon,
+        cuadradoCorazon = {5*ancho_pantalla/6 - 50 - 20*3,
                            alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
                            20,
                            20 };

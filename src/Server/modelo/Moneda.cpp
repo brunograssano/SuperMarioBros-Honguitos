@@ -3,7 +3,7 @@
 
 
 Moneda::Moneda(int coordenadaX, int coordenadaY) {
-    this->posicion = PosicionFija(coordenadaX, coordenadaY);
+    this->posicion = PosicionFija((coordenadaX/40)*40, (coordenadaY/40)*40);
     this->sprite = SpriteMoneda();
     agarrada = false;
     Moneda::inicializarMapasDeColision();
@@ -62,4 +62,10 @@ void Moneda::agarrar(void *ptr) {
 
 bool Moneda::debeColisionar() {
     return !agarrada;
+}
+
+void Moneda::elevar(int y) {
+    int yAnt = posicion.obtenerPosY();
+    int xAnt = posicion.obtenerPosX();
+    posicion = PosicionFija(xAnt, yAnt + y);
 }

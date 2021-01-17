@@ -15,8 +15,7 @@ ManejadorDeSonidoMario::ManejadorDeSonidoMario(int idMario) {
     mapaSonidoColisionPorIzquierda[COLISION_ID_MONEDA] = SONIDO_AGARRAR_MONEDA;
 
     mapaSonidoColisionPorAbajo[COLISION_ID_GOOMBA] = SONIDO_MATAR_GOOMBA;
-    mapaSonidoColisionPorAbajo[COLISION_ID_KOOPA] = SONIDO_MATAR_GOOMBA;
-
+    mapaSonidoColisionPorAbajo[COLISION_ID_KOOPA] = SONIDO_MATAR_KOOPA;
 }
 
 void ManejadorDeSonidoMario::activarSonidoFlor() {

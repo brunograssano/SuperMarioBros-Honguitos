@@ -22,6 +22,7 @@ ReproductorMusica::ReproductorMusica(){
     nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_LANZAR_CHISPA,"resources/Musica/EfectosSonido/Chispazo.wav"));
     nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_REBOTE_BOLA_DE_FUEGO,"resources/Musica/EfectosSonido/ReboteBolaDeFuego.wav"));
 	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_EXPLOSION_BOLA_DE_FUEGO,"resources/Musica/EfectosSonido/ExplosionBolaDeFuego.wav"));
+	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_LLEGAR_A_LA_META,"resources/Musica/EfectosSonido/PasarDeNivel.wav"));
 
 	string nombreArchivo;
 	Mix_Chunk* efecto = nullptr;

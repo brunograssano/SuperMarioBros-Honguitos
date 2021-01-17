@@ -13,5 +13,6 @@ bool esUnSonidoValido(sonido_t sonido){
             tipo == SONIDO_LANZAR_BOLA_DE_FUEGO     ||
             tipo == SONIDO_LANZAR_CHISPA            ||
             tipo == SONIDO_REBOTE_BOLA_DE_FUEGO     ||
-            tipo == SONIDO_EXPLOSION_BOLA_DE_FUEGO);
+            tipo == SONIDO_EXPLOSION_BOLA_DE_FUEGO  ||
+            tipo == SONIDO_LLEGAR_A_LA_META);
 }

@@ -338,6 +338,7 @@ Nivel::~Nivel (){
     monedas.clear();
     delete contador;
     delete meta;
+    delete podio;
 }
 
 void Nivel::iniciar(map<int, Mario*> jugadores) {

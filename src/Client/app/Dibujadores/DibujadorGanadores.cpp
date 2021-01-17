@@ -115,6 +115,7 @@ DibujadorGanadores::~DibujadorGanadores(){
 	}
 	particulas.clear();
 	delete this->dibujadorPuntos;
+	delete this->dibujadorCreditos;
 	delete this->botonDerecho;
 	delete this->botonIzquierdo;
 }

@@ -2,7 +2,8 @@
 #define SRC_UTILS_HPP_
 
 #include <string>
-#include <stdint.h>
+#include <cstdint>
+
 using namespace std;
 /* PALABRAS RESERVADAS */
 /*
@@ -202,7 +203,9 @@ typedef struct usuario{
 
 #define SONIDO 'S'
 typedef struct sonido{
-    char nombre[MAX_NOMBRE_SONIDO];
+    uint8_t tipoSonido;
 }sonido_t;
+
+bool esUnSonidoValido(sonido_t sonido);
 
 #endif /* SRC_UTILS_HPP_ */

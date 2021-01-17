@@ -35,6 +35,8 @@ class AplicacionServidor : public Thread{
 	private:
         void revisarSiMandarInfoNivel(int *cantidadNivelesRestantes);
         void mandarInfoNivel();
+        void enviarSonidos();
+
 		Servidor* servidor;
 		Log* log;
 		Juego* juego;

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "Meta.hpp"
+#include "src/Server/Botonera/Botonera.hpp"
 
 Meta::Meta(int puntoBandera) {
     this->puntoBandera = puntoBandera;
@@ -7,7 +8,8 @@ Meta::Meta(int puntoBandera) {
 
 void Meta::agregarSiPasoLaMeta(Mario *jugador) {
     if(!yaLLegoALaMeta(jugador) && estaEnLaMeta(jugador) && jugador->estaConectado()){
-        ganadores.push_back(jugador);
+        ganadores.push_back(jugador);4;
+        Botonera::getInstance()->agregarSonido(SONIDO_LLEGAR_A_LA_META, jugador->obtenerID());
     }
 }
 

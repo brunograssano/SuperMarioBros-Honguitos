@@ -24,6 +24,8 @@ class FlorDeFuego : public ObjetoSorpresa{
         void chocarPorArribaCon(Colisionable* colisionable) override;
         void chocarPorAbajoCon(Colisionable* colisionable) override;
 
+        void sonar() override;
+
     private:
         void inicializarMapasDeColision() override;
         Posicion posicionFija;

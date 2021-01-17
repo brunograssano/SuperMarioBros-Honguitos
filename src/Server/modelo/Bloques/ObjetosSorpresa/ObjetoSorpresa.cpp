@@ -3,3 +3,5 @@
 bool ObjetoSorpresa::debeDesaparecer() {
     return _debeDesaparecer;
 }
+
+void ObjetoSorpresa::sonar() {}

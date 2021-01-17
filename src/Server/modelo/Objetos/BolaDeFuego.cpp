@@ -15,6 +15,7 @@ BolaDeFuego::BolaDeFuego(const PosicionFija& posicionInicial, int direccion, flo
     velocidadX += velocidadDeInercia;
     velocidadY = VELOCIDAD_Y_INICIAL;
     exploto = false;
+    manejadorSonido = ManejadorDeSonidoBolaDeFuego(mario->obtenerID());
     inicializarMapasDeColision();
 }
 
@@ -107,7 +108,24 @@ void BolaDeFuego::inicializarMapasDeColision() {
     mapaColisionesPorAbajo[COLISION_ID_KOOPA] = parMatarKoopa;
 }
 
+void BolaDeFuego::chocarPorIzquierdaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoIzquierda(colisionable->obtenerColisionID());
+    Colisionable::chocarPorIzquierdaCon(colisionable);
+}
+
+void BolaDeFuego::chocarPorDerechaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoDerecha(colisionable->obtenerColisionID());
+    Colisionable::chocarPorDerechaCon(colisionable);
+}
+
+void BolaDeFuego::chocarPorArribaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoArriba(colisionable->obtenerColisionID());
+    Colisionable::chocarPorArribaCon(colisionable);
+}
+
+
 void BolaDeFuego::chocarPorAbajoCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoAbajo(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarY(colisionable->obtenerRectangulo());
         rebotar(nullptr);
@@ -122,6 +140,7 @@ void BolaDeFuego::explotar(void *pVoid) {
     velocidadX = 0;
     efecto_gravitacional = 0;
     sprite->explotar();
+    manejadorSonido.reproducirExplosion();
     exploto = true;
 }
 
@@ -130,6 +149,7 @@ void BolaDeFuego::rebotar(void *pVoid) {
         velocidadY /= -1.3;
         velocidadY = velocidadY>3?3:velocidadY;
         rebotes++;
+        manejadorSonido.reproducirRebote();
     }else{
         explotar(nullptr);
     }

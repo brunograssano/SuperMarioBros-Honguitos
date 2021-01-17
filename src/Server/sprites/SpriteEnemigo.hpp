@@ -7,6 +7,14 @@ class SpriteEnemigo : public Sprite{
     public:
         virtual void morir() = 0;
         virtual bool seMostroElTiempoSuficienteEnPantalla() = 0;
+        bool debeEspejarse(){
+            return this->estaEspejado;
+        }
+        void espejar() {
+            this->estaEspejado = !estaEspejado;
+        }
+    protected:
+        bool estaEspejado;
 };
 
 

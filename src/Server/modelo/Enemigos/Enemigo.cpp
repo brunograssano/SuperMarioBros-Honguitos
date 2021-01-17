@@ -32,6 +32,7 @@ void Enemigo::morir(void* ptr) {
 
 void Enemigo::cambiarOrientacion() {
     movimientoEnemigo.cambiarOrientacion();
+    spriteEnemigo->espejar();
 }
 
 enemigo_t Enemigo::serializarEnemigo(int tipo) {
@@ -41,7 +42,7 @@ enemigo_t Enemigo::serializarEnemigo(int tipo) {
     enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
     enemigoSerializado.numeroRecorteY = tipoColor;
     enemigoSerializado.tipoEnemigo = tipo;
-    enemigoSerializado.espejar = movimientoEnemigo.debeEspejarse();
+    enemigoSerializado.espejar = spriteEnemigo->debeEspejarse();
     return enemigoSerializado;
 }
 

@@ -4,7 +4,8 @@
 #define DEFAULT 100
 
 Koopa::Koopa(int tipoColor) {
-    spriteEnemigo = new SpriteKoopa();
+    bool debeEspejarse = this->movimientoEnemigo.debeEspejarse();
+    spriteEnemigo = new SpriteKoopa(debeEspejarse);
     this->tipoColor = tipoColor;
     loMataron = false;
     this->inicializarMapasDeColision();

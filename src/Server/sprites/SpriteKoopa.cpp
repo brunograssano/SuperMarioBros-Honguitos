@@ -1,9 +1,10 @@
 #include "SpriteKoopa.hpp"
 #define MUERTO 2
 
-SpriteKoopa::SpriteKoopa() {
+SpriteKoopa::SpriteKoopa(bool estaEspejado) {
 	estadoActual = 0;
 	ciclos=0;
+	this->estaEspejado = estaEspejado;
 }
 
 void SpriteKoopa::actualizarSprite(){

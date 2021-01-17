@@ -6,7 +6,7 @@
 class SpriteKoopa : public SpriteEnemigo{
 	public:
 
-		explicit SpriteKoopa();
+		explicit SpriteKoopa(bool estaEspejado);
 		~SpriteKoopa() override= default;
         void morir() override;
 		void actualizarSprite()override;

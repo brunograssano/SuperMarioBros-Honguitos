@@ -19,7 +19,7 @@ class ObjetoSorpresa : public ObjetoFugaz{
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override = 0;
         bool debeColisionar() override = 0;
-        virtual void sonar() = 0;
+        virtual void sonar();
 
 protected:
         void inicializarMapasDeColision() override = 0;

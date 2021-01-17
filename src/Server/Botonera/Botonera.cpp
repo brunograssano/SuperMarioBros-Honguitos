@@ -10,10 +10,9 @@ Botonera* Botonera::getInstance() {
     return botonera;
 }
 
-void Botonera::agregarSonido(std::string claveSonido, int idDetonante) {
-    if(claveSonido.empty()) return;
+void Botonera::agregarSonido(uint8_t claveSonido, int idDetonante) {
     sonido_t sonido;
-    strcpy(sonido.nombre, claveSonido.c_str());
+    sonido.tipoSonido = claveSonido;
     sonidos[idDetonante].push_back(sonido);
 }
 

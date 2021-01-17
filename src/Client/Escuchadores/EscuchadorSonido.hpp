@@ -14,6 +14,7 @@ class EscuchadorSonido : public Escuchador{
         sonido_t sonido;
         string error;
         bool recibioMensajeValido();
+        bool sonidoValido(uint8_t tipo);
 };
 
 

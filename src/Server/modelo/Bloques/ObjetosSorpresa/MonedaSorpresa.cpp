@@ -56,5 +56,3 @@ bool MonedaSorpresa::debeColisionar() {
 }
 
 void MonedaSorpresa::inicializarMapasDeColision() {}
-
-void MonedaSorpresa::sonar() {}

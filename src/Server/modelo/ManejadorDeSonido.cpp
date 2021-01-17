@@ -17,6 +17,6 @@ void ManejadorDeSonido::reproducirSonidoAbajo(std::string id_colision) {
     agregarSonido(mapaSonidoColisionPorAbajo, id_colision);
 }
 
-void ManejadorDeSonido::agregarSonido(std::map<std::string, std::string> mapaSonido, std::string id_colision) {
+void ManejadorDeSonido::agregarSonido(std::map<std::string, uint8_t> mapaSonido, std::string id_colision) {
     Botonera::getInstance()->agregarSonido(mapaSonido[id_colision], id);
 }

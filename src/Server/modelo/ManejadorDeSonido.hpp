@@ -12,11 +12,11 @@ class ManejadorDeSonido{
         void reproducirSonidoAbajo(std::string id_colision);
 
     protected:
-        std::map<std::string, std::string> mapaSonidoColisionPorDerecha;
-        std::map<std::string, std::string> mapaSonidoColisionPorIzquierda;
-        std::map<std::string, std::string> mapaSonidoColisionPorArriba;
-        std::map<std::string, std::string> mapaSonidoColisionPorAbajo;
-        void agregarSonido(std::map<std::string, std::string> mapaSonido, std::string id_colision);
+        std::map<std::string, uint8_t> mapaSonidoColisionPorDerecha;
+        std::map<std::string, uint8_t> mapaSonidoColisionPorIzquierda;
+        std::map<std::string, uint8_t> mapaSonidoColisionPorArriba;
+        std::map<std::string, uint8_t> mapaSonidoColisionPorAbajo;
+        void agregarSonido(std::map<std::string, uint8_t> mapaSonido, std::string id_colision);
         int id = 0;
 };
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_MANEJADORDESONIDO_HPP

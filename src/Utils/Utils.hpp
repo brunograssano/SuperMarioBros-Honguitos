@@ -202,7 +202,7 @@ typedef struct usuario{
 
 #define SONIDO 'S'
 typedef struct sonido{
-    char nombre[MAX_NOMBRE_SONIDO];
+    uint8_t tipoSonido;
 }sonido_t;
 
 #endif /* SRC_UTILS_HPP_ */

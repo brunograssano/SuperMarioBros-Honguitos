@@ -13,7 +13,7 @@ class Botonera {
         ~Botonera() = default;
 
         /* Inscribe que el detonante activo el sonido asociado a la claveSonidos */
-        void agregarSonido(std::string claveSonido, int idDetonante);
+        void agregarSonido(uint8_t claveSonido, int idDetonante);
 
         /*
          * Devuelve los sonidos activados entre llamados a este método.

@@ -73,12 +73,13 @@ class Mario : public Colisionable {
         void alternarModoTest();
         int obtenerID();
 
-private:
+    private:
         void empujarEnX(rectangulo_t rectanguloBloque,int direccion);
         void empujarEnY(rectangulo_t rectanguloBloque,int direccion);
         void hacerseDeFuego(void* pVoid);
         void inicializarMapasDeColision() override;
         void inicializarMapaMorirPorEnemigos();
+        void desactivarMapaColisionesEnemigos();
         void agregarPuntos(void* puntos = nullptr);
         void swapDeModificador(ModificadorMario *nuevoModificador);
         void matarEnemigo(void* puntos = nullptr);
@@ -89,6 +90,7 @@ private:
 		ModificadorMario* modificador;
 		VidaMario* vidaMario;
         ManejadorDeSonidoMario manejadorSonido = ManejadorDeSonidoMario(ID_DEFAULT);
+        int ticksInmunidad;
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;

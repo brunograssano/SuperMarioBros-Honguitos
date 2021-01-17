@@ -45,7 +45,7 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
 	int ancho_textoGameOver = 450;
 	int alto_textoGameOver = 80;
 	SDL_Rect cuadradoGameOver = {ancho_pantalla/2 -ancho_textoGameOver/2,
-							alto_pantalla/7,
+							alto_pantalla/7 - 40,
 							ancho_textoGameOver,
 							alto_textoGameOver}; //Los coloco en el centro.
 

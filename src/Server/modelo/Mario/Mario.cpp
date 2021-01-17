@@ -1,6 +1,8 @@
 #include "Mario.hpp"
 #include "src/Utils/Constantes.hpp"
 #include "src/Server/sprites/SpriteMario.hpp"
+#include <src/Server/Botonera/Botonera.hpp>
+
 
 const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 300;
 const int MINIMO_COORDENADA_Y = 0;
@@ -21,6 +23,7 @@ Mario::Mario(int numeroJugador){
     this->agarreUnaFlorEnEsteInstante = false;
     this->estaEnModoTest = false;
     Mario::inicializarMapasDeColision();
+    manejadorSonido = ManejadorDeSonidoMario(numeroJugador);
 }
 
 void Mario::inicializarMapasDeColision(){
@@ -56,8 +59,11 @@ SpriteMario* Mario::obtenerSpite(){
 }
 
 void Mario::actualizarSaltarMario(){
-	movimiento->saltar();
-	spriteMario->actualizarSpriteMarioSaltar();
+    if(!movimiento->estaEnElAire()){
+        manejadorSonido.reproducirSonidoSalto();
+        movimiento->saltar();
+        spriteMario->actualizarSpriteMarioSaltar();
+    }
 }
 
 void Mario::actualizarAgacharseMario(){
@@ -99,6 +105,7 @@ void Mario::agregarPuntos(int unosPuntos){
 }
 
 void Mario::agregarMoneda(){
+    manejadorSonido.reproducirSonidoMoneda();
     puntos+=PUNTOS_POR_MONEDA;
 }
 
@@ -173,6 +180,8 @@ void Mario::perderVida(void* ptr) {
     if(!this->estaEnModoTest){
         ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
         swapDeModificador(nuevoModificador);
+        manejadorSonido.activarSonidoFlor();
+        manejadorSonido.reproducirSonidoMuerte();
     }
 }
 
@@ -189,13 +198,16 @@ void Mario::hacerseDeFuego(void *pVoid) {
     if(modificador->puedeAgarrarFlor()) {
         agarreUnaFlorEnEsteInstante = true;
         this->hacerseDeFuego();
+        manejadorSonido.desactivarSonidoFlor();
     }
 }
 
 ObjetoFugaz* Mario::dispararFuego() {
     Posicion posManos = spriteMario->posicionManos();
     PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),obtenerPosicionY() + posManos.obtenerPosY());
-    return modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
+    ObjetoFugaz* disparo =  modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
+    manejadorSonido.reproducirSonidoDisparo(disparo->serializar().tipoDeEfecto); //todo: pedir el tipo directamente.
+    return disparo;
 }
 
 string Mario::obtenerColisionID() {
@@ -226,6 +238,7 @@ void Mario::matarEnemigo(void* puntos){
 }
 
 void Mario::chocarPorDerechaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoDerecha(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarEnX(colisionable->obtenerRectangulo(),IZQUIERDA);
     }
@@ -233,10 +246,10 @@ void Mario::chocarPorDerechaCon(Colisionable *colisionable) {
         Colisionable::chocarPorDerechaCon(colisionable);
     }
 }
-
 void Mario::chocarPorIzquierdaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoIzquierda(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
-        empujarEnX(colisionable->obtenerRectangulo(),DERECHA);
+        empujarEnX(colisionable->obtenerRectangulo(), DERECHA);
     }
     else{
         Colisionable::chocarPorIzquierdaCon(colisionable);
@@ -244,6 +257,7 @@ void Mario::chocarPorIzquierdaCon(Colisionable *colisionable) {
 }
 
 void Mario::chocarPorArribaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoArriba(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarEnY(colisionable->obtenerRectangulo(),ABAJO);
     }
@@ -253,6 +267,7 @@ void Mario::chocarPorArribaCon(Colisionable *colisionable) {
 }
 
 void Mario::chocarPorAbajoCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoAbajo(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarEnY(colisionable->obtenerRectangulo(),ARRIBA);
     }
@@ -337,4 +352,8 @@ void Mario::inicializarMapaMorirPorEnemigos() {
     mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
+}
+
+int Mario::obtenerID() {
+    return numeroJugador;
 }

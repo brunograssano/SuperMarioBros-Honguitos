@@ -61,4 +61,5 @@ void Sorpresa::elevar(int y) {
 void Sorpresa::usarse(void* pVoid) {
     spriteBloque->usarse();
     usado = true;
+    objetoSorpresa->sonar();
 }

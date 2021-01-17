@@ -19,6 +19,9 @@ class SpriteMario;
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 
 #include "src/Server/modelo/Colisionable.hpp"
+#include "ManejadorDeSonidoMario.hpp"
+
+const int ID_DEFAULT = 0;
 
 class Mario : public Colisionable {
 
@@ -68,7 +71,7 @@ class Mario : public Colisionable {
 		~Mario() override;
 
         void alternarModoTest();
-
+        int obtenerID();
 
 private:
         void empujarEnX(rectangulo_t rectanguloBloque,int direccion);
@@ -85,6 +88,7 @@ private:
 		SpriteMario * spriteMario;
 		ModificadorMario* modificador;
 		VidaMario* vidaMario;
+        ManejadorDeSonidoMario manejadorSonido = ManejadorDeSonidoMario(ID_DEFAULT);
 		int puntos;
 		int numeroJugador;
 		bool estaConectadoElJugador;

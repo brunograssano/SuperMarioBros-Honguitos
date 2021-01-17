@@ -17,6 +17,7 @@ class MonedaSorpresa : public ObjetoSorpresa{
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
+        void sonar() override;
 
     private:
         void inicializarMapasDeColision() override;

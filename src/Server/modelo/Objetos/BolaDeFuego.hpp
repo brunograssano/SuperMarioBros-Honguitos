@@ -5,6 +5,9 @@
 #include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/sprites/SpriteBolaDeFuego.hpp"
+#include "ManejadorDeSonidoBolaDeFuego.hpp"
+
+const int ID_DEFAULT_MARIO = 0;
 
 class Mario;
 
@@ -21,6 +24,9 @@ class BolaDeFuego : public ObjetoFugaz{
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
+        void chocarPorIzquierdaCon(Colisionable* colisionable) override;
+        void chocarPorDerechaCon(Colisionable* colisionable) override;
+        void chocarPorArribaCon(Colisionable* colisionable) override;
         void chocarPorAbajoCon(Colisionable* colisionable) override;
 
 
@@ -34,6 +40,7 @@ class BolaDeFuego : public ObjetoFugaz{
         int rebotes = 0;
         bool exploto;
         Mario* marioQueDisparo;
+        ManejadorDeSonidoBolaDeFuego manejadorSonido = ManejadorDeSonidoBolaDeFuego(ID_DEFAULT_MARIO);
         void empujarY(rectangulo_t rectangulo);
         void explotar(void *pVoid);
         void rebotar(void *pVoid);

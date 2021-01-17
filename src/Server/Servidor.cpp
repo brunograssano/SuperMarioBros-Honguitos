@@ -245,3 +245,9 @@ Servidor::~Servidor(){
 	delete reconectador;
 	delete log;
 }
+
+void Servidor::enviarSonidosA(const int id, list<sonido_t> sonidos) {
+    for(auto const& sonido: sonidos){
+        clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);
+    }
+}

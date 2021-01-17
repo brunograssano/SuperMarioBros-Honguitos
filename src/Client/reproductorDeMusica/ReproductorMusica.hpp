@@ -15,7 +15,6 @@ class ReproductorMusica{
 	public:
 		static ReproductorMusica* getInstance();
 		void ReproducirMusicaNivel(string nombreCancion);
-		void ReproducirSonidoSalto();
         void reproducirSonido(const string& tipoSonido);
         void ponerMusica(const string& nombreCancion);
         static void reanudarMusica();

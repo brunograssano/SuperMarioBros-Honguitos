@@ -22,6 +22,7 @@ ReproductorMusica::ReproductorMusica(){
 	nombresSonidos.insert(std::pair<string,string>("AgarraHongo","resources/Musica/EfectosSonido/MarioAgarraHongo.wav"));
 	nombresSonidos.insert(std::pair<string,string>("ApareceHongo","resources/Musica/EfectosSonido/ApareceHongo.wav"));
 	nombresSonidos.insert(std::pair<string,string>("PisaKoopa","resources/Musica/EfectosSonido/MarioPisaKoopa.wav"));
+	nombresSonidos.insert(std::pair<string,string>("MarioMorir","resources/Musica/EfectosSonido/MarioMorir.wav"));
 
 	string nombreArchivo;
 	Mix_Chunk* efecto =nullptr;
@@ -97,10 +98,6 @@ void ReproductorMusica::reanudarMusica(){
     Mix_ResumeMusic();
 }
 
-void ReproductorMusica::ReproducirSonidoSalto(){
-	estadoSonidos->reproducir("EfectoSalto");
-}
-
 void ReproductorMusica::cambiarMusica(){
     EstadoMusica* nuevoEstadoMusica = estadoMusica->cambiar();
     delete estadoMusica;
@@ -115,7 +112,7 @@ void ReproductorMusica::cambiarSonidos(){
 
 void ReproductorMusica::reproducirSonido(const string& tipoSonido) {
     Mix_Chunk* efecto = efectosDeSonido.at(tipoSonido);
-    Mix_PlayChannel( -1, efecto, 0 );
+    estadoSonidos->reproducir(efecto);
 }
 
 ReproductorMusica::~ReproductorMusica(){

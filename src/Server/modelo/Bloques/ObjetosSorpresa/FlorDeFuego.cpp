@@ -1,3 +1,4 @@
+#include <src/Server/Botonera/Botonera.hpp>
 #include "src/Server/modelo/PosicionFija.hpp"
 #include "FlorDeFuego.hpp"
 
@@ -88,4 +89,8 @@ void FlorDeFuego::chocarPorAbajoCon(Colisionable *colisionable) {
         }
     }
     Colisionable::chocarPorAbajoCon(colisionable);
+}
+
+void FlorDeFuego::sonar() {
+    Botonera::getInstance()->agregarSonido("AparecePlanta", ID_TODOS_DETONANTES);
 }

@@ -35,7 +35,10 @@ void Juego::avanzarNivel(){
     if(niveles.empty()) return;
 
     Nivel* nivelViejo = niveles.front();
+
     nivelViejo->terminar();
+    guardarPodio(nivelViejo->obtenerPodio());
+
     delete nivelViejo;
     niveles.pop_front();
 
@@ -140,6 +143,17 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
     info_partida.cantidadJugadores = jugadores.size();
     info_partida.idPropio = IDJugador;
 
+    int indicePodio = 0;
+    if(!podios.empty()) {
+        for (auto const &podio: podios) {
+            info_partida.podios[indicePodio] = podio;
+            indicePodio++;
+        }
+        info_partida.podioPuntosAcumulados = this->podioAcumulado;
+    }
+    info_partida.topePodios = indicePodio;
+
+
     for(int i=0;i<jugadores.size();i++){
         info_partida.jugadores[i].puntos = 0;
         info_partida.jugadores[i].mario.idImagen = i;
@@ -155,7 +169,6 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
         i++;
     }
     info_partida.cantidadFondosNiveles = i;
-
     info_partida.mundo = obtenerMundoActual();
 
     return info_partida;
@@ -175,7 +188,6 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
         info_ronda.jugadores[i] = jugadorSerializado;
     }
 
-
     if(!niveles.empty())
         niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, &camara);
     return info_ronda;
@@ -184,8 +196,15 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
 nivel_t Juego::serializarNivel(){
     nivel_t nivel;
     memset(&nivel,0,sizeof(nivel_t));
+
     if(!niveles.empty())
         niveles.front()->completarInformacionNivel(&nivel);
+
+    if(!podios.empty()){
+        nivel.podio = this->podios.back();
+        nivel.podioPuntosAcumulados = this->podioAcumulado;
+    }
+
     return nivel;
 }
 
@@ -223,4 +242,22 @@ Juego::~Juego(){
     }
     jugadores.clear();
     niveles.clear();
+}
+
+void Juego::guardarPodio(Podio *podio) {
+    podio_t podioSerializado;
+    podioSerializado.cantidadJugadores = 0;
+    for(int indiceJugador = 0; indiceJugador < podio->getPodioNivel().size(); indiceJugador++) {
+        podioSerializado.puntosNivel[indiceJugador] = podio->getPodioNivel().at(indiceJugador).second;
+        podioSerializado.ids[indiceJugador] = podio->getPodioNivel().at(indiceJugador).first->obtenerNumeroJugador();
+        podioSerializado.cantidadJugadores++;
+    }
+    this->podios.push_back(podioSerializado);
+
+    podioAcumulado.cantidadJugadores = 0;
+    for(int indiceJugador = 0; indiceJugador < podio->getPodioTotal().size(); indiceJugador++){
+        this->podioAcumulado.puntosNivel[indiceJugador] = podio->getPodioTotal().at(indiceJugador).second;
+        this->podioAcumulado.ids[indiceJugador] = podio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
+        this->podioAcumulado.cantidadJugadores++;
+    }
 }

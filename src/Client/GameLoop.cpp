@@ -31,6 +31,8 @@ void GameLoop::gameLoop() {
 			}
 			else if (event.type == SDL_KEYDOWN){
 			    aplicacion->manejarEntrada(event.key.keysym.sym);
+			}else if(event.type == SDL_MOUSEBUTTONDOWN){
+			    aplicacion->manejarClick(event);
 			}
 		}
 		SDL_PumpEvents();

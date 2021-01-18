@@ -9,7 +9,7 @@ bool operator == (const bloque_t &bloque1, const bloque_t &bloque2){
 }
 
 
-JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla){
+JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla, podio_t podios[], unsigned short topePodios, podio_t podioPuntosAcumulados){
 	for(int i = 0; i<cantidadJugadores;i++){
 		this->jugadores[jugadores[i].mario.idImagen] = jugadores[i];
 	}
@@ -18,9 +18,23 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADOR
 	this->tiempoFaltante = 0;
 	this->numeroMundo = 0;
 	this->posXCamara = 0;
+	this->nivelesJugados = 0;
 	this->ganaron = false;
 	this->perdieron = false;
 	this->anchoVista = anchoPantalla;
+	this->hayQueMostrarPuntosDeNivel = false;
+	this->hayQueCargarPodioNivel = true;
+	for(int i = 0; i<topePodios; i++){
+	    if(i == 0){
+	        podio_t primerPodio;
+	        this->podios.push_back(primerPodio);
+	    }
+	    this->hayQueCargarPodioNivel = false;
+	    this->podios.push_back(podios[i]);
+	    nivelesJugados++;
+	}
+
+	this->podioPuntosTotales = podioPuntosAcumulados;
 }
 
 bool JuegoCliente::ganaronElJuego() const{
@@ -138,6 +152,10 @@ list<moneda_t> JuegoCliente::obtenerMonedas(){
 	return monedas;
 }
 
+vector<podio_t> JuegoCliente::obtenerPodios(){
+    return this->podios;
+}
+
 int JuegoCliente::obtenerTiempoFaltante() const{
 	return tiempoFaltante;
 }
@@ -175,6 +193,7 @@ list<efecto_t> JuegoCliente::obtenerEfectos() {
 void JuegoCliente::agregarNivel(nivel_t nivel) {
     pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_lock(&mutex);
+    if(numeroMundo != 0 ){this->hayQueMostrarPuntosDeNivel = true;}
     numeroMundo = nivel.mundo;
     ladrillos.clear();
     tuberias.clear();
@@ -188,5 +207,24 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     for(int i=0;i<nivel.topePozos;i++){
         pozos.push_front(nivel.pozos[i]);
     }
+
+    if(!hayQueCargarPodioNivel){
+        hayQueCargarPodioNivel = true;
+    }else{
+        podios.push_back(nivel.podio);
+    }
+
+    podioPuntosTotales = nivel.podioPuntosAcumulados;
+    nivelesJugados++;
+
     pthread_mutex_unlock(&mutex);
+
+}
+
+int JuegoCliente::obtenerNivelesJugados()  {
+    return nivelesJugados;
+}
+
+podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
+    return this->podioPuntosTotales;
 }

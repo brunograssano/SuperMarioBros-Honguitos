@@ -13,10 +13,10 @@ class Podio: public Observador {
         void recibirJugadores(map<int, Mario*> jugadores);
         void actualizar(Observable* observable) override;
         vector<pair<Mario*, int>> getPodioNivel();
-        vector<pair<int,Mario*>>  getPodioTotal();
+        vector<pair<Mario*, int>>  getPodioTotal();
         ~Podio()=default;
     private:
-        vector<pair<int,Mario*>> puntajeTotal;
+        vector<pair<Mario*, int>> puntajeTotal;
         vector<pair<Mario*, int>> puntajeParcial;
         vector<pair<Mario*, int>> puntajeNivelAnterior;
 };

@@ -366,7 +366,6 @@ bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
 }
 
 void Nivel::completarInformacionNivel(nivel_t *nivel) {
-
     nivel->mundo = mundo;
     for(auto const& tuberia: tuberias){
         if(nivel->topeTuberias<MAX_TUBERIAS){
@@ -391,8 +390,6 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
-
-    // TODO ver que mas agregamos
 }
 
 Nivel::~Nivel (){
@@ -414,13 +411,16 @@ Nivel::~Nivel (){
     monedas.clear();
 }
 
-
 void Nivel::iniciar(map<int, Mario*> jugadores) {
     contador.iniciar();
     podio->recibirJugadores(jugadores);
     for(auto const& parJugador:jugadores){
         parJugador.second->agregar(podio);
     }
+}
+
+Podio* Nivel::obtenerPodio(){
+    return this->podio;
 }
 
 int Nivel::tiempoRestante() {

@@ -31,7 +31,7 @@ foreach (_headerFile ${MARIO_HEADERS})
 endforeach()
 list(REMOVE_DUPLICATES MARIO_INCLUDE_DIRS)
 
-add_executable (${PROJECT_NAME} ${MARIO_SOURCES})
+add_executable (${PROJECT_NAME} ${MARIO_SOURCES} src/Client/app/Dibujadores/DibujadorFinNivel.cpp src/Client/app/Dibujadores/DibujadorFinNivel.hpp)
 
 # Add compiler errors/warnings flags
 target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:MSVC>:/W4 /WX>)

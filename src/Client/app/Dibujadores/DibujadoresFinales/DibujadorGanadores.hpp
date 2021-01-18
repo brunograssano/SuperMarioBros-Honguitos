@@ -13,6 +13,9 @@
 #include "src/Client/app/juegoCliente/JuegoCliente.hpp"
 #include "src/Client/app/Dibujadores/Recortes/Recorte.hpp"
 
+#include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
+#include "DibujadorPuntos.hpp"
+#include "DibujadorCreditos.hpp"
 
 class DibujadorGanadores : public Dibujador{
 	public:
@@ -20,16 +23,24 @@ class DibujadorGanadores : public Dibujador{
 		void dibujar(JuegoCliente* juegoCliente);
 		~DibujadorGanadores() override;
 
-	private:
+    void agregarEventoDeClick(SDL_Event eventoClick);
+
+private:
 		void dibujarTextoGanadores(JuegoCliente* juegoCliente);
 		void dibujarParticulas();
 		void dibujarPersonajes();
+		void dibujarTitulo();
 
-		map<int, SDL_Color> colores;
+		BotonConTexto* botonIzquierdo;
+		BotonConTexto* botonDerecho;
+		SDL_Event eventoMouse;
+
         Recorte* spritePeach;
         Recorte* spriteToad;
         Recorte* spriteYoshi;
 		list<ParticulaGanadores> particulas;
+		DibujadorPuntos* dibujadorPuntos;
+		DibujadorCreditos* dibujadorCreditos;
 };
 
 

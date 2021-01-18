@@ -11,16 +11,25 @@
 #include "src/Client/app/Dibujadores/Dibujador.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecorteCoffinMario.hpp"
 
+#include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
+#include "DibujadorPuntos.hpp"
+#include "DibujadorCreditos.hpp"
 
 class DibujadorGameOver : public Dibujador{
 
 	public:
 		DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
-		void dibujar() override;
-		~DibujadorGameOver() override = default;
+		void dibujar(JuegoCliente* juegoCliente);
+        void agregarEventoDeClick(SDL_Event eventoClick);
+		~DibujadorGameOver() override;
 
 	private:
-		RecorteCoffinMario spriteCoffinMario;
+        RecorteCoffinMario spriteCoffinMario;
+        BotonConTexto* botonIzquierdo;
+        BotonConTexto* botonDerecho;
+        SDL_Event eventoMouse;
+        DibujadorPuntos* dibujadorPuntos;
+        DibujadorCreditos* dibujadorCreditos;
 };
 
 

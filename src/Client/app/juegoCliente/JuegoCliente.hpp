@@ -12,7 +12,7 @@ using namespace std;
 class JuegoCliente{
 
 	public:
-		JuegoCliente(int cantidadJugadores,jugador_t jugadores[MAX_JUGADORES],int idPropio,int anchoPantalla);
+		JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla, podio_t podios[], unsigned short topePodios, podio_t podioPuntosTotales);
 		~JuegoCliente() = default;
 
 		void agregarRonda(info_ronda_t ronda);
@@ -26,11 +26,14 @@ class JuegoCliente{
         list<pozo_t> obtenerPozos();
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
+		int obtenerNivelesJugados() ;
 		int obtenerIDPropio() const;
 		int obtenerPosXCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
-        void agregarNivel(nivel_t nivel);
+    podio_t obtenerPodioPuntosAcumulados();
+        vector<podio_t> obtenerPodios();
+        bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
     private:
         bool enRango(int posX, int w) const;
 		queue<info_ronda_t> rondas;
@@ -42,17 +45,18 @@ class JuegoCliente{
 		list<moneda_t> monedas;
         list<tuberia_t> tuberias;
         list<efecto_t> efectos;
+        vector<podio_t> podios;
+        podio_t podioPuntosTotales;
 		int cantidadJugadores;
 		int idPropio;
-
 		int anchoVista;
 		int numeroMundo;
 		int tiempoFaltante;
 		int posXCamara;
 		bool ganaron;
 		bool perdieron;
-
-
+        bool hayQueCargarPodioNivel;
+		int nivelesJugados;
 };
 
 

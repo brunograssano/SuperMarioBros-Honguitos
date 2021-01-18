@@ -19,16 +19,19 @@ using namespace std;
 #include "src/Client/app/Dibujadores/DibujadoresJuego/DibujadorJuego.hpp"
 #include "src/Client/app/Dibujadores/DibujadoresError/DibujadorError.hpp"
 #include "src/Client/app/Dibujadores/DibujadoresError/DibujadorErrorServidor.hpp"
+#include "DibujadorFinNivel.hpp" // todo mover
 
 class Dibujadores{
 
 	public:
 		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, bool leidoCorrectamente);
 		void dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarGameOver();
+		void dibujarGameOver(JuegoCliente* juegoCliente);
 		void dibujarInicio();
 		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
+		void dibujarPantallaFinNivel(JuegoCliente *juegoCliente);
 		void dibujarErrorServidor();
+		void agregarEventoADibujadores(SDL_Event eventoClick);
 		~Dibujadores();
 
 	private:
@@ -38,6 +41,7 @@ class Dibujadores{
 		DibujadorJuego* dibujadorJuego;
 		DibujadorError* dibujadorError;
 		DibujadorErrorServidor* dibujadorErrorServidor;
+		DibujadorFinNivel* dibujadorFinNivel;
 		bool archivoBienLeido;
 };
 

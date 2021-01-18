@@ -2,7 +2,6 @@
 #define SRC_SERVER_MODELO_NIVEL_HPP_
 
 #include <map>
-#include <memory>
 #include <string>
 #include <tuple>
 #include <cstdlib>
@@ -17,7 +16,6 @@
 #include "Meta.hpp"
 #include "Piso.hpp"
 #include "Podio.hpp"
-
 
 using namespace std;
 
@@ -46,6 +44,7 @@ class Nivel{
         void terminar();
         void completarInformacionNivel(nivel_t *nivel);
         void aparecerDisparo(ObjetoFugaz* disparo);
+        Podio* obtenerPodio();
 
     private:
         void sacarEnemigosMuertos();

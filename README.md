@@ -1,5 +1,7 @@
 # TP de Taller de programación 1 - Azcurra
-    
+
+[![Build Status](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba.svg?token=kxawFvHvMKcCczSHri2q&branch=master)](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba)
+
 Trabajo practico de la materia Taller de programación 1.
   
 ## Grupo Honguitos

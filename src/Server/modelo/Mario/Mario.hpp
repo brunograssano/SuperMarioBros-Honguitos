@@ -17,13 +17,14 @@ class SpriteMario;
 #include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/Objetos/BolaDeFuego.hpp"
 #include "src/Server/modelo/Objetos/Chispa.hpp"
+#include "src/Utils/Observable.hpp"
 
 #include "src/Server/modelo/Colisionable.hpp"
 #include "ManejadorDeSonidoMario.hpp"
 
-const int ID_DEFAULT = 0;
+class Mario: public Colisionable, public Observable{
 
-class Mario : public Colisionable {
+  const int ID_DEFAULT = 0;
 
 	public:
 		explicit Mario(int numeroJugador);

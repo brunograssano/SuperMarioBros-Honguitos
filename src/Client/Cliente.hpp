@@ -21,9 +21,8 @@ class EscuchadorCliente;
 
 class GameLoop;
 #include "../Client/GameLoop.hpp"
-
+#include "../Utils/Constantes.hpp"
 using namespace std;
-#define LARGO_IP 20
 
 class Cliente{
 

@@ -17,6 +17,7 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->contador = Contador(tiempo, SEGUNDOS);
     this->meta = Meta(this->puntoBanderaFin);
     this->piso = Piso(altoPiso);
+    this->podio = new Podio();
 }
 
 void Nivel::actualizarPosicionesEnemigos(){
@@ -46,6 +47,7 @@ void Nivel::actualizarObjetosFugaces() {
         objeto->actualizar();
     }
 }
+
 
 void Nivel::actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena){
     actualizarPosicionesEnemigos();
@@ -412,8 +414,13 @@ Nivel::~Nivel (){
     monedas.clear();
 }
 
-void Nivel::iniciar() {
+
+void Nivel::iniciar(map<int, Mario*> jugadores) {
     contador.iniciar();
+    podio->recibirJugadores(jugadores);
+    for(auto const& parJugador:jugadores){
+        parJugador.second->agregar(podio);
+    }
 }
 
 int Nivel::tiempoRestante() {

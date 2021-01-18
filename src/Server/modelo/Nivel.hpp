@@ -16,6 +16,8 @@
 #include "Moneda.hpp"
 #include "Meta.hpp"
 #include "Piso.hpp"
+#include "Podio.hpp"
+
 
 using namespace std;
 
@@ -33,7 +35,7 @@ class Nivel{
 		void agregarMoneda(Moneda* unaMoneda);
 		int obtenerMundo() const;
 		int tiempoRestante();
-		void iniciar();
+		void iniciar(map<int, Mario*> jugadores);
 
         /* Completará la información de los siguientes campos:
          * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
@@ -75,6 +77,7 @@ class Nivel{
 
         Meta meta = Meta(0);
         Contador contador = Contador(0, 0);
+        Podio* podio;
 
         int mundo;
         string direccionFondo;

@@ -12,6 +12,7 @@ using namespace std;
 #include "PisoTest.hpp"
 #include "Assert.hpp"
 #include "PisoTest.hpp"
+#include "PodioTest.hpp"
 
 
 int mainTest(){
@@ -24,8 +25,10 @@ int mainTest(){
 	ColisionadorTest::ejecutar(&testSuite);
 	MonedaTest::ejecutar(&testSuite);
 	PisoTest::ejecutar(&testSuite);
+  PodioTest::ejecutar(&testSuite);
 
 	cout << "Pasaron " << testSuite.getPruebasPasadas() << " pruebas de "<< testSuite.getPruebasTotales() << endl;
+
 	return 0;
 }
 

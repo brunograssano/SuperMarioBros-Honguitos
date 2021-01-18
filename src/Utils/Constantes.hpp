@@ -8,6 +8,8 @@ const int ANCHO_FONDO = 8177;
 #define ARRIBA 3
 #define ABAJO 4
 #define MAX_CONEXIONES 4
+#define SIN_JUGAR -1
+#define LARGO_IP 20
 
 #define COLISION_ID_MARIO "Mario"
 #define COLISION_ID_KOOPA "Koopa"

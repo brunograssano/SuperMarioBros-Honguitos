@@ -45,7 +45,7 @@ void Juego::avanzarNivel(){
     }
     else{
         camara.reiniciar();
-        niveles.front()->iniciar();
+        niveles.front()->iniciar(jugadores);
         Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
     }
 
@@ -124,7 +124,7 @@ bool Juego::ganaron() const {
 
 void Juego::iniciar(){
     if(niveles.empty()) return;
-    niveles.front()->iniciar();
+    niveles.front()->iniciar(jugadores);
 }
 
 bool Juego::perdieron() {

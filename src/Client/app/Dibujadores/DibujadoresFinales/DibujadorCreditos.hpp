@@ -4,7 +4,7 @@
 
 
 #include <src/Client/app/juegoCliente/JuegoCliente.hpp>
-#include "Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
 
 class DibujadorCreditos{
 

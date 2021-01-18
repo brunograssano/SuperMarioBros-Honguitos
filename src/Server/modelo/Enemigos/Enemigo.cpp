@@ -14,13 +14,16 @@ void Enemigo::agregarPosicion(int coordenadaX, int coordenadaY) {
     posicionActual = PosicionMovil(coordenadaX, coordenadaY);
 }
 
-void Enemigo::actualizarPosicion() {
+void Enemigo::actualizarPosicion(rectangulo_t rectangulo) {
     if(posicionActual.obtenerPosY() <= MINIMO_COORDENADA_Y){
         morir();
         return;
     }
-    movimientoEnemigo.mover(&posicionActual);
-    spriteEnemigo->actualizarSprite();
+    int posX = posicionActual.obtenerPosX();
+    if(rectangulo.x1-ANCHO_ENEMIGOS*2<posX && posX<rectangulo.x2+ANCHO_ENEMIGOS*2){
+        movimientoEnemigo.mover(&posicionActual);
+        spriteEnemigo->actualizarSprite();
+    }
 }
 
 void Enemigo::morir(void* ptr) {

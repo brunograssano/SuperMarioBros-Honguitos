@@ -13,6 +13,8 @@ void PisoTest::ejecutar(Assert *testSuite) {
     test02CuandoSeLePideAlPisoLaPosicionDeRespawnYAlPrincipioHayUnPozoEsteDevuelveElFinalDelPozo(testSuite);
     cout << AZUL_CLARO"----------TEST 03----------" RESET << endl;
     test03CuandoNoHayUnPozoAlComienzoLaPosicionDeRespawnCoincideConLaDeLaCamara(testSuite);
+    cout << AZUL_CLARO"----------TEST 04----------" RESET << endl;
+    test04AlInicializarElPisoSeObtienenLasCantidadesCorrectas(testSuite);
     cout << CYAN"========== Finalizando con las pruebas del piso ==========" RESET << endl;
 
 }
@@ -62,4 +64,35 @@ void PisoTest::test03CuandoNoHayUnPozoAlComienzoLaPosicionDeRespawnCoincideConLa
     bool hayPiso = piso.obtenerRespawn(rectanguloCamara, &respawn);
     testSuite->assert(hayPiso, "Se encontró una posición para reaparecer.");
     testSuite->assert(respawn.obtenerPosX(), xEsperado, "El piso devuelve correctamente la posición de resaparición con un pozo al comienzo.");
+}
+void PisoTest::test04AlInicializarElPisoSeObtienenLasCantidadesCorrectas(Assert* testSuite) {
+    int alto = 400;
+
+    Piso piso(alto);
+    piso.inicializar();
+    testSuite->assert(piso.obtenerPiso().size(), 1, "Si no se tienen pozos, se obtiene un solo piso");
+
+    piso = Piso(alto);
+    piso.agregarPozo(10, 0, 0);
+    piso.inicializar();
+    testSuite->assert(piso.obtenerPiso().size(), 2, "Con un solo pozo se obtienen 2 pisos");
+
+    piso = Piso(alto);
+    piso.agregarPozo(10, 0, 0);
+    piso.agregarPozo(20, 0, 0);
+    piso.agregarPozo(30, 0, 0);
+    piso.inicializar();
+    testSuite->assert(piso.obtenerPiso().size(), 2, "No se pueden superponer pozos");
+
+    piso = Piso(alto);
+    piso.agregarPozo(100, 0, 0);
+    piso.agregarPozo(400, 0, 0);
+    piso.agregarPozo(700, 0, 0);
+    piso.inicializar();
+    testSuite->assert(piso.obtenerPiso().size(), 4, "Con 3 pozos se tienen 4 pisos");
+
+    piso = Piso(alto);
+    piso.agregarPozo(-1, 0, 0);
+    piso.inicializar();
+    testSuite->assert(piso.obtenerPiso().size(), 1, "No se puede poner un pozo antes del comienzo del piso");
 }

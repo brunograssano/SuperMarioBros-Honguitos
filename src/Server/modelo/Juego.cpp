@@ -1,4 +1,5 @@
 #include "Juego.hpp"
+#include "src/Server/sprites/SpriteMario.hpp"
 #include <utility>
 
 Juego* Juego::instanciaJuego = nullptr;
@@ -14,7 +15,7 @@ Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, 
         nivel->inicializar();
     }
 
-    camara = new Camara(alto_pantalla, ancho_pantalla);
+    camara = Camara(alto_pantalla, ancho_pantalla);
     hanGanado = false;
 }
 
@@ -43,7 +44,7 @@ void Juego::avanzarNivel(){
         Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
     else{
-        camara->reiniciar();
+        camara.reiniciar();
         niveles.front()->iniciar(jugadores);
         Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
     }
@@ -73,12 +74,12 @@ void Juego::actualizarModelo(){
         parClaveJugador.second->actualizarPosicion();
     }
     Nivel* nivelActual = niveles.front();
-	nivelActual->actualizarModelo(jugadores);
+	nivelActual->actualizarModelo(jugadores, camara.obtenerRectanguloCamara());
 
-    if(nivelActual->todosEnLaMeta(jugadores) && hayConectados()) {
+    if( !murieronTodos() && hayConectados() && nivelActual->todosEnLaMeta(jugadores)) {
         avanzarNivel();
     }
-    camara->moverCamara(this->jugadores);
+    camara.moverCamara(this->jugadores);
 }
 
 int Juego::obtenerMundoActual(){
@@ -90,6 +91,8 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     if(niveles.empty()) return;
 
     Mario* jugador = jugadores[idJugador];
+    if(!jugador->estaVivo()){return;}
+
     bool seMovio = false;
     if(entradaUsuario.A){
         jugador->actualizarIzquierdaMario();
@@ -106,11 +109,11 @@ void Juego::actualizarJugador(unsigned short idJugador, entrada_usuario_t entrad
     if(entradaUsuario.S && !seMovio){
         jugador->actualizarAgacharseMario();
     }
-    if(entradaUsuario.F){
-        jugador->hacerseDeFuego();
+    if(entradaUsuario.T){
+        jugador->alternarModoTest();
     }
-    if(entradaUsuario.ESP){ //todo: tener un boton para esto je
-        Disparo* disparo = jugador->dispararFuego();
+    if(entradaUsuario.ESP){
+        ObjetoFugaz* disparo = jugador->dispararFuego();
         niveles.front()->aparecerDisparo(disparo);
     }
 }
@@ -125,15 +128,15 @@ void Juego::iniciar(){
 }
 
 bool Juego::perdieron() {
-    return ((obtenerTiempoRestante() == 0) && !ganaron());
+    return ((obtenerTiempoRestante() == 0) && !ganaron()) || murieronTodos();
 }
 
 info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador){
     info_partida_t info_partida;
     memset(&info_partida,0,sizeof(info_partida_t));
 
-    info_partida.altoVentana =  camara->obtenerRectanguloCamara().h;
-    info_partida.anchoVentana = camara->obtenerRectanguloCamara().w;
+    info_partida.altoVentana =  camara.obtenerRectanguloCamara().h;
+    info_partida.anchoVentana = camara.obtenerRectanguloCamara().w;
     info_partida.cantidadJugadores = jugadores.size();
     info_partida.idPropio = IDJugador;
 
@@ -162,7 +165,7 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
     info_ronda_t info_ronda;
     memset(&info_ronda,0,sizeof(info_ronda_t));
 
-    info_ronda.posXCamara = camara->obtenerRectanguloCamara().x;
+    info_ronda.posXCamara = camara.obtenerRectanguloCamara().x1;
     info_ronda.ganaron = ganaron();
     info_ronda.perdieron = perdieron();
 
@@ -174,7 +177,7 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
 
 
     if(!niveles.empty())
-        niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, camara);
+        niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, &camara);
     return info_ronda;
 }
 
@@ -198,8 +201,20 @@ bool Juego::hayConectados() {
     return hayAlguienConectado;
 }
 
-Juego::~Juego(){
+int Juego::cantidadDeNiveles() {
+    return niveles.size();
+}
 
+bool Juego::murieronTodos() {
+    for(auto const& parClaveJugador:jugadores){
+        if(parClaveJugador.second->estaVivo()){
+            return false;
+        }
+    }
+    return true;
+}
+
+Juego::~Juego(){
     for(auto const& parClaveJugador:jugadores){
         delete parClaveJugador.second;
     }
@@ -208,9 +223,4 @@ Juego::~Juego(){
     }
     jugadores.clear();
     niveles.clear();
-    delete camara;
-}
-
-int Juego::cantidadDeNiveles() {
-    return niveles.size();
 }

@@ -4,19 +4,23 @@
 
 #include "ModificadorMario.hpp"
 #include "src/Server/modelo/Posicion.hpp"
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/Objetos/Chispa.hpp"
 
 class SinModificador : public ModificadorMario{
-    const int MAX_CICLOS_PARA_CHISPEAR = 30;
+
     public:
-        Disparo* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
+        explicit SinModificador(Mario* marioAsociado);
+        ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
         void actualizar()override;
+        ModificadorMario* hacerseDeFuego() override;
+        bool puedeAgarrarFlor() override;
+        uint8_t serializar() override;
 
     private:
         int ciclosChispa = 0;
-        bool yaPuedeChispear();
+        bool yaPuedeChispear() const;
 };
 
 

@@ -1,26 +1,29 @@
 #include "Nivel.hpp"
-
+#include "src/Utils/colisiones/Colisionador.hpp"
 #include <string>
+
+#include "src/Server/modelo/Bloques/PiezaDeTuberia.hpp"
 
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin) {
+Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso) {
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
     this->tiempo = tiempo;
     this->cantidadMonedas = cantidadMonedas;
-    this->puntoBanderaFin = ANCHO_FONDO * (float) puntoBanderaFin / 100;
-    this->contador = new Contador(tiempo, SEGUNDOS);
-    this->meta = new Meta(this->puntoBanderaFin);
+    this->puntoBanderaFin = ANCHO_FONDO* (float) puntoBanderaFin /100;
+    this->contador = Contador(tiempo, SEGUNDOS);
+    this->meta = Meta(this->puntoBanderaFin);
+    this->piso = Piso(altoPiso);
     this->podio = new Podio();
 }
 
 void Nivel::actualizarPosicionesEnemigos(){
 	Log* log = Log::getInstance();
 	int i = 1;
-	for (auto const& enemigo : enemigos) {
+	for (auto& enemigo : enemigos) {
 	    enemigo->actualizarPosicion();
 	    log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
 	    i++;
@@ -28,51 +31,117 @@ void Nivel::actualizarPosicionesEnemigos(){
 }
 
 void Nivel::actualizarMonedas(){
-	for(auto const& moneda : monedas){
+	for(auto& moneda : monedas){
 		moneda->actualizar();
 	}
 }
 
-void Nivel::actualizarDisparos() {
-    list<Disparo*> disparosABorrar;
-    for(auto const& disparo: disparos){
-        disparo->actualizar();
-        if(disparo->debeDesaparecer()){
-            disparosABorrar.push_back(disparo);
-        }
+void Nivel::actualizarBloques() {
+    for(auto& bloque : plataformas){
+        bloque->actualizar();
     }
-    for(auto disparo : disparosABorrar){
-        disparos.remove(disparo);
-        delete disparo;
-    }
-
 }
 
-void Nivel::actualizarModelo(map<int, Mario*> jugadores){
-    //resolverColisiones(jugadores);usarse
+void Nivel::actualizarObjetosFugaces() {
+    for(auto& objeto: objetosFugaces) {
+        objeto->actualizar();
+    }
+}
+
+
+void Nivel::actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena){
     actualizarPosicionesEnemigos();
-    actualizarDisparos();
+
+    imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
+    resolverColisiones(jugadores);
+
+    actualizarObjetosFugaces();
     actualizarMonedas();
+    actualizarBloques();
+
+    sacarEnemigosMuertos();
+    sacarObjetosFugaces();
+    sacarMonedasAgarradas();
+
     resolverGanadores(jugadores);
+}
+
+void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
+    list<Colisionable*> plataformasPiso = piso.obtenerPiso();
+
+    //todo: mejorar esto:
+    list<PiezaDeTuberia*> piezasDeTuberia;
+    for(auto& tuberia: tuberias){
+        list<PiezaDeTuberia*> piezasTuberiaActual = tuberia->obtenerPiezas();
+        piezasDeTuberia.insert(piezasDeTuberia.end(), piezasTuberiaActual.begin(), piezasTuberiaActual.end());
+    }
+
+
+    for(auto& parClaveJugador: jugadores){
+        Mario* jugador = parClaveJugador.second;
+        chocarContraTodos(jugador, (void*)&enemigos, nullptr, nullptr);
+        chocarContraTodos(jugador, (void*)&monedas, nullptr, nullptr);
+        chocarContraTodos(jugador, (void*)&plataformas,&Nivel::agregarObjeto_helper, this);
+        chocarContraTodos(jugador, (void*)&objetosFugaces, nullptr, nullptr);
+        chocarContraTodos(jugador,(void*) &plataformasPiso,nullptr, nullptr);
+        chocarContraTodos(jugador, (void*) &piezasDeTuberia,nullptr, nullptr);
+    }
+    for(auto& enemigo:enemigos){
+        chocarContraTodos(enemigo, (void*)&objetosFugaces, nullptr, nullptr);
+        chocarContraTodos(enemigo, (void*)&plataformas, nullptr, nullptr);
+        chocarContraTodos(enemigo,(void*)&plataformasPiso,nullptr, nullptr);
+        chocarContraTodos(enemigo, (void*)&piezasDeTuberia,nullptr, nullptr);
+    }
+    for(auto& objeto: objetosFugaces){
+        chocarContraTodos(objeto, (void*) &plataformasPiso, nullptr, nullptr);
+        chocarContraTodos(objeto, (void*)&plataformas, nullptr, nullptr);
+        chocarContraTodos(objeto, (void*) &piezasDeTuberia,nullptr, nullptr);
+    }
 }
 
 void Nivel::resolverGanadores(map<int, Mario *> mapaJugadores) {
     for(auto const& parClaveJugador:mapaJugadores)
-        meta->agregarSiPasoLaMeta(parClaveJugador.second);
+        meta.agregarSiPasoLaMeta(parClaveJugador.second);
 }
 
 void Nivel::sacarEnemigosMuertos(){
     list<Enemigo*> enemigosABorrar;
-    for(auto enemigo : enemigosMuertos){ // se moverian a la lista esta una vez que detectamos colision por arriba
-        if(enemigo->sePuedeEliminar()){ // la otra opcion es mantenerlos en la lista original, e ir verificando si estan muertos
+    for(auto enemigo : enemigos){
+        if(enemigo->sePuedeEliminar()){
             enemigosABorrar.push_back(enemigo);
         }
     }
     for(auto enemigo : enemigosABorrar ){
-        enemigosMuertos.remove(enemigo);
+        enemigos.remove(enemigo);
         delete enemigo;
     }
 }
+void Nivel::sacarMonedasAgarradas() {
+    list<Moneda*> monedasABorrar;
+    for(auto moneda : monedas){
+        if(moneda->fueAgarrada()){
+            monedasABorrar.push_back(moneda);
+        }
+    }
+    for(auto moneda : monedasABorrar ){
+        monedas.remove(moneda);
+        delete moneda;
+    }
+}
+
+void Nivel::sacarObjetosFugaces() {
+    list<ObjetoFugaz*> objetosABorrar;
+    for(auto const& objeto: objetosFugaces){
+        if(objeto->debeDesaparecer()){
+            objetosABorrar.push_back(objeto);
+        }
+    }
+    for(auto objeto : objetosABorrar){
+        objetosFugaces.remove(objeto);
+        delete objeto;
+    }
+}
+
 
 string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
@@ -82,8 +151,8 @@ int Nivel::obtenerMundo() const{
     return mundo;
 }
 
-void Nivel::agregarPlataforma(Plataforma* unaPlataforma){
-    plataformas.push_back(unaPlataforma);
+void Nivel::agregarPlataforma(list<Bloque *> unaPlataforma){
+    plataformas.splice(plataformas.end(),unaPlataforma);
 }
 void Nivel::agregarEnemigo(Enemigo* unEnemigo){
     enemigos.push_back(unEnemigo);
@@ -101,33 +170,58 @@ bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
 
 void Nivel::inicializar() {
     inicializarPosicionesOcupadasPorBloques();
+    inicializarPosicionOcupadasPorTuberias();
     inicializarPosicionMonedas();
     inicializarPosicionEnemigo();
+    elevarObstaculos();
+    piso.inicializar();
+}
+
+void Nivel::elevarObstaculos() {
+    for(auto& bloque: plataformas){
+        bloque->elevar(piso.obtenerAltura());
+    }
+    for(auto& tuberia: tuberias){
+        tuberia->elevar(piso.obtenerAltura());
+    }
+    for(auto& moneda: monedas){
+        moneda->elevar(piso.obtenerAltura());
+    }
 }
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
-	for(auto const& plataforma : plataformas){
-		list<Bloque*> bloques = plataforma->obtenerBloques();
+    for(auto const& bloque : plataformas){
+        if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
+            Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
+                    + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
+            bloque->ubicarEnPosicionDefault();
+        }
 
-		for(auto const& bloque : bloques){
-			if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
-				Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
-						+ " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
-				bloque->ubicarEnPosicionDefault();
-			}
+        posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
+    }
 
-			posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
-		}
+}
 
-	}
+void Nivel::inicializarPosicionOcupadasPorTuberias(){
+    //Esto esta feo, funcionara?
+    int posicionesQueOcupaUnaTuberia = 5;
+    int posicionXOcupada;
+    int posicionYOcupada;
+    for(auto const& tuberia : tuberias){
+        posicionXOcupada = tuberia->obtenerPosicionX()/TAMANIO_BLOQUE;
+        posicionYOcupada = 0;
+        for(int i = 0; i < posicionesQueOcupaUnaTuberia; i++) {
+            for(int j = 0; j < posicionesQueOcupaUnaTuberia; j++){
+                posicionesOcupadas[make_tuple(posicionXOcupada+i, posicionYOcupada+j)] = true;
+            }
+        }
+    }
 }
 
 //rand() % (MAXIMO + 1 - MINIMO) + MINIMO
 
 void Nivel::inicializarPosicionMonedas(){
-
-	srand(time(nullptr));
 
 	int cantidadMaximaMonedas = (int)(puntoBanderaFin/2)/(TAMANIO_MONEDA);
 
@@ -139,8 +233,8 @@ void Nivel::inicializarPosicionMonedas(){
 
 	int limiteXSuperior = (int)puntoBanderaFin;
 	int limiteXInferior = (int)puntoBanderaFin/10;
-	int limiteYInferior = ALTO_NIVEL/4;
-	int limiteYSuperior = ALTO_NIVEL*1/2;
+	int limiteYInferior = ALTO_NIVEL/6;
+	int limiteYSuperior = (ALTO_NIVEL*2)/5;
 
 	for(int i=0; i<cantidadMonedas && i<cantidadMaximaMonedas; i++){
 
@@ -162,15 +256,13 @@ void Nivel::inicializarPosicionMonedas(){
 
 void Nivel::inicializarPosicionEnemigo(){
 
-	srand(time(nullptr));
-
 	int numeroPosicionX = 0;
 
 	int limiteXSuperior = (int)puntoBanderaFin;
 	int limiteXInferior = (int)puntoBanderaFin/10;
 
 	int coordenadaX = 0;
-	int coordenadaY = 50;
+	int coordenadaY = 100;
 
 	unsigned int cantidadMaximaEnemigos =  (unsigned int)(puntoBanderaFin/3)/TAMANIO_ENEMIGO;
 
@@ -215,26 +307,24 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
     }
 }
 
-void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, int), void* contexto) {
+void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto) {
     if(!ptrInfoRonda) return;
 
-    ptrInfoRonda->tiempoFaltante = contador->tiempoRestante();
+    ptrInfoRonda->tiempoFaltante = contador.tiempoRestante();
 
     int numeroBloque = 0;
-    for(auto const& plataforma: plataformas){
-        list<bloque_t> bloques = plataforma->serializarPlataforma();
-        for(auto const& bloque: bloques){
-            if(bloque.numeroRecorteY == SORPRESA && deboAgregarlo(contexto, bloque.posX) && numeroBloque < MAX_SORPRESAS){
-                ptrInfoRonda->bloques[numeroBloque] = bloque;
-                numeroBloque++;
-            }
+    for(auto const& bloque: plataformas){
+        bloque_t bloqueSerializado = bloque->serializar();
+        if(bloque->cambioElSprite() && deboAgregarlo(contexto, bloque->obtenerRectangulo()) && numeroBloque < MAX_SORPRESAS){
+            ptrInfoRonda->bloques[numeroBloque] = bloqueSerializado;
+            numeroBloque++;
         }
     }
     ptrInfoRonda->topeBloques = numeroBloque;
 
     int numeroEnemigo = 0;
     for(auto const& enemigo: enemigos){
-        if(deboAgregarlo(contexto, enemigo->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, enemigo->obtenerRectangulo()) &&
            numeroEnemigo<MAX_ENEMIGOS){
             ptrInfoRonda->enemigos[numeroEnemigo] = enemigo->serializar();
             numeroEnemigo++;
@@ -244,16 +334,17 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroMoneda = 0;
     for(auto const& moneda: monedas){
-        if(deboAgregarlo(contexto, moneda->obtenerPosicionX()) &&
+        if(deboAgregarlo(contexto, moneda->obtenerRectangulo()) &&
            numeroMoneda<MAX_MONEDAS){
             ptrInfoRonda->monedas[numeroMoneda] = moneda->serializar();
             numeroMoneda++;
         }
     }
+
     ptrInfoRonda->topeMonedas = numeroMoneda;
     int numeroEfecto = 0;
-    for(auto const& disparo : disparos){
-        if(deboAgregarlo(contexto, disparo->obtenerPosicionX()) &&
+    for(auto const& disparo : objetosFugaces){
+        if(deboAgregarlo(contexto, disparo->obtenerRectangulo()) &&
             numeroEfecto<MAX_EFECTOS){
             ptrInfoRonda->efectos[numeroEfecto] = disparo->serializar();
             numeroEfecto++;
@@ -262,33 +353,20 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     ptrInfoRonda->topeEfectos = numeroEfecto;
 }
 
-void Nivel::agregarPozo(int posicionXNuevoPozo, int tipoPozo) {
-    auto* posiblePozo = new Pozo(posicionXNuevoPozo, tipoPozo);
-
-    bool superponeAObjeto = false;
-    for (auto pozo:pozos){ // llevar a otra funcion a parte la verificacion de superposicion
-        if(pozo->colisionaCon(posiblePozo)){
-            superponeAObjeto = true;
-        }
-    }
-    // mismo chequeo para plataformas?
-    if(!superponeAObjeto){
-        pozos.push_back(posiblePozo);
-    }
-    else{
-        delete posiblePozo;
-    }
+void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
+    piso.agregarPozo(posicionX, tipoPozo, fondo);
 }
 
 void Nivel::terminar() {
-    meta->sumarPuntos(contador->tiempoRestante());
+    meta.sumarPuntos(contador.tiempoRestante());
 }
 
 bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
-    return meta->todosEnLaMeta(jugadores);
+    return meta.todosEnLaMeta(jugadores);
 }
 
 void Nivel::completarInformacionNivel(nivel_t *nivel) {
+
     nivel->mundo = mundo;
     for(auto const& tuberia: tuberias){
         if(nivel->topeTuberias<MAX_TUBERIAS){
@@ -297,20 +375,19 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
+    list<pozo_t> pozos = piso.serializar();
     for(auto const& pozo: pozos){
         if(nivel->topePozos<MAX_POZOS){
-            nivel->pozos[nivel->topePozos] = pozo->serializar();
+            nivel->pozos[nivel->topePozos] = pozo;
             nivel->topePozos++;
         }
     }
 
-    for(auto const& plataforma: plataformas){
-        list<bloque_t>  bloques = plataforma->serializarPlataforma();
-        for(auto const& bloque: bloques){
-            if(nivel->topeBloques<MAX_LADRILLOS && bloque.numeroRecorteY!=SORPRESA){
-                nivel->bloques[nivel->topeBloques] = bloque;
-                nivel->topeBloques++;
-            }
+    for(auto const& bloque: plataformas){
+        bloque_t  bloquesSerializado = bloque->serializar();
+        if(nivel->topeBloques<MAX_LADRILLOS && bloquesSerializado.numeroRecorteY!=SORPRESA){
+            nivel->bloques[nivel->topeBloques] = bloquesSerializado;
+            nivel->topeBloques++;
         }
     }
 
@@ -328,19 +405,18 @@ Nivel::~Nivel (){
     for(const auto& enemigo:enemigos){
         delete enemigo;
     }
-    for(const auto& disparo:disparos){
+    for(const auto& disparo:objetosFugaces){
         delete disparo;
     }
-    disparos.clear();
+    objetosFugaces.clear();
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
-    delete contador;
-    delete meta;
 }
 
+
 void Nivel::iniciar(map<int, Mario*> jugadores) {
-    contador->iniciar();
+    contador.iniciar();
     podio->recibirJugadores(jugadores);
     for(auto const& parJugador:jugadores){
         parJugador.second->agregar(podio);
@@ -348,10 +424,65 @@ void Nivel::iniciar(map<int, Mario*> jugadores) {
 }
 
 int Nivel::tiempoRestante() {
-    return contador->tiempoRestante();
+    return contador.tiempoRestante();
 }
 
-/* todo Refactor: Aparecer objetoFugaz */
-void Nivel::aparecerDisparo(Disparo* disparo) {
-    disparos.push_back(disparo);
+void Nivel::aparecerDisparo(ObjetoFugaz* disparo) {
+    objetosFugaces.push_back(disparo);
 }
+
+void Nivel::agregarObjeto_helper(void* ptr_jugador, void *ptr_bloque, void *ptr_nivel) {
+    ((Nivel *) ptr_nivel)->utilizarSorpresa((Mario *) ptr_jugador, (Bloque *) ptr_bloque);
+}
+
+void Nivel::utilizarSorpresa(Mario* jugador, Bloque *bloque) {
+    ObjetoSorpresa* objeto = bloque->colisionaronAbajo();
+    objeto->usarse(jugador);
+    if(objeto->debeDesaparecer()){
+        delete objeto;
+    }
+    else{
+        objetosFugaces.push_front(objeto);
+    }
+}
+
+
+void Nivel::buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos) {
+    int xActual = rectanguloEscena.x1;
+    int yActual = rectanguloEscena.y2;
+    bool hayCandidato = false;
+
+    for(auto const& bloque : plataformas){
+        rectangulo_t rectBloque = bloque->obtenerRectangulo();
+        rectangulo_t interseccion{};
+        bool hayInterseccion = intersecarRectangulos(rectanguloEscena, rectBloque, &interseccion);
+        if(hayInterseccion && interseccion.w >= ANCHO_MARIO){
+            if(!hayCandidato){
+                xActual = rectBloque.x1;
+                yActual = rectBloque.y2;
+                hayCandidato = true;
+            }else if(rectBloque.x1 < xActual){
+                xActual = rectBloque.x1;
+                yActual = rectBloque.y2;
+            }
+        }
+    }
+
+    *pos = PosicionFija(xActual, yActual);
+}
+
+
+void Nivel::imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena) {
+    PosicionFija posicionDeReaparicion(rectanguloEscena.x1, piso.obtenerAltura());
+
+    bool hayPiso = piso.obtenerRespawn(rectanguloEscena, &posicionDeReaparicion);
+    if(!hayPiso) {
+        buscarBloqueParaCaer(rectanguloEscena, &posicionDeReaparicion);
+    }
+
+    for(auto& parClaveJugador : jugadores){
+        Mario* jugador = parClaveJugador.second;
+        jugador->nuevoPuntoDeReaparicion(posicionDeReaparicion);
+    }
+}
+

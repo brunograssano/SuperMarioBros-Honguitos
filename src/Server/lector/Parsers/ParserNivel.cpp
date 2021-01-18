@@ -1,5 +1,6 @@
 #include "ParserNivel.hpp"
 #include "ParserTuberia.hpp"
+#include "ParserPozo.hpp"
 
 #define VALOR_POR_DEFECTO_MUNDO 1
 #define VALOR_POR_DEFECTO_TIEMPO 300
@@ -8,6 +9,7 @@
 #define MINIMO_PUNTO_BANDERA 50
 #define MAXIMO_PUNTO_BANDERA 100
 #define TIEMPO_MINIMO 25
+#define FACTOR_PISO 0.1
 
 bool condicionPuntoBandera(int puntoBandera){
     return (puntoBandera < MINIMO_PUNTO_BANDERA) || (puntoBandera > MAXIMO_PUNTO_BANDERA);
@@ -44,31 +46,31 @@ void ParserNivel::parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido){
     mensajeCondicion = "El valor de puntoBanderaFin "+ puntoBanderaFinString +" enviado no tiene valor valido, se carga el valor por defecto";
     int puntoBanderaFin = intentarObtenerNumero(archivoLeido, puntoBanderaFinString,condicionPuntoBandera, mensajeCondicion, VALOR_POR_DEFECTO_PUNTO_FIN);
 
-	auto* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin);
+	auto* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin,(int)((float)archivoLeido->altoVentana*FACTOR_PISO));
 	archivoLeido->niveles.push_back(unNivel);
-	for (pugi::xml_node enemigos: nivel.children("enemigos"))
-	{
-		for (pugi::xml_node enemigo: enemigos.children("enemigo"))
-		{
-			auto* parser = new ParserEnemigo();
-            parser->parsear(enemigo, unNivel, archivoLeido);
-			delete parser;
-		}
-	}
-	for (pugi::xml_node plataformas: nivel.children("plataformas"))
-	{
-		for (pugi::xml_node plataforma: plataformas.children("plataforma"))
-		{
-			auto* parser = new ParserPlataforma();
-            parser->parsear(plataforma, unNivel, archivoLeido);
-			delete parser;
-		}
-	}
+    ParserPlataforma parserPlataforma = ParserPlataforma();
+    parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "plataformas", "plataforma",&parserPlataforma);
 
-    for (pugi::xml_node tuberia: nivel.children("tuberia"))
-    {
-        auto* parser = new ParserTuberia();
+    ParserEnemigo parserEnemigo = ParserEnemigo();
+    parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "enemigos", "enemigo",&parserEnemigo);
+
+    ParserTuberia parserTuberias = ParserTuberia();
+    parsearUnNivel(nivel, archivoLeido, unNivel, "tuberia", &parserTuberias);
+
+    ParserPozo parserPozos = ParserPozo();
+    parsearUnNivel(nivel, archivoLeido, unNivel, "pozo", &parserPozos);
+}
+
+void ParserNivel::parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelAParsear, Parser *parser) {
+    for (pugi::xml_node tuberia: nivel.children(nivelAParsear.c_str())){
         parser->parsear(tuberia, unNivel, archivoLeido);
-        delete parser;
+    }
+}
+
+void ParserNivel::parsearMultiplesNiveles(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelSuperior, string nivelInferior, Parser* parser) {
+    for (pugi::xml_node nodoSuperior: nivel.children(nivelSuperior.c_str())){
+        for (pugi::xml_node nodo: nodoSuperior.children(nivelInferior.c_str())){
+            parser->parsear(nodo, unNivel, archivoLeido);
+        }
     }
 }

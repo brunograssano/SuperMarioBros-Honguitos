@@ -8,7 +8,7 @@ using namespace std;
 #include "../../../Utils/log/Error.hpp"
 #include "../../../Utils/log/Debug.hpp"
 #include "../../../Utils/log/Info.hpp"
-#include "Parser.h"
+#include "Parser.hpp"
 
 class ParserLog : public Parser{
 	public:

@@ -1,6 +1,6 @@
 #include "Dibujadores.hpp"
 
-Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla, bool leidoCorrectamente){ // @suppress("Class members should be properly initialized")
+Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla, bool leidoCorrectamente){
 	archivoBienLeido = leidoCorrectamente;
 	this->dibujadorGameOver = new DibujadorGameOver(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 	this->dibujadorInicio = new DibujadorInicio(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);

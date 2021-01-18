@@ -22,18 +22,15 @@ void GameLoop::gameLoop() {
 	App *aplicacion = App::getInstance();
 	SDL_Event event;
 	unsigned int microSegundosEspera = 11000;
-	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
+	auto contador = Contador(microSegundosEspera, USEGUNDOS);
 	while (!salir) {
-		contador->iniciar();
+		contador.iniciar();
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				salir = true;
 			}
-			else if (event.type == SDL_KEYDOWN  && event.key.keysym.sym == SDLK_m){
-                ReproductorMusica::getInstance()->cambiarMusica();
-			}
-			else if (event.type == SDL_KEYDOWN  && event.key.keysym.sym == SDLK_n){
-                ReproductorMusica::getInstance()->cambiarSonidos();
+			else if (event.type == SDL_KEYDOWN){
+			    aplicacion->manejarEntrada(event.key.keysym.sym);
 			}
 		}
 		SDL_PumpEvents();
@@ -45,8 +42,7 @@ void GameLoop::gameLoop() {
 		}
 		aplicacion->actualizar();
 		aplicacion->dibujar();
-		usleep(contador->tiempoRestante());
+		usleep(contador.tiempoRestante());
 	}
-	delete contador;
 	delete aplicacion;
 };

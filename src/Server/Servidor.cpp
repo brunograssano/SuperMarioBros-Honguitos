@@ -3,29 +3,28 @@
 #include <cstring>
 
 
-Servidor::Servidor(ArchivoLeido* archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
+Servidor::Servidor(ArchivoLeido archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
 	manejadorIDs = new ManejadorIdentificadores();
-	log = Log::getInstance(archivoLeido->tipoLog);
+	log = Log::getInstance(archivoLeido.tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
-	escribirMensajesDeArchivoLeidoEnLog(archivoLeido->mensajeError);
+	escribirMensajesDeArchivoLeidoEnLog(archivoLeido.mensajeError);
 
-	aplicacionServidor = new AplicacionServidor(this, archivoLeido->niveles, archivoLeido->cantidadConexiones,
-												 archivoLeido->anchoVentana, archivoLeido->altoVentana);
+	aplicacionServidor = new AplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones,
+												 archivoLeido.anchoVentana, archivoLeido.altoVentana);
 
-	usuariosValidos = archivoLeido->usuariosValidos;
-	if(archivoLeido->cantidadConexiones>MAX_CONEXIONES){
-		log->huboUnError("No se permite la cantidad de conexiones enviada ("+to_string(archivoLeido->cantidadConexiones)+"), el maximo es de " + to_string(MAX_CONEXIONES)+".");
-		archivoLeido->cantidadConexiones = MAX_CONEXIONES;
+	usuariosValidos = archivoLeido.usuariosValidos;
+	if(archivoLeido.cantidadConexiones>MAX_CONEXIONES){
+		log->huboUnError("No se permite la cantidad de conexiones enviada ("+to_string(archivoLeido.cantidadConexiones)+"), el maximo es de " + to_string(MAX_CONEXIONES)+".");
+		archivoLeido.cantidadConexiones = MAX_CONEXIONES;
 	}
-	cantidadConexiones = archivoLeido->cantidadConexiones;
+	cantidadConexiones = archivoLeido.cantidadConexiones;
 
 	socketServer = iniciarSocketServidor(puerto,ip);
 
     log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
     aceptadorDeConexiones = new AceptadorDeConexiones(this,socketServer);
     reconectador = new ReconectadorDeConexiones(this);
-	delete archivoLeido;
 }
 
 
@@ -117,7 +116,7 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 }
 
 
-bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario){
+bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario, ConexionCliente* conexionClienteConPosibleUsuario){
     pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     int idJugador;
     bool seConecto = false;
@@ -244,4 +243,12 @@ Servidor::~Servidor(){
 	delete aplicacionServidor;
 	delete reconectador;
 	delete log;
+}
+
+void Servidor::enviarSonidosA(const int id, list<sonido_t> sonidos) {
+    for(auto const& sonido: sonidos){
+        if(clientesJugando.count(id) != 0) {
+            clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);
+        }
+    }
 }

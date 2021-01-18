@@ -2,7 +2,8 @@
 #define SRC_UTILS_HPP_
 
 #include <string>
-#include <stdint.h>
+#include <cstdint>
+
 using namespace std;
 /* PALABRAS RESERVADAS */
 /*
@@ -32,6 +33,14 @@ const int MAX_MENSAJE = 75;
 const int TIPO_GOOMBA = 1;
 const int TIPO_KOOPA = 2;
 
+typedef struct rectangulo{
+    int x1;
+    int x2;
+    int y1;
+    int y2;
+    int h;
+    int w;
+}rectangulo_t;
 
 #define TIPO_ERROR 'E'
 #define INFO 'I'
@@ -43,6 +52,7 @@ typedef struct mensaje_log{
 
 typedef struct enemigo{
     unsigned short posX;
+    unsigned short posY;
 	uint8_t numeroRecorteX;	// 1|2|3|4|5|6|...|
 	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco ,( 4: fuego goomba)
 	uint8_t tipoEnemigo;	// 1 GOOMBA - 2 KOOPA
@@ -58,6 +68,7 @@ typedef struct bloque{
 
 typedef struct mario{
 	uint8_t idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
+	uint8_t modificador; // 0 Nada - 1 Fuego
 	unsigned short posX;
 	unsigned short posY;
 	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y
@@ -78,12 +89,14 @@ typedef struct jugador{
 
 typedef struct tuberia {
     unsigned short posX;
+    unsigned short posY;
     uint8_t color;
     uint8_t tipo;
 }tuberia_t;
 
 typedef struct pozo {
     unsigned short posX;
+    uint8_t fondo;
     uint8_t tipo;
 }pozo_t;
 
@@ -91,6 +104,8 @@ typedef struct pozo {
 #define NADA 0
 #define BOLA_DE_FUEGO 1
 #define CHISPA 2
+#define FLOR 3
+#define MONEDA_FLOTANTE 4
 typedef struct efecto{
     unsigned short posX;
     unsigned short posY;
@@ -111,7 +126,7 @@ typedef struct entrada_usuario{
 	bool D;
 	bool W;
 	bool ESP;
-	bool F;
+	bool T;
 }entrada_usuario_t;
 
 #define VERIFICACION 'V'
@@ -188,7 +203,9 @@ typedef struct usuario{
 
 #define SONIDO 'S'
 typedef struct sonido{
-    char nombre[MAX_NOMBRE_SONIDO];
+    uint8_t tipoSonido;
 }sonido_t;
+
+bool esUnSonidoValido(sonido_t sonido);
 
 #endif /* SRC_UTILS_HPP_ */

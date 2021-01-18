@@ -6,18 +6,12 @@
 class Tierra : public Terreno{
 
 	public:
-		Tierra(){
-			coeficienteDeRozamiento = 0.2;
-		}
-
-		~Tierra() {
-		}
-
+		Tierra();
 		float aplicarCoeficienteDeRozamiento(float velocidadX) override;
 		float obtenerImpulsoHorizontal(float aceleracion) override;
 		float obtenerImpulsoVertical(float fuerza) override;
-	private:
-		float coeficienteDeRozamiento;
+        float amortiguarVelocidad(float velocidadY) override;
+
 };
 
 #endif /* SRC_MODELO_MOVIMIENTO_TERRENO_TIERRA_H_ */

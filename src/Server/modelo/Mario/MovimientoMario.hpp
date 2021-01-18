@@ -7,6 +7,7 @@
 #include "src/Server/modelo/Terreno/Tierra.hpp"
 #include "src/Server/modelo/Posicion.hpp"
 #include "src/Server/modelo/Terreno/Terreno.hpp"
+#include <map>
 
 class MovimientoMario{
 	public:
@@ -16,18 +17,19 @@ class MovimientoMario{
 		void aceleraraIzquierda();
 		bool estaQuieto();
 		void saltar();
-		void setVelocidadY(int velocidad){
-			this->movimientoY->setVelocidadY(velocidad);
-		}
+		void setVelocidadY(int velocidad);
         float obtenerVelocidadXActual();
 		void mover(PosicionMovil* posicion);
-
-
-
+        void impulsarY();
+        void reiniciar();
+        void setVelocidadX(int velocidadNueva);
+        void teParasteEnBloque();
+        bool estaEnElAire() const;
 private:
-		MovimientoHorizontal* movimientoX;
-		MovimientoVertical* movimientoY;
-		Terreno* terrenoActual;
+		MovimientoHorizontal movimientoX = MovimientoHorizontal(0, 0);
+		MovimientoVertical movimientoY = MovimientoVertical(0);
+		std::map<int,Terreno*> terrenos;
+		int terrenoActual;
 };
 
 

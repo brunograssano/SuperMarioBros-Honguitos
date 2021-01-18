@@ -11,7 +11,7 @@ using namespace std;
 
 class Mario;
 #include "src/Server/modelo/Mario/Mario.hpp"
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "Camara/Camara.hpp"
 #include "src/Utils/Contador.hpp"
 
@@ -21,14 +21,14 @@ class Juego{
 		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla);
         void avanzarNivel();
 
-        Camara* camara;
+        Camara camara = Camara(0, 0);
         bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();
-
+        bool murieronTodos();
 		static Juego* instanciaJuego;
 
     public:
@@ -53,7 +53,7 @@ class Juego{
         info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
         nivel_t serializarNivel();
 
-    int cantidadDeNiveles();
+        int cantidadDeNiveles();
 };
 
 

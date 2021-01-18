@@ -2,30 +2,49 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_BOLADEFUEGO_HPP
 
 #include <src/Server/modelo/PosicionFija.hpp>
-#include "src/Server/modelo/Objetos/Disparo.hpp"
+#include "src/Server/modelo/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/sprites/SpriteBolaDeFuego.hpp"
-#include "src/Utils/Constantes.hpp"
+#include "ManejadorDeSonidoBolaDeFuego.hpp"
 
-class BolaDeFuego : public Disparo{
-    const float VELOCIDAD_X_INICIAL = 3.5;
-    const float VELOCIDAD_Y_INICIAL = 0;
-    const float EFECTO_GRAVITACIONAL = -0.1;
+const int ID_DEFAULT_MARIO = 0;
+
+class Mario;
+
+class BolaDeFuego : public ObjetoFugaz{
     public:
-        explicit BolaDeFuego(PosicionFija posicionInicial, int direccion, float velocidadDeInercia);
+        explicit BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia, Mario* marioQueDisparo);
 
-    void actualizar() override;
+        void actualizar() override;
         efecto_t serializar() override;
         int obtenerPosicionX() override;
+        bool debeDesaparecer() override;
         ~BolaDeFuego() override;
 
-        bool debeDesaparecer() override;
+        string obtenerColisionID() override;
+        rectangulo_t obtenerRectangulo() override;
+        bool debeColisionar() override;
+        void chocarPorIzquierdaCon(Colisionable* colisionable) override;
+        void chocarPorDerechaCon(Colisionable* colisionable) override;
+        void chocarPorArribaCon(Colisionable* colisionable) override;
+        void chocarPorAbajoCon(Colisionable* colisionable) override;
+
+
     private:
+        void inicializarMapasDeColision() override;
         PosicionMovil* posicion;
-        Sprite* sprite;
+        SpriteBolaDeFuego* sprite;
         float velocidadX;
         float velocidadY;
+        float efecto_gravitacional = -0.1;
         int rebotes = 0;
+        bool exploto;
+        Mario* marioQueDisparo;
+        ManejadorDeSonidoBolaDeFuego manejadorSonido = ManejadorDeSonidoBolaDeFuego(ID_DEFAULT_MARIO);
+        void empujarY(rectangulo_t rectangulo);
+        void explotar(void *pVoid);
+        void rebotar(void *pVoid);
+        void matarEnemigo(void *pVoid);
 };
 
 

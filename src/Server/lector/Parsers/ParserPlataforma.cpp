@@ -1,6 +1,5 @@
 #include "src/Server/modelo/Bloques/Ladrillo.hpp"
 #include "src/Server/modelo/Bloques/Sorpresa.hpp"
-#include "src/Server/modelo/Bloques/Plataforma.hpp"
 #include "ParserPlataforma.hpp"
 
 #define VALOR_POR_DEFECTO_CANTIDAD_BLOQUES 5
@@ -34,7 +33,7 @@ void ParserPlataforma::parsear(pugi::xml_node plataforma, Nivel* unNivel, Archiv
     string posXString = plataforma.child_value("coordenadaX");
     string posYString = plataforma.child_value("coordenadaY");
 
-	auto* unaPlataforma = new Plataforma();
+	list<Bloque*> unaPlataforma;
 
     string mensajeCondicion = "El valor de cantidad de bloques ("+ cantidadBloquesString +") enviado no tiene valor valido,se carga el valor por defecto";
     int cantidadBloques = intentarObtenerNumero(archivoLeido, cantidadBloquesString,condicionCantidadMinimaBloques, mensajeCondicion, VALOR_POR_DEFECTO_CANTIDAD_BLOQUES);
@@ -55,17 +54,15 @@ void ParserPlataforma::parsear(pugi::xml_node plataforma, Nivel* unNivel, Archiv
 		if(tipo=="Ladrillo"){
 			unBloque = new Ladrillo(coordenadaX,coordenadaY, tipoColorBloque);
             coordenadaX += 40;
-			unaPlataforma->agregarBloque(unBloque);
 		}else if(tipo=="Sorpresa"){
 			unBloque = new Sorpresa(coordenadaX,coordenadaY);
             coordenadaX += 40;
-			unaPlataforma->agregarBloque(unBloque);
 		}else{
 			archivoLeido->mensajeError.emplace_back("El tipo de bloque no es valido, se pone un ladrillo en su lugar");
 			unBloque = new Ladrillo(coordenadaX, coordenadaY, VALOR_POR_DEFECTO_COLOR);
             coordenadaX += 40;
-			unaPlataforma->agregarBloque(unBloque);
 		}
+        unaPlataforma.push_back(unBloque);
 	}
 	unNivel->agregarPlataforma(unaPlataforma);
 }

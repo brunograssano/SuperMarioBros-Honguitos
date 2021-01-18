@@ -7,7 +7,8 @@ MovimientoVertical::MovimientoVertical(float fuerza){
 	this->fuerza = fuerza;
 }
 void MovimientoVertical::saltar(Terreno* terreno){
-	this->velocidadY += terreno->obtenerImpulsoVertical(fuerza);
+    this->velocidadY = terreno->amortiguarVelocidad(velocidadY);
+    this->velocidadY += terreno->obtenerImpulsoVertical(fuerza);
 }
 
 void MovimientoVertical::aplicarGravedad(){
@@ -19,3 +20,8 @@ void MovimientoVertical::mover(PosicionMovil* posicion){
 	posicion->moverVertical(desplazamientoY);
 	aplicarGravedad();
 }
+
+void MovimientoVertical::setVelocidadY(int velocidad) {
+    this->velocidadY = (float)velocidad;
+}
+

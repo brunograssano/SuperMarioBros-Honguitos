@@ -39,7 +39,7 @@ class ReconectadorDeConexiones;
 class Servidor : public Thread{
 
 	public:
-		Servidor(ArchivoLeido* archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
+		Servidor(ArchivoLeido archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
 		~Servidor();
 
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
@@ -47,13 +47,14 @@ class Servidor : public Thread{
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia);
 		void ejecutar() override;
-		void guardarRondaParaEnvio(info_ronda_t ronda);
 		void terminarElJuego();
-
 		map<int,string> obtenerMapaJugadores();
 
 		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
+
         void mandarNivelAClientes(nivel_t nivel);
+        void guardarRondaParaEnvio(info_ronda_t ronda);
+        void enviarSonidosA(const int id, list<sonido_t> sonidos);
         bool terminoElJuego() const;
         void guardarConexion(ConexionCliente *conexionCliente);
 
@@ -61,6 +62,7 @@ class Servidor : public Thread{
         bool empezoElJuego();
         void mandarActualizacionAClientes();
         void reconectarJugador(mensaje_log_t mensaje, const int idJugador);
+
 
 private:
         ReconectadorDeConexiones* reconectador;

@@ -5,7 +5,7 @@ using namespace std;
 #include <string>
 #include "../pugixml.hpp"
 #include "../ArchivoLeido.hpp"
-#include "Parser.h"
+#include "Parser.hpp"
 
 class ParserPlataforma : public Parser{
 	public:

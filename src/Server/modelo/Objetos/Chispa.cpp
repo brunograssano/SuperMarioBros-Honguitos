@@ -1,9 +1,10 @@
 #include "Chispa.hpp"
 
-Chispa::Chispa(Posicion posicionInicial, int direccion) {
+Chispa::Chispa(const Posicion& posicionInicial, int direccion) {
     int desfaseX = direccion==DERECHA?20:-60;
     posicion = new PosicionFija(posicionInicial.obtenerPosX()+desfaseX, posicionInicial.obtenerPosY());
     sprite = new SpriteChispa(direccion);
+    inicializarMapasDeColision();
 }
 
 bool Chispa::debeDesaparecer() {
@@ -27,3 +28,20 @@ int Chispa::obtenerPosicionX() {
     return posicion->obtenerPosX();
 }
 
+string Chispa::obtenerColisionID() {
+    return COLISION_ID_CHISPA;
+}
+
+rectangulo_t Chispa::obtenerRectangulo() {
+    int x = posicion->obtenerPosX();
+    int y = posicion->obtenerPosY();
+    int w = ANCHO_CHISPA;
+    int h = ALTO_CHISPA;
+    return {x, x+w, y, y+w, h, w};
+}
+
+bool Chispa::debeColisionar() {
+    return false;
+}
+
+void Chispa::inicializarMapasDeColision() {}

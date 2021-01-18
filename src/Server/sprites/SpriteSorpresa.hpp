@@ -1,21 +1,17 @@
-
 #ifndef SRC_SERVER_SPRITES_SPRITESORPRESA_HPP_
 #define SRC_SERVER_SPRITES_SPRITESORPRESA_HPP_
 
-#include <SDL2/SDL.h>
+#include "SpriteBloque.hpp"
 
-#include "Sprite.hpp"
-
-class SpriteSorpresa : public Sprite{
+class SpriteSorpresa : public SpriteBloque{
 	public:
 
-		explicit SpriteSorpresa(bool seUso);
+		explicit SpriteSorpresa();
 		~SpriteSorpresa() override= default;
-		SDL_Rect obtenerRectanguloActual()override;
 		void actualizarSprite()override;
+		void usarse() override;
+		bool cambioElSprite() override;
 
-	private:
-		SDL_Rect estadosPosibles[5]{};
 };
 
 

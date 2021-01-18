@@ -1,4 +1,4 @@
-#include "Parser.h"
+#include "Parser.hpp"
 
 int Parser::intentarObtenerNumero(ArchivoLeido* archivoLeido,string numeroString, condicionACumplir condicion,string mensajeCondicion,int VALOR_DEFECTO) {
     int numero;

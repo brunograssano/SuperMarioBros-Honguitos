@@ -8,7 +8,7 @@ class EnemigoTest {
     public:
         static void ejecutar(Assert* testSuite);
         static void test01LosEnemigosSePuedenMover(Assert* testSuite);
-
+        static void test02SeChocaMarioPorArribaConUnEnemigoYElEnemigoMuere(Assert *testSuite);
 };
 
 

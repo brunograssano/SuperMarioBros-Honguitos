@@ -6,18 +6,12 @@
 class Aire : public Terreno{
 
 	public:
-		Aire(){
-			coeficienteDeRozamiento = 0.08;
-		}
-
-		~Aire(){
-		}
-
+		Aire();
 		float aplicarCoeficienteDeRozamiento(float velocidadX) override;
 		float obtenerImpulsoHorizontal(float aceleracion) override;
 		float obtenerImpulsoVertical(float fuerza) override;
-	private:
-		float coeficienteDeRozamiento;
+		float amortiguarVelocidad(float velocidadY) override;
+
 
 };
 

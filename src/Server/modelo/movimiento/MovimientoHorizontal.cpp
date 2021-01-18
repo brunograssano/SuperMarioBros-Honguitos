@@ -1,7 +1,5 @@
 #include "MovimientoHorizontal.hpp"
 
-const float COEFICIENTE_DE_TIEMPO = 1;
-
 bool velocidadBaja(float velocidad){
 	return(velocidad < 0.5 && velocidad > -0.5);
 }
@@ -45,8 +43,7 @@ bool MovimientoHorizontal::estaQuieto(){
 }
 
 void MovimientoHorizontal::mover(PosicionMovil* posicion, Terreno* terreno){
-	float desplazamientoX = velocidadX*COEFICIENTE_DE_TIEMPO;
-	posicion->moverHorizontal(desplazamientoX);
+	posicion->moverHorizontal(velocidadX);
 	velocidadX = terreno->aplicarCoeficienteDeRozamiento(velocidadX);
 	if(velocidadBaja(velocidadX)){
 		velocidadX = 0;
@@ -55,4 +52,8 @@ void MovimientoHorizontal::mover(PosicionMovil* posicion, Terreno* terreno){
 
 float MovimientoHorizontal::obtenerVelocidadXActual() {
     return this->velocidadX;
+}
+
+void MovimientoHorizontal::setVelocidad(int velocidad) {
+    this->velocidadX = velocidad;
 }

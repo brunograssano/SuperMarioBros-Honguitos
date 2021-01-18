@@ -1,24 +1,18 @@
-
 #ifndef SRC_SERVER_SPRITES_SPRITELADRILLO_HPP_
 #define SRC_SERVER_SPRITES_SPRITELADRILLO_HPP_
 
-#include <SDL2/SDL.h>
+#include "SpriteBloque.hpp"
 
-#include "Sprite.hpp"
-
-class SpriteLadrillo : public Sprite{
+class SpriteLadrillo : public SpriteBloque{
 	public:
-
-		explicit SpriteLadrillo(int tipo);
+		SpriteLadrillo();
 		~SpriteLadrillo() override = default;
-
-		SDL_Rect obtenerRectanguloActual()override;
-
 		void actualizarSprite()override;
+		void usarse() override;
+		bool cambioElSprite() override;
 
-	private:
-
-		SDL_Rect rectanguloLadrillo{};
+    private:
+        int estadoAnterior;
 
 };
 

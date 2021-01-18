@@ -1,7 +1,5 @@
 #include "SpriteMario.hpp"
 
-#include <SDL2/SDL.h>
-
 const int ANCHO_SPRITE_PIXEL = 16;
 const int ALTO_SPRITE_PIXEL = 32;
 const int PASO_PROXIMO_SPRITE = 30;
@@ -17,23 +15,9 @@ const int MOV_IZQ_1 = 5, MOV_IZQ_2 = 4, MOV_IZQ_3 = 3;
 SpriteMario::SpriteMario(){
 	estadoActual = QUIETO_DER;
 	proximoEstado = QUIETO_DER;
-	int corrimientoEnImagen = 0;
-
 	// Variables que controlan el cambio de Sprite
 	contadorEvento = 0;
 	temporizadorMarioAgachado = 0;
-
-	for(auto & estadosPosible : estadosPosibles){
-		estadosPosible.x = corrimientoEnImagen;
-		estadosPosible.y = 0;
-		estadosPosible.w = ANCHO_SPRITE_PIXEL;
-		estadosPosible.h = ALTO_SPRITE_PIXEL;
-		corrimientoEnImagen+= PASO_PROXIMO_SPRITE;
-	}
-}
-
-SDL_Rect SpriteMario::obtenerRectanguloActual(){
-	return estadosPosibles[estadoActual];
 }
 
 bool SpriteMario::controlDeFlujoSprite() {
@@ -381,9 +365,9 @@ void SpriteMario::actualizarSpriteMarioAgacharse() {
 
 Posicion SpriteMario::posicionManos() {
     if(direccionMirada() == DERECHA){
-        return PosicionFija(estadosPosibles[this->estadoActual].w,this->estadosPosibles[estadoActual].h*3/2);
+        return PosicionFija(ANCHO_SPRITE_PIXEL,ALTO_SPRITE_PIXEL*3/2);
     }else{
-        return PosicionFija(0,this->estadosPosibles[estadoActual].h*3/2);
+        return PosicionFija(0,ALTO_SPRITE_PIXEL*3/2);
     }
 }
 

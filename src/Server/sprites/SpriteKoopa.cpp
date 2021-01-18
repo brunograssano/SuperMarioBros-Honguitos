@@ -1,19 +1,10 @@
-
 #include "SpriteKoopa.hpp"
 #define MUERTO 2
 
-SpriteKoopa::SpriteKoopa(int tipo){
-	direccionTextura = "resources/Imagenes/Personajes/Koopas.png";
+SpriteKoopa::SpriteKoopa(bool estaEspejado) {
 	estadoActual = 0;
 	ciclos=0;
-	int corrimientoEnImagen=0;
-	for(auto & estadosPosible : estadosPosibles){
-		estadosPosible.x = corrimientoEnImagen;
-		estadosPosible.y = tipo*16;
-		estadosPosible.w = 16;
-		estadosPosible.h = 24;
-		corrimientoEnImagen+= 16;
-	}
+	this->estaEspejado = estaEspejado;
 }
 
 void SpriteKoopa::actualizarSprite(){
@@ -31,13 +22,8 @@ void SpriteKoopa::actualizarSprite(){
 	ciclos++;
 }
 
-
-SDL_Rect SpriteKoopa::obtenerRectanguloActual(){
-	return estadosPosibles[estadoActual];
-}
-
 void SpriteKoopa::morir() {
-    estadoActual = MUERTO;  // VER CON CUAL OPCION NOS QUEDAMOS DEL SPRITE
+    estadoActual = MUERTO;  // todo VER CON CUAL OPCION NOS QUEDAMOS DEL SPRITE
     ciclos = 0;
 }
 

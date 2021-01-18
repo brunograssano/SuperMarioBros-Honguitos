@@ -1,15 +1,24 @@
 #include "Sorpresa.hpp"
-#include "ObjetosSorpresa/FlorDeFuego.h"
-#include "ObjetosSorpresa/MonedaSorpresa.h"
+#include "ObjetosSorpresa/FlorDeFuego.hpp"
+#include "ObjetosSorpresa/MonedaSorpresa.hpp"
 
 Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     tipoBloque = SORPRESA;
     int coordenadaXNormalizada = normalizarCoordenadaIngresada(coordenadaX);
     int coordenadaYNormalizada = normalizarCoordenadaIngresada(coordenadaY);
-    this->posicion = new PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
-    this->spriteBloque = new SpriteSorpresa(false);
-    SDL_Rect rectangulo = spriteBloque->obtenerRectanguloActual();
-    this->objetoSorpresa = obtenerObjetoSorpresa(posicion->obtenerPosX(), posicion->obtenerPosY() + rectangulo.h);
+    this->posicion = PosicionFija(coordenadaXNormalizada, coordenadaYNormalizada);
+    this->spriteBloque = new SpriteSorpresa();
+    this->objetoSorpresa = obtenerObjetoSorpresa(posicion.obtenerPosX(), posicion.obtenerPosY() + LARGO_BLOQUE);
+    usado = false;
+    entregado = false;
+    Sorpresa::inicializarMapasDeColision();
+}
+
+void Sorpresa::inicializarMapasDeColision(){
+    auto pUsarse = (void (Colisionable::*)(void*)) &Sorpresa::usarse;
+    Colisionable::parFuncionColisionContexto_t parUsarse = {pUsarse, nullptr};
+
+    mapaColisionesPorAbajo[COLISION_ID_MARIO] = parUsarse;
 }
 
 ObjetoSorpresa* Sorpresa::obtenerObjetoSorpresa(int posX, int posY) {
@@ -18,21 +27,41 @@ ObjetoSorpresa* Sorpresa::obtenerObjetoSorpresa(int posX, int posY) {
         objeto = new FlorDeFuego(posX,posY);
     }
     else{
-        objeto = new MonedaSorpresa();
+        PosicionFija pos(posX, posY);
+        objeto = new MonedaSorpresa(&pos);
     }
     return objeto;
 }
 
 ObjetoSorpresa* Sorpresa::colisionaronAbajo() {
-    ObjetoSorpresa* objetoADar = objetoSorpresa;
-    objetoSorpresa = new SinSorpresa();
-    delete spriteBloque;
-    spriteBloque = new SpriteSorpresa(true);
-    return objetoADar;
+    if(usado && !entregado){
+        entregado = true;
+        return objetoSorpresa;
+    }
+    return new SinSorpresa();
+}
+
+string Sorpresa::obtenerColisionID() {
+    return COLISION_ID_SORPRESA;
 }
 
 Sorpresa::~Sorpresa() {
-    delete this->posicion;
     delete this->spriteBloque;
-    delete this->objetoSorpresa;
+    if(!usado){
+        delete this->objetoSorpresa;
+    }
+}
+
+void Sorpresa::elevar(int y) {
+    Bloque::elevar(y);
+    delete objetoSorpresa;
+    objetoSorpresa = obtenerObjetoSorpresa(posicion.obtenerPosX(), posicion.obtenerPosY() + LARGO_BLOQUE);
+}
+
+void Sorpresa::usarse(void* pVoid) {
+    spriteBloque->usarse();
+    usado = true;
+    if(!entregado){
+        objetoSorpresa->sonar();
+    }
 }

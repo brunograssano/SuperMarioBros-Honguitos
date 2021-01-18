@@ -1,12 +1,19 @@
 #include "SinModificador.hpp"
 #include "MarioDeFuego.hpp"
+#include "src/Server/modelo/Mario/Mario.hpp"
+
+const int MAX_CICLOS_PARA_CHISPEAR = 30;
+
+SinModificador::SinModificador(Mario *marioAsociado) {
+    this->marioAsociado = marioAsociado;
+}
 
 ModificadorMario *SinModificador::perderVida(VidaMario *vidaMario) {
     vidaMario->perderVida();
-    return new SinModificador();
+    return new SinModificador(marioAsociado);
 }
 
-Disparo *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
+ObjetoFugaz *SinModificador::dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) {
     if(yaPuedeChispear()){
         ciclosChispa = 0;
         return new Chispa(posicionManosMario, direccion);
@@ -22,6 +29,18 @@ void SinModificador::actualizar(){
     }
 }
 
-bool SinModificador::yaPuedeChispear() {
+bool SinModificador::yaPuedeChispear() const {
     return ciclosChispa == MAX_CICLOS_PARA_CHISPEAR;
+}
+
+ModificadorMario *SinModificador::hacerseDeFuego() {
+    return new MarioDeFuego(marioAsociado);
+}
+
+bool SinModificador::puedeAgarrarFlor() {
+    return true;
+}
+
+uint8_t SinModificador::serializar() {
+    return SIN_MODIFICADOR;
 }

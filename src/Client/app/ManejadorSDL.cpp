@@ -81,14 +81,14 @@ SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Render
 }
 
 SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizador){
-    SDL_Texture*  texturaCargada= NULL;
+    SDL_Texture*  texturaCargada = nullptr;
     SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
-    if(superficieImagen == NULL){
+    if(superficieImagen == nullptr){
         Log::getInstance()->huboUnErrorSDL("No se pudo cargar una imagen en " + direccion, IMG_GetError());
     }
     else{
         texturaCargada = SDL_CreateTextureFromSurface( renderizador, superficieImagen );
-        if( texturaCargada == NULL ){
+        if( texturaCargada == nullptr ){
             Log::getInstance()->huboUnErrorSDL("No se pudo crear una textura a partir de la imagen en " + direccion, SDL_GetError());
         }
         SDL_FreeSurface( superficieImagen );
@@ -98,8 +98,7 @@ SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizad
 
 SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador){
     SDL_Texture* texturaCargada = cargarTexturaImagen(direccion, renderizador);
-    if(texturaCargada == NULL){
-        //texturaCargada = texturaDefecto; TODO: Fijarse si es necesario.
+    if(texturaCargada == nullptr){
         Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion + ". Se cargo la textura por defecto.");
     }else{
         Log::getInstance()->mostrarMensajeDeCarga(descripcion, direccion);

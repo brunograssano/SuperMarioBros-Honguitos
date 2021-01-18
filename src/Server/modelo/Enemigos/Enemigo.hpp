@@ -5,31 +5,42 @@
 #include <string>
 #include "../../sprites/SpriteEnemigo.hpp"
 #include "src/Utils/Utils.hpp"
-#include "src/Server/modelo/Mario/Mario.hpp"
+class Mario;
 
-class Enemigo{
+#include "src/Server/modelo/Colisionable.hpp"
+#include "MovimientoEnemigo.hpp"
+
+
+class Enemigo : public Colisionable{
 
 	public:
-        virtual ~Enemigo()= default;
+        ~Enemigo() override = default;
         virtual enemigo_t serializar() =0 ;
-        virtual void morir(Mario *marioQueMatoAlEnemigo);
+        void morir(void* ptr = nullptr);
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
 		virtual void actualizarPosicion();
         virtual bool sePuedeEliminar();
+        string obtenerColisionID() override = 0;
+        rectangulo_t obtenerRectangulo() override;
+        void chocarPorDerechaCon(Colisionable *colisionable) override;
+        void chocarPorIzquierdaCon(Colisionable *colisionable) override;
+        void chocarPorAbajoCon(Colisionable* colisionable) override;
+        bool debeColisionar() override;
+        bool estaMuerto() const;
 
-	protected:
-        static float obtenerVelocidad(){
-            return (0.15 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
-        }
+    protected:
+        void empujarEnY(rectangulo_t rectanguloBloque, int direccion); // TODO generalizar junto a mario
+        void empujarEnX(rectangulo_t rectanguloBloque, int direccion);
+        void inicializarMapasDeColision() override;
+        void cambiarOrientacion();
         enemigo_t serializarEnemigo(int tipo);
-		PosicionMovil* posicionActual{};
+		PosicionMovil posicionActual = PosicionMovil(0,0);
         SpriteEnemigo* spriteEnemigo{};
-        float velocidadX{};
+        MovimientoEnemigo movimientoEnemigo;
         int tipoColor{};
-        int puntos;
-
+        bool loMataron = false;
 };
 
 

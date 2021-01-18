@@ -15,8 +15,7 @@ class ReproductorMusica{
 	public:
 		static ReproductorMusica* getInstance();
 		void ReproducirMusicaNivel(string nombreCancion);
-		void ReproducirSonidoSalto();
-        void reproducirSonido(const string& tipoSonido);
+        void reproducirSonido(const uint8_t& tipoSonido);
         void ponerMusica(const string& nombreCancion);
         static void reanudarMusica();
         static void pausarMusica();
@@ -30,7 +29,7 @@ class ReproductorMusica{
         EstadoSonidos* estadoSonidos;
         static ReproductorMusica* reproductor;
         ReproductorMusica();
-        map<string,Mix_Chunk*> efectosDeSonido;
+        map<uint8_t, Mix_Chunk*> efectosDeSonido;
         Mix_Music* cancionReproduciendose = nullptr;
 };
 

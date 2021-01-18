@@ -35,6 +35,7 @@ class App{
 		bool terminoElJuego;
 		bool errorServidor;
 		bool estaReproduciendoMusicaGanadores;
+		bool presionoT;
 		map<int,string> direccionesNiveles;
 		int ancho_pantalla;
 		int alto_pantalla;
@@ -52,6 +53,7 @@ class App{
         void agregarNivel(nivel_t nivel);
 		void ocurrioUnErrorServidor();
 		void dibujar();
+        void manejarEntrada(SDL_Keycode codigoEntrada);
 };
 
 #endif /* SRC_APP_APP_HPP_ */

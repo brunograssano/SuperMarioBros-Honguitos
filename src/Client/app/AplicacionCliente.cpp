@@ -1,11 +1,10 @@
 #include "AplicacionCliente.hpp"
 #include "../../Client/reproductorDeMusica/ReproductorMusica.hpp"
+#include "src/Utils/Constantes.hpp"
 #include "ManejadorSDL.hpp"
 #include <list>
 
 App* App::aplicacion = nullptr;
-
-#define LIMITE_SALTO 1
 
 App* App::getInstance(info_partida_t informacion, Cliente* cliente){
 	if(aplicacion==nullptr){
@@ -29,7 +28,6 @@ App::App(info_partida_t informacion, Cliente *cliente) {
     cargadorTexturas = new CargadorTexturas(renderizador);
 
     for(int i=0; i<informacion.cantidadFondosNiveles; i++){
-        //*Traerme el vector de mundos*// // TODO QUE SIGNIFICABA ESTO?
         this->direccionesNiveles[informacion.mundo+i] = string(informacion.direccionesFondoNiveles[i]);
     }
 
@@ -45,6 +43,7 @@ App::App(info_partida_t informacion, Cliente *cliente) {
     comenzoElJuego = false;
     errorServidor = false;
     estaReproduciendoMusicaGanadores = false;
+    presionoT = false;
 
     bool juegoInicializadoCorrectamente = true; // TODO SACAR ESTO
     dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
@@ -66,14 +65,14 @@ void App::ocurrioUnErrorServidor(){
 void App::actualizarServer(const Uint8 *keystate){
 
 	if(!sePusoMusicaInicio){
-		ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaInicio.mp3"); //TODO: refactorizar a otro método.
+		ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_INICIO); //TODO: refactorizar a otro método.
 		sePusoMusicaInicio = true;
 	}
 
 	if(!comenzoElJuego){
 		if(keystate[SDL_SCANCODE_RETURN]){
 			comenzoElJuego = true;
-			ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/TemaNivel1.mp3"); //TODO: refactorizar a otro método.
+			ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_NIVEL1); //TODO: refactorizar a otro método.
 		}
 	}
 	else if(!terminoElJuego){
@@ -82,17 +81,6 @@ void App::actualizarServer(const Uint8 *keystate){
 		if(keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
 			entradaUsuario.W = true;
 			se_movio = true;
-
-			int idPropio = juegoCliente->obtenerIDPropio(); // QUIZAS CONVIENE MOVERLO A ALGO QUE NOS DIGA EL SERVER SI HAY DESFASE
-			map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
-			float posYJugador = jugadores[idPropio].mario.posY;
-			if(posYJugador<=LIMITE_SALTO && !sonoSalto){
-				ReproductorMusica::getInstance()->ReproducirSonidoSalto();
-				sonoSalto = true;
-			}
-			else if(posYJugador>LIMITE_SALTO){
-				sonoSalto = false;
-			}
 		}
 
 		if(keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A]){
@@ -110,9 +98,10 @@ void App::actualizarServer(const Uint8 *keystate){
 			se_movio = true;
 		}
 
-		if(keystate[SDL_SCANCODE_F]){ //todo: desaparece
-		    entradaUsuario.F = true;
+		if(presionoT){
+		    entradaUsuario.T = true;
 		    se_movio = true;
+            presionoT = false;
 		}
 
 		if(keystate[SDL_SCANCODE_SPACE]){
@@ -145,7 +134,7 @@ void App::dibujar(){
 		if(juegoCliente->ganaronElJuego()){
 
 			if(!this->estaReproduciendoMusicaGanadores){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/MusicaVictoria.mp3");
+				ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_VICTORIA);
 				estaReproduciendoMusicaGanadores = true;
 			}
 			dibujador->dibujarPantallaGanadores(juegoCliente);
@@ -153,7 +142,7 @@ void App::dibujar(){
 		}
 		else if(juegoCliente->perdieronElJuego()){
 			if(!terminoElJuego){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel("resources/Musica/CoffinDance8Bits.mp3");
+				ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_GAMEOVER);
 				terminoElJuego = true;
 			}
 			dibujador->dibujarGameOver();
@@ -163,8 +152,21 @@ void App::dibujar(){
 	}
 }
 
-App::~App(){
+void App::agregarNivel(nivel_t nivel) {
+    juegoCliente->agregarNivel(nivel);
+}
 
+void App::manejarEntrada(SDL_Keycode codigoEntrada) {
+    if(codigoEntrada == SDLK_m){
+        ReproductorMusica::getInstance()->cambiarMusica();
+    }else if(codigoEntrada == SDLK_n){
+        ReproductorMusica::getInstance()->cambiarSonidos();
+    }else if(codigoEntrada == SDLK_t){
+        presionoT = true;
+    }
+}
+
+App::~App(){
 	Log::getInstance()->mostrarMensajeDeInfo("Se cierra la aplicacion");
 
 	SDL_DestroyRenderer( renderizador );
@@ -174,9 +176,3 @@ App::~App(){
 	delete cargadorTexturas;
 	delete ReproductorMusica::getInstance();
 }
-
-void App::agregarNivel(nivel_t nivel) {
-    juegoCliente->agregarNivel(nivel);
-    // TODO logica para que se muestren las pantallas intermedias?
-}
-

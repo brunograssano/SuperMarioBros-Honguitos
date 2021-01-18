@@ -18,9 +18,12 @@ class Meta {
         void sumarPuntos(int puntosExtra);
         bool todosEnLaMeta(const std::map<int, Mario *>& map);
         ~Meta();
-private:
+    private:
         bool estaEnLaMeta(Mario* jugador) const;
         bool yaLLegoALaMeta(Mario* jugador);
+        bool conectadosVivosPasaronMetaYDesconectadosNo(const map<int, Mario *> &jugadores);
+        static bool todosDesconectados(const map<int, Mario *> &jugadores);
+        static bool conectadosMuertosYDesconectadosVivos(const map<int, Mario *> &jugadores);
         list<Mario*> ganadores;
         int puntoBandera;
 };

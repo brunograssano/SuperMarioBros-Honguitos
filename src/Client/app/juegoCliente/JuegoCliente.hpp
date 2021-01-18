@@ -34,7 +34,9 @@ class JuegoCliente{
     podio_t obtenerPodioPuntosAcumulados();
         vector<podio_t> obtenerPodios();
         bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
-    private:
+    void agregarNivel(nivel_t nivel);
+
+private:
         bool enRango(int posX, int w) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;

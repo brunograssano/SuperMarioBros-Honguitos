@@ -14,8 +14,8 @@
 #include "src/Client/app/Dibujadores/Recortes/Recorte.hpp"
 
 #include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
-#include "DibujadorPuntos.hpp"
-#include "DibujadorCreditos.hpp"
+#include "src/Client/app/Dibujadores/DibujadorPuntos.hpp"
+#include "src/Client/app/Dibujadores/DibujadorCreditos.hpp"
 
 class DibujadorGanadores : public Dibujador{
 	public:

@@ -19,7 +19,7 @@ using namespace std;
 #include "src/Client/app/Dibujadores/DibujadoresJuego/DibujadorJuego.hpp"
 #include "src/Client/app/Dibujadores/DibujadoresError/DibujadorError.hpp"
 #include "src/Client/app/Dibujadores/DibujadoresError/DibujadorErrorServidor.hpp"
-#include "DibujadorFinNivel.hpp" // todo mover
+#include "src/Client/app/Dibujadores/DibujadoresFinales/DibujadorFinNivel.hpp" // todo mover
 
 class Dibujadores{
 

@@ -1,13 +1,13 @@
 
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_DIBUJADORFINNIVEL_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_DIBUJADORFINNIVEL_HPP
-#include "Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
 
 
-#include "Dibujador.hpp"
-#include "../CargadorTexturas.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
+#include "src/Client/app/CargadorTexturas.hpp"
 
-#include "../juegoCliente/JuegoCliente.hpp"
+#include "src/Client/app/juegoCliente/JuegoCliente.hpp"
 
 class DibujadorFinNivel : public Dibujador{
     public:

@@ -3,8 +3,8 @@
 #include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecorteToadSaltando.hpp"
 #include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecorteYoshiSaltando.hpp"
 
-#include "src/Client/app/ManejadorSDL.hpp"
-const int ANCHO_FONDO = 8177; // todo ver si se usa
+#include "src/Client/app/ManejadorSDL.hpp" //todo: ver si se usa
+
 
 DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
 	this->cargadorTexturas = cargadorTexturas;

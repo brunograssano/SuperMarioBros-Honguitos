@@ -12,8 +12,8 @@
 #include "src/Client/app/Dibujadores/Recortes/RecorteCoffinMario.hpp"
 
 #include "src/Client/app/VentanaInicio/BotonConTexto.hpp"
-#include "DibujadorPuntos.hpp"
-#include "DibujadorCreditos.hpp"
+#include "src/Client/app/Dibujadores/DibujadorPuntos.hpp"
+#include "src/Client/app/Dibujadores/DibujadorCreditos.hpp"
 
 class DibujadorGameOver : public Dibujador{
 

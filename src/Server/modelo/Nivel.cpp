@@ -357,8 +357,12 @@ void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
     piso.agregarPozo(posicionX, tipoPozo, fondo);
 }
 
-void Nivel::terminar() {
+void Nivel::terminar(map<int, Mario *> jugadores) {
     meta.sumarPuntos(contador.tiempoRestante());
+
+    for(auto const& parJugador:jugadores){
+        parJugador.second->eliminar(podio);
+    }
 }
 
 bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
@@ -409,6 +413,7 @@ Nivel::~Nivel (){
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
+    delete this->podio;
 }
 
 void Nivel::iniciar(map<int, Mario*> jugadores) {

@@ -41,7 +41,7 @@ class Nivel{
         void actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena);
         bool todosEnLaMeta(map<int, Mario*> jugadores);
 		string obtenerDireccionFondoActual();
-        void terminar();
+        void terminar(map<int, Mario*> jugadores);
         void completarInformacionNivel(nivel_t *nivel);
         void aparecerDisparo(ObjetoFugaz* disparo);
         Podio* obtenerPodio();

@@ -164,7 +164,6 @@ Cliente::~Cliente(){
 
 }
 
-
 void Cliente::recibirInformacionNivel(nivel_t nivel) {
     esperar(&cargoLaAplicacion);
     App* aplicacion = App::getInstance();

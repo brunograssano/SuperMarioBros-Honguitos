@@ -66,8 +66,6 @@ private:
 		unsigned short cantidadJugadoresActivos;
 
 		GameLoop* gameLoop;
-
-
 };
 
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

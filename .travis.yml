@@ -14,9 +14,6 @@ addons:
     - gcc-6
     - g++-6
     - libsdl2-dev
-    - libsdl2-dev-image
-    - libsdl2-ttf-dev
-    - libsdl2-mixer-dev
     - cmake-data
     - cmake
     

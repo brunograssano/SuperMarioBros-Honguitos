@@ -9,8 +9,9 @@ const short MARIO_DESCONECTADO = -1;
 
 
 Mario::Mario(int numeroJugador){
-	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT,COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
+	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT, COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
 			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
+    this->posicionDeReaparicion = PosicionFija(COORDENADA_X_DEFAULT, COORDENADA_Y_DEFAULT);
 	this->puntos=0;
 	this->movimiento = new MovimientoMario();
 	this->spriteMario = new SpriteMario();
@@ -168,7 +169,7 @@ int Mario::obtenerVida(){
 }
 
 void Mario::perderVida(void* ptr) {
-    posicion->reiniciar();  //todo: Piso más cercano.
+    posicion->reiniciar(posicionDeReaparicion);
     movimiento->reiniciar();
     if(!this->estaEnModoTest){
         ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
@@ -337,4 +338,8 @@ void Mario::inicializarMapaMorirPorEnemigos() {
     mapaColisionesPorIzquierda[COLISION_ID_GOOMBA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_KOOPA] = parPerderVida;
     mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
+}
+
+void Mario::nuevoPuntoDeReaparicion(Posicion puntoDeReaparicion) {
+    this->posicionDeReaparicion = PosicionFija(puntoDeReaparicion.obtenerPosX(), puntoDeReaparicion.obtenerPosY());
 }

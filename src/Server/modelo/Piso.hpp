@@ -3,6 +3,7 @@
 
 #include "src/Server/modelo/Bloques/Pozo.hpp"
 #include "Colisionable.hpp"
+#include "Plataforma.hpp"
 
 class Piso {
 
@@ -13,13 +14,14 @@ class Piso {
         void agregarPozo(int posicionPozo, int tipoPozo, int fondo);
         list<Colisionable*> obtenerPiso();
         list<pozo_t> serializar();
-        int obtenerAltura();
+        int obtenerAltura() const;
+        bool obtenerRespawn(rectangulo_t rectangulo, Posicion* posicion);
 
-    private:
+private:
         int alto;
         list<Pozo> pozos;
         list<Colisionable*> plataformas;
-
+        bool obtenerXRespawn(rectangulo_t rectangulo, int* x);
 };
 
 

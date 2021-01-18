@@ -40,10 +40,6 @@ void EnemigoTest::test02SeChocaMarioPorArribaConUnEnemigoYElEnemigoMuere(Assert*
 
     goomba.chocarPorArribaCon(&mario);
 
-    for(int i = 0; i < 100; i++){
-        goomba.actualizarPosicion();
-    }
-
-    testSuite->assert(goomba.sePuedeEliminar(), "Se murio el Goomba");
+    testSuite->assert(goomba.estaMuerto(), "Se murio el Goomba");
 
 }

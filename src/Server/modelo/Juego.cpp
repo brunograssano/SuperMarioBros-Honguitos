@@ -74,7 +74,7 @@ void Juego::actualizarModelo(){
         parClaveJugador.second->actualizarPosicion();
     }
     Nivel* nivelActual = niveles.front();
-	nivelActual->actualizarModelo(jugadores);
+	nivelActual->actualizarModelo(jugadores, camara.obtenerRectanguloCamara());
 
     if(nivelActual->todosEnLaMeta(jugadores) && hayConectados()) {
         avanzarNivel();
@@ -165,7 +165,7 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
     info_ronda_t info_ronda;
     memset(&info_ronda,0,sizeof(info_ronda_t));
 
-    info_ronda.posXCamara = camara.obtenerRectanguloCamara().x;
+    info_ronda.posXCamara = camara.obtenerRectanguloCamara().x1;
     info_ronda.ganaron = ganaron();
     info_ronda.perdieron = perdieron();
 

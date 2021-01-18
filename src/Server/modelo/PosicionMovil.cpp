@@ -41,3 +41,8 @@ void PosicionMovil::reiniciar() {
     posicionX = minimoX;
     posicionY = COORDENADA_Y_DEFAULT;
 }
+
+void PosicionMovil::reiniciar(Posicion pos) {
+    posicionX = pos.obtenerPosX();
+    posicionY = pos.obtenerPosY();
+}

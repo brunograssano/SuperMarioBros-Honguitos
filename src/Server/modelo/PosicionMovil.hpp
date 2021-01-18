@@ -2,6 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_POSICIONMOVIL_HPP
 
 #include "Posicion.hpp"
+#include "PosicionFija.hpp"
 
 class PosicionMovil : public Posicion{
 
@@ -15,8 +16,9 @@ class PosicionMovil : public Posicion{
         void actualizarLimiteTerrenoIzq(int limite);
         void actualizarLimiteTerrenoDer(int limite);
         void reiniciar();
+        void reiniciar(Posicion pos);
 
-    private:
+private:
         int minimoX;
         int maximoX;
 };

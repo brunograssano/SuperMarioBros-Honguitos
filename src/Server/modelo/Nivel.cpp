@@ -47,8 +47,10 @@ void Nivel::actualizarObjetosFugaces() {
     }
 }
 
-void Nivel::actualizarModelo(map<int, Mario*> jugadores){
+void Nivel::actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena){
     actualizarPosicionesEnemigos();
+
+    imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
     resolverColisiones(jugadores);
 
     actualizarObjetosFugaces();
@@ -416,3 +418,44 @@ void Nivel::utilizarSorpresa(Mario* jugador, Bloque *bloque) {
         objetosFugaces.push_front(objeto);
     }
 }
+
+
+void Nivel::buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos) {
+    int xActual = rectanguloEscena.x1;
+    int yActual = rectanguloEscena.y2;
+    bool hayCandidato = false;
+
+    for(auto const& bloque : plataformas){
+        rectangulo_t rectBloque = bloque->obtenerRectangulo();
+        rectangulo_t interseccion{};
+        bool hayInterseccion = intersecarRectangulos(rectanguloEscena, rectBloque, &interseccion);
+        if(hayInterseccion && interseccion.w >= ANCHO_MARIO){
+            if(!hayCandidato){
+                xActual = rectBloque.x1;
+                yActual = rectBloque.y2;
+                hayCandidato = true;
+            }else if(rectBloque.x1 < xActual){
+                xActual = rectBloque.x1;
+                yActual = rectBloque.y2;
+            }
+        }
+    }
+
+    *pos = PosicionFija(xActual, yActual);
+}
+
+
+void Nivel::imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena) {
+    PosicionFija posicionDeReaparicion(rectanguloEscena.x1, piso.obtenerAltura());
+
+    bool hayPiso = piso.obtenerRespawn(rectanguloEscena, &posicionDeReaparicion);
+    if(!hayPiso) {
+        buscarBloqueParaCaer(rectanguloEscena, &posicionDeReaparicion);
+    }
+
+    for(auto& parClaveJugador : jugadores){
+        Mario* jugador = parClaveJugador.second;
+        jugador->nuevoPuntoDeReaparicion(posicionDeReaparicion);
+    }
+}
+

@@ -1,7 +1,6 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_CAMARA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_CAMARA_HPP
 
-#include <SDL2/SDL.h>
 #include <map>
 #include "../Mario/Mario.hpp"
 #include "src/Utils/Constantes.hpp"
@@ -21,7 +20,7 @@ class Camara {
         void moverCamara(const map<int,Mario*>& jugadores);
         static bool estaEnRangoHelper(void* ptr, rectangulo_t rect);
         bool estaEnRangoVisible(rectangulo_t rect) const;
-        SDL_Rect obtenerRectanguloCamara();
+        rectangulo_t obtenerRectanguloCamara();
     private:
         rectangulo_t rectanguloCamara{};
 };

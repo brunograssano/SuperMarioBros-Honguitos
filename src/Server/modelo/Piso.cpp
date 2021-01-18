@@ -46,6 +46,34 @@ Piso::~Piso() {
     }
 }
 
-int Piso::obtenerAltura() {
+int Piso::obtenerAltura() const {
     return alto;
+}
+
+bool Piso::obtenerXRespawn(rectangulo_t rectanguloEscena, int* x) {
+    *x = rectanguloEscena.x1;
+    bool encontreAlguna = false;
+    for(auto const& plataforma : plataformas){
+        rectangulo_t rectanguloActual = plataforma->obtenerRectangulo();
+        rectangulo_t interseccion;
+        bool hayInterseccion = intersecarRectangulos(rectanguloActual, rectanguloEscena, &interseccion);
+        if(hayInterseccion && (interseccion.w >= ANCHO_MARIO)){
+            if(encontreAlguna && interseccion.x1  < *x){
+                *x = interseccion.x1;
+            }else if(!encontreAlguna){
+                *x = interseccion.x1;
+                encontreAlguna = true;
+            }
+        }
+    }
+    return encontreAlguna;
+}
+
+bool Piso::obtenerRespawn(rectangulo_t rectanguloEscena, Posicion* posicion){
+    int x = 0;
+    bool hayPiso = obtenerXRespawn(rectanguloEscena, &x);
+    if(hayPiso){
+        *posicion = PosicionFija(x, alto);
+    }
+    return hayPiso;
 }

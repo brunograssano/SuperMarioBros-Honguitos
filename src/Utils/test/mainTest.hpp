@@ -10,6 +10,7 @@ using namespace std;
 #include "ColisionadorTest.hpp"
 #include "MonedaTest.hpp"
 #include "Assert.hpp"
+#include "PisoTest.hpp"
 
 
 int mainTest(){
@@ -21,6 +22,7 @@ int mainTest(){
 	EnemigoTest::ejecutar(testSuite);
 	ColisionadorTest::ejecutar(testSuite);
 	MonedaTest::ejecutar(testSuite);
+    PisoTest::ejecutar(testSuite);
 
 
 	cout << "Pasaron " << testSuite->getPruebasPasadas() << " pruebas de "<< testSuite->getPruebasTotales() << endl;

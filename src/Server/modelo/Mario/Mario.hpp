@@ -65,12 +65,12 @@ class Mario : public Colisionable {
         void chocarPorArribaCon(Colisionable* colisionable) override;
         void chocarPorAbajoCon(Colisionable* colisionable) override;
 
-		~Mario() override;
-
         void alternarModoTest();
+        void nuevoPuntoDeReaparicion(Posicion puntoDeReaparicion);
 
+        ~Mario() override;
 
-private:
+    private:
         void empujarEnX(rectangulo_t rectanguloBloque,int direccion);
         void empujarEnY(rectangulo_t rectanguloBloque,int direccion);
         void hacerseDeFuego(void* pVoid);
@@ -80,6 +80,7 @@ private:
         void swapDeModificador(ModificadorMario *nuevoModificador);
         void matarEnemigo(void* puntos = nullptr);
 
+        PosicionFija posicionDeReaparicion = PosicionFija(0,0);
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
 		SpriteMario * spriteMario;

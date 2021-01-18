@@ -38,7 +38,7 @@ class Nivel{
         /* Completará la información de los siguientes campos:
          * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
 		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto);
-        void actualizarModelo(map<int, Mario*> jugadores);
+        void actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena);
         bool todosEnLaMeta(map<int, Mario*> jugadores);
 		string obtenerDireccionFondoActual();
         void terminar();
@@ -83,6 +83,8 @@ class Nivel{
 
         void sacarObjetosFugaces();
         void actualizarBloques();
+        void imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena);
+        void buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos);
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

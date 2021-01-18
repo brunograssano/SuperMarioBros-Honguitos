@@ -85,7 +85,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
                            20,
                            20 };
 
-        for(int i = 0; i<parIdJugador.second.mario.vidas; i++){
+        for(int i = 0; i<juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.vidas; i++){
             SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Corazon"), nullptr, &cuadradoCorazon);
             cuadradoCorazon.x += 25;
         }

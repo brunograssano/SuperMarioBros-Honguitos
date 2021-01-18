@@ -3,7 +3,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_DIBUJADORPUNTOS_HPP
 
 #include <src/Client/app/juegoCliente/JuegoCliente.hpp>
-#include "Dibujador.hpp"
+#include "src/Client/app/Dibujadores/Dibujador.hpp"
 
 class DibujadorPuntos{
 

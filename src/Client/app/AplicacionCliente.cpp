@@ -181,5 +181,4 @@ App::~App(){
 
 	delete dibujador;
 	delete cargadorTexturas;
-	delete ReproductorMusica::getInstance();
 }

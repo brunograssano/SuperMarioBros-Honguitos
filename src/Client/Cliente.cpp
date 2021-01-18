@@ -1,5 +1,6 @@
 #include "Cliente.hpp"
 #include <thread>
+#include "src/Client/reproductorDeMusica/ReproductorMusica.hpp"
 #include "app/ManejadorSDL.hpp"
 #include "UtilidadesCliente.hpp"
 
@@ -17,7 +18,7 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	cerroVentana = false;
 
 	cantidadJugadoresActivos = 0;
-
+    ReproductorMusica::getInstance();
 	escuchador = new EscuchadorCliente(socketCliente,this,&terminoJuego,&terminoEscuchar);
     enviador = new EnviadorCliente(socketCliente,this,&terminoJuego,&terminoEnviar);
 	ventanaInicio = nullptr;
@@ -157,7 +158,7 @@ Cliente::~Cliente(){
 	terminarSDL();
 	cerrarSocketCliente(socketCliente);
 	while(!terminoEnviar || !terminoEscuchar){}
-
+    delete ReproductorMusica::getInstance();
     delete escuchador;
 	delete enviador;
 	delete gameLoop;

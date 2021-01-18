@@ -9,8 +9,8 @@ Dibujadores::Dibujadores(CargadorTexturas* cargadorTexturas,SDL_Renderer* render
 	this->dibujadorError = nullptr;
 	this->dibujadorError = new DibujadorError(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 	this->dibujadorErrorServidor = new DibujadorErrorServidor(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+    this->dibujadorFinNivel = new DibujadorFinNivel(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 }
-
 
 void Dibujadores::dibujarPantallaGanadores(JuegoCliente* juegoCliente){
 	dibujadorGanadores->dibujar(juegoCliente);
@@ -25,8 +25,13 @@ void Dibujadores::dibujarInicio(){
 	}
 }
 
-void Dibujadores::dibujarGameOver(){
-	dibujadorGameOver->dibujar();
+void Dibujadores::dibujarPantallaFinNivel(JuegoCliente* juegoCliente){
+    dibujadorFinNivel->dibujar(juegoCliente);
+}
+
+
+void Dibujadores::dibujarGameOver(JuegoCliente* juegoCliente){
+	dibujadorGameOver->dibujar(juegoCliente);
 }
 
 void Dibujadores::dibujarErrorServidor(){
@@ -35,6 +40,11 @@ void Dibujadores::dibujarErrorServidor(){
 
 void Dibujadores::dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
 	dibujadorJuego->dibujar(rectanguloCamara,juegoCliente);
+}
+
+void Dibujadores::agregarEventoADibujadores(SDL_Event eventoClick){
+    dibujadorGanadores->agregarEventoDeClick(eventoClick);
+    dibujadorGameOver->agregarEventoDeClick(eventoClick);
 }
 
 Dibujadores::~Dibujadores(){

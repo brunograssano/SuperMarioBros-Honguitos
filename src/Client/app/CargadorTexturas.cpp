@@ -49,6 +49,11 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 
     texturaDefecto = intentarCarga("la imagen por defecto","resources/Imagenes/ImagenError.png",renderizador);
 
+    texturas["FondoNivelTerminado"]  = intentarCarga("el fondo de finalizacion de nivel", "resources/Imagenes/Niveles/fondoNivelTerminado.png", renderizador);
+    texturas["Creditos"] = intentarCarga("los creditos", "resources/Imagenes/Creditos.png", renderizador);
+    texturas["FondoGanadores"] = intentarCarga("el fondo de los ganadores", "resources/Imagenes/Niveles/fondoGanadores.png", renderizador);
+
+
     string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
                               "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
 

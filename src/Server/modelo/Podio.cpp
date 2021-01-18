@@ -4,12 +4,10 @@
 using namespace std;
 
 void Podio::recibirJugadores(map<int, Mario *> jugadores) {
-    for (auto& elemento : jugadores) {
-        puntajeTotal.push_back(elemento);
-    }
     for(auto parJugador:jugadores){
         puntajeParcial.push_back(make_pair(parJugador.second,0));
         puntajeNivelAnterior.push_back(make_pair(parJugador.second,parJugador.second->obtenerPuntos()));
+        puntajeTotal.push_back(make_pair(parJugador.second, parJugador.second->obtenerPuntos()));
     }
 }
 
@@ -27,15 +25,17 @@ void Podio::actualizar(Observable* mario){
     int puntosTotales = ((Mario *)mario)->obtenerPuntos();
     int indicePuntajeParcial = buscarIndicePar((Mario *)mario,puntajeParcial);
     int indicePuntajeAnterior = buscarIndicePar((Mario *)mario,puntajeNivelAnterior);
+    int indicePuntajeTotal = buscarIndicePar((Mario *) mario, puntajeTotal);
     puntajeParcial.at(indicePuntajeParcial).second = puntosTotales - puntajeNivelAnterior.at(indicePuntajeAnterior).second;
+    puntajeTotal.at(indicePuntajeTotal).second = puntosTotales;
 }
 
 auto comparadorParcial = [](pair<Mario*, int> const & primerElemento, pair<Mario*, int> const & segundoElemento){
     return primerElemento.second > segundoElemento.second;
 };
 
-auto comparadorTotal = [](pair<int, Mario*> const & primerElemento, pair<int, Mario*> const & segundoElemento){
-    return primerElemento.second->obtenerPuntos() != segundoElemento.second->obtenerPuntos() ? primerElemento.second->obtenerPuntos() > segundoElemento.second->obtenerPuntos() : primerElemento.first > segundoElemento.first;
+auto comparadorTotal = [](pair<Mario*, int> const & primerElemento, pair<Mario*, int> const & segundoElemento){
+    return primerElemento.first->obtenerPuntos() != segundoElemento.first->obtenerPuntos() ? primerElemento.first->obtenerPuntos() > segundoElemento.first->obtenerPuntos() : primerElemento.first > segundoElemento.first;
 };
 
 vector<pair<Mario*, int>> Podio::getPodioNivel() {
@@ -43,7 +43,7 @@ vector<pair<Mario*, int>> Podio::getPodioNivel() {
     return puntajeParcial;
 }
 
-vector<pair<int,Mario*>> Podio::getPodioTotal() {
+vector<pair<Mario* , int>> Podio::getPodioTotal() {
     sort(puntajeTotal.begin(), puntajeTotal.end(), comparadorTotal);
     return puntajeTotal;
 }

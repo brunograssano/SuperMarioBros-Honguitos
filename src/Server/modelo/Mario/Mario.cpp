@@ -60,6 +60,10 @@ SpriteMario* Mario::obtenerSpite(){
 	return spriteMario;
 }
 
+int Mario::obtenerNumeroJugador(){
+    return this->numeroJugador;
+}
+
 void Mario::actualizarSaltarMario(){
     if(!movimiento->estaEnElAire()){
         manejadorSonido.reproducirSonidoSalto();

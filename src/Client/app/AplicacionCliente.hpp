@@ -54,6 +54,7 @@ class App{
 		void ocurrioUnErrorServidor();
 		void dibujar();
         void manejarEntrada(SDL_Keycode codigoEntrada);
+        void manejarClick(SDL_Event eventoClick);
 };
 
 #endif /* SRC_APP_APP_HPP_ */

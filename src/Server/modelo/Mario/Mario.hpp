@@ -51,6 +51,7 @@ class Mario: public Colisionable, public Observable{
         void perderVida(void* ptr = nullptr);
         int obtenerVida();
         void hacerseDeFuego();
+        int obtenerNumeroJugador();
         ObjetoFugaz* dispararFuego();
 
 		jugador_t serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen);

@@ -17,6 +17,10 @@ App* App::getInstance(){
 		return aplicacion;
 }
 
+void App::manejarClick(SDL_Event eventoClick) {
+    this->dibujador->agregarEventoADibujadores(eventoClick);
+}
+
 App::App(info_partida_t informacion, Cliente *cliente) {
     Log* log = Log::getInstance();
     this->cliente = cliente;
@@ -35,7 +39,8 @@ App::App(info_partida_t informacion, Cliente *cliente) {
 
     rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
 
-    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,ancho_pantalla);
+    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,ancho_pantalla,
+                                    informacion.podios, informacion.topePodios, informacion.podioPuntosAcumulados);
 
     sePusoMusicaInicio = false;
     sonoSalto = false;
@@ -129,8 +134,8 @@ void App::dibujar(){
 	if(this->errorServidor){
 		dibujador->dibujarErrorServidor();
 	}else if(!comenzoElJuego){
-		dibujador->dibujarInicio();
-	}else{
+        dibujador->dibujarInicio();
+    }else{
 		if(juegoCliente->ganaronElJuego()){
 
 			if(!this->estaReproduciendoMusicaGanadores){
@@ -140,12 +145,14 @@ void App::dibujar(){
 			dibujador->dibujarPantallaGanadores(juegoCliente);
 			terminoElJuego = true;
 		}
-		else if(juegoCliente->perdieronElJuego()){
-			if(!terminoElJuego){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_GAMEOVER);
-				terminoElJuego = true;
-			}
-			dibujador->dibujarGameOver();
+		else if(juegoCliente->perdieronElJuego()) {
+            if (!terminoElJuego) {
+                ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_GAMEOVER);
+                terminoElJuego = true;
+            }
+            dibujador->dibujarGameOver(juegoCliente);
+        }else if(juegoCliente->hayQueMostrarPuntosDeNivel){
+                dibujador->dibujarPantallaFinNivel(juegoCliente);
 		}else if(!terminoElJuego){
 			dibujador->dibujarJuego(&rectanguloCamara,juegoCliente);
 		}

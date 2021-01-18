@@ -49,7 +49,7 @@ class Nivel{
     private:
         void sacarEnemigosMuertos();
         void sacarMonedasAgarradas();
-        void actualizarPosicionesEnemigos();
+        void actualizarPosicionesEnemigos(rectangulo_t rectangulo);
         void actualizarMonedas();
         void actualizarObjetosFugaces();
         void resolverColisiones(map<int,Mario*> jugadores);

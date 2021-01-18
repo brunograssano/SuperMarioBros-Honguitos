@@ -20,11 +20,11 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->podio = new Podio();
 }
 
-void Nivel::actualizarPosicionesEnemigos(){
+void Nivel::actualizarPosicionesEnemigos(rectangulo_t rectangulo) {
 	Log* log = Log::getInstance();
 	int i = 1;
 	for (auto& enemigo : enemigos) {
-	    enemigo->actualizarPosicion();
+        enemigo->actualizarPosicion(rectangulo);
 	    log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
 	    i++;
 	}
@@ -50,7 +50,7 @@ void Nivel::actualizarObjetosFugaces() {
 
 
 void Nivel::actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena){
-    actualizarPosicionesEnemigos();
+    actualizarPosicionesEnemigos(rectanguloEscena);
 
     imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
     resolverColisiones(jugadores);

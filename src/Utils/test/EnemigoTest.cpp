@@ -23,10 +23,10 @@ void EnemigoTest::test01LosEnemigosSePuedenMover(Assert *testSuite) {
     auto koopa = Koopa(0);
     koopa.agregarPosicion(10,10);
     int posInicialKoopa = koopa.obtenerPosicionX();
-
+    rectangulo_t camara = {0,1000,0,0,0,0};
     for (int i = 0; i < 10; ++i) {
-        goomba.actualizarPosicion();
-        koopa.actualizarPosicion();
+        goomba.actualizarPosicion(camara);
+        koopa.actualizarPosicion(camara);
     }
 
     testSuite->assert(goomba.obtenerPosicionX()!=posInicialGoomba,"El Goomba se puede mover");

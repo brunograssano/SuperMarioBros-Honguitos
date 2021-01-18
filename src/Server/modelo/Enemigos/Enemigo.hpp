@@ -20,7 +20,7 @@ class Enemigo : public Colisionable{
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
-		virtual void actualizarPosicion();
+		virtual void actualizarPosicion(rectangulo_t rectangulo);
         virtual bool sePuedeEliminar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;

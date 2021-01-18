@@ -76,7 +76,7 @@ void Juego::actualizarModelo(){
     Nivel* nivelActual = niveles.front();
 	nivelActual->actualizarModelo(jugadores, camara.obtenerRectanguloCamara());
 
-    if(nivelActual->todosEnLaMeta(jugadores) && hayConectados()) {
+    if( !murieronTodos() && hayConectados() && nivelActual->todosEnLaMeta(jugadores)) {
         avanzarNivel();
     }
     camara.moverCamara(this->jugadores);

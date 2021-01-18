@@ -25,8 +25,7 @@ class MovimientoMario{
         void setVelocidadX(int velocidadNueva);
         void teParasteEnBloque();
         bool estaEnElAire() const;
-
-    private:
+private:
 		MovimientoHorizontal movimientoX = MovimientoHorizontal(0, 0);
 		MovimientoVertical movimientoY = MovimientoVertical(0);
 		std::map<int,Terreno*> terrenos;

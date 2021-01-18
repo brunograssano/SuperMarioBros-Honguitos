@@ -71,9 +71,28 @@ const uint8_t SIN_MODIFICADOR = 0, MODIFICADOR_FUEGO = 1;
 #define CLAVE_TEXTURA_YOSHI_SALTANDO "YoshiSaltando"
 #define CLAVE_TEXTURA_FONDO_POZO "FondoPozo"
 
+
+//=======================================================//
+//====================== MUSICA =========================//
 #define MUSICA_VICTORIA "resources/Musica/MusicaVictoria.mp3"
 #define MUSICA_GAMEOVER "resources/Musica/CoffinDance8Bits.mp3"
 #define MUSICA_INICIO "resources/Musica/MusicaInicio.mp3"
 #define MUSICA_NIVEL1 "resources/Musica/TemaNivel1.mp3"
+
+//=======================================================//
+//====================== SONIDOS ========================//
+const uint8_t NO_SONAR = 0;
+const uint8_t SONIDO_SALTO = 1;
+const uint8_t SONIDO_AGARRAR_MONEDA = 2;
+const uint8_t SONIDO_MATAR_GOOMBA = 3;
+const uint8_t SONIDO_MATAR_KOOPA = 4;
+const uint8_t SONIDO_APARECE_FLOR = 5;
+const uint8_t SONIDO_AGARRA_POWERUP = 6;
+const uint8_t SONIDO_MORIR = 7;
+const uint8_t SONIDO_LANZAR_BOLA_DE_FUEGO = 8;
+const uint8_t SONIDO_LANZAR_CHISPA = 9;
+const uint8_t SONIDO_REBOTE_BOLA_DE_FUEGO = 10;
+const uint8_t SONIDO_EXPLOSION_BOLA_DE_FUEGO = 11;
+const uint8_t SONIDO_LLEGAR_A_LA_META = 12;
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_CONSTANTES_HPP

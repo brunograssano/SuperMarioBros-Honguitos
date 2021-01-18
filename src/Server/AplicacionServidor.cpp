@@ -4,6 +4,8 @@
 
 #include <utility>
 
+#include <src/Server/Botonera/Botonera.hpp>
+
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
 	juego = Juego::getInstance(std::move(niveles),cantidadJugadores, alto_pantalla, ancho_pantalla);
@@ -11,6 +13,7 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 	comenzoElJuego = false;
 	juegoInicializadoCorrectamente = false;
 	log = Log::getInstance();
+	Botonera::getInstance();
 	servidor = server;
 }
 
@@ -70,6 +73,7 @@ void AplicacionServidor::ejecutar(){
 		revisarSiMandarInfoNivel(&cantidadNivelesRestantes);
 		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
 		servidor->guardarRondaParaEnvio(ronda);
+        enviarSonidos();
 
 		usleep(contador->tiempoRestante());
 	}
@@ -91,9 +95,21 @@ void AplicacionServidor::desconectarJugador(int idJugador){
 }
 
 AplicacionServidor::~AplicacionServidor(){
+    delete Botonera::getInstance();
 	delete juego;
 }
 
 bool AplicacionServidor::empezoElJuego() {
     return comenzoElJuego;
+}
+
+void AplicacionServidor::enviarSonidos() {
+    std::map<int, string> jugadores = servidor->obtenerMapaJugadores();
+    Botonera *botonera = Botonera::getInstance();
+    std::list<sonido_t> sonidoDeTodos = botonera->obtenerSonidosDe(ID_TODOS_DETONANTES);
+    for(auto const& parClaveJugador : jugadores){
+        std::list<sonido_t> sonidos = botonera->obtenerSonidosDe(parClaveJugador.first);
+        sonidos.insert(sonidos.end(), sonidoDeTodos.begin(), sonidoDeTodos.end());
+        servidor->enviarSonidosA(parClaveJugador.first, sonidos);
+    }
 }

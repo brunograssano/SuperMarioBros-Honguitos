@@ -6,8 +6,6 @@
 
 App* App::aplicacion = nullptr;
 
-#define LIMITE_SALTO 1
-
 App* App::getInstance(info_partida_t informacion, Cliente* cliente){
 	if(aplicacion==nullptr){
 		aplicacion= new App(informacion,cliente);
@@ -30,7 +28,6 @@ App::App(info_partida_t informacion, Cliente *cliente) {
     cargadorTexturas = new CargadorTexturas(renderizador);
 
     for(int i=0; i<informacion.cantidadFondosNiveles; i++){
-        //*Traerme el vector de mundos*// // TODO QUE SIGNIFICABA ESTO?
         this->direccionesNiveles[informacion.mundo+i] = string(informacion.direccionesFondoNiveles[i]);
     }
 
@@ -46,6 +43,7 @@ App::App(info_partida_t informacion, Cliente *cliente) {
     comenzoElJuego = false;
     errorServidor = false;
     estaReproduciendoMusicaGanadores = false;
+    presionoT = false;
 
     bool juegoInicializadoCorrectamente = true; // TODO SACAR ESTO
     dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
@@ -83,17 +81,6 @@ void App::actualizarServer(const Uint8 *keystate){
 		if(keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
 			entradaUsuario.W = true;
 			se_movio = true;
-
-			int idPropio = juegoCliente->obtenerIDPropio(); // QUIZAS CONVIENE MOVERLO A ALGO QUE NOS DIGA EL SERVER SI HAY DESFASE
-			map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
-			float posYJugador = jugadores[idPropio].mario.posY;
-			if(posYJugador<=LIMITE_SALTO && !sonoSalto){
-				ReproductorMusica::getInstance()->ReproducirSonidoSalto();
-				sonoSalto = true;
-			}
-			else if(posYJugador>LIMITE_SALTO){
-				sonoSalto = false;
-			}
 		}
 
 		if(keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A]){
@@ -111,9 +98,10 @@ void App::actualizarServer(const Uint8 *keystate){
 			se_movio = true;
 		}
 
-		if(keystate[SDL_SCANCODE_T]){
+		if(presionoT){
 		    entradaUsuario.T = true;
 		    se_movio = true;
+            presionoT = false;
 		}
 
 		if(keystate[SDL_SCANCODE_SPACE]){
@@ -166,11 +154,19 @@ void App::dibujar(){
 
 void App::agregarNivel(nivel_t nivel) {
     juegoCliente->agregarNivel(nivel);
-    // TODO logica para que se muestren las pantallas intermedias?
+}
+
+void App::manejarEntrada(SDL_Keycode codigoEntrada) {
+    if(codigoEntrada == SDLK_m){
+        ReproductorMusica::getInstance()->cambiarMusica();
+    }else if(codigoEntrada == SDLK_n){
+        ReproductorMusica::getInstance()->cambiarSonidos();
+    }else if(codigoEntrada == SDLK_t){
+        presionoT = true;
+    }
 }
 
 App::~App(){
-
 	Log::getInstance()->mostrarMensajeDeInfo("Se cierra la aplicacion");
 
 	SDL_DestroyRenderer( renderizador );

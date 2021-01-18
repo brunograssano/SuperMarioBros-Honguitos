@@ -1,12 +1,14 @@
 #include "Mario.hpp"
 #include "src/Utils/Constantes.hpp"
 #include "src/Server/sprites/SpriteMario.hpp"
+#include "src/Server/Botonera/Botonera.hpp"
+
 
 const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 300;
 const int MINIMO_COORDENADA_Y = 0;
 const int TERRENO_LIMITE_DERECHO_MAX = 8177,TERRENO_LIMITE_DERECHO_MIN = 0;
 const short MARIO_DESCONECTADO = -1;
-
+const int SIN_INMUNIDAD = 180, EMPIEZA_INMUNIDAD = 0, PIERDE_INMUNIDAD = 179;
 
 Mario::Mario(int numeroJugador){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT, COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
@@ -22,6 +24,8 @@ Mario::Mario(int numeroJugador){
     this->agarreUnaFlorEnEsteInstante = false;
     this->estaEnModoTest = false;
     Mario::inicializarMapasDeColision();
+    manejadorSonido = ManejadorDeSonidoMario(numeroJugador);
+    ticksInmunidad = SIN_INMUNIDAD;
 }
 
 void Mario::inicializarMapasDeColision(){
@@ -57,8 +61,11 @@ SpriteMario* Mario::obtenerSpite(){
 }
 
 void Mario::actualizarSaltarMario(){
-	movimiento->saltar();
-	spriteMario->actualizarSpriteMarioSaltar();
+    if(!movimiento->estaEnElAire()){
+        manejadorSonido.reproducirSonidoSalto();
+        movimiento->saltar();
+        spriteMario->actualizarSpriteMarioSaltar();
+    }
 }
 
 void Mario::actualizarAgacharseMario(){
@@ -100,6 +107,7 @@ void Mario::agregarPuntos(int unosPuntos){
 }
 
 void Mario::agregarMoneda(){
+    manejadorSonido.reproducirSonidoMoneda();
     puntos+=PUNTOS_POR_MONEDA;
 }
 
@@ -139,6 +147,13 @@ void Mario::actualizarPosicion(){
 		this->perderVida();
 	}
 	modificador->actualizar();
+	if(ticksInmunidad<PIERDE_INMUNIDAD && ticksInmunidad != SIN_INMUNIDAD){
+        ticksInmunidad++;
+	}
+	else if (ticksInmunidad == PIERDE_INMUNIDAD && !estaEnModoTest){
+        ticksInmunidad = SIN_INMUNIDAD;
+        inicializarMapasDeColision();
+	}
 	Log::getInstance()->mostrarPosicion("Mario", posicion->obtenerPosX(), posicion->obtenerPosY());
 }
 
@@ -174,6 +189,10 @@ void Mario::perderVida(void* ptr) {
     if(!this->estaEnModoTest){
         ModificadorMario* nuevoModificador = modificador->perderVida(vidaMario);
         swapDeModificador(nuevoModificador);
+        manejadorSonido.activarSonidoFlor();
+        manejadorSonido.reproducirSonidoMuerte();
+        ticksInmunidad = EMPIEZA_INMUNIDAD;
+        desactivarMapaColisionesEnemigos();
     }
 }
 
@@ -190,13 +209,16 @@ void Mario::hacerseDeFuego(void *pVoid) {
     if(modificador->puedeAgarrarFlor()) {
         agarreUnaFlorEnEsteInstante = true;
         this->hacerseDeFuego();
+        manejadorSonido.desactivarSonidoFlor();
     }
 }
 
 ObjetoFugaz* Mario::dispararFuego() {
     Posicion posManos = spriteMario->posicionManos();
     PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),obtenerPosicionY() + posManos.obtenerPosY());
-    return modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
+    ObjetoFugaz* disparo =  modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
+    manejadorSonido.reproducirSonidoDisparo(disparo->serializar().tipoDeEfecto); //todo: pedir el tipo directamente.
+    return disparo;
 }
 
 string Mario::obtenerColisionID() {
@@ -227,6 +249,7 @@ void Mario::matarEnemigo(void* puntos){
 }
 
 void Mario::chocarPorDerechaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoDerecha(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarEnX(colisionable->obtenerRectangulo(),IZQUIERDA);
     }
@@ -234,10 +257,10 @@ void Mario::chocarPorDerechaCon(Colisionable *colisionable) {
         Colisionable::chocarPorDerechaCon(colisionable);
     }
 }
-
 void Mario::chocarPorIzquierdaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoIzquierda(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
-        empujarEnX(colisionable->obtenerRectangulo(),DERECHA);
+        empujarEnX(colisionable->obtenerRectangulo(), DERECHA);
     }
     else{
         Colisionable::chocarPorIzquierdaCon(colisionable);
@@ -245,6 +268,7 @@ void Mario::chocarPorIzquierdaCon(Colisionable *colisionable) {
 }
 
 void Mario::chocarPorArribaCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoArriba(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarEnY(colisionable->obtenerRectangulo(),ABAJO);
     }
@@ -254,6 +278,7 @@ void Mario::chocarPorArribaCon(Colisionable *colisionable) {
 }
 
 void Mario::chocarPorAbajoCon(Colisionable *colisionable) {
+    manejadorSonido.reproducirSonidoAbajo(colisionable->obtenerColisionID());
     if(esUnBloque(colisionable->obtenerColisionID())){
         empujarEnY(colisionable->obtenerRectangulo(),ARRIBA);
     }
@@ -292,40 +317,22 @@ bool Mario::debeColisionar() {
 void Mario::alternarModoTest() {
     auto pPerderVida = (void (Colisionable::*)(void*))&Mario::perderVida;
     Colisionable::parFuncionColisionContexto_t parPerderVida = {pPerderVida, nullptr};
-
     this->estaEnModoTest = !this->estaEnModoTest;
-
     if(estaEnModoTest){
-        mapaColisionesPorArriba.erase(COLISION_ID_KOOPA);
-        mapaColisionesPorArriba.erase(COLISION_ID_GOOMBA);
-        mapaColisionesPorDerecha.erase(COLISION_ID_KOOPA);
-        mapaColisionesPorDerecha.erase(COLISION_ID_GOOMBA);
-        mapaColisionesPorIzquierda.erase(COLISION_ID_KOOPA);
-        mapaColisionesPorIzquierda.erase(COLISION_ID_GOOMBA);
+        desactivarMapaColisionesEnemigos();
     }else{
         inicializarMapaMorirPorEnemigos();
     }
 
 }
 
-void Mario::desconectar() {
-    estaConectadoElJugador = false;
-}
-
-void Mario::conectar() {
-    estaConectadoElJugador = true;
-}
-
-bool Mario::estaVivo() {
-    return vidaMario->estaVivo();
-}
-
-Mario::~Mario(){
-    delete this->spriteMario;
-    delete this->posicion;
-    delete this->movimiento;
-    delete this->modificador;
-    delete this->vidaMario;
+void Mario::desactivarMapaColisionesEnemigos() {
+    mapaColisionesPorArriba.erase(COLISION_ID_KOOPA);
+    mapaColisionesPorArriba.erase(COLISION_ID_GOOMBA);
+    mapaColisionesPorDerecha.erase(COLISION_ID_KOOPA);
+    mapaColisionesPorDerecha.erase(COLISION_ID_GOOMBA);
+    mapaColisionesPorIzquierda.erase(COLISION_ID_KOOPA);
+    mapaColisionesPorIzquierda.erase(COLISION_ID_GOOMBA);
 }
 
 void Mario::inicializarMapaMorirPorEnemigos() {
@@ -340,6 +347,30 @@ void Mario::inicializarMapaMorirPorEnemigos() {
     mapaColisionesPorArriba[COLISION_ID_GOOMBA] = parPerderVida;
 }
 
+int Mario::obtenerID() {
+    return numeroJugador;
+}
+
+void Mario::desconectar() {
+    estaConectadoElJugador = false;
+}
+
+void Mario::conectar() {
+    estaConectadoElJugador = true;
+}
+
+bool Mario::estaVivo() {
+    return vidaMario->estaVivo();
+}
+
 void Mario::nuevoPuntoDeReaparicion(Posicion puntoDeReaparicion) {
     this->posicionDeReaparicion = PosicionFija(puntoDeReaparicion.obtenerPosX(), puntoDeReaparicion.obtenerPosY());
+}
+
+Mario::~Mario() {
+    delete this->spriteMario;
+    delete this->posicion;
+    delete this->movimiento;
+    delete this->modificador;
+    delete this->vidaMario;
 }

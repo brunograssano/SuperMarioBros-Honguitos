@@ -9,6 +9,7 @@ class PisoTest{
         static void test01CuandoSeLePideAlPisoLaPosicionDeRespawnYNoHayPozosEsteDevuelveLaMinima(Assert* testSuite);
         static void test02CuandoSeLePideAlPisoLaPosicionDeRespawnYAlPrincipioHayUnPozoEsteDevuelveElFinalDelPozo(Assert* testSuite);
         static void test03CuandoNoHayUnPozoAlComienzoLaPosicionDeRespawnCoincideConLaDeLaCamara(Assert* testSuite);
+        static void test04AlInicializarElPisoSeObtienenLasCantidadesCorrectas(Assert *testSuite);
 };
 
 

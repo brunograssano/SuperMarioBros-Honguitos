@@ -2,7 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PODIO_HPP
 #include <map>
 #include <vector>
-#include <Mario.hpp>
+#include "Mario/Mario.hpp"
 #include "src/Utils/Observador.hpp"
 
 using namespace std;

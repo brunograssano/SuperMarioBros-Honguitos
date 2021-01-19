@@ -174,6 +174,13 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
         //SDL_RenderDrawRect(renderizador, &rectanguloMario);
         SDL_RenderCopy(renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario,&rectanguloMario);
     }
+
+    /*SDL_Rect cuadradoCoordenadas = {ancho_pantalla - 130, 110, 120, 35};
+    std::string coordenadas = "";
+    coordenadas.append(to_string(mario.posX));
+    coordenadas.append(",");
+    coordenadas.append(to_string(mario.posY));
+    renderizarTexto(cuadradoCoordenadas, coordenadas, colorDefault);*/
 }
 
 void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
@@ -227,7 +234,6 @@ void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
 
 	SDL_Rect cuadradoTiempo = { ancho_pantalla - 130, 60, 120, 35 };
 	SDL_Rect cuadradoMundo = { ancho_pantalla - 130, 10, 120, 35 };
-
 	renderizarTexto(cuadradoTiempo, textoDeTiempo.str(), colorDefault);
 	renderizarTexto(cuadradoMundo, textoDeNivel.str(), colorDefault);
 }

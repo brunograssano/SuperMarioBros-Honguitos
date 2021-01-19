@@ -21,24 +21,73 @@
                     <color>0</color>
                     <cantidad>10</cantidad>
                 </enemigo><enemigo>
-                    <tipo>Koopa</tipo>
-                    <color>0</color>
-                    <cantidad>5</cantidad>
-                </enemigo>
+                <tipo>Koopa</tipo>
+                <color>0</color>
+                <cantidad>5</cantidad>
+            </enemigo>
 
             </enemigos>
-			
-			<tuberia>
-            		<color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
-            		<tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-            		<posicionX>1040</posicionX>
-        	</tuberia>
 
-			<tuberia>
-            		<color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
-            		<tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-            		<posicionX>1280</posicionX>
-        	</tuberia>
+            <tuberia>
+                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>1060</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>1370</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>5200</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>5860</posicionX>
+            </tuberia>
+
+            <pozo>
+                <tipoPozo>2</tipoPozo>
+                <posicionX>2060</posicionX>
+                <fondoPozo>0</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>2</tipoPozo>
+                <posicionX>3040</posicionX>
+                <fondoPozo>0</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>2</tipoPozo>
+                <posicionX>3240</posicionX>
+                <fondoPozo>0</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>2</tipoPozo>
+                <posicionX>4720</posicionX>
+                <fondoPozo>0</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>2</tipoPozo>
+                <posicionX>5290</posicionX>
+                <fondoPozo>0</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>2</tipoPozo>
+                <posicionX>5490</posicionX>
+                <fondoPozo>0</fondoPozo>
+            </pozo>
+
+
 
             <plataformas>
 
@@ -58,14 +107,14 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>820</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>1</color>
                     <coordenadaX>860</coordenadaX>
@@ -79,21 +128,21 @@
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma><plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>1</color>
-                    <coordenadaX>940</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
+                <tipo>Ladrillo</tipo>
+                <color>1</color>
+                <coordenadaX>940</coordenadaX>
+                <coordenadaY>120</coordenadaY>
+                <cantidadBloques>1</cantidadBloques>
+            </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>860</coordenadaX>
                     <coordenadaY>280</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 
+
                 <!-- Termino parte inicial -->
                 <plataforma>
                     <tipo>Sorpresa</tipo>
@@ -102,13 +151,13 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <!-- Bloque oculto con honguito sorpresa-->
-                 <plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>1</color><coordenadaX>2970</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
-                    
-                 </plataforma>
+
+                </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
@@ -117,7 +166,7 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>1</color>
                     <coordenadaX>3050</coordenadaX>
@@ -156,7 +205,7 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>1</color>
                     <coordenadaX>3850</coordenadaX>
@@ -164,14 +213,14 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>3890</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>4050</coordenadaX>
                     <coordenadaY>120</coordenadaY>
@@ -185,7 +234,7 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
-                 <plataforma>
+                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>4290</coordenadaX>
                     <coordenadaY>120</coordenadaY>
@@ -216,30 +265,17 @@
                 </plataforma>
 
                 <plataforma>
-                    <tipo>Ladrillo</tipo><color>1</color>
-                    <coordenadaX>4930</coordenadaX>
-                    <coordenadaY>280</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                    
-                </plataforma>
-
-                <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>4970</coordenadaX>
                     <coordenadaY>280</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
-                </plataforma><plataforma>
+                </plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>1</color>
                     <coordenadaX>4970</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
-                </plataforma><plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>1</color>
-                    <coordenadaX>5050</coordenadaX>
-                    <coordenadaY>280</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
                 </plataforma>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
@@ -282,8 +318,68 @@
                     <color>2</color>
                     <cantidad>5</cantidad>
                 </enemigo>
-
             </enemigos>
+
+            <tuberia>
+                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>1520</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>1900</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>2620</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>7100</posicionX>
+            </tuberia>
+
+
+            <pozo>
+                <tipoPozo>1</tipoPozo>
+                <posicionX>2400</posicionX>
+                <fondoPozo>1</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>1</tipoPozo>
+                <posicionX>4040</posicionX>
+                <fondoPozo>1</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>1</tipoPozo>
+                <posicionX>4760</posicionX>
+                <fondoPozo>1</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>1</tipoPozo>
+                <posicionX>6900</posicionX>
+                <fondoPozo>1</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>1</tipoPozo>
+                <posicionX>7280</posicionX>
+                <fondoPozo>1</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>1</tipoPozo>
+                <posicionX>7480</posicionX>
+                <fondoPozo>1</fondoPozo>
+            </pozo>
+
             <plataformas>
 
                 <plataforma>
@@ -322,7 +418,7 @@
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
-                 <plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>5</color>
                     <coordenadaX>1320</coordenadaX>
@@ -389,27 +485,6 @@
                     <tipo>Ladrillo</tipo>
                     <color>4</color>
                     <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>0</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>40</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>4120</coordenadaX>
-                    <coordenadaY>80</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>4</color>
-                    <coordenadaX>4120</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
@@ -457,7 +532,7 @@
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>6</cantidadBloques>
                 </plataforma>
-                
+
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>5</color>
@@ -484,8 +559,8 @@
         <nivel>
             <mundo>3</mundo>
             <direccionFondo>MapaNivel3Base.png</direccionFondo>
-            <cantidadMonedas>10</cantidadMonedas>
-            <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
+            <cantidadMonedas>25</cantidadMonedas>
+            <tiempoNivel>400</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>96</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
 
@@ -501,6 +576,45 @@
                     <cantidad>8</cantidad>
                 </enemigo>
             </enemigos>
+
+            <pozo>
+                <tipoPozo>4</tipoPozo>
+                <posicionX>1260</posicionX>
+                <fondoPozo>2</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>4</tipoPozo>
+                <posicionX>3040</posicionX>
+                <fondoPozo>2</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>4</tipoPozo>
+                <posicionX>3360</posicionX>
+                <fondoPozo>2</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>4</tipoPozo>
+                <posicionX>5200</posicionX>
+                <fondoPozo>2</fondoPozo>
+            </pozo>
+
+
+
+            <tuberia>
+                <color>1</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>4300</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>1</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>6200</posicionX>
+            </tuberia>
+
             <plataformas>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
@@ -573,6 +687,14 @@
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
+                    <coordenadaX>2800</coordenadaX>
+                    <coordenadaY>120</coordenadaY>
+                    <cantidadBloques>2</cantidadBloques>
+                </plataforma>
+
+                <plataforma>
+                    <tipo>Ladrillo</tipo>
+                    <color>2</color>
                     <coordenadaX>3080</coordenadaX>
                     <coordenadaY>280</coordenadaY>
                     <cantidadBloques>5</cantidadBloques>
@@ -611,14 +733,6 @@
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
-                    <coordenadaX>4500</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
-                    <cantidadBloques>2</cantidadBloques>
-                </plataforma>
-
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>2</color>
                     <coordenadaX>4600</coordenadaX>
                     <coordenadaY>280</coordenadaY>
                     <cantidadBloques>12</cantidadBloques>
@@ -636,28 +750,26 @@
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
                     <coordenadaX>6000</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
+                    <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
 
                 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>6040</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
+                    <coordenadaY>160</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
 
-
-              	<plataforma>
+                <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>2</color>
                     <coordenadaX>6120</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
+                    <coordenadaY>160</coordenadaY>
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
             </plataformas>
         </nivel>
-        
         <nivel>
             <mundo>4</mundo>
             <direccionFondo>MapaNivel4Base.png</direccionFondo>
@@ -665,7 +777,6 @@
             <tiempoNivel>200</tiempoNivel>          <!--En segundos-->
             <puntoBanderaFin>94</puntoBanderaFin>          <!--Numero de 0 a 100 que representa el porcentaje del nivel-->
             <enemigos>
-
                 <enemigo>
                     <tipo>Goomba</tipo>
                     <color>3</color>
@@ -690,19 +801,114 @@
                     <cantidad>6</cantidad>
                 </enemigo>
             </enemigos>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>400</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>1000</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>1200</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>1960</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>2560</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>4200</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>4400</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>6000</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>6300</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>6500</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>6700</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>6900</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>7190</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+            <pozo>
+                <tipoPozo>3</tipoPozo>
+                <posicionX>7390</posicionX>
+                <fondoPozo>3</fondoPozo>
+            </pozo>
+
+            <tuberia>
+                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>1480</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>2920</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>5300</posicionX>
+            </tuberia>
+
+            <tuberia>
+                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                <posicionX>7100</posicionX>
+            </tuberia>
+
             <plataformas>
             
             	 <plataforma>
                     <tipo>Sorpresa</tipo>
                     <coordenadaX>800</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
-                    <cantidadBloques>4</cantidadBloques>
-                </plataforma>
-
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>3</color>
-                    <coordenadaX>1500</coordenadaX>
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>4</cantidadBloques>
                 </plataforma>
@@ -861,39 +1067,6 @@
                     <coordenadaY>120</coordenadaY>
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
-                
-                <plataforma>
-                    <tipo>Sorpresa</tipo>
-                    <coordenadaX>7000</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
-                    <cantidadBloques>2</cantidadBloques>
-                </plataforma>
-                
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>3</color>
-                    <coordenadaX>7080</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
-                    <cantidadBloques>2</cantidadBloques>
-                </plataforma>
-                
-                 <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>3</color>
-                    <coordenadaX>7080</coordenadaX>
-                    <coordenadaY>280</coordenadaY>
-                    <cantidadBloques>2</cantidadBloques>
-                </plataforma>
-                
-                <plataforma>
-                    <tipo>Sorpresa</tipo>
-                    <coordenadaX>7160</coordenadaX>
-                    <coordenadaY>120</coordenadaY>
-                    <cantidadBloques>2</cantidadBloques>
-                </plataforma>
-                		
-     
-     
             </plataformas>
         </nivel>	
        

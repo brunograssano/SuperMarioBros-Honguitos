@@ -36,7 +36,7 @@ void Juego::avanzarNivel(){
 
     Nivel* nivelViejo = niveles.front();
 
-    nivelViejo->terminar();
+    nivelViejo->terminar(this->jugadores);
     guardarPodio(nivelViejo->obtenerPodio());
 
     delete nivelViejo;

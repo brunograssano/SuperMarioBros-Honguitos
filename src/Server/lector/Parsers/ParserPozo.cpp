@@ -1,7 +1,7 @@
 #include "ParserPozo.hpp"
 #include <string>
 
-const int CANTIDAD_TIPOS_POZO = 2, TIPO_POR_DEFECTO_POZO = 0,CANTIDAD_FONDOS_POZO = 4;
+const int CANTIDAD_TIPOS_POZO = 4, TIPO_POR_DEFECTO_POZO = 0,CANTIDAD_FONDOS_POZO = 4;
 const int POS_POR_DEFECTO_POZO = 2500;
 #define FONDO_POR_DEFECTO 0
 

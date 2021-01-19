@@ -191,16 +191,19 @@ void Nivel::elevarObstaculos() {
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
+    list<Bloque *> plataformasARemover;
     for(auto const& bloque : plataformas){
         if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
             Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
-                    + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se pone en la posicion default");
-            bloque->ubicarEnPosicionDefault();
+                    + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se elimina");
+            plataformasARemover.push_back(bloque);
+            posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
         }
-
-        posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
     }
 
+    for(auto const& bloque : plataformasARemover){
+        this->plataformas.remove(bloque);
+    }
 }
 
 void Nivel::inicializarPosicionOcupadasPorTuberias(){
@@ -357,8 +360,12 @@ void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
     piso.agregarPozo(posicionX, tipoPozo, fondo);
 }
 
-void Nivel::terminar() {
+void Nivel::terminar(map<int, Mario *> jugadores) {
     meta.sumarPuntos(contador.tiempoRestante());
+
+    for(auto const& parJugador:jugadores){
+        parJugador.second->eliminar(podio);
+    }
 }
 
 bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
@@ -409,6 +416,7 @@ Nivel::~Nivel (){
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
+    delete this->podio;
 }
 
 void Nivel::iniciar(map<int, Mario*> jugadores) {

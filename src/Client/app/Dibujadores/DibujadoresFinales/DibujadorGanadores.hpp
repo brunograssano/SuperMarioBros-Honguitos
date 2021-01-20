@@ -29,7 +29,7 @@ private:
 		void dibujarTextoGanadores(JuegoCliente* juegoCliente);
 		void dibujarParticulas();
 		void dibujarPersonajes();
-		void dibujarTitulo();
+		void dibujarTitulo(string nombreGanador);
 
 		BotonConTexto* botonIzquierdo;
 		BotonConTexto* botonDerecho;

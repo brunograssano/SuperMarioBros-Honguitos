@@ -23,6 +23,12 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
 	int posicionXCoffinMario = this->spriteCoffinMario.obtenerPosicionX();
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_GAMEOVER), &rectanguloCamara, nullptr);
 
+    int piso = 440;
+    SDL_Rect rectanguloCoffinMario = {posicionXCoffinMario, piso, 3*70, 3*32};
+    SDL_Rect recorteCoffinMario = this->spriteCoffinMario.obtenerRecorte(0);
+    SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_COFFIN_MARIO), &recorteCoffinMario , &rectanguloCoffinMario);
+
+
     this->dibujadorCreditos-> dibujarCreditos();
 	/* todo MODULARIZAR*/
     botonIzquierdo->mostrarse();
@@ -50,10 +56,6 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
 							alto_textoGameOver}; //Los coloco en el centro.
 
 	renderizarTexto(cuadradoGameOver, textoGameOver.str(), colorDefault);
-	int piso = 440;
-	SDL_Rect rectanguloCoffinMario = {posicionXCoffinMario, piso, 3*70, 3*32};
-	SDL_Rect recorteCoffinMario = this->spriteCoffinMario.obtenerRecorte(0);
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_COFFIN_MARIO), &recorteCoffinMario , &rectanguloCoffinMario);
 
 	SDL_RenderPresent(renderizador);
 }

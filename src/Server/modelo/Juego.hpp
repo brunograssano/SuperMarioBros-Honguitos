@@ -57,6 +57,7 @@ class Juego{
 
         int cantidadDeNiveles();
         void guardarPodio(Podio *podio);
+        void revisarSiGanaronElJuego();
 };
 
 

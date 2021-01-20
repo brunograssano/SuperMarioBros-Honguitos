@@ -42,11 +42,7 @@ void Juego::avanzarNivel(){
     delete nivelViejo;
     niveles.pop_front();
 
-    if(niveles.empty()){
-        hanGanado = true;
-        Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
-    }
-    else{
+    if(!niveles.empty()){
         camara.reiniciar();
         niveles.front()->iniciar(jugadores);
         Log::getInstance()->mostrarMensajeDeInfo("Se avanzo de nivel");
@@ -80,6 +76,11 @@ void Juego::actualizarModelo(){
 	nivelActual->actualizarModelo(jugadores, camara.obtenerRectanguloCamara());
 
     if( !murieronTodos() && hayConectados() && nivelActual->todosEnLaMeta(jugadores)) {
+        avanzarNivel();
+        revisarSiGanaronElJuego();
+    }
+
+    if(perdieron()){
         avanzarNivel();
     }
     camara.moverCamara(this->jugadores);
@@ -259,5 +260,12 @@ void Juego::guardarPodio(Podio *podio) {
         this->podioAcumulado.puntosNivel[indiceJugador] = podio->getPodioTotal().at(indiceJugador).second;
         this->podioAcumulado.ids[indiceJugador] = podio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
         this->podioAcumulado.cantidadJugadores++;
+    }
+}
+
+void Juego::revisarSiGanaronElJuego() {
+    if(niveles.empty()){
+        hanGanado = true;
+        Log::getInstance()->mostrarMensajeDeInfo("Se terminaron los niveles del juego");
     }
 }

@@ -3,11 +3,11 @@
 #define VALOR_POR_DEFECTO_ENEMIGOS 15
 #define VALOR_POR_DEFECTO_COLOR_ENEMIGO 0
 
-bool condicionCantidadEnemigos(int cantidad){
+bool laCantidadDeLosEnemigosEsInvalida(int cantidad){
     return cantidad < 0;
 }
 
-bool condicionColorEnemigos(int color){
+bool elColorDeLosEnemigosEsInvalido(int color){
     return (color < 0) || (color>3);
 }
 
@@ -17,10 +17,12 @@ void ParserEnemigo::parsear(pugi::xml_node enemigo, Nivel* unNivel, ArchivoLeido
     string cantEnemigosString = enemigo.child_value("cantidad");
 
     string mensajeCondicion = "El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto";
-	int cantidad = intentarObtenerNumero(archivoLeido, cantEnemigosString,condicionCantidadEnemigos, mensajeCondicion, VALOR_POR_DEFECTO_COLOR_ENEMIGO);
+	int cantidad = intentarObtenerNumero(archivoLeido, cantEnemigosString, laCantidadDeLosEnemigosEsInvalida,
+                                         mensajeCondicion, VALOR_POR_DEFECTO_COLOR_ENEMIGO);
 
 	mensajeCondicion = "El valor del color de enemigos ("+colorEnemigoString+") enviado no tiene valor valido,se carga el valor por defecto";
-    int colorEnemigoInt = intentarObtenerNumero(archivoLeido, colorEnemigoString,condicionColorEnemigos, mensajeCondicion, VALOR_POR_DEFECTO_ENEMIGOS);
+    int colorEnemigoInt = intentarObtenerNumero(archivoLeido, colorEnemigoString, elColorDeLosEnemigosEsInvalido,
+                                                mensajeCondicion, VALOR_POR_DEFECTO_ENEMIGOS);
 
 
 	if(tipo!="Goomba" && tipo!="Koopa"){

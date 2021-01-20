@@ -9,19 +9,19 @@
 
 const int MAXIMO_ALTO = 4000;
 
-bool condicionCantidadMinimaBloques(int cantidadBloques){
+bool seTieneUnaCantidadInvalidaDeBloques(int cantidadBloques){
     return cantidadBloques < 0;
 }
 
-bool condicionPosX(int pos){
+bool elBloqueEstaEnUnaPosicionXInvalida(int pos){
     return pos < 0;
 }
 
-bool condicionPosY(int pos){
+bool elBloqueEstaEnUnaPosicionYInvalida(int pos){
     return pos < 0 || MAXIMO_ALTO < pos;
 }
 
-bool condicionColor(int color){
+bool esColorBloqueInvalido(int color){
     return color < 0 || 6 < color;
 }
 
@@ -36,17 +36,22 @@ void ParserPlataforma::parsear(pugi::xml_node plataforma, Nivel* unNivel, Archiv
 	list<Bloque*> unaPlataforma;
 
     string mensajeCondicion = "El valor de cantidad de bloques ("+ cantidadBloquesString +") enviado no tiene valor valido,se carga el valor por defecto";
-    int cantidadBloques = intentarObtenerNumero(archivoLeido, cantidadBloquesString,condicionCantidadMinimaBloques, mensajeCondicion, VALOR_POR_DEFECTO_CANTIDAD_BLOQUES);
+    int cantidadBloques = intentarObtenerNumero(archivoLeido, cantidadBloquesString,
+                                                seTieneUnaCantidadInvalidaDeBloques, mensajeCondicion,
+                                                VALOR_POR_DEFECTO_CANTIDAD_BLOQUES);
 
     mensajeCondicion = "El valor de coordenada X enviado ("+posXString+") no tiene valor valido,se carga el valor por defecto";
-    int coordenadaX = intentarObtenerNumero(archivoLeido, posXString,condicionPosX, mensajeCondicion, VALOR_POR_DEFECTO_COORDENADAX);
+    int coordenadaX = intentarObtenerNumero(archivoLeido, posXString, elBloqueEstaEnUnaPosicionXInvalida,
+                                            mensajeCondicion, VALOR_POR_DEFECTO_COORDENADAX);
 
     mensajeCondicion = "El valor de coordenada Y enviado ("+posYString+") no tiene valor valido,se carga el valor por defecto";
-    int coordenadaY = intentarObtenerNumero(archivoLeido, posYString,condicionPosY, mensajeCondicion,VALOR_POR_DEFECTO_COORDENADAY);
+    int coordenadaY = intentarObtenerNumero(archivoLeido, posYString, elBloqueEstaEnUnaPosicionYInvalida,
+                                            mensajeCondicion, VALOR_POR_DEFECTO_COORDENADAY);
 
     if(tipo!="Sorpresa"){
         mensajeCondicion = "El color del bloque "+colorBloque+" no es valido, se carga el por defecto.";
-        tipoColorBloque = intentarObtenerNumero(archivoLeido, colorBloque,condicionColor, mensajeCondicion,VALOR_POR_DEFECTO_COLOR);
+        tipoColorBloque = intentarObtenerNumero(archivoLeido, colorBloque, esColorBloqueInvalido, mensajeCondicion,
+                                                VALOR_POR_DEFECTO_COLOR);
     }
 
 	for(int i=0;i<cantidadBloques;i++){

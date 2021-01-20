@@ -11,19 +11,19 @@
 #define TIEMPO_MINIMO 25
 #define FACTOR_PISO 0.1
 
-bool condicionPuntoBandera(int puntoBandera){
+bool elPuntoBanderaEstaEnUnPuntoInvalido(int puntoBandera){
     return (puntoBandera < MINIMO_PUNTO_BANDERA) || (puntoBandera > MAXIMO_PUNTO_BANDERA);
 }
 
-bool condicionMundo(int mundo){
+bool elMundoTieneUnValorInvalido(int mundo){
     return mundo < 0;
 }
 
-bool condicionTiempo(int tiempo){
+bool elTiempoEsInvalido(int tiempo){
     return tiempo < TIEMPO_MINIMO;
 }
 
-bool condicionCantidadMonedas(int cantidadMonedas){
+bool seTieneUnaCantidadInvalidaDeMonedas(int cantidadMonedas){
     return cantidadMonedas < 0;
 }
 
@@ -35,16 +35,21 @@ void ParserNivel::parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido){
     string tiempoString = nivel.child_value("tiempoNivel");
 
     string mensajeCondicion = "El valor de mundo ("+ mundoString +") enviado no tiene valor valido, se carga el valor por defecto";
-    int mundo = intentarObtenerNumero(archivoLeido, mundoString,condicionMundo, mensajeCondicion, VALOR_POR_DEFECTO_MUNDO);
+    int mundo = intentarObtenerNumero(archivoLeido, mundoString, elMundoTieneUnValorInvalido, mensajeCondicion,
+                                      VALOR_POR_DEFECTO_MUNDO);
 
     mensajeCondicion = "El valor de tiempo del nivel ("+tiempoString+") enviado no tiene valor valido, se carga el valor por defecto";
-    int tiempoNivel = intentarObtenerNumero(archivoLeido, tiempoString,condicionTiempo, mensajeCondicion, VALOR_POR_DEFECTO_TIEMPO);
+    int tiempoNivel = intentarObtenerNumero(archivoLeido, tiempoString, elTiempoEsInvalido, mensajeCondicion,
+                                            VALOR_POR_DEFECTO_TIEMPO);
 
     mensajeCondicion = "El valor de cantidad de monedas ("+cantMonedasString+") enviado no tiene valor valido, se carga el valor por defecto";
-    int cantidadMonedas  = intentarObtenerNumero(archivoLeido, cantMonedasString,condicionCantidadMonedas, mensajeCondicion, VALOR_POR_DEFECTO_MONEDA);
+    int cantidadMonedas  = intentarObtenerNumero(archivoLeido, cantMonedasString, seTieneUnaCantidadInvalidaDeMonedas,
+                                                 mensajeCondicion, VALOR_POR_DEFECTO_MONEDA);
 
     mensajeCondicion = "El valor de puntoBanderaFin "+ puntoBanderaFinString +" enviado no tiene valor valido, se carga el valor por defecto";
-    int puntoBanderaFin = intentarObtenerNumero(archivoLeido, puntoBanderaFinString,condicionPuntoBandera, mensajeCondicion, VALOR_POR_DEFECTO_PUNTO_FIN);
+    int puntoBanderaFin = intentarObtenerNumero(archivoLeido, puntoBanderaFinString,
+                                                elPuntoBanderaEstaEnUnPuntoInvalido, mensajeCondicion,
+                                                VALOR_POR_DEFECTO_PUNTO_FIN);
 
 	auto* unNivel = new Nivel(mundo,direccionFondo,tiempoNivel,cantidadMonedas,puntoBanderaFin,(int)((float)archivoLeido->altoVentana*FACTOR_PISO));
 	archivoLeido->niveles.push_back(unNivel);

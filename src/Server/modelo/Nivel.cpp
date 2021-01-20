@@ -197,8 +197,8 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
             Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
                     + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se elimina");
             plataformasARemover.push_back(bloque);
-            posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
         }
+        posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
     }
 
     for(auto const& bloque : plataformasARemover){
@@ -207,7 +207,6 @@ void Nivel::inicializarPosicionesOcupadasPorBloques(){
 }
 
 void Nivel::inicializarPosicionOcupadasPorTuberias(){
-    //Esto esta feo, funcionara?
     int posicionesQueOcupaUnaTuberia = 5;
     int posicionXOcupada;
     int posicionYOcupada;

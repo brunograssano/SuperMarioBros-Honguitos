@@ -36,7 +36,7 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
     botonIzquierdo->mostrarse();
     botonDerecho->mostrarse();
     int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
-    dibujarTitulo();
+    dibujarTitulo(juegoCliente->obtenerJugadores()[juegoCliente->obtenerPodioPuntosAcumulados().ids[0]].nombreJugador);
 
     if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
         dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
@@ -49,10 +49,10 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
     dibujadorCreditos->dibujarCreditos();
 }
 
-void DibujadorGanadores::dibujarTitulo(){
+void DibujadorGanadores::dibujarTitulo(string nombreGanador){
     stringstream textoFelicitaciones;
     textoFelicitaciones.str("");
-    textoFelicitaciones << "GANARON EL JUEGO!";
+    textoFelicitaciones << "HAS GANADO: "<< nombreGanador;
     int ancho_textoFelicitaciones = 400;
     int alto_textoFelicitaciones = 60;
 

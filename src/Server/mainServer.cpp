@@ -61,10 +61,9 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
 	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo);
 
-	auto* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
+	Servidor server(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 
-	server->ejecutar();
-	delete server;
+	server.ejecutar();
 
 	return 0;
 }

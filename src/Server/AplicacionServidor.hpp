@@ -9,7 +9,6 @@
 
 #include "../Utils/Contador.hpp"
 class Servidor;
-#include "Servidor.hpp"
 
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
@@ -21,7 +20,7 @@ class Servidor;
 class AplicacionServidor : public Thread{
 	public:
 		AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla);
-		~AplicacionServidor();
+		~AplicacionServidor() override;
 		void iniciarJuego();
 		void desconectarJugador(int idJugador);
         nivel_t obtenerInfoNivel();
@@ -30,7 +29,7 @@ class AplicacionServidor : public Thread{
 		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
 		void ejecutar() override;
 		void activarJugador(int idMarioConectandose);
-		bool empezoElJuego();
+		bool empezoElJuego() const;
 
 	private:
         void revisarSiMandarInfoNivel(int *cantidadNivelesRestantes);

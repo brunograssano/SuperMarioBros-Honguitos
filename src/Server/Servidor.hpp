@@ -17,8 +17,7 @@
 #include "../Utils/log/Log.hpp"
 #include "modelo/Juego.hpp"
 
-class AplicacionServidor;
-#include "../Server/AplicacionServidor.hpp"
+#include "AplicacionServidor.hpp"
 #include "../Utils/Utils.hpp"
 #include "UtilidadesServer.hpp"
 #include "lector/ArchivoLeido.hpp"
@@ -39,8 +38,8 @@ class ReconectadorDeConexiones;
 class Servidor : public Thread{
 
 	public:
-		Servidor(ArchivoLeido archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
-		~Servidor();
+		Servidor(const ArchivoLeido& archivoLeido,const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip);
+		~Servidor() override;
 
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		void intentarIniciarModelo();
@@ -54,23 +53,23 @@ class Servidor : public Thread{
 
         void mandarNivelAClientes(nivel_t nivel);
         void guardarRondaParaEnvio(info_ronda_t ronda);
-        void enviarSonidosA(const int id, list<sonido_t> sonidos);
+        void enviarSonidosA(int id, list<sonido_t> sonidos);
         bool terminoElJuego() const;
         void guardarConexion(ConexionCliente *conexionCliente);
 
         int cantidadUsuariosLogueados() const;
         bool empezoElJuego();
         void mandarActualizacionAClientes();
-        void reconectarJugador(mensaje_log_t mensaje, const int idJugador);
+        void reconectarJugador(mensaje_log_t mensaje, int idJugador);
 
 
-private:
-        ReconectadorDeConexiones* reconectador;
-        AceptadorDeConexiones* aceptadorDeConexiones;
+    private:
+        ReconectadorDeConexiones reconectador;
+        AceptadorDeConexiones aceptadorDeConexiones = AceptadorDeConexiones(nullptr, 0);
 		map<int,string> mapaIDNombre;
 		Log* log;
-		AplicacionServidor* aplicacionServidor;
-		ManejadorIdentificadores* manejadorIDs;
+		AplicacionServidor aplicacionServidor;
+		ManejadorIdentificadores manejadorIDs;
 
 		int socketServer;
 		int cantidadConexiones;

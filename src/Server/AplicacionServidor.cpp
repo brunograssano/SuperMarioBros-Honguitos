@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <utility>
 #include "src/Server/Botonera/Botonera.hpp"
-
+#include "Servidor.hpp"
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
 	juego = Juego::getInstance(std::move(niveles),cantidadJugadores, alto_pantalla, ancho_pantalla);
@@ -21,7 +21,7 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 
 info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
 	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para ejecutar.");
-    return juego->obtenerInfoRonda(mapaIDNombre);
+    return juego->obtenerInfoRonda(std::move(mapaIDNombre));
 }
 
 nivel_t AplicacionServidor::obtenerInfoNivel(){
@@ -95,7 +95,7 @@ void AplicacionServidor::desconectarJugador(int idJugador){
 	juego->desconectarJugador(idJugador);
 }
 
-bool AplicacionServidor::empezoElJuego() {
+bool AplicacionServidor::empezoElJuego() const {
     return comenzoElJuego;
 }
 

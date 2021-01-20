@@ -4,6 +4,8 @@
 #include "app/ManejadorSDL.hpp"
 #include "UtilidadesCliente.hpp"
 
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	socketCliente = conectarAlServidor(ip, puerto);
 
@@ -26,7 +28,6 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 }
 
 void Cliente::terminarProcesosDelCliente() {
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	terminoJuego = true;
 	//cerroVentana = true;
@@ -49,7 +50,6 @@ void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
 
 void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion){
 	if(!seRecibioInformacionInicio){
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 		iniciarSDL();
 		ventanaInicio = new VentanaInicio(actualizacion.cantidadJugadoresActivos, actualizacion.cantidadMaximaDeJugadores);
 		pthread_mutex_lock(&mutex);

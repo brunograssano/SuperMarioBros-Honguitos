@@ -24,8 +24,10 @@ void EnviadorConexionCliente::ejecutar() {
     bool hayError = false;
     while(!cliente->terminoElJuego() && !hayError){
         if(!identificadoresMensajeAEnviar.empty()){
+            pthread_mutex_lock(&mutex);
             tipoMensaje = identificadoresMensajeAEnviar.front();
             identificadoresMensajeAEnviar.pop();
+            pthread_mutex_unlock(&mutex);
             try{
                 enviadores[tipoMensaje]->enviar();
             }catch(const std::exception& e){
@@ -38,7 +40,6 @@ void EnviadorConexionCliente::ejecutar() {
 
 
 void EnviadorConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     enviadores[caracter]->dejarInformacion(mensaje);
     pthread_mutex_lock(&mutex);
     identificadoresMensajeAEnviar.push(caracter);

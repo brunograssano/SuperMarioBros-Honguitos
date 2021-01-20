@@ -35,15 +35,13 @@ Thread &Thread::operator=(Thread&& otroThread) noexcept {
 }
 
 void Thread::dormirHilo() {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_lock(&mutex);
-    pthread_cond_wait(&variableCondicional, &mutex);
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_lock(&mutexHilo);
+    pthread_cond_wait(&variableCondicional, &mutexHilo);
+    pthread_mutex_unlock(&mutexHilo);
 }
 
 void Thread::despertarHilo() {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mutexHilo);
     pthread_cond_signal(&variableCondicional);
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutexHilo);
 }

@@ -9,7 +9,6 @@ ReconectadorDeConexiones::ReconectadorDeConexiones(Servidor *servidor) {
 }
 
 void ReconectadorDeConexiones::ejecutar() {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     list<int> idsUsuariosReconectados;
     while(!terminarReconectar){
         while(usuariosQuePerdieronConexion.empty()){

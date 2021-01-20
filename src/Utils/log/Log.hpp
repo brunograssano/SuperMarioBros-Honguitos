@@ -12,16 +12,7 @@ using namespace std;
 class Log{
 
 	private:
-		explicit Log(TipoLog* tipoLog){
-			this->tipoLog = tipoLog;
-
-			string nombreArchivo = "Log - ";
-			time(&tiempo);
-			char* tiempoActual = ctime(&tiempo);
-			nombreArchivo = nombreArchivo +tiempoActual;
-			nombreArchivo = nombreArchivo + ".txt";
-			archivoLog.open("logs/"+nombreArchivo);
-		}
+		explicit Log(TipoLog* tipoLog);
 
 		string armarMensaje(const string& primeraParte, const string& segundaParte);
 

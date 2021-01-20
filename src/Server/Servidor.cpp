@@ -2,7 +2,6 @@
 #include <string>
 #include <cstring>
 
-
 Servidor::Servidor(ArchivoLeido archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip){
 	terminoJuego = false;
 	manejadorIDs = new ManejadorIdentificadores();
@@ -36,7 +35,6 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 
 
 void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		reconectador->agregarUsuarioDesconectado(nombre,contrasenia,idJugador);
 		clientesJugando.erase(idJugador);
@@ -69,7 +67,7 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int i
 void Servidor::mandarActualizacionAClientes() {
     actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
     for(auto const& cliente:clientes){
-        cliente->actualizarCliente(actualizacion);
+        cliente->agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&actualizacion);
     }
 }
 
@@ -117,7 +115,6 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 
 
 bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario, ConexionCliente* conexionClienteConPosibleUsuario){
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     int idJugador;
     bool seConecto = false;
     if(reconectador->coincideAlgunaCredencial(posibleUsuario,&idJugador)){
@@ -138,7 +135,6 @@ bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCl
 		return false;
 	}
 
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	for(auto& usuario:usuariosValidos){
 		if (coincidenCredenciales(posibleUsuario, usuario)) {
 			pthread_mutex_lock(&mutex);
@@ -151,7 +147,7 @@ bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCl
 			pthread_mutex_unlock(&mutex);
 			actualizacion_cantidad_jugadores_t actualizacion = crearActualizacionJugadores();
 			for(auto const& cliente:clientes){
-				cliente->actualizarCliente(actualizacion);
+				cliente->agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&actualizacion);
 			}
 			despertarHilo();
 			return true;

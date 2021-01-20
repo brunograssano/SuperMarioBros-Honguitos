@@ -1,10 +1,7 @@
 #include "AplicacionServidor.hpp"
-
 #include <unistd.h>
-
 #include <utility>
-
-#include <src/Server/Botonera/Botonera.hpp>
+#include "src/Server/Botonera/Botonera.hpp"
 
 
 AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
@@ -53,18 +50,20 @@ void AplicacionServidor::ejecutar(){
 	}
 
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");
-	auto* contador = new Contador(microSegundosEspera, USEGUNDOS);
+	auto contador = Contador(microSegundosEspera, USEGUNDOS);
     juego->iniciar();
     int cantidadNivelesRestantes = juego->cantidadDeNiveles();
     mandarInfoNivel();
 	while(!terminoElJuego || juego->hayConectados()){
-	    contador->iniciar();
+	    contador.iniciar();
 		if(!terminoElJuego){
 
 			while(!colaDeEntradasUsuario.empty()){
 				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
 				juego->actualizarJugador(parIDEntrada.id, parIDEntrada.entradas);
+                pthread_mutex_lock(&mutex);
 				colaDeEntradasUsuario.pop();
+                pthread_mutex_unlock(&mutex);
 			}
 			juego->actualizarModelo();
 
@@ -75,15 +74,17 @@ void AplicacionServidor::ejecutar(){
 		servidor->guardarRondaParaEnvio(ronda);
         enviarSonidos();
 
-		usleep(contador->tiempoRestante());
+		usleep(contador.tiempoRestante());
 	}
-	delete contador;
+
 	Log::getInstance()->mostrarMensajeDeInfo("Termina el ciclo del juego en el server");
     servidor->terminarElJuego();
 }
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
-	this->colaDeEntradasUsuario.push(entradaUsuario);
+    pthread_mutex_lock(&mutex);
+    this->colaDeEntradasUsuario.push(entradaUsuario);
+    pthread_mutex_unlock(&mutex);
 }
 
 void AplicacionServidor::activarJugador(int idMarioConectandose){
@@ -92,11 +93,6 @@ void AplicacionServidor::activarJugador(int idMarioConectandose){
 
 void AplicacionServidor::desconectarJugador(int idJugador){
 	juego->desconectarJugador(idJugador);
-}
-
-AplicacionServidor::~AplicacionServidor(){
-    delete Botonera::getInstance();
-	delete juego;
 }
 
 bool AplicacionServidor::empezoElJuego() {
@@ -112,4 +108,9 @@ void AplicacionServidor::enviarSonidos() {
         sonidos.insert(sonidos.end(), sonidoDeTodos.begin(), sonidoDeTodos.end());
         servidor->enviarSonidosA(parClaveJugador.first, sonidos);
     }
+}
+
+AplicacionServidor::~AplicacionServidor(){
+    delete Botonera::getInstance();
+    delete juego;
 }

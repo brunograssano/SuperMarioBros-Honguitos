@@ -19,14 +19,14 @@ class EscuchadorConexionCliente;
 class ConexionCliente : public Thread{
 
 	public:
-		ConexionCliente(Servidor* servidor, int socket, int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar);
+		ConexionCliente(Servidor *servidor, int socket, string ip,actualizacion_cantidad_jugadores_t informacionAMandar);
 		~ConexionCliente() override;
 
 		void ejecutar() override;
 		void enviarActualizacionesDeRonda();
         void agregarMensajeAEnviar(char caracter, void *mensaje);
-		void actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion);
-		void recibirCredencial(string nombre,string contrasenia);
+
+        void recibirCredencial(string nombre,string contrasenia);
 		void agregarIDJuego(int IDJugador);
 		string obtenerIP();
 		void terminarElJuego();
@@ -50,9 +50,7 @@ private:
 
 		int idPropio;
 		int socket;
-		int cantidadConexiones;
 		string ip;
-
 		Servidor* servidor;
 
 };

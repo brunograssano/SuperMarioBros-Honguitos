@@ -1,4 +1,5 @@
 #include "EnviadorMensajeLog.hpp"
+pthread_mutex_t mutexLog = PTHREAD_MUTEX_INITIALIZER;
 
 EnviadorMensajeLog::EnviadorMensajeLog(int socket){
 	this->socket = socket;
@@ -7,20 +8,18 @@ EnviadorMensajeLog::EnviadorMensajeLog(int socket){
 void EnviadorMensajeLog::enviar(){
 	mensaje_log_t mensaje;
 	memset(&mensaje,0,sizeof(mensaje_log_t));
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(!mensajesLog.empty()){
-		pthread_mutex_lock(&mutex);
+		pthread_mutex_lock(&mutexLog);
 		mensaje = mensajesLog.front();
 		mensajesLog.pop();
-		pthread_mutex_unlock(&mutex);
+		pthread_mutex_unlock(&mutexLog);
         Enviador::enviar(MENSAJE_LOG,&mensaje,sizeof(mensaje_log_t));
 	}
 
 }
 
 void EnviadorMensajeLog::dejarInformacion(void* informacion){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
+	pthread_mutex_lock(&mutexLog);
 	mensajesLog.push(*((mensaje_log_t*)informacion));
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexLog);
 }

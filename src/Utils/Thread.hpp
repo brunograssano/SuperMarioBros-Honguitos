@@ -21,6 +21,9 @@ class Thread {
     private:
         pthread_t hilo{};
         pthread_cond_t variableCondicional=PTHREAD_COND_INITIALIZER;
+        pthread_mutex_t mutexHilo = PTHREAD_MUTEX_INITIALIZER;
+    protected:
+        pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 };
 
 

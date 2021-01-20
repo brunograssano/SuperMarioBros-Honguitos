@@ -4,11 +4,10 @@
 #include "EnviadoresServer/EnviadorConexionCliente.hpp"
 #include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
-ConexionCliente::ConexionCliente(Servidor* servidor, int socket, /*todo: sacar*/int cantidadConexiones,string ip, actualizacion_cantidad_jugadores_t informacionAMandar){
+ConexionCliente::ConexionCliente(Servidor *servidor, int socket, string ip, actualizacion_cantidad_jugadores_t informacionAMandar) {
 	this->servidor = servidor;
 	this->socket = socket;
 	this->ip = std::move(ip);
-	this->cantidadConexiones = cantidadConexiones;
 	this->nombre = "";
 	this->contrasenia = "";
 	puedeJugar = false;
@@ -51,7 +50,7 @@ void ConexionCliente::ejecutar(){
 
 	bool esUsuarioValido = false;
 
-	actualizarCliente(informacionAMandar);
+	agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&informacionAMandar);
 	esperarCredenciales();
 
 	while(!esUsuarioValido && !terminoJuego) {
@@ -77,10 +76,9 @@ bool ConexionCliente::terminoElJuego() const{
 }
 
 void ConexionCliente::terminarElJuego(){
-    pthread_mutex_t mutexServer = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_lock(&mutexServer);
+    pthread_mutex_lock(&mutex);
 	terminoJuego = true;
-    pthread_mutex_unlock(&mutexServer);
+    pthread_mutex_unlock(&mutex);
     despertarHilo();
 }
 
@@ -88,14 +86,6 @@ void ConexionCliente::agregarIDJuego(int IDJugador){
     escuchador->agregarEscuchadorEntrada(IDJugador,servidor);
 	puedeJugar = true;
 	idPropio = IDJugador;
-}
-
-void ConexionCliente::actualizarCliente(actualizacion_cantidad_jugadores_t actualizacion){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	this->cantidadConexiones = actualizacion.cantidadJugadoresActivos;
-    pthread_mutex_unlock(&mutex);
-    agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&actualizacion);
 }
 
 string ConexionCliente::obtenerIP() {

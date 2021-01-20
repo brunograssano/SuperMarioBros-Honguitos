@@ -30,10 +30,7 @@ void EscuchadorEntradaTeclado::casoExitoso(){
 	}
 
 	if(esIdValido){
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_lock(&mutex);
 		servidor->encolarEntradaUsuario(entradaUsuarioId);
-		pthread_mutex_unlock(&mutex);
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("El ID proveniente del cliente no es valido, se ignora la entrada del teclado");
 	}

@@ -16,7 +16,7 @@ int AceptadorDeConexiones::crearCliente(int socketConexionEntrante,const struct 
         Log::getInstance()->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
         actualizacion_cantidad_jugadores_t actualizacion = servidor->crearActualizacionJugadores();
 
-        auto *conexion = new ConexionCliente(servidor,socketConexionEntrante,servidor->cantidadUsuariosLogueados(), (string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
+        auto *conexion = new ConexionCliente(servidor, socketConexionEntrante,(string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
 
         try{
             conexion->empezarHilo("ConexionCliente("+to_string(usuariosConectados) +" - "+ (string) inet_ntoa(addressCliente.sin_addr)+")");

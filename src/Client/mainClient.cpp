@@ -19,11 +19,10 @@ int mainClient(int argc, char* args[]){
 	TipoLog* nivelLog = determinarNivelLog(nivelLogEntrada);
 	Log::getInstance(nivelLog);
 
-	Cliente* cliente = new Cliente(ip, puerto);
-	cliente->ejecutar();
-	delete cliente;
-	delete Log::getInstance();
+	Cliente cliente(ip, puerto);
+	cliente.ejecutar();
 
+	delete Log::getInstance();
 
 	return 0;
 }

@@ -79,7 +79,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     log->mostrarMensajeDeInfo("Ha finalizado la carga de imagenes");
 }
 
-void CargadorTexturas::revisarCargaCorrecta(map<string, SDL_Texture *> texturasCargadas) {
+void CargadorTexturas::revisarCargaCorrecta(const map<string, SDL_Texture *>& texturasCargadas) {
     for(auto parClaveTextura:texturasCargadas){
         if(parClaveTextura.second==nullptr){
             parClaveTextura.second = texturaDefecto;

@@ -5,7 +5,7 @@
 #include "ObjetoSorpresa.hpp"
 #include "src/Server/modelo/PosicionMovil.hpp"
 #include "src/Server/modelo/movimiento/MovimientoVertical.hpp"
-#include <src/Server/sprites/SpriteMonedaFlotante.hpp>
+#include "src/Server/sprites/SpriteMonedaFlotante.hpp"
 
 class MonedaSorpresa : public ObjetoSorpresa{
     public:
@@ -20,8 +20,8 @@ class MonedaSorpresa : public ObjetoSorpresa{
 
     private:
         void inicializarMapasDeColision() override;
-        PosicionMovil posicion = PosicionMovil(0, 0, 0, 0, 0);
-        MovimientoVertical movimiento = MovimientoVertical(0);
+        PosicionMovil posicion;
+        MovimientoVertical movimiento;
         SpriteMonedaFlotante sprite;
         int posYInicial;
 };

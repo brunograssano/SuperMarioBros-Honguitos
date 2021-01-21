@@ -1,5 +1,3 @@
-
-using namespace std;
 #include "LectorTest.hpp"
 #include <iostream>
 

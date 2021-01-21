@@ -1,9 +1,9 @@
 #ifndef SRC_UTILS_TEST_BLOQUETEST_HPP_
 #define SRC_UTILS_TEST_BLOQUETEST_HPP_
 
-using namespace std;
 #include <iostream>
 #include <string>
+using namespace std;
 
 #include "../../Server/modelo/Bloques/Bloque.hpp"
 #include "Assert.hpp"

@@ -9,7 +9,7 @@ class PosicionFija : public Posicion{
 
         PosicionFija(int coordenadaX,int coordenadaY) : Posicion(){
             this->posicionX=(float)coordenadaX;
-            this->posicionY=coordenadaY;
+            this->posicionY=(float)coordenadaY;
         }
 
 };

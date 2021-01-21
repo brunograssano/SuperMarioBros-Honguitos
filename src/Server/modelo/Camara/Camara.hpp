@@ -4,12 +4,6 @@
 #include <map>
 #include "../Mario/Mario.hpp"
 #include "src/Utils/Constantes.hpp"
-/*
- * Es el ancho que se permite hacia adelante y hacia atrás de la pantalla
- * para considerar a una entidad que está en el rango de visión
- */
-const int ANCHO_RANGO = 100;
-
 
 class Camara {
 

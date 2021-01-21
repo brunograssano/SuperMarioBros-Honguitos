@@ -8,6 +8,8 @@
 #include "EscuchadorLog.hpp"
 #include "EscuchadorNivel.hpp"
 
+#include <sys/socket.h>
+
 EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar) {
     escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, cliente);
     escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, cliente);

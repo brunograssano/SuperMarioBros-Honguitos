@@ -1,5 +1,7 @@
 #include "GameLoop.hpp"
 #include "reproductorDeMusica/ReproductorMusica.hpp"
+#include <SDL2/SDL.h>
+
 
 GameLoop::GameLoop(){
 	salir = false;

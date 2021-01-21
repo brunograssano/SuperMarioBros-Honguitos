@@ -3,11 +3,11 @@
 #include "Podio.hpp"
 using namespace std;
 
-void Podio::recibirJugadores(map<int, Mario *> jugadores) {
+void Podio::recibirJugadores(const map<int, Mario *>& jugadores) {
     for(auto parJugador:jugadores){
-        puntajeParcial.push_back(make_pair(parJugador.second,0));
-        puntajeNivelAnterior.push_back(make_pair(parJugador.second,parJugador.second->obtenerPuntos()));
-        puntajeTotal.push_back(make_pair(parJugador.second, parJugador.second->obtenerPuntos()));
+        puntajeParcial.emplace_back(parJugador.second,0);
+        puntajeNivelAnterior.emplace_back(parJugador.second,parJugador.second->obtenerPuntos());
+        puntajeTotal.emplace_back(parJugador.second, parJugador.second->obtenerPuntos());
     }
 }
 

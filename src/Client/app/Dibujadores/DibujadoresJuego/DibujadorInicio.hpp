@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
 
@@ -15,8 +15,9 @@ class DibujadorInicio : public Dibujador{
 		DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
 		void dibujar() override;
 		~DibujadorInicio() override;
-		int alto_fondo;
-		int ancho_fondo;
+    private:
+		int alto_fondo{};
+		int ancho_fondo{};
 		int posicion_x_fondo;
 		int ticks_salto_imagen;
 		int desfase;

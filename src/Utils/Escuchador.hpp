@@ -1,11 +1,6 @@
 #ifndef SRC_UTILS_ESCUCHADOR_HPP_
 #define SRC_UTILS_ESCUCHADOR_HPP_
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 #include "Utils.hpp"
 
 class Escuchador{

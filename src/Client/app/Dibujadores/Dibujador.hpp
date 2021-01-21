@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
 
@@ -23,9 +23,9 @@ class Dibujador{
 		virtual void dibujar(){}
 
 		virtual void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color){
-			SDL_Rect* clip = NULL;
+			SDL_Rect* clip = nullptr;
 			double angle = 0.0;
-			SDL_Point* center = NULL;
+			SDL_Point* center = nullptr;
 			SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 			SDL_SetRenderDrawColor(renderizador, colorDefault.r, colorDefault.g, colorDefault.b, colorDefault.a);
@@ -37,13 +37,13 @@ class Dibujador{
 
 		};
 
-		virtual ~Dibujador(){};
+		virtual ~Dibujador()= default;;
 
 	protected:
-		int alto_pantalla;
-		int ancho_pantalla;
-		SDL_Renderer* renderizador;
-		CargadorTexturas* cargadorTexturas;
+		int alto_pantalla{};
+		int ancho_pantalla{};
+		SDL_Renderer* renderizador{};
+		CargadorTexturas* cargadorTexturas{};
 
 };
 

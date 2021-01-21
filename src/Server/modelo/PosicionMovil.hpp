@@ -15,8 +15,8 @@ class PosicionMovil : public Posicion{
         void moverVertical(float cantidadAMover);
         void actualizarLimiteTerrenoIzq(int limite);
         void actualizarLimiteTerrenoDer(int limite);
-        void reiniciar();
-        void reiniciar(Posicion pos);
+
+    void reiniciar(const Posicion& pos);
 
 private:
         int minimoX;

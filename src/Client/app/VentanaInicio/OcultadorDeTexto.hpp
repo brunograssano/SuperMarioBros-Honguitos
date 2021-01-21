@@ -7,27 +7,27 @@ using namespace std;
 
 class OcultadorDeTexto{
 	public:
-		virtual ~OcultadorDeTexto(){};
+		virtual ~OcultadorDeTexto()= default;;
 		virtual string ocultar(string texto){return string("");};
 };
 
 class OcultadorDeTextoAstericos: public OcultadorDeTexto{
 
 	public:
-		OcultadorDeTextoAstericos(){}
+		OcultadorDeTextoAstericos()= default;
 		string ocultar(string texto)override{
 			return string(texto.length(), '*');
 		}
-		~OcultadorDeTextoAstericos(){}
+		~OcultadorDeTextoAstericos() override= default;
 };
 
 class OcultadorDeTextoNulo: public OcultadorDeTexto{
 	public:
-		OcultadorDeTextoNulo(){}
+		OcultadorDeTextoNulo()= default;
 		string ocultar(string texto)override{
 			return texto;
 		}
-		~OcultadorDeTextoNulo(){}
+		~OcultadorDeTextoNulo() override= default;
 };
 
 #endif /* SRC_CLIENT_APP_VENTANAINICIO_OCULTADORDETEXTO_HPP_ */

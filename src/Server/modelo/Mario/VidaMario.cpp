@@ -18,6 +18,6 @@ void VidaMario::perderVida() {
     }
 }
 
-bool VidaMario::estaVivo() {
+bool VidaMario::estaVivo() const {
     return vidas > 0;
 }

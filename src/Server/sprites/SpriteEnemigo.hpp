@@ -7,7 +7,7 @@ class SpriteEnemigo : public Sprite{
     public:
         virtual void morir() = 0;
         virtual bool seMostroElTiempoSuficienteEnPantalla() = 0;
-        bool debeEspejarse(){
+        bool debeEspejarse() const{
             return this->estaEspejado;
         }
         void espejar() {

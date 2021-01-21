@@ -43,7 +43,6 @@ App::App(info_partida_t informacion, Cliente *cliente) {
                                     informacion.podios, informacion.topePodios, informacion.podioPuntosAcumulados);
 
     sePusoMusicaInicio = false;
-    sonoSalto = false;
     terminoElJuego = false;
     comenzoElJuego = false;
     errorServidor = false;
@@ -81,7 +80,7 @@ void App::actualizarServer(const Uint8 *keystate){
 		}
 	}
 	else if(!terminoElJuego){
-		entrada_usuario_t entradaUsuario = {false,false,false,false};
+		entrada_usuario_t entradaUsuario = {false,false,false,false,false,false};
 		bool se_movio = false;
 		if(keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
 			entradaUsuario.W = true;

@@ -8,7 +8,8 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso) {
+Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso)
+      : piso(altoPiso){
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
     this->tiempo = tiempo;
@@ -16,7 +17,6 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->puntoBanderaFin = ANCHO_FONDO* (float) puntoBanderaFin /100;
     this->contador = Contador(tiempo, SEGUNDOS);
     this->meta = Meta(this->puntoBanderaFin);
-    this->piso = Piso(altoPiso);
     this->podio = new Podio();
 }
 

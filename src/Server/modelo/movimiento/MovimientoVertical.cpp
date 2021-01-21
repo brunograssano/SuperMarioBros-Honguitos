@@ -1,6 +1,6 @@
 #include "MovimientoVertical.hpp"
 
-const float COEFICIENTE_DE_TIEMPO = 0.16;
+const float COEFICIENTE_DE_TIEMPO = 0.16, GRAVEDAD = 9.8;
 
 MovimientoVertical::MovimientoVertical(float fuerza){
 	this->velocidadY = 0;
@@ -12,7 +12,7 @@ void MovimientoVertical::saltar(Terreno* terreno){
 }
 
 void MovimientoVertical::aplicarGravedad(){
-	this->velocidadY -= 9.8*COEFICIENTE_DE_TIEMPO;
+	this->velocidadY -= GRAVEDAD*COEFICIENTE_DE_TIEMPO;
 }
 
 void MovimientoVertical::mover(PosicionMovil* posicion){

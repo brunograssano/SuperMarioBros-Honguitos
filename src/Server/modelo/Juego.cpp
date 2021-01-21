@@ -4,7 +4,8 @@
 
 Juego* Juego::instanciaJuego = nullptr;
 
-Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla) {
+Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla)
+      : camara(alto_pantalla, ancho_pantalla){
     for(int i = 0; i < cantJugadores; i++){
         jugadores[i] = new Mario(i);
     }
@@ -15,7 +16,6 @@ Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, 
         nivel->inicializar();
     }
 
-    camara = Camara(alto_pantalla, ancho_pantalla);
     hanGanado = false;
 }
 

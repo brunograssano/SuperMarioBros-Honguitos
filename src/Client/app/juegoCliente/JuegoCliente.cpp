@@ -3,7 +3,7 @@
 
 #define CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS 20 /* para evitar el delay por renderizar cosas viejas y no nuevas */
 #define RANGO_VISTA 100
-#define NO_HAY_MUNDO_CARGADO -1
+#define NO_HAY_MUNDO_CARGADO (-1)
 
 bool operator == (const bloque_t &bloque1, const bloque_t &bloque2){
     return bloque1.posX == bloque2.posX && bloque1.posY == bloque2.posY && bloque1.numeroRecorteY == bloque2.numeroRecorteY;
@@ -224,7 +224,7 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
 
 }
 
-int JuegoCliente::obtenerNivelesJugados()  {
+int JuegoCliente::obtenerNivelesJugados() const  {
     return nivelesJugados;
 }
 

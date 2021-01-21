@@ -1,5 +1,4 @@
 #include "ConexionCliente.hpp"
-
 #include "Servidor.hpp"
 #include "EnviadoresServer/EnviadorConexionCliente.hpp"
 #include "EscuchadoresServer/EscuchadorConexionCliente.hpp"
@@ -10,8 +9,7 @@ ConexionCliente::ConexionCliente(Servidor *servidor, int socket, string ip, actu
 	this->ip = std::move(ip);
 	this->nombre = "";
 	this->contrasenia = "";
-	puedeJugar = false;
-	terminoJuego = false;
+    terminoJuego = false;
 	recibioCredenciales = false;
 	idPropio = SIN_JUGAR;
 	escuchador = new EscuchadorConexionCliente(socket,this);
@@ -84,8 +82,7 @@ void ConexionCliente::terminarElJuego(){
 
 void ConexionCliente::agregarIDJuego(int IDJugador){
     escuchador->agregarEscuchadorEntrada(IDJugador,servidor);
-	puedeJugar = true;
-	idPropio = IDJugador;
+    idPropio = IDJugador;
 }
 
 string ConexionCliente::obtenerIP() {

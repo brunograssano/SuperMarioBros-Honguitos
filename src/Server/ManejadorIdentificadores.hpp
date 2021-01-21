@@ -1,21 +1,17 @@
 #ifndef SRC_SERVER_MANEJADORIDENTIFICADORES_HPP_
 #define SRC_SERVER_MANEJADORIDENTIFICADORES_HPP_
 
+#include <vector>
 using namespace std;
 
-#include <vector>
-
 class ManejadorIdentificadores{
-
 
 	public:
 		ManejadorIdentificadores();
 		~ManejadorIdentificadores();
-
 		int obtenerIDNueva();
-		vector<int> obtenerTodasLasID();
 
-	private:
+    private:
 		vector<int> mapaID;
 		int cantidadIDs;
 

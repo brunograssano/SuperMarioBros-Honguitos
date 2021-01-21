@@ -4,12 +4,12 @@
 
 const int FUERZA = 30;
 
-MonedaSorpresa::MonedaSorpresa(Posicion* posicionInicial) {
+MonedaSorpresa::MonedaSorpresa(Posicion* posicionInicial) :
+    posicion(posicionInicial->obtenerPosX(), posicionInicial->obtenerPosY(),
+             posicionInicial->obtenerPosY(), posicionInicial->obtenerPosX(), posicionInicial->obtenerPosX()),
+    movimiento(FUERZA){
     _debeDesaparecer = false;
     posYInicial = posicionInicial->obtenerPosY();
-    posicion = PosicionMovil(posicionInicial->obtenerPosX(), posicionInicial->obtenerPosY(),
-                             posicionInicial->obtenerPosY(), posicionInicial->obtenerPosX(), posicionInicial->obtenerPosX());
-    movimiento = MovimientoVertical(FUERZA);
     Terreno* tierra = new Tierra();
     movimiento.saltar(tierra);
     delete tierra;

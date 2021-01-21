@@ -13,7 +13,7 @@ class DibujadorFinNivel : public Dibujador{
     public:
         DibujadorFinNivel(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
         void dibujar(JuegoCliente* juegoCliente);
-        ~DibujadorFinNivel() override{};
+        ~DibujadorFinNivel() override= default;
     private:
         void dibujarTextoFinNivel(JuegoCliente *juegoCliente);
         map<int, SDL_Color> colores;

@@ -37,6 +37,6 @@ void SpriteBolaDeFuego::explotar() {
     exploto = true;
 }
 
-bool SpriteBolaDeFuego::terminoDeExplotar() {
+bool SpriteBolaDeFuego::terminoDeExplotar() const {
     return _terminoDeExplotar;
 }

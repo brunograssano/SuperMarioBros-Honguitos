@@ -23,7 +23,6 @@ const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 
 const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
 															// correspondiente a la carpeta en la que tiene que estar esta imagen
-const int MAX_NOMBRE_SONIDO = 15;
 
 const int MAX_SORPRESAS=15,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 30,MAX_POZOS = 30, MAX_LADRILLOS = 400,MAX_EFECTOS = 20;
 
@@ -54,7 +53,7 @@ typedef struct enemigo{
     unsigned short posX;
     unsigned short posY;
 	uint8_t numeroRecorteX;	// 1|2|3|4|5|6|...|
-	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco ,( 4: fuego goomba)
+	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco , 4: fuego
 	uint8_t tipoEnemigo;	// 1 GOOMBA - 2 KOOPA
 	bool espejar;
 }enemigo_t;
@@ -67,12 +66,12 @@ typedef struct bloque{
 }bloque_t;
 
 typedef struct mario{
-	uint8_t idImagen; //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
+	uint8_t idImagen;    //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
 	uint8_t modificador; // 0 Nada - 1 Fuego
 	unsigned short posX;
 	unsigned short posY;
 	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y
-    uint8_t vidas;					//el recorte correspondiente es el gris (DE 0 A 14/18? SON LOS ESTADOS)
+    uint8_t vidas;		  //el recorte correspondiente es el gris
 }mario_t;
 
 typedef struct moneda{
@@ -178,7 +177,6 @@ typedef struct ronda{
 	uint8_t topeBloques;
     uint8_t topeEnemigos;
 	uint8_t topeMonedas;
-    uint8_t topeTuberias;
     uint8_t topeEfectos;
 	bool ganaron;
 	bool perdieron;
@@ -202,7 +200,6 @@ typedef struct nivel{
     pozo_t pozos[MAX_POZOS];
     podio_t podio;
     podio_t podioPuntosAcumulados;
-    //informacion de los puntos para mostrar en la pantalla del medio?
 }nivel_t;
 
 typedef struct usuario{

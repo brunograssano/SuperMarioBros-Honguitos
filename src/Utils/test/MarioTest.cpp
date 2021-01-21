@@ -5,8 +5,6 @@
 
 #include "src/Server/modelo/Mario/Mario.hpp"
 #include "src/Server/modelo/Enemigos/Koopa.hpp"
-#include "src/Server/modelo/Enemigos/Goomba.hpp"
-
 
 void MarioTest::ejecutar(Assert* testSuite){
 
@@ -31,74 +29,66 @@ void MarioTest::ejecutar(Assert* testSuite){
 }
 
 void MarioTest::test01CuandoPedisAMarioQueSeMuevaADerechaSeMueve(Assert* testSuite){
-	Mario* mario = new Mario(0);
-	int posicion = mario->obtenerPosicionX();
+	Mario mario = Mario(0);
+	int posicion = mario.obtenerPosicionX();
 
-    mario->actualizarDerechaMario();
-	mario->actualizarPosicion();
-    mario->actualizarPosicion();
+    mario.actualizarDerechaMario();
+	mario.actualizarPosicion();
+    mario.actualizarPosicion();
 
-	testSuite->assert(mario->obtenerPosicionX() > posicion,"Mario se mueve a derecha");
-	delete mario;
+	testSuite->assert(mario.obtenerPosicionX() > posicion,"Mario se mueve a derecha");
 }
 
 void MarioTest::test02CuandoPedisAMarioQueSeMuevaAIzquierdaSeMueve(Assert* testSuite){
-	Mario* mario = new Mario(0);
-	int posicion = mario->obtenerPosicionX();
+	Mario mario = Mario(0);
+	int posicion = mario.obtenerPosicionX();
 
-    mario->actualizarIzquierdaMario();
-	mario->actualizarPosicion();
-    mario->actualizarPosicion();
+    mario.actualizarIzquierdaMario();
+	mario.actualizarPosicion();
+    mario.actualizarPosicion();
 
-	testSuite->assert(mario->obtenerPosicionX() < posicion,"Mario se mueve a izquierda");
-	delete mario;
+	testSuite->assert(mario.obtenerPosicionX() < posicion,"Mario se mueve a izquierda");
 }
 
 void MarioTest::test03AgregarMonedasAMarioSumaCincuentaPuntos(Assert* testSuite){
-	Mario* mario = new Mario(0);
+	Mario mario = Mario(0);
 
-	mario->agregarMoneda();
-	testSuite->assert(mario->obtenerPuntos(),50,"Mario tiene 50 puntos");
-    mario->agregarMoneda();
-    testSuite->assert(mario->obtenerPuntos(),100,"Mario tiene 100 puntos");
-    mario->agregarMoneda();
-    mario->agregarMoneda();
-    testSuite->assert(mario->obtenerPuntos(),200,"Mario tiene 200 puntos");
-	delete mario;
+	mario.agregarMoneda();
+	testSuite->assert(mario.obtenerPuntos(),50,"Mario tiene 50 puntos");
+    mario.agregarMoneda();
+    testSuite->assert(mario.obtenerPuntos(),100,"Mario tiene 100 puntos");
+    mario.agregarMoneda();
+    mario.agregarMoneda();
+    testSuite->assert(mario.obtenerPuntos(),200,"Mario tiene 200 puntos");
 }
 
 void MarioTest::test04MarioEmpiezaConCeroPuntos(Assert* testSuite){
-	Mario* mario = new Mario(0);
-	testSuite->assert(mario->obtenerPuntos(),0,"Mario empieza con 0 puntos");
-	delete mario;
+	Mario mario = Mario(0);
+	testSuite->assert(mario.obtenerPuntos(),0,"Mario empieza con 0 puntos");
 }
 
 void MarioTest::test05MarioGanaDiezPuntosYDevuelveEsoDeTotal(Assert* testSuite){
-	Mario* mario = new Mario(0);
-	mario->agregarPuntos(10);
-	testSuite->assert(mario->obtenerPuntos(),10,"Mario tiene 10 puntos");
-	delete mario;
+	Mario mario = Mario(0);
+	mario.agregarPuntos(10);
+	testSuite->assert(mario.obtenerPuntos(),10,"Mario tiene 10 puntos");
 }
 
 void MarioTest::test06MarioEmpiezaCon3VidasYLasPierdedependiendoElCaso(Assert *testSuite) {
-    Mario* mario = new Mario(0);
-    testSuite->assert(mario->obtenerVida(),3,"Mario empieza con 3 vidas");
-    mario->perderVida();
-    testSuite->assert(mario->obtenerVida(),2,"Mario pierde una vida, le quedan 2");
-    mario->hacerseDeFuego();
-    testSuite->assert(mario->obtenerVida(),2,"Mario se hace de fuego y tiene 2 vidas");
-    mario->perderVida();
-    testSuite->assert(mario->obtenerVida(),2,"Mario de fuego pierde una vida, pero sigue teniendo 2");
-    mario->perderVida();
-    testSuite->assert(mario->obtenerVida(),1,"Mario es normal, pierde vida, le queda 1");
-    delete mario;
+    Mario mario = Mario(0);
+    testSuite->assert(mario.obtenerVida(),3,"Mario empieza con 3 vidas");
+    mario.perderVida();
+    testSuite->assert(mario.obtenerVida(),2,"Mario pierde una vida, le quedan 2");
+    mario.hacerseDeFuego();
+    testSuite->assert(mario.obtenerVida(),2,"Mario se hace de fuego y tiene 2 vidas");
+    mario.perderVida();
+    testSuite->assert(mario.obtenerVida(),2,"Mario de fuego pierde una vida, pero sigue teniendo 2");
+    mario.perderVida();
+    testSuite->assert(mario.obtenerVida(),1,"Mario es normal, pierde vida, le queda 1");
 }
 
 void MarioTest::test07MarioPierdeUnaVidaCuandoChocaConPorDerechaConUnKoopa(Assert *testSuite){
-    Mario* mario = new Mario(0);
-    Koopa* koopa = new Koopa(1);
-    mario->chocarPorDerechaCon(koopa);
-    testSuite->assert(mario->obtenerVida(), 2, "Mario pierde una vida al chocar con koopa.");
-    delete mario;
-    delete koopa;
+    Mario mario = Mario(0);
+    Koopa koopa = Koopa(1);
+    mario.chocarPorDerechaCon(&koopa);
+    testSuite->assert(mario.obtenerVida(), 2, "Mario pierde una vida al chocar con koopa.");
 }

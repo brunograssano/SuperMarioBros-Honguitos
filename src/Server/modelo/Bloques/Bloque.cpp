@@ -8,10 +8,6 @@ int Bloque::obtenerPosicionY() {
     return this->posicion.obtenerPosY();
 }
 
-void Bloque::ubicarEnPosicionDefault() {
-    this->posicion = PosicionFija(200, 200);
-}
-
 ObjetoSorpresa* Bloque::colisionaronAbajo() {
     return new SinSorpresa();
 }

@@ -5,7 +5,7 @@
 #include <list>
 #include "src/Utils/Utils.hpp"
 
-#define ID_TODOS_DETONANTES -2
+#define ID_TODOS_DETONANTES (-2)
 
 class Botonera {
     public:

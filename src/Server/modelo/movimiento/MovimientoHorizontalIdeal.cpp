@@ -4,7 +4,7 @@ MovimientoHorizontalIdeal::MovimientoHorizontalIdeal(float velocidad) {
     velocidadX = velocidad;
 }
 
-void MovimientoHorizontalIdeal::mover(PosicionMovil *posicion) {
+void MovimientoHorizontalIdeal::mover(PosicionMovil *posicion) const {
     posicion->moverHorizontal(velocidadX);
 }
 

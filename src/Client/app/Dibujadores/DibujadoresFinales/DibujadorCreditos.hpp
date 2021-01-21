@@ -7,22 +7,21 @@
 #include "src/Client/app/Dibujadores/Dibujador.hpp"
 
 class DibujadorCreditos{
-
-public:
-    DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
-    void dibujarCreditos();
-private:
-    int alto_pantalla;
-    int ancho_pantalla;
-    CargadorTexturas* cargadorTexturas;
-    SDL_Renderer* renderizador;
-    void dibujarRectanguloCreditos();
-    void dibujarTexto();
-    int ciclosDibujado = 0;
-    int xRectanguloTransparente;
-    int yRectanguloTransparente;
-    int anchoRectanguloTransparente;
-    int altoRectanguloTransparente;
+    public:
+        DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
+        void dibujarCreditos();
+    private:
+        int alto_pantalla;
+        int ancho_pantalla;
+        CargadorTexturas* cargadorTexturas;
+        SDL_Renderer* renderizador;
+        void dibujarRectanguloCreditos();
+        void dibujarTexto();
+        int ciclosDibujado = 0;
+        int xRectanguloTransparente;
+        int yRectanguloTransparente;
+        int anchoRectanguloTransparente;
+        int altoRectanguloTransparente;
 };
 
 

@@ -8,9 +8,11 @@ const int ANCHO_FONDO = 8177;
 #define ARRIBA 3
 #define ABAJO 4
 #define MAX_CONEXIONES 4
-#define SIN_JUGAR -1
+#define SIN_JUGAR (-1)
 #define LARGO_IP 20
 
+//=======================================================//
+//==================== COLISIONES =======================//
 #define COLISION_ID_MARIO "Mario"
 #define COLISION_ID_KOOPA "Koopa"
 #define COLISION_ID_GOOMBA "Goomba"
@@ -25,14 +27,12 @@ const int ANCHO_FONDO = 8177;
 #define COLISION_ID_PLATAFORMA "Plataforma"
 #define COLISION_ID_PIEZA_TUBERIA "Pieza tuberia"
 
+
 const int ANCHO_POZO = 200, ALTO_POZO = 50;
-
-
 const int PUNTOS_KOOPA = 1000;
 const int PUNTOS_GOOMBA = 500;
 const int PUNTOS_POR_MONEDA = 50;
 
-const float PROPORCION_PISO_EN_IMAGEN = 0.1;
 const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
 const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
 const int LARGO_BLOQUE = 40;
@@ -52,7 +52,8 @@ const uint8_t SIN_MODIFICADOR = 0, MODIFICADOR_FUEGO = 1;
 
 #define POZO_RECORTE 10 // todo mejorar el mapa
 
-
+//=======================================================//
+//====================== TEXTURAS =======================//
 #define CLAVE_TEXTURA_POZO "Pozo"
 #define CLAVE_TEXTURA_MONEDA "Moneda"
 #define CLAVE_TEXTURA_FONDO_INICIO "FondoInicio"

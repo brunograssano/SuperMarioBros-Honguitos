@@ -21,9 +21,9 @@ TTF_Font* cargarFuente(const string& direccion,int tamanio);
 
 SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente);
 
-SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizador);
+SDL_Texture* cargarTexturaImagen(const std::string& direccion, SDL_Renderer* renderizador);
 
-SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador);
+SDL_Texture* intentarCarga(const std::string& descripcion, const std::string& direccion, SDL_Renderer* renderizador);
 
 void destructorDeTexturas(SDL_Texture* textura);
 

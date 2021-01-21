@@ -24,8 +24,8 @@ class Bloque : public Colisionable{
 		void actualizar();
 		int obtenerPosicionX();
 		int obtenerPosicionY();
-		void ubicarEnPosicionDefault();
-		virtual ObjetoSorpresa* colisionaronAbajo();
+
+        virtual ObjetoSorpresa* colisionaronAbajo();
         virtual bloque_t serializar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;

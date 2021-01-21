@@ -1,4 +1,5 @@
 #include "Observable.hpp"
+#include "Observador.hpp"
 
 void Observable::agregar(Observador* observador){
     observadores.push_back(observador);

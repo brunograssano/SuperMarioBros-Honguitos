@@ -34,11 +34,7 @@ void MovimientoHorizontal::aceleraraIzquierda(Terreno* terreno){
 	}
 }
 
-float calcularDesplazamiento(float velocidad, float unidadDeTiempo){
-	return(velocidad* unidadDeTiempo);
-}
-
-bool MovimientoHorizontal::estaQuieto(){
+bool MovimientoHorizontal::estaQuieto() const{
 	return(velocidadBaja(velocidadX));
 }
 
@@ -50,10 +46,10 @@ void MovimientoHorizontal::mover(PosicionMovil* posicion, Terreno* terreno){
 	}
 }
 
-float MovimientoHorizontal::obtenerVelocidadXActual() {
+float MovimientoHorizontal::obtenerVelocidadXActual() const {
     return this->velocidadX;
 }
 
 void MovimientoHorizontal::setVelocidad(int velocidad) {
-    this->velocidadX = velocidad;
+    this->velocidadX = (float)velocidad;
 }

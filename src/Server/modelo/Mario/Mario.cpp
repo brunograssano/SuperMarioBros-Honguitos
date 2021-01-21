@@ -10,10 +10,10 @@ const int TERRENO_LIMITE_DERECHO_MAX = 8177,TERRENO_LIMITE_DERECHO_MIN = 0;
 const short MARIO_DESCONECTADO = -1;
 const int SIN_INMUNIDAD = 180, EMPIEZA_INMUNIDAD = 0, PIERDE_INMUNIDAD = 179;
 
-Mario::Mario(int numeroJugador){
+Mario::Mario(int numeroJugador): manejadorSonido(numeroJugador),
+        posicionDeReaparicion(COORDENADA_X_DEFAULT, COORDENADA_Y_DEFAULT){
 	this->posicion = new PosicionMovil(COORDENADA_X_DEFAULT, COORDENADA_Y_DEFAULT, MINIMO_COORDENADA_Y,
-			TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
-    this->posicionDeReaparicion = PosicionFija(COORDENADA_X_DEFAULT, COORDENADA_Y_DEFAULT);
+			                            TERRENO_LIMITE_DERECHO_MIN, TERRENO_LIMITE_DERECHO_MAX);
 	this->puntos=0;
 	this->movimiento = new MovimientoMario();
 	this->spriteMario = new SpriteMario();
@@ -24,7 +24,6 @@ Mario::Mario(int numeroJugador){
     this->agarreUnaFlorEnEsteInstante = false;
     this->estaEnModoTest = false;
     Mario::inicializarMapasDeColision();
-    manejadorSonido = ManejadorDeSonidoMario(numeroJugador);
     ticksInmunidad = SIN_INMUNIDAD;
 }
 

@@ -15,7 +15,6 @@ using namespace std;
 class EnviadorConexionCliente;
 class EscuchadorConexionCliente;
 
-
 class ConexionCliente : public Thread{
 
 	public:
@@ -38,14 +37,13 @@ private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
 		void esperarCredenciales();
 
-		EscuchadorConexionCliente* escuchador;
-        EnviadorConexionCliente* enviador;
+		EscuchadorConexionCliente* escuchador{};
+        EnviadorConexionCliente* enviador{};
 
 		string nombre;
 		string contrasenia;
 
-		bool puedeJugar;
-		bool terminoJuego;
+        bool terminoJuego;
 		bool recibioCredenciales;
 
 		int idPropio;

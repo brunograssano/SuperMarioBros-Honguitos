@@ -4,7 +4,6 @@
 #include "../../Utils/Escuchador.hpp"
 #include "../ConexionCliente.hpp"
 
-
 class EscuchadorCredenciales: public Escuchador{
 
 	public:
@@ -15,7 +14,7 @@ class EscuchadorCredenciales: public Escuchador{
 
 	private:
 		ConexionCliente* conexionCliente;
-		credencial_t credencial;
+		credencial_t credencial{};
 };
 
 

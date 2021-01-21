@@ -8,7 +8,6 @@
 const int DESPLAZAMIENTO_X = 33;
 
 RecorteTuberia::RecorteTuberia() {
-    int desplazamiento = 0;
     SDL_Rect primerEstado = {0,0, ANCHO_TUBERIA_CHICA_IMAGEN, ALTO_TUBERIA_IMAGEN};
     SDL_Rect segundoEstado = {DESPLAZAMIENTO_X, 0, ANCHO_TUBERIA_GRANDE_IMAGEN, ALTO_TUBERIA_IMAGEN};
     estadosPosibles.push_back(primerEstado);

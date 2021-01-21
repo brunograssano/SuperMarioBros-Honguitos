@@ -9,7 +9,7 @@ class EnviadorInfoPartida:public Enviador{
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 	private:
-		info_partida_t info_comienzo_partida;
+		info_partida_t info_comienzo_partida{};
 };
 
 

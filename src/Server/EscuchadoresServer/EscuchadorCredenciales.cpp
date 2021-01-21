@@ -24,7 +24,7 @@ void EscuchadorCredenciales::casoExitoso(){
 	nombre = string(credencial.nombre);
 	contrasenia = string(credencial.contrasenia);
 
-	Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales:" + nombre + " | " +contrasenia +" del cliente: " + conexionCliente->obtenerIP());
+	Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales: (" + nombre + ";" +contrasenia +") del cliente: " + conexionCliente->obtenerIP());
 
 	conexionCliente->recibirCredencial(nombre, contrasenia);
 }

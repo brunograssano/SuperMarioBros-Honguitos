@@ -1,21 +1,10 @@
 #ifndef SRC_UTILS_ENVIADOR_HPP_
 #define SRC_UTILS_ENVIADOR_HPP_
 
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 #include "Utils.hpp"
-
-#include "../Utils/log/Log.hpp"
-
-#include <iostream>
 
 #include <string>
 #include <cstring>
-
 #include <unistd.h>
 
 class Enviador{

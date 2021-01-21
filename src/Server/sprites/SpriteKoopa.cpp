@@ -16,7 +16,7 @@ void SpriteKoopa::actualizarSprite(){
 		estadoActual = 1;
 		ciclos = 0;
 	}
-	else if(ciclos>=10){
+    else if(ciclos>=10){
 		estadoActual = 0;
 	}
 	ciclos++;

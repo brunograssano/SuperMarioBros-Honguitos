@@ -19,7 +19,6 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	terminoEscuchar = false;
 	cerroVentana = false;
 
-	cantidadJugadoresActivos = 0;
     ReproductorMusica::getInstance();
 	escuchador = new EscuchadorCliente(socketCliente,this,&terminoJuego,&terminoEscuchar);
     enviador = new EnviadorCliente(socketCliente,this,&terminoJuego,&terminoEnviar);
@@ -53,13 +52,11 @@ void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t
 		iniciarSDL();
 		ventanaInicio = new VentanaInicio(actualizacion.cantidadJugadoresActivos, actualizacion.cantidadMaximaDeJugadores);
 		pthread_mutex_lock(&mutex);
-		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
-		ventanaInicio->actualizarJugadores(actualizacion);
+        ventanaInicio->actualizarJugadores(actualizacion);
 		this->seRecibioInformacionInicio = true;
 		pthread_mutex_unlock(&mutex);
 	}else if(!empiezaElJuego){
-		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
-		ventanaInicio->actualizarJugadores(actualizacion);
+        ventanaInicio->actualizarJugadores(actualizacion);
 	}
 }
 void Cliente::recibirInformacionRonda(info_ronda_t info_ronda) const{

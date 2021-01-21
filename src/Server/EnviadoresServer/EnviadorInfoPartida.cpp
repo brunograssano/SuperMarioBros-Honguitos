@@ -8,7 +8,7 @@ EnviadorInfoPartida::EnviadorInfoPartida(int socket){
 
 
 void EnviadorInfoPartida::enviar(){
-	mensaje_log_t mensaje={0,0};
+	mensaje_log_t mensaje={0,{0}};
 	mensaje.tipo = INFO;
 	strcpy(mensaje.mensajeParaElLog,"Empieza el juego...");
 

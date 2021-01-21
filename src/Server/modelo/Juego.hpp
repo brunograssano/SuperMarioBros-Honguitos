@@ -21,11 +21,11 @@ class Juego{
 		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla);
         void avanzarNivel();
 
-        Camara camara = Camara(0, 0);
+        Camara camara;
         bool hanGanado;
         map<int,Mario*> jugadores;
 		list<Nivel*> niveles;
-		podio_t podioAcumulado;
+		podio_t podioAcumulado{};
         vector<podio_t> podios;
 
         int obtenerTiempoRestante();

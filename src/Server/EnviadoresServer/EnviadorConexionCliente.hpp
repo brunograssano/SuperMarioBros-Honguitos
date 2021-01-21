@@ -11,7 +11,7 @@ class EnviadorConexionCliente : public Thread{
 
     public:
         EnviadorConexionCliente(int socket,ConexionCliente* cliente);
-        ~EnviadorConexionCliente();
+        ~EnviadorConexionCliente() override;
         void ejecutar()override;
         void agregarMensajeAEnviar(char caracter,void* mensaje);
 

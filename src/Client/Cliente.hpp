@@ -62,9 +62,8 @@ private:
 		bool terminoEscuchar;
 
 		int socketCliente;
-		unsigned short cantidadJugadoresActivos;
 
-		GameLoop* gameLoop;
+    GameLoop* gameLoop;
 };
 
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

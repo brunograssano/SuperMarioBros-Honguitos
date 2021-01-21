@@ -1,8 +1,8 @@
 #ifndef SRC_CLIENT_REPRODUCTORDEMUSICA_REPRODUCTORMUSICA_HPP_
 #define SRC_CLIENT_REPRODUCTORDEMUSICA_REPRODUCTORMUSICA_HPP_
 
-using namespace std;
 #include <string>
+using namespace std;
 #include "../../Utils/log/Log.hpp"
 #include "EstadoMusica.hpp"
 #include "EstadoSonidos.hpp"

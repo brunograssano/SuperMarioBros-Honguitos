@@ -1,6 +1,4 @@
 #include "EscuchadorConexionCliente.hpp"
-
-class EscuchadorEntradaTeclado;
 #include "EscuchadorEntradaTeclado.hpp"
 #include "EscuchadorCredenciales.hpp"
 

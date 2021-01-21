@@ -4,8 +4,6 @@
 #include <list>
 #include "src/Utils/Utils.hpp"
 #include "src/Utils/Thread.hpp"
-class AceptadorDeConexiones;
-class Servidor;
 
 /* *
  * Crea un socket para el servidor, configurandolo con lo necesario para empezar a ejecutar.

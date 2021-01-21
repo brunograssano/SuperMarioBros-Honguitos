@@ -1,36 +1,35 @@
 #include "mainServer.hpp"
 
-using namespace std;
-
 #include "../Client/app/AplicacionCliente.hpp"
 #include "lector/Lector.hpp"
 
 #include "../Utils/Validaciones.hpp"
 #include "../Server/Servidor.hpp"
+#include <string>
+using namespace std;
 
 ArchivoLeido realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
-	auto lector = Lector();
 	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	ArchivoLeido archivoLeido;
 
 	if (strcmp(direccionLecturaComando, "") != 0) {
-		archivoLeido = lector.leerArchivo(direccionLecturaComando);
+		archivoLeido = Lector::leerArchivo(direccionLecturaComando);
 		if (!archivoLeido.leidoCorrectamente) {
 			mensajesErrorOtroArchivo = archivoLeido.mensajeError;
 			if(!archivoLeido.usuariosValidos.empty()){
 				list<usuario_t> usuarios;
 				usuarios.swap(archivoLeido.usuariosValidos);
 				int cantidadConexiones = archivoLeido.cantidadConexiones;
-				archivoLeido = lector.leerArchivo(direccionLecturaDefault);
+				archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
 				archivoLeido.usuariosValidos.swap(usuarios);
 				archivoLeido.cantidadConexiones = cantidadConexiones;
 			}else{
-				archivoLeido = lector.leerArchivo(direccionLecturaDefault);
+				archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
 			}
 		}
 	} else {
-		archivoLeido = lector.leerArchivo(direccionLecturaDefault);
+		archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
 	}
 
 	if (strcmp(nivelLogEntrada, "") != 0) {

@@ -1,5 +1,4 @@
 #include "EstadoSonidos.hpp"
-#include "ReproductorMusica.hpp"
 
 EstadoSonidos* SuenanSonidos::cambiar(){
     return new SonidosMuteados();

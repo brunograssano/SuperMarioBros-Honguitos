@@ -1,7 +1,7 @@
 #include <cstring>
 using namespace std;
 #include <csignal>
-#include <src/Utils/Validaciones.hpp>
+#include "src/Utils/Validaciones.hpp"
 
 #include "Server/mainServer.hpp"
 #include "Client/mainClient.hpp"
@@ -47,7 +47,7 @@ int main( int cantidadArgumentos, char* argumentos[]){
 	else if(revisarParametro(cantidadArgumentos, argumentos, "test")){
 	    mainTest();
 	}
-    else if(revisarParametro(cantidadArgumentos, argumentos, "help")){
+	else if(revisarParametro(cantidadArgumentos, argumentos, "help")){
         mostrarAyuda();
     }
 	else{

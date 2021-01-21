@@ -1,9 +1,8 @@
 #include "VentanaInicio.hpp"
 
-#include <stdio.h>
 using namespace std;
-#include<string>
-#include<iostream>
+#include <string>
+#include <iostream>
 #include "../ManejadorSDL.hpp"
 #include "../../../Utils/log/Log.hpp"
 #include "ManejadorEntrada.hpp"
@@ -21,8 +20,7 @@ const SDL_Color COLOR_ROJO = { 214, 40, 57, 0xFF };
 
 VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short jugadoresTotales){
 	this->ingresoIncorrectoCredenciales = false;
-	this->salaLlena = false;
-	this->murioElServer = false;
+    this->murioElServer = false;
 	this->jugadoresTotales = jugadoresTotales;
 	this->jugadoresConectados = jugadoresConectados;
 
@@ -51,20 +49,6 @@ void VentanaInicio::seMurioElServer(){
 	murioElServer = true;
 }
 
-void VentanaInicio::imprimirMensajeDesconexion(){
-	SDL_RenderClear( this->renderer );
-
-	SDL_Texture* texturaMensaje = cargarTexturaTexto("Ocurrio un error en la conexion con el Servidor.", COLOR_NEGRO,
-                                                     this->renderer, this->fuente);
-	SDL_Texture* texturaMensajeInfo = cargarTexturaTexto("Revise su archivo log en la carpeta \"/logs/\".", COLOR_NEGRO,
-                                                         this->renderer, this->fuente);
-
-	renderizar(20,ALTO_PANTALLA/2-80,40,ANCHO_PANTALLA-50, texturaMensaje, renderer);
-	renderizar(20,ALTO_PANTALLA/2,40,ANCHO_PANTALLA-50, texturaMensajeInfo, renderer);
-	destructorDeTexturas(texturaMensaje);
-	destructorDeTexturas(texturaMensajeInfo);
-}
-
 void VentanaInicio::imprimirErrorIngreso() {
     SDL_Rect rectangulo = {370, 265, 260, 30};
     SDL_SetRenderDrawColor(this->renderer, 162, 177, 205, 0xFF);
@@ -83,15 +67,13 @@ void VentanaInicio::imprimirErrorIngreso() {
 
 void VentanaInicio::obtenerEntrada(){
 
-	Log* log = Log::getInstance();
-	bool terminar = false;
+    bool terminar = false;
 	SDL_Event evento;
 	SDL_StartTextInput();
-	string textoIngresadoUsuario = "";
-	string textoIngresadoContrasenia = "";
+	string textoIngresadoUsuario;
+	string textoIngresadoContrasenia;
 	string* entradaUsuario = &textoIngresadoUsuario;
 	bool terminoEntrada = false;
-	int anchoTextoUsuario, anchoTextoContrasenia;
     ManejadorEntrada manejador;
 
 	while( !terminar && !terminoEntrada){
@@ -125,7 +107,7 @@ void VentanaInicio::obtenerEntrada(){
 }
 
 
-bool VentanaInicio::estaConectado(string nombre){
+bool VentanaInicio::estaConectado(const string& nombre){
 	for(int i = 0; i < informacionJugadoresConectados.tope; i++){
 		if(nombre == informacionJugadoresConectados.pares_id_nombre[i].nombre &&
 				informacionJugadoresConectados.pares_id_nombre[i].conectado){

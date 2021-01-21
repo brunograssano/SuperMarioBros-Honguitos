@@ -4,8 +4,6 @@
 #include <SDL.h>
 #include "Recorte.hpp"
 
-const unsigned short MAX_TIPOS = 2;
-
 class RecorteTuberia: public Recorte {
     public:
         RecorteTuberia();

@@ -2,7 +2,6 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_OBSERVADOR_HPP
 
 class Observable;
-#include "Observable.hpp"
 
 class Observador {
     public:

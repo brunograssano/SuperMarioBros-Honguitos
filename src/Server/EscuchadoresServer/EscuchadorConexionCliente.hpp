@@ -9,7 +9,7 @@
 class EscuchadorConexionCliente : public Thread{
     public:
         EscuchadorConexionCliente(int socket,ConexionCliente* cliente);
-        ~EscuchadorConexionCliente();
+        ~EscuchadorConexionCliente() override;
         void ejecutar()override;
         void agregarEscuchadorEntrada(int IDjugador,Servidor* servidor);
     private:

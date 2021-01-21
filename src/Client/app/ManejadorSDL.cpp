@@ -48,7 +48,7 @@ void cargarIcono(SDL_Window* ventana){
 TTF_Font* cargarFuente(const string& direccion,int tamanio){
     Log* log = Log::getInstance();
     TTF_Font* fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
-    if( fuente == NULL ) {
+    if( fuente == nullptr ) {
         log->huboUnErrorSDL("No se pudo cargar la fuente", SDL_GetError());
     }
     return fuente;
@@ -80,7 +80,7 @@ SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Render
 	return texturaACargar;
 }
 
-SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizador){
+SDL_Texture* cargarTexturaImagen(const std::string& direccion, SDL_Renderer* renderizador){
     SDL_Texture*  texturaCargada = nullptr;
     SDL_Surface* superficieImagen = IMG_Load(direccion.c_str());
     if(superficieImagen == nullptr){
@@ -96,7 +96,7 @@ SDL_Texture* cargarTexturaImagen(std::string direccion, SDL_Renderer* renderizad
     return texturaCargada;
 }
 
-SDL_Texture* intentarCarga(std::string descripcion, std::string direccion, SDL_Renderer* renderizador){
+SDL_Texture* intentarCarga(const std::string& descripcion, const std::string& direccion, SDL_Renderer* renderizador){
     SDL_Texture* texturaCargada = cargarTexturaImagen(direccion, renderizador);
     if(texturaCargada == nullptr){
         Log::getInstance()->huboUnError("No se pudo cargar " + descripcion +" en: "+ direccion + ". Se cargo la textura por defecto.");

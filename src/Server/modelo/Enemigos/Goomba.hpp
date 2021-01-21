@@ -1,8 +1,5 @@
-
 #ifndef SRC_MODELO_ENEMIGOS_GOOMBA_HP_
 #define SRC_MODELO_ENEMIGOS_GOOMBA_HP_
-
-using namespace std;
 
 #include "Enemigo.hpp"
 

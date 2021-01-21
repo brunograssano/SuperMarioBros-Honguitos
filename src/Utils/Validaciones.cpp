@@ -1,6 +1,26 @@
 #include "Validaciones.hpp"
+#include <getopt.h>
+#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+
+#include "../Utils/log/Debug.hpp"
+#include "../Utils/log/Error.hpp"
+#include "../Utils/log/Info.hpp"
 
 const int PARTES_DE_IP = 4;
+const int TERMINO = -1;
+#define VALOR_MAXIMO_PUERTO 65535
+#define VALOR_MINIMO_PUERTO 1023
+
+#define SERVER 's'
+#define CONFIG 'c'
+#define IP 'i'
+#define PUERTO 'p'
+#define LOG 'l'
+#define TEST 't'
+#define AYUDA 'h'
 
 void mostrarAyuda(){
     cout<<"Las opciones disponibles son las siguientes"<<endl;

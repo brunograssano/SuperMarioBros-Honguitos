@@ -1,11 +1,10 @@
 #ifndef SRC_UTILS_TEST_LECTORTEST_HPP_
 #define SRC_UTILS_TEST_LECTORTEST_HPP_
 
-using namespace std;
 #include <iostream>
 #include <string>
-
-#include <stdio.h>
+using namespace std;
+#include <cstdio>
 
 #include "../../Server/lector/Lector.hpp"
 #include "Assert.hpp"

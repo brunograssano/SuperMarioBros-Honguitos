@@ -1,4 +1,6 @@
 #include "Enviador.hpp"
+#include <sys/socket.h>
+#include "../Utils/log/Log.hpp"
 
 void Enviador::revisarSiSeMandoCorrectamente(int resultado, const string& descripcion) {
     if(resultado < 0){

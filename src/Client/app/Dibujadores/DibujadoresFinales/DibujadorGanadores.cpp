@@ -40,16 +40,16 @@ void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
 
     if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
         dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
-        this->eventoMouse.type = NULL;
+        this->eventoMouse.type = 0;
     } else if (botonDerecho->botonClickeado(this->eventoMouse)) {
         dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
-        this->eventoMouse.type = NULL;
+        this->eventoMouse.type = 0;
     }
     dibujadorPuntos->dibujarPuntos(juegoCliente);
     dibujadorCreditos->dibujarCreditos();
 }
 
-void DibujadorGanadores::dibujarTitulo(string nombreGanador){
+void DibujadorGanadores::dibujarTitulo(const string& nombreGanador){
     stringstream textoFelicitaciones;
     textoFelicitaciones.str("");
     textoFelicitaciones << "HAS GANADO: "<< nombreGanador;
@@ -60,7 +60,7 @@ void DibujadorGanadores::dibujarTitulo(string nombreGanador){
                             alto_pantalla/2 - alto_textoFelicitaciones/2 - 225,
                             ancho_textoFelicitaciones,
                             alto_textoFelicitaciones};
-    renderizarTexto(cuadradoFin, textoFelicitaciones.str().c_str(), colorDefault);
+    renderizarTexto(cuadradoFin, textoFelicitaciones.str(), colorDefault);
 }
 
 

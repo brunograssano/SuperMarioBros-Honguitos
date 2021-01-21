@@ -12,7 +12,7 @@ float Aire::aplicarCoeficienteDeRozamiento(float velocidadX){
 }
 
 float Aire::obtenerImpulsoHorizontal(float aceleracion){
-	return aceleracion/1.5;	//Quito aceleracion por estar en el aire
+	return (float)(aceleracion/1.5);	//Quito aceleracion por estar en el aire
 }
 
 float Aire::obtenerImpulsoVertical(float fuerza){

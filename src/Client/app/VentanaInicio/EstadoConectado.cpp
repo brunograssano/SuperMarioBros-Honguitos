@@ -1,13 +1,11 @@
-
 #include "EstadoConectado.hpp"
+#include <string>
+using namespace std;
+#include "src/Utils/log/Log.hpp"
+
 #define ANCHO_PANTALLA 650
 #define ALTO_PANTALLA 450
 const SDL_Color COLOR_BLANCO = {255, 255, 255, 0xFF };
-#include<string>
-#include <src/Utils/log/Log.hpp>
-
-
-using namespace std;
 
 EstadoConectado::EstadoConectado(SDL_Renderer* renderer,SDL_Texture* fondoPantalla,TTF_Font* fuente,BotonConTexto* botonEnviar,BotonConTexto* cajaTextoUsuario,BotonConTexto* cajaTextoContrasenia){
     Log* log = Log::getInstance();

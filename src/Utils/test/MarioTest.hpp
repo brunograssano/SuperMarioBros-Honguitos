@@ -1,9 +1,9 @@
 #ifndef SRC_UTILS_TEST_MARIOTEST_HPP_
 #define SRC_UTILS_TEST_MARIOTEST_HPP_
 
-using namespace std;
 #include <iostream>
 #include <string>
+using namespace std;
 
 #include "Assert.hpp"
 class MarioTest{

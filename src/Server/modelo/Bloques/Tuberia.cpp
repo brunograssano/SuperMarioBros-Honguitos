@@ -10,8 +10,8 @@ Tuberia::Tuberia(int posX, int tipo, int color) {
     crearColisionables(posX, tipo);
 }
 
-void Tuberia::crearColisionables(int x, int tipo) {
-    if(tipo == TUBERIA_CHICA){
+void Tuberia::crearColisionables(int x, int tipoDeTuberia) {
+    if(tipoDeTuberia == TUBERIA_CHICA){
         piezas.push_back(new PiezaDeTuberia(x, 0, ANCHO_TUBERIA_CHICA, ALTO_TUBERIA_CHICA));
         dimensiones = {x, 0, ANCHO_TUBERIA_CHICA, ALTO_TUBERIA_CHICA}; //todo: migrar a rectangulo_t
     }else{

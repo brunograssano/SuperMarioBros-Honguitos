@@ -35,7 +35,7 @@ void DibujadorInicio::dibujar(){
 		posicion_x_fondo = 0;		//OJO: Esta transición "fluida" sólo sucede si la pantalla tiene las dimensiones mínimas (800 de ancho).
 	}
 	SDL_Rect rectanguloCamara = {(int)posicion_x_fondo, 0, alto_pantalla, ancho_pantalla};
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_INICIO), &rectanguloCamara, NULL);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_INICIO), &rectanguloCamara, nullptr);
 
 	ticks_salto_imagen++;
 	if(ticks_salto_imagen >= 50){

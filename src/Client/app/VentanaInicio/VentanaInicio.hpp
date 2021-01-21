@@ -26,14 +26,13 @@ class VentanaInicio{
         EstadoVentana* estadoVentana;
 		bool ingresoIncorrectoCredenciales;
 		string errorDeIngreso;
-		bool salaLlena;
-		bool murioElServer;
+    bool murioElServer;
 
 		unsigned short jugadoresTotales;
 		unsigned short jugadoresConectados;
 
-		actualizacion_cantidad_jugadores_t informacionJugadoresConectados;
-		credencial_t credenciales;
+		actualizacion_cantidad_jugadores_t informacionJugadoresConectados{};
+		credencial_t credenciales{};
 
 
 		SDL_Texture* fondoPantalla = nullptr;
@@ -46,8 +45,7 @@ class VentanaInicio{
 		BotonConTexto* cajaTextoUsuario;
 		BotonConTexto* cajaTextoContrasenia;
 
-		bool estaConectado(string nombre);
-		void imprimirMensajeDesconexion();
+		bool estaConectado(const string& nombre);
         void imprimirErrorIngreso();
 		void ponerLosMarios();
 		SDL_Texture* texturasMarios;

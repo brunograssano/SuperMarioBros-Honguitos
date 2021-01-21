@@ -55,7 +55,6 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
     SDL_Rect cuadradoCorazon;
 
     stringstream puntosJugador;
-    int corrimientoCorazon = 200;
     int corrimiento = 100;
 
     int alto_borde_puntos = (alto_puntosJugador+desfase_puntosJugador+5) * juegoCliente->obtenerJugadores().size();
@@ -95,12 +94,12 @@ void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
         if (juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS) {
             idColor = MARIO_GRIS;
         }
-        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+        renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
         textosDibujados++;
         indiceJugador++;
     }
 
-    renderizarTexto(cuadradoFinNivel, textoFinNivel.str().c_str(), colorDefault);
+    renderizarTexto(cuadradoFinNivel, textoFinNivel.str(), colorDefault);
 }
 
 

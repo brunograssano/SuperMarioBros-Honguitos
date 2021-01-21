@@ -10,8 +10,8 @@ void EnviadorCantidadConexion::enviar(){
     Enviador::enviar(ACTUALIZACION_JUGADORES,&actualizacion,sizeof(actualizacion_cantidad_jugadores_t));
 }
 
-void EnviadorCantidadConexion::dejarInformacion(void* actualizacion){
-	this->actualizacion = *((actualizacion_cantidad_jugadores_t*) actualizacion);
+void EnviadorCantidadConexion::dejarInformacion(void* nueva_actualizacion){
+	this->actualizacion = *((actualizacion_cantidad_jugadores_t*) nueva_actualizacion);
 }
 
 

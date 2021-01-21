@@ -22,17 +22,10 @@
 #include "UtilidadesServer.hpp"
 #include "lector/ArchivoLeido.hpp"
 
-class ConexionCliente;
 #include "ConexionCliente.hpp"
-
 #include "ManejadorIdentificadores.hpp"
-
 #include "src/Utils/Constantes.hpp"
-
-class AceptadorDeConexiones;
 #include "AceptadorDeConexiones.hpp"
-
-class ReconectadorDeConexiones;
 #include "ReconectadorDeConexiones.hpp"
 
 class Servidor : public Thread{
@@ -53,11 +46,10 @@ class Servidor : public Thread{
 
         void mandarNivelAClientes(nivel_t nivel);
         void guardarRondaParaEnvio(info_ronda_t ronda);
-        void enviarSonidosA(int id, list<sonido_t> sonidos);
+        void enviarSonidosA(int id, const list<sonido_t>& sonidos);
         bool terminoElJuego() const;
         void guardarConexion(ConexionCliente *conexionCliente);
 
-        int cantidadUsuariosLogueados() const;
         bool empezoElJuego();
         void mandarActualizacionAClientes();
         void reconectarJugador(mensaje_log_t mensaje, int idJugador);
@@ -79,8 +71,9 @@ class Servidor : public Thread{
 
 		bool esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
+        void notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, string &nombre);
 
-		bool terminoJuego;
+        bool terminoJuego;
 		list<ConexionCliente*> clientes;
 		list<ConexionCliente*> conexionesPerdidas;
 		map<int,ConexionCliente*> clientesJugando;

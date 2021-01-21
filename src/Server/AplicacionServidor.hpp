@@ -7,15 +7,12 @@
 #include <queue>
 #include <map>
 
-#include "../Utils/Contador.hpp"
 class Servidor;
-
+#include "../Utils/Contador.hpp"
 #include "../Utils/log/Log.hpp"
 #include "../Utils/Utils.hpp"
 #include "../Utils/Thread.hpp"
-
 #include "modelo/Juego.hpp"
-#include "lector/ArchivoLeido.hpp"
 
 class AplicacionServidor : public Thread{
 	public:
@@ -41,8 +38,7 @@ class AplicacionServidor : public Thread{
 		Juego* juego;
         bool terminoElJuego;
 		bool comenzoElJuego;
-		bool juegoInicializadoCorrectamente;
-		queue<entrada_usuario_id_t> colaDeEntradasUsuario;
+        queue<entrada_usuario_id_t> colaDeEntradasUsuario;
 };
 
 

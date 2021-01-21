@@ -11,26 +11,9 @@
 class Contador{
 
 	public:
-		Contador(int tiempo, int unidad){
-			tiempoTotal = tiempo;
-			tiempoInicio = time(nullptr);
-			this->unidad = unidad;
-		}
-
-		void iniciar(){
-			tiempoInicio = time(nullptr);
-		}
-
-		int tiempoRestante() const{
-			time_t tiempoActual = time(nullptr);
-			double tiempoDesdeElComienzoEnSegundos = difftime(tiempoActual, tiempoInicio);
-			int tiempoDesdeElComienzo = (int) tiempoDesdeElComienzoEnSegundos*unidad;
-			if(tiempoDesdeElComienzo >= tiempoTotal){
-				return 0;
-			}else{
-				return (tiempoTotal - tiempoDesdeElComienzo);
-			}
-		}
+		Contador(int tiempo, int unidad);
+		void iniciar();
+		int tiempoRestante() const;
 		~Contador()= default;
 
 	private:

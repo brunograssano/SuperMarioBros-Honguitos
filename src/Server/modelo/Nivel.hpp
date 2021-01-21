@@ -72,7 +72,7 @@ class Nivel{
         list<Moneda*> monedas;
         list<Tuberia*> tuberias;
         list<ObjetoFugaz*> objetosFugaces;
-        Piso piso = Piso(0);
+        Piso piso;
 
         Meta meta = Meta(0);
         Contador contador = Contador(0, 0);

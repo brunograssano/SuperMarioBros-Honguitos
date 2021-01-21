@@ -6,19 +6,19 @@
 
 #include <iostream>
 #include <string>
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
 
 #include "../Utils/log/Log.hpp"
 
-void salirCliente(string mensajeLog){ // Se puede juntar con el salir del servidor --> hacer un salir generico en algun archivo de utilidades general
+void salirCliente(const string& mensajeLog){ // todo Se puede juntar con el salir del servidor --> hacer un salir generico en algun archivo de utilidades general
 	cout<< "No se pudo conectar al server, terminamos la aplicacion"<<endl;
 	Log::getInstance()->huboUnError(mensajeLog);
 	exit(-1);
 }
 
 int conectarAlServidor(char ip[LARGO_IP], int puerto){
-	struct sockaddr_in serv_addr;
+	struct sockaddr_in serv_addr{};
 
 	int socketCliente = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (socketCliente < 0){

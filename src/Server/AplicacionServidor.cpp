@@ -8,8 +8,7 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 	juego = Juego::getInstance(std::move(niveles),cantidadJugadores, alto_pantalla, ancho_pantalla);
     terminoElJuego = false;
 	comenzoElJuego = false;
-	juegoInicializadoCorrectamente = false;
-	log = Log::getInstance();
+    log = Log::getInstance();
 	Botonera::getInstance();
 	servidor = server;
 }
@@ -30,6 +29,7 @@ nivel_t AplicacionServidor::obtenerInfoNivel(){
 
 void AplicacionServidor::iniciarJuego(){
 	comenzoElJuego = true;
+	despertarHilo();
 }
 
 void AplicacionServidor::mandarInfoNivel() {
@@ -47,6 +47,7 @@ void AplicacionServidor::revisarSiMandarInfoNivel(int* cantidadNivelesRestantes)
 void AplicacionServidor::ejecutar(){
 	int microSegundosEspera = 16666;
 	while(!comenzoElJuego){
+	    dormirHilo();
 	}
 
 	Log::getInstance()->mostrarMensajeDeInfo("Inicia el ciclo del juego en el server");

@@ -36,25 +36,28 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int i
 		cantUsuariosLogueados--;
 		pthread_mutex_unlock(&mutex);
 		aplicacionServidor.desconectarJugador(idJugador);
-
-		mensaje_log_t mensajeLog;
-		memset(&mensajeLog,0,sizeof(mensaje_log_t));
-
-		nombre.insert(0,"Se desconecto el usuario: ");
-		strcpy(mensajeLog.mensajeParaElLog,nombre.c_str());
-		mensajeLog.tipo = INFO;
-		for(auto const cliente:clientes){
-			if(cliente != conexionPerdida){
-                cliente->agregarMensajeAEnviar(MENSAJE_LOG,&mensajeLog);
-			}
-		}
-	}
+        notificarClientesDeLaDesconexion(conexionPerdida, nombre);
+    }
 	pthread_mutex_lock(&mutex);
 	conexionesPerdidas.push_front(conexionPerdida);
 	clientes.remove(conexionPerdida);
 	pthread_mutex_unlock(&mutex);
 
     mandarActualizacionAClientes();
+}
+
+void Servidor::notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, string &nombre) {
+    mensaje_log_t mensajeLog;
+    memset(&mensajeLog,0,sizeof(mensaje_log_t));
+
+    nombre.insert(0,"Se desconecto el usuario: ");
+    strcpy(mensajeLog.mensajeParaElLog,nombre.c_str());
+    mensajeLog.tipo = INFO;
+    for(auto const cliente:clientes){
+        if(cliente != conexionPerdida){
+            cliente->agregarMensajeAEnviar(MENSAJE_LOG,&mensajeLog);
+        }
+    }
 }
 
 void Servidor::mandarActualizacionAClientes() {
@@ -205,8 +208,12 @@ void Servidor::guardarConexion(ConexionCliente *conexionCliente) {
     clientes.push_back(conexionCliente);
 }
 
-int Servidor::cantidadUsuariosLogueados() const {
-    return cantUsuariosLogueados;
+void Servidor::enviarSonidosA(const int id, const list<sonido_t>& sonidos) {
+    for(auto const& sonido: sonidos){
+        if(clientesJugando.count(id) != 0) {
+            clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);
+        }
+    }
 }
 
 Servidor::~Servidor(){
@@ -228,12 +235,4 @@ Servidor::~Servidor(){
     reconectador.despertarHilo();
 	while(!aceptadorDeConexiones.terminoAceptar() || !reconectador.terminoHiloReconectar()){}
 	delete log;
-}
-
-void Servidor::enviarSonidosA(const int id, list<sonido_t> sonidos) {
-    for(auto const& sonido: sonidos){
-        if(clientesJugando.count(id) != 0) {
-            clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);
-        }
-    }
 }

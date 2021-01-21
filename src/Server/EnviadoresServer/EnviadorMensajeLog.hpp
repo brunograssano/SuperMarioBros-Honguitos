@@ -1,7 +1,6 @@
 #ifndef SRC_SERVER_ENVIADORESSERVER_ENVIADORMENSAJELOG_HPP_
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORMENSAJELOG_HPP_
 
-#include <string>
 #include <queue>
 using namespace std;
 
@@ -18,7 +17,6 @@ class EnviadorMensajeLog:public Enviador{
 	private:
 		queue<mensaje_log_t> mensajesLog;
 };
-
 
 
 #endif /* SRC_SERVER_ENVIADORESSERVER_ENVIADORMENSAJELOG_HPP_ */

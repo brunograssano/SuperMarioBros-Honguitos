@@ -24,8 +24,6 @@ class SpriteMario;
 
 class Mario: public Colisionable, public Observable{
 
-  const int ID_DEFAULT = 0;
-
 	public:
 		explicit Mario(int numeroJugador);
 		int obtenerPuntos() const;
@@ -86,13 +84,13 @@ class Mario: public Colisionable, public Observable{
         void swapDeModificador(ModificadorMario *nuevoModificador);
         void matarEnemigo(void* puntos = nullptr);
 
-        PosicionFija posicionDeReaparicion = PosicionFija(0,0);
+        PosicionFija posicionDeReaparicion;
 		PosicionMovil* posicion;
 		MovimientoMario* movimiento;
 		SpriteMario * spriteMario;
 		ModificadorMario* modificador;
 		VidaMario* vidaMario;
-        ManejadorDeSonidoMario manejadorSonido = ManejadorDeSonidoMario(ID_DEFAULT);
+        ManejadorDeSonidoMario manejadorSonido;
         int ticksInmunidad;
 		int puntos;
 		int numeroJugador;

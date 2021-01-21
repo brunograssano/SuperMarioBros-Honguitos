@@ -2,7 +2,6 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORSONIDO_HPP
 
 #include <queue>
-
 #include "src/Utils/Enviador.hpp"
 
 class EnviadorSonido : public Enviador{

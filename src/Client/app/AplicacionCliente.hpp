@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
 using namespace std;
@@ -31,8 +31,7 @@ class App{
 		JuegoCliente* juegoCliente;
 		bool sePusoMusicaInicio;
 		bool comenzoElJuego;
-		bool sonoSalto;
-		bool terminoElJuego;
+        bool terminoElJuego;
 		bool errorServidor;
 		bool estaReproduciendoMusicaGanadores;
 		bool presionoT;

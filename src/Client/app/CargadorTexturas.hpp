@@ -23,7 +23,7 @@ class CargadorTexturas{
 		void revisarSiCambioNivel(string nombreFondo);
 		~CargadorTexturas();
 
-private:
+    private:
 		string direccionFondoActual;
 		map<int,SDL_Texture*> texturasMario;
         map<string,SDL_Texture*> texturas;
@@ -34,9 +34,8 @@ private:
 		map<string,SDL_Texture*> particulas;
 		TTF_Font* fuenteJuego;
 
-    static void destruirTexturasEnMapa(const map<string, SDL_Texture *>& mapaDeTexturas);
-
-    void revisarCargaCorrecta(map<string, SDL_Texture *> texturasCargadas);
+        static void destruirTexturasEnMapa(const map<string, SDL_Texture *>& mapaDeTexturas);
+        void revisarCargaCorrecta(const map<string, SDL_Texture *>& texturasCargadas);
 };
 
 

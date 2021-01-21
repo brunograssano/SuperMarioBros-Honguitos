@@ -1,5 +1,4 @@
 #include "Botonera.hpp"
-#include <cstring>
 
 Botonera* Botonera::botonera = nullptr;
 

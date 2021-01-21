@@ -7,7 +7,7 @@
 class MovimientoHorizontalIdeal {
     public:
         explicit MovimientoHorizontalIdeal(float velocidad);
-        void mover(PosicionMovil* posicion);
+        void mover(PosicionMovil* posicion) const;
         void setVelocidad(float velocidad);
         void cambiarDireccion();
         bool debeEspejarse() const;

@@ -10,7 +10,7 @@ using namespace std;
 class Podio: public Observador {
     public:
         Podio()=default;
-        void recibirJugadores(map<int, Mario*> jugadores);
+        void recibirJugadores(const map<int, Mario*>& jugadores);
         void actualizar(Observable* observable) override;
         vector<pair<Mario*, int>> getPodioNivel();
         vector<pair<Mario*, int>>  getPodioTotal();

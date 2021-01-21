@@ -10,7 +10,7 @@ class SpriteBolaDeFuego : public Sprite{
         ~SpriteBolaDeFuego() override = default;
         void actualizarSprite() override;
         void explotar();
-        bool terminoDeExplotar();
+        bool terminoDeExplotar() const;
 
     private:
         void cambiarSprite();

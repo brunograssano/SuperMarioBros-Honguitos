@@ -37,10 +37,10 @@ void DibujadorGameOver::dibujar(JuegoCliente* juegoCliente){
 
     if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
         dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
-        this->eventoMouse.type = NULL;
+        this->eventoMouse.type = 0;
     } else if (botonDerecho->botonClickeado(this->eventoMouse)) {
         dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
-        this->eventoMouse.type = NULL;
+        this->eventoMouse.type = 0;
     }
     dibujadorPuntos->dibujarPuntosGameOver(juegoCliente);
 	/**/

@@ -94,3 +94,7 @@ void FlorDeFuego::chocarPorAbajoCon(Colisionable *colisionable) {
 void FlorDeFuego::sonar() {
     Botonera::getInstance()->agregarSonido(SONIDO_APARECE_FLOR, ID_TODOS_DETONANTES);
 }
+
+int FlorDeFuego::tipoDeEfecto() {
+    return FLOR;
+}

@@ -221,7 +221,7 @@ ObjetoFugaz* Mario::dispararFuego() {
     Posicion posManos = spriteMario->posicionManos();
     PosicionFija posicionManosMario(obtenerPosicionX() + posManos.obtenerPosX(),obtenerPosicionY() + posManos.obtenerPosY());
     ObjetoFugaz* disparo =  modificador->dispararFuego(posicionManosMario, spriteMario->direccionMirada(), movimiento->obtenerVelocidadXActual());
-    manejadorSonido.reproducirSonidoDisparo(disparo->serializar().tipoDeEfecto); //todo: pedir el tipo directamente.
+    manejadorSonido.reproducirSonidoDisparo(disparo->tipoDeEfecto());
     return disparo;
 }
 

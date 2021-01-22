@@ -1,4 +1,5 @@
 #include "EscuchadorActualizacionJugadores.hpp"
+#include "src/Utils/log/Log.hpp"
 
 EscuchadorActualizacionJugadores::EscuchadorActualizacionJugadores(int socket, Cliente* cliente){
 	this->socket = socket;

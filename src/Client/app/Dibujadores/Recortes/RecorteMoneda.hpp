@@ -3,7 +3,6 @@
 
 #include <SDL2/SDL.h>
 #include "Recorte.hpp"
-const int ESTADOS_MONEDA = 4;
 
 class RecorteMoneda : public Recorte{
 	public:

@@ -1,4 +1,5 @@
 #include "EscuchadorNivel.hpp"
+#include "src/Utils/log/Log.hpp"
 
 EscuchadorNivel::EscuchadorNivel(int socketCliente, Cliente *cliente) {
     this->socket = socketCliente;

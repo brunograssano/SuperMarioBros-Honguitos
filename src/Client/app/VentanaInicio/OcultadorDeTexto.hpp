@@ -7,7 +7,7 @@ using namespace std;
 
 class OcultadorDeTexto{
 	public:
-		virtual ~OcultadorDeTexto()= default;;
+		virtual ~OcultadorDeTexto()= default;
 		virtual string ocultar(string texto){return string("");};
 };
 

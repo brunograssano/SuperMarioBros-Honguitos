@@ -1,5 +1,6 @@
 #include "GameLoop.hpp"
 #include "reproductorDeMusica/ReproductorMusica.hpp"
+#include "src/Utils/Contador.hpp"
 #include <SDL2/SDL.h>
 
 

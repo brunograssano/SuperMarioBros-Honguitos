@@ -1,4 +1,5 @@
 #include "EscuchadorVerificacionCredenciales.hpp"
+#include "src/Utils/log/Log.hpp"
 
 EscuchadorVerificacionCredenciales::EscuchadorVerificacionCredenciales(int socket, Cliente* cliente){
 	this->socket = socket;

@@ -3,14 +3,12 @@
 #include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecorteToadSaltando.hpp"
 #include "src/Client/app/Dibujadores/Recortes/spritesPersonajesSaltando/RecorteYoshiSaltando.hpp"
 
-#include "src/Client/app/ManejadorSDL.hpp" //todo: ver si se usa
-
-
-DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
+DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla,JuegoCliente* juegoCliente){
 	this->cargadorTexturas = cargadorTexturas;
 	this->renderizador= renderizador;
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
+	this->juegoCliente = juegoCliente;
 	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
     this->dibujadorCreditos = new DibujadorCreditos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
 
@@ -32,7 +30,7 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 
 }
 
-void DibujadorGanadores::dibujarTextoGanadores(JuegoCliente* juegoCliente) {
+void DibujadorGanadores::dibujarTextoGanadores() {
     botonIzquierdo->mostrarse();
     botonDerecho->mostrarse();
     int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
@@ -89,13 +87,13 @@ void DibujadorGanadores::dibujarPersonajes(){
 }
 
 
-void DibujadorGanadores::dibujar(JuegoCliente* juegoCliente){
+void DibujadorGanadores::dibujar(){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoGanadores"), nullptr, nullptr);
 
 	dibujarParticulas();
-	dibujarTextoGanadores(juegoCliente);
+	dibujarTextoGanadores();
 	dibujarPersonajes();
 	SDL_RenderPresent( renderizador );
 	for(auto& particula:particulas){

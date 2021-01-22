@@ -31,7 +31,7 @@ class Enemigo : public Colisionable{
         bool estaMuerto() const;
 
     protected:
-        void empujarEnY(rectangulo_t rectanguloBloque, int direccion); // TODO generalizar junto a mario
+        void empujarEnY(rectangulo_t rectanguloBloque, int direccion);
         void empujarEnX(rectangulo_t rectanguloBloque, int direccion);
         void inicializarMapasDeColision() override;
         void cambiarOrientacion();

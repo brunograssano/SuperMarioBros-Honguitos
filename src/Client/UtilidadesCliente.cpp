@@ -11,7 +11,7 @@
 
 #include "../Utils/log/Log.hpp"
 
-void salirCliente(const string& mensajeLog){ // todo Se puede juntar con el salir del servidor --> hacer un salir generico en algun archivo de utilidades general
+void salirCliente(const string& mensajeLog){
 	cout<< "No se pudo conectar al server, terminamos la aplicacion"<<endl;
 	Log::getInstance()->huboUnError(mensajeLog);
 	exit(-1);

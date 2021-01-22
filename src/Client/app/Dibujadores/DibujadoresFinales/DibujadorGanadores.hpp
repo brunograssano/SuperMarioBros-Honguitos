@@ -19,13 +19,13 @@
 
 class DibujadorGanadores : public Dibujador{
 	public:
-		DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
-		void dibujar(JuegoCliente* juegoCliente);
+		DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla,JuegoCliente* juegoCliente);
+		void dibujar()override;
 		~DibujadorGanadores() override;
-        void agregarEventoDeClick(SDL_Event eventoClick);
+        void agregarEventoDeClick(SDL_Event eventoClick) override;
 
-private:
-		void dibujarTextoGanadores(JuegoCliente* juegoCliente);
+    private:
+		void dibujarTextoGanadores();
 		void dibujarParticulas();
 		void dibujarPersonajes();
 		void dibujarTitulo(const string& nombreGanador);
@@ -33,6 +33,7 @@ private:
 		BotonConTexto* botonIzquierdo;
 		BotonConTexto* botonDerecho;
 		SDL_Event eventoMouse{};
+        JuegoCliente* juegoCliente;
 
         Recorte* spritePeach;
         Recorte* spriteToad;

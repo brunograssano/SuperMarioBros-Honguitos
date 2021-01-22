@@ -10,6 +10,7 @@ class Nada : public ObjetoFugaz{
         void actualizar() override;
         efecto_t serializar() override;
         int obtenerPosicionX() override;
+        int tipoDeEfecto() override;
         ~Nada() override;
         bool debeDesaparecer() override;
         string obtenerColisionID() override {return  COLISION_ID_NADA;}

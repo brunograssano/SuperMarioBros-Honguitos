@@ -14,7 +14,7 @@ class EscuchadorNivel : public Escuchador{
     private:
         bool recibioMensajeValido();
         string error;
-        nivel_t info_nivel;
+        nivel_t info_nivel{};
         Cliente* cliente;
 };
 

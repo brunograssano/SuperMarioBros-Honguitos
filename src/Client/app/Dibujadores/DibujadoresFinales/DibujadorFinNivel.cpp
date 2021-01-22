@@ -2,11 +2,12 @@
 const int ANCHO_IMAGEN_FONDO = 800;
 const int ALTO_IMAGEN_FONDO = 800;
 
-DibujadorFinNivel::DibujadorFinNivel(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla){
+DibujadorFinNivel::DibujadorFinNivel(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla,JuegoCliente *juegoCliente){
     this->alto_pantalla = alto_pantalla;
     this->ancho_pantalla = ancho_pantalla;
     this->cargadorTexturas = cargadorTexturas;
     this->renderizador = renderizador;
+    this->juegoCliente = juegoCliente;
 
     colores[-1] = {150, 150 , 150, 255}; // Gris.
     colores[0] = {230, 30 , 044, 255}; // Rojo.
@@ -16,13 +17,13 @@ DibujadorFinNivel::DibujadorFinNivel(CargadorTexturas* cargadorTexturas, SDL_Ren
     ciclosDibujado = 0;
 }
 
-void DibujadorFinNivel::dibujar(JuegoCliente* juegoCliente){
+void DibujadorFinNivel::dibujar(){
     SDL_RenderClear( renderizador );
 
     SDL_Rect rectanguloFondo = {0, 0, ANCHO_IMAGEN_FONDO, ALTO_IMAGEN_FONDO};
     SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("FondoNivelTerminado"), &rectanguloFondo, nullptr);
 
-    dibujarTextoFinNivel(juegoCliente);
+    dibujarTextoFinNivel();
 
     SDL_RenderPresent( renderizador );
     ciclosDibujado++;
@@ -32,7 +33,7 @@ void DibujadorFinNivel::dibujar(JuegoCliente* juegoCliente){
     }
 }
 
-void DibujadorFinNivel::dibujarTextoFinNivel(JuegoCliente* juegoCliente){
+void DibujadorFinNivel::dibujarTextoFinNivel(){
 
     stringstream textoFinNivel;
     textoFinNivel.str("");

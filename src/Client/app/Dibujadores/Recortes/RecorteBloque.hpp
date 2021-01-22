@@ -4,8 +4,6 @@
 #include "Recorte.hpp"
 #include <SDL2/SDL.h>
 
-const int COLORES_BLOQUES_POSIBLES = 6, ESTADOS_BLOQUE = 5;
-
 class RecorteBloque : public Recorte{
 	public:
 	    RecorteBloque();

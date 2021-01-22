@@ -149,7 +149,6 @@ typedef struct info_partida{
 	unsigned short topePodios;
 	unsigned short cantidadJugadores;
 	char direccionesFondoNiveles[MAX_CANT_NIVELES][MAX_LARGO_NOMBRE_NIVEL];
-
 	unsigned short cantidadFondosNiveles;
 	unsigned short anchoVentana;
 	unsigned short mundo;

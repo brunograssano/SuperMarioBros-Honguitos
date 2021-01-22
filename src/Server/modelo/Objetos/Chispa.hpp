@@ -14,6 +14,7 @@ class Chispa : public ObjetoFugaz{
         efecto_t serializar() override;
         int obtenerPosicionX() override;
         bool debeDesaparecer() override;
+        int tipoDeEfecto() override;
         ~Chispa() override;
 
         string obtenerColisionID() override;

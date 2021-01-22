@@ -18,68 +18,33 @@ App* App::getInstance(){
 }
 
 void App::manejarClick(SDL_Event eventoClick) {
-    this->dibujador->agregarEventoADibujadores(eventoClick);
+    this->dibujador.agregarEventoADibujadores(eventoClick);
 }
 
-App::App(info_partida_t informacion, Cliente *cliente) {
+App::App(info_partida_t informacion, Cliente *cliente)
+    :dibujador(informacion.direccionesFondoNiveles,informacion.cantidadFondosNiveles,informacion.mundo,
+               informacion.anchoVentana,informacion.altoVentana,&juegoCliente),
+    juegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,informacion.anchoVentana,
+                                                                                                                                                                                    informacion.altoVentana,informacion.podios, informacion.topePodios, informacion.podioPuntosAcumulados){
     Log* log = Log::getInstance();
     this->cliente = cliente;
 
-    ancho_pantalla = informacion.anchoVentana;
-    alto_pantalla = informacion.altoVentana;
-    inicializarSDL();
-
-    cargadorTexturas = new CargadorTexturas(renderizador);
-
-    for(int i=0; i<informacion.cantidadFondosNiveles; i++){
-        this->direccionesNiveles[informacion.mundo+i] = string(informacion.direccionesFondoNiveles[i]);
-    }
-
-    cargadorTexturas->cargarTexturasNiveles(direccionesNiveles, renderizador, informacion.mundo);
-
-    rectanguloCamara = { 0, 0, ancho_pantalla , alto_pantalla};
-
-    juegoCliente = new JuegoCliente(informacion.cantidadJugadores,informacion.jugadores,informacion.idPropio,ancho_pantalla,
-                                    informacion.podios, informacion.topePodios, informacion.podioPuntosAcumulados);
-
-    sePusoMusicaInicio = false;
     terminoElJuego = false;
     comenzoElJuego = false;
-    errorServidor = false;
     estaReproduciendoMusicaGanadores = false;
     presionoT = false;
 
-    bool juegoInicializadoCorrectamente = true; // TODO SACAR ESTO
-    dibujador = new Dibujadores(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla,juegoInicializadoCorrectamente);
-
     log->mostrarMensajeDeInfo("Inicio del juego");
-
-}
-
-void App::inicializarSDL(){
-    ventanaAplicacion = crearVentana("Super Mario Bros",alto_pantalla,ancho_pantalla);
-    renderizador = crearRenderer(ventanaAplicacion);
-    cargarIcono(ventanaAplicacion);
+    ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_INICIO);
 }
 
 void App::ocurrioUnErrorServidor(){
-	errorServidor = true;
+    dibujador.ocurrioErrorEnServidor();
 }
 
 void App::actualizarServer(const Uint8 *keystate){
 
-	if(!sePusoMusicaInicio){
-		ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_INICIO); //TODO: refactorizar a otro método.
-		sePusoMusicaInicio = true;
-	}
-
-	if(!comenzoElJuego){
-		if(keystate[SDL_SCANCODE_RETURN]){
-			comenzoElJuego = true;
-			ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_NIVEL1); //TODO: refactorizar a otro método.
-		}
-	}
-	else if(!terminoElJuego){
+	if(comenzoElJuego && !terminoElJuego){
 		entrada_usuario_t entradaUsuario = {false,false,false,false,false,false};
 		bool se_movio = false;
 		if(keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W]){
@@ -120,46 +85,35 @@ void App::actualizarServer(const Uint8 *keystate){
 }
 
 void App::agregarRonda(info_ronda_t info_ronda){
-	juegoCliente->agregarRonda(info_ronda);
+	juegoCliente.agregarRonda(info_ronda);
 }
 
 void App::actualizar(){
-	juegoCliente->actualizar();
-    cargadorTexturas->revisarSiCambioNivel(direccionesNiveles[juegoCliente->obtenerMundoActual()]);
+	juegoCliente.actualizar();
+    dibujador.determinarEstado();
+    determinarMusica();
 }
 
-void App::dibujar(){
+void App::determinarMusica() {
+    if(juegoCliente.ganaronElJuego()){
+        if(!estaReproduciendoMusicaGanadores){
+            ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_VICTORIA);
+            estaReproduciendoMusicaGanadores = true;
+        }
+        terminoElJuego = true;
+    }
+    else if(juegoCliente.perdieronElJuego() && !terminoElJuego) {
+        ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_GAMEOVER);
+        terminoElJuego = true;
+    }
+}
 
-	if(this->errorServidor){
-		dibujador->dibujarErrorServidor();
-	}else if(!comenzoElJuego){
-        dibujador->dibujarInicio();
-    }else{
-		if(juegoCliente->ganaronElJuego()){
-
-			if(!this->estaReproduciendoMusicaGanadores){
-				ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_VICTORIA);
-				estaReproduciendoMusicaGanadores = true;
-			}
-			dibujador->dibujarPantallaGanadores(juegoCliente);
-			terminoElJuego = true;
-		}
-		else if(juegoCliente->perdieronElJuego()) {
-            if (!terminoElJuego) {
-                ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_GAMEOVER);
-                terminoElJuego = true;
-            }
-            dibujador->dibujarGameOver(juegoCliente);
-        }else if(juegoCliente->hayQueMostrarPuntosDeNivel){
-                dibujador->dibujarPantallaFinNivel(juegoCliente);
-		}else if(!terminoElJuego){
-			dibujador->dibujarJuego(&rectanguloCamara,juegoCliente);
-		}
-	}
+void App::dibujar() {
+    dibujador.dibujar();
 }
 
 void App::agregarNivel(nivel_t nivel) {
-    juegoCliente->agregarNivel(nivel);
+    juegoCliente.agregarNivel(nivel);
 }
 
 void App::manejarEntrada(SDL_Keycode codigoEntrada) {
@@ -169,15 +123,13 @@ void App::manejarEntrada(SDL_Keycode codigoEntrada) {
         ReproductorMusica::getInstance()->cambiarSonidos();
     }else if(codigoEntrada == SDLK_t){
         presionoT = true;
+    }else if(!comenzoElJuego && codigoEntrada == SDLK_RETURN){
+        comenzoElJuego = true;
+        dibujador.comenzoElJuego();
+        ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_NIVEL1);
     }
 }
 
 App::~App(){
 	Log::getInstance()->mostrarMensajeDeInfo("Se cierra la aplicacion");
-
-	SDL_DestroyRenderer( renderizador );
-	SDL_DestroyWindow( ventanaAplicacion );
-
-	delete dibujador;
-	delete cargadorTexturas;
 }

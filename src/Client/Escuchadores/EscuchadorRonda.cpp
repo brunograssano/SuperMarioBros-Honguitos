@@ -1,4 +1,7 @@
 #include "EscuchadorRonda.hpp"
+#include "src/Utils/log/Log.hpp"
+#include "src/Utils/Constantes.hpp"
+
 EscuchadorRonda::EscuchadorRonda(int socket, Cliente* cliente){
 	this->socket = socket;
 	this->cliente = cliente;

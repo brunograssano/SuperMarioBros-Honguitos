@@ -26,10 +26,8 @@ using namespace std;
 class DibujadorJuego : public Dibujador{
 
 	public:
-		DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
-
-		void dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujar() override{}
+		DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla,JuegoCliente* juegoCliente);
+		void dibujar() override;
 		~DibujadorJuego() override;
 
 	private:
@@ -37,6 +35,7 @@ class DibujadorJuego : public Dibujador{
 		stringstream textoDeNivel;
 		stringstream textoDePuntos;
 
+        JuegoCliente* juegoCliente;
 		SDL_Rect rectanguloCamara{};
 
 		RecorteMario* recorteSpriteMario;
@@ -48,19 +47,18 @@ class DibujadorJuego : public Dibujador{
 
 		map<int, Recorte*> recortes;
 		map<int, string> clavesEfectos;
-
 		map<int, SDL_Color> colores;
 
-		void dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarTexto(JuegoCliente* juegoCliente);
-        void dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
-        void dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-        void dibujarEfectos(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente);
+		void dibujarEnemigos();
+		void dibujarPlataformas();
+		void dibujarMonedas();
+		void dibujarMarios();
+		void dibujarTexto();
+        void dibujarTuberias();
+        void dibujarPozos();
+        void dibujarEfectos();
         static int obtenerEspaciado(int cantidadJugadores);
-        void dibujarFondoPozos(SDL_Rect *rectanguloCamara, JuegoCliente *juagoCliente);
+        void dibujarFondoPozos();
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

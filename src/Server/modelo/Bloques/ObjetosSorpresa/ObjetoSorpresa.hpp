@@ -15,13 +15,14 @@ class ObjetoSorpresa : public ObjetoFugaz{
         efecto_t serializar() override = 0;
         void actualizar() override = 0;
         int obtenerPosicionX() override = 0;
+        int tipoDeEfecto() override = 0;
 
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override = 0;
         bool debeColisionar() override = 0;
         virtual void sonar();
 
-protected:
+    protected:
         void inicializarMapasDeColision() override = 0;
         bool _debeDesaparecer;
 };

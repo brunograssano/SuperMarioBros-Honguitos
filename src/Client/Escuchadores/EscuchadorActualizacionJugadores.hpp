@@ -18,7 +18,7 @@ class EscuchadorActualizacionJugadores: public Escuchador{
 		bool recibioMensajeValido();
 
 	private:
-		actualizacion_cantidad_jugadores_t actualizacion;
+		actualizacion_cantidad_jugadores_t actualizacion{};
 		Cliente* cliente;
 		string error;
 };

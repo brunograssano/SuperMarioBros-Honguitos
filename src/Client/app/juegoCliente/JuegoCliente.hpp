@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <list>
+#include <SDL2/SDL.h>
 using namespace std;
 
 #include "../../../Utils/Utils.hpp"
@@ -12,7 +13,8 @@ using namespace std;
 class JuegoCliente{
 
 	public:
-		JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla, podio_t podios[], unsigned short topePodios, podio_t podioPuntosTotales);
+		JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla,int altoPantalla,
+                        podio_t podios[], unsigned short topePodios, podio_t podioPuntosTotales);
 		~JuegoCliente() = default;
 
 		void agregarRonda(info_ronda_t ronda);
@@ -24,11 +26,12 @@ class JuegoCliente{
         list<tuberia_t> obtenerTuberias();
         list<efecto_t> obtenerEfectos();
         list<pozo_t> obtenerPozos();
+        SDL_Rect rectanguloCamara{};
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
 		int obtenerNivelesJugados() const ;
 		int obtenerIDPropio() const;
-		int obtenerPosXCamara() const;
+		SDL_Rect obtenerCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
         podio_t obtenerPodioPuntosAcumulados();
@@ -36,7 +39,7 @@ class JuegoCliente{
         bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
         void agregarNivel(nivel_t nivel);
 
-private:
+    private:
         bool enRango(int posX, int w) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
@@ -54,7 +57,6 @@ private:
 		int anchoVista;
 		int numeroMundo;
 		int tiempoFaltante;
-		int posXCamara;
 		bool ganaron;
 		bool perdieron;
         bool hayQueCargarPodioNivel;

@@ -14,6 +14,7 @@ class FlorDeFuego : public ObjetoSorpresa{
         efecto_t serializar() override;
         void actualizar() override;
         int obtenerPosicionX() override;
+        int tipoDeEfecto() override;
 
         string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;

@@ -3,46 +3,38 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <sstream>
-
+#include <map>
 using namespace std;
 
 #include "../juegoCliente/JuegoCliente.hpp"
 #include "../CargadorTexturas.hpp"
-#include "../../../Server/sprites/SpriteMario.hpp"
-
-#include "src/Client/app/Dibujadores/DibujadoresFinales/DibujadorGameOver.hpp"
-#include "src/Client/app/Dibujadores/DibujadoresJuego/DibujadorInicio.hpp"
-#include "src/Client/app/Dibujadores/DibujadoresFinales/DibujadorGanadores.hpp"
-#include "src/Client/app/Dibujadores/DibujadoresJuego/DibujadorJuego.hpp"
-#include "src/Client/app/Dibujadores/DibujadoresError/DibujadorError.hpp"
-#include "src/Client/app/Dibujadores/DibujadoresError/DibujadorErrorServidor.hpp"
-#include "src/Client/app/Dibujadores/DibujadoresFinales/DibujadorFinNivel.hpp" // todo mover
+#include "Dibujador.hpp"
 
 class Dibujadores{
 
 	public:
-		Dibujadores(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, bool leidoCorrectamente);
-		void dibujarJuego(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente);
-		void dibujarGameOver(JuegoCliente* juegoCliente);
-		void dibujarInicio();
-		void dibujarPantallaGanadores(JuegoCliente* juegoCliente);
-		void dibujarPantallaFinNivel(JuegoCliente *juegoCliente);
-		void dibujarErrorServidor();
+		Dibujadores(char direccionesFondoNiveles[MAX_CANT_NIVELES][MAX_LARGO_NOMBRE_NIVEL],unsigned short cantidadFondosNiveles,
+              unsigned short mundo,unsigned short  ancho_pantalla,unsigned short  alto_pantalla,JuegoCliente *juegoCliente);
 		void agregarEventoADibujadores(SDL_Event eventoClick);
+        void dibujar();
 		~Dibujadores();
 
-	private:
-		DibujadorGameOver* dibujadorGameOver;
-		DibujadorInicio* dibujadorInicio;
-		DibujadorGanadores* dibujadorGanadores;
-		DibujadorJuego* dibujadorJuego;
-		DibujadorError* dibujadorError;
-		DibujadorErrorServidor* dibujadorErrorServidor;
-		DibujadorFinNivel* dibujadorFinNivel;
-		bool archivoBienLeido;
+        void comenzoElJuego();
+        void ocurrioErrorEnServidor();
+        void determinarEstado();
+
+    private:
+        CargadorTexturas *cargadorTexturas;
+        SDL_Renderer *renderizador;
+        SDL_Window* ventanaAplicacion;
+        map<int,string> direccionesNiveles;
+        JuegoCliente *juegoCliente;
+        map<string,Dibujador*> dibujadores;
+        string estadoActual;
+
 };
 
 

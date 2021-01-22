@@ -22,22 +22,13 @@ class App{
 	protected:
 		App(info_partida_t informacion, Cliente* cliente);
 		static App* aplicacion;
-		CargadorTexturas* cargadorTexturas;
-		SDL_Window* ventanaAplicacion{};
-		SDL_Renderer* renderizador{};
-		SDL_Rect rectanguloCamara{};
-		Dibujadores* dibujador;
-		void inicializarSDL();
-		JuegoCliente* juegoCliente;
-		bool sePusoMusicaInicio;
-		bool comenzoElJuego;
+		Dibujadores dibujador;
+        void determinarMusica();
+		JuegoCliente juegoCliente;
+        bool comenzoElJuego;
         bool terminoElJuego;
-		bool errorServidor;
-		bool estaReproduciendoMusicaGanadores;
+        bool estaReproduciendoMusicaGanadores;
 		bool presionoT;
-		map<int,string> direccionesNiveles;
-		int ancho_pantalla;
-		int alto_pantalla;
 		Cliente* cliente;
 
 	public:

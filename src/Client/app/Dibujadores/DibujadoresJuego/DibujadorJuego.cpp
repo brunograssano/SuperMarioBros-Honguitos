@@ -2,11 +2,13 @@
 #include "src/Utils/Constantes.hpp"
 #include "src/Client/app/Dibujadores/Recortes/RecortePozo.hpp"
 
-DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla){
+DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla,JuegoCliente* juegoCliente){
     this->cargadorTexturas = cargadorTexturas;
     this->renderizador = renderizador;
     this->alto_pantalla = alto_pantalla;
     this->ancho_pantalla = ancho_pantalla;
+    this->juegoCliente = juegoCliente;
+
     this->recorteSpriteMario = new RecorteMario();
     this->recorteSpriteGoomba = new RecorteGoomba();
     this->recorteSpriteKoopa = new RecorteKoopa();
@@ -34,25 +36,25 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas,SDL_Renderer* 
 	colores[3] = {76 , 225, 252, 255};   // Celeste.
 }
 
-void DibujadorJuego::dibujar(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
-	rectanguloCamara->x = juegoCliente->obtenerPosXCamara();
+void DibujadorJuego::dibujar(){
+	rectanguloCamara = juegoCliente->obtenerCamara();
 	SDL_RenderClear( renderizador );
-	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), rectanguloCamara, nullptr);
+	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, nullptr);
 
-	dibujarPlataformas(rectanguloCamara, juegoCliente);
-    dibujarFondoPozos(rectanguloCamara, juegoCliente);
-    dibujarTuberias(rectanguloCamara, juegoCliente);
-	dibujarMonedas(rectanguloCamara, juegoCliente);
-    dibujarEnemigos(rectanguloCamara, juegoCliente);
-    dibujarEfectos(rectanguloCamara, juegoCliente);
-    dibujarMarios(rectanguloCamara, juegoCliente);
-    dibujarPozos(rectanguloCamara,juegoCliente);
-	dibujarTexto(juegoCliente);
+	dibujarPlataformas();
+    dibujarFondoPozos();
+    dibujarTuberias();
+	dibujarMonedas();
+    dibujarEnemigos();
+    dibujarEfectos();
+    dibujarMarios();
+    dibujarPozos();
+	dibujarTexto();
 
 	SDL_RenderPresent( renderizador );
 }
 
-void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+void DibujadorJuego::dibujarEnemigos(){
 	list<enemigo_t> enemigos = juegoCliente->obtenerEnemigos();
 	string tipo;
 	SDL_Texture* texturaEnemigo = nullptr;
@@ -67,7 +69,7 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
             texturaEnemigo = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_KOOPAS);
 		}
 
-		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara->x,
+		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara.x,
 									alto_pantalla - enemigo.posY - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
@@ -79,12 +81,12 @@ void DibujadorJuego::dibujarEnemigos(SDL_Rect* rectanguloCamara,JuegoCliente* ju
     }
 }
 
-void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+void DibujadorJuego::dibujarPlataformas(){
 	list<bloque_t> bloques = juegoCliente->obtenerBloques();
     SDL_Texture* texturaBloques = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_BLOQUES);
 	for (auto const& bloque : bloques) {
 
-		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara->x,
+		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara.x,
 									alto_pantalla - bloque.posY - LARGO_BLOQUE,
 									LARGO_BLOQUE, LARGO_BLOQUE};
 		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
@@ -93,11 +95,11 @@ void DibujadorJuego::dibujarPlataformas(SDL_Rect* rectanguloCamara,JuegoCliente*
 
 }
 
-void DibujadorJuego::dibujarFondoPozos(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente) {
+void DibujadorJuego::dibujarFondoPozos() {
     list<pozo_t> pozos = juegoCliente->obtenerPozos();
     SDL_Texture* texturaFondoPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_POZO);
     for (auto const& pozo : pozos) {
-        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara->x,
+        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara.x,
                                    alto_pantalla - (int)(alto_pantalla*0.12),
                                    ANCHO_POZO, (int)(alto_pantalla*0.12)};
         SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.fondo);
@@ -107,11 +109,11 @@ void DibujadorJuego::dibujarFondoPozos(SDL_Rect *rectanguloCamara, JuegoCliente 
 }
 
 
-void DibujadorJuego::dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+void DibujadorJuego::dibujarPozos(){
     list<pozo_t> pozos = juegoCliente->obtenerPozos();
     SDL_Texture* texturaPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_POZO);
     for (auto const& pozo : pozos) {
-        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara->x,
+        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara.x,
                                      alto_pantalla - ALTO_POZO,
                                      ANCHO_POZO, ALTO_POZO};
         SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.tipo);
@@ -119,11 +121,11 @@ void DibujadorJuego::dibujarPozos(SDL_Rect* rectanguloCamara,JuegoCliente* juego
     }
 }
 
-void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+void DibujadorJuego::dibujarMonedas(){
 	list<moneda_t> monedas = juegoCliente->obtenerMonedas();
     SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_MONEDA);
 	for (auto const& moneda : monedas) {
-		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara->x,
+		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara.x,
 									alto_pantalla - moneda.posY - LARGO_MONEDA,
                                      LARGO_MONEDA, LARGO_MONEDA};
 		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.numeroRecorte);
@@ -131,12 +133,12 @@ void DibujadorJuego::dibujarMonedas(SDL_Rect* rectanguloCamara,JuegoCliente* jue
 	}
 }
 
-void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *juegoCliente) {
+void DibujadorJuego::dibujarTuberias() {
     list<tuberia_t> tuberias = juegoCliente->obtenerTuberias();
     SDL_Texture* texturaTuberia = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_TUBERIAS);
     for (auto const& tuberia : tuberias) {
         SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.tipo,tuberia.color);
-        SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara->x,
+        SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara.x,
                                       alto_pantalla - recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.tipo) - tuberia.posY,
                                       recorteSpriteTuberia->obtenerAnchuraParaDibujarImagen(tuberia.tipo),
                                       recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.tipo)};
@@ -144,14 +146,14 @@ void DibujadorJuego::dibujarTuberias(SDL_Rect *rectanguloCamara, JuegoCliente *j
     }
 }
 
-void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* juegoCliente){
+void DibujadorJuego::dibujarMarios(){
 	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int idPropio = juegoCliente->obtenerIDPropio();
 	for(auto const parClaveJugador:jugadores){
 		mario_t mario = parClaveJugador.second.mario;
 		if(mario.idImagen != idPropio && mario.vidas != 0){
 			int idMario = mario.idImagen;
-			SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,
+			SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara.x,
 											alto_pantalla -ALTO_MARIO- mario.posY,
 											ANCHO_MARIO, ALTO_MARIO};
 			SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen, mario.modificador);
@@ -166,7 +168,7 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
 
 	mario_t mario = jugadores[idPropio].mario;
     if(mario.vidas != 0) {
-        SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara->x,alto_pantalla - ALTO_MARIO - mario.posY,
+        SDL_Rect rectanguloMario = {mario.posX - rectanguloCamara.x,alto_pantalla - ALTO_MARIO - mario.posY,
                                     ANCHO_MARIO, ALTO_MARIO};
 
         SDL_Rect recorteMario = recorteSpriteMario->obtenerRecorte(mario.recorteImagen, mario.modificador);
@@ -183,14 +185,14 @@ void DibujadorJuego::dibujarMarios(SDL_Rect* rectanguloCamara,JuegoCliente* jueg
     renderizarTexto(cuadradoCoordenadas, coordenadas, colorDefault);*/
 }
 
-void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* juegoCliente) {
+void DibujadorJuego::dibujarEfectos() {
     list<efecto_t> efectos = juegoCliente->obtenerEfectos();
     for (auto const& efecto : efectos) {
         if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA || efecto.tipoDeEfecto == FLOR || efecto.tipoDeEfecto == MONEDA_FLOTANTE) {
             SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipoDeEfecto]);
             Recorte* recorteEfecto = recortes[efecto.tipoDeEfecto];
             SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
-            SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara->x,
+            SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara.x,
                                          alto_pantalla - efecto.posY -
                                                  recorteEfecto->obtenerAlturaParaDibujarImagen(0),
                                          recorteEfecto->obtenerAnchuraParaDibujarImagen(0),
@@ -201,7 +203,7 @@ void DibujadorJuego::dibujarEfectos(SDL_Rect* rectanguloCamara, JuegoCliente* ju
     }
 }
 
-void DibujadorJuego::dibujarTexto(JuegoCliente* juegoCliente){
+void DibujadorJuego::dibujarTexto(){
 	SDL_SetRenderDrawColor( renderizador, 0xFF, 0xFF, 0xFF, 0xFF );
 
 	textoDeTiempo.str( "" );

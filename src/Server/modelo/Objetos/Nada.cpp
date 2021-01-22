@@ -16,3 +16,7 @@ int Nada::obtenerPosicionX() {
 bool Nada::debeDesaparecer() {
     return true;
 }
+
+int Nada::tipoDeEfecto() {
+    return NADA;
+}

@@ -23,7 +23,7 @@ void SpriteKoopa::actualizarSprite(){
 }
 
 void SpriteKoopa::morir() {
-    estadoActual = MUERTO;  // todo VER CON CUAL OPCION NOS QUEDAMOS DEL SPRITE
+    estadoActual = MUERTO;
     ciclos = 0;
 }
 

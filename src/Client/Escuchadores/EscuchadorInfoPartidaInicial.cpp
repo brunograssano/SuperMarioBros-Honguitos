@@ -1,4 +1,5 @@
 #include "EscuchadorInfoPartidaInicial.hpp"
+#include "src/Utils/log/Log.hpp"
 
 EscuchadorInfoPartidaInicial::EscuchadorInfoPartidaInicial(int socket,Cliente* cliente){
 	this->socket = socket;

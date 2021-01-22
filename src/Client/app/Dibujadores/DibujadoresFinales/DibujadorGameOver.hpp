@@ -18,18 +18,23 @@
 class DibujadorGameOver : public Dibujador{
 
 	public:
-		DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla);
-		void dibujar(JuegoCliente* juegoCliente);
-        void agregarEventoDeClick(SDL_Event eventoClick);
+		DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla,int alto_pantalla,JuegoCliente* juegoCliente);
+        void dibujar()override;
+        void agregarEventoDeClick(SDL_Event eventoClick) override;
 		~DibujadorGameOver() override;
 
 	private:
         RecorteCoffinMario spriteCoffinMario;
         BotonConTexto* botonIzquierdo;
         BotonConTexto* botonDerecho;
-        SDL_Event eventoMouse;
+        SDL_Event eventoMouse{};
         DibujadorPuntos* dibujadorPuntos;
         DibujadorCreditos* dibujadorCreditos;
+        JuegoCliente* juegoCliente;
+
+        void dibujarTextoGameOver();
+        void dibujarPuntosObtenidosEnNiveles();
+        void dibujarCoffinMario();
 };
 
 

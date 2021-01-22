@@ -10,7 +10,8 @@ bool operator == (const bloque_t &bloque1, const bloque_t &bloque2){
 }
 
 
-JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla, podio_t podios[], unsigned short topePodios, podio_t podioPuntosAcumulados){
+JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPropio,int anchoPantalla,int altoPantalla,
+                           podio_t podios[], unsigned short topePodios, podio_t podioPuntosAcumulados){
 	for(int i = 0; i<cantidadJugadores;i++){
 		this->jugadores[jugadores[i].mario.idImagen] = jugadores[i];
 	}
@@ -18,14 +19,14 @@ JuegoCliente::JuegoCliente(int cantidadJugadores,jugador_t jugadores[],int idPro
 	this->idPropio = idPropio;
 	this->tiempoFaltante = 0;
 	this->numeroMundo = NO_HAY_MUNDO_CARGADO;
-	this->posXCamara = 0;
 	this->nivelesJugados = 0;
 	this->ganaron = false;
 	this->perdieron = false;
 	this->anchoVista = anchoPantalla;
 	this->hayQueMostrarPuntosDeNivel = false;
 	this->hayQueCargarPodioNivel = true;
-	for(int i = 0; i<topePodios; i++){
+    rectanguloCamara = { 0, 0, anchoPantalla , altoPantalla};
+    for(int i = 0; i<topePodios; i++){
 	    if(i == 0){
 	        podio_t primerPodio;
 	        this->podios.push_back(primerPodio);
@@ -53,8 +54,8 @@ void JuegoCliente::agregarRonda(info_ronda_t ronda){
 	pthread_mutex_unlock(&mutex);
 }
 
-int JuegoCliente::obtenerPosXCamara() const{
-	return posXCamara;
+SDL_Rect JuegoCliente::obtenerCamara()const{
+	return rectanguloCamara;
 }
 
 void JuegoCliente::actualizar(){
@@ -76,7 +77,7 @@ void JuegoCliente::actualizar(){
 		pthread_mutex_unlock(&mutex);
 	}
 	tiempoFaltante = ronda.tiempoFaltante;
-	posXCamara = ronda.posXCamara;
+    rectanguloCamara.x = ronda.posXCamara;
 	ganaron = ronda.ganaron;
 	perdieron = ronda.perdieron;
 
@@ -86,7 +87,7 @@ void JuegoCliente::actualizar(){
 	monedas.clear();
 	efectos.clear();
 
-	for(int i=0;i<ronda.topeBloques;i++){ // TODO PENSAR FORMA DE SACAR LO REPETIDO // sizeof(objeto), comienzo del vector
+	for(int i=0;i<ronda.topeBloques;i++){
 		bloques.push_front(ronda.bloques[i]);
 	}
 	for(int i=0;i<ronda.topeEnemigos;i++){
@@ -146,7 +147,7 @@ list<bloque_t> JuegoCliente::obtenerBloques(){
 }
 
 bool JuegoCliente::enRango(int posX, int w) const {
-    return (posXCamara - RANGO_VISTA) <= posX + w && posX <= (posXCamara + anchoVista + RANGO_VISTA);
+    return (rectanguloCamara.x - RANGO_VISTA) <= posX + w && posX <= (rectanguloCamara.x + anchoVista + RANGO_VISTA);
 }
 
 list<moneda_t> JuegoCliente::obtenerMonedas(){
@@ -201,7 +202,7 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     ladrillos.clear();
     tuberias.clear();
     pozos.clear();
-    for(int i=0;i<nivel.topeBloques;i++){ // TODO IDEM A LO DE ARRIBA
+    for(int i=0;i<nivel.topeBloques;i++){
         ladrillos.push_front(nivel.bloques[i]);
     }
     for(int i=0;i<nivel.topeTuberias;i++){

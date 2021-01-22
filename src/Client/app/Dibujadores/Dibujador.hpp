@@ -20,8 +20,8 @@ class Dibujador{
 
 	public:
 
-		virtual void dibujar(){}
-
+		virtual void dibujar() = 0;
+        virtual void agregarEventoDeClick(SDL_Event eventoClick) {};
 		virtual void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color){
 			SDL_Rect* clip = nullptr;
 			double angle = 0.0;
@@ -37,7 +37,7 @@ class Dibujador{
 
 		};
 
-		virtual ~Dibujador()= default;;
+		virtual ~Dibujador()= default;
 
 	protected:
 		int alto_pantalla{};

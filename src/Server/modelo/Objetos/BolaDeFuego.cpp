@@ -166,3 +166,7 @@ void BolaDeFuego::empujarY(rectangulo_t rectanguloEmpujador) {
     int desplazamiento = rectanguloEmpujador.y2 - rectanguloBola.y1;
     this->posicion->moverVertical(desplazamiento);
 }
+
+int BolaDeFuego::tipoDeEfecto() {
+    return BOLA_DE_FUEGO;
+}

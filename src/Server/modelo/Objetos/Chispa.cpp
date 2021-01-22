@@ -45,3 +45,7 @@ bool Chispa::debeColisionar() {
 }
 
 void Chispa::inicializarMapasDeColision() {}
+
+int Chispa::tipoDeEfecto() {
+    return CHISPA;
+}

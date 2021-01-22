@@ -15,8 +15,9 @@ class SinSorpresa : public ObjetoSorpresa{
         string obtenerColisionID() override {return  COLISION_ID_NADA;}
         rectangulo_t obtenerRectangulo() override{return {0,0,0,0,0,0};}
         bool debeColisionar() override {return false;}
+        int tipoDeEfecto() override {return NADA;};
 
-private:
+    private:
         void inicializarMapasDeColision() override {}
 };
 

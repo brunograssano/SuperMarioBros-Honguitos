@@ -56,3 +56,7 @@ bool MonedaSorpresa::debeColisionar() {
 }
 
 void MonedaSorpresa::inicializarMapasDeColision() {}
+
+int MonedaSorpresa::tipoDeEfecto() {
+    return MONEDA_FLOTANTE;
+}

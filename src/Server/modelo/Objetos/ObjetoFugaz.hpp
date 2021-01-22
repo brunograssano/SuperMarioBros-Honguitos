@@ -10,6 +10,7 @@ class ObjetoFugaz : public Colisionable{
         virtual efecto_t serializar() = 0;
         virtual void actualizar() = 0;
         virtual int obtenerPosicionX() = 0;
+        virtual int tipoDeEfecto() = 0;
         ~ObjetoFugaz() override = default;
 
         string obtenerColisionID() override = 0;

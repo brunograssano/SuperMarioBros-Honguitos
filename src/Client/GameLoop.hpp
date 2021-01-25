@@ -9,7 +9,7 @@ class GameLoop{
 
 	public:
 		GameLoop();
-		~GameLoop()= default;
+		~GameLoop();
 
 		static bool inicializarAplicacion(info_partida_t informacion,Cliente* cliente);
 		static void seMurioElServer();

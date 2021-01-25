@@ -3,7 +3,7 @@
 #include "src/Utils/Constantes.hpp"
 #define DEFAULT 100
 
-Goomba::Goomba(int tipoColor) {
+Goomba::Goomba(int tipoColor){
     spriteEnemigo = new SpriteGoomba();
     this->tipoColor = tipoColor;
     loMataron = false;

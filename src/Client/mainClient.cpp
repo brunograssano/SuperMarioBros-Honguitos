@@ -22,7 +22,5 @@ int mainClient(int argc, char* args[]){
 	Cliente cliente(ip, puerto);
 	cliente.ejecutar();
 
-	delete Log::getInstance();
-
 	return 0;
 }

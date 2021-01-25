@@ -64,7 +64,8 @@ void Cliente::recibirInformacionRonda(info_ronda_t info_ronda) const{
 		return;
 	}
 	App* aplicacion = App::getInstance();
-	aplicacion->agregarRonda(info_ronda);
+	if(aplicacion!= nullptr)
+	    aplicacion->agregarRonda(info_ronda);
 }
 
 void Cliente::esperar(const bool* condicionAEsperar){
@@ -152,14 +153,14 @@ void Cliente::cerradoVentanaInicio() const {
 }
 
 Cliente::~Cliente(){
-	terminarSDL();
 	cerrarSocketCliente(socketCliente);
 	while(!terminoEnviar || !terminoEscuchar){}
     delete ReproductorMusica::getInstance();
     delete escuchador;
 	delete enviador;
 	delete gameLoop;
-
+    terminarSDL();
+    delete Log::getInstance();
 }
 
 void Cliente::recibirInformacionNivel(nivel_t nivel) {

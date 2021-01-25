@@ -5,6 +5,8 @@
 #define RANGO_VISTA 100
 #define NO_HAY_MUNDO_CARGADO (-1)
 
+pthread_mutex_t mutexJuegoCliente = PTHREAD_MUTEX_INITIALIZER;
+
 bool operator == (const bloque_t &bloque1, const bloque_t &bloque2){
     return bloque1.posX == bloque2.posX && bloque1.posY == bloque2.posY && bloque1.numeroRecorteY == bloque2.numeroRecorteY;
 }
@@ -48,10 +50,9 @@ bool JuegoCliente::perdieronElJuego() const{
 }
 
 void JuegoCliente::agregarRonda(info_ronda_t ronda){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
+	pthread_mutex_lock(&mutexJuegoCliente);
 	rondas.push(ronda);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexJuegoCliente);
 }
 
 SDL_Rect JuegoCliente::obtenerCamara()const{
@@ -59,7 +60,6 @@ SDL_Rect JuegoCliente::obtenerCamara()const{
 }
 
 void JuegoCliente::actualizar(){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	if(rondas.empty()){
 		return;
 	}
@@ -67,14 +67,14 @@ void JuegoCliente::actualizar(){
 
 	if(rondas.size() >= CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS){
 		ronda = rondas.back();
-		pthread_mutex_lock(&mutex);
+		pthread_mutex_lock(&mutexJuegoCliente);
 		while(!rondas.empty()) rondas.pop();
-		pthread_mutex_unlock(&mutex);
+		pthread_mutex_unlock(&mutexJuegoCliente);
 	}else{
-		pthread_mutex_lock(&mutex);
+		pthread_mutex_lock(&mutexJuegoCliente);
 		ronda = rondas.front();
 		rondas.pop();
-		pthread_mutex_unlock(&mutex);
+		pthread_mutex_unlock(&mutexJuegoCliente);
 	}
 	tiempoFaltante = ronda.tiempoFaltante;
     rectanguloCamara.x = ronda.posXCamara;
@@ -193,8 +193,7 @@ list<efecto_t> JuegoCliente::obtenerEfectos() {
 }
 
 void JuegoCliente::agregarNivel(nivel_t nivel) {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mutexJuegoCliente);
     if(numeroMundo != NO_HAY_MUNDO_CARGADO ){
         this->hayQueMostrarPuntosDeNivel = true;
     }
@@ -221,7 +220,7 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     podioPuntosTotales = nivel.podioPuntosAcumulados;
     nivelesJugados++;
 
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutexJuegoCliente);
 
 }
 

@@ -49,5 +49,8 @@ void GameLoop::gameLoop() {
 		aplicacion->dibujar();
 		usleep(contador.tiempoRestante());
 	}
-	delete aplicacion;
+}
+
+GameLoop::~GameLoop() {
+    delete App::getInstance();
 };

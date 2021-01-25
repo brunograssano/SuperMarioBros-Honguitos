@@ -2,14 +2,16 @@
 #include "../../sprites/SpriteKoopa.hpp"
 #include "src/Utils/Constantes.hpp"
 #define DEFAULT 100
+#define VELOCIDAD_EXTRA_KOOPA 0.5
 
-Koopa::Koopa(int tipoColor) {
-    bool debeEspejarse = this->movimientoEnemigo.debeEspejarse();
-    spriteEnemigo = new SpriteKoopa(debeEspejarse);
+Koopa::Koopa(int tipoColor){
     this->tipoColor = tipoColor;
     loMataron = false;
     this->inicializarMapasDeColision();
     posicionActual = PosicionMovil(DEFAULT, DEFAULT);
+    movimientoEnemigo = MovimientoEnemigo(VELOCIDAD_EXTRA_KOOPA);
+    bool debeEspejarse = this->movimientoEnemigo.debeEspejarse();
+    spriteEnemigo = new SpriteKoopa(debeEspejarse);
 }
 
 Koopa::~Koopa() {

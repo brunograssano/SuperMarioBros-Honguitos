@@ -2,10 +2,15 @@
 #include "MovimientoEnemigo.hpp"
 #include <cmath>
 #define FUERZA_SALTO_ENEMIGO 0
+#define VELOCIDAD_MINIMA 0.2
+#define RANGO_VELOCIDAD_EXTRA 11
 
-MovimientoEnemigo::MovimientoEnemigo() {
+#define NORMALIZACION 100
+
+MovimientoEnemigo::MovimientoEnemigo(float velocidadExtra) {
     movimientoVertical = MovimientoVertical(FUERZA_SALTO_ENEMIGO);
-    movimientoHorizontal = MovimientoHorizontalIdeal(obtenerVelocidad());
+    float velocidadEnX = obtenerVelocidad(velocidadExtra);
+    movimientoHorizontal = MovimientoHorizontalIdeal(velocidadEnX);
 }
 
 void MovimientoEnemigo::mover(PosicionMovil *posicionMovil) {
@@ -13,8 +18,8 @@ void MovimientoEnemigo::mover(PosicionMovil *posicionMovil) {
     movimientoVertical.mover(posicionMovil);
 }
 
-float MovimientoEnemigo::obtenerVelocidad() {
-    return (0.2 + ((rand() % 11) / 100)) * pow(-1,rand()%2);
+float MovimientoEnemigo::obtenerVelocidad(float velocidadExtra) {
+    return ( (float)pow(-1,rand()%2) * (float)(VELOCIDAD_MINIMA + velocidadExtra + (float)((float)(rand() % RANGO_VELOCIDAD_EXTRA) / NORMALIZACION) ) );
 }
 
 bool MovimientoEnemigo::debeEspejarse() {

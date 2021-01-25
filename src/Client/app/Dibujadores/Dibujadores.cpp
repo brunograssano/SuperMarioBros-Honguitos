@@ -15,7 +15,7 @@
 
 Dibujadores::Dibujadores(char direccionesFondoNiveles[MAX_CANT_NIVELES][MAX_LARGO_NOMBRE_NIVEL],unsigned short cantidadFondosNiveles,
                          unsigned short mundo,unsigned short  anchoPantalla,unsigned short  altoPantalla,JuegoCliente *juegoCliente) {
-    ventanaAplicacion = crearVentana("Super Mario Bros",alto_pantalla,ancho_pantalla);
+    ventanaAplicacion = crearVentana("Super Mario Bros",altoPantalla,anchoPantalla);
     renderizador = crearRenderer(ventanaAplicacion);
     cargarIcono(ventanaAplicacion);
     for(int i=0; i<cantidadFondosNiveles; i++){

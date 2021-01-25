@@ -9,7 +9,7 @@ class Mario;
 
 #include "src/Server/modelo/Colisionable.hpp"
 #include "MovimientoEnemigo.hpp"
-
+#define VELOCIDAD_EXTRA_DEFAULT 0.0
 
 class Enemigo : public Colisionable{
 
@@ -38,7 +38,7 @@ class Enemigo : public Colisionable{
         enemigo_t serializarEnemigo(int tipo);
 		PosicionMovil posicionActual = PosicionMovil(0,0);
         SpriteEnemigo* spriteEnemigo{};
-        MovimientoEnemigo movimientoEnemigo;
+        MovimientoEnemigo movimientoEnemigo = MovimientoEnemigo(VELOCIDAD_EXTRA_DEFAULT);
         int tipoColor{};
         bool loMataron = false;
 };

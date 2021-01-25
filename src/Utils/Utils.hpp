@@ -194,7 +194,7 @@ typedef struct nivel{
     short topeBloques;
     uint8_t topePozos;
     uint8_t topeTuberias;
-    bloque_t bloques[MAX_LADRILLOS]; //definir contstantes (van a venir todos los bloques ladrillo/tuberias de un nivel)
+    bloque_t bloques[MAX_LADRILLOS];
     tuberia_t tuberias[MAX_TUBERIAS];
     pozo_t pozos[MAX_POZOS];
     podio_t podio;

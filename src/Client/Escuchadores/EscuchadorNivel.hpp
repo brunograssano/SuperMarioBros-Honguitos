@@ -12,7 +12,6 @@ class EscuchadorNivel : public Escuchador{
         void casoSocketCerrado()override;
         void casoExitoso()override;
     private:
-        bool recibioMensajeValido();
         string error;
         nivel_t info_nivel{};
         Cliente* cliente;

@@ -1,10 +1,8 @@
 #include "mainServer.hpp"
 
-#include "../Client/app/AplicacionCliente.hpp"
-#include "lector/Lector.hpp"
-
+#include "Lector/Lector.hpp"
 #include "../Utils/Validaciones.hpp"
-#include "../Server/Servidor.hpp"
+#include "src/Server/Servidor/Servidor.hpp"
 #include <string>
 using namespace std;
 

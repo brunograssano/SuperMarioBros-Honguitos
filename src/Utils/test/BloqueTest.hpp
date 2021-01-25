@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 
-#include "../../Server/modelo/Bloques/Bloque.hpp"
+#include "../../Server/Modelo/Juego/Nivel/Bloques/Bloque.hpp"
 #include "Assert.hpp"
 
 

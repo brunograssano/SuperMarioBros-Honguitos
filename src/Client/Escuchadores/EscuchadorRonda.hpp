@@ -22,7 +22,7 @@ class EscuchadorRonda: public Escuchador{
 		bool recibioMensajeValido();
 	private:
 		Cliente* cliente;
-		info_ronda_t info_ronda;
+		info_ronda_t info_ronda{};
 		string error;
 };
 

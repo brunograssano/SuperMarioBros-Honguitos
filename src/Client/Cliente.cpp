@@ -1,7 +1,8 @@
 #include "Cliente.hpp"
 #include <thread>
-#include "src/Client/reproductorDeMusica/ReproductorMusica.hpp"
-#include "app/ManejadorSDL.hpp"
+#include "src/Client/ReproductorDeMusica/ReproductorMusica.hpp"
+#include "App/ManejadorSDL.hpp"
+#include "App/AplicacionCliente.hpp"
 #include "UtilidadesCliente.hpp"
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;

@@ -1,4 +1,4 @@
-#include "src/Client/reproductorDeMusica/ReproductorMusica.hpp"
+#include "src/Client/ReproductorDeMusica/ReproductorMusica.hpp"
 #include "src/Utils/log/Log.hpp"
 #include "EscuchadorSonido.hpp"
 #include "src/Utils/Constantes.hpp"

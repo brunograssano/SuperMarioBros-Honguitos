@@ -3,8 +3,8 @@
 
 class Cliente;
 #include "../Cliente.hpp"
-#include "../../Utils/Enviador.hpp"
-#include "../../Utils/Thread.hpp"
+#include "src/Utils/Enviador.hpp"
+#include "src/Utils/Thread.hpp"
 
 class EnviadorCliente  : public Thread{
     public:

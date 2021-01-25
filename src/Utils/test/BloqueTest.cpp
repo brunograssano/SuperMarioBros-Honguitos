@@ -1,5 +1,5 @@
-#include "src/Server/modelo/Bloques/Ladrillo.hpp"
-#include "src/Server/modelo/Bloques/Sorpresa.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Bloques/Ladrillo.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Bloques/Sorpresa.hpp"
 #include "BloqueTest.hpp"
 
 #define CYAN "\u001b[36m"

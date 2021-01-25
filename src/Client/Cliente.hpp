@@ -3,25 +3,25 @@
 
 #include <iostream>
 #include <string>
-#include <string.h>
-#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
 #include <unistd.h>
 
 #include <queue>
 #include <map>
 
 #include "../Utils/Utils.hpp"
-#include "app/VentanaInicio/VentanaInicio.hpp"
+#include "App/VentanaInicio/VentanaInicio.hpp"
 
 class EnviadorCliente;
-#include "../../src/Client/EnviadoresCliente/EnviadorCliente.hpp"
+#include "EnviadoresCliente/EnviadorCliente.hpp"
 
 class EscuchadorCliente;
-#include "../../src/Client/Escuchadores/EscuchadorCliente.hpp"
+#include "Escuchadores/EscuchadorCliente.hpp"
 
 class GameLoop;
-#include "../Client/GameLoop.hpp"
-#include "../Utils/Constantes.hpp"
+#include "GameLoop.hpp"
+#include "src/Utils/Constantes.hpp"
 using namespace std;
 
 class Cliente{

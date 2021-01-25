@@ -1,7 +1,7 @@
-#include "../Client/mainClient.hpp"
-#include "../Client/Cliente.hpp"
+#include "mainClient.hpp"
+#include "Cliente.hpp"
 #include "src/Utils/log/Log.hpp"
-#include "../Utils/Validaciones.hpp"
+#include "src/Utils/Validaciones.hpp"
 
 int mainClient(int argc, char* args[]){
 

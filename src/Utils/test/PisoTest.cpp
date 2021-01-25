@@ -1,4 +1,5 @@
-#include "src/Server/modelo/Piso.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Piso/Piso.hpp"
+#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "PisoTest.hpp"
 
 #define CYAN "\u001b[36m"

@@ -1,7 +1,7 @@
 #ifndef SERVER_ESCUCHADORENTRADATECLADO_HPP_
 #define SERVER_ESCUCHADORENTRADATECLADO_HPP_
 
-#include "../Servidor.hpp"
+#include "src/Server/Servidor/Servidor.hpp"
 #include "../../Utils/Utils.hpp"
 #include "../../Utils/Escuchador.hpp"
 

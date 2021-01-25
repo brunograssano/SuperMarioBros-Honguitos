@@ -1,7 +1,7 @@
 #ifndef SRC_CLIENT_ENVIADORESCLIENTE_ENVIADORCREDENCIALES_HPP_
 #define SRC_CLIENT_ENVIADORESCLIENTE_ENVIADORCREDENCIALES_HPP_
 
-#include "../../Utils/Enviador.hpp"
+#include "src/Utils/Enviador.hpp"
 
 class EnviadorCredenciales:public Enviador{
 	public:

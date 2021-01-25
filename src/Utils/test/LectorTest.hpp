@@ -6,7 +6,7 @@
 using namespace std;
 #include <cstdio>
 
-#include "../../Server/lector/Lector.hpp"
+#include "../../Server/Lector/Lector.hpp"
 #include "Assert.hpp"
 class LectorTest{
 

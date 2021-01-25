@@ -1,11 +1,11 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_MONEDATEST_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_MONEDATEST_HPP
 
-using namespace std;
 #include <iostream>
 #include <string>
+using namespace std;
 
-#include "../../Server/modelo/Moneda.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Moneda.hpp"
 #include "Assert.hpp"
 
 class MonedaTest {

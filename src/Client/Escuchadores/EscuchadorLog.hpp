@@ -5,9 +5,8 @@
 #include <string>
 using namespace std;
 
-#include "../../Utils/log/Log.hpp"
-
-#include "../../Utils/Escuchador.hpp"
+#include "src/Utils/log/Log.hpp"
+#include "src/Utils/Escuchador.hpp"
 
 class EscuchadorLog : public Escuchador{
 

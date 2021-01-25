@@ -3,8 +3,8 @@
 #define AZUL_CLARO "\e[1;34m"
 #define RESET "\x1b[0m"
 
-#include "src/Server/modelo/Mario/Mario.hpp"
-#include "src/Server/modelo/Enemigos/Koopa.hpp"
+#include "src/Server/Modelo/Juego/Mario/Mario.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Enemigos/Koopa.hpp"
 
 void MarioTest::ejecutar(Assert* testSuite){
 

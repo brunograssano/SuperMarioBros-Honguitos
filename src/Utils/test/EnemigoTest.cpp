@@ -1,6 +1,6 @@
-#include "src/Server/modelo/Enemigos/Goomba.hpp"
-#include "src/Server/modelo/Enemigos/Koopa.hpp"
-#include "src/Server/modelo/Mario/Mario.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Enemigos/Goomba.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Enemigos/Koopa.hpp"
+#include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 #include "EnemigoTest.hpp"
 
 #define CYAN "\u001b[36m"

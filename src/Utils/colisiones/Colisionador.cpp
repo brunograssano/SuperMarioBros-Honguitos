@@ -1,5 +1,5 @@
 #include "Colisionador.hpp"
-#include "src/Server/modelo/Colisionable.hpp"
+#include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "SDL2/SDL.h"
 #include "../Constantes.hpp"
 

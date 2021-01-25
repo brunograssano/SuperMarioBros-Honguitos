@@ -4,7 +4,7 @@
 class Cliente;
 #include "../Cliente.hpp"
 
-#include "../../Utils/Escuchador.hpp"
+#include "src/Utils/Escuchador.hpp"
 
 class EscuchadorInfoPartidaInicial : public Escuchador{
 

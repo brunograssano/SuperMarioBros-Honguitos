@@ -3,7 +3,7 @@
 #define AZUL_CLARO "\e[1;34m"
 #define RESET "\x1b[0m"
 
-#include "src/Server/modelo/Mario/Mario.hpp"
+#include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 
 void MonedaTest::ejecutar(Assert *testSuite) {
     cout << CYAN"========== Comenzando con las pruebas de moneda ==========" RESET << endl;

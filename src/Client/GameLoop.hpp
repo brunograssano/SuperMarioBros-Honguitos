@@ -1,9 +1,8 @@
 #ifndef SRC_CLIENT_GAMELOOP_HPP_
 #define SRC_CLIENT_GAMELOOP_HPP_
 
-#include "../Utils/Utils.hpp"
-#include "../Client/Cliente.hpp"
-#include "app/AplicacionCliente.hpp"
+#include "src/Utils/Utils.hpp"
+#include "Cliente.hpp"
 
 class GameLoop{
 

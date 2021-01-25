@@ -1,5 +1,5 @@
 configuracion>
-    <log>       <!-- Pueden no indicarlo esto, ya que pueden mandarlo por linea de comando al iniciar la app (Si no mandan eso considerar ERROR)-->
+    <log>       <!-- Pueden no indicarlo esto, ya que pueden mandarlo por linea de comando al iniciar la App (Si no mandan eso considerar ERROR)-->
         <level>ERROR</level> <!-- DEBUG o INFO -->
     </log>
 

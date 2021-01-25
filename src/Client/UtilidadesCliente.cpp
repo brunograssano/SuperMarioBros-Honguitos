@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <unistd.h>
 
-#include "../Utils/log/Log.hpp"
+#include "src/Utils/log/Log.hpp"
 
 void salirCliente(const string& mensajeLog){
 	cout<< "No se pudo conectar al server, terminamos la aplicacion"<<endl;

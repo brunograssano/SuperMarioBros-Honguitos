@@ -9,14 +9,11 @@ const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
 Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso)
-      : piso(altoPiso){
+      : piso(altoPiso), meta(ANCHO_FONDO* (float) puntoBanderaFin /100),contador(tiempo, SEGUNDOS){
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
     this->cantidadMonedas = cantidadMonedas;
     this->puntoBanderaFin = ANCHO_FONDO* (float) puntoBanderaFin /100;
-    this->contador = Contador(tiempo, SEGUNDOS);
-    this->meta = Meta((int)this->puntoBanderaFin);
-    this->podio = new Podio();
 }
 
 void Nivel::actualizarPosicionesEnemigos(rectangulo_t rectangulo) {
@@ -359,7 +356,7 @@ void Nivel::terminar(const map<int, Mario *>& jugadores) {
     meta.sumarPuntos(contador.tiempoRestante());
 
     for(auto const& parJugador:jugadores){
-        parJugador.second->eliminar(podio);
+        parJugador.second->eliminar(&podio);
     }
 }
 
@@ -411,19 +408,19 @@ Nivel::~Nivel (){
     plataformas.clear();
     enemigos.clear();
     monedas.clear();
-    delete this->podio;
+
 }
 
 void Nivel::iniciar(const map<int, Mario*>& jugadores) {
     contador.iniciar();
-    podio->recibirJugadores(jugadores);
+    podio.recibirJugadores(jugadores);
     for(auto const& parJugador:jugadores){
-        parJugador.second->agregar(podio);
+        parJugador.second->agregar(&podio);
     }
 }
 
 Podio* Nivel::obtenerPodio(){
-    return this->podio;
+    return &podio;
 }
 
 int Nivel::tiempoRestante() {

@@ -24,7 +24,7 @@ class JuegoCliente{
 		list<entidad_t> obtenerBloques();
 		list<entidad_t> obtenerMonedas();
         list<entidad_t> obtenerTuberias();
-        list<efecto_t> obtenerEfectos();
+        list<entidad_t> obtenerEfectos();
         list<entidad_t> obtenerPozos();
         SDL_Rect rectanguloCamara{};
 		int obtenerTiempoFaltante() const;
@@ -49,7 +49,7 @@ class JuegoCliente{
 		list<entidad_t> enemigos;
 		list<entidad_t> monedas;
         list<entidad_t> tuberias;
-        list<efecto_t> efectos;
+        list<entidad_t> efectos;
         vector<podio_t> podios;
         podio_t podioPuntosTotales{};
 		int cantidadJugadores;

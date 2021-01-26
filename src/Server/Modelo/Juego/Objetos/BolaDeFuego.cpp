@@ -39,10 +39,13 @@ BolaDeFuego::~BolaDeFuego() {
     delete sprite;
 }
 
-efecto_t BolaDeFuego::serializar() {
-    auto posX = (unsigned short ) posicion->obtenerPosX();
-    auto posY = (unsigned short ) posicion->obtenerPosY();
-    return {posX, posY, static_cast<uint8_t>(sprite->obtenerEstadoActual()), BOLA_DE_FUEGO};
+entidad_t BolaDeFuego::serializar() {
+    entidad_t bolaDeFuegoSerializada = {0,0,0,0,0, false};
+    bolaDeFuegoSerializada.x = posicion->obtenerPosX();
+    bolaDeFuegoSerializada.y = posicion->obtenerPosY();
+    bolaDeFuegoSerializada.recorteX = sprite->obtenerEstadoActual();
+    bolaDeFuegoSerializada.tipo = BOLA_DE_FUEGO;
+    return bolaDeFuegoSerializada;
 }
 
 int BolaDeFuego::obtenerPosicionX() {

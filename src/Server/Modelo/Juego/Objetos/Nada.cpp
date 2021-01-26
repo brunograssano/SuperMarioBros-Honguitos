@@ -5,8 +5,8 @@ Nada::~Nada() = default;
 
 void Nada::actualizar() {}
 
-efecto_t Nada::serializar() {
-    return {0, 0, 0, 0};
+entidad_t Nada::serializar() {
+    return {0, 0, 0, 0,0,false};
 }
 
 int Nada::obtenerPosicionX() {

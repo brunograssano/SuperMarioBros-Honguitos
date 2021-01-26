@@ -88,18 +88,14 @@ void JuegoCliente::actualizar(){
 	ganaron = ronda.ganaron;
 	perdieron = ronda.perdieron;
 
-	jugadores.clear();
-	efectos.clear();
-
 	cargarLista(&bloques,ronda.bloques,ronda.topeBloques);
     cargarLista(&enemigos,ronda.enemigos,ronda.topeEnemigos);
     cargarLista(&monedas,ronda.monedas,ronda.topeMonedas);
+    cargarLista(&efectos,ronda.efectos,ronda.topeEfectos);
+    jugadores.clear();
 	for(int i=0;i<cantidadJugadores;i++){
 		jugadores[i]=ronda.jugadores[i];
 	}
-    for(int i=0;i<ronda.topeEfectos;i++){
-        efectos.push_front(ronda.efectos[i]);
-    }
 
     list<entidad_t> ladrillosASacar;
     list<entidad_t> ladrillosNuevos;
@@ -186,7 +182,7 @@ list<entidad_t> JuegoCliente::obtenerTuberias() {
     return tuberiasAMostrar;
 }
 
-list<efecto_t> JuegoCliente::obtenerEfectos() {
+list<entidad_t> JuegoCliente::obtenerEfectos() {
     return efectos;
 }
 

@@ -186,18 +186,18 @@ void DibujadorJuego::dibujarMarios(){
 }
 
 void DibujadorJuego::dibujarEfectos() {
-    list<efecto_t> efectos = juegoCliente->obtenerEfectos();
+    list<entidad_t> efectos = juegoCliente->obtenerEfectos();
     for (auto const& efecto : efectos) {
-        if(efecto.tipoDeEfecto == BOLA_DE_FUEGO || efecto.tipoDeEfecto == CHISPA || efecto.tipoDeEfecto == FLOR || efecto.tipoDeEfecto == MONEDA_FLOTANTE) {
-            SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipoDeEfecto]);
-            Recorte* recorteEfecto = recortes[efecto.tipoDeEfecto];
-            SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.numeroRecorte);
-            SDL_Rect rectanguloEfecto = {efecto.posX - rectanguloCamara.x,
-                                         alto_pantalla - efecto.posY -
+        if(efecto.tipo == BOLA_DE_FUEGO || efecto.tipo == CHISPA || efecto.tipo == FLOR || efecto.tipo == MONEDA_FLOTANTE) {
+            SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipo]);
+            Recorte* recorteEfecto = recortes[efecto.tipo];
+            SDL_Rect rectanguloRecorte = recorteEfecto->obtenerRecorte(efecto.recorteX);
+            SDL_Rect rectanguloEfecto = {efecto.x - rectanguloCamara.x,
+                                         alto_pantalla - efecto.y -
                                                  recorteEfecto->obtenerAlturaParaDibujarImagen(0),
                                          recorteEfecto->obtenerAnchuraParaDibujarImagen(0),
                                          recorteEfecto->obtenerAlturaParaDibujarImagen(0)};
-            SDL_RendererFlip flip = recorteEfecto->direccion(efecto.numeroRecorte) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL;
+            SDL_RendererFlip flip = recorteEfecto->direccion(efecto.recorteX) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL; // todo usar el espejado
             SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
         }
     }

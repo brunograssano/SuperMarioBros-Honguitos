@@ -71,12 +71,6 @@ typedef struct podio {
 #define CHISPA 2
 #define FLOR 3
 #define MONEDA_FLOTANTE 4
-typedef struct efecto{
-    unsigned short posX;
-    unsigned short posY;
-    uint8_t numeroRecorte;
-    uint8_t tipoDeEfecto;
-}efecto_t;
 
 typedef struct entidad {
     unsigned short x;
@@ -154,7 +148,7 @@ typedef struct ronda{
     entidad_t bloques[MAX_SORPRESAS];
     entidad_t enemigos[MAX_ENEMIGOS];
     entidad_t monedas[MAX_MONEDAS];
-    efecto_t efectos[MAX_EFECTOS];
+    entidad_t efectos[MAX_EFECTOS];
     jugador_t jugadores[MAX_JUGADORES];
 }info_ronda_t;
 

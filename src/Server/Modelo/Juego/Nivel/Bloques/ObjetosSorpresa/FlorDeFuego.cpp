@@ -16,10 +16,13 @@ FlorDeFuego::FlorDeFuego(int posX, int posY) {
 
 void FlorDeFuego::usarse(Mario *mario){}
 
-efecto_t FlorDeFuego::serializar() {
-    unsigned short x = posicionFija.obtenerPosX();
-    unsigned short y = posicionFija.obtenerPosY();
-    return {x,y, color,FLOR};
+entidad_t FlorDeFuego::serializar() {
+    entidad_t florSerializada = {0,0,0,0,0,false};
+    florSerializada.x = posicionFija.obtenerPosX();
+    florSerializada.y = posicionFija.obtenerPosY();
+    florSerializada.recorteX = color;
+    florSerializada.tipo = FLOR;
+    return florSerializada;
 }
 
 void FlorDeFuego::actualizar() {}

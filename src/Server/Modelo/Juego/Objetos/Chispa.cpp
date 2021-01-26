@@ -18,10 +18,13 @@ void Chispa::actualizar() {
     sprite->actualizarSprite();
 }
 
-efecto_t Chispa::serializar() {
-    auto posX = (unsigned short ) posicion->obtenerPosX();
-    auto posY = (unsigned short ) posicion->obtenerPosY();
-    return {posX, posY, static_cast<uint8_t>(sprite->obtenerEstadoActual()), CHISPA};
+entidad_t Chispa::serializar() {
+    entidad_t chispaSerializada = {0,0,0,0,0, false};
+    chispaSerializada.x = posicion->obtenerPosX();
+    chispaSerializada.y = posicion->obtenerPosY();
+    chispaSerializada.recorteX = sprite->obtenerEstadoActual();
+    chispaSerializada.tipo = CHISPA;
+    return chispaSerializada;
 }
 
 int Chispa::obtenerPosicionX() {

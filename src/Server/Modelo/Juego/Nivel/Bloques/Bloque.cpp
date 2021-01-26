@@ -16,12 +16,12 @@ int Bloque::normalizarCoordenadaIngresada(int coordenada) {
     return (coordenada/40)*40;
 }
 
-bloque_t Bloque::serializar() {
-    bloque_t bloqueSerializado = {0, 0, 0, 0};
-    bloqueSerializado.posX = posicion.obtenerPosX();
-    bloqueSerializado.posY = posicion.obtenerPosY();
-    bloqueSerializado.numeroRecorteX = spriteBloque->obtenerEstadoActual();
-    bloqueSerializado.numeroRecorteY = tipoBloque;
+entidad_t Bloque::serializar() {
+    entidad_t bloqueSerializado = {0, 0, 0, 0,0,false};
+    bloqueSerializado.x = posicion.obtenerPosX();
+    bloqueSerializado.y = posicion.obtenerPosY();
+    bloqueSerializado.recorteX = spriteBloque->obtenerEstadoActual();
+    bloqueSerializado.recorteY = tipoBloque;
     return bloqueSerializado;
 }
 

@@ -13,12 +13,11 @@ void Moneda::actualizar() {
     this->sprite.actualizarSprite();
 }
 
-moneda_t Moneda::serializar() {
-    moneda_t monedaSerializada;
-
-    monedaSerializada.posX = posicion.obtenerPosX();
-    monedaSerializada.posY = posicion.obtenerPosY();
-    monedaSerializada.numeroRecorte = sprite.obtenerEstadoActual();
+entidad_t Moneda::serializar() {
+    entidad_t monedaSerializada = {0,0,0,0,0,false};
+    monedaSerializada.x = posicion.obtenerPosX();
+    monedaSerializada.y = posicion.obtenerPosY();
+    monedaSerializada.recorteX = sprite.obtenerEstadoActual();
     return monedaSerializada;
 }
 

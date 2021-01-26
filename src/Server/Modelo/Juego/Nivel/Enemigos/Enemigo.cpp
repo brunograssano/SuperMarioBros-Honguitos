@@ -39,14 +39,14 @@ void Enemigo::cambiarOrientacion() {
     spriteEnemigo->espejar();
 }
 
-enemigo_t Enemigo::serializarEnemigo(int tipo) {
-    enemigo_t enemigoSerializado;
-    enemigoSerializado.posX = this->obtenerPosicionX();
-    enemigoSerializado.posY = this->obtenerPosicionY();
-    enemigoSerializado.numeroRecorteX = spriteEnemigo->obtenerEstadoActual();
-    enemigoSerializado.numeroRecorteY = tipoColor;
-    enemigoSerializado.tipoEnemigo = tipo;
-    enemigoSerializado.espejar = spriteEnemigo->debeEspejarse();
+entidad_t Enemigo::serializarEnemigo(int tipo) {
+    entidad_t enemigoSerializado = {0,0,0,0,0,false};;
+    enemigoSerializado.x = this->obtenerPosicionX();
+    enemigoSerializado.y = this->obtenerPosicionY();
+    enemigoSerializado.recorteX = spriteEnemigo->obtenerEstadoActual();
+    enemigoSerializado.recorteY = tipoColor;
+    enemigoSerializado.tipo = tipo;
+    enemigoSerializado.espejado = spriteEnemigo->debeEspejarse();
     return enemigoSerializado;
 }
 

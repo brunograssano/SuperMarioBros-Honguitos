@@ -37,15 +37,15 @@ class Nivel{
 		void agregarMoneda(Moneda* unaMoneda);
 		int obtenerMundo() const;
 		int tiempoRestante();
-		void iniciar(map<int, Mario*> jugadores);
+		void iniciar(const map<int, Mario*>& jugadores);
 
         /* Completará la información de los siguientes campos:
          * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
 		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto);
-        void actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena);
-        bool todosEnLaMeta(map<int, Mario*> jugadores);
+        void actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
+        bool todosEnLaMeta(const map<int, Mario*>& jugadores);
 		string obtenerDireccionFondoActual();
-        void terminar(map<int, Mario*> jugadores);
+        void terminar(const map<int, Mario*>& jugadores);
         void completarInformacionNivel(nivel_t *nivel);
         void aparecerDisparo(ObjetoFugaz* disparo);
         Podio* obtenerPodio();
@@ -56,10 +56,10 @@ class Nivel{
         void actualizarPosicionesEnemigos(rectangulo_t rectangulo);
         void actualizarMonedas();
         void actualizarObjetosFugaces();
-        void resolverColisiones(map<int,Mario*> jugadores);
+        void resolverColisiones(const map<int,Mario*>& jugadores);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
-        void resolverGanadores(map<int, Mario *> map);
+        void resolverGanadores(const map<int, Mario *>& map);
         void elevarObstaculos();
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
@@ -90,7 +90,7 @@ class Nivel{
         void sacarObjetosFugaces();
         void actualizarBloques();
 
-        void imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena);
+        void imponerPosicionDeReaparicion(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
         void buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos);
 };
 

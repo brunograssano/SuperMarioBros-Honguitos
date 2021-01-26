@@ -20,12 +20,12 @@ class JuegoCliente{
 		void agregarRonda(info_ronda_t ronda);
 		void actualizar();
 		map<int,jugador_t> obtenerJugadores();
-		list<enemigo_t> obtenerEnemigos();
-		list<bloque_t> obtenerBloques();
-		list<moneda_t> obtenerMonedas();
-        list<tuberia_t> obtenerTuberias();
+		list<entidad_t> obtenerEnemigos();
+		list<entidad_t> obtenerBloques();
+		list<entidad_t> obtenerMonedas();
+        list<entidad_t> obtenerTuberias();
         list<efecto_t> obtenerEfectos();
-        list<pozo_t> obtenerPozos();
+        list<entidad_t> obtenerPozos();
         SDL_Rect rectanguloCamara{};
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
@@ -43,12 +43,12 @@ class JuegoCliente{
         bool enRango(int posX, int w) const;
 		queue<info_ronda_t> rondas;
 		map<int,jugador_t> jugadores;
-		list<bloque_t> bloques;
-        list<bloque_t> ladrillos;
-        list<pozo_t> pozos;
-		list<enemigo_t> enemigos;
-		list<moneda_t> monedas;
-        list<tuberia_t> tuberias;
+		list<entidad_t> bloques;
+        list<entidad_t> ladrillos;
+        list<entidad_t> pozos;
+		list<entidad_t> enemigos;
+		list<entidad_t> monedas;
+        list<entidad_t> tuberias;
         list<efecto_t> efectos;
         vector<podio_t> podios;
         podio_t podioPuntosTotales{};
@@ -61,6 +61,8 @@ class JuegoCliente{
 		bool perdieron;
         bool hayQueCargarPodioNivel;
 		int nivelesJugados;
+
+        static void cargarLista(list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope);
 };
 
 

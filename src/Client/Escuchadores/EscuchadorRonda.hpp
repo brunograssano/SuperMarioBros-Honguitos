@@ -15,12 +15,12 @@ class EscuchadorRonda: public Escuchador{
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 
-		static bool bloquesValidos(bloque_t bloques[MAX_SORPRESAS], int tope);
-		static bool monedasValidas(moneda_t monedas[MAX_MONEDAS], int tope);
-		static bool enemigosValidos(enemigo_t enemigos[MAX_ENEMIGOS], int tope);
-
-		bool recibioMensajeValido();
 	private:
+        static bool bloquesValidos(entidad_t bloques[MAX_SORPRESAS], int tope);
+        static bool monedasValidas(entidad_t monedas[MAX_MONEDAS], int tope);
+        static bool enemigosValidos(entidad_t enemigos[MAX_ENEMIGOS], int tope);
+
+        bool recibioMensajeValido();
 		Cliente* cliente;
 		info_ronda_t info_ronda{};
 		string error;

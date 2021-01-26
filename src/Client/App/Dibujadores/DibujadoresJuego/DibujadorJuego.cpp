@@ -55,54 +55,54 @@ void DibujadorJuego::dibujar(){
 }
 
 void DibujadorJuego::dibujarEnemigos(){
-	list<enemigo_t> enemigos = juegoCliente->obtenerEnemigos();
+	list<entidad_t> enemigos = juegoCliente->obtenerEnemigos();
 	string tipo;
 	SDL_Texture* texturaEnemigo = nullptr;
 	for (auto const& enemigo : enemigos) {
 		SDL_Rect recorteTextura;
-		if(enemigo.tipoEnemigo==GOOMBA){
-			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
+		if(enemigo.tipo==GOOMBA){
+			recorteTextura = recorteSpriteGoomba->obtenerRecorte(enemigo.recorteX,enemigo.recorteY);
             texturaEnemigo = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_GOOMBA);
 		}
 		else{
-			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.numeroRecorteX,enemigo.numeroRecorteY);
+			recorteTextura = recorteSpriteKoopa->obtenerRecorte(enemigo.recorteX,enemigo.recorteY);
             texturaEnemigo = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_KOOPAS);
 		}
 
-		SDL_Rect rectanguloEnemigo = {enemigo.posX-rectanguloCamara.x,
-									alto_pantalla - enemigo.posY - ALTO_ENEMIGOS,
+		SDL_Rect rectanguloEnemigo = {enemigo.x-rectanguloCamara.x,
+									alto_pantalla - enemigo.y - ALTO_ENEMIGOS,
 									ANCHO_ENEMIGOS, ALTO_ENEMIGOS};
 
         //SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F );
 		//SDL_RenderDrawRect(renderizador, &rectanguloEnemigo);
 
 		SDL_RenderCopyEx(renderizador,texturaEnemigo,&recorteTextura,&rectanguloEnemigo,0,
-                         nullptr,enemigo.espejar?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+                         nullptr,enemigo.espejado?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
     }
 }
 
 void DibujadorJuego::dibujarPlataformas(){
-	list<bloque_t> bloques = juegoCliente->obtenerBloques();
+	list<entidad_t> bloques = juegoCliente->obtenerBloques();
     SDL_Texture* texturaBloques = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_BLOQUES);
 	for (auto const& bloque : bloques) {
 
-		SDL_Rect rectanguloBloque = {bloque.posX - rectanguloCamara.x,
-									alto_pantalla - bloque.posY - LARGO_BLOQUE,
+		SDL_Rect rectanguloBloque = {bloque.x - rectanguloCamara.x,
+									alto_pantalla - bloque.y - LARGO_BLOQUE,
 									LARGO_BLOQUE, LARGO_BLOQUE};
-		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.numeroRecorteX,bloque.numeroRecorteY);
+		SDL_Rect recorteBloque = recorteSpriteBloque->obtenerRecorte(bloque.recorteX,bloque.recorteY);
 		SDL_RenderCopy( renderizador, texturaBloques, &recorteBloque, &rectanguloBloque);
 	}
 
 }
 
 void DibujadorJuego::dibujarFondoPozos() {
-    list<pozo_t> pozos = juegoCliente->obtenerPozos();
+    list<entidad_t> pozos = juegoCliente->obtenerPozos();
     SDL_Texture* texturaFondoPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_POZO);
     for (auto const& pozo : pozos) {
-        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara.x,
+        SDL_Rect rectanguloPozo = {pozo.x - rectanguloCamara.x,
                                    alto_pantalla - (int)(alto_pantalla*0.12),
                                    ANCHO_POZO, (int)(alto_pantalla*0.12)};
-        SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.fondo);
+        SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.tipo);
         recortePozo.y += 1; // TODO acomodar o crear un nuevo recorte, agarra una parte de la imagen de arriba
         SDL_RenderCopy( renderizador, texturaFondoPozos, &recortePozo, &rectanguloPozo);
     }
@@ -110,38 +110,38 @@ void DibujadorJuego::dibujarFondoPozos() {
 
 
 void DibujadorJuego::dibujarPozos(){
-    list<pozo_t> pozos = juegoCliente->obtenerPozos();
+    list<entidad_t> pozos = juegoCliente->obtenerPozos();
     SDL_Texture* texturaPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_POZO);
     for (auto const& pozo : pozos) {
-        SDL_Rect rectanguloPozo = {pozo.posX - rectanguloCamara.x,
+        SDL_Rect rectanguloPozo = {pozo.x - rectanguloCamara.x,
                                      alto_pantalla - ALTO_POZO,
                                      ANCHO_POZO, ALTO_POZO};
-        SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.tipo);
+        SDL_Rect recortePozo = recortes[POZO_RECORTE]->obtenerRecorte(0,pozo.recorteY);
         SDL_RenderCopy( renderizador, texturaPozos, &recortePozo, &rectanguloPozo);
     }
 }
 
 void DibujadorJuego::dibujarMonedas(){
-	list<moneda_t> monedas = juegoCliente->obtenerMonedas();
+	list<entidad_t> monedas = juegoCliente->obtenerMonedas();
     SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_MONEDA);
 	for (auto const& moneda : monedas) {
-		SDL_Rect rectanguloMoneda = {moneda.posX - rectanguloCamara.x,
-									alto_pantalla - moneda.posY - LARGO_MONEDA,
+		SDL_Rect rectanguloMoneda = {moneda.x - rectanguloCamara.x,
+									alto_pantalla - moneda.y - LARGO_MONEDA,
                                      LARGO_MONEDA, LARGO_MONEDA};
-		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.numeroRecorte);
+		SDL_Rect recorteMoneda = recorteSpriteMoneda->obtenerRecorte(moneda.recorteX);
 		SDL_RenderCopy( renderizador, texturaMoneda, &recorteMoneda, &rectanguloMoneda);
 	}
 }
 
 void DibujadorJuego::dibujarTuberias() {
-    list<tuberia_t> tuberias = juegoCliente->obtenerTuberias();
+    list<entidad_t> tuberias = juegoCliente->obtenerTuberias();
     SDL_Texture* texturaTuberia = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_TUBERIAS);
     for (auto const& tuberia : tuberias) {
-        SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.tipo,tuberia.color);
-        SDL_Rect rectanguloTuberia = {tuberia.posX - rectanguloCamara.x,
-                                      alto_pantalla - recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.tipo) - tuberia.posY,
-                                      recorteSpriteTuberia->obtenerAnchuraParaDibujarImagen(tuberia.tipo),
-                                      recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.tipo)};
+        SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.recorteX,tuberia.recorteY);
+        SDL_Rect rectanguloTuberia = {tuberia.x - rectanguloCamara.x,
+                                      alto_pantalla - recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.recorteX) - tuberia.y,
+                                      recorteSpriteTuberia->obtenerAnchuraParaDibujarImagen(tuberia.recorteX),
+                                      recorteSpriteTuberia->obtenerAlturaParaDibujarImagen(tuberia.recorteX)};
         SDL_RenderCopy( renderizador, texturaTuberia, &recorteTuberia, &rectanguloTuberia);
     }
 }

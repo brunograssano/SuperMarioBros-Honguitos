@@ -15,7 +15,7 @@ Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, 
     this->cantidadMonedas = cantidadMonedas;
     this->puntoBanderaFin = ANCHO_FONDO* (float) puntoBanderaFin /100;
     this->contador = Contador(tiempo, SEGUNDOS);
-    this->meta = Meta(this->puntoBanderaFin);
+    this->meta = Meta((int)this->puntoBanderaFin);
     this->podio = new Podio();
 }
 
@@ -48,7 +48,7 @@ void Nivel::actualizarObjetosFugaces() {
 }
 
 
-void Nivel::actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena){
+void Nivel::actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena){
     actualizarPosicionesEnemigos(rectanguloEscena);
 
     imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
@@ -65,7 +65,7 @@ void Nivel::actualizarModelo(map<int, Mario*> jugadores, rectangulo_t rectangulo
     resolverGanadores(jugadores);
 }
 
-void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
+void Nivel::resolverColisiones(const map<int, Mario *>& jugadores) {
     list<Colisionable*> plataformasPiso = piso.obtenerPiso();
 
     //todo: mejorar esto:
@@ -98,7 +98,7 @@ void Nivel::resolverColisiones(map<int, Mario *> jugadores) {
     }
 }
 
-void Nivel::resolverGanadores(map<int, Mario *> mapaJugadores) {
+void Nivel::resolverGanadores(const map<int, Mario *>& mapaJugadores) {
     for(auto const& parClaveJugador:mapaJugadores)
         meta.agregarSiPasoLaMeta(parClaveJugador.second);
 }
@@ -315,7 +315,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroBloque = 0;
     for(auto const& bloque: plataformas){
-        bloque_t bloqueSerializado = bloque->serializar();
+        entidad_t bloqueSerializado = bloque->serializar();
         if(bloque->cambioElSprite() && deboAgregarlo(contexto, bloque->obtenerRectangulo()) && numeroBloque < MAX_SORPRESAS){
             ptrInfoRonda->bloques[numeroBloque] = bloqueSerializado;
             numeroBloque++;
@@ -325,8 +325,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroEnemigo = 0;
     for(auto const& enemigo: enemigos){
-        if(deboAgregarlo(contexto, enemigo->obtenerRectangulo()) &&
-           numeroEnemigo<MAX_ENEMIGOS){
+        if(deboAgregarlo(contexto, enemigo->obtenerRectangulo()) && numeroEnemigo<MAX_ENEMIGOS){
             ptrInfoRonda->enemigos[numeroEnemigo] = enemigo->serializar();
             numeroEnemigo++;
         }
@@ -335,8 +334,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     int numeroMoneda = 0;
     for(auto const& moneda: monedas){
-        if(deboAgregarlo(contexto, moneda->obtenerRectangulo()) &&
-           numeroMoneda<MAX_MONEDAS){
+        if(deboAgregarlo(contexto, moneda->obtenerRectangulo()) && numeroMoneda<MAX_MONEDAS){
             ptrInfoRonda->monedas[numeroMoneda] = moneda->serializar();
             numeroMoneda++;
         }
@@ -345,8 +343,7 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
     ptrInfoRonda->topeMonedas = numeroMoneda;
     int numeroEfecto = 0;
     for(auto const& disparo : objetosFugaces){
-        if(deboAgregarlo(contexto, disparo->obtenerRectangulo()) &&
-            numeroEfecto<MAX_EFECTOS){
+        if(deboAgregarlo(contexto, disparo->obtenerRectangulo()) && numeroEfecto<MAX_EFECTOS){
             ptrInfoRonda->efectos[numeroEfecto] = disparo->serializar();
             numeroEfecto++;
         }
@@ -358,7 +355,7 @@ void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
     piso.agregarPozo(posicionX, tipoPozo, fondo);
 }
 
-void Nivel::terminar(map<int, Mario *> jugadores) {
+void Nivel::terminar(const map<int, Mario *>& jugadores) {
     meta.sumarPuntos(contador.tiempoRestante());
 
     for(auto const& parJugador:jugadores){
@@ -366,7 +363,7 @@ void Nivel::terminar(map<int, Mario *> jugadores) {
     }
 }
 
-bool Nivel::todosEnLaMeta(map<int, Mario *> jugadores) {
+bool Nivel::todosEnLaMeta(const map<int, Mario *>& jugadores) {
     return meta.todosEnLaMeta(jugadores);
 }
 
@@ -379,7 +376,7 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
-    list<pozo_t> pozos = piso.serializar();
+    list<entidad_t> pozos = piso.serializar();
     for(auto const& pozo: pozos){
         if(nivel->topePozos<MAX_POZOS){
             nivel->pozos[nivel->topePozos] = pozo;
@@ -388,8 +385,8 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
     }
 
     for(auto const& bloque: plataformas){
-        bloque_t  bloquesSerializado = bloque->serializar();
-        if(nivel->topeBloques<MAX_LADRILLOS && bloquesSerializado.numeroRecorteY!=SORPRESA){
+        entidad_t  bloquesSerializado = bloque->serializar();
+        if(nivel->topeBloques<MAX_LADRILLOS && bloquesSerializado.recorteY!=SORPRESA){
             nivel->bloques[nivel->topeBloques] = bloquesSerializado;
             nivel->topeBloques++;
         }
@@ -417,7 +414,7 @@ Nivel::~Nivel (){
     delete this->podio;
 }
 
-void Nivel::iniciar(map<int, Mario*> jugadores) {
+void Nivel::iniciar(const map<int, Mario*>& jugadores) {
     contador.iniciar();
     podio->recibirJugadores(jugadores);
     for(auto const& parJugador:jugadores){
@@ -478,7 +475,7 @@ void Nivel::buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* po
 }
 
 
-void Nivel::imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena) {
+void Nivel::imponerPosicionDeReaparicion(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena) {
     PosicionFija posicionDeReaparicion(rectanguloEscena.x1, piso.obtenerAltura());
 
     bool hayPiso = piso.obtenerRespawn(rectanguloEscena, &posicionDeReaparicion);

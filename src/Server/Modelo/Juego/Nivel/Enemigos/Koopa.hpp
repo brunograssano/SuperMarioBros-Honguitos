@@ -7,7 +7,7 @@ class Koopa : public Enemigo{
 	public:
 		explicit Koopa(int tipoColor);
 		~Koopa() override;
-		enemigo_t serializar() override;
+        entidad_t serializar() override;
         string obtenerColisionID() override;
 };
 

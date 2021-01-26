@@ -18,9 +18,9 @@ info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNomb
 	return juego->obtenerInfoPartida(mapaIDNombre, IDJugador);
 }
 
-info_ronda_t AplicacionServidor::obtenerInfoRonda(map<int,string> mapaIDNombre){
+info_ronda_t AplicacionServidor::obtenerInfoRonda() {
 	Log::getInstance()->mostrarAccion("Se prepara la informacion de la ronda para ejecutar.");
-    return juego->obtenerInfoRonda(std::move(mapaIDNombre));
+    return juego->obtenerInfoRonda();
 }
 
 nivel_t AplicacionServidor::obtenerInfoNivel(){
@@ -71,7 +71,7 @@ void AplicacionServidor::ejecutar(){
 			terminoElJuego = juego->ganaron() || juego->perdieron();
 		}
 		revisarSiMandarInfoNivel(&cantidadNivelesRestantes);
-		info_ronda_t ronda = obtenerInfoRonda(servidor->obtenerMapaJugadores());
+		info_ronda_t ronda = obtenerInfoRonda();
 		servidor->guardarRondaParaEnvio(ronda);
         enviarSonidos();
 

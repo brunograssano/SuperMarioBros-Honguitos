@@ -219,7 +219,7 @@ void DibujadorJuego::dibujarTexto(){
 	SDL_Texture* texturaCorazon = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_CORAZON);
 	for(auto const& parClaveJugador:jugadores){
 		textoDePuntos.str("");
-		textoDePuntos << parClaveJugador.second.nombreJugador << ": "<<parClaveJugador.second.puntos;
+		textoDePuntos << parClaveJugador.second.nombreJugador << ": "<<parClaveJugador.second.mario.puntos;
 		SDL_Rect cuadradoPuntos = { 10 + espacioX, 10, 140, 30 };
         SDL_Rect cuadradoCorazon = { 20 + espacioX, 50, 20, 20 };
 		int id = parClaveJugador.first;

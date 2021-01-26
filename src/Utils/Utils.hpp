@@ -50,13 +50,13 @@ typedef struct mario{
 	uint8_t modificador; // 0 Nada - 1 Fuego
 	unsigned short posX;
 	unsigned short posY;
+    unsigned short puntos;
 	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y
     uint8_t vidas;		  //el recorte correspondiente es el gris
 }mario_t;
 
 typedef struct jugador{
 	char nombreJugador[MAX_NOMBRE];
-	unsigned short puntos;
 	mario_t mario;
 }jugador_t;
 
@@ -149,7 +149,7 @@ typedef struct ronda{
     entidad_t enemigos[MAX_ENEMIGOS];
     entidad_t monedas[MAX_MONEDAS];
     entidad_t efectos[MAX_EFECTOS];
-    jugador_t jugadores[MAX_JUGADORES];
+    mario_t jugadores[MAX_JUGADORES];
 }info_ronda_t;
 
 #define NIVEL 'N'

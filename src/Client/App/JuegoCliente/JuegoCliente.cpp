@@ -92,9 +92,9 @@ void JuegoCliente::actualizar(){
     cargarLista(&enemigos,ronda.enemigos,ronda.topeEnemigos);
     cargarLista(&monedas,ronda.monedas,ronda.topeMonedas);
     cargarLista(&efectos,ronda.efectos,ronda.topeEfectos);
-    jugadores.clear();
+
 	for(int i=0;i<cantidadJugadores;i++){
-		jugadores[i]=ronda.jugadores[i];
+		jugadores[i].mario=ronda.jugadores[i];
 	}
 
     list<entidad_t> ladrillosASacar;

@@ -25,7 +25,7 @@ class AplicacionServidor : public Thread{
         nivel_t obtenerInfoNivel();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
-		info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
+		info_ronda_t obtenerInfoRonda();
 		void ejecutar() override;
 		void activarJugador(int idMarioConectandose);
 		bool empezoElJuego() const;

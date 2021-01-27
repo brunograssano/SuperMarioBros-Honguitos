@@ -17,8 +17,12 @@ PosicionMovil::PosicionMovil(int coordenadaX, int coordenadaY) : Posicion() {
 }
 
 void PosicionMovil::moverHorizontal(float cantidadAMover) {
-    if(((posicionX + cantidadAMover) <= (float)maximoX) && ((posicionX + cantidadAMover) >= (float)minimoX))
-        this->posicionX+=cantidadAMover;
+    if(posicionX < minimoX){
+        posicionX = minimoX;
+    }
+    if(((posicionX + cantidadAMover) <= (float)maximoX) && ((posicionX + cantidadAMover) >= (float)minimoX)) {
+        this->posicionX += cantidadAMover;
+    }
 }
 
 void PosicionMovil::moverVertical(float cantidadAMover) {

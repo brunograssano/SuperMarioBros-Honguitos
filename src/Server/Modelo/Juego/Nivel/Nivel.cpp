@@ -467,7 +467,8 @@ void Nivel::buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* po
                 xActual = rectBloque.x1;
                 yActual = rectBloque.y2;
                 hayCandidato = true;
-            }else if(rectBloque.x1 < xActual){
+            }else if(rectBloque.x1 < xActual ||
+                    (rectBloque.x1 == xActual && rectBloque.y2 > yActual)){
                 xActual = rectBloque.x1;
                 yActual = rectBloque.y2;
             }
@@ -484,11 +485,41 @@ void Nivel::imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_
     bool hayPiso = piso.obtenerRespawn(rectanguloEscena, &posicionDeReaparicion);
     if(!hayPiso) {
         buscarBloqueParaCaer(rectanguloEscena, &posicionDeReaparicion);
+    }else{
+        buscarBloqueMasAlto(&posicionDeReaparicion);
     }
 
     for(auto& parClaveJugador : jugadores){
         Mario* jugador = parClaveJugador.second;
         jugador->nuevoPuntoDeReaparicion(posicionDeReaparicion);
     }
+}
+
+void Nivel::buscarBloqueMasAlto(PosicionFija* posicion) {
+    int xACaer = posicion->obtenerPosX();
+    int yACaer = posicion->obtenerPosY();
+    for(auto const& bloque : plataformas){
+        int xBloque = bloque->obtenerPosicionX();
+        int yTechoBloque = bloque->obtenerPosicionY() + LARGO_BLOQUE;
+        if(xACaer <= xBloque + LARGO_BLOQUE &&
+           xACaer + ANCHO_MARIO >= xBloque &&
+           yTechoBloque > yACaer){
+            yACaer = yTechoBloque;
+        }
+    }
+
+    for(auto const& tuberia: tuberias){
+        list<PiezaDeTuberia*> piezas = tuberia->obtenerPiezas();
+        for(auto const& pieza: piezas){
+            rectangulo_t rectanguloPieza = pieza->obtenerRectangulo();
+            if(xACaer <= rectanguloPieza.x2 &&
+               xACaer + ANCHO_MARIO >= rectanguloPieza.x1 &&
+               rectanguloPieza.y2 > yACaer){
+                yACaer = rectanguloPieza.y2;
+            }
+        }
+    }
+
+    *posicion = PosicionFija(xACaer, yACaer);
 }
 

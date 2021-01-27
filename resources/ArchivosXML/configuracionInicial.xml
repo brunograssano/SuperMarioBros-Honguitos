@@ -361,48 +361,6 @@
                 <plataforma>
                     <tipo>Ladrillo</tipo>
                     <color>6</color>
-                    <coordenadaX>3760</coordenadaX>
-                    <coordenadaY>360</coordenadaY>
-                    <cantidadBloques>6</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>6</color>
-                    <coordenadaX>3960</coordenadaX>
-                    <coordenadaY>400</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>6</color>
-                    <coordenadaX>3960</coordenadaX>
-                    <coordenadaY>440</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>6</color>
-                    <coordenadaX>3960</coordenadaX>
-                    <coordenadaY>480</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>6</color>
-                    <coordenadaX>3960</coordenadaX>
-                    <coordenadaY>520</coordenadaY>
-                    <cantidadBloques>1</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>6</color>
-                    <coordenadaX>3920</coordenadaX>
-                    <coordenadaY>560</coordenadaY>
-                    <cantidadBloques>2</cantidadBloques>
-                </plataforma>
-                <plataforma>
-                    <tipo>Ladrillo</tipo>
-                    <color>6</color>
                     <coordenadaX>3640</coordenadaX>
                     <coordenadaY>80</coordenadaY>
                     <cantidadBloques>10</cantidadBloques>

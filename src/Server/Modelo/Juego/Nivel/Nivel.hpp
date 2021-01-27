@@ -92,6 +92,7 @@ class Nivel{
 
         void imponerPosicionDeReaparicion(map<int, Mario*> jugadores, rectangulo_t rectanguloEscena);
         void buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos);
+        void buscarBloqueMasAlto(PosicionFija* posicion);
 };
 
 #endif /* SRC_SERVER_MODELO_NIVEL_HPP_ */

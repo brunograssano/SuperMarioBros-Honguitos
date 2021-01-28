@@ -1,4 +1,5 @@
 #include "Chispa.hpp"
+#include "src/Utils/Constantes.hpp"
 
 Chispa::Chispa(const Posicion& posicionInicial, int direccion) {
     int desfaseX = direccion==DERECHA?20:-60;
@@ -17,13 +18,13 @@ void Chispa::actualizar() {
     ciclos++;
     sprite->actualizarSprite();
 }
-
 entidad_t Chispa::serializar() {
     entidad_t chispaSerializada = {0,0,0,0,0, false};
     chispaSerializada.x = posicion->obtenerPosX();
     chispaSerializada.y = posicion->obtenerPosY();
     chispaSerializada.recorteX = sprite->obtenerEstadoActual();
     chispaSerializada.tipo = CHISPA;
+    chispaSerializada.espejado = sprite->estaEspejado();
     return chispaSerializada;
 }
 

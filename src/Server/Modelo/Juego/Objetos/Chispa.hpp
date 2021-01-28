@@ -4,7 +4,6 @@
 #include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteChispa.hpp"
-#include "src/Utils/Constantes.hpp"
 
 class Chispa : public ObjetoFugaz{
     const int CICLOS_PARA_DESAPARECER = 20;
@@ -25,7 +24,7 @@ class Chispa : public ObjetoFugaz{
         void inicializarMapasDeColision() override;
         int ciclos = 0;
         PosicionFija* posicion;
-        Sprite* sprite;
+        SpriteChispa* sprite;
 };
 
 

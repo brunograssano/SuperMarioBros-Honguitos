@@ -13,10 +13,6 @@ void Recorte::inicializarEstados(const int cantidadEstados,const int desplazamie
     }
 }
 
-int Recorte::direccion(int recorte) {
-    return DERECHA;
-}
-
 SDL_Rect Recorte::obtenerRecorte(int recorte) {
     auto iterador = estadosPosibles.begin();
     SDL_Rect estado;

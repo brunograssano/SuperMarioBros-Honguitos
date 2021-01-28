@@ -6,7 +6,7 @@ const int CICLOS_PARA_CAMBIO = 5;
 SpriteChispa::SpriteChispa(int direccion){
     this->ciclos = 0;
     this->estadoActual = ESTADO_INICIAL;
-    this->direccion = direccion;
+    this->espejado = direccion == IZQUIERDA;
 }
 void SpriteChispa::cambiarSprite() {
     if(estadoActual == 3){
@@ -24,12 +24,7 @@ void SpriteChispa::actualizarSprite() {
     ciclos++;
 }
 
-int SpriteChispa::obtenerEstadoActual() {
-    if(direccion == DERECHA){
-        return estadoActual;
-    }else{
-        return estadoActual + 4; //Implica que está mirando hacia la izquierda.
-    }
+bool SpriteChispa::estaEspejado() {
+    return espejado;
 }
-
 

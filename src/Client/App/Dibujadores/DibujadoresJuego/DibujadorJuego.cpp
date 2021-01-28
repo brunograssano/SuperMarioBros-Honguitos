@@ -197,7 +197,7 @@ void DibujadorJuego::dibujarEfectos() {
                                                  recorteEfecto->obtenerAlturaParaDibujarImagen(0),
                                          recorteEfecto->obtenerAnchuraParaDibujarImagen(0),
                                          recorteEfecto->obtenerAlturaParaDibujarImagen(0)};
-            SDL_RendererFlip flip = recorteEfecto->direccion(efecto.recorteX) == DERECHA?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL; // todo usar el espejado
+            SDL_RendererFlip flip = efecto.espejado?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE;
             SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
         }
     }

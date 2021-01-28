@@ -12,7 +12,6 @@ class Recorte {
         virtual SDL_Rect obtenerRecorte(int recorte, int color);
         virtual int obtenerAlturaParaDibujarImagen(int tipo);
         virtual int obtenerAnchuraParaDibujarImagen(int tipo);
-        virtual int direccion(int recorte);
         virtual void actualizarSprite(){};
 
     protected:

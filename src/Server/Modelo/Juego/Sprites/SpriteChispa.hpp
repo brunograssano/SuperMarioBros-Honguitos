@@ -8,11 +8,11 @@ class SpriteChispa : public Sprite{
     public:
         explicit SpriteChispa(int direccion);
         ~SpriteChispa() override = default;
-        int obtenerEstadoActual() override;
         void actualizarSprite() override;
+        bool estaEspejado();
     private:
         void cambiarSprite();
-        int direccion;
+        bool espejado;
 };
 
 

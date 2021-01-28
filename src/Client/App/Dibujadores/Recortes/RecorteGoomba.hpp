@@ -7,6 +7,8 @@
 class RecorteGoomba : public Recorte{
 	public:
 		RecorteGoomba();
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
 };
 
 

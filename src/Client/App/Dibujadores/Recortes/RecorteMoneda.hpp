@@ -7,6 +7,8 @@
 class RecorteMoneda : public Recorte{
 	public:
 		RecorteMoneda();
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
 };
 
 

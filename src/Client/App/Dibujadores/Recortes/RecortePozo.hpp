@@ -7,6 +7,8 @@
 class RecortePozo : public Recorte{
     public:
         RecortePozo();
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
 };
 
 

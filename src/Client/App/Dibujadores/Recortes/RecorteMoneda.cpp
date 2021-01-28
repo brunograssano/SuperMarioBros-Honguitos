@@ -7,3 +7,11 @@ RecorteMoneda::RecorteMoneda() {
     inicializarEstados(ESTADOS_MONEDA,DESPLAZAMIENTO_X,ALTO_MONEDA,ANCHO_MONEDA);
 }
 
+int RecorteMoneda::obtenerAnchuraParaDibujarImagen(int tipo) {
+    return LARGO_MONEDA;
+}
+
+int RecorteMoneda::obtenerAlturaParaDibujarImagen(int tipo) {
+    return LARGO_MONEDA;
+}
+

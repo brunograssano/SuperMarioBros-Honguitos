@@ -66,12 +66,6 @@ typedef struct podio {
     int ids[MAX_JUGADORES];
 }podio_t;
 
-#define NADA 0
-#define BOLA_DE_FUEGO 1
-#define CHISPA 2
-#define FLOR 3
-#define MONEDA_FLOTANTE 4
-
 typedef struct entidad {
     unsigned short x;
     unsigned short y;

@@ -7,7 +7,8 @@ class RecorteKoopa : public Recorte{
 
 	public:
 		RecorteKoopa();
-
+        int obtenerAnchuraParaDibujarImagen(int tipo) override;
+        int obtenerAlturaParaDibujarImagen(int tipo) override;
 };
 
 

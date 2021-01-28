@@ -14,11 +14,11 @@ class Piso {
         ~Piso();
         void agregarPozo(int posicionPozo, int tipoPozo, int fondo);
         list<Colisionable*> obtenerPiso();
-        list<pozo_t> serializar();
+        list<entidad_t> serializar();
         int obtenerAltura() const;
         bool obtenerRespawn(rectangulo_t rectangulo, Posicion* posicion);
 
-private:
+    private:
         int alto;
         list<Pozo> pozos;
         list<Colisionable*> plataformas;

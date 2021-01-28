@@ -110,11 +110,9 @@ void Mario::agregarMoneda(){
     puntos+=PUNTOS_POR_MONEDA;
 }
 
-jugador_t Mario::serializar(const char nombreJugador[MAX_NOMBRE], unsigned short idImagen){
-	jugador_t jugadorSerializado;
-	strcpy(jugadorSerializado.nombreJugador, nombreJugador);
-	jugadorSerializado.puntos = puntos;
+mario_t Mario::serializar(unsigned short idImagen){
 	mario_t marioSerializado;
+    marioSerializado.puntos = puntos;
 	marioSerializado.idImagen = idImagen;
 	marioSerializado.posX = posicion->obtenerPosX();
 	marioSerializado.posY = posicion->obtenerPosY();
@@ -124,8 +122,7 @@ jugador_t Mario::serializar(const char nombreJugador[MAX_NOMBRE], unsigned short
 	if(!estaConectadoElJugador){
 		marioSerializado.recorteImagen = MARIO_DESCONECTADO;
 	}
-	jugadorSerializado.mario = marioSerializado;
-	return jugadorSerializado;
+	return marioSerializado;
 }
 
 

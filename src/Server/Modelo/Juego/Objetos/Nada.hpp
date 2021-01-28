@@ -8,7 +8,7 @@ class Nada : public ObjetoFugaz{
     public:
         explicit Nada();
         void actualizar() override;
-        efecto_t serializar() override;
+        entidad_t serializar() override;
         int obtenerPosicionX() override;
         int tipoDeEfecto() override;
         ~Nada() override;

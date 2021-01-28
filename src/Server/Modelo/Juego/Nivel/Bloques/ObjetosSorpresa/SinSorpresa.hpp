@@ -9,7 +9,7 @@ class SinSorpresa : public ObjetoSorpresa{
         SinSorpresa() {
             _debeDesaparecer = true;
         }
-        efecto_t serializar() override {return {0, 0, 0, 0};}
+        entidad_t serializar() override {return {0, 0, 0, 0,0,false};}
         void actualizar() override {}
         int obtenerPosicionX() override {return 0;}
         string obtenerColisionID() override {return  COLISION_ID_NADA;}

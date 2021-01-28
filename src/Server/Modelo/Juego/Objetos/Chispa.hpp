@@ -11,7 +11,7 @@ class Chispa : public ObjetoFugaz{
     public:
         explicit Chispa(const Posicion& posicionInicial, int direccion);
         void actualizar() override;
-        efecto_t serializar() override;
+        entidad_t serializar() override;
         int obtenerPosicionX() override;
         bool debeDesaparecer() override;
         int tipoDeEfecto() override;

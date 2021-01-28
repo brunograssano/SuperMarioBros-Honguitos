@@ -16,7 +16,7 @@ class BolaDeFuego : public ObjetoFugaz{
         explicit BolaDeFuego(const PosicionFija& posicionInicial, int direccion, float velocidadDeInercia, Mario* marioQueDisparo);
 
         void actualizar() override;
-        efecto_t serializar() override;
+        entidad_t serializar() override;
         int obtenerPosicionX() override;
         bool debeDesaparecer() override;
         int tipoDeEfecto() override;

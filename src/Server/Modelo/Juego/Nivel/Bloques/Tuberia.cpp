@@ -35,10 +35,13 @@ unsigned short Tuberia::obtenerPosicionX() const {
     return posicion.obtenerPosX();
 }
 
-tuberia_t Tuberia::serializar(){
-    unsigned short x = posicion.obtenerPosX();
-    unsigned short y = posicion.obtenerPosY();
-    return {x, y, color, tipo};
+entidad_t Tuberia::serializar(){
+    entidad_t tuberiaSerializada = {0,0,0,0,0,false};
+    tuberiaSerializada.x = posicion.obtenerPosX();
+    tuberiaSerializada.y = posicion.obtenerPosY();
+    tuberiaSerializada.recorteX = tipo;
+    tuberiaSerializada.recorteY = color;
+    return tuberiaSerializada;
 }
 
 void Tuberia::elevar(int y) {

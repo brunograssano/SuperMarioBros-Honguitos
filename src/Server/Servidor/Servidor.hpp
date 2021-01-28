@@ -27,6 +27,7 @@
 #include "ManejadorIdentificadores.hpp"
 #include "AceptadorDeConexiones.hpp"
 #include "ReconectadorDeConexiones.hpp"
+#include "IntentadorIniciarModelo.hpp"
 
 class Servidor : public Thread{
 
@@ -35,7 +36,6 @@ class Servidor : public Thread{
 		~Servidor() override;
 
 		bool esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
-		void intentarIniciarModelo();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
 		void agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia);
 		void ejecutar() override;
@@ -57,6 +57,7 @@ class Servidor : public Thread{
 
     private:
         ReconectadorDeConexiones reconectador;
+        IntentadorIniciarModelo iniciadorModelo;
         AceptadorDeConexiones aceptadorDeConexiones = AceptadorDeConexiones(nullptr, 0);
 		map<int,string> mapaIDNombre;
 		Log* log;
@@ -72,6 +73,7 @@ class Servidor : public Thread{
 		bool esUsuarioDesconectado(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
 		bool esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCliente* conexionClienteConPosibleUsuario);
         void notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, string &nombre);
+        void eliminarConexionesPerdidas();
 
         bool terminoJuego;
 		list<ConexionCliente*> clientes;

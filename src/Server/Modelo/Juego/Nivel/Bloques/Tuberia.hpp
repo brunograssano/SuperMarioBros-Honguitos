@@ -11,7 +11,7 @@ class Tuberia{
         bool colisionaCon(Tuberia *otraTuberia);
         unsigned short obtenerPosicionX() const;
         void elevar(int y);
-        tuberia_t serializar();
+        entidad_t serializar();
         list<PiezaDeTuberia*> obtenerPiezas();
     private:
         void crearColisionables(int x, int tipo);

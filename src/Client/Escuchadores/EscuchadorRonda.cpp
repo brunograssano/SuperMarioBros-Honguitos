@@ -21,31 +21,31 @@ void EscuchadorRonda::casoSocketCerrado(){
 }
 
 
-bool EscuchadorRonda::bloquesValidos(bloque_t bloques[MAX_SORPRESAS], int tope){
+bool EscuchadorRonda::bloquesValidos(entidad_t bloques[MAX_SORPRESAS], int tope){
 	for(int i = 0; i < tope; i++){
-		if(bloques[i].numeroRecorteX > ESTADOS_BLOQUE ||
-		   bloques[i].numeroRecorteY > COLORES_BLOQUES_POSIBLES){
+		if(bloques[i].recorteX > ESTADOS_BLOQUE ||
+		   bloques[i].recorteY > COLORES_BLOQUES_POSIBLES){
 			return false;
 		}
 	}
 	return true;
 }
 
-bool EscuchadorRonda::monedasValidas(moneda_t monedas[MAX_MONEDAS], int tope){
+bool EscuchadorRonda::monedasValidas(entidad_t monedas[MAX_MONEDAS], int tope){
 	for(int i = 0; i < tope; i++){
-		if(monedas[i].numeroRecorte > ESTADOS_MONEDA){
+		if(monedas[i].recorteX > ESTADOS_MONEDA){
 			return false;
 		}
 	}
 	return true;
 }
 
-bool EscuchadorRonda::enemigosValidos(enemigo_t enemigos[MAX_ENEMIGOS], int tope){
+bool EscuchadorRonda::enemigosValidos(entidad_t enemigos[MAX_ENEMIGOS], int tope){
 	for(int i = 0; i < tope; i++){
-		enemigo_t enemigo = enemigos[i];
-		if((enemigo.tipoEnemigo != TIPO_GOOMBA && enemigo.tipoEnemigo != TIPO_KOOPA)||
-			((enemigo.tipoEnemigo == TIPO_GOOMBA && (enemigo.numeroRecorteX > ESTADOS_GOOMBA || enemigo.numeroRecorteY > COLORES_GOOMBA_POSIBLES)) ||
-			(enemigo.tipoEnemigo == TIPO_KOOPA && (enemigo.numeroRecorteX > ESTADOS_KOOPA || enemigo.numeroRecorteY > COLORES_KOOPA_POSIBLES)))){
+        entidad_t enemigo = enemigos[i];
+		if((enemigo.tipo != TIPO_GOOMBA && enemigo.tipo != TIPO_KOOPA)||
+			((enemigo.tipo == TIPO_GOOMBA && (enemigo.recorteX > ESTADOS_GOOMBA || enemigo.recorteY > COLORES_GOOMBA_POSIBLES)) ||
+			(enemigo.tipo == TIPO_KOOPA && (enemigo.recorteX > ESTADOS_KOOPA || enemigo.recorteY > COLORES_KOOPA_POSIBLES)))){
 			return false;
 		}
 	}

@@ -6,7 +6,7 @@
 class Goomba : public Enemigo{
 	public:
 		explicit Goomba(int tipoColor);
-		enemigo_t serializar() override;
+        entidad_t serializar() override;
 		~Goomba() override;
         string obtenerColisionID() override;
 };

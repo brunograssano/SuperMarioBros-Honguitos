@@ -16,7 +16,7 @@ class Enemigo : public Colisionable{
 
 	public:
         ~Enemigo() override = default;
-        virtual enemigo_t serializar() =0 ;
+        virtual entidad_t serializar() =0 ;
         void morir(void* ptr = nullptr);
 		int obtenerPosicionX();
 		int obtenerPosicionY();
@@ -36,7 +36,7 @@ class Enemigo : public Colisionable{
         void empujarEnX(rectangulo_t rectanguloBloque, int direccion);
         void inicializarMapasDeColision() override;
         void cambiarOrientacion();
-        enemigo_t serializarEnemigo(int tipo);
+        entidad_t serializarEnemigo(int tipo);
 		PosicionMovil posicionActual = PosicionMovil(0,0);
         SpriteEnemigo* spriteEnemigo{};
         MovimientoEnemigo movimientoEnemigo = MovimientoEnemigo(VELOCIDAD_EXTRA_DEFAULT);

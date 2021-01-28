@@ -8,7 +8,7 @@ class Pozo {
     public:
         Pozo(int posicionX, int tipo, int fondo);
         unsigned short obtenerPosicionX() const;
-        pozo_t serializar();
+        entidad_t serializar() const;
 
     private:
         unsigned short posicionX;

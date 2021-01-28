@@ -13,7 +13,7 @@ class Moneda : public Colisionable{
         Moneda(int coordenadaX, int coordenadaY);
         ~Moneda() override = default;
         void actualizar();
-        moneda_t serializar();
+        entidad_t serializar();
         int obtenerPosicionX();
         int obtenerPosicionY();
         void elevar(int y);

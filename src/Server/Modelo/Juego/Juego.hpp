@@ -52,7 +52,7 @@ class Juego{
 		void conectarJugador(int idMarioConectandose);
 
         info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador);
-        info_ronda_t obtenerInfoRonda(map<int,string> mapaIDNombre);
+        info_ronda_t obtenerInfoRonda();
         nivel_t serializarNivel();
 
         int cantidadDeNiveles();

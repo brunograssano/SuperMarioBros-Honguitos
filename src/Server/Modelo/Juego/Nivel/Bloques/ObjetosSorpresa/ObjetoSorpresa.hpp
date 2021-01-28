@@ -12,7 +12,7 @@ class ObjetoSorpresa : public ObjetoFugaz{
         virtual void usarse(Mario* mario) {};
 
         bool debeDesaparecer() override;
-        efecto_t serializar() override = 0;
+        entidad_t serializar() override = 0;
         void actualizar() override = 0;
         int obtenerPosicionX() override = 0;
         int tipoDeEfecto() override = 0;

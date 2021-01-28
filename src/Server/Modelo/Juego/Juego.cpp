@@ -155,7 +155,7 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
 
 
     for(int i=0;i<jugadores.size();i++){
-        info_partida.jugadores[i].puntos = 0;
+        info_partida.jugadores[i].mario.puntos = 0;
         info_partida.jugadores[i].mario.idImagen = i;
         info_partida.jugadores[i].mario.posX = jugadores[i]->obtenerPosicionX();
         info_partida.jugadores[i].mario.posY = jugadores[i]->obtenerPosicionY();
@@ -174,7 +174,7 @@ info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJug
     return info_partida;
 }
 
-info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
+info_ronda_t Juego::obtenerInfoRonda() {
     info_ronda_t info_ronda;
     memset(&info_ronda,0,sizeof(info_ronda_t));
 
@@ -182,10 +182,8 @@ info_ronda_t Juego::obtenerInfoRonda(map<int,string> mapaIDNombre) {
     info_ronda.ganaron = ganaron();
     info_ronda.perdieron = perdieron();
 
-    jugador_t jugadorSerializado;
     for(int i=0; i<jugadores.size(); i++){
-        jugadorSerializado = jugadores[i]->serializar(mapaIDNombre[i].c_str(), i);
-        info_ronda.jugadores[i] = jugadorSerializado;
+        info_ronda.jugadores[i] = jugadores[i]->serializar(i);
     }
 
     if(!niveles.empty())

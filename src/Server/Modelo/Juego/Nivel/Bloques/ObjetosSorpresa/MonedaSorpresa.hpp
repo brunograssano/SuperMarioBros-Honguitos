@@ -12,7 +12,7 @@ class MonedaSorpresa : public ObjetoSorpresa{
     public:
         explicit MonedaSorpresa(Posicion* posicionInicial);
         void usarse(Mario* mario)override;
-        efecto_t serializar() override;
+        entidad_t serializar() override;
         void actualizar() override;
         int obtenerPosicionX() override;
         int tipoDeEfecto() override;

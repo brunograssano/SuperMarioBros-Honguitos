@@ -19,7 +19,7 @@ class Filtro {
         static std::list<Colisionable *> filtrarBloquesEnEscena(const std::list<Bloque *>& bloques, rectangulo_t rectanguloEscena);
         static std::list<Colisionable *> filtrarObjetosEnEscena(const std::list<ObjetoFugaz *>& objetos, rectangulo_t rectanguloEscena);
         static std::list<Colisionable *> filtrarPiezasDeTuberiaEnEscena(const std::list<Tuberia *>& tuberias, rectangulo_t rectanguloEscena);
-        static std::list<Colisionable *> filtrarPlataformasEnEscena(const list<Colisionable *>& plataformas, rectangulo_t rectanguloEscena);
+        static std::list<Colisionable *> filtrarPlataformasEnEscena(const std::list<Colisionable *>& plataformas, rectangulo_t rectanguloEscena);
 };
 
 

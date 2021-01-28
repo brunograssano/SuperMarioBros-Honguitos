@@ -12,7 +12,7 @@ class EnviadorEntrada:public Enviador{
 		void dejarInformacion(void* informacion)override;
 
 	private:
-		queue<entrada_usuario_t> entradasUsuario;
+        std::queue<entrada_usuario_t> entradasUsuario;
 };
 
 

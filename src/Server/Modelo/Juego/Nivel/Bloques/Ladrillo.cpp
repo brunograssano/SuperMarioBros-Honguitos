@@ -24,7 +24,7 @@ void Ladrillo::inicializarMapasDeColision() {
     mapaColisionesPorAbajo[COLISION_ID_MARIO] = parRomperse;
 }
 
-string Ladrillo::obtenerColisionID() {
+std::string Ladrillo::obtenerColisionID() {
     return COLISION_ID_LADRILLO;
 }
 

@@ -3,7 +3,7 @@
 #include "../ManejadorSDL.hpp"
 #define ANCHO_MAXIMO_TEXTO 270
 
-SDL_Texture* BotonConTexto::cargoTextura(const string& texto){
+SDL_Texture* BotonConTexto::cargoTextura(const std::string& texto){
 	Log* log = Log::getInstance();
 	SDL_Color color = { 255, 255, 255, 0xFF };
 	SDL_Texture* texturaACargar;
@@ -22,7 +22,7 @@ SDL_Texture* BotonConTexto::cargoTextura(const string& texto){
 	return texturaACargar;
 }
 
-BotonConTexto::BotonConTexto(int posicionX, int posicionY, int ancho, int alto , const string& texto, SDL_Renderer* renderer, TTF_Font* fuente){
+BotonConTexto::BotonConTexto(int posicionX, int posicionY, int ancho, int alto , const std::string& texto, SDL_Renderer* renderer, TTF_Font* fuente){
 	this->rectangulo = {posicionX, posicionY, ancho , alto };
 	this->texto = texto;
 	this->fuente = fuente;
@@ -37,7 +37,7 @@ void BotonConTexto::ocultaTexto(){
 	ocultadorDeTexto = new OcultadorDeTextoAstericos();
 }
 
-void BotonConTexto::cambiarTexto(const string& texto){
+void BotonConTexto::cambiarTexto(const std::string& texto){
 	this->texto = texto;
 	SDL_Texture* texturaABorrar = this->texturaTexto;
 	if(!texto.empty()){

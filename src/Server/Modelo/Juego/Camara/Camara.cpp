@@ -14,7 +14,7 @@ void Camara::reiniciar(){
     rectanguloCamara.y2 = rectanguloCamara.h;
 }
 
-void Camara::moverCamara(const map<int,Mario*>& jugadores) {
+void Camara::moverCamara(const std::map<int,Mario*>& jugadores) {
     int posicionDelJugadorMasALaDerecha = 0;
     int posicionDelJugadorMasALaIzquierda = ANCHO_FONDO;
 

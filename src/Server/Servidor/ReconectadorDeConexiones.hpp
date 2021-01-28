@@ -14,15 +14,15 @@ class ReconectadorDeConexiones : public Thread{
         void terminarReconectarConexiones();
         bool coincideAlgunaCredencial(const usuario_t &usuario, int *credencialNuevoJugador);
         bool terminoHiloReconectar() const;
-        void agregarUsuarioDesconectado(const string &nombre, const string &contrasenia, const int idJugador);
-        bool estaDesconectado(const string &nombre);
+        void agregarUsuarioDesconectado(const std::string &nombre, const std::string &contrasenia, int idJugador);
+        bool estaDesconectado(const std::string &nombre);
 
 private:
         bool terminoHilo;
         bool terminarReconectar;
         void reconectadorFaseJuego(usuario_t usuario, int idJugador);
         Servidor* servidor;
-        map<int,usuario_t> usuariosQuePerdieronConexion;
+        std::map<int,usuario_t> usuariosQuePerdieronConexion;
 
 };
 

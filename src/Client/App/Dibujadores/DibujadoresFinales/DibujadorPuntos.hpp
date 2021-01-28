@@ -14,14 +14,14 @@ class DibujadorPuntos{
         void dibujarPuntosGameOver(JuegoCliente* juegoCliente);
         void disminuirNivelAMostrarPuntos(int ultimoNivel);
         void aumentarNivelAMostrarPuntos (int ultimoNivel);
-        void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color);
+        void renderizarTexto(SDL_Rect renderQuad, std::string textoAMostrar, SDL_Color color);
     private:
         int nivelAMostrarPuntos;
         int alto_pantalla;
         int ancho_pantalla;
         CargadorTexturas* cargadorTexturas;
         SDL_Renderer* renderizador;
-        map<int, SDL_Color> colores;
+        std::map<int, SDL_Color> colores;
 
         void dibujarPuntosTotales(JuegoCliente *juegoCliente);
         void dibujarPuntosDelNivel(JuegoCliente *juegoCliente);

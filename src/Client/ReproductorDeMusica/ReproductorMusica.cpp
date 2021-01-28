@@ -10,21 +10,21 @@ ReproductorMusica::ReproductorMusica(){
 	if((Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0)){
 		Log::getInstance()->huboUnErrorSDL("Hubo un fallo al inicializar el reproductor de musica", Mix_GetError());
 	}
-	map<uint8_t,string> nombresSonidos;
-	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_SALTO,"resources/Musica/EfectosSonido/EfectoSalto.wav"));
-	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_AGARRAR_MONEDA,"resources/Musica/EfectosSonido/AgarrarMoneda.wav"));
-	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_MATAR_GOOMBA,"resources/Musica/EfectosSonido/MarioMataGoomba.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_MATAR_KOOPA,"resources/Musica/EfectosSonido/MarioPisaKoopa.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_APARECE_FLOR,"resources/Musica/EfectosSonido/AparecePlanta.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_AGARRA_POWERUP,"resources/Musica/EfectosSonido/MarioAgarraHongo.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_MORIR,"resources/Musica/EfectosSonido/MarioMorir.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_LANZAR_BOLA_DE_FUEGO,"resources/Musica/EfectosSonido/MarioLanzaFuego.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_LANZAR_CHISPA,"resources/Musica/EfectosSonido/Chispazo.wav"));
-    nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_REBOTE_BOLA_DE_FUEGO,"resources/Musica/EfectosSonido/ReboteBolaDeFuego.wav"));
-	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_EXPLOSION_BOLA_DE_FUEGO,"resources/Musica/EfectosSonido/ExplosionBolaDeFuego.wav"));
-	nombresSonidos.insert(std::pair<uint8_t,string>(SONIDO_LLEGAR_A_LA_META,"resources/Musica/EfectosSonido/PasarDeNivel.wav"));
+    std::map<uint8_t,std::string> nombresSonidos;
+	nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_SALTO,DIRECCION_SONIDO_SALTO));
+	nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_AGARRAR_MONEDA,DIRECCION_SONIDO_AGARRAR_MONEDA));
+	nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_MATAR_GOOMBA,DIRECCION_SONIDO_MUERTE_GOOMBA));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_MATAR_KOOPA,DIRECCION_SONIDO_MUERTE_KOOPA));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_APARECE_FLOR,DIRECCION_SONIDO_APARECE_PLANTA));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_AGARRA_POWERUP,DIRECCION_SONIDO_MARIO_AGARRA_HONGO));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_MORIR,DIRECCION_SONIDO_MARIO_MUERE));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_LANZAR_BOLA_DE_FUEGO,DIRECCION_SONIDO_MARIO_LANZA_FUEGO));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_LANZAR_CHISPA,DIRECCION_SONIDO_CHISPA));
+    nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_REBOTE_BOLA_DE_FUEGO,DIRECCION_SONIDO_REBOTE));
+	nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_EXPLOSION_BOLA_DE_FUEGO,DIRECCION_SONIDO_EXPLOSION));
+	nombresSonidos.insert(std::pair<uint8_t,std::string>(SONIDO_LLEGAR_A_LA_META,DIRECCION_SONIDO_PASAR_NIVEL));
 
-	string nombreArchivo;
+    std::string nombreArchivo;
 	Mix_Chunk* efecto = nullptr;
 
 	for (const auto& elemento : nombresSonidos) {
@@ -48,11 +48,11 @@ ReproductorMusica* ReproductorMusica::getInstance(){
 	return reproductor;
 }
 
-void ReproductorMusica::ReproducirMusicaNivel(string nombreCancion){
+void ReproductorMusica::ReproducirMusicaNivel(std::string nombreCancion){
     estadoMusica->reproducir(std::move(nombreCancion));
 }
 
-void ReproductorMusica::ponerMusica(const string& nombreCancion){
+void ReproductorMusica::ponerMusica(const std::string& nombreCancion){
     Mix_Music* cancion = nullptr;
 
     if (cancionReproduciendose == nullptr){

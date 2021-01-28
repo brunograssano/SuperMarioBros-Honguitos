@@ -2,7 +2,6 @@
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORMENSAJELOG_HPP_
 
 #include <queue>
-using namespace std;
 
 #include "../../Utils/Enviador.hpp"
 
@@ -15,7 +14,7 @@ class EnviadorMensajeLog:public Enviador{
 		void dejarInformacion(void* informacion)override;
 
 	private:
-		queue<mensaje_log_t> mensajesLog;
+        std::queue<mensaje_log_t> mensajesLog;
 };
 
 

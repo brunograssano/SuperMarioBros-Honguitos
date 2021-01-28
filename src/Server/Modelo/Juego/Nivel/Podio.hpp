@@ -5,20 +5,18 @@
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 #include "src/Utils/Observador.hpp"
 
-using namespace std;
-
 class Podio: public Observador {
     public:
         Podio()=default;
-        void recibirJugadores(const map<int, Mario*>& jugadores);
+        void recibirJugadores(const std::map<int, Mario*>& jugadores);
         void actualizar(Observable* observable) override;
-        vector<pair<Mario*, int>> getPodioNivel();
-        vector<pair<Mario*, int>>  getPodioTotal();
+        std::vector<std::pair<Mario*, int>> getPodioNivel();
+        std::vector<std::pair<Mario*, int>>  getPodioTotal();
         ~Podio() override =default;
     private:
-        vector<pair<Mario*, int>> puntajeTotal;
-        vector<pair<Mario*, int>> puntajeParcial;
-        vector<pair<Mario*, int>> puntajeNivelAnterior;
+        std::vector<std::pair<Mario*, int>> puntajeTotal;
+        std::vector<std::pair<Mario*, int>> puntajeParcial;
+        std::vector<std::pair<Mario*, int>> puntajeNivelAnterior;
 };
 
 

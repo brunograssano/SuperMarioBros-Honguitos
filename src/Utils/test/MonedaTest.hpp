@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 #include "src/Server/Modelo/Juego/Nivel/Moneda.hpp"
 #include "Assert.hpp"

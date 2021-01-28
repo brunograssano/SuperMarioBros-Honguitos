@@ -5,17 +5,11 @@
 class Posicion{
 
 	public:
-		int obtenerPosX() const{
-			return (int)this->posicionX;
-		}
-
-		int obtenerPosY() const{
-			return (int)this->posicionY;
-		}
-
+		int obtenerPosX() const;
+		int obtenerPosY() const;
 		virtual ~Posicion() = default;
 
-protected:
+    protected:
 		float posicionX{};
 		float posicionY{};
 		int minimoY{};

@@ -1,6 +1,5 @@
 #include "EstadoConectado.hpp"
 #include <string>
-using namespace std;
 #include "src/Utils/log/Log.hpp"
 
 #define ANCHO_PANTALLA 650
@@ -28,7 +27,7 @@ EstadoConectado::EstadoConectado(SDL_Renderer* renderer,SDL_Texture* fondoPantal
 
 void EstadoConectado::mostrarse(unsigned short jugadoresConectados, unsigned short jugadoresTotales){
     SDL_Texture* texturaCantidadJugadores = cargarTexturaTexto(
-            "Conectados " + to_string(jugadoresConectados) + "/" + to_string(jugadoresTotales) + " jugadores",
+            "Conectados " + std::to_string(jugadoresConectados) + "/" + std::to_string(jugadoresTotales) + " jugadores",
             COLOR_BLANCO, this->renderer, this->fuente);
     SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( this->renderer );

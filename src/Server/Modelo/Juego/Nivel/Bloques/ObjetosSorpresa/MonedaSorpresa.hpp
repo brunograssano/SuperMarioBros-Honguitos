@@ -16,7 +16,7 @@ class MonedaSorpresa : public ObjetoSorpresa{
         void actualizar() override;
         int obtenerPosicionX() override;
         int tipoDeEfecto() override;
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
 

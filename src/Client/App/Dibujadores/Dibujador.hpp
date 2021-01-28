@@ -3,9 +3,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
-using namespace std;
-
 #include <cstdio>
 #include <string>
 #include <sstream>
@@ -19,24 +16,9 @@ const int MARIO_GRIS = -1;
 class Dibujador{
 
 	public:
-
 		virtual void dibujar() = 0;
         virtual void agregarEventoDeClick(SDL_Event eventoClick) {};
-		virtual void renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color){
-			SDL_Rect* clip = nullptr;
-			double angle = 0.0;
-			SDL_Point* center = nullptr;
-			SDL_RendererFlip flip = SDL_FLIP_NONE;
-
-			SDL_SetRenderDrawColor(renderizador, colorDefault.r, colorDefault.g, colorDefault.b, colorDefault.a);
-
-			SDL_Texture* texto = cargadorTexturas->cargarFuenteDeTextoATextura(textoAMostrar, renderizador, color);
-
-			SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
-			destructorDeTexturas(texto);
-
-		};
-
+		virtual void renderizarTexto(SDL_Rect renderQuad, std::string textoAMostrar, SDL_Color color);
 		virtual ~Dibujador()= default;
 
 	protected:

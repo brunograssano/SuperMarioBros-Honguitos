@@ -2,7 +2,6 @@
 #include "ManejadorSDL.hpp"
 #include "src/Client/ReproductorDeMusica/ReproductorMusica.hpp"
 #include "src/Utils/Constantes.hpp"
-#include <list>
 
 App* App::aplicacion = nullptr;
 

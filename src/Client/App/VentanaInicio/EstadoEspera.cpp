@@ -1,4 +1,3 @@
-
 #include "src/Utils/log/Log.hpp"
 #include "EstadoEspera.hpp"
 #define ANCHO_PANTALLA 650
@@ -39,7 +38,7 @@ void EstadoEspera::mostrarse(unsigned short jugadoresConectados, unsigned short 
     destructorDeTexturas(texturaMensajeEspera);
 
     SDL_Texture* texturaCantidadJugadores = cargarTexturaTexto(
-            "Conectados " + to_string(jugadoresConectados) + "/" + to_string(jugadoresTotales) + " jugadores",
+            "Conectados " + std::to_string(jugadoresConectados) + "/" + std::to_string(jugadoresTotales) + " jugadores",
             COLOR_BLANCO, this->renderer, this->fuente);
     if(texturaCantidadJugadores != nullptr ){
         renderizar(380,320,14,250,texturaCantidadJugadores,renderer);

@@ -4,7 +4,7 @@
 #include "src/Server/Botonera/Botonera.hpp"
 #include "src/Server/Servidor/Servidor.hpp"
 
-AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
+AplicacionServidor::AplicacionServidor(Servidor* server,std::list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla){
 	juego = Juego::getInstance(std::move(niveles),cantidadJugadores, alto_pantalla, ancho_pantalla);
     terminoElJuego = false;
 	comenzoElJuego = false;
@@ -13,7 +13,7 @@ AplicacionServidor::AplicacionServidor(Servidor* server,list<Nivel*> niveles,int
 	servidor = server;
 }
 
-info_partida_t AplicacionServidor::obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador){
+info_partida_t AplicacionServidor::obtenerInfoPartida(std::map<int,std::string> mapaIDNombre,int IDJugador){
 	Log::getInstance()->mostrarMensajeDeInfo("Se prepara la informacion de la partida para el jugador: " + mapaIDNombre[IDJugador]);
 	return juego->obtenerInfoPartida(mapaIDNombre, IDJugador);
 }
@@ -101,7 +101,7 @@ bool AplicacionServidor::empezoElJuego() const {
 }
 
 void AplicacionServidor::enviarSonidos() {
-    std::map<int, string> jugadores = servidor->obtenerMapaJugadores();
+    std::map<int, std::string> jugadores = servidor->obtenerMapaJugadores();
     Botonera *botonera = Botonera::getInstance();
     std::list<sonido_t> sonidoDeTodos = botonera->obtenerSonidosDe(ID_TODOS_DETONANTES);
     for(auto const& parClaveJugador : jugadores){

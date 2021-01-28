@@ -8,7 +8,7 @@ class Ladrillo : public Bloque {
 
     public:
         Ladrillo(int coordenadaX, int coordenadaY, int tipo);
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         ~Ladrillo() override;
     private:
         void romperse(void* ptr = nullptr);

@@ -11,7 +11,7 @@ class EnviadorSonido : public Enviador{
         void dejarInformacion(void* informacion)override;
 
     private:
-        queue<sonido_t> colaSonidos;
+        std::queue<sonido_t> colaSonidos;
 };
 
 

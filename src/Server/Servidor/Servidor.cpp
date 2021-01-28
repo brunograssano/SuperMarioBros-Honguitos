@@ -2,7 +2,7 @@
 #include <string>
 #include <cstring>
 
-Servidor::Servidor(const ArchivoLeido& archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip)
+Servidor::Servidor(const ArchivoLeido& archivoLeido, const std::list<std::string>& mensajesErrorOtroArchivo, int puerto, char* ip)
                     : reconectador(this),
                       iniciadorModelo(archivoLeido.cantidadConexiones,&aplicacionServidor,&clientesJugando,&mapaIDNombre),
                       aplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones, archivoLeido.anchoVentana, archivoLeido.altoVentana){
@@ -17,7 +17,7 @@ Servidor::Servidor(const ArchivoLeido& archivoLeido, const list<string>& mensaje
 
 	socketServer = iniciarSocketServidor(puerto,ip);
     aceptadorDeConexiones = AceptadorDeConexiones(this,socketServer);
-    log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (string)ip + " y en el puerto: "+ to_string(puerto) + ". Se estan esperando conexiones");
+    log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (std::string)ip + " y en el puerto: "+ std::to_string(puerto) + ". Se estan esperando conexiones");
 }
 
 
@@ -28,7 +28,7 @@ void Servidor::guardarRondaParaEnvio(info_ronda_t ronda){
 }
 
 
-void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,string nombre,const string& contrasenia){
+void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int idJugador,std::string nombre,const std::string& contrasenia){
 	if(!nombre.empty() && !contrasenia.empty() && idJugador!=SIN_JUGAR){
 		reconectador.agregarUsuarioDesconectado(nombre,contrasenia,idJugador);
 		clientesJugando.erase(idJugador);
@@ -48,7 +48,7 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int i
     despertarHilo();
 }
 
-void Servidor::notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, string &nombre) {
+void Servidor::notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, std::string &nombre) {
     mensaje_log_t mensajeLog;
     memset(&mensajeLog,0,sizeof(mensaje_log_t));
 
@@ -192,7 +192,7 @@ bool Servidor::terminoElJuego() const{
     return terminoJuego;
 }
 
-map<int, string> Servidor::obtenerMapaJugadores() {
+std::map<int, std::string> Servidor::obtenerMapaJugadores() {
     return mapaIDNombre;
 }
 
@@ -206,7 +206,7 @@ void Servidor::guardarConexion(ConexionCliente *conexionCliente) {
     clientes.push_back(conexionCliente);
 }
 
-void Servidor::enviarSonidosA(const int id, const list<sonido_t>& sonidos) {
+void Servidor::enviarSonidosA(const int id, const std::list<sonido_t>& sonidos) {
     for(auto const& sonido: sonidos){
         if(clientesJugando.count(id) != 0) {
             clientesJugando[id]->agregarMensajeAEnviar(SONIDO, (void *) &sonido);

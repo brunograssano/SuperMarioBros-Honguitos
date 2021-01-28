@@ -52,7 +52,7 @@ void DibujadorGameOver::dibujarPuntosObtenidosEnNiveles() {
 }
 
 void DibujadorGameOver::dibujarTextoGameOver() {
-    stringstream textoGameOver;
+    std::stringstream textoGameOver;
     textoGameOver.str("");
     textoGameOver << "GAME OVER";
     int ancho_textoGameOver = 450;

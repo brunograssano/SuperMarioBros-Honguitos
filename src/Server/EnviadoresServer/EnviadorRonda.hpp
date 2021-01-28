@@ -11,7 +11,7 @@ class EnviadorRonda:public Enviador{
 		void dejarInformacion(void* informacion)override;
 
 	private:
-		queue<info_ronda_t> colaRondas;
+        std::queue<info_ronda_t> colaRondas;
 
 };
 

@@ -11,8 +11,8 @@
 
 #include "src/Utils/log/Log.hpp"
 
-void salirCliente(const string& mensajeLog){
-	cout<< "No se pudo conectar al server, terminamos la aplicacion"<<endl;
+void salirCliente(const std::string& mensajeLog){
+    std::cout<< "No se pudo conectar al server, terminamos la aplicacion"<<std::endl;
 	Log::getInstance()->huboUnError(mensajeLog);
 	exit(-1);
 }
@@ -34,7 +34,7 @@ int conectarAlServidor(char ip[LARGO_IP], int puerto){
 	}
 
 	if (connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
-		salirCliente("Falló la conexión al servidor. Abortamos.-------"+to_string(errno));
+		salirCliente("Falló la conexión al servidor. Abortamos.-------"+std::to_string(errno));
 	}
 
 	return socketCliente;
@@ -43,10 +43,10 @@ int conectarAlServidor(char ip[LARGO_IP], int puerto){
 void cerrarSocketCliente(int socketCliente) {
 	int resultado = shutdown(socketCliente, SHUT_RDWR);
 	if (resultado < 0) {
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",std::to_string(errno));
 	}
 	resultado = close(socketCliente);
 	if (resultado < 0) {
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",std::to_string(errno));
 	}
 }

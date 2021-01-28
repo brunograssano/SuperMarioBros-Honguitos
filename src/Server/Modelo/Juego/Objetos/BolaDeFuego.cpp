@@ -52,7 +52,7 @@ int BolaDeFuego::obtenerPosicionX() {
     return posicion->obtenerPosX();
 }
 
-string BolaDeFuego::obtenerColisionID() {
+std::string BolaDeFuego::obtenerColisionID() {
     return COLISION_ID_BOLA_DE_FUEGO;
 }
 

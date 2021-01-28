@@ -11,8 +11,8 @@ class EscuchadorSonido : public Escuchador{
         void casoExitoso()override;
 
     private:
-        sonido_t sonido;
-        string error;
+        sonido_t sonido{};
+        std::string error;
         bool recibioMensajeValido();
 };
 

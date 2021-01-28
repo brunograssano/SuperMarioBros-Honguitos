@@ -3,7 +3,6 @@
 #include <thread>
 
 #include <string>
-using namespace std;
 
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Escuchador.hpp"

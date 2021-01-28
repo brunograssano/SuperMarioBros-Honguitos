@@ -1,11 +1,11 @@
 #include <stdexcept>
 #include "ManejadorEntrada.hpp"
 
-bool ManejadorEntrada::manejarEntrada(SDL_Event evento, bool* terminar, string* textoIngresadoUsuario, string* textoIngresadoContrasenia, string** entradaUsuario, BotonConTexto* cajaTextoUsuario, BotonConTexto* cajaTextoContrasenia, BotonConTexto* botonEnviar){
+bool ManejadorEntrada::manejarEntrada(SDL_Event evento, bool* terminar, std::string* textoIngresadoUsuario, std::string* textoIngresadoContrasenia, std::string** entradaUsuario, BotonConTexto* cajaTextoUsuario, BotonConTexto* cajaTextoContrasenia, BotonConTexto* botonEnviar){
     while( SDL_PollEvent( &evento ) != 0 ){
         if( evento.type == SDL_QUIT ){
             (*terminar) = true;
-            throw runtime_error("CerroVentanaDeInicio");
+            throw std::runtime_error("CerroVentanaDeInicio");
         }
         else if(( evento.type == SDL_KEYDOWN )||(evento.type == SDL_MOUSEBUTTONDOWN)){
             if( evento.key.keysym.sym == SDLK_BACKSPACE && (**entradaUsuario).length() > 0 ){

@@ -1,7 +1,7 @@
 #include "EstadoMusica.hpp"
 #include "ReproductorMusica.hpp"
 
-Suena::Suena(string cancionAReproducir,string cancionQueSeReproduce){
+Suena::Suena(std::string cancionAReproducir,std::string cancionQueSeReproduce){
     this->cancionAReproducir = cancionAReproducir;
     this->cancionQueSeReproduce = cancionQueSeReproduce;
 }
@@ -11,7 +11,7 @@ EstadoMusica* Suena::cambiar() {
     return new Muteada(cancionAReproducir,cancionQueSeReproduce);
 }
 
-void Suena::reproducir(string nombreCancion) {
+void Suena::reproducir(std::string nombreCancion) {
     if ((cancionQueSeReproduce == cancionAReproducir) && (!cancionQueSeReproduce.empty())){
         ReproductorMusica::getInstance()->reanudarMusica();
     }else{
@@ -21,7 +21,7 @@ void Suena::reproducir(string nombreCancion) {
     }
 }
 
-Muteada::Muteada(string cancionAReproducir,string cancionQueSeReproduce){
+Muteada::Muteada(std::string cancionAReproducir,std::string cancionQueSeReproduce){
     this->cancionAReproducir = cancionAReproducir;
     this->cancionQueSeReproduce = cancionQueSeReproduce;
 }
@@ -32,6 +32,6 @@ EstadoMusica* Muteada::cambiar() {
     return nuevoEstado;
 }
 
-void Muteada::reproducir(string nombreCancion) {
+void Muteada::reproducir(std::string nombreCancion) {
     cancionAReproducir = nombreCancion;
 }

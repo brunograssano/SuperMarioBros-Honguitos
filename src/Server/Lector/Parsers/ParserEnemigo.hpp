@@ -2,7 +2,6 @@
 #define SRC_LECTOR_PARSERENEMIGO_HPP_
 
 #include <string>
-using namespace std;
 #include "Parser.hpp"
 #include "../pugixml.hpp"
 #include "../ArchivoLeido.hpp"

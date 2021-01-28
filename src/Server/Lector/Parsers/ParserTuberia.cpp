@@ -17,11 +17,11 @@ bool laTuberiaTienePosicionXInvalida(int posX){
 }
 
 void ParserTuberia::parsear(pugi::xml_node tuberia, Nivel* unNivel, ArchivoLeido* archivoLeido) {
-    string colorString = tuberia.child_value("color");
-    string tipoString = tuberia.child_value("tipoTuberia");
-    string posXString = tuberia.child_value("posicionX");
+    std::string colorString = tuberia.child_value("color");
+    std::string tipoString = tuberia.child_value("tipoTuberia");
+    std::string posXString = tuberia.child_value("posicionX");
 
-    string mensaje = "El color de la tuberia elegido ("+colorString+") no tiene valor valido,se carga el valor por defecto (verde)";
+    std::string mensaje = "El color de la tuberia elegido ("+colorString+") no tiene valor valido,se carga el valor por defecto (verde)";
     int color = intentarObtenerNumero(archivoLeido, colorString, esColorDeTuberiaInvalido, mensaje,
                                       COLOR_POR_DEFECTO_TUBERIA);
 

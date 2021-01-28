@@ -11,9 +11,9 @@
  */
 int iniciarSocketServidor(int puerto, char* ip);
 
-void empezarHilo(Thread* hilo,const string& nombreHilo);
+void empezarHilo(Thread* hilo,const std::string& nombreHilo);
 
-void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError);
+void escribirMensajesDeArchivoLeidoEnLog(const std::list<std::string>& mensajesError);
 
 bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario);
 

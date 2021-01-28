@@ -2,7 +2,7 @@
 
 
 void ParserLog::parsear(pugi::xml_node log, ArchivoLeido* archivoLeido){
-	string level = log.child_value("level");
+    std::string level = log.child_value("level");
 	if(level == "ERROR"){
 		archivoLeido->tipoLog = new Error();
 	}else if(level == "DEBUG"){

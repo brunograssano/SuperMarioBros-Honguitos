@@ -2,7 +2,7 @@
 
 #include <string>
 #include <iostream>
-using namespace std;
+
 #include "../ManejadorSDL.hpp"
 #include "src/Utils/log/Log.hpp"
 #include "ManejadorEntrada.hpp"
@@ -28,7 +28,7 @@ VentanaInicio::VentanaInicio(unsigned short jugadoresConectados, unsigned short 
 	this->renderer = crearRenderer(ventana);
 	this->fuente = cargarFuente( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
 	cargarIcono(ventana);
-    string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.png";
+    std::string direccionFondo = "resources/Imagenes/Niveles/fondoPantallaInicio.png";
     this->fondoPantalla = cargarTexturaImagen( direccionFondo,this->renderer );
 
     this->botonEnviar = new BotonConTexto(460, 190, 80 , 40 , "Enviar",this->renderer,this->fuente);
@@ -70,14 +70,13 @@ void VentanaInicio::obtenerEntrada(){
     bool terminar = false;
 	SDL_Event evento;
 	SDL_StartTextInput();
-	string textoIngresadoUsuario;
-	string textoIngresadoContrasenia;
-	string* entradaUsuario = &textoIngresadoUsuario;
+    std::string textoIngresadoUsuario;
+    std::string textoIngresadoContrasenia;
+    std::string* entradaUsuario = &textoIngresadoUsuario;
 	bool terminoEntrada = false;
-    ManejadorEntrada manejador;
 
 	while( !terminar && !terminoEntrada){
-		terminoEntrada = manejador.manejarEntrada(evento, &terminar, &textoIngresadoUsuario, &textoIngresadoContrasenia,
+		terminoEntrada = ManejadorEntrada::manejarEntrada(evento, &terminar, &textoIngresadoUsuario, &textoIngresadoContrasenia,
                                                   &entradaUsuario, cajaTextoUsuario, cajaTextoContrasenia, botonEnviar);
 
 		cajaTextoUsuario->cambiarTexto(textoIngresadoUsuario);
@@ -107,7 +106,7 @@ void VentanaInicio::obtenerEntrada(){
 }
 
 
-bool VentanaInicio::estaConectado(const string& nombre){
+bool VentanaInicio::estaConectado(const std::string& nombre){
 	for(int i = 0; i < informacionJugadoresConectados.tope; i++){
 		if(nombre == informacionJugadoresConectados.pares_id_nombre[i].nombre &&
 				informacionJugadoresConectados.pares_id_nombre[i].conectado){
@@ -120,11 +119,11 @@ bool VentanaInicio::estaConectado(const string& nombre){
 void VentanaInicio::imprimirMensajeError(){
 	ingresoIncorrectoCredenciales = true;
 	if (informacionJugadoresConectados.tope >= jugadoresTotales){
-		errorDeIngreso = string("La sala esta llena, no puede ingresar");
+		errorDeIngreso = std::string("La sala esta llena, no puede ingresar");
 	}else if(estaConectado(credenciales.nombre)){
-		errorDeIngreso = string("Este jugador ya ingreso a la sala.");
+		errorDeIngreso = std::string("Este jugador ya ingreso a la sala.");
 	}else{
-		errorDeIngreso = string("Las credenciales ingresadas son erroneas");
+		errorDeIngreso = std::string("Las credenciales ingresadas son erroneas");
 	}
 }
 
@@ -135,7 +134,7 @@ void VentanaInicio::imprimirMensajeEspera(){
 	SDL_Event evento;
 	while( SDL_PollEvent( &evento ) != 0 ){
 		if( evento.type == SDL_QUIT ){
-			throw runtime_error("Cerro Ventana De Inicio");
+			throw std::runtime_error("Cerro Ventana De Inicio");
 		}
 	}
 
@@ -165,7 +164,7 @@ void VentanaInicio::ponerLosMarios(){
 		else
 			recorte = {64, 0, 16, 32};
 
-		string strNombre = informacionJugadoresConectados.pares_id_nombre[i].nombre;
+        std::string strNombre = informacionJugadoresConectados.pares_id_nombre[i].nombre;
 		SDL_Texture* texturaNombre = cargarTexturaTexto(strNombre, COLOR_BLANCO, this->renderer, this->fuente);
 		SDL_Rect rectanguloNombre = {x-5, y-15, 40, 10};
 		SDL_SetRenderDrawColor(renderer, 75, 89, 129, 0x0F );

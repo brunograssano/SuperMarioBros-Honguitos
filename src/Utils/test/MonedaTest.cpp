@@ -2,7 +2,7 @@
 #define CYAN "\u001b[36m"
 #define AZUL_CLARO "\e[1;34m"
 #define RESET "\x1b[0m"
-
+using namespace std;
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 
 void MonedaTest::ejecutar(Assert *testSuite) {

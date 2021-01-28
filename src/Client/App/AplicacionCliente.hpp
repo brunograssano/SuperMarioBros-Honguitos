@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
-using namespace std;
 
 #include "Dibujadores/Dibujadores.hpp"
 #include "JuegoCliente/JuegoCliente.hpp"
@@ -14,8 +13,6 @@ using namespace std;
 #include "src/Utils/Constantes.hpp"
 #include "src/Utils/Utils.hpp"
 #include "../Cliente.hpp"
-
-#include <map>
 
 class App{
 

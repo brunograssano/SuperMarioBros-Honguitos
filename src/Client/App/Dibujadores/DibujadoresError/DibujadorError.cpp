@@ -12,7 +12,7 @@ void DibujadorError::dibujar(){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
 
-	stringstream textoError;
+    std::stringstream textoError;
 	textoError.str("");
 	textoError << "Ocurrio un error, revise que tenga bien la configuracion default. Para mas detalles ver el log";
 	int ancho_textoError = 770;

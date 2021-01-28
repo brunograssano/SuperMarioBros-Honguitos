@@ -7,17 +7,16 @@
 #include <cstring>
 #include <list>
 #include "TipoLog.hpp"
-using namespace std;
 
 class Log{
 
 	private:
 		explicit Log(TipoLog* tipoLog);
 
-		string armarMensaje(const string& primeraParte, const string& segundaParte);
+        std::string armarMensaje(const std::string& primeraParte, const std::string& segundaParte);
 
 		TipoLog* tipoLog;
-		ofstream archivoLog;
+        std::ofstream archivoLog;
 		time_t tiempo{};
 		static Log* log;
 
@@ -28,16 +27,16 @@ class Log{
 		~Log();
 
 		//DEBUG//
-		void mostrarPosicion(const string& nombreEntidad,int coordenadaX, int coordenadaY);
-		void mostrarAccion(const string& accion);
+		void mostrarPosicion(const std::string& nombreEntidad,int coordenadaX, int coordenadaY);
+		void mostrarAccion(const std::string& accion);
 
 		//INFO//
-		void mostrarMensajeDeInfo(const string& mensajeInfo);
-		void mostrarMensajeDeCarga(const string& idObjetoCargado,const string& rutaObjetoCargado);
+		void mostrarMensajeDeInfo(const std::string& mensajeInfo);
+		void mostrarMensajeDeCarga(const std::string& idObjetoCargado,const std::string& rutaObjetoCargado);
 
 		//ERRORES//
-		void huboUnErrorSDL(const string& descripcionError, const string& errorSDL);
-		void huboUnError(const string& descripcionError);
+		void huboUnErrorSDL(const std::string& descripcionError, const std::string& errorSDL);
+		void huboUnError(const std::string& descripcionError);
 };
 
 

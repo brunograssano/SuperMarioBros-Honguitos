@@ -1,11 +1,9 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_DIBUJADORFINNIVEL_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_DIBUJADORFINNIVEL_HPP
+
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
-
-
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
 #include "src/Client/App/CargadorTexturas.hpp"
-
 #include "src/Client/App/JuegoCliente/JuegoCliente.hpp"
 
 class DibujadorFinNivel : public Dibujador{
@@ -16,7 +14,7 @@ class DibujadorFinNivel : public Dibujador{
     private:
         void dibujarTextoFinNivel();
         JuegoCliente *juegoCliente;
-        map<int, SDL_Color> colores;
+        std::map<int, SDL_Color> colores;
         int ciclosDibujado;
 };
 

@@ -49,7 +49,7 @@ bool Meta::todosEnLaMeta(const std::map<int, Mario *>& jugadores) {
     return conectadosVivosPasaronMetaYDesconectadosNo(jugadores);
 }
 
-bool Meta::conectadosVivosPasaronMetaYDesconectadosNo(const map<int, Mario *> &jugadores) {
+bool Meta::conectadosVivosPasaronMetaYDesconectadosNo(const std::map<int, Mario *> &jugadores) {
     bool pasaronMeta = true;
     const int cantidadJugadores = jugadores.size();
     auto iterador = jugadores.begin();
@@ -64,13 +64,13 @@ bool Meta::conectadosVivosPasaronMetaYDesconectadosNo(const map<int, Mario *> &j
     return pasaronMeta;
 }
 
-bool Meta::todosDesconectados(const map<int, Mario *> &jugadores) {
+bool Meta::todosDesconectados(const std::map<int, Mario *> &jugadores) {
     return std::all_of(jugadores.begin(), jugadores.end(),[](auto parClaveJugador){return !parClaveJugador.second->estaConectado();});
 }
 
-bool Meta::conectadosMuertosYDesconectadosVivos(const map<int, Mario *> &jugadores) {
-    list<Mario*> jugadoresConectados;
-    list<Mario*> jugadoresDesconectados;
+bool Meta::conectadosMuertosYDesconectadosVivos(const std::map<int, Mario *> &jugadores) {
+    std::list<Mario*> jugadoresConectados;
+    std::list<Mario*> jugadoresDesconectados;
     for(auto parClaveJugador:jugadores){
         if(parClaveJugador.second->estaConectado()){
             jugadoresConectados.push_back(parClaveJugador.second);

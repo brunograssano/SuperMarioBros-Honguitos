@@ -8,7 +8,7 @@ class PiezaDeTuberia : public Colisionable{
     public:
         PiezaDeTuberia(int posX, int posY, int w, int h);
         void elevar(int y);
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
     private:

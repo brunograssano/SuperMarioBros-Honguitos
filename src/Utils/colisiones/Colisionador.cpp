@@ -88,7 +88,7 @@ void chocar(Colisionable* colisionable1, Colisionable* colisionable2) {
 
 }
 
-void chocarContraTodos(Colisionable* colisionable, list<Colisionable*> colisionables, FuncionLuegoDeColisionar funcionLuegoDeColisionar, void* contexto){
+void chocarContraTodos(Colisionable* colisionable, std::list<Colisionable*> colisionables, FuncionLuegoDeColisionar funcionLuegoDeColisionar, void* contexto){
     if(!colisionable->debeColisionar()){
         return;
     }
@@ -102,6 +102,6 @@ void chocarContraTodos(Colisionable* colisionable, list<Colisionable*> colisiona
     }
 }
 
-bool esUnBloque(const string& idColisionable){
+bool esUnBloque(const std::string& idColisionable){
     return idColisionable == COLISION_ID_LADRILLO || idColisionable == COLISION_ID_SORPRESA || idColisionable == COLISION_ID_PLATAFORMA || idColisionable == COLISION_ID_PIEZA_TUBERIA;
 }

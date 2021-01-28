@@ -29,7 +29,7 @@ int Moneda::obtenerPosicionY() {
     return this->posicion.obtenerPosY();
 }
 
-string Moneda::obtenerColisionID() {
+std::string Moneda::obtenerColisionID() {
     return COLISION_ID_MONEDA;
 }
 

@@ -3,7 +3,6 @@
 
 #include <list>
 #include <map>
-using namespace std;
 
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 #include "src/Utils/Constantes.hpp"
@@ -22,10 +21,10 @@ class Meta {
     private:
         bool estaEnLaMeta(Mario* jugador) const;
         bool yaLLegoALaMeta(Mario* jugador);
-        bool conectadosVivosPasaronMetaYDesconectadosNo(const map<int, Mario *> &jugadores);
-        static bool todosDesconectados(const map<int, Mario *> &jugadores);
-        static bool conectadosMuertosYDesconectadosVivos(const map<int, Mario *> &jugadores);
-        list<Mario*> ganadores;
+        bool conectadosVivosPasaronMetaYDesconectadosNo(const std::map<int, Mario *> &jugadores);
+        static bool todosDesconectados(const std::map<int, Mario *> &jugadores);
+        static bool conectadosMuertosYDesconectadosVivos(const std::map<int, Mario *> &jugadores);
+        std::list<Mario*> ganadores;
         int puntoBandera;
 };
 

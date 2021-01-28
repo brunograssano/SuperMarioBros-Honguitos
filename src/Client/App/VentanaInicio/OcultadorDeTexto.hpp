@@ -2,31 +2,24 @@
 #define SRC_CLIENT_APP_VENTANAINICIO_OCULTADORDETEXTO_HPP_
 
 #include <string>
-using namespace std;
-
 
 class OcultadorDeTexto{
 	public:
 		virtual ~OcultadorDeTexto()= default;
-		virtual string ocultar(string texto){return string("");};
+		virtual std::string ocultar(std::string texto)=0;
 };
 
 class OcultadorDeTextoAstericos: public OcultadorDeTexto{
-
 	public:
 		OcultadorDeTextoAstericos()= default;
-		string ocultar(string texto)override{
-			return string(texto.length(), '*');
-		}
+        std::string ocultar(std::string texto)override;
 		~OcultadorDeTextoAstericos() override= default;
 };
 
 class OcultadorDeTextoNulo: public OcultadorDeTexto{
 	public:
 		OcultadorDeTextoNulo()= default;
-		string ocultar(string texto)override{
-			return texto;
-		}
+        std::string ocultar(std::string texto)override;
 		~OcultadorDeTextoNulo() override= default;
 };
 

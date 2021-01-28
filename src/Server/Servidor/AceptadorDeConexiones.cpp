@@ -11,15 +11,15 @@ AceptadorDeConexiones::AceptadorDeConexiones(Servidor *servidor,int socketServer
 
 int AceptadorDeConexiones::crearCliente(int socketConexionEntrante,const struct sockaddr_in &addressCliente, int usuariosConectados) {
     if (socketConexionEntrante < 0) {
-        Log::getInstance()->huboUnError("No se pudo aceptar una conexion proveniente de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
+        Log::getInstance()->huboUnError("No se pudo aceptar una conexion proveniente de "+ (std::string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ std::to_string(ntohs(addressCliente.sin_port)) + ".");
     } else {
-        Log::getInstance()->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ to_string(ntohs(addressCliente.sin_port)) + ".");
+        Log::getInstance()->mostrarMensajeDeInfo("Se obtuvo una conexion de "+ (std::string) (inet_ntoa(addressCliente.sin_addr))+ " del puerto "+ std::to_string(ntohs(addressCliente.sin_port)) + ".");
         actualizacion_cantidad_jugadores_t actualizacion = servidor->crearActualizacionJugadores();
 
-        auto *conexion = new ConexionCliente(servidor, socketConexionEntrante,(string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
+        auto *conexion = new ConexionCliente(servidor, socketConexionEntrante,(std::string) (inet_ntoa(addressCliente.sin_addr)), actualizacion);
 
         try{
-            conexion->empezarHilo("ConexionCliente("+to_string(usuariosConectados) +" - "+ (string) inet_ntoa(addressCliente.sin_addr)+")");
+            conexion->empezarHilo("ConexionCliente("+std::to_string(usuariosConectados) +" - "+ (std::string) inet_ntoa(addressCliente.sin_addr)+")");
             usuariosConectados++;
             servidor->guardarConexion(conexion);
         }catch (const std::exception& e) {

@@ -28,15 +28,15 @@ bool esColorBloqueInvalido(int color){
 
 void ParserPlataforma::parsear(pugi::xml_node plataforma, Nivel* unNivel, ArchivoLeido* archivoLeido){
     int tipoColorBloque = 0;
-    string tipo = plataforma.child_value("tipo");
-	string colorBloque = plataforma.child_value("color");
-    string cantidadBloquesString = plataforma.child_value("cantidadBloques");
-    string posXString = plataforma.child_value("coordenadaX");
-    string posYString = plataforma.child_value("coordenadaY");
+    std::string tipo = plataforma.child_value("tipo");
+    std::string colorBloque = plataforma.child_value("color");
+    std::string cantidadBloquesString = plataforma.child_value("cantidadBloques");
+    std::string posXString = plataforma.child_value("coordenadaX");
+    std::string posYString = plataforma.child_value("coordenadaY");
 
-	list<Bloque*> unaPlataforma;
+    std::list<Bloque*> unaPlataforma;
 
-    string mensajeCondicion = "El valor de cantidad de bloques ("+ cantidadBloquesString +") enviado no tiene valor valido,se carga el valor por defecto";
+    std::string mensajeCondicion = "El valor de cantidad de bloques ("+ cantidadBloquesString +") enviado no tiene valor valido,se carga el valor por defecto";
     int cantidadBloques = intentarObtenerNumero(archivoLeido, cantidadBloquesString,
                                                 seTieneUnaCantidadInvalidaDeBloques, mensajeCondicion,
                                                 VALOR_POR_DEFECTO_CANTIDAD_BLOQUES);

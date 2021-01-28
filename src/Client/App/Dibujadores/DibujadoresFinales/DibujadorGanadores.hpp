@@ -28,7 +28,7 @@ class DibujadorGanadores : public Dibujador{
 		void dibujarTextoGanadores();
 		void dibujarParticulas();
 		void dibujarPersonajes();
-		void dibujarTitulo(const string& nombreGanador);
+		void dibujarTitulo(const std::string& nombreGanador);
 
 		BotonConTexto* botonIzquierdo;
 		BotonConTexto* botonDerecho;
@@ -38,7 +38,7 @@ class DibujadorGanadores : public Dibujador{
         Recorte* spritePeach;
         Recorte* spriteToad;
         Recorte* spriteYoshi;
-		list<ParticulaGanadores> particulas;
+        std::list<ParticulaGanadores> particulas;
 		DibujadorPuntos* dibujadorPuntos;
 		DibujadorCreditos* dibujadorCreditos;
 };

@@ -3,7 +3,7 @@
 
 Juego* Juego::instanciaJuego = nullptr;
 
-Juego::Juego(list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla)
+Juego::Juego(std::list<Nivel *> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla)
       : camara(alto_pantalla, ancho_pantalla){
     for(int i = 0; i < cantJugadores; i++){
         jugadores[i] = new Mario(i);
@@ -23,7 +23,7 @@ Juego* Juego::getInstance(){
 	return instanciaJuego;
 }
 
-Juego* Juego::getInstance(list<Nivel*> niveles,int cantJugadores, int alto_pantalla, int ancho_pantalla){
+Juego* Juego::getInstance(std::list<Nivel*> niveles,int cantJugadores, int alto_pantalla, int ancho_pantalla){
 	if(instanciaJuego==nullptr){
 		instanciaJuego = new Juego(std::move(niveles),cantJugadores, alto_pantalla, ancho_pantalla);
 	}
@@ -134,7 +134,7 @@ bool Juego::perdieron() {
     return ((obtenerTiempoRestante() == 0) && !ganaron()) || murieronTodos();
 }
 
-info_partida_t Juego::obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador){
+info_partida_t Juego::obtenerInfoPartida(std::map<int,std::string> mapaIDNombre, int IDJugador){
     info_partida_t info_partida;
     memset(&info_partida,0,sizeof(info_partida_t));
 

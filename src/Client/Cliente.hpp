@@ -22,7 +22,6 @@ class EscuchadorCliente;
 class GameLoop;
 #include "GameLoop.hpp"
 #include "src/Utils/Constantes.hpp"
-using namespace std;
 
 class Cliente{
 
@@ -63,7 +62,7 @@ private:
 
 		int socketCliente;
 
-    GameLoop* gameLoop;
+        GameLoop* gameLoop;
 };
 
 #endif /* SRC_CLIENT_CLIENTE_HPP_ */

@@ -15,7 +15,7 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
     this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
     this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
 
-    string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
+    std::string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
 							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
 	for(int i=0;i<700;i++){
 		int posX = rand() % ancho_pantalla;
@@ -47,8 +47,8 @@ void DibujadorGanadores::dibujarTextoGanadores() {
     dibujadorCreditos->dibujarCreditos();
 }
 
-void DibujadorGanadores::dibujarTitulo(const string& nombreGanador){
-    stringstream textoFelicitaciones;
+void DibujadorGanadores::dibujarTitulo(const std::string& nombreGanador){
+    std::stringstream textoFelicitaciones;
     textoFelicitaciones.str("");
     textoFelicitaciones << "HAS GANADO: "<< nombreGanador;
     int ancho_textoFelicitaciones = 400;

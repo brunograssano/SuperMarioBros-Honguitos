@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 #include "../../Server/Modelo/Juego/Nivel/Bloques/Bloque.hpp"
 #include "Assert.hpp"

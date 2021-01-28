@@ -8,7 +8,6 @@
 #include <SDL2/SDL_image.h>
 #include <map>
 #include <SDL2/SDL_ttf.h>
-using namespace std;
 
 class CargadorTexturas{
 
@@ -16,26 +15,26 @@ class CargadorTexturas{
 		explicit CargadorTexturas(SDL_Renderer* renderizador);
 		SDL_Texture* obtenerTexturaMario(int idMario);
 		SDL_Texture* obtenerTexturaFondo();
-		SDL_Texture* obtenerTextura(const string& clave);
-		SDL_Texture* obtenerParticula(const string& particulaAsociada);
-		SDL_Texture* cargarFuenteDeTextoATextura(const string& textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto);
-		void cargarTexturasNiveles(map<int, string> direccionesNiveles, SDL_Renderer *renderizador,unsigned short mundo);
-		void revisarSiCambioNivel(string nombreFondo);
+		SDL_Texture* obtenerTextura(const std::string& clave);
+		SDL_Texture* obtenerParticula(const std::string& particulaAsociada);
+		SDL_Texture* cargarFuenteDeTextoATextura(const std::string& textoAMostrar, SDL_Renderer* renderizador, SDL_Color colorTexto);
+		void cargarTexturasNiveles(std::map<int, std::string> direccionesNiveles, SDL_Renderer *renderizador,unsigned short mundo);
+		void revisarSiCambioNivel(std::string nombreFondo);
 		~CargadorTexturas();
 
     private:
-		string direccionFondoActual;
-		map<int,SDL_Texture*> texturasMario;
-        map<string,SDL_Texture*> texturas;
+        std::string direccionFondoActual;
+        std::map<int,SDL_Texture*> texturasMario;
+        std::map<std::string,SDL_Texture*> texturas;
 		SDL_Texture* texturaFondoActual = nullptr;
 		SDL_Texture* texturaFuenteJuego = nullptr;
 		SDL_Texture* texturaDefecto = nullptr;
-		map<string,SDL_Texture*> texturasNiveles;
-		map<string,SDL_Texture*> particulas;
+        std::map<std::string,SDL_Texture*> texturasNiveles;
+        std::map<std::string,SDL_Texture*> particulas;
 		TTF_Font* fuenteJuego;
 
-        static void destruirTexturasEnMapa(const map<string, SDL_Texture *>& mapaDeTexturas);
-        void revisarCargaCorrecta(const map<string, SDL_Texture *>& texturasCargadas);
+        static void destruirTexturasEnMapa(const std::map<std::string, SDL_Texture *>& mapaDeTexturas);
+        void revisarCargaCorrecta(const std::map<std::string, SDL_Texture *>& texturasCargadas);
 };
 
 

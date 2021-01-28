@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 #include "Assert.hpp"
 class MarioTest{

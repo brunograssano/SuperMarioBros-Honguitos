@@ -15,10 +15,10 @@ class Enviador{
 
 	protected:
         void enviar(char caracter,const void* structPointer, unsigned int bytes);
-        static void revisarSiSeMandoCorrectamente(int resultado, const string& descripcion);
-        static void casoError(const string& descripcion);
-        static void casoSocketCerrado(const string& descripcion);
-        static void casoExitoso(const string& descripcion);
+        static void revisarSiSeMandoCorrectamente(int resultado, const std::string& descripcion);
+        static void casoError(const std::string& descripcion);
+        static void casoSocketCerrado(const std::string& descripcion);
+        static void casoExitoso(const std::string& descripcion);
 		int socket{};
 };
 

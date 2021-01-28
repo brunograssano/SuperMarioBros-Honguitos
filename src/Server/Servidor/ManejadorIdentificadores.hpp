@@ -2,7 +2,6 @@
 #define SRC_SERVER_MANEJADORIDENTIFICADORES_HPP_
 
 #include <vector>
-using namespace std;
 
 class ManejadorIdentificadores{
 
@@ -12,7 +11,7 @@ class ManejadorIdentificadores{
 		int obtenerIDNueva();
 
     private:
-		vector<int> mapaID;
+        std::vector<int> mapaID;
 		int cantidadIDs;
 
 };

@@ -46,11 +46,11 @@ void DibujadorPuntos::dibujarPuntosTotales(JuegoCliente *juegoCliente) {
     int desfase_puntosJugador = 50;
     SDL_Rect cuadradoPuntos;
 
-    stringstream puntosJugador;
+    std::stringstream puntosJugador;
 
     dibujarRectanguloPuntos(ancho_puntosJugador,alto_puntosJugador,desfase_puntosJugador);
 
-    stringstream tituloPuntos;
+    std::stringstream tituloPuntos;
     tituloPuntos << "Puntos totales";
 
     SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
@@ -58,14 +58,14 @@ void DibujadorPuntos::dibujarPuntosTotales(JuegoCliente *juegoCliente) {
                                      ancho_puntosJugador,
                                      alto_puntosJugador};
 
-    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
+    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str(), colorDefault);
     int indiceJugador = 0;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
 
         podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
         puntosJugador.str("");
         //int id;
-        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
@@ -79,7 +79,7 @@ void DibujadorPuntos::dibujarPuntosTotales(JuegoCliente *juegoCliente) {
             idColor = MARIO_GRIS;
         }
 
-        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+        renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
 
         desfase_puntosJugador +=40;
         indiceJugador++;
@@ -95,10 +95,10 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
 
     dibujarRectanguloPuntos(ancho_puntosJugador, alto_puntosJugador, desfase_puntosJugador);
 
-    stringstream puntosJugador;
+    std::stringstream puntosJugador;
 
-    stringstream tituloPuntos;
-    tituloPuntos << "Puntos nivel " <<to_string(this->nivelAMostrarPuntos);
+    std::stringstream tituloPuntos;
+    tituloPuntos << "Puntos nivel " <<std::to_string(this->nivelAMostrarPuntos);
 
     SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                                      alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
@@ -106,14 +106,14 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
                                      alto_puntosJugador};
 
 
-    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
+    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str(), colorDefault);
     int indiceJugador = 0;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
 
         podio_t podio = juegoCliente->obtenerPodios().at(nivelAMostrarPuntos);
         puntosJugador.str("");
         //int id;
-        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
@@ -127,7 +127,7 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
             idColor = MARIO_GRIS;
         }
 
-        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+        renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
 
         desfase_puntosJugador +=40;
         indiceJugador++;
@@ -136,10 +136,10 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
 
 }
 
-void DibujadorPuntos::renderizarTexto(SDL_Rect renderQuad, string textoAMostrar, SDL_Color color){
-    SDL_Rect* clip = NULL;
+void DibujadorPuntos::renderizarTexto(SDL_Rect renderQuad, std::string textoAMostrar, SDL_Color color){
+    SDL_Rect* clip = nullptr;
     double angle = 0.0;
-    SDL_Point* center = NULL;
+    SDL_Point* center = nullptr;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
 
     SDL_SetRenderDrawColor(renderizador, colorDefault.r, colorDefault.g, colorDefault.b, colorDefault.a);
@@ -168,11 +168,11 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
     int desfase_puntosJugador = 50;
     SDL_Rect cuadradoPuntos;
 
-    stringstream puntosJugador;
+    std::stringstream puntosJugador;
 
     dibujarRectanguloPuntos(ancho_puntosJugador,alto_puntosJugador,desfase_puntosJugador);
 
-    stringstream tituloPuntos;
+    std::stringstream tituloPuntos;
     tituloPuntos << "Puntos totales";
 
     SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
@@ -186,7 +186,7 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
 
         puntosJugador.str("");
         //int id;
-        string nombreJugador = parIdJugador.second.nombreJugador;
+        std::string nombreJugador = parIdJugador.second.nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.mario.puntos;
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,

@@ -8,7 +8,7 @@ class Koopa : public Enemigo{
 		explicit Koopa(int tipoColor);
 		~Koopa() override;
         entidad_t serializar() override;
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
 };
 
 #endif /* SRC_SERVER_MODELO_ENEMIGOS_KOOPA_HPP_ */

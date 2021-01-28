@@ -8,8 +8,8 @@ class Thread {
     public:
         Thread() = default;
         virtual ~Thread() = default;
-        void empezarHilo(std::string nombreHilo);
-        void join(std::string nombreHilo) const;
+        void empezarHilo(const std::string& nombreHilo);
+        void join(const std::string& nombreHilo) const;
         void dormirHilo();
         void despertarHilo();
         virtual void ejecutar() = 0;

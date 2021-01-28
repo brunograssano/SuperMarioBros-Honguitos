@@ -9,14 +9,14 @@ class Cliente;
 class EnviadorCliente  : public Thread{
     public:
         EnviadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar);
-        ~EnviadorCliente();
+        ~EnviadorCliente() override;
         void ejecutar()override;
         void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);
 
     private:
         Cliente* cliente;
-        queue<char> identificadoresMensajeAEnviar;
-        map<char,Enviador*> enviadores;
+        std::queue<char> identificadoresMensajeAEnviar;
+        std::map<char,Enviador*> enviadores;
 
         bool* terminoJuego;
         bool* terminoEnviar;

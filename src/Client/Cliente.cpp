@@ -1,5 +1,4 @@
 #include "Cliente.hpp"
-#include <thread>
 #include "src/Client/ReproductorDeMusica/ReproductorMusica.hpp"
 #include "App/ManejadorSDL.hpp"
 #include "App/AplicacionCliente.hpp"
@@ -30,7 +29,6 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 void Cliente::terminarProcesosDelCliente() {
 	pthread_mutex_lock(&mutex);
 	terminoJuego = true;
-	//cerroVentana = true;
 	gameLoop->seMurioElServer();
 	if(ventanaInicio!=nullptr){
 		ventanaInicio->seMurioElServer();

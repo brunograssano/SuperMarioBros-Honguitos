@@ -2,7 +2,7 @@
 #include <sys/socket.h>
 #include "../Utils/log/Log.hpp"
 
-void Enviador::revisarSiSeMandoCorrectamente(int resultado, const string& descripcion) {
+void Enviador::revisarSiSeMandoCorrectamente(int resultado, const std::string& descripcion) {
     if(resultado < 0){
         casoError(descripcion);
     }else if(resultado == 0){
@@ -12,18 +12,18 @@ void Enviador::revisarSiSeMandoCorrectamente(int resultado, const string& descri
     }
 }
 
-void Enviador::casoError(const string& descripcion) {
-    Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir informacion de: "+ descripcion +", se cierra el socket", to_string(errno));
-    throw runtime_error(descripcion+" Error");
+void Enviador::casoError(const std::string& descripcion) {
+    Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir informacion de: "+ descripcion +", se cierra el socket", std::to_string(errno));
+    throw std::runtime_error(descripcion+" Error");
 }
 
-void Enviador::casoSocketCerrado(const string& descripcion) {
+void Enviador::casoSocketCerrado(const std::string& descripcion) {
     Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de: "+ descripcion +", se cierra el socket");
-    throw runtime_error(descripcion+" Error");
+    throw std::runtime_error(descripcion+" Error");
 
 }
 
-void Enviador::casoExitoso(const string& descripcion) {
+void Enviador::casoExitoso(const std::string& descripcion) {
     Log::getInstance()->mostrarAccion("Se recibio exitosamente informacion de: "+ descripcion);
 }
 

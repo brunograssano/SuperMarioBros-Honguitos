@@ -15,8 +15,8 @@ class Parser {
 
     protected:
 
-    static int intentarObtenerNumero(ArchivoLeido *archivoLeido, const string& numeroString, condicionACumplir esValorInvalido,
-                                const string& mensajeCondicion, int VALOR_DEFECTO);
+    static int intentarObtenerNumero(ArchivoLeido *archivoLeido, const std::string& numeroString, condicionACumplir esValorInvalido,
+                                const std::string& mensajeCondicion, int VALOR_DEFECTO);
 };
 
 

@@ -25,7 +25,6 @@ void DibujadorCreditos::dibujarTexto(){
 
     SDL_RenderCopy(renderizador, this->cargadorTexturas->obtenerTextura("Creditos"),
                    &recorteCreditos, &rectanguloTexto);
-
 }
 
 void DibujadorCreditos::dibujarRectanguloCreditos() {
@@ -38,10 +37,8 @@ void DibujadorCreditos::dibujarRectanguloCreditos() {
     anchoRectanguloTransparente = 250;
     altoRectanguloTransparente = (alto_puntosJugador + desfase_puntosJugador)*4+50;
 
-    SDL_Rect rectanguloTransparente = {xRectanguloTransparente,
-                                       yRectanguloTransparente,
-                                       anchoRectanguloTransparente,
-                                       altoRectanguloTransparente};
+    SDL_Rect rectanguloTransparente = {xRectanguloTransparente,yRectanguloTransparente,
+                                       anchoRectanguloTransparente,altoRectanguloTransparente};
     SDL_SetRenderDrawBlendMode(renderizador, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderizador, 220, 220, 220, 120);
     SDL_RenderFillRect(renderizador, &rectanguloTransparente);

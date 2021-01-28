@@ -9,7 +9,7 @@ ReconectadorDeConexiones::ReconectadorDeConexiones(Servidor *servidor) {
 }
 
 void ReconectadorDeConexiones::ejecutar() {
-    list<int> idsUsuariosReconectados;
+    std::list<int> idsUsuariosReconectados;
     while(!terminarReconectar){
         while(usuariosQuePerdieronConexion.empty()){
             dormirHilo();
@@ -62,7 +62,7 @@ bool ReconectadorDeConexiones::coincideAlgunaCredencial(const usuario_t &usuario
     return false;
 }
 
-void ReconectadorDeConexiones::agregarUsuarioDesconectado(const string &nombre, const string &contrasenia, const int idJugador) {
+void ReconectadorDeConexiones::agregarUsuarioDesconectado(const std::string &nombre, const std::string &contrasenia, const int idJugador) {
     usuario_t usuarioDesconectado = {nombre,contrasenia,false};
     usuariosQuePerdieronConexion[idJugador] = usuarioDesconectado;
 }
@@ -71,7 +71,7 @@ bool ReconectadorDeConexiones::terminoHiloReconectar() const {
     return terminoHilo;
 }
 
-bool ReconectadorDeConexiones::estaDesconectado(const string& nombre){
+bool ReconectadorDeConexiones::estaDesconectado(const std::string& nombre){
     bool estaDesconectado = false;
     for(auto const& parClaveUsuario:usuariosQuePerdieronConexion){
         if(nombre == parClaveUsuario.second.nombre && !parClaveUsuario.second.usado){

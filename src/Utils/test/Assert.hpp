@@ -4,14 +4,13 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
-using namespace std;
 
 class Assert{
 	public:
-		void assert(int obtenido, int esperado, const string& textoExplicativo);
-		void assert(float obtenido, float esperado, float delta, const string& textoExplicativo);
-		void assert(bool condicion, const string& textoExplicativo);
-		void assert(const string& obtenido, const string& esperado, const string& textoExplicativo);
+		void assert(int obtenido, int esperado, const std::string& textoExplicativo);
+		void assert(float obtenido, float esperado, float delta, const std::string& textoExplicativo);
+		void assert(bool condicion, const std::string& textoExplicativo);
+		void assert(const std::string& obtenido, const std::string& esperado, const std::string& textoExplicativo);
 		int getPruebasPasadas() const;
 		int getPruebasTotales() const;
 

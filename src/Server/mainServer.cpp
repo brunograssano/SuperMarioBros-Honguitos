@@ -4,11 +4,10 @@
 #include "../Utils/Validaciones.hpp"
 #include "src/Server/Servidor/Servidor.hpp"
 #include <string>
-using namespace std;
 
-ArchivoLeido realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
+ArchivoLeido realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], std::list<std::string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
-	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
+    std::string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
 	ArchivoLeido archivoLeido;
 
 	if (strcmp(direccionLecturaComando, "") != 0) {
@@ -16,7 +15,7 @@ ArchivoLeido realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO
 		if (!archivoLeido.leidoCorrectamente) {
 			mensajesErrorOtroArchivo = archivoLeido.mensajeError;
 			if(!archivoLeido.usuariosValidos.empty()){
-				list<usuario_t> usuarios;
+				std::list<usuario_t> usuarios;
 				usuarios.swap(archivoLeido.usuariosValidos);
 				int cantidadConexiones = archivoLeido.cantidadConexiones;
 				archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
@@ -50,7 +49,7 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	int puerto;
 	char ip[LARGO_IP] = "";
 	ArchivoLeido archivoLeido;
-	list<string> mensajesErrorOtroArchivo;
+    std::list<std::string> mensajesErrorOtroArchivo;
 
 	manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 

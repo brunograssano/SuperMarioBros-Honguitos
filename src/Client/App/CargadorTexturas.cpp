@@ -7,6 +7,7 @@
 #include "ManejadorSDL.hpp"
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Constantes.hpp"
+using namespace std;
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();

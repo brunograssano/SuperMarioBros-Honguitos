@@ -33,10 +33,10 @@ list<Colisionable*> Piso::obtenerPiso() {
     return plataformas;
 }
 
-list<pozo_t> Piso::serializar() {
-    list<pozo_t> pozosSerializados;
+list<entidad_t> Piso::serializar() {
+    list<entidad_t> pozosSerializados;
     for(auto pozo: pozos){
-        pozo_t pozo_serializado = pozo.serializar();
+        entidad_t pozo_serializado = pozo.serializar();
         pozosSerializados.push_back(pozo_serializado);
     }
     return pozosSerializados;

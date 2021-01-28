@@ -17,8 +17,21 @@ Tablero de Trello - [link](https://trello.com/b/sdukQHiL/tp-taller)
 ### Pre-requisitos
 Listado de software/herramientas necesarias para el proyecto
 
+* C++
+* SDL2 / SDL2_image / SDL2_ttf / SDL2_mixer
+* CMake
+* Sistema operativo basado en Linux
+
 ## Ejecutando las pruebas
-Para ejecutar las pruebas...
+A lo largo del desarrollo del trabajo se han hecho algunas
+pruebas para poder evaluar el correcto funcionamiento del modelo.
+ Estas se pueden ejecutar de las siguientes maneras.
+```
+./Mario -t
+./Mario --test
+
+* Siendo Mario el nombre del ejecutable que se tenga
+```
 
 ## Ejecutando la aplicación
 Para ejecutar la aplicación...

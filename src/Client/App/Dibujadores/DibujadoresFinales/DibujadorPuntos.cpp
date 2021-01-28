@@ -180,14 +180,14 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
                                      ancho_puntosJugador,
                                      alto_puntosJugador};
 
-    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str().c_str(), colorDefault);
+    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str(), colorDefault);
     int indiceJugador = 0;
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
 
         puntosJugador.str("");
         //int id;
         string nombreJugador = parIdJugador.second.nombreJugador;
-        puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.puntos;
+        puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.mario.puntos;
 
         cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                           alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
@@ -200,7 +200,7 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
             idColor = MARIO_GRIS;
         }
 
-        renderizarTexto(cuadradoPuntos, puntosJugador.str().c_str(), colores[idColor]);
+        renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
 
         desfase_puntosJugador +=40;
         indiceJugador++;

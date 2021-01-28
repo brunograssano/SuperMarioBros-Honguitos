@@ -3,10 +3,8 @@
 
 #include <string>
 #include <cstdint>
-
 using namespace std;
-/* PALABRAS RESERVADAS */
-/*
+/* PALABRAS RESERVADAS
  * V: Verificacion
  * U: Actualizacion sobre la cantidad de jugadores.
  * L: Mensaje para el log.
@@ -18,19 +16,17 @@ using namespace std;
  * N: Informacion del nivel nuevo (bloques fijos)
  */
 
-
 const int MAX_NOMBRE = 20,MAX_CONTRASENIA = 25;
 
-const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30; // Solo el nombre, nosotros concatenamos la direccion
-															// correspondiente a la carpeta en la que tiene que estar esta imagen
+// Solo el nombre, nosotros concatenamos la direccion correspondiente a la carpeta en la que tiene que estar esta imagen
+const int MAX_CANT_NIVELES = 10,MAX_LARGO_NOMBRE_NIVEL= 30;
 
 const int MAX_SORPRESAS=15,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 30,MAX_POZOS = 30, MAX_LADRILLOS = 400,MAX_EFECTOS = 20;
 
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
 
-const int TIPO_GOOMBA = 1;
-const int TIPO_KOOPA = 2;
+const int TIPO_GOOMBA = 1,TIPO_KOOPA = 2;
 
 typedef struct rectangulo{
     int x1;
@@ -49,55 +45,20 @@ typedef struct mensaje_log{
 	char mensajeParaElLog[MAX_MENSAJE];
 }mensaje_log_t;
 
-typedef struct enemigo{
-    unsigned short posX;
-    unsigned short posY;
-	uint8_t numeroRecorteX;	// 1|2|3|4|5|6|...|
-	uint8_t numeroRecorteY;	// 1: marrón, 2: azul, 3: blanco , 4: fuego
-	uint8_t tipoEnemigo;	// 1 GOOMBA - 2 KOOPA
-	bool espejar;
-}enemigo_t;
-
-typedef struct bloque{
-    int posX;
-    int posY;
-	uint8_t numeroRecorteX;
-	uint8_t numeroRecorteY;
-}bloque_t;
-
 typedef struct mario{
 	uint8_t idImagen;    //1 ROJO - 2 VERDE - 3 VIOLETA - 4 CELESTE
 	uint8_t modificador; // 0 Nada - 1 Fuego
 	unsigned short posX;
 	unsigned short posY;
+    unsigned short puntos;
 	int8_t recorteImagen; // Si el recorte de la imagen viene en un valor (-1) se indica que el jugador se desconecto y
     uint8_t vidas;		  //el recorte correspondiente es el gris
 }mario_t;
 
-typedef struct moneda{
-	unsigned short posX;
-	unsigned short posY;
-	uint8_t numeroRecorte;
-}moneda_t;
-
 typedef struct jugador{
 	char nombreJugador[MAX_NOMBRE];
-	unsigned short puntos;
 	mario_t mario;
 }jugador_t;
-
-typedef struct tuberia {
-    unsigned short posX;
-    unsigned short posY;
-    uint8_t color;
-    uint8_t tipo;
-}tuberia_t;
-
-typedef struct pozo {
-    unsigned short posX;
-    uint8_t fondo;
-    uint8_t tipo;
-}pozo_t;
 
 typedef struct podio {
     unsigned short puntosNivel[MAX_JUGADORES];
@@ -110,12 +71,15 @@ typedef struct podio {
 #define CHISPA 2
 #define FLOR 3
 #define MONEDA_FLOTANTE 4
-typedef struct efecto{
-    unsigned short posX;
-    unsigned short posY;
-    uint8_t numeroRecorte;
-    uint8_t tipoDeEfecto;
-}efecto_t;
+
+typedef struct entidad {
+    unsigned short x;
+    unsigned short y;
+    uint8_t tipo; // Cambio de imagen, ejemplo Goomba-Koopa o que se toma algo de otra imagen, ej. El fondo de los pozos
+    uint8_t recorteX;
+    uint8_t recorteY;
+    bool espejado;
+} entidad_t;
 
 #define CREDENCIAL 'C'
 typedef struct credencial{
@@ -181,22 +145,22 @@ typedef struct ronda{
 	bool perdieron;
 	unsigned short posXCamara;
 	unsigned short tiempoFaltante;
-	bloque_t bloques[MAX_SORPRESAS];
-	enemigo_t enemigos[MAX_ENEMIGOS];
-	moneda_t monedas[MAX_MONEDAS];
-	jugador_t jugadores[MAX_JUGADORES];
-	efecto_t efectos[MAX_EFECTOS];
+    entidad_t bloques[MAX_SORPRESAS];
+    entidad_t enemigos[MAX_ENEMIGOS];
+    entidad_t monedas[MAX_MONEDAS];
+    entidad_t efectos[MAX_EFECTOS];
+    mario_t jugadores[MAX_JUGADORES];
 }info_ronda_t;
 
 #define NIVEL 'N'
 typedef struct nivel{
     uint8_t mundo;
-    short topeBloques;
+    unsigned short topeBloques;
     uint8_t topePozos;
     uint8_t topeTuberias;
-    bloque_t bloques[MAX_LADRILLOS];
-    tuberia_t tuberias[MAX_TUBERIAS];
-    pozo_t pozos[MAX_POZOS];
+    entidad_t bloques[MAX_LADRILLOS];
+    entidad_t tuberias[MAX_TUBERIAS];
+    entidad_t pozos[MAX_POZOS];
     podio_t podio;
     podio_t podioPuntosAcumulados;
 }nivel_t;

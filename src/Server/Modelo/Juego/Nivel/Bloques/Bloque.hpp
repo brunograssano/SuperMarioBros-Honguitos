@@ -23,7 +23,7 @@ class Bloque : public Colisionable{
 		int obtenerPosicionY();
 
         virtual ObjetoSorpresa* colisionaronAbajo();
-        virtual bloque_t serializar();
+        virtual entidad_t serializar();
         string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;

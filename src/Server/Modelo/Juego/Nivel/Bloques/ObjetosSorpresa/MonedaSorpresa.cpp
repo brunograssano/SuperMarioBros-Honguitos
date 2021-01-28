@@ -23,11 +23,13 @@ void MonedaSorpresa::usarse(Mario *mario) {
     mario->agregarMoneda();
 }
 
-efecto_t MonedaSorpresa::serializar() {
-    unsigned short x = posicion.obtenerPosX();
-    unsigned short y = posicion.obtenerPosY();
-    uint8_t recorte = sprite.obtenerEstadoActual();
-    return {x, y, recorte, MONEDA_FLOTANTE};
+entidad_t MonedaSorpresa::serializar() {
+    entidad_t monedaSorpresaSerializada = {0,0,0,0,0,false};
+    monedaSorpresaSerializada.x = posicion.obtenerPosX();
+    monedaSorpresaSerializada.y = posicion.obtenerPosY();
+    monedaSorpresaSerializada.recorteX = sprite.obtenerEstadoActual();
+    monedaSorpresaSerializada.tipo = MONEDA_FLOTANTE;
+    return monedaSorpresaSerializada;
 }
 
 void MonedaSorpresa::actualizar() {

@@ -18,7 +18,7 @@ Koopa::~Koopa() {
     delete spriteEnemigo;
 }
 
-enemigo_t Koopa::serializar() {
+entidad_t Koopa::serializar() {
     return serializarEnemigo(TIPO_KOOPA);
 }
 

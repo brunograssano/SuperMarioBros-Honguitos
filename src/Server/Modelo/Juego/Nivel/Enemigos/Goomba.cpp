@@ -11,7 +11,7 @@ Goomba::Goomba(int tipoColor){
     posicionActual = PosicionMovil(DEFAULT, DEFAULT);
 }
 
-enemigo_t Goomba::serializar() {
+entidad_t Goomba::serializar() {
     return serializarEnemigo(TIPO_GOOMBA);
 }
 

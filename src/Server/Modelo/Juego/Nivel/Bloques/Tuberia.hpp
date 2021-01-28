@@ -14,7 +14,7 @@ class Tuberia{
         unsigned short obtenerPosicionX() const;
         void elevar(int y);
         SDL_Rect obtenerDimensiones();
-        tuberia_t serializar();
+        entidad_t serializar();
         list<PiezaDeTuberia*> obtenerPiezas();
     private:
         void crearColisionables(int x, int tipo);

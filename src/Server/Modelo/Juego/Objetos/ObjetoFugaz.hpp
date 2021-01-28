@@ -7,7 +7,7 @@
 class ObjetoFugaz : public Colisionable{
     public:
         virtual bool debeDesaparecer() = 0;
-        virtual efecto_t serializar() = 0;
+        virtual entidad_t serializar() = 0;
         virtual void actualizar() = 0;
         virtual int obtenerPosicionX() = 0;
         virtual int tipoDeEfecto() = 0;

@@ -7,8 +7,8 @@
 
 pthread_mutex_t mutexJuegoCliente = PTHREAD_MUTEX_INITIALIZER;
 
-bool operator == (const bloque_t &bloque1, const bloque_t &bloque2){
-    return bloque1.posX == bloque2.posX && bloque1.posY == bloque2.posY && bloque1.numeroRecorteY == bloque2.numeroRecorteY;
+bool operator == (const entidad_t &bloque1, const entidad_t &bloque2){
+    return bloque1.x == bloque2.x && bloque1.y == bloque2.y && bloque1.recorteY == bloque2.recorteY;
 }
 
 
@@ -59,6 +59,13 @@ SDL_Rect JuegoCliente::obtenerCamara()const{
 	return rectanguloCamara;
 }
 
+void JuegoCliente::cargarLista(list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope) {
+    listaACargar->clear();
+    for(int i=0;i<tope;i++){
+        listaACargar->push_front(vector[i]);
+    }
+}
+
 void JuegoCliente::actualizar(){
 	if(rondas.empty()){
 		return;
@@ -81,33 +88,20 @@ void JuegoCliente::actualizar(){
 	ganaron = ronda.ganaron;
 	perdieron = ronda.perdieron;
 
-	bloques.clear();
-	enemigos.clear();
-	jugadores.clear();
-	monedas.clear();
-	efectos.clear();
+	cargarLista(&bloques,ronda.bloques,ronda.topeBloques);
+    cargarLista(&enemigos,ronda.enemigos,ronda.topeEnemigos);
+    cargarLista(&monedas,ronda.monedas,ronda.topeMonedas);
+    cargarLista(&efectos,ronda.efectos,ronda.topeEfectos);
 
-	for(int i=0;i<ronda.topeBloques;i++){
-		bloques.push_front(ronda.bloques[i]);
-	}
-	for(int i=0;i<ronda.topeEnemigos;i++){
-		enemigos.push_front(ronda.enemigos[i]);
-	}
-	for(int i=0;i<ronda.topeMonedas;i++){
-		monedas.push_front(ronda.monedas[i]);
-	}
 	for(int i=0;i<cantidadJugadores;i++){
-		jugadores[i]=ronda.jugadores[i];
+		jugadores[i].mario=ronda.jugadores[i];
 	}
-    for(int i=0;i<ronda.topeEfectos;i++){
-        efectos.push_front(ronda.efectos[i]);
-    }
 
-    list<bloque_t> ladrillosASacar;
-    list<bloque_t> ladrillosNuevos;
+    list<entidad_t> ladrillosASacar;
+    list<entidad_t> ladrillosNuevos;
     bool agregado = false;
     for(auto ladrillo: ladrillos){
-        if(enRango(ladrillo.posX, LARGO_BLOQUE)){
+        if(enRango(ladrillo.x, LARGO_BLOQUE)){
             for(auto bloque : bloques) {
                 if(ladrillo == bloque){
                     ladrillosASacar.push_front(ladrillo);
@@ -138,11 +132,11 @@ map<int,jugador_t> JuegoCliente::obtenerJugadores(){
 	return jugadores;
 }
 
-list<enemigo_t> JuegoCliente::obtenerEnemigos(){
+list<entidad_t> JuegoCliente::obtenerEnemigos(){
 	return enemigos;
 }
 
-list<bloque_t> JuegoCliente::obtenerBloques(){
+list<entidad_t> JuegoCliente::obtenerBloques(){
 	return bloques;
 }
 
@@ -150,7 +144,7 @@ bool JuegoCliente::enRango(int posX, int w) const {
     return (rectanguloCamara.x - RANGO_VISTA) <= posX + w && posX <= (rectanguloCamara.x + anchoVista + RANGO_VISTA);
 }
 
-list<moneda_t> JuegoCliente::obtenerMonedas(){
+list<entidad_t> JuegoCliente::obtenerMonedas(){
 	return monedas;
 }
 
@@ -166,10 +160,10 @@ int JuegoCliente::obtenerMundoActual() const{
 	return numeroMundo;
 }
 
-list<pozo_t> JuegoCliente::obtenerPozos() {
-    list<pozo_t> pozosAMostrar;
+list<entidad_t> JuegoCliente::obtenerPozos() {
+    list<entidad_t> pozosAMostrar;
     for(auto pozo:pozos){
-        if(enRango(pozo.posX, ANCHO_POZO)){
+        if(enRango(pozo.x, ANCHO_POZO)){
             pozosAMostrar.push_front(pozo);
         }
     }
@@ -177,18 +171,18 @@ list<pozo_t> JuegoCliente::obtenerPozos() {
 }
 
 
-list<tuberia_t> JuegoCliente::obtenerTuberias() {
-    list<tuberia_t> tuberiasAMostrar;
+list<entidad_t> JuegoCliente::obtenerTuberias() {
+    list<entidad_t> tuberiasAMostrar;
     for(auto tuberia:tuberias){
         int ancho = tuberia.tipo==TUBERIA_CHICA?ANCHO_TUBERIA_CHICA:ANCHO_TUBERIA_GRANDE;
-        if(enRango(tuberia.posX, ancho)){
+        if(enRango(tuberia.x, ancho)){
             tuberiasAMostrar.push_front(tuberia);
         }
     }
     return tuberiasAMostrar;
 }
 
-list<efecto_t> JuegoCliente::obtenerEfectos() {
+list<entidad_t> JuegoCliente::obtenerEfectos() {
     return efectos;
 }
 
@@ -198,18 +192,10 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
         this->hayQueMostrarPuntosDeNivel = true;
     }
     numeroMundo = nivel.mundo;
-    ladrillos.clear();
-    tuberias.clear();
-    pozos.clear();
-    for(int i=0;i<nivel.topeBloques;i++){
-        ladrillos.push_front(nivel.bloques[i]);
-    }
-    for(int i=0;i<nivel.topeTuberias;i++){
-        tuberias.push_front(nivel.tuberias[i]);
-    }
-    for(int i=0;i<nivel.topePozos;i++){
-        pozos.push_front(nivel.pozos[i]);
-    }
+
+    cargarLista(&ladrillos,nivel.bloques,nivel.topeBloques);
+    cargarLista(&tuberias,nivel.tuberias,nivel.topeTuberias);
+    cargarLista(&pozos,nivel.pozos,nivel.topePozos);
 
     if(!hayQueCargarPodioNivel){
         hayQueCargarPodioNivel = true;

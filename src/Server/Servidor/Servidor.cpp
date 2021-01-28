@@ -3,8 +3,9 @@
 #include <cstring>
 
 Servidor::Servidor(const ArchivoLeido& archivoLeido, const list<string>& mensajesErrorOtroArchivo, int puerto, char* ip)
-                    : aplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones, archivoLeido.anchoVentana, archivoLeido.altoVentana)
-	                , reconectador(this){
+                    : reconectador(this),
+                      iniciadorModelo(archivoLeido.cantidadConexiones,&aplicacionServidor,&clientesJugando,&mapaIDNombre),
+                      aplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones, archivoLeido.anchoVentana, archivoLeido.altoVentana){
     terminoJuego = false;
 	manejadorIDs = ManejadorIdentificadores();
 	log = Log::getInstance(archivoLeido.tipoLog);
@@ -44,6 +45,7 @@ void Servidor::agregarUsuarioDesconectado(ConexionCliente* conexionPerdida,int i
 	pthread_mutex_unlock(&mutex);
 
     mandarActualizacionAClientes();
+    despertarHilo();
 }
 
 void Servidor::notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, string &nombre) {
@@ -85,11 +87,25 @@ void Servidor::ejecutar(){
 	::empezarHilo(&aplicacionServidor,"GameLoop");
 	::empezarHilo(&aceptadorDeConexiones,"AceptadorDeConexiones");
 	::empezarHilo(&reconectador,"ReconectadorDeConexiones");
-	intentarIniciarModelo();
-    aplicacionServidor.join("GameLoop");
+	::empezarHilo(&iniciadorModelo,"IniciadorDelModelo");
+    eliminarConexionesPerdidas();
 }
 
-actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PASAR A USAR EL MANEJADOR DE KEYS
+void Servidor::eliminarConexionesPerdidas() {
+    while (!terminoJuego){
+        while (conexionesPerdidas.empty() && !terminoJuego){
+            dormirHilo();
+        }
+        for(auto const& cliente:conexionesPerdidas){
+            delete cliente;
+        }
+        pthread_mutex_lock(&mutex);
+        conexionesPerdidas.clear();
+        pthread_mutex_unlock(&mutex);
+    }
+}
+
+actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){
 	actualizacion_cantidad_jugadores_t actualizacion;
 	memset(&actualizacion, 0, sizeof(actualizacion_cantidad_jugadores_t));
 	int i = 0;
@@ -108,7 +124,6 @@ actualizacion_cantidad_jugadores_t Servidor::crearActualizacionJugadores(){ //PA
 	actualizacion.cantidadMaximaDeJugadores = cantidadConexiones;
 	return actualizacion;
 }
-
 
 bool Servidor::esUsuarioDesconectado(const usuario_t& posibleUsuario, ConexionCliente* conexionClienteConPosibleUsuario){
     int idJugador;
@@ -145,7 +160,7 @@ bool Servidor::esUsuarioSinConectarse(const usuario_t& posibleUsuario,ConexionCl
 			for(auto const& cliente:clientes){
 				cliente->agregarMensajeAEnviar(ACTUALIZACION_JUGADORES,&actualizacion);
 			}
-			despertarHilo();
+            iniciadorModelo.despertarHilo();
 			return true;
 		}
 	}
@@ -161,24 +176,6 @@ bool Servidor::esUsuarioValido(const usuario_t& posibleUsuario,ConexionCliente* 
 		   esUsuarioDesconectado(posibleUsuario,conexionClienteConPosibleUsuario);
 }
 
-
-void Servidor::intentarIniciarModelo(){
-	info_partida_t info_partida[cantidadConexiones];
-	while(mapaIDNombre.size() < cantidadConexiones){
-	    dormirHilo();
-	}
-
-	log->mostrarMensajeDeInfo("Se va a iniciar el envio de informacion inicial a los jugadores.");
-
-	for(auto parIDCliente:clientesJugando){
-		int id = parIDCliente.first;
-		info_partida[id] = aplicacionServidor.obtenerInfoPartida(mapaIDNombre,id);
-        parIDCliente.second->agregarMensajeAEnviar(PARTIDA,&info_partida[id]);
-	}
-
-	aplicacionServidor.iniciarJuego();
-}
-
 void Servidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
 	this->aplicacionServidor.encolarEntradaUsuario(entradaUsuario);
 }
@@ -188,6 +185,7 @@ void Servidor::terminarElJuego(){
         cliente->terminarElJuego();
 	}
 	terminoJuego = true;
+	despertarHilo();
 }
 
 bool Servidor::terminoElJuego() const{

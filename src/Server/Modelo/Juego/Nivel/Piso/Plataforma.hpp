@@ -14,7 +14,7 @@ class Plataforma : public Colisionable{
 
     private:
         void inicializarMapasDeColision() override;
-        rectangulo_t rangoPlataforma;
+        rectangulo_t rangoPlataforma{};
 
 };
 

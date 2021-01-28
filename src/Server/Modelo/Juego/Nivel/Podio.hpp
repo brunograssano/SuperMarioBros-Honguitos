@@ -14,7 +14,7 @@ class Podio: public Observador {
         void actualizar(Observable* observable) override;
         vector<pair<Mario*, int>> getPodioNivel();
         vector<pair<Mario*, int>>  getPodioTotal();
-        ~Podio()=default;
+        ~Podio() override =default;
     private:
         vector<pair<Mario*, int>> puntajeTotal;
         vector<pair<Mario*, int>> puntajeParcial;

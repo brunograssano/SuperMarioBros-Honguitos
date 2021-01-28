@@ -12,7 +12,7 @@ class FlorDeFuego : public ObjetoSorpresa{
     public:
         FlorDeFuego(int posicionBloque, int altoBloque);
         void usarse(Mario* mario)override;
-        efecto_t serializar() override;
+        entidad_t serializar() override;
         void actualizar() override;
         int obtenerPosicionX() override;
         int tipoDeEfecto() override;

@@ -4,6 +4,7 @@
 
 #include "src/Server/Modelo/Juego/Sprites/SpriteSorpresa.hpp"
 
+#define PROBABILIDAD_NECESARIA_PARA_FLOR 80
 
 Sorpresa::Sorpresa(int coordenadaX, int coordenadaY) {
     tipoBloque = SORPRESA;
@@ -26,7 +27,8 @@ void Sorpresa::inicializarMapasDeColision(){
 
 ObjetoSorpresa* Sorpresa::obtenerObjetoSorpresa(int posX, int posY) {
     ObjetoSorpresa* objeto;
-    if(rand()%2 == 0){
+    unsigned int probabilidad = rand()%101;
+    if(probabilidad > PROBABILIDAD_NECESARIA_PARA_FLOR){
         objeto = new FlorDeFuego(posX,posY);
     }
     else{

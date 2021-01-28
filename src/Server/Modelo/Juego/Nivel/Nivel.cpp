@@ -80,13 +80,13 @@ void Nivel::resolverColisiones(const std::map<int, Mario *>& jugadores, rectangu
         chocarContraTodos(jugador, piezasDeTuberiaEnEscena, nullptr, nullptr);
         chocarContraTodos(jugador, plataformasPisoEnEscena,nullptr, nullptr);
     }
-    for(auto& enemigo:enemigos){
+    for(auto& enemigo:enemigosEnEscena){
         chocarContraTodos(enemigo, objetosEnEscena, nullptr, nullptr);
         chocarContraTodos(enemigo, bloquesEnEscena, nullptr, nullptr);
         chocarContraTodos(enemigo, piezasDeTuberiaEnEscena,nullptr, nullptr);
         chocarContraTodos(enemigo, plataformasPisoEnEscena,nullptr, nullptr);
     }
-    for(auto& objeto: objetosFugaces){
+    for(auto& objeto: objetosEnEscena){
         chocarContraTodos(objeto, bloquesEnEscena, nullptr, nullptr);
         chocarContraTodos(objeto, piezasDeTuberiaEnEscena,nullptr, nullptr);
         chocarContraTodos(objeto, plataformasPisoEnEscena, nullptr, nullptr);

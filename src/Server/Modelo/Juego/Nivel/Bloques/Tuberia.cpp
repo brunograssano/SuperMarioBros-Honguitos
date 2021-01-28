@@ -41,6 +41,7 @@ entidad_t Tuberia::serializar(){
     tuberiaSerializada.y = posicion.obtenerPosY();
     tuberiaSerializada.recorteX = tipo;
     tuberiaSerializada.recorteY = color;
+    tuberiaSerializada.tipo = tipo;
     return tuberiaSerializada;
 }
 

@@ -8,20 +8,11 @@
 #include <sstream>
 
 #include "src/Client/App/CargadorTexturas.hpp"
-
 #include "src/Client/App/JuegoCliente/JuegoCliente.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteMario.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteKoopa.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteGoomba.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteMoneda.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteBloque.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteBolaDeFuego.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteChispa.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteFlor.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteMonedaFlotante.hpp"
-
+#include "src/Client/App/Dibujadores/Recortes/Recorte.hpp"
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
-#include "src/Client/App/Dibujadores/Recortes/RecorteTuberia.hpp"
+
+typedef void(*FuncionParaDibujar)(void* dibujador, void* claveEntidad, void* textura,void* entidad);
 
 class DibujadorJuego : public Dibujador{
 
@@ -34,31 +25,26 @@ class DibujadorJuego : public Dibujador{
         std::stringstream textoDeTiempo;
         std::stringstream textoDeNivel;
         std::stringstream textoDePuntos;
-
         JuegoCliente* juegoCliente;
 		SDL_Rect rectanguloCamara{};
 
-		RecorteMario* recorteSpriteMario;
-		RecorteGoomba* recorteSpriteGoomba;
-		RecorteKoopa* recorteSpriteKoopa;
-		RecorteMoneda* recorteSpriteMoneda;
-		RecorteBloque* recorteSpriteBloque;
-		RecorteTuberia* recorteSpriteTuberia;
-
 		std::map<int, Recorte*> recortes;
-        std::map<int, std::string> clavesEfectos;
+        std::map<int, std::string> clavesTexturas;
         std::map<int, SDL_Color> colores;
 
-		void dibujarEnemigos();
-		void dibujarPlataformas();
-		void dibujarMonedas();
 		void dibujarMarios();
 		void dibujarTexto();
-        void dibujarTuberias();
-        void dibujarPozos();
-        void dibujarEfectos();
         static int obtenerEspaciado(int cantidadJugadores);
-        void dibujarFondoPozos();
+
+        void dibujar(int claveEntidad,FuncionParaDibujar funcion);
+        static void dibujadorSimple_helper(void* dibujador, void* claveEntidad, void* textura,void* entidad);
+        void dibujadorSimple(int* claveEntidad, SDL_Texture *textura,entidad_t *entidad);
+        static void dibujadorEnemigos_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad);
+        void dibujadorEnemigos(int *claveEntidad, SDL_Texture *textura, entidad_t *entidad);
+        static void dibujadorEfectos_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad);
+        void dibujadorEfectos(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad);
+        static void dibujadorFondoPozo_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad);
+        void dibujadorFondoPozo(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

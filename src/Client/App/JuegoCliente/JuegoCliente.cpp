@@ -88,10 +88,10 @@ void JuegoCliente::actualizar(){
 	ganaron = ronda.ganaron;
 	perdieron = ronda.perdieron;
 
-	cargarLista(&bloques,ronda.bloques,ronda.topeBloques);
-    cargarLista(&enemigos,ronda.enemigos,ronda.topeEnemigos);
-    cargarLista(&monedas,ronda.monedas,ronda.topeMonedas);
-    cargarLista(&efectos,ronda.efectos,ronda.topeEfectos);
+	cargarLista(&entidades[BLOQUE_RECORTE],ronda.bloques,ronda.topeBloques);
+    cargarLista(&entidades[ENEMIGOS_RECORTE],ronda.enemigos,ronda.topeEnemigos);
+    cargarLista(&entidades[MONEDA_RECORTE],ronda.monedas,ronda.topeMonedas);
+    cargarLista(&entidades[EFECTOS_RECORTE],ronda.efectos,ronda.topeEfectos);
 
 	for(int i=0;i<cantidadJugadores;i++){
 		jugadores[i].mario=ronda.jugadores[i];
@@ -102,7 +102,7 @@ void JuegoCliente::actualizar(){
     bool agregado = false;
     for(auto ladrillo: ladrillos){
         if(enRango(ladrillo.x, LARGO_BLOQUE)){
-            for(auto bloque : bloques) {
+            for(auto bloque : entidades[BLOQUE_RECORTE]) {
                 if(ladrillo == bloque){
                     ladrillosASacar.push_front(ladrillo);
                     ladrillosNuevos.push_front(bloque);
@@ -110,7 +110,7 @@ void JuegoCliente::actualizar(){
                 }
             }
             if(!agregado){
-                bloques.push_front(ladrillo);
+                entidades[BLOQUE_RECORTE].push_front(ladrillo);
             }
             agregado = false;
         }
@@ -132,20 +132,8 @@ std::map<int,jugador_t> JuegoCliente::obtenerJugadores(){
 	return jugadores;
 }
 
-std::list<entidad_t> JuegoCliente::obtenerEnemigos(){
-	return enemigos;
-}
-
-std::list<entidad_t> JuegoCliente::obtenerBloques(){
-	return bloques;
-}
-
 bool JuegoCliente::enRango(int posX, int w) const {
     return (rectanguloCamara.x - RANGO_VISTA) <= posX + w && posX <= (rectanguloCamara.x + anchoVista + RANGO_VISTA);
-}
-
-std::list<entidad_t> JuegoCliente::obtenerMonedas(){
-	return monedas;
 }
 
 std::vector<podio_t> JuegoCliente::obtenerPodios(){
@@ -160,32 +148,6 @@ int JuegoCliente::obtenerMundoActual() const{
 	return numeroMundo;
 }
 
-std::list<entidad_t> JuegoCliente::obtenerPozos() {
-    std::list<entidad_t> pozosAMostrar;
-    for(auto pozo:pozos){
-        if(enRango(pozo.x, ANCHO_POZO)){
-            pozosAMostrar.push_front(pozo);
-        }
-    }
-    return pozosAMostrar;
-}
-
-
-std::list<entidad_t> JuegoCliente::obtenerTuberias() {
-    std::list<entidad_t> tuberiasAMostrar;
-    for(auto tuberia:tuberias){
-        int ancho = tuberia.tipo==TUBERIA_CHICA?ANCHO_TUBERIA_CHICA:ANCHO_TUBERIA_GRANDE;
-        if(enRango(tuberia.x, ancho)){
-            tuberiasAMostrar.push_front(tuberia);
-        }
-    }
-    return tuberiasAMostrar;
-}
-
-std::list<entidad_t> JuegoCliente::obtenerEfectos() {
-    return efectos;
-}
-
 void JuegoCliente::agregarNivel(nivel_t nivel) {
     pthread_mutex_lock(&mutexJuegoCliente);
     if(numeroMundo != NO_HAY_MUNDO_CARGADO ){
@@ -194,8 +156,8 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     numeroMundo = nivel.mundo;
 
     cargarLista(&ladrillos,nivel.bloques,nivel.topeBloques);
-    cargarLista(&tuberias,nivel.tuberias,nivel.topeTuberias);
-    cargarLista(&pozos,nivel.pozos,nivel.topePozos);
+    cargarLista(&entidades[TUBERIA_RECORTE],nivel.tuberias,nivel.topeTuberias);
+    cargarLista(&entidades[POZO_RECORTE],nivel.pozos,nivel.topePozos);
 
     if(!hayQueCargarPodioNivel){
         hayQueCargarPodioNivel = true;
@@ -216,4 +178,17 @@ int JuegoCliente::obtenerNivelesJugados() const  {
 
 podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
     return this->podioPuntosTotales;
+}
+
+std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
+    if(claveEntidad == TUBERIA_RECORTE || claveEntidad == POZO_RECORTE){
+        std::list<entidad_t> entidadesAMostrar;
+        for(auto entidad:entidades[claveEntidad]){
+            if(enRango(entidad.x, ANCHO_POZO)){ // Se utiliza el ancho del pozo porque es el mas grande de los 2
+                entidadesAMostrar.push_front(entidad);
+            }
+        }
+        return entidadesAMostrar;
+    }
+    return entidades[claveEntidad];
 }

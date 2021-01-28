@@ -57,7 +57,21 @@ const uint8_t SIN_MODIFICADOR = 0, MODIFICADOR_FUEGO = 1;
 #define ESTADOS_KOOPA 6
 #define COLORES_KOOPA_POSIBLES 5
 
-#define POZO_RECORTE 10 // todo mejorar el mapa
+#define NADA 0
+#define BOLA_DE_FUEGO 1
+#define CHISPA 2
+#define FLOR 3
+#define MONEDA_FLOTANTE 4
+#define POZO_RECORTE 5
+#define MARIO_RECORTE 6
+#define GOOMBA_RECORTE 7
+#define KOOPA_RECORTE 8
+#define MONEDA_RECORTE 9
+#define BLOQUE_RECORTE 10
+#define TUBERIA_RECORTE 11
+#define ENEMIGOS_RECORTE 12
+#define EFECTOS_RECORTE 13
+
 
 //=======================================================//
 //====================== TEXTURAS =======================//

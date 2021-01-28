@@ -18,7 +18,7 @@ typedef void(*FuncionLuegoDeColisionar)(void* colisionable1, void* colisionable2
 void chocar(Colisionable* colisionable1, Colisionable* colisionable2);
 void chocarContraTodos(Colisionable* colisionable, void* colisionables, FuncionLuegoDeColisionar funcion, void* contexto);
 int tipoDeChoque(rectangulo_t rectangulo1, rectangulo_t rectangulo2);
-bool esUnBloque(const string& idColisionable);
+bool esUnBloque(const std::string& idColisionable);
 bool colisionan(rectangulo_t rect1, rectangulo_t rect2);
 bool intersecarRectangulos(rectangulo_t rect1, rectangulo_t rect2, rectangulo_t* rectInterseccion);
 

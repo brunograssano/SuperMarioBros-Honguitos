@@ -8,8 +8,6 @@
 #include "src/Utils/Utils.hpp"
 #include "EstadoVentana.hpp"
 
-using namespace std;
-
 class VentanaInicio{
 
 	public:
@@ -25,8 +23,8 @@ class VentanaInicio{
 
         EstadoVentana* estadoVentana;
 		bool ingresoIncorrectoCredenciales;
-		string errorDeIngreso;
-    bool murioElServer;
+        std::string errorDeIngreso;
+        bool murioElServer;
 
 		unsigned short jugadoresTotales;
 		unsigned short jugadoresConectados;
@@ -45,7 +43,7 @@ class VentanaInicio{
 		BotonConTexto* cajaTextoUsuario;
 		BotonConTexto* cajaTextoContrasenia;
 
-		bool estaConectado(const string& nombre);
+		bool estaConectado(const std::string& nombre);
         void imprimirErrorIngreso();
 		void ponerLosMarios();
 		SDL_Texture* texturasMarios;

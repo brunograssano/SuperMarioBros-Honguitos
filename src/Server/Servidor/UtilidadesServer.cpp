@@ -9,9 +9,9 @@
 
 const int TAMANIO_COLA = 4;
 
-void salir(const string& mensajeLog){
+void salir(const std::string& mensajeLog){
 	Log* log = Log::getInstance();
-	cout << "No se pudo iniciar el server, cerrando la aplicacion, mire el log para mas detalles" << endl;
+    std::cout << "No se pudo iniciar el server, cerrando la aplicacion, mire el log para mas detalles" << std::endl;
 	log->huboUnError(mensajeLog);
 	delete log;
 	exit(EXIT_FAILURE);
@@ -45,19 +45,19 @@ int iniciarSocketServidor(int puerto, char* ip){
 		salir("No se pudo bindear el socket al puerto.");
 	}
 
-	cout<< "Se inicio el servidor"<<endl;
+    std::cout<< "Se inicio el servidor"<<std::endl;
 
 	return socketServer;
 }
 
-void escribirMensajesDeArchivoLeidoEnLog(const list<string>& mensajesError){
+void escribirMensajesDeArchivoLeidoEnLog(const std::list<std::string>& mensajesError){
 	Log* log = Log::getInstance();
 	for(auto const& mensaje:mensajesError){
 		log->huboUnError(mensaje);
 	}
 }
 
-void empezarHilo(Thread* hilo,const string& nombreHilo){
+void empezarHilo(Thread* hilo,const std::string& nombreHilo){
     try{
         hilo->empezarHilo(nombreHilo);
     }catch(const std::exception& e){
@@ -68,13 +68,13 @@ void empezarHilo(Thread* hilo,const string& nombreHilo){
 void cerrarServidor(int socketServer){
 	int resultado = shutdown(socketServer,SHUT_RDWR);
 	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",std::to_string(errno));
 	}
 	resultado = close(socketServer);
 	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",std::to_string(errno));
 	}
-	cout<<"Se cerro el servidor"<<endl;
+    std::cout<<"Se cerro el servidor"<<std::endl;
 }
 
 

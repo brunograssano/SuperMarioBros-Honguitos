@@ -19,6 +19,6 @@ Goomba::~Goomba() {
     delete spriteEnemigo;
 }
 
-string Goomba::obtenerColisionID() {
+std::string Goomba::obtenerColisionID() {
     return COLISION_ID_GOOMBA;
 }

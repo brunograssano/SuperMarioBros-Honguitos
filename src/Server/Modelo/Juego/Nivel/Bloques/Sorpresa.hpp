@@ -8,7 +8,7 @@ class Sorpresa : public Bloque{
     public:
 		Sorpresa(int coordenadaX, int coordenadaY);
         ObjetoSorpresa* colisionaronAbajo()override;
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         void elevar(int y) override;
         ~Sorpresa() override;
 

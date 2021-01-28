@@ -13,7 +13,7 @@ class Nada : public ObjetoFugaz{
         int tipoDeEfecto() override;
         ~Nada() override;
         bool debeDesaparecer() override;
-        string obtenerColisionID() override {return  COLISION_ID_NADA;}
+        std::string obtenerColisionID() override {return  COLISION_ID_NADA;}
         rectangulo_t obtenerRectangulo() override{return {0,0,0,0,0,0};}
         bool debeColisionar() override {return false;}
 

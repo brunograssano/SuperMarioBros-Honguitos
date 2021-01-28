@@ -14,13 +14,13 @@ class EscuchadorActualizacionJugadores: public Escuchador{
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 
-		bool idsValidas(par_id_nombre_t pares_id_nombre[MAX_JUGADORES], int tope);
+		static bool idsValidas(par_id_nombre_t pares_id_nombre[MAX_JUGADORES], int tope);
 		bool recibioMensajeValido();
 
 	private:
 		actualizacion_cantidad_jugadores_t actualizacion{};
 		Cliente* cliente;
-		string error;
+        std::string error;
 };
 
 #endif /* SRC_CLIENT_ESCUCHADORES_ESCUCHADORACTUALIZACIONJUGADORES_HPP_ */

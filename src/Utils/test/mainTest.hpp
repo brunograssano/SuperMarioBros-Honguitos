@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 #include "BloqueTest.hpp"
 #include "MarioTest.hpp"
@@ -29,7 +28,7 @@ int mainTest(){
     PodioTest::ejecutar(&testSuite);
     TuberiaTest::ejecutar(&testSuite);
 
-	cout << "Pasaron " << testSuite.getPruebasPasadas() << " pruebas de "<< testSuite.getPruebasTotales() << endl;
+    std::cout << "Pasaron " << testSuite.getPruebasPasadas() << " pruebas de "<< testSuite.getPruebasTotales() << std::endl;
 
 	return 0;
 }

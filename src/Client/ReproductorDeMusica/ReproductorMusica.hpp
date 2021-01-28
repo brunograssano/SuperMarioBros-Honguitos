@@ -2,7 +2,6 @@
 #define SRC_CLIENT_REPRODUCTORDEMUSICA_REPRODUCTORMUSICA_HPP_
 
 #include <string>
-using namespace std;
 #include "src/Utils/log/Log.hpp"
 #include "EstadoMusica.hpp"
 #include "EstadoSonidos.hpp"
@@ -14,9 +13,9 @@ using namespace std;
 class ReproductorMusica{
 	public:
 		static ReproductorMusica* getInstance();
-		void ReproducirMusicaNivel(string nombreCancion);
+		void ReproducirMusicaNivel(std::string nombreCancion);
         void reproducirSonido(const uint8_t& tipoSonido);
-        void ponerMusica(const string& nombreCancion);
+        void ponerMusica(const std::string& nombreCancion);
         static void reanudarMusica();
         static void pausarMusica();
 		void cambiarMusica();
@@ -29,7 +28,7 @@ class ReproductorMusica{
         EstadoSonidos* estadoSonidos;
         static ReproductorMusica* reproductor;
         ReproductorMusica();
-        map<uint8_t, Mix_Chunk*> efectosDeSonido;
+        std::map<uint8_t, Mix_Chunk*> efectosDeSonido;
         Mix_Music* cancionReproduciendose = nullptr;
 };
 

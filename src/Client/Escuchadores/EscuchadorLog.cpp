@@ -11,17 +11,17 @@ EscuchadorLog::EscuchadorLog(int socket){
 
 
 void EscuchadorLog::casoError(int resultado){
-	Log::getInstance()->huboUnErrorSDL("Ocurrio un error al recibir un mensaje del log", to_string(errno));
-	throw runtime_error("ErrorAlEscucharUnMensajeParaElLog");
+	Log::getInstance()->huboUnErrorSDL("Ocurrio un error al recibir un mensaje del log", std::to_string(errno));
+	throw std::runtime_error("ErrorAlEscucharUnMensajeParaElLog");
 }
 
 void EscuchadorLog::casoSocketCerrado(){
 	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion del mensaje para el Log. Se cierra el socket.");
-	throw runtime_error("ErrorAlEscucharMensajeDelLog");
+	throw std::runtime_error("ErrorAlEscucharMensajeDelLog");
 }
 
 void EscuchadorLog::casoExitoso(){
-	string mensajeLog(conjuntoMensajeLog.mensajeParaElLog);
+    std::string mensajeLog(conjuntoMensajeLog.mensajeParaElLog);
 	if(conjuntoMensajeLog.tipo == TIPO_ERROR){
 		Log::getInstance()->huboUnError(mensajeLog);
 	}

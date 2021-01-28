@@ -23,7 +23,7 @@ class Enemigo : public Colisionable{
 		virtual void agregarPosicion(int coordenadaX,int coordenadaY);
 		virtual void actualizarPosicion(rectangulo_t rectangulo);
         virtual bool sePuedeEliminar();
-        string obtenerColisionID() override = 0;
+        std::string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
         void chocarPorDerechaCon(Colisionable *colisionable) override;
         void chocarPorIzquierdaCon(Colisionable *colisionable) override;

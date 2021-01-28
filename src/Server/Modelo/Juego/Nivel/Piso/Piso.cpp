@@ -29,12 +29,12 @@ void Piso::inicializar() {
     }
 }
 
-list<Colisionable*> Piso::obtenerPiso() {
+std::list<Colisionable*> Piso::obtenerPiso() {
     return plataformas;
 }
 
-list<entidad_t> Piso::serializar() {
-    list<entidad_t> pozosSerializados;
+std::list<entidad_t> Piso::serializar() {
+    std::list<entidad_t> pozosSerializados;
     for(auto pozo: pozos){
         entidad_t pozo_serializado = pozo.serializar();
         pozosSerializados.push_back(pozo_serializado);

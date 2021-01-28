@@ -15,7 +15,7 @@ DibujadorInicio::DibujadorInicio(CargadorTexturas* cargadorTexturas, SDL_Rendere
 }
 
 
-void crearIndicacion(int* ticks, stringstream* indicacion){
+void crearIndicacion(int* ticks, std::stringstream* indicacion){
 	if(*ticks < 25){
 		*indicacion << "> Jugar";
 	}else if(*ticks < 50){
@@ -53,7 +53,7 @@ void DibujadorInicio::dibujar(){
 								alto_titulo};
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Titulo"),nullptr, &rectanguloTitulo);
 
-	stringstream indicacion;
+    std::stringstream indicacion;
 	indicacion.str("");
 	ticks_salto_triangulo++;
 	crearIndicacion(&ticks_salto_triangulo, &indicacion);

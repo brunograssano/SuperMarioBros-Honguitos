@@ -2,7 +2,7 @@
 
 IntentadorIniciarModelo::IntentadorIniciarModelo(const unsigned int cantidadConexiones,AplicacionServidor *aplicacionServidor,
                                                  std::map<int, ConexionCliente*> *mapaClientesJugando,
-                                                 std::map<int, string> *mapaIDNombre)
+                                                 std::map<int, std::string> *mapaIDNombre)
         : cantidadConexiones(cantidadConexiones) {
     this->aplicacionServidor = aplicacionServidor;
     this->mapaClientesJugando = mapaClientesJugando;

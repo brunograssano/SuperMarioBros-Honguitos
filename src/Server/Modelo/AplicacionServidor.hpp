@@ -18,13 +18,13 @@ class Servidor;
 
 class AplicacionServidor : public Thread{
 	public:
-		AplicacionServidor(Servidor* server,list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla);
+		AplicacionServidor(Servidor* server,std::list<Nivel*> niveles,int cantidadJugadores,int ancho_pantalla ,int  alto_pantalla);
 		~AplicacionServidor() override;
 		void iniciarJuego();
 		void desconectarJugador(int idJugador);
         nivel_t obtenerInfoNivel();
 		void encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario);
-		info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre, int IDJugador);
+		info_partida_t obtenerInfoPartida(std::map<int,std::string> mapaIDNombre, int IDJugador);
 		info_ronda_t obtenerInfoRonda();
 		void ejecutar() override;
 		void activarJugador(int idMarioConectandose);
@@ -40,7 +40,7 @@ class AplicacionServidor : public Thread{
 		Juego* juego;
         bool terminoElJuego;
 		bool comenzoElJuego;
-        queue<entrada_usuario_id_t> colaDeEntradasUsuario;
+        std::queue<entrada_usuario_id_t> colaDeEntradasUsuario;
 };
 
 

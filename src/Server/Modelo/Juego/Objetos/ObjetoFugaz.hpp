@@ -13,7 +13,7 @@ class ObjetoFugaz : public Colisionable{
         virtual int tipoDeEfecto() = 0;
         ~ObjetoFugaz() override = default;
 
-        string obtenerColisionID() override = 0;
+        std::string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override = 0;
         bool debeColisionar() override = 0;
 

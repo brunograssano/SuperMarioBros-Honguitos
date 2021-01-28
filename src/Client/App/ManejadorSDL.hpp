@@ -4,7 +4,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-using namespace std;
 #include<string>
 
 void iniciarSDL();
@@ -17,9 +16,9 @@ SDL_Window* crearVentana(const char *titulo, int alto, int ancho);
 
 void cargarIcono(SDL_Window* ventana);
 
-TTF_Font* cargarFuente(const string& direccion,int tamanio);
+TTF_Font* cargarFuente(const std::string& direccion,int tamanio);
 
-SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente);
+SDL_Texture* cargarTexturaTexto(const std::string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente);
 
 SDL_Texture* cargarTexturaImagen(const std::string& direccion, SDL_Renderer* renderizador);
 

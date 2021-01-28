@@ -1,7 +1,6 @@
 #ifndef SRC_LECTOR_PARSERLOG_HPP_
 #define SRC_LECTOR_PARSERLOG_HPP_
 
-using namespace std;
 #include <string>
 #include "../pugixml.hpp"
 #include "../ArchivoLeido.hpp"

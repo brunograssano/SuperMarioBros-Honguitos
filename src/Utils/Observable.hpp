@@ -2,7 +2,6 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_OBSERVABLE_HPP
 
 #include <list>
-using namespace std;
 
 class Observador;
 
@@ -13,7 +12,7 @@ class Observable {
         virtual void eliminar(Observador* observador);
         virtual void notificar();
     private:
-        list<Observador*> observadores;
+        std::list<Observador*> observadores;
 };
 
 

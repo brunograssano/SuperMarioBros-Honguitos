@@ -21,31 +21,29 @@
 #include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "src/Utils/Contador.hpp"
 
-using namespace std;
-
 const int ALTO_NIVEL = 600;
 
 class Nivel{
 	public:
-        Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso);
+        Nivel(int mundo, std::string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso);
         ~Nivel();
 		void inicializar();
         void agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int colorTuberia);
         void agregarPozo(int posicionX, int tipoPozo, int fondo);
-		void agregarPlataforma(list<Bloque *> unaPlataforma);
+		void agregarPlataforma(std::list<Bloque *> unaPlataforma);
 		void agregarEnemigo(Enemigo* unEnemigo);
 		void agregarMoneda(Moneda* unaMoneda);
 		int obtenerMundo() const;
 		int tiempoRestante();
-		void iniciar(const map<int, Mario*>& jugadores);
+		void iniciar(const std::map<int, Mario*>& jugadores);
 
         /* Completará la información de los siguientes campos:
          * tiempoFaltante, mundo, bloques[], enemigos[], monedas[],tuberias[], y sus respectivos topes */
 		void completarInformacionRonda(info_ronda_t* ptrInfoRonda, bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto);
-        void actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
-        bool todosEnLaMeta(const map<int, Mario*>& jugadores);
-		string obtenerDireccionFondoActual();
-        void terminar(const map<int, Mario*>& jugadores);
+        void actualizarModelo(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
+        bool todosEnLaMeta(const std::map<int, Mario*>& jugadores);
+        std::string obtenerDireccionFondoActual();
+        void terminar(const std::map<int, Mario*>& jugadores);
         void completarInformacionNivel(nivel_t *nivel);
         void aparecerDisparo(ObjetoFugaz* disparo);
         Podio* obtenerPodio();
@@ -56,10 +54,10 @@ class Nivel{
         void actualizarPosicionesEnemigos(rectangulo_t rectangulo);
         void actualizarMonedas();
         void actualizarObjetosFugaces();
-        void resolverColisiones(const map<int,Mario*>& jugadores);
+        void resolverColisiones(const std::map<int,Mario*>& jugadores);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
-        void resolverGanadores(const map<int, Mario *>& map);
+        void resolverGanadores(const std::map<int, Mario *>& map);
         void elevarObstaculos();
         void inicializarPosicionEnemigo();
         void inicializarPosicionMonedas();
@@ -68,14 +66,14 @@ class Nivel{
         static void agregarObjeto_helper(void* ptr_jugador, void* ptr_bloque, void* ptr_nivel);
         void utilizarSorpresa(Mario* jugador, Bloque* bloque);
 
-        map<int, bool> posicionesOcupadasXEnemigos;
-        map<tuple<int, int>, bool> posicionesOcupadas;
+        std::map<int, bool> posicionesOcupadasXEnemigos;
+        std::map<std::tuple<int, int>, bool> posicionesOcupadas;
 
-        list<Bloque*> plataformas;
-        list<Enemigo*> enemigos;
-        list<Moneda*> monedas;
-        list<Tuberia*> tuberias;
-        list<ObjetoFugaz*> objetosFugaces;
+        std::list<Bloque*> plataformas;
+        std::list<Enemigo*> enemigos;
+        std::list<Moneda*> monedas;
+        std::list<Tuberia*> tuberias;
+        std::list<ObjetoFugaz*> objetosFugaces;
         Piso piso;
 
         Meta meta;
@@ -83,14 +81,14 @@ class Nivel{
         Podio podio;
 
         int mundo;
-        string direccionFondo;
+        std::string direccionFondo;
         int cantidadMonedas;
         float puntoBanderaFin;
 
         void sacarObjetosFugaces();
         void actualizarBloques();
 
-        void imponerPosicionDeReaparicion(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
+        void imponerPosicionDeReaparicion(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
         void buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos);
         void buscarBloqueMasAlto(PosicionFija* posicion);
 };

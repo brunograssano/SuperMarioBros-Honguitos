@@ -6,7 +6,6 @@
 #include <iostream>
 #include <string>
 #include <utility>
-using namespace std;
 
 class Mario;
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
@@ -18,15 +17,15 @@ class Mario;
 class Juego{
 
 	private:
-		Juego(list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla);
+		Juego(std::list<Nivel*> nivelesLector, int cantJugadores, int alto_pantalla, int ancho_pantalla);
         void avanzarNivel();
 
         Camara camara;
         bool hanGanado;
-        map<int,Mario*> jugadores;
-		list<Nivel*> niveles;
+        std::map<int,Mario*> jugadores;
+        std::list<Nivel*> niveles;
 		podio_t podioAcumulado{};
-        vector<podio_t> podios;
+        std::vector<podio_t> podios;
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();
@@ -37,7 +36,7 @@ class Juego{
 		Juego(Juego &other) = delete;
         ~Juego();
 		static Juego* getInstance();
-		static Juego* getInstance(list<Nivel*> archivoLeido,int cantJugadores, int alto_pantalla, int ancho_pantalla);
+		static Juego* getInstance(std::list<Nivel*> archivoLeido,int cantJugadores, int alto_pantalla, int ancho_pantalla);
 
 		void iniciar();
 
@@ -51,7 +50,7 @@ class Juego{
 		void desconectarJugador(int idJugador);
 		void conectarJugador(int idMarioConectandose);
 
-        info_partida_t obtenerInfoPartida(map<int,string> mapaIDNombre,int IDJugador);
+        info_partida_t obtenerInfoPartida(std::map<int,std::string> mapaIDNombre,int IDJugador);
         info_ronda_t obtenerInfoRonda();
         nivel_t serializarNivel();
 

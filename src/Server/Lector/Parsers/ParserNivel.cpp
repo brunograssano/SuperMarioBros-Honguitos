@@ -28,13 +28,13 @@ bool seTieneUnaCantidadInvalidaDeMonedas(int cantidadMonedas){
 }
 
 void ParserNivel::parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido){
-	string direccionFondo = nivel.child_value("direccionFondo");
-    string puntoBanderaFinString = nivel.child_value("puntoBanderaFin");
-    string cantMonedasString = nivel.child_value("cantidadMonedas");
-    string mundoString = nivel.child_value("mundo");
-    string tiempoString = nivel.child_value("tiempoNivel");
+    std::string direccionFondo = nivel.child_value("direccionFondo");
+    std::string puntoBanderaFinString = nivel.child_value("puntoBanderaFin");
+    std::string cantMonedasString = nivel.child_value("cantidadMonedas");
+    std::string mundoString = nivel.child_value("mundo");
+    std::string tiempoString = nivel.child_value("tiempoNivel");
 
-    string mensajeCondicion = "El valor de mundo ("+ mundoString +") enviado no tiene valor valido, se carga el valor por defecto";
+    std::string mensajeCondicion = "El valor de mundo ("+ mundoString +") enviado no tiene valor valido, se carga el valor por defecto";
     int mundo = intentarObtenerNumero(archivoLeido, mundoString, elMundoTieneUnValorInvalido, mensajeCondicion,
                                       VALOR_POR_DEFECTO_MUNDO);
 
@@ -66,13 +66,13 @@ void ParserNivel::parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido){
     parsearUnNivel(nivel, archivoLeido, unNivel, "pozo", &parserPozos);
 }
 
-void ParserNivel::parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelAParsear, Parser *parser) {
+void ParserNivel::parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const std::string& nivelAParsear, Parser *parser) {
     for (pugi::xml_node tuberia: nivel.children(nivelAParsear.c_str())){
         parser->parsear(tuberia, unNivel, archivoLeido);
     }
 }
 
-void ParserNivel::parsearMultiplesNiveles(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelSuperior, string nivelInferior, Parser* parser) {
+void ParserNivel::parsearMultiplesNiveles(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const std::string& nivelSuperior, std::string nivelInferior, Parser* parser) {
     for (pugi::xml_node nodoSuperior: nivel.children(nivelSuperior.c_str())){
         for (pugi::xml_node nodo: nodoSuperior.children(nivelInferior.c_str())){
             parser->parsear(nodo, unNivel, archivoLeido);

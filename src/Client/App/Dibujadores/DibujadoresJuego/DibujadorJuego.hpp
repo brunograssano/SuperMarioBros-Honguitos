@@ -7,7 +7,6 @@
 #include <string>
 #include <sstream>
 
-using namespace std;
 #include "src/Client/App/CargadorTexturas.hpp"
 
 #include "src/Client/App/JuegoCliente/JuegoCliente.hpp"
@@ -32,9 +31,9 @@ class DibujadorJuego : public Dibujador{
 		~DibujadorJuego() override;
 
 	private:
-		stringstream textoDeTiempo;
-		stringstream textoDeNivel;
-		stringstream textoDePuntos;
+        std::stringstream textoDeTiempo;
+        std::stringstream textoDeNivel;
+        std::stringstream textoDePuntos;
 
         JuegoCliente* juegoCliente;
 		SDL_Rect rectanguloCamara{};
@@ -46,9 +45,9 @@ class DibujadorJuego : public Dibujador{
 		RecorteBloque* recorteSpriteBloque;
 		RecorteTuberia* recorteSpriteTuberia;
 
-		map<int, Recorte*> recortes;
-		map<int, string> clavesEfectos;
-		map<int, SDL_Color> colores;
+		std::map<int, Recorte*> recortes;
+        std::map<int, std::string> clavesEfectos;
+        std::map<int, SDL_Color> colores;
 
 		void dibujarEnemigos();
 		void dibujarPlataformas();

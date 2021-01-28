@@ -4,7 +4,6 @@
 
 class Cliente;
 #include "../Cliente.hpp"
-
 #include "../../Utils/Escuchador.hpp"
 
 class EscuchadorRonda: public Escuchador{
@@ -23,7 +22,7 @@ class EscuchadorRonda: public Escuchador{
         bool recibioMensajeValido();
 		Cliente* cliente;
 		info_ronda_t info_ronda{};
-		string error;
+        std::string error;
 };
 
 

@@ -6,7 +6,6 @@
 #include <string>
 #include <list>
 #include <SDL2/SDL.h>
-using namespace std;
 
 #include "src/Utils/Utils.hpp"
 
@@ -19,13 +18,13 @@ class JuegoCliente{
 
 		void agregarRonda(info_ronda_t ronda);
 		void actualizar();
-		map<int,jugador_t> obtenerJugadores();
-		list<entidad_t> obtenerEnemigos();
-		list<entidad_t> obtenerBloques();
-		list<entidad_t> obtenerMonedas();
-        list<entidad_t> obtenerTuberias();
-        list<entidad_t> obtenerEfectos();
-        list<entidad_t> obtenerPozos();
+        std::map<int,jugador_t> obtenerJugadores();
+        std::list<entidad_t> obtenerEnemigos();
+        std::list<entidad_t> obtenerBloques();
+        std::list<entidad_t> obtenerMonedas();
+        std::list<entidad_t> obtenerTuberias();
+        std::list<entidad_t> obtenerEfectos();
+        std::list<entidad_t> obtenerPozos();
         SDL_Rect rectanguloCamara{};
 		int obtenerTiempoFaltante() const;
 		int obtenerMundoActual() const;
@@ -35,22 +34,23 @@ class JuegoCliente{
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
         podio_t obtenerPodioPuntosAcumulados();
-        vector<podio_t> obtenerPodios();
+        std::vector<podio_t> obtenerPodios();
         bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
         void agregarNivel(nivel_t nivel);
 
     private:
         bool enRango(int posX, int w) const;
-		queue<info_ronda_t> rondas;
-		map<int,jugador_t> jugadores;
-		list<entidad_t> bloques;
-        list<entidad_t> ladrillos;
-        list<entidad_t> pozos;
-		list<entidad_t> enemigos;
-		list<entidad_t> monedas;
-        list<entidad_t> tuberias;
-        list<entidad_t> efectos;
-        vector<podio_t> podios;
+        static void cargarLista(std::list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope);
+        std::queue<info_ronda_t> rondas;
+        std::map<int,jugador_t> jugadores;
+        std::list<entidad_t> bloques;
+        std::list<entidad_t> ladrillos;
+        std::list<entidad_t> pozos;
+        std::list<entidad_t> enemigos;
+        std::list<entidad_t> monedas;
+        std::list<entidad_t> tuberias;
+        std::list<entidad_t> efectos;
+        std::vector<podio_t> podios;
         podio_t podioPuntosTotales{};
 		int cantidadJugadores;
 		int idPropio;
@@ -61,8 +61,6 @@ class JuegoCliente{
 		bool perdieron;
         bool hayQueCargarPodioNivel;
 		int nivelesJugados;
-
-        static void cargarLista(list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope);
 };
 
 

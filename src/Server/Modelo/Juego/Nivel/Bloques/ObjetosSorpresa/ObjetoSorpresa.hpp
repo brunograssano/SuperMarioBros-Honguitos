@@ -17,7 +17,7 @@ class ObjetoSorpresa : public ObjetoFugaz{
         int obtenerPosicionX() override = 0;
         int tipoDeEfecto() override = 0;
 
-        string obtenerColisionID() override = 0;
+        std::string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override = 0;
         bool debeColisionar() override = 0;
         virtual void sonar();

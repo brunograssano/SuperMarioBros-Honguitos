@@ -15,11 +15,11 @@ bool elColorDeLosEnemigosEsInvalido(int color){
 }
 
 void ParserEnemigo::parsear(pugi::xml_node enemigo, Nivel* unNivel, ArchivoLeido* archivoLeido){
-	string tipo = enemigo.child_value("tipo");
-	string colorEnemigoString = enemigo.child_value("color");
-    string cantEnemigosString = enemigo.child_value("cantidad");
+    std::string tipo = enemigo.child_value("tipo");
+    std::string colorEnemigoString = enemigo.child_value("color");
+    std::string cantEnemigosString = enemigo.child_value("cantidad");
 
-    string mensajeCondicion = "El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto";
+    std::string mensajeCondicion = "El valor de cantidad de enemigos ("+cantEnemigosString+") enviado no tiene valor valido,se carga el valor por defecto";
 	int cantidad = intentarObtenerNumero(archivoLeido, cantEnemigosString, laCantidadDeLosEnemigosEsInvalida,
                                          mensajeCondicion, VALOR_POR_DEFECTO_COLOR_ENEMIGO);
 

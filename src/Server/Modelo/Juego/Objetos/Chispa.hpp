@@ -17,7 +17,7 @@ class Chispa : public ObjetoFugaz{
         int tipoDeEfecto() override;
         ~Chispa() override;
 
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
 

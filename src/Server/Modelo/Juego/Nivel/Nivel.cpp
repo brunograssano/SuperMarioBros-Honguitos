@@ -8,7 +8,7 @@ const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
-Nivel::Nivel(int mundo, string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso)
+Nivel::Nivel(int mundo, std::string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso)
       : piso(altoPiso), meta(ANCHO_FONDO* (float) puntoBanderaFin /100),contador(tiempo, SEGUNDOS){
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
@@ -21,7 +21,7 @@ void Nivel::actualizarPosicionesEnemigos(rectangulo_t rectangulo) {
 	int i = 1;
 	for (auto& enemigo : enemigos) {
         enemigo->actualizarPosicion(rectangulo);
-	    log->mostrarPosicion("Enemigo " + to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
+	    log->mostrarPosicion("Enemigo " + std::to_string(i), enemigo->obtenerPosicionX(), enemigo->obtenerPosicionY());
 	    i++;
 	}
 }
@@ -45,7 +45,7 @@ void Nivel::actualizarObjetosFugaces() {
 }
 
 
-void Nivel::actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena){
+void Nivel::actualizarModelo(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena){
     actualizarPosicionesEnemigos(rectanguloEscena);
 
     imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
@@ -62,13 +62,13 @@ void Nivel::actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rec
     resolverGanadores(jugadores);
 }
 
-void Nivel::resolverColisiones(const map<int, Mario *>& jugadores) {
-    list<Colisionable*> plataformasPiso = piso.obtenerPiso();
+void Nivel::resolverColisiones(const std::map<int, Mario *>& jugadores) {
+    std::list<Colisionable*> plataformasPiso = piso.obtenerPiso();
 
     //todo: mejorar esto:
-    list<PiezaDeTuberia*> piezasDeTuberia;
+    std::list<PiezaDeTuberia*> piezasDeTuberia;
     for(auto& tuberia: tuberias){
-        list<PiezaDeTuberia*> piezasTuberiaActual = tuberia->obtenerPiezas();
+        std::list<PiezaDeTuberia*> piezasTuberiaActual = tuberia->obtenerPiezas();
         piezasDeTuberia.insert(piezasDeTuberia.end(), piezasTuberiaActual.begin(), piezasTuberiaActual.end());
     }
 
@@ -95,13 +95,13 @@ void Nivel::resolverColisiones(const map<int, Mario *>& jugadores) {
     }
 }
 
-void Nivel::resolverGanadores(const map<int, Mario *>& mapaJugadores) {
+void Nivel::resolverGanadores(const std::map<int, Mario *>& mapaJugadores) {
     for(auto const& parClaveJugador:mapaJugadores)
         meta.agregarSiPasoLaMeta(parClaveJugador.second);
 }
 
 void Nivel::sacarEnemigosMuertos(){
-    list<Enemigo*> enemigosABorrar;
+    std::list<Enemigo*> enemigosABorrar;
     for(auto enemigo : enemigos){
         if(enemigo->sePuedeEliminar()){
             enemigosABorrar.push_back(enemigo);
@@ -113,7 +113,7 @@ void Nivel::sacarEnemigosMuertos(){
     }
 }
 void Nivel::sacarMonedasAgarradas() {
-    list<Moneda*> monedasABorrar;
+    std::list<Moneda*> monedasABorrar;
     for(auto moneda : monedas){
         if(moneda->fueAgarrada()){
             monedasABorrar.push_back(moneda);
@@ -126,7 +126,7 @@ void Nivel::sacarMonedasAgarradas() {
 }
 
 void Nivel::sacarObjetosFugaces() {
-    list<ObjetoFugaz*> objetosABorrar;
+    std::list<ObjetoFugaz*> objetosABorrar;
     for(auto const& objeto: objetosFugaces){
         if(objeto->debeDesaparecer()){
             objetosABorrar.push_back(objeto);
@@ -139,7 +139,7 @@ void Nivel::sacarObjetosFugaces() {
 }
 
 
-string Nivel::obtenerDireccionFondoActual(){
+std::string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
 }
 
@@ -147,7 +147,7 @@ int Nivel::obtenerMundo() const{
     return mundo;
 }
 
-void Nivel::agregarPlataforma(list<Bloque *> unaPlataforma){
+void Nivel::agregarPlataforma(std::list<Bloque *> unaPlataforma){
     plataformas.splice(plataformas.end(),unaPlataforma);
 }
 void Nivel::agregarEnemigo(Enemigo* unEnemigo){
@@ -161,7 +161,7 @@ bool Nivel::esUnaPosicionXValidaEnemigo(int numeroPosicion){
 }
 
 bool Nivel::esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY){
-	return !posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)];
+	return !posicionesOcupadas[std::make_tuple(numeroPosicionX, numeroPosicionY)];
 }
 
 void Nivel::inicializar() {
@@ -187,14 +187,14 @@ void Nivel::elevarObstaculos() {
 
 void Nivel::inicializarPosicionesOcupadasPorBloques(){
 
-    list<Bloque *> plataformasARemover;
+    std::list<Bloque *> plataformasARemover;
     for(auto const& bloque : plataformas){
         if((bloque->obtenerPosicionX() >= (int) puntoBanderaFin) || (bloque->obtenerPosicionY() >= ALTO_NIVEL)){
-            Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + to_string(bloque->obtenerPosicionX()) +
-                    + " Y: "+to_string(bloque->obtenerPosicionX()) +	" se elimina");
+            Log::getInstance()->huboUnError("No se pudo poner un bloque en la posicion X: " + std::to_string(bloque->obtenerPosicionX()) +
+                    + " Y: "+std::to_string(bloque->obtenerPosicionX()) +	" se elimina");
             plataformasARemover.push_back(bloque);
         }
-        posicionesOcupadas[make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
+        posicionesOcupadas[std::make_tuple(bloque->obtenerPosicionX()/TAMANIO_BLOQUE, bloque->obtenerPosicionY()/TAMANIO_BLOQUE)] = true;
     }
 
     for(auto const& bloque : plataformasARemover){
@@ -211,7 +211,7 @@ void Nivel::inicializarPosicionOcupadasPorTuberias(){
         posicionYOcupada = 0;
         for(int i = 0; i < posicionesQueOcupaUnaTuberia; i++) {
             for(int j = 0; j < posicionesQueOcupaUnaTuberia; j++){
-                posicionesOcupadas[make_tuple(posicionXOcupada+i, posicionYOcupada+j)] = true;
+                posicionesOcupadas[std::make_tuple(posicionXOcupada+i, posicionYOcupada+j)] = true;
             }
         }
     }
@@ -224,7 +224,7 @@ void Nivel::inicializarPosicionMonedas(){
 	int cantidadMaximaMonedas = (int)(puntoBanderaFin/2)/(TAMANIO_MONEDA);
 
 	if(cantidadMonedas > cantidadMaximaMonedas){
-		Log::getInstance()->huboUnError("No se pueden poner " + to_string(cantidadMonedas) +" monedas, se ponen entonces: " + to_string(cantidadMaximaMonedas));
+		Log::getInstance()->huboUnError("No se pueden poner " + std::to_string(cantidadMonedas) +" monedas, se ponen entonces: " + std::to_string(cantidadMaximaMonedas));
 	}
 
 	int numeroPosicionX = 0, numeroPosicionY = 0, coordenadaX = 0, coordenadaY = 0;
@@ -241,7 +241,7 @@ void Nivel::inicializarPosicionMonedas(){
 			numeroPosicionY = rand() % (limiteYSuperior/TAMANIO_MONEDA + 1 - limiteYInferior/TAMANIO_MONEDA) + limiteYInferior/TAMANIO_MONEDA;
 		}while(!this->esUnaPosicionValidaMoneda(numeroPosicionX, numeroPosicionY));
 
-		this->posicionesOcupadas[make_tuple(numeroPosicionX, numeroPosicionY)] = true;
+		this->posicionesOcupadas[std::make_tuple(numeroPosicionX, numeroPosicionY)] = true;
 
 		coordenadaX = numeroPosicionX*TAMANIO_MONEDA;
 		coordenadaY = numeroPosicionY*TAMANIO_MONEDA;
@@ -265,8 +265,8 @@ void Nivel::inicializarPosicionEnemigo(){
 	unsigned int cantidadMaximaEnemigos =  (unsigned int)(puntoBanderaFin/3)/TAMANIO_ENEMIGO;
 
 	if(enemigos.size()>=cantidadMaximaEnemigos){
-			Log::getInstance()->huboUnError("No se pudieron cargar "+ to_string((int)enemigos.size()) +
-				" enemigos, se carga la cantidad maxima permitida para este nivel: " + to_string((int)cantidadMaximaEnemigos));
+			Log::getInstance()->huboUnError("No se pudieron cargar "+ std::to_string((int)enemigos.size()) +
+				" enemigos, se carga la cantidad maxima permitida para este nivel: " + std::to_string((int)cantidadMaximaEnemigos));
 			auto iterador1 = enemigos.begin();
 			auto iterador2 = enemigos.end();
 			advance(iterador1, cantidadMaximaEnemigos-1);
@@ -352,7 +352,7 @@ void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
     piso.agregarPozo(posicionX, tipoPozo, fondo);
 }
 
-void Nivel::terminar(const map<int, Mario *>& jugadores) {
+void Nivel::terminar(const std::map<int, Mario *>& jugadores) {
     meta.sumarPuntos(contador.tiempoRestante());
 
     for(auto const& parJugador:jugadores){
@@ -360,7 +360,7 @@ void Nivel::terminar(const map<int, Mario *>& jugadores) {
     }
 }
 
-bool Nivel::todosEnLaMeta(const map<int, Mario *>& jugadores) {
+bool Nivel::todosEnLaMeta(const std::map<int, Mario *>& jugadores) {
     return meta.todosEnLaMeta(jugadores);
 }
 
@@ -373,7 +373,7 @@ void Nivel::completarInformacionNivel(nivel_t *nivel) {
         }
     }
 
-    list<entidad_t> pozos = piso.serializar();
+    std::list<entidad_t> pozos = piso.serializar();
     for(auto const& pozo: pozos){
         if(nivel->topePozos<MAX_POZOS){
             nivel->pozos[nivel->topePozos] = pozo;
@@ -411,7 +411,7 @@ Nivel::~Nivel (){
 
 }
 
-void Nivel::iniciar(const map<int, Mario*>& jugadores) {
+void Nivel::iniciar(const std::map<int, Mario*>& jugadores) {
     contador.iniciar();
     podio.recibirJugadores(jugadores);
     for(auto const& parJugador:jugadores){
@@ -473,7 +473,7 @@ void Nivel::buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* po
 }
 
 
-void Nivel::imponerPosicionDeReaparicion(const map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena) {
+void Nivel::imponerPosicionDeReaparicion(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena) {
     PosicionFija posicionDeReaparicion(rectanguloEscena.x1, piso.obtenerAltura());
 
     bool hayPiso = piso.obtenerRespawn(rectanguloEscena, &posicionDeReaparicion);
@@ -503,7 +503,7 @@ void Nivel::buscarBloqueMasAlto(PosicionFija* posicion) {
     }
 
     for(auto const& tuberia: tuberias){
-        list<PiezaDeTuberia*> piezas = tuberia->obtenerPiezas();
+        std::list<PiezaDeTuberia*> piezas = tuberia->obtenerPiezas();
         for(auto const& pieza: piezas){
             rectangulo_t rectanguloPieza = pieza->obtenerRectangulo();
             if(xACaer <= rectanguloPieza.x2 &&

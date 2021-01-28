@@ -9,7 +9,7 @@
 class MarioDeFuego : public ModificadorMario{
     public:
         explicit MarioDeFuego(Mario* marioAsociado);
-        ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario);
+        ObjetoFugaz* dispararFuego(PosicionFija posicionManosMario, int direccion, float velocidadDeMario) override;
         ModificadorMario* perderVida(VidaMario* vidaMario)override;
         void actualizar()override;
         ModificadorMario* hacerseDeFuego() override;

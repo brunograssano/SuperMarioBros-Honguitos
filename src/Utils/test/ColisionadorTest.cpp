@@ -1,7 +1,7 @@
 #include "ColisionadorTest.hpp"
 #include "src/Utils/colisiones/Colisionador.hpp"
 #include "src/Utils/Utils.hpp"
-
+using namespace std;
 #define CYAN "\u001b[36m"
 #define AZUL_CLARO "\e[1;34m"
 #define RESET "\x1b[0m"

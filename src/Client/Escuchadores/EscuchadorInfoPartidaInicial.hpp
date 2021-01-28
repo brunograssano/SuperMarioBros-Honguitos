@@ -18,7 +18,7 @@ class EscuchadorInfoPartidaInicial : public Escuchador{
 	private:
 		info_partida_t info_partida;
 		Cliente* cliente;
-		string error = "";
+        std::string error = "";
 };
 
 

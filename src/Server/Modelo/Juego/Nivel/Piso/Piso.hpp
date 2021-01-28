@@ -13,15 +13,15 @@ class Piso {
         void inicializar();
         ~Piso();
         void agregarPozo(int posicionPozo, int tipoPozo, int fondo);
-        list<Colisionable*> obtenerPiso();
-        list<entidad_t> serializar();
+        std::list<Colisionable*> obtenerPiso();
+        std::list<entidad_t> serializar();
         int obtenerAltura() const;
         bool obtenerRespawn(rectangulo_t rectangulo, Posicion* posicion);
 
     private:
         int alto;
-        list<Pozo> pozos;
-        list<Colisionable*> plataformas;
+        std::list<Pozo> pozos;
+        std::list<Colisionable*> plataformas;
         bool obtenerXRespawn(rectangulo_t rectangulo, int* x);
 };
 

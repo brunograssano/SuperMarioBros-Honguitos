@@ -21,7 +21,7 @@ void Tuberia::crearColisionables(int x, int tipoDeTuberia) {
 }
 
 bool Tuberia::colisionaCon(Tuberia *otraTuberia) {
-    list<PiezaDeTuberia*> piezasOtraTuberia = otraTuberia->obtenerPiezas();
+    std::list<PiezaDeTuberia*> piezasOtraTuberia = otraTuberia->obtenerPiezas();
     bool colisionoUnaPieza = false;
     for(auto const& pieza : piezas){
         for(auto const& otraPieza : piezasOtraTuberia){
@@ -51,6 +51,6 @@ void Tuberia::elevar(int y) {
     }
 }
 
-list<PiezaDeTuberia *> Tuberia::obtenerPiezas() {
+std::list<PiezaDeTuberia *> Tuberia::obtenerPiezas() {
     return piezas;
 }

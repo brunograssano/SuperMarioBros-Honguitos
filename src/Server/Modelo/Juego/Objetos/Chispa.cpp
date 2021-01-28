@@ -31,7 +31,7 @@ int Chispa::obtenerPosicionX() {
     return posicion->obtenerPosX();
 }
 
-string Chispa::obtenerColisionID() {
+std::string Chispa::obtenerColisionID() {
     return COLISION_ID_CHISPA;
 }
 

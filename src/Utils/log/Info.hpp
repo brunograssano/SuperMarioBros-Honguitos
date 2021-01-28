@@ -11,8 +11,8 @@ class Info : public TipoLog{
 
 		// No hace el nivel de Debug, por lo que las sobreescribe para no hacer nada
 
-		void mostrarPosicion(const string& registroPosicion,ofstream& archivo) override {};
-		void mostrarAccion(const string& registroAccion,ofstream& archivo) override {};
+		void mostrarPosicion(const std::string& registroPosicion,std::ofstream& archivo) override {};
+		void mostrarAccion(const std::string& registroAccion,std::ofstream& archivo) override {};
 
 };
 

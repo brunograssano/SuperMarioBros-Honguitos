@@ -12,7 +12,7 @@ pthread_mutex_t mutexEscrituraLog = PTHREAD_MUTEX_INITIALIZER;
 Log::Log(TipoLog *tipoLog) {
     this->tipoLog = tipoLog;
 
-    string nombreArchivo = "Log - ";
+    std::string nombreArchivo = "Log - ";
     time(&tiempo);
     char* tiempoActual = ctime(&tiempo);
     nombreArchivo = nombreArchivo +tiempoActual;
@@ -43,52 +43,52 @@ Log::~Log(){
 }
 
 //DEBUG//
-void Log::mostrarPosicion(const string& nombreEntidad,int coordenadaX, int coordenadaY){
+void Log::mostrarPosicion(const std::string& nombreEntidad,int coordenadaX, int coordenadaY){
 	pthread_mutex_lock(&mutexEscrituraLog);
-	string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + to_string(coordenadaX) + "," + to_string(coordenadaY) + ")");
+    std::string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + std::to_string(coordenadaX) + "," + std::to_string(coordenadaY) + ")");
 	tipoLog->mostrarPosicion(mensaje, archivoLog);
 	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-void Log::mostrarAccion(const string& accion){
+void Log::mostrarAccion(const std::string& accion){
 	pthread_mutex_lock(&mutexEscrituraLog);
-	string mensaje = armarMensaje(" - " + accion,"");
+    std::string mensaje = armarMensaje(" - " + accion,"");
 	tipoLog->mostrarAccion(mensaje, archivoLog);
 	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
 //INFO//
-void Log::mostrarMensajeDeInfo(const string& mensajeInfo){
+void Log::mostrarMensajeDeInfo(const std::string& mensajeInfo){
 	pthread_mutex_lock(&mutexEscrituraLog);
-	string mensaje = armarMensaje(" - " + mensajeInfo,"");
+    std::string mensaje = armarMensaje(" - " + mensajeInfo,"");
 	tipoLog->mostrarMensajeDeInfo(mensaje, archivoLog);
 	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-void Log::mostrarMensajeDeCarga(const string& idObjetoCargado,const string& rutaObjetoCargado){
+void Log::mostrarMensajeDeCarga(const std::string& idObjetoCargado,const std::string& rutaObjetoCargado){
 	pthread_mutex_lock(&mutexEscrituraLog);
-	string mensaje = armarMensaje(" - Se cargo " + idObjetoCargado, " desde la ruta " + rutaObjetoCargado);
+    std::string mensaje = armarMensaje(" - Se cargo " + idObjetoCargado, " desde la ruta " + rutaObjetoCargado);
 	tipoLog->mostrarMensajeDeCarga(mensaje, archivoLog);
 	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
 //ERRORES//
-void Log::huboUnErrorSDL(const string& descripcionError, const string& errorSDL){
+void Log::huboUnErrorSDL(const std::string& descripcionError, const std::string& errorSDL){
 	pthread_mutex_lock(&mutexEscrituraLog);
-	string mensaje= armarMensaje(" - " + descripcionError, " ---- " + errorSDL);
+    std::string mensaje= armarMensaje(" - " + descripcionError, " ---- " + errorSDL);
 	tipoLog->huboUnError(mensaje, archivoLog);
 	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-void Log::huboUnError(const string& descripcionError){
+void Log::huboUnError(const std::string& descripcionError){
 	pthread_mutex_lock(&mutexEscrituraLog);
-	string mensaje = armarMensaje(descripcionError,"");
+    std::string mensaje = armarMensaje(descripcionError,"");
 	tipoLog->huboUnError(mensaje, archivoLog);
 	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-string Log::armarMensaje(const string& primeraParte, const string& segundaParte) {
-	string mensaje = "";
+std::string Log::armarMensaje(const std::string& primeraParte, const std::string& segundaParte) {
+    std::string mensaje = "";
 	time(&tiempo);
 	char *tiempoActual = ctime(&tiempo);
 	mensaje = mensaje + tiempoActual;

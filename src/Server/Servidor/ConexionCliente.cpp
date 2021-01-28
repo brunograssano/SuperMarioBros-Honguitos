@@ -3,7 +3,7 @@
 #include "src/Server/EnviadoresServer/EnviadorConexionCliente.hpp"
 #include "src/Server/EscuchadoresServer/EscuchadorConexionCliente.hpp"
 
-ConexionCliente::ConexionCliente(Servidor *servidor, int socket, string ip, actualizacion_cantidad_jugadores_t informacionAMandar) {
+ConexionCliente::ConexionCliente(Servidor *servidor, int socket, std::string ip, actualizacion_cantidad_jugadores_t informacionAMandar) {
 	this->servidor = servidor;
 	this->socket = socket;
 	this->ip = std::move(ip);
@@ -17,7 +17,7 @@ ConexionCliente::ConexionCliente(Servidor *servidor, int socket, string ip, actu
 	this->informacionAMandar = informacionAMandar;
 }
 
-void ConexionCliente::recibirCredencial(string posibleNombre, string posibleContrasenia){
+void ConexionCliente::recibirCredencial(std::string posibleNombre, std::string posibleContrasenia){
 	this->nombre = std::move(posibleNombre);
 	this->contrasenia = std::move(posibleContrasenia);
 	recibioCredenciales = true;
@@ -56,8 +56,7 @@ void ConexionCliente::ejecutar(){
         agregarMensajeAEnviar(VERIFICACION,&esUsuarioValido);
         if (esUsuarioValido) {
             Log::getInstance()->mostrarMensajeDeInfo(
-                    "Se acepto el usuario: " + nombre + " con contrasenia: " + contrasenia + " del cliente: " +
-                    this->ip);
+                    "Se acepto el usuario: " + nombre + " con contrasenia: " + contrasenia + " del cliente: " + ip);
         } else {
             esperarCredenciales();
         }
@@ -85,7 +84,7 @@ void ConexionCliente::agregarIDJuego(int IDJugador){
     idPropio = IDJugador;
 }
 
-string ConexionCliente::obtenerIP() {
+std::string ConexionCliente::obtenerIP() {
     return ip;
 }
 
@@ -99,10 +98,10 @@ ConexionCliente::~ConexionCliente(){
 
 	int resultado = shutdown(socket, SHUT_RDWR);
 	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el shutdown del socket del usuario: "+nombre,to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el shutdown del socket del usuario: "+nombre,std::to_string(errno));
 	}
 	resultado = close(socket);
 	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el close del socket del usuario: "+nombre,to_string(errno));
+		Log::getInstance()->huboUnErrorSDL("Hubo un problema al hacer el close del socket del usuario: "+nombre,std::to_string(errno));
 	}
 }

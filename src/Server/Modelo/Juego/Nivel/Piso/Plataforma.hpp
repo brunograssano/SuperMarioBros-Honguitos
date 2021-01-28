@@ -9,7 +9,7 @@ class Plataforma : public Colisionable{
         Plataforma(int comienzoPlataformaX,int finPlataformaX,int alto);
         ~Plataforma() override = default;
         rectangulo_t obtenerRectangulo() override;
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         bool debeColisionar() override;
 
     private:

@@ -59,7 +59,7 @@ SDL_Rect JuegoCliente::obtenerCamara()const{
 	return rectanguloCamara;
 }
 
-void JuegoCliente::cargarLista(list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope) {
+void JuegoCliente::cargarLista(std::list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope) {
     listaACargar->clear();
     for(int i=0;i<tope;i++){
         listaACargar->push_front(vector[i]);
@@ -97,8 +97,8 @@ void JuegoCliente::actualizar(){
 		jugadores[i].mario=ronda.jugadores[i];
 	}
 
-    list<entidad_t> ladrillosASacar;
-    list<entidad_t> ladrillosNuevos;
+    std::list<entidad_t> ladrillosASacar;
+    std::list<entidad_t> ladrillosNuevos;
     bool agregado = false;
     for(auto ladrillo: ladrillos){
         if(enRango(ladrillo.x, LARGO_BLOQUE)){
@@ -128,15 +128,15 @@ int JuegoCliente::obtenerIDPropio() const{
 	return idPropio;
 }
 
-map<int,jugador_t> JuegoCliente::obtenerJugadores(){
+std::map<int,jugador_t> JuegoCliente::obtenerJugadores(){
 	return jugadores;
 }
 
-list<entidad_t> JuegoCliente::obtenerEnemigos(){
+std::list<entidad_t> JuegoCliente::obtenerEnemigos(){
 	return enemigos;
 }
 
-list<entidad_t> JuegoCliente::obtenerBloques(){
+std::list<entidad_t> JuegoCliente::obtenerBloques(){
 	return bloques;
 }
 
@@ -144,11 +144,11 @@ bool JuegoCliente::enRango(int posX, int w) const {
     return (rectanguloCamara.x - RANGO_VISTA) <= posX + w && posX <= (rectanguloCamara.x + anchoVista + RANGO_VISTA);
 }
 
-list<entidad_t> JuegoCliente::obtenerMonedas(){
+std::list<entidad_t> JuegoCliente::obtenerMonedas(){
 	return monedas;
 }
 
-vector<podio_t> JuegoCliente::obtenerPodios(){
+std::vector<podio_t> JuegoCliente::obtenerPodios(){
     return this->podios;
 }
 
@@ -160,8 +160,8 @@ int JuegoCliente::obtenerMundoActual() const{
 	return numeroMundo;
 }
 
-list<entidad_t> JuegoCliente::obtenerPozos() {
-    list<entidad_t> pozosAMostrar;
+std::list<entidad_t> JuegoCliente::obtenerPozos() {
+    std::list<entidad_t> pozosAMostrar;
     for(auto pozo:pozos){
         if(enRango(pozo.x, ANCHO_POZO)){
             pozosAMostrar.push_front(pozo);
@@ -171,8 +171,8 @@ list<entidad_t> JuegoCliente::obtenerPozos() {
 }
 
 
-list<entidad_t> JuegoCliente::obtenerTuberias() {
-    list<entidad_t> tuberiasAMostrar;
+std::list<entidad_t> JuegoCliente::obtenerTuberias() {
+    std::list<entidad_t> tuberiasAMostrar;
     for(auto tuberia:tuberias){
         int ancho = tuberia.tipo==TUBERIA_CHICA?ANCHO_TUBERIA_CHICA:ANCHO_TUBERIA_GRANDE;
         if(enRango(tuberia.x, ancho)){
@@ -182,7 +182,7 @@ list<entidad_t> JuegoCliente::obtenerTuberias() {
     return tuberiasAMostrar;
 }
 
-list<entidad_t> JuegoCliente::obtenerEfectos() {
+std::list<entidad_t> JuegoCliente::obtenerEfectos() {
     return efectos;
 }
 

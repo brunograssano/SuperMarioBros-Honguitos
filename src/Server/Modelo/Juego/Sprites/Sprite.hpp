@@ -10,7 +10,7 @@ class Sprite{
             return estadoActual;
         }
 
-protected:
+    protected:
 		int ciclos = 0;
 		int estadoActual = 0;
 };

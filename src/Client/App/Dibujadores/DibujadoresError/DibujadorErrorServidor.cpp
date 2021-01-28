@@ -11,10 +11,10 @@ void DibujadorErrorServidor::dibujar(){
 	SDL_SetRenderDrawColor( renderizador, 0, 0, 0, 255 );
 	SDL_RenderClear( renderizador );
 
-	stringstream textoError;
+    std::stringstream textoError;
 	textoError.str("");
 	textoError << "Ocurrio un error en la conexion con el Servidor.";
-	stringstream textoInfo;
+    std::stringstream textoInfo;
 	textoInfo.str("");
 	textoInfo << "Para mas informacion revise su archivo log en la carpeta \"/logs/\"";
 

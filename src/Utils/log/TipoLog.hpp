@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 #include <utility>
-using namespace std;
 
 class TipoLog{
 
@@ -13,33 +12,19 @@ class TipoLog{
 		virtual ~TipoLog()= default;
 
 		//DEBUG//
-		virtual void mostrarPosicion(const string& registroPosicion,ofstream& archivo){
-			escribirEnLog(" [DEBUG] ",registroPosicion,archivo);
-		}
-
-		virtual void mostrarAccion(const string& registroAccion,ofstream& archivo){
-			escribirEnLog(" [DEBUG] ",registroAccion,archivo);
-		}
+		virtual void mostrarPosicion(const std::string& registroPosicion,std::ofstream& archivo);
+		virtual void mostrarAccion(const std::string& registroAccion,std::ofstream& archivo);
 
 		//INFO//
-		virtual void mostrarMensajeDeInfo(const string& registroInfo,ofstream& archivo){
-			escribirEnLog(" [INFO] ",registroInfo,archivo);
-		}
-		virtual void mostrarMensajeDeCarga(const string& registroInfo,ofstream& archivo){
-			escribirEnLog(" [INFO] ",registroInfo,archivo);
-		}
+		virtual void mostrarMensajeDeInfo(const std::string& registroInfo,std::ofstream& archivo);
+		virtual void mostrarMensajeDeCarga(const std::string& registroInfo,std::ofstream& archivo);
 
 		//ERRORES//
-		virtual void huboUnError(const string& registroError,ofstream& archivo){
-			escribirEnLog(" [ERROR] ",registroError,archivo);
-		}
+		virtual void huboUnError(const std::string& registroError,std::ofstream& archivo);
 
 
 	private:
-
-		static void escribirEnLog(const string& tipo,const string& registroError,ofstream& archivo){
-			archivo << tipo + registroError << endl;
-		}
+		static void escribirEnLog(const std::string& tipo,const std::string& registroError,std::ofstream& archivo);
 
 };
 

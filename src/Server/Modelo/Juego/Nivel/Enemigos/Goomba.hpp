@@ -8,7 +8,7 @@ class Goomba : public Enemigo{
 		explicit Goomba(int tipoColor);
         entidad_t serializar() override;
 		~Goomba() override;
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
 };
 
 #endif /* SRC_MODELO_ENEMIGOS_GOOMBA_HP_ */

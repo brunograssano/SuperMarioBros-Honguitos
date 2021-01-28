@@ -14,7 +14,7 @@ class EscuchadorConexionCliente : public Thread{
         void agregarEscuchadorEntrada(int IDjugador,Servidor* servidor);
     private:
         ConexionCliente* cliente;
-        map<char,Escuchador*> escuchadores;
+        std::map<char,Escuchador*> escuchadores;
         int socket;
         int idJugador;
 };

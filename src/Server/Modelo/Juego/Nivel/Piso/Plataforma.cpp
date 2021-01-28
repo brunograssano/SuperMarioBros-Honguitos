@@ -11,7 +11,7 @@ rectangulo_t Plataforma::obtenerRectangulo() {
 
 void Plataforma::inicializarMapasDeColision(){}
 
-string Plataforma::obtenerColisionID() {
+std::string Plataforma::obtenerColisionID() {
     return COLISION_ID_PLATAFORMA;
 }
 

@@ -7,17 +7,17 @@ EscuchadorRonda::EscuchadorRonda(int socket, Cliente* cliente){
 	this->cliente = cliente;
 	structPointer = &this->info_ronda;
 	bytes = sizeof(info_ronda_t);
-	error = string("");
+	error = std::string("");
 }
 
 void EscuchadorRonda::casoError(int resultado){
-	Log::getInstance()->huboUnErrorSDL("Hubo un error al escuchar informacion de la ronda, se cierra el socket", to_string(errno));
-	throw runtime_error("ErrorAlEscucharInformacionDeLaRonda");
+	Log::getInstance()->huboUnErrorSDL("Hubo un error al escuchar informacion de la ronda, se cierra el socket", std::to_string(errno));
+	throw std::runtime_error("ErrorAlEscucharInformacionDeLaRonda");
 }
 
 void EscuchadorRonda::casoSocketCerrado(){
 	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de la ronda, se cierra el socket");
-	throw runtime_error("ErrorAlEscucharInformacionDeLaRonda");
+	throw std::runtime_error("ErrorAlEscucharInformacionDeLaRonda");
 }
 
 
@@ -56,13 +56,13 @@ bool EscuchadorRonda::recibioMensajeValido(){
 	bool ocurrioError = false;
 
 	if(!bloquesValidos(info_ronda.bloques, info_ronda.topeBloques)){
-		error = string("El vector de bloques posee al menos un bloque invalido.");
+		error = std::string("El vector de bloques posee al menos un bloque invalido.");
 		ocurrioError = true;
 	}else if(!monedasValidas(info_ronda.monedas, info_ronda.topeMonedas)){
-		error = string("El vector de monedas posee al menos un bloque invalido.");
+		error = std::string("El vector de monedas posee al menos un bloque invalido.");
 		ocurrioError = true;
 	}else if(!enemigosValidos(info_ronda.enemigos, info_ronda.topeEnemigos)){
-		error = string("El vector de enemigos posee al menos un enemigo invalido.");
+		error = std::string("El vector de enemigos posee al menos un enemigo invalido.");
 		ocurrioError = true;
 	}
 	return !ocurrioError;

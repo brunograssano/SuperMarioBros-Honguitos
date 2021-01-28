@@ -9,8 +9,6 @@
 #include "src/Utils/colisiones/Colisionador.hpp"
 #include "src/Utils/Utils.hpp"
 
-using namespace std;
-
 class Colisionable{
 
     public:
@@ -25,16 +23,16 @@ class Colisionable{
         virtual void chocarPorIzquierdaCon(Colisionable* colisionable);
         virtual void chocarPorArribaCon(Colisionable* colisionable);
         virtual void chocarPorAbajoCon(Colisionable* colisionable);
-        virtual string obtenerColisionID() = 0;
+        virtual std::string obtenerColisionID() = 0;
         virtual rectangulo_t obtenerRectangulo() = 0;
         virtual bool debeColisionar() = 0;
     protected:
-        map<std::string, parFuncionColisionContexto_t> mapaColisionesPorDerecha;
-        map<std::string, parFuncionColisionContexto_t> mapaColisionesPorIzquierda;
-        map<std::string, parFuncionColisionContexto_t> mapaColisionesPorArriba;
-        map<std::string, parFuncionColisionContexto_t> mapaColisionesPorAbajo;
+        std::map<std::string, parFuncionColisionContexto_t> mapaColisionesPorDerecha;
+        std::map<std::string, parFuncionColisionContexto_t> mapaColisionesPorIzquierda;
+        std::map<std::string, parFuncionColisionContexto_t> mapaColisionesPorArriba;
+        std::map<std::string, parFuncionColisionContexto_t> mapaColisionesPorAbajo;
         virtual void inicializarMapasDeColision() = 0;
-        void ejecutarFuncionDeColision(map<std::string, parFuncionColisionContexto_t> mapaColisiones, Colisionable* colisionable);
+        void ejecutarFuncionDeColision(std::map<std::string, parFuncionColisionContexto_t> mapaColisiones, Colisionable* colisionable);
 };
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_COLISIONABLE_HPP

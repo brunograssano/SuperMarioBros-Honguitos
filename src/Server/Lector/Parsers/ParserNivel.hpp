@@ -1,7 +1,6 @@
 #ifndef SRC_LECTOR_PARSERNIVEL_HPP_
 #define SRC_LECTOR_PARSERNIVEL_HPP_
 
-using namespace std;
 #include <string>
 #include "../pugixml.hpp"
 #include "../ArchivoLeido.hpp"
@@ -15,10 +14,10 @@ class ParserNivel : public Parser{
 
     private:
         static void parsearMultiplesNiveles(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel,
-                            const string& nivelSuperior,
-                            string nivelInferior, Parser* parser) ;
+                            const std::string& nivelSuperior,
+                            std::string nivelInferior, Parser* parser) ;
 
-    static void parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const string& nivelAParsear,
+        static void parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const std::string& nivelAParsear,
                         Parser *parser) ;
 };
 

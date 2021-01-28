@@ -1,6 +1,6 @@
 #include "Parser.hpp"
 
-int Parser::intentarObtenerNumero(ArchivoLeido* archivoLeido, const string& numeroString, condicionACumplir esValorInvalido, const string& mensajeCondicion, int VALOR_DEFECTO) {
+int Parser::intentarObtenerNumero(ArchivoLeido* archivoLeido, const std::string& numeroString, condicionACumplir esValorInvalido, const std::string& mensajeCondicion, int VALOR_DEFECTO) {
     int numero;
     try{
         numero = stoi(numeroString);

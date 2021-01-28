@@ -31,7 +31,7 @@ int FlorDeFuego::obtenerPosicionX() {
     return posicionFija.obtenerPosX();
 }
 
-string FlorDeFuego::obtenerColisionID() {
+std::string FlorDeFuego::obtenerColisionID() {
     return COLISION_ID_FLOR;
 }
 

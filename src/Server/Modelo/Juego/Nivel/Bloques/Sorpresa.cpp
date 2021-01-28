@@ -46,7 +46,7 @@ ObjetoSorpresa* Sorpresa::colisionaronAbajo() {
     return new SinSorpresa();
 }
 
-string Sorpresa::obtenerColisionID() {
+std::string Sorpresa::obtenerColisionID() {
     return COLISION_ID_SORPRESA;
 }
 

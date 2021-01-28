@@ -16,7 +16,7 @@ void Colisionable::chocarPorAbajoCon(Colisionable *colisionable) {
     ejecutarFuncionDeColision(mapaColisionesPorAbajo, colisionable);
 }
 
-void Colisionable::ejecutarFuncionDeColision(map<std::string, parFuncionColisionContexto_t> mapaColisiones, Colisionable* colisionable) {
+void Colisionable::ejecutarFuncionDeColision(std::map<std::string, parFuncionColisionContexto_t> mapaColisiones, Colisionable* colisionable) {
     parFuncionColisionContexto_t parFuncionColisionContexto = mapaColisiones[colisionable->obtenerColisionID()];
     if (parFuncionColisionContexto.funcion){
         (this->*parFuncionColisionContexto.funcion)(parFuncionColisionContexto.contexto);

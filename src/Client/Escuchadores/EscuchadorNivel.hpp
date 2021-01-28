@@ -12,7 +12,7 @@ class EscuchadorNivel : public Escuchador{
         void casoSocketCerrado()override;
         void casoExitoso()override;
     private:
-        string error;
+        std::string error;
         nivel_t info_nivel{};
         Cliente* cliente;
 };

@@ -15,7 +15,7 @@ rectangulo_t PiezaDeTuberia::obtenerRectangulo() {
     return rectangulo;
 }
 
-string PiezaDeTuberia::obtenerColisionID() {
+std::string PiezaDeTuberia::obtenerColisionID() {
     return COLISION_ID_PIEZA_TUBERIA;
 }
 

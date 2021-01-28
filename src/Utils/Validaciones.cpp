@@ -9,6 +9,8 @@
 #include "../Utils/log/Error.hpp"
 #include "../Utils/log/Info.hpp"
 
+using namespace std;
+
 const int PARTES_DE_IP = 4;
 const int TERMINO = -1;
 #define VALOR_MAXIMO_PUERTO 65535

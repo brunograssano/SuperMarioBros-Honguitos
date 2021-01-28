@@ -105,4 +105,17 @@ const uint8_t SONIDO_REBOTE_BOLA_DE_FUEGO = 10;
 const uint8_t SONIDO_EXPLOSION_BOLA_DE_FUEGO = 11;
 const uint8_t SONIDO_LLEGAR_A_LA_META = 12;
 
+#define DIRECCION_SONIDO_SALTO "resources/Musica/EfectosSonido/EfectoSalto.wav"
+#define DIRECCION_SONIDO_AGARRAR_MONEDA "resources/Musica/EfectosSonido/AgarrarMoneda.wav"
+#define DIRECCION_SONIDO_MUERTE_GOOMBA "resources/Musica/EfectosSonido/MarioMataGoomba.wav"
+#define DIRECCION_SONIDO_MUERTE_KOOPA "resources/Musica/EfectosSonido/MarioPisaKoopa.wav"
+#define DIRECCION_SONIDO_APARECE_PLANTA "resources/Musica/EfectosSonido/AparecePlanta.wav"
+#define DIRECCION_SONIDO_MARIO_AGARRA_HONGO "resources/Musica/EfectosSonido/MarioAgarraHongo.wav"
+#define DIRECCION_SONIDO_MARIO_MUERE "resources/Musica/EfectosSonido/MarioMorir.wav"
+#define DIRECCION_SONIDO_MARIO_LANZA_FUEGO "resources/Musica/EfectosSonido/MarioLanzaFuego.wav"
+#define DIRECCION_SONIDO_CHISPA "resources/Musica/EfectosSonido/Chispazo.wav"
+#define DIRECCION_SONIDO_REBOTE "resources/Musica/EfectosSonido/ReboteBolaDeFuego.wav"
+#define DIRECCION_SONIDO_EXPLOSION "resources/Musica/EfectosSonido/ExplosionBolaDeFuego.wav"
+#define DIRECCION_SONIDO_PASAR_NIVEL "resources/Musica/EfectosSonido/PasarDeNivel.wav"
+
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_CONSTANTES_HPP

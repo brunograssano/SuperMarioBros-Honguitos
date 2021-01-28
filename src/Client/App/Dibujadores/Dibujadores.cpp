@@ -19,7 +19,7 @@ Dibujadores::Dibujadores(char direccionesFondoNiveles[MAX_CANT_NIVELES][MAX_LARG
     renderizador = crearRenderer(ventanaAplicacion);
     cargarIcono(ventanaAplicacion);
     for(int i=0; i<cantidadFondosNiveles; i++){
-        direccionesNiveles[mundo+i] = string(direccionesFondoNiveles[i]);
+        direccionesNiveles[mundo+i] = std::string(direccionesFondoNiveles[i]);
     }
     this->cargadorTexturas = new CargadorTexturas(renderizador);
     this->cargadorTexturas->cargarTexturasNiveles(direccionesNiveles,renderizador,mundo);

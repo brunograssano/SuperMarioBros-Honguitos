@@ -1,7 +1,6 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_ESTADOESPERA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ESTADOESPERA_HPP
 
-
 #include <SDL_ttf.h>
 #include <SDL.h>
 #include "EstadoVentana.hpp"

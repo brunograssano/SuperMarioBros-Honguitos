@@ -11,7 +11,7 @@ class Camara {
         Camara(int alto_pantalla, int ancho_pantalla);
         ~Camara() = default;
         void reiniciar();
-        void moverCamara(const map<int,Mario*>& jugadores);
+        void moverCamara(const std::map<int,Mario*>& jugadores);
         static bool estaEnRangoHelper(void* ptr, rectangulo_t rect);
         bool estaEnRangoVisible(rectangulo_t rect) const;
         rectangulo_t obtenerRectanguloCamara();

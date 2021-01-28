@@ -2,32 +2,31 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ESTADOMUSICA_HPP
 
 #include <string>
-using namespace std;
 
 class EstadoMusica {
     public:
         virtual ~EstadoMusica()= default;
         virtual EstadoMusica* cambiar() = 0;
-        virtual void reproducir(string nombreCancion) = 0;
+        virtual void reproducir(std::string nombreCancion) = 0;
 
     protected:
-        string cancionAReproducir;
-        string cancionQueSeReproduce;
+        std::string cancionAReproducir;
+        std::string cancionQueSeReproduce;
 };
 
 class Suena : public EstadoMusica{
     public:
         Suena()= default;
-        Suena(string cancionAReproducir,string cancionQueSeReproduce);
+        Suena(std::string cancionAReproducir,std::string cancionQueSeReproduce);
         EstadoMusica* cambiar() override;
-        void reproducir(string nombreCancion) override;
+        void reproducir(std::string nombreCancion) override;
 };
 
 class Muteada : public EstadoMusica{
     public:
-        Muteada(string cancionAReproducir,string cancionQueSeReproduce);
+        Muteada(std::string cancionAReproducir,std::string cancionQueSeReproduce);
         EstadoMusica* cambiar() override;
-        void reproducir(string nombreCancion) override;
+        void reproducir(std::string nombreCancion) override;
 };
 
 #endif //TP_TALLER_DE_PROGRAMACION_FIUBA_ESTADOMUSICA_HPP

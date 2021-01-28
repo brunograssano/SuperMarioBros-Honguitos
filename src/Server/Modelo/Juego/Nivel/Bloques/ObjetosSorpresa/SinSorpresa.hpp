@@ -12,7 +12,7 @@ class SinSorpresa : public ObjetoSorpresa{
         entidad_t serializar() override {return {0, 0, 0, 0,0,false};}
         void actualizar() override {}
         int obtenerPosicionX() override {return 0;}
-        string obtenerColisionID() override {return  COLISION_ID_NADA;}
+        std::string obtenerColisionID() override {return  COLISION_ID_NADA;}
         rectangulo_t obtenerRectangulo() override{return {0,0,0,0,0,0};}
         bool debeColisionar() override {return false;}
         int tipoDeEfecto() override {return NADA;};

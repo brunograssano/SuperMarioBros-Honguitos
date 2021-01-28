@@ -54,7 +54,7 @@ class Mario: public Colisionable, public Observable{
 		void actualizarMinimoX(int limite);
 
         rectangulo_t obtenerRectangulo() override;
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         bool debeColisionar() override;
 
         void chocarPorDerechaCon(Colisionable* colisionable) override;

@@ -17,8 +17,8 @@ class EnviadorConexionCliente : public Thread{
 
     private:
         ConexionCliente* cliente;
-        queue<char> identificadoresMensajeAEnviar;
-        map<char,Enviador*> enviadores;
+        std::queue<char> identificadoresMensajeAEnviar;
+        std::map<char,Enviador*> enviadores;
 
 };
 

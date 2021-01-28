@@ -11,10 +11,10 @@ bool elAltoEsInvalido(int alto){
 }
 
 void ParserVentana::parsear(pugi::xml_node ventana, ArchivoLeido* archivoLeido){
-	string ancho = ventana.child_value("ancho");
-	string alto = ventana.child_value("alto");
+    std::string ancho = ventana.child_value("ancho");
+    std::string alto = ventana.child_value("alto");
 
-	string mensaje = "El valor de ancho ("+ancho+") enviado no tiene valor valido,se carga el valor por defecto";
+    std::string mensaje = "El valor de ancho ("+ancho+") enviado no tiene valor valido,se carga el valor por defecto";
     archivoLeido->anchoVentana = intentarObtenerNumero(archivoLeido, ancho, elAnchoEsInvalido, mensaje,
                                                        VALOR_POR_DEFECTO_ANCHO);
 

@@ -9,12 +9,14 @@ EscuchadorEntradaTeclado::EscuchadorEntradaTeclado(int socket, int idJugador, Se
 }
 
 void EscuchadorEntradaTeclado::casoError(int resultado){
-	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de entradas de usuario del jugador: "+ to_string(this->idJugador)+ ", se cierra el socket", to_string(errno));
-	throw runtime_error("ErrorAlRecibirEntradaTeclado");
+	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de entradas de usuario del jugador: "
+	+ std::to_string(this->idJugador)+ ", se cierra el socket", std::to_string(errno));
+	throw std::runtime_error("ErrorAlRecibirEntradaTeclado");
 }
 void EscuchadorEntradaTeclado::casoSocketCerrado(){
-	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de entrada de teclado del jugador: "+ to_string(this->idJugador)+ ". Se cierra el socket");
-	throw runtime_error("ErrorAlRecibirEntradaTeclado");
+	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de entrada de teclado del jugador: "
+	+ std::to_string(this->idJugador)+ ". Se cierra el socket");
+	throw std::runtime_error("ErrorAlRecibirEntradaTeclado");
 }
 void EscuchadorEntradaTeclado::casoExitoso(){
 	entrada_usuario_id_t entradaUsuarioId;

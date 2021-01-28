@@ -3,7 +3,6 @@
 
 #include <string>
 #include <list>
-using namespace std;
 #include "src/Server/Modelo/Juego/Nivel/Nivel.hpp"
 #include "../../Utils/log/TipoLog.hpp"
 #include "../../Utils/Utils.hpp"
@@ -22,10 +21,10 @@ class ArchivoLeido{
 		TipoLog* tipoLog;
 		int anchoVentana;
 		int altoVentana;
-		list<Nivel*> niveles{};
+        std::list<Nivel*> niveles{};
 		bool leidoCorrectamente;
-		list<string> mensajeError{};
-		list<usuario_t> usuariosValidos{};
+        std::list<std::string> mensajeError{};
+        std::list<usuario_t> usuariosValidos{};
 		int cantidadConexiones;
 
 		void verificarLectura();

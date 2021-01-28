@@ -6,7 +6,6 @@ class Servidor;
 #include <thread>
 #include <string>
 #include <map>
-using namespace std;
 
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Utils.hpp"
@@ -18,37 +17,37 @@ class EscuchadorConexionCliente;
 class ConexionCliente : public Thread{
 
 	public:
-		ConexionCliente(Servidor *servidor, int socket, string ip,actualizacion_cantidad_jugadores_t informacionAMandar);
+		ConexionCliente(Servidor *servidor, int socket, std::string ip,actualizacion_cantidad_jugadores_t informacionAMandar);
 		~ConexionCliente() override;
 
 		void ejecutar() override;
 		void enviarActualizacionesDeRonda();
         void agregarMensajeAEnviar(char caracter, void *mensaje);
 
-        void recibirCredencial(string nombre,string contrasenia);
+        void recibirCredencial(std::string nombre,std::string contrasenia);
 		void agregarIDJuego(int IDJugador);
-		string obtenerIP();
+        std::string obtenerIP();
 		void terminarElJuego();
         bool terminoElJuego() const;
 
         void desconectarse();
 
-private:
+    private:
 		actualizacion_cantidad_jugadores_t informacionAMandar{};
 		void esperarCredenciales();
 
 		EscuchadorConexionCliente* escuchador{};
         EnviadorConexionCliente* enviador{};
 
-		string nombre;
-		string contrasenia;
+        std::string nombre;
+        std::string contrasenia;
 
         bool terminoJuego;
 		bool recibioCredenciales;
 
 		int idPropio;
 		int socket;
-		string ip;
+        std::string ip;
 		Servidor* servidor;
 
 };

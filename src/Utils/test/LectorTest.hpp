@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 #include <cstdio>
 
 #include "../../Server/Lector/Lector.hpp"

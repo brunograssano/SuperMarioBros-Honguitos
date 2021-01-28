@@ -16,9 +16,9 @@ class PosicionMovil : public Posicion{
         void actualizarLimiteTerrenoIzq(int limite);
         void actualizarLimiteTerrenoDer(int limite);
 
-    void reiniciar(const Posicion& pos);
+        void reiniciar(const Posicion& pos);
 
-private:
+    private:
         int minimoX;
         int maximoX;
 };

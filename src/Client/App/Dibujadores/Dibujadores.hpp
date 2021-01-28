@@ -7,7 +7,6 @@
 #include <string>
 #include <sstream>
 #include <map>
-using namespace std;
 
 #include "../JuegoCliente/JuegoCliente.hpp"
 #include "../CargadorTexturas.hpp"
@@ -30,10 +29,10 @@ class Dibujadores{
         CargadorTexturas *cargadorTexturas;
         SDL_Renderer *renderizador;
         SDL_Window* ventanaAplicacion;
-        map<int,string> direccionesNiveles;
+        std::map<int,std::string> direccionesNiveles;
         JuegoCliente *juegoCliente;
-        map<string,Dibujador*> dibujadores;
-        string estadoActual;
+        std::map<std::string,Dibujador*> dibujadores;
+        std::string estadoActual;
 
 };
 

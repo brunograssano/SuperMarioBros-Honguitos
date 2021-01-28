@@ -12,12 +12,12 @@ class Error : public TipoLog{
 		// No hace los niveles de Debug y Info.
 
 		//DEBUG//
-		void mostrarPosicion(const string& registroPosicion,ofstream& archivo)override{};
-		void mostrarAccion(const string& registroAccion,ofstream& archivo)override{};
+		void mostrarPosicion(const std::string& registroPosicion,std::ofstream& archivo)override{};
+		void mostrarAccion(const std::string& registroAccion,std::ofstream& archivo)override{};
 
 		//INFO//
-		void mostrarMensajeDeInfo(const string& registroInfo,ofstream& archivo)override{};
-		void mostrarMensajeDeCarga(const string& registroInfo,ofstream& archivo)override{};
+		void mostrarMensajeDeInfo(const std::string& registroInfo,std::ofstream& archivo)override{};
+		void mostrarMensajeDeCarga(const std::string& registroInfo,std::ofstream& archivo)override{};
 
 };
 #endif /* SRC_UTILS_LOG_ERROR_HPP_ */

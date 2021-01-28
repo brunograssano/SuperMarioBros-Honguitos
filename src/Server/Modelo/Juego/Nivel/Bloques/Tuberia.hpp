@@ -12,10 +12,10 @@ class Tuberia{
         unsigned short obtenerPosicionX() const;
         void elevar(int y);
         entidad_t serializar();
-        list<PiezaDeTuberia*> obtenerPiezas();
+        std::list<PiezaDeTuberia*> obtenerPiezas();
     private:
         void crearColisionables(int x, int tipo);
-        list<PiezaDeTuberia*> piezas;
+        std::list<PiezaDeTuberia*> piezas;
         Posicion posicion;
         uint8_t tipo;
         uint8_t color;

@@ -44,7 +44,7 @@ int MonedaSorpresa::obtenerPosicionX() {
     return posicion.obtenerPosX();
 }
 
-string MonedaSorpresa::obtenerColisionID() {
+std::string MonedaSorpresa::obtenerColisionID() {
     return COLISION_ID_MONEDA_FLOTANTE;
 }
 

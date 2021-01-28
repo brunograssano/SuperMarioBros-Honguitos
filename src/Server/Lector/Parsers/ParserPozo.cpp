@@ -18,11 +18,11 @@ bool esUnFondoDePozoInvalido(int fondo){
 }
 
 void ParserPozo::parsear(pugi::xml_node pozo, Nivel* unNivel, ArchivoLeido* archivoLeido) {
-    string tipoString = pozo.child_value("tipoPozo");
-    string posXString = pozo.child_value("posicionX");
-    string fondoString = pozo.child_value("fondoPozo");
+    std::string tipoString = pozo.child_value("tipoPozo");
+    std::string posXString = pozo.child_value("posicionX");
+    std::string fondoString = pozo.child_value("fondoPozo");
 
-    string mensaje = "El tipo del pozo elegido ("+tipoString+") no tiene valor valido,se carga el valor por defecto";
+    std::string mensaje = "El tipo del pozo elegido ("+tipoString+") no tiene valor valido,se carga el valor por defecto";
     int tipo = intentarObtenerNumero(archivoLeido, tipoString, elPozoEsUnTipoInvalido, mensaje, TIPO_POR_DEFECTO_POZO);
 
     mensaje = "La posicion ingresada de pozo ("+posXString+") no es valida, se asigna por defecto uno";

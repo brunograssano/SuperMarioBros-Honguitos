@@ -217,7 +217,7 @@ ObjetoFugaz* Mario::dispararFuego() {
     return disparo;
 }
 
-string Mario::obtenerColisionID() {
+std::string Mario::obtenerColisionID() {
     return COLISION_ID_MARIO;
 }
 

@@ -3,7 +3,6 @@
 
 #include <list>
 #include <string>
-using namespace std;
 
 #include "ObjetosSorpresa/ObjetoSorpresa.hpp"
 #include "ObjetosSorpresa/SinSorpresa.hpp"
@@ -24,7 +23,7 @@ class Bloque : public Colisionable{
 
         virtual ObjetoSorpresa* colisionaronAbajo();
         virtual entidad_t serializar();
-        string obtenerColisionID() override = 0;
+        std::string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
         bool cambioElSprite();

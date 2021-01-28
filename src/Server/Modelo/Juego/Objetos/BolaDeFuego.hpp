@@ -22,7 +22,7 @@ class BolaDeFuego : public ObjetoFugaz{
         int tipoDeEfecto() override;
         ~BolaDeFuego() override;
 
-        string obtenerColisionID() override;
+        std::string obtenerColisionID() override;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;
         void chocarPorIzquierdaCon(Colisionable* colisionable) override;

@@ -35,7 +35,7 @@ SDL_Renderer* crearRenderer(SDL_Window* ventana){
 
 void cargarIcono(SDL_Window* ventana){
 	Log* log = Log::getInstance();
-	string direccionIcono = "resources/Imagenes/Personajes/IconoHongo.png";
+    std::string direccionIcono = "resources/Imagenes/Personajes/IconoHongo.png";
 	SDL_Surface* icono = IMG_Load(direccionIcono.c_str());
 	if(icono == nullptr){
 		log->huboUnErrorSDL("No se pudo cargar el icono en: " + direccionIcono, IMG_GetError());
@@ -45,7 +45,7 @@ void cargarIcono(SDL_Window* ventana){
 	}
 }
 
-TTF_Font* cargarFuente(const string& direccion,int tamanio){
+TTF_Font* cargarFuente(const std::string& direccion,int tamanio){
     Log* log = Log::getInstance();
     TTF_Font* fuente = TTF_OpenFont( "resources/Fuentes/fuenteSuperMarioBros.ttf", 12 );
     if( fuente == nullptr ) {
@@ -62,7 +62,7 @@ SDL_Window* crearVentana(const char *titulo, int alto, int ancho){
     return ventanaAplicacion;
 }
 
-SDL_Texture* cargarTexturaTexto(const string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente){
+SDL_Texture* cargarTexturaTexto(const std::string& texto, SDL_Color color, SDL_Renderer* renderer, TTF_Font* fuente){
 	Log* log = Log::getInstance();
 	SDL_Texture* texturaACargar;
 	SDL_Surface* textSurface = TTF_RenderText_Solid( fuente, texto.c_str(), color );

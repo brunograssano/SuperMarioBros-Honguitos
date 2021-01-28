@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cstdint>
-using namespace std;
+
 /* PALABRAS RESERVADAS
  * V: Verificacion
  * U: Actualizacion sobre la cantidad de jugadores.
@@ -11,7 +11,7 @@ using namespace std;
  * E: Entrada del usuario
  * C: Credenciales que nos manda el usuario
  * P: Informacion necesaria para iniciar la partida
- * R: Información necesaria para renderizar
+ * R: Información necesaria para una ronda
  * S: Sonido a reproducir
  * N: Informacion del nivel nuevo (bloques fijos)
  */
@@ -166,8 +166,8 @@ typedef struct nivel{
 }nivel_t;
 
 typedef struct usuario{
-	string nombre;
-	string contrasenia;
+	std::string nombre;
+    std::string contrasenia;
 	bool usado;
 }usuario_t;
 

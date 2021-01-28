@@ -35,7 +35,7 @@ void DibujadorFinNivel::dibujar(){
 
 void DibujadorFinNivel::dibujarTextoFinNivel(){
 
-    stringstream textoFinNivel;
+    std::stringstream textoFinNivel;
     textoFinNivel.str("");
     int nivelAnterior = juegoCliente->obtenerMundoActual() - 1;
     textoFinNivel << "Fin del Nivel " << nivelAnterior;
@@ -55,7 +55,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
     SDL_Rect cuadradoPuntos;
     SDL_Rect cuadradoCorazon;
 
-    stringstream puntosJugador;
+    std::stringstream puntosJugador;
     int corrimiento = 100;
 
     int alto_borde_puntos = (alto_puntosJugador+desfase_puntosJugador+5) * juegoCliente->obtenerJugadores().size();
@@ -73,7 +73,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
 
         podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
         puntosJugador.str("");
-        string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de " << nombreJugador << ": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/6 + 50,

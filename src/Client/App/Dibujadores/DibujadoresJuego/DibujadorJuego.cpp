@@ -55,8 +55,8 @@ void DibujadorJuego::dibujar(){
 }
 
 void DibujadorJuego::dibujarEnemigos(){
-	list<entidad_t> enemigos = juegoCliente->obtenerEnemigos();
-	string tipo;
+    std::list<entidad_t> enemigos = juegoCliente->obtenerEnemigos();
+    std::string tipo;
 	SDL_Texture* texturaEnemigo = nullptr;
 	for (auto const& enemigo : enemigos) {
 		SDL_Rect recorteTextura;
@@ -82,7 +82,7 @@ void DibujadorJuego::dibujarEnemigos(){
 }
 
 void DibujadorJuego::dibujarPlataformas(){
-	list<entidad_t> bloques = juegoCliente->obtenerBloques();
+    std::list<entidad_t> bloques = juegoCliente->obtenerBloques();
     SDL_Texture* texturaBloques = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_BLOQUES);
 	for (auto const& bloque : bloques) {
 
@@ -96,7 +96,7 @@ void DibujadorJuego::dibujarPlataformas(){
 }
 
 void DibujadorJuego::dibujarFondoPozos() {
-    list<entidad_t> pozos = juegoCliente->obtenerPozos();
+    std::list<entidad_t> pozos = juegoCliente->obtenerPozos();
     SDL_Texture* texturaFondoPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_POZO);
     for (auto const& pozo : pozos) {
         SDL_Rect rectanguloPozo = {pozo.x - rectanguloCamara.x,
@@ -110,7 +110,7 @@ void DibujadorJuego::dibujarFondoPozos() {
 
 
 void DibujadorJuego::dibujarPozos(){
-    list<entidad_t> pozos = juegoCliente->obtenerPozos();
+    std::list<entidad_t> pozos = juegoCliente->obtenerPozos();
     SDL_Texture* texturaPozos = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_POZO);
     for (auto const& pozo : pozos) {
         SDL_Rect rectanguloPozo = {pozo.x - rectanguloCamara.x,
@@ -122,7 +122,7 @@ void DibujadorJuego::dibujarPozos(){
 }
 
 void DibujadorJuego::dibujarMonedas(){
-	list<entidad_t> monedas = juegoCliente->obtenerMonedas();
+    std::list<entidad_t> monedas = juegoCliente->obtenerMonedas();
     SDL_Texture* texturaMoneda = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_MONEDA);
 	for (auto const& moneda : monedas) {
 		SDL_Rect rectanguloMoneda = {moneda.x - rectanguloCamara.x,
@@ -134,7 +134,7 @@ void DibujadorJuego::dibujarMonedas(){
 }
 
 void DibujadorJuego::dibujarTuberias() {
-    list<entidad_t> tuberias = juegoCliente->obtenerTuberias();
+    std::list<entidad_t> tuberias = juegoCliente->obtenerTuberias();
     SDL_Texture* texturaTuberia = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_TUBERIAS);
     for (auto const& tuberia : tuberias) {
         SDL_Rect recorteTuberia = recorteSpriteTuberia->obtenerRecorte(tuberia.recorteX,tuberia.recorteY);
@@ -147,7 +147,7 @@ void DibujadorJuego::dibujarTuberias() {
 }
 
 void DibujadorJuego::dibujarMarios(){
-	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
+    std::map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int idPropio = juegoCliente->obtenerIDPropio();
 	for(auto const parClaveJugador:jugadores){
 		mario_t mario = parClaveJugador.second.mario;
@@ -186,7 +186,7 @@ void DibujadorJuego::dibujarMarios(){
 }
 
 void DibujadorJuego::dibujarEfectos() {
-    list<entidad_t> efectos = juegoCliente->obtenerEfectos();
+    std::list<entidad_t> efectos = juegoCliente->obtenerEfectos();
     for (auto const& efecto : efectos) {
         if(efecto.tipo == BOLA_DE_FUEGO || efecto.tipo == CHISPA || efecto.tipo == FLOR || efecto.tipo == MONEDA_FLOTANTE) {
             SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesEfectos[efecto.tipo]);
@@ -213,7 +213,7 @@ void DibujadorJuego::dibujarTexto(){
 	textoDeNivel.str("");
 	textoDeNivel << "Mundo " << juegoCliente->obtenerMundoActual();
 
-	map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
+    std::map<int,jugador_t> jugadores = juegoCliente->obtenerJugadores();
 	int espacioX = 0;
 	const int ESPACIO = obtenerEspaciado(jugadores.size());
 	SDL_Texture* texturaCorazon = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_CORAZON);

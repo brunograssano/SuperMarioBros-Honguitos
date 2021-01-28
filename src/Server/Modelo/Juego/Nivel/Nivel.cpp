@@ -293,7 +293,7 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
     auto* posibleTuberia = new Tuberia(posicionXNuevaTuberia,tipoTuberia,colorTuberia);
 
     bool superponeAObjeto = false;
-    for (auto tuberia:tuberias){ // llevar a otra funcion a parte la verificacion de superposicion
+    for (auto tuberia:tuberias){
         if(tuberia->colisionaCon(posibleTuberia)){
             superponeAObjeto = true;
         }

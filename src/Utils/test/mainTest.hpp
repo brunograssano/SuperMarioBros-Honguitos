@@ -13,6 +13,7 @@ using namespace std;
 #include "Assert.hpp"
 #include "PisoTest.hpp"
 #include "PodioTest.hpp"
+#include "TuberiaTest.hpp"
 
 
 int mainTest(){
@@ -26,6 +27,7 @@ int mainTest(){
 	MonedaTest::ejecutar(&testSuite);
 	PisoTest::ejecutar(&testSuite);
     PodioTest::ejecutar(&testSuite);
+    TuberiaTest::ejecutar(&testSuite);
 
 	cout << "Pasaron " << testSuite.getPruebasPasadas() << " pruebas de "<< testSuite.getPruebasTotales() << endl;
 

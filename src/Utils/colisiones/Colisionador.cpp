@@ -3,18 +3,12 @@
 #include "SDL2/SDL.h"
 #include "../Constantes.hpp"
 
-bool colisionan(rectangulo_t rect1, rectangulo_t rect2){
-    SDL_Rect sdl_rect1 = {rect1.x1, rect1.y1, rect1.w, rect1.h};
-    SDL_Rect sdl_rect2 = {rect2.x1, rect2.y1, rect2.w, rect2.h};
-    return SDL_HasIntersection(&sdl_rect1, &sdl_rect2);
-}
-
 bool intersecarRectangulos(rectangulo_t rect1, rectangulo_t rect2, rectangulo_t* rectInterseccion){
     SDL_Rect interseccion;
     SDL_Rect A = {rect1.x1, rect1.y1, rect1.w, rect1.h};
     SDL_Rect B = {rect2.x1, rect2.y1, rect2.w, rect2.h};
     bool hayInterseccion = (bool) SDL_IntersectRect(&A, &B, &interseccion);
-    if(hayInterseccion){
+    if(hayInterseccion && rectInterseccion != nullptr){
         rectInterseccion->x1 = interseccion.x;
         rectInterseccion->x2 = interseccion.x + interseccion.w;
         rectInterseccion->y1 = interseccion.y;
@@ -25,19 +19,18 @@ bool intersecarRectangulos(rectangulo_t rect1, rectangulo_t rect2, rectangulo_t*
     return hayInterseccion;
 }
 
-int tipoDeChoque(rectangulo_t rect1, rectangulo_t rect2) {
+bool colisionan(rectangulo_t rect1, rectangulo_t rect2){
+    return intersecarRectangulos(rect1, rect2, nullptr);
+}
 
+int tipoDeChoque(rectangulo_t rect1, rectangulo_t rect2) {
     bool derecha = rect1.x1 > rect2.x1 && rect1.x1 < rect2.x2;
     bool izquierda = rect1.x2 > rect2.x1 && rect1.x2 < rect2.x2;
     bool arriba = rect1.y1 > rect2.y1 && rect1.y1 < rect2.y2;
     bool abajo = rect1.y2 > rect2.y1 && rect1.y2 < rect2.y2;
 
-    //todo: utilizar la función rectanguloInterseccion
-    SDL_Rect interseccion;
-    SDL_Rect A = {rect1.x1, rect1.y1, rect1.w, rect1.h};
-    SDL_Rect B = {rect2.x1, rect2.y1, rect2.w, rect2.h};
-
-    bool hayInterseccion = (bool)SDL_IntersectRect(&A, &B, &interseccion);
+    rectangulo_t interseccion;
+    bool hayInterseccion = intersecarRectangulos(rect1, rect2, &interseccion);
 
     if(!hayInterseccion)
         return SIN_CHOQUE;

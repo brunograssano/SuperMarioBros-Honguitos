@@ -1,7 +1,7 @@
 #include "Nivel.hpp"
 #include "src/Utils/colisiones/Colisionador.hpp"
 #include <string>
-
+#include "Filtro.hpp"
 #include "Bloques/PiezaDeTuberia.hpp"
 
 const int TAMANIO_MONEDA = 40;
@@ -49,7 +49,7 @@ void Nivel::actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rec
     actualizarPosicionesEnemigos(rectanguloEscena);
 
     imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
-    resolverColisiones(jugadores);
+    resolverColisiones(jugadores, rectanguloEscena);
 
     actualizarObjetosFugaces();
     actualizarMonedas();
@@ -62,36 +62,35 @@ void Nivel::actualizarModelo(const map<int, Mario*>& jugadores, rectangulo_t rec
     resolverGanadores(jugadores);
 }
 
-void Nivel::resolverColisiones(const map<int, Mario *>& jugadores) {
-    list<Colisionable*> plataformasPiso = piso.obtenerPiso();
-
-    //todo: mejorar esto:
-    list<PiezaDeTuberia*> piezasDeTuberia;
-    for(auto& tuberia: tuberias){
-        list<PiezaDeTuberia*> piezasTuberiaActual = tuberia->obtenerPiezas();
-        piezasDeTuberia.insert(piezasDeTuberia.end(), piezasTuberiaActual.begin(), piezasTuberiaActual.end());
-    }
+void Nivel::resolverColisiones(const map<int, Mario *>& jugadores, rectangulo_t rectanguloEscena) {
+    std::list<Colisionable*> plataformasPiso = piso.obtenerPiso();
+    std::list<Colisionable*> plataformasPisoEnEscena = Filtro::filtrarPlataformasEnEscena(plataformasPiso, rectanguloEscena);
+    std::list<Colisionable*> enemigosEnEscena = Filtro::filtrarEnemigosEnEscena(enemigos, rectanguloEscena);
+    std::list<Colisionable*> monedasEnEscena = Filtro::filtrarMonedasEnEscena(monedas, rectanguloEscena);
+    std::list<Colisionable*> bloquesEnEscena = Filtro::filtrarBloquesEnEscena(plataformas, rectanguloEscena);
+    std::list<Colisionable*> objetosEnEscena = Filtro::filtrarObjetosEnEscena(objetosFugaces, rectanguloEscena);
+    std::list<Colisionable*> piezasDeTuberiaEnEscena = Filtro::filtrarPiezasDeTuberiaEnEscena(tuberias, rectanguloEscena);
 
 
     for(auto& parClaveJugador: jugadores){
         Mario* jugador = parClaveJugador.second;
-        chocarContraTodos(jugador, (void*)&enemigos, nullptr, nullptr);
-        chocarContraTodos(jugador, (void*)&monedas, nullptr, nullptr);
-        chocarContraTodos(jugador, (void*)&plataformas,&Nivel::agregarObjeto_helper, this);
-        chocarContraTodos(jugador, (void*)&objetosFugaces, nullptr, nullptr);
-        chocarContraTodos(jugador,(void*) &plataformasPiso,nullptr, nullptr);
-        chocarContraTodos(jugador, (void*) &piezasDeTuberia,nullptr, nullptr);
+        chocarContraTodos(jugador, enemigosEnEscena, nullptr, nullptr);
+        chocarContraTodos(jugador, monedasEnEscena, nullptr, nullptr);
+        chocarContraTodos(jugador, bloquesEnEscena, &Nivel::agregarObjeto_helper, this);
+        chocarContraTodos(jugador, objetosEnEscena, nullptr, nullptr);
+        chocarContraTodos(jugador, piezasDeTuberiaEnEscena, nullptr, nullptr);
+        chocarContraTodos(jugador, plataformasPisoEnEscena,nullptr, nullptr);
     }
     for(auto& enemigo:enemigos){
-        chocarContraTodos(enemigo, (void*)&objetosFugaces, nullptr, nullptr);
-        chocarContraTodos(enemigo, (void*)&plataformas, nullptr, nullptr);
-        chocarContraTodos(enemigo,(void*)&plataformasPiso,nullptr, nullptr);
-        chocarContraTodos(enemigo, (void*)&piezasDeTuberia,nullptr, nullptr);
+        chocarContraTodos(enemigo, objetosEnEscena, nullptr, nullptr);
+        chocarContraTodos(enemigo, bloquesEnEscena, nullptr, nullptr);
+        chocarContraTodos(enemigo, piezasDeTuberiaEnEscena,nullptr, nullptr);
+        chocarContraTodos(enemigo, plataformasPisoEnEscena,nullptr, nullptr);
     }
     for(auto& objeto: objetosFugaces){
-        chocarContraTodos(objeto, (void*) &plataformasPiso, nullptr, nullptr);
-        chocarContraTodos(objeto, (void*)&plataformas, nullptr, nullptr);
-        chocarContraTodos(objeto, (void*) &piezasDeTuberia,nullptr, nullptr);
+        chocarContraTodos(objeto, bloquesEnEscena, nullptr, nullptr);
+        chocarContraTodos(objeto, piezasDeTuberiaEnEscena,nullptr, nullptr);
+        chocarContraTodos(objeto, plataformasPisoEnEscena, nullptr, nullptr);
     }
 }
 

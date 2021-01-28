@@ -56,7 +56,7 @@ class Nivel{
         void actualizarPosicionesEnemigos(rectangulo_t rectangulo);
         void actualizarMonedas();
         void actualizarObjetosFugaces();
-        void resolverColisiones(const map<int,Mario*>& jugadores);
+        void resolverColisiones(const map<int,Mario*>& jugadores, rectangulo_t rectanguloEscena);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
         void resolverGanadores(const map<int, Mario *>& map);

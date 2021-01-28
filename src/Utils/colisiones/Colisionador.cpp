@@ -88,11 +88,10 @@ void chocar(Colisionable* colisionable1, Colisionable* colisionable2) {
 
 }
 
-void chocarContraTodos(Colisionable* colisionable, void* ptr_colisionables, FuncionLuegoDeColisionar funcionLuegoDeColisionar, void* contexto){
+void chocarContraTodos(Colisionable* colisionable, list<Colisionable*> colisionables, FuncionLuegoDeColisionar funcionLuegoDeColisionar, void* contexto){
     if(!colisionable->debeColisionar()){
         return;
     }
-    list<Colisionable*> colisionables = *(list<Colisionable*>*) ptr_colisionables;
     for(auto segundo_colisionable: colisionables){
         if(segundo_colisionable->debeColisionar()){
             chocar(colisionable, segundo_colisionable);

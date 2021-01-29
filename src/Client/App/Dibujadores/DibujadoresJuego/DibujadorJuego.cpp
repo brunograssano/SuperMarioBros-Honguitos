@@ -130,8 +130,6 @@ void DibujadorJuego::dibujarMarios(){
                                     ANCHO_MARIO, ALTO_MARIO};
 
         SDL_Rect recorteMario = recortes[MARIO_RECORTE]->obtenerRecorte(mario.recorteImagen, mario.modificador);
-        //SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 0x0F);
-        //SDL_RenderDrawRect(renderizador, &rectanguloMario);
         SDL_RenderCopy(renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario,&rectanguloMario);
     }
 
@@ -180,8 +178,9 @@ void DibujadorJuego::dibujarTexto(){
 	renderizarTexto(cuadradoMundo, textoDeNivel.str(), colorDefault);
 }
 
-int DibujadorJuego::obtenerEspaciado(int cantidadJugadores) { // TODO HACER QUE SE ACOMODEN LOS VALORES DE ACUERDO AL ANCHO PANTALLA
-    return cantidadJugadores == 2 ? 500 : cantidadJugadores == 3 ? 250 : 170;
+int DibujadorJuego::obtenerEspaciado(int cantidadJugadores) {
+    int espacioBase = cantidadJugadores == 2 ? 500 : cantidadJugadores == 3 ? 250 : 170;
+    return espacioBase * (ancho_pantalla/ VALOR_POR_DEFECTO_ANCHO);
 }
 
 DibujadorJuego::~DibujadorJuego(){

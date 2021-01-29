@@ -3,6 +3,8 @@
 #include <string>
 
 const int ANCHO_FONDO = 8177;
+#define VALOR_POR_DEFECTO_ANCHO 800
+#define VALOR_POR_DEFECTO_ALTO 600
 #define IZQUIERDA 1
 #define DERECHA 2
 #define ARRIBA 3

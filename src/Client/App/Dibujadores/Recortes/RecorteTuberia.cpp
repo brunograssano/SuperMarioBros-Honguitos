@@ -14,16 +14,16 @@ RecorteTuberia::RecorteTuberia() {
     estadosPosibles.push_back(segundoEstado);
 }
 
-int RecorteTuberia::obtenerAlturaParaDibujarImagen(int tipo) {
-    if(tipo == TUBERIA_CHICA){
+int RecorteTuberia::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
+    if(recorteX == TUBERIA_CHICA){
         return ALTO_TUBERIA_CHICA*2; // Esto es por cómo está hecha la imagen... y el constructor.
     }else{
         return ALTO_TUBERIA_GRANDE;
     }
 }
 
-int RecorteTuberia::obtenerAnchuraParaDibujarImagen(int tipo) {
-    if(tipo == TUBERIA_CHICA){
+int RecorteTuberia::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
+    if(recorteX == TUBERIA_CHICA){
         return ANCHO_TUBERIA_CHICA;
     }else{
         return ANCHO_TUBERIA_GRANDE;

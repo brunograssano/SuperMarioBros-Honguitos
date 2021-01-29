@@ -1,18 +1,19 @@
 #include "RecortePozo.hpp"
+#include "src/Utils/Constantes.hpp"
 
-#define ALTO_POZO 60
-#define ANCHO_POZO 200
-#define MAX_ESTADOS_POZOS 1
+#define ANCHO_POZO_PIXEL_IMAGEN 180
+#define ALTO_POZO_PIXEL_IMAGEN 60
+#define MAX_ESTADOS_POZOS 5
 const int DESPLAZAMIENTO_X = 0;
 
 RecortePozo::RecortePozo() {
-    inicializarEstados(MAX_ESTADOS_POZOS,DESPLAZAMIENTO_X,ALTO_POZO,ANCHO_POZO);
+    inicializarEstados(MAX_ESTADOS_POZOS,DESPLAZAMIENTO_X,ALTO_POZO_PIXEL_IMAGEN, ANCHO_POZO_PIXEL_IMAGEN);
 }
 
-int RecortePozo::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecortePozo::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return ANCHO_POZO;
 }
 
-int RecortePozo::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecortePozo::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return ALTO_POZO;
 }

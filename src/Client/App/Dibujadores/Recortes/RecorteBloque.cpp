@@ -8,10 +8,10 @@ RecorteBloque::RecorteBloque() {
     inicializarEstados(ESTADOS_BLOQUE,DESPLAZAMIENTO_BLOQUES_X,ALTO_BLOQUE,ANCHO_BLOQUE);
 }
 
-int RecorteBloque::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecorteBloque::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return LARGO_BLOQUE;
 }
 
-int RecorteBloque::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecorteBloque::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return LARGO_BLOQUE;
 }

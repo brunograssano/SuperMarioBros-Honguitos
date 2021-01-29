@@ -26,8 +26,6 @@ const int MAX_SORPRESAS=15,MAX_ENEMIGOS=25,MAX_MONEDAS=25,MAX_TUBERIAS = 30,MAX_
 const int MAX_JUGADORES = 4;
 const int MAX_MENSAJE = 75;
 
-const int TIPO_GOOMBA = 1,TIPO_KOOPA = 2;
-
 typedef struct rectangulo{
     int x1;
     int x2;

@@ -12,7 +12,7 @@ Goomba::Goomba(int tipoColor){
 }
 
 entidad_t Goomba::serializar() {
-    return serializarEnemigo(TIPO_GOOMBA);
+    return serializarEnemigo(GOOMBA);
 }
 
 Goomba::~Goomba() {

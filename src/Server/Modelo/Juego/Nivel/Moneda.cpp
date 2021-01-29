@@ -18,6 +18,7 @@ entidad_t Moneda::serializar() {
     monedaSerializada.x = posicion.obtenerPosX();
     monedaSerializada.y = posicion.obtenerPosY();
     monedaSerializada.recorteX = sprite.obtenerEstadoActual();
+    monedaSerializada.tipo = MONEDA;
     return monedaSerializada;
 }
 

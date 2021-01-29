@@ -25,26 +25,26 @@ SDL_Rect Recorte::obtenerRecorte(int recorte) {
     return estado;
 }
 
-int Recorte::obtenerAnchuraParaDibujarImagen(int tipo) {
+int Recorte::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     SDL_Rect rectangulo = estadosPosibles.front();
     return rectangulo.w;
 }
 
-int Recorte::obtenerAlturaParaDibujarImagen(int tipo) {
+int Recorte::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     SDL_Rect rectangulo = estadosPosibles.front();
     return rectangulo.h;
 }
 
-SDL_Rect Recorte::obtenerRecorte(int recorte, int color) {
+SDL_Rect Recorte::obtenerRecorte(int recorteX, int recorteY) {
     auto iterador = estadosPosibles.begin();
     SDL_Rect estado;
-    if(recorte == 0){
+    if(recorteX == 0){
         estado = *iterador;
     }else{
-        std::advance(iterador, recorte);
+        std::advance(iterador, recorteX);
         estado = *iterador;
     }
-    estado.y = color * estado.h;
+    estado.y = recorteY * estado.h;
     return estado;
 }
 

@@ -31,7 +31,7 @@ foreach (_headerFile ${MARIO_HEADERS})
 endforeach()
 list(REMOVE_DUPLICATES MARIO_INCLUDE_DIRS)
 
-add_executable (${PROJECT_NAME} ${MARIO_SOURCES})
+add_executable (${PROJECT_NAME} ${MARIO_SOURCES} src/Client/App/Dibujadores/Recortes/RecorteFondoPozo.cpp src/Client/App/Dibujadores/Recortes/RecorteFondoPozo.hpp)
 
 # Add compiler errors/warnings flags
 target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:MSVC>:/W4 /WX>)

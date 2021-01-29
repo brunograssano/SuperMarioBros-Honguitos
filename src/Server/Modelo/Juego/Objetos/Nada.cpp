@@ -6,7 +6,7 @@ Nada::~Nada() = default;
 void Nada::actualizar() {}
 
 entidad_t Nada::serializar() {
-    return {0, 0, 0, 0,0,false};
+    return {0, 0, NADA, 0,0,false};
 }
 
 int Nada::obtenerPosicionX() {

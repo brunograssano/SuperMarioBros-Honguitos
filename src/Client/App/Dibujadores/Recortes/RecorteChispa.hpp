@@ -6,8 +6,8 @@ class RecorteChispa : public Recorte{
     static const int CANTIDAD_DE_RECORTES = 4;
     public:
         RecorteChispa();
-        int obtenerAnchuraParaDibujarImagen(int tipo) override;
-        int obtenerAlturaParaDibujarImagen(int tipo) override;
+        int obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) override;
+        int obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) override;
 };
 
 

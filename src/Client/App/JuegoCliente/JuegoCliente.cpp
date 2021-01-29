@@ -66,6 +66,17 @@ void JuegoCliente::cargarLista(std::list<entidad_t>* listaACargar, entidad_t *ve
     }
 }
 
+void JuegoCliente::crearListaDeFondoPozo(std::list<entidad_t>* listaACargar, entidad_t *pozos, uint8_t topePozos) {
+    listaACargar->clear();
+    for(int i = 0; i < topePozos; i++){
+        entidad_t fondo = pozos[i];
+        fondo.tipo = FONDO_POZO;
+        fondo.recorteY = fondo.recorteX;
+        fondo.recorteX = 0;
+        listaACargar->push_front(fondo);
+    }
+}
+
 void JuegoCliente::actualizar(){
 	if(rondas.empty()){
 		return;
@@ -88,9 +99,9 @@ void JuegoCliente::actualizar(){
 	ganaron = ronda.ganaron;
 	perdieron = ronda.perdieron;
 
-	cargarLista(&entidades[BLOQUE_RECORTE],ronda.bloques,ronda.topeBloques);
+	cargarLista(&entidades[BLOQUE], ronda.bloques, ronda.topeBloques);
     cargarLista(&entidades[ENEMIGOS_RECORTE],ronda.enemigos,ronda.topeEnemigos);
-    cargarLista(&entidades[MONEDA_RECORTE],ronda.monedas,ronda.topeMonedas);
+    cargarLista(&entidades[MONEDA], ronda.monedas, ronda.topeMonedas);
     cargarLista(&entidades[EFECTOS_RECORTE],ronda.efectos,ronda.topeEfectos);
 
 	for(int i=0;i<cantidadJugadores;i++){
@@ -102,7 +113,7 @@ void JuegoCliente::actualizar(){
     bool agregado = false;
     for(auto ladrillo: ladrillos){
         if(enRango(ladrillo.x, LARGO_BLOQUE)){
-            for(auto bloque : entidades[BLOQUE_RECORTE]) {
+            for(auto bloque : entidades[BLOQUE]) {
                 if(ladrillo == bloque){
                     ladrillosASacar.push_front(ladrillo);
                     ladrillosNuevos.push_front(bloque);
@@ -110,7 +121,7 @@ void JuegoCliente::actualizar(){
                 }
             }
             if(!agregado){
-                entidades[BLOQUE_RECORTE].push_front(ladrillo);
+                entidades[BLOQUE].push_front(ladrillo);
             }
             agregado = false;
         }
@@ -156,8 +167,9 @@ void JuegoCliente::agregarNivel(nivel_t nivel) {
     numeroMundo = nivel.mundo;
 
     cargarLista(&ladrillos,nivel.bloques,nivel.topeBloques);
-    cargarLista(&entidades[TUBERIA_RECORTE],nivel.tuberias,nivel.topeTuberias);
-    cargarLista(&entidades[POZO_RECORTE],nivel.pozos,nivel.topePozos);
+    cargarLista(&entidades[TUBERIA], nivel.tuberias, nivel.topeTuberias);
+    cargarLista(&entidades[POZO], nivel.pozos, nivel.topePozos);
+    crearListaDeFondoPozo(&entidades[FONDO_POZO], nivel.pozos, nivel.topePozos);
 
     if(!hayQueCargarPodioNivel){
         hayQueCargarPodioNivel = true;
@@ -181,7 +193,7 @@ podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
 }
 
 std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
-    if(claveEntidad == TUBERIA_RECORTE || claveEntidad == POZO_RECORTE){
+    if(claveEntidad == TUBERIA || claveEntidad == POZO || claveEntidad == FONDO_POZO){
         std::list<entidad_t> entidadesAMostrar;
         for(auto entidad:entidades[claveEntidad]){
             if(enRango(entidad.x, ANCHO_POZO)){ // Se utiliza el ancho del pozo porque es el mas grande de los 2
@@ -192,3 +204,4 @@ std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
     }
     return entidades[claveEntidad];
 }
+

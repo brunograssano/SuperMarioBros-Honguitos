@@ -8,10 +8,10 @@
 class Recorte {
     public:
         virtual ~Recorte() = default;
-        virtual SDL_Rect obtenerRecorte(int recorte);
-        virtual SDL_Rect obtenerRecorte(int recorte, int color);
-        virtual int obtenerAlturaParaDibujarImagen(int tipo);
-        virtual int obtenerAnchuraParaDibujarImagen(int tipo);
+        virtual SDL_Rect obtenerRecorte(int recorteX);
+        virtual SDL_Rect obtenerRecorte(int recorteX, int recorteY);
+        virtual int obtenerAlturaParaDibujarImagen(int recorteX, int recorteY);
+        virtual int obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY);
         virtual void actualizarSprite(){};
 
     protected:

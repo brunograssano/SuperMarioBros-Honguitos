@@ -7,11 +7,11 @@ RecorteKoopa::RecorteKoopa() {
     inicializarEstados(ESTADOS_KOOPA,ANCHO_KOOPA,ALTO_KOOPA,ANCHO_KOOPA);
 }
 
-int RecorteKoopa::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecorteKoopa::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return ANCHO_ENEMIGOS;
 }
 
-int RecorteKoopa::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecorteKoopa::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return ALTO_ENEMIGOS;
 }
 

@@ -8,14 +8,17 @@ class MovimientoVertical{
 
 	public:
 		explicit MovimientoVertical(float fuerza);
+		explicit MovimientoVertical(float fuerza, float gravedad);
 		void saltar(Terreno* terreno);
 		void mover(PosicionMovil* posicion);
 		void setVelocidadY(int velocidad);
+        void aplicarGravedadDefault();
 
-    private:
+private:
 		void aplicarGravedad();
 		float velocidadY;
 		float fuerza;
+        float gravedad;
 };
 
 

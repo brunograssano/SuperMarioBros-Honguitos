@@ -8,6 +8,7 @@ class MovimientoEnemigo {
 
     public:
         explicit MovimientoEnemigo(float velocidadExtra);
+        explicit MovimientoEnemigo(float velocidadExtra, float gravedad);
         ~MovimientoEnemigo() = default;
         void mover(PosicionMovil* posicionMovil);
         void setVelocidadY(float velocidadY);
@@ -15,7 +16,7 @@ class MovimientoEnemigo {
         void morir();
         void cambiarOrientacion();
 
-    private:
+private:
         static float obtenerVelocidad(float velocidadExtra);
         MovimientoHorizontalIdeal movimientoHorizontal = MovimientoHorizontalIdeal(0.2);
         MovimientoVertical movimientoVertical = MovimientoVertical(0);

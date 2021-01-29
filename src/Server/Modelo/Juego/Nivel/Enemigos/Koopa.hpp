@@ -9,6 +9,7 @@ class Koopa : public Enemigo{
 		~Koopa() override;
         entidad_t serializar() override;
         std::string obtenerColisionID() override;
+        bool estaEnElAire();
 };
 
 #endif /* SRC_SERVER_MODELO_ENEMIGOS_KOOPA_HPP_ */

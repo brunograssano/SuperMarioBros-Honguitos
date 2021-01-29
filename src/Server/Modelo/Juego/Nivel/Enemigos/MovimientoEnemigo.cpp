@@ -13,6 +13,12 @@ MovimientoEnemigo::MovimientoEnemigo(float velocidadExtra) {
     movimientoHorizontal = MovimientoHorizontalIdeal(velocidadEnX);
 }
 
+MovimientoEnemigo::MovimientoEnemigo(float velocidadExtra, float gravedad) {
+    movimientoVertical = MovimientoVertical(FUERZA_SALTO_ENEMIGO, gravedad);
+    float velocidadEnX = obtenerVelocidad(velocidadExtra);
+    movimientoHorizontal = MovimientoHorizontalIdeal(velocidadEnX);
+}
+
 void MovimientoEnemigo::mover(PosicionMovil *posicionMovil) {
     movimientoHorizontal.mover(posicionMovil);
     movimientoVertical.mover(posicionMovil);
@@ -28,6 +34,7 @@ bool MovimientoEnemigo::debeEspejarse() {
 
 void MovimientoEnemigo::morir() {
     movimientoHorizontal.setVelocidad(0);
+    movimientoVertical.aplicarGravedadDefault();
 }
 
 void MovimientoEnemigo::cambiarOrientacion() {

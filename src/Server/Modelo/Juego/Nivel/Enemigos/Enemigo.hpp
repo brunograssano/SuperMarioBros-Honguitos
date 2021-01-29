@@ -42,6 +42,7 @@ class Enemigo : public Colisionable{
         MovimientoEnemigo movimientoEnemigo = MovimientoEnemigo(VELOCIDAD_EXTRA_DEFAULT);
         int tipoColor{};
         bool loMataron = false;
+        bool pisoBloque = false;
 };
 
 

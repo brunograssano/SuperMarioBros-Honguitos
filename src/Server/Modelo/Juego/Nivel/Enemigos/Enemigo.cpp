@@ -25,6 +25,7 @@ void Enemigo::actualizarPosicion(rectangulo_t rectangulo) {
         movimientoEnemigo.mover(&posicionActual);
         spriteEnemigo->actualizarSprite();
     }
+    pisoBloque = false;
 }
 
 void Enemigo::morir(void* ptr) {
@@ -129,6 +130,10 @@ void Enemigo::empujarEnY(rectangulo_t rectanguloBloque, int direccion) {
         this->posicionActual.moverVertical(-(rectanguloEnemigo.y2-rectanguloBloque.y1));
     }
     else{
-        this->posicionActual.moverVertical(rectanguloBloque.y2-rectanguloEnemigo.y1);
+        // El -1 es para que aún sigan colisionando contra el bloque en el que están parados
+        // Sin este -1 estamos separando al enemigo lo suficiente del bloque como para que dependa
+        // de cuan rapido caiga (su gravedad) switcheando aire y tierra constantemente.
+        this->posicionActual.moverVertical(rectanguloBloque.y2 - rectanguloEnemigo.y1 - 1);
+        pisoBloque = true;
     }
 }

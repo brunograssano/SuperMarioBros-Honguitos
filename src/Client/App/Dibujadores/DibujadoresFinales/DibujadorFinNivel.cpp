@@ -1,3 +1,5 @@
+#include <unistd.h>
+#include "src/Utils/Constantes.hpp"
 #include "DibujadorFinNivel.hpp"
 const int ANCHO_IMAGEN_FONDO = 800;
 const int ALTO_IMAGEN_FONDO = 800;
@@ -26,11 +28,8 @@ void DibujadorFinNivel::dibujar(){
     dibujarTextoFinNivel();
 
     SDL_RenderPresent( renderizador );
-    ciclosDibujado++;
-    if(ciclosDibujado >= 200) {
-        juegoCliente->hayQueMostrarPuntosDeNivel = false;
-        ciclosDibujado = 0;
-    }
+    sleep(TIEMPO_ESPERA_GAME_LOOP);
+    juegoCliente->hayQueMostrarPuntosDeNivel = false;
 }
 
 void DibujadorFinNivel::dibujarTextoFinNivel(){

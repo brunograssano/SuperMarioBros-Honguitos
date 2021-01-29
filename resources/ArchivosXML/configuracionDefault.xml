@@ -28,26 +28,30 @@
                     <cantidad>5</cantidad>
                 </enemigo>
             </enemigos>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1300</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <tuberia>
-                <color>0</color>
-                <tipoTuberia>0</tipoTuberia>
-                <posicionX>5200</posicionX>
-            </tuberia>
-            <tuberia>
-                <color>0</color>
-                <tipoTuberia>1</tipoTuberia>
-                <posicionX>5560</posicionX>
-            </tuberia>
+            <pozos>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1300</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+            </pozos>
+            <tuberias>
+                <tuberia>
+                    <color>0</color>
+                    <tipoTuberia>0</tipoTuberia>
+                    <posicionX>5200</posicionX>
+                </tuberia>
+                <tuberia>
+                    <color>0</color>
+                    <tipoTuberia>1</tipoTuberia>
+                    <posicionX>5560</posicionX>
+                </tuberia>
+            </tuberias>
             <plataformas>
                 <plataforma>
                     <tipo>Sorpresa</tipo>
@@ -290,26 +294,30 @@
                     <cantidad>7</cantidad>
                 </enemigo>
             </enemigos>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1200</posicionX>
-                <fondoPozo>4</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>p
-                <posicionX>2000</posicionX>
-                <fondoPozo>4</fondoPozo>
-            </pozo>
-            <tuberia>
-                <color>1</color>
-                <tipoTuberia>1</tipoTuberia>
-                <posicionX>5300</posicionX>
-            </tuberia>
-            <tuberia>
-                <color>1</color>
-                <tipoTuberia>1</tipoTuberia>
-                <posicionX>5900</posicionX>
-            </tuberia>
+            <pozos>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1200</posicionX>
+                    <fondoPozo>4</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>p
+                    <posicionX>2000</posicionX>
+                    <fondoPozo>4</fondoPozo>
+                </pozo>
+            </pozos>
+            <tuberias>
+                <tuberia>
+                    <color>1</color>
+                    <tipoTuberia>1</tipoTuberia>
+                    <posicionX>5300</posicionX>
+                </tuberia>
+                <tuberia>
+                    <color>1</color>
+                    <tipoTuberia>1</tipoTuberia>
+                    <posicionX>5900</posicionX>
+                </tuberia>
+            </tuberias>
             <plataformas>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
@@ -569,6 +577,7 @@
                     <cantidad>4</cantidad>
                 </enemigo>
             </enemigos>
+            <pozos>
             <pozo>
                 <tipoPozo>0</tipoPozo>
                 <posicionX>400</posicionX>
@@ -589,6 +598,7 @@
                 <posicionX>3000</posicionX>
                 <fondoPozo>4</fondoPozo>
             </pozo>
+            </pozos>
             <plataformas>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
@@ -745,21 +755,23 @@
                     <cantidadBloques>1</cantidadBloques>
                 </plataforma>
             </plataformas>
-            <tuberia>
-                <color>1</color>
-                <tipoTuberia>1</tipoTuberia>
-                <posicionX>4800</posicionX>
-            </tuberia>
-            <tuberia>
-                <color>1</color>
-                <tipoTuberia>0</tipoTuberia>
-                <posicionX>5500</posicionX>
-            </tuberia>
-            <tuberia>
-                <color>1</color>
-                <tipoTuberia>0</tipoTuberia>
-                <posicionX>5900</posicionX>
-            </tuberia>
+            <tuberias>
+                <tuberia>
+                    <color>1</color>
+                    <tipoTuberia>1</tipoTuberia>
+                    <posicionX>4800</posicionX>
+                </tuberia>
+                <tuberia>
+                    <color>1</color>
+                    <tipoTuberia>0</tipoTuberia>
+                    <posicionX>5500</posicionX>
+                </tuberia>
+                <tuberia>
+                    <color>1</color>
+                    <tipoTuberia>0</tipoTuberia>
+                    <posicionX>5900</posicionX>
+                </tuberia>
+            </tuberias>
         </nivel>
     </niveles>
 

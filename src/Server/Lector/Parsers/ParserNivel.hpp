@@ -17,8 +17,6 @@ class ParserNivel : public Parser{
                             const std::string& nivelSuperior,
                             std::string nivelInferior, Parser* parser) ;
 
-        static void parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const std::string& nivelAParsear,
-                        Parser *parser) ;
 };
 
 

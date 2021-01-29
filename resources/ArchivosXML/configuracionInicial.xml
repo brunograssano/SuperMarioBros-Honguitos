@@ -17,213 +17,213 @@
             <puntoBanderaFin>95</puntoBanderaFin>
             <enemigos>
             </enemigos>
-
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>0</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>1800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>2000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>2200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>2400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>2600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>2800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>3000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>3200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>3400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>3600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>3800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>4000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>4200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>4400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>4600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>4800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>5000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>5200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>5400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>5600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>5800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>6000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>6200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>6400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>6600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>6800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>7000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>7200</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>7400</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>7600</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>7800</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>0</tipoPozo>
-                <posicionX>8000</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-
+            <pozos>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>0</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>1800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>2000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>2200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>2400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>2600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>2800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>3000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>3200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>3400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>3600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>3800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>4000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>4200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>4400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>4600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>4800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>5000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>5200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>5400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>5600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>5800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>6000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>6200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>6400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>6600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>6800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>7000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>7200</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>7400</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>7600</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>7800</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>0</tipoPozo>
+                    <posicionX>8000</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+            </pozos>
             <plataformas>
                 <plataforma>
                     <tipo>Ladrillo</tipo>
@@ -574,66 +574,68 @@
             </enemigo>
 
             </enemigos>
+            <tuberias>
+                <tuberia>
+                    <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>1060</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>1060</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>1370</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>1370</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>5200</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>5200</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>5860</posicionX>
+                </tuberia>
+            </tuberias>
 
-            <tuberia>
-                <color>0</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>5860</posicionX>
-            </tuberia>
+            <pozos>
+                <pozo>
+                    <tipoPozo>2</tipoPozo>
+                    <posicionX>2060</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>2</tipoPozo>
-                <posicionX>2060</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>2</tipoPozo>
+                    <posicionX>3040</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>2</tipoPozo>
-                <posicionX>3040</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>2</tipoPozo>
+                    <posicionX>3240</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>2</tipoPozo>
-                <posicionX>3240</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>2</tipoPozo>
+                    <posicionX>4720</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>2</tipoPozo>
-                <posicionX>4720</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-
-            <pozo>
-                <tipoPozo>2</tipoPozo>
-                <posicionX>5290</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>2</tipoPozo>
-                <posicionX>5490</posicionX>
-                <fondoPozo>0</fondoPozo>
-            </pozo>
-
+                <pozo>
+                    <tipoPozo>2</tipoPozo>
+                    <posicionX>5290</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>2</tipoPozo>
+                    <posicionX>5490</posicionX>
+                    <fondoPozo>0</fondoPozo>
+                </pozo>
+            </pozos>
 
 
             <plataformas>
@@ -866,67 +868,67 @@
                     <cantidad>5</cantidad>
                 </enemigo>
             </enemigos>
+            <tuberias>
+                <tuberia>
+                    <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>1520</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>1520</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>1900</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>1900</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>2620</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>2620</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>7100</posicionX>
+                </tuberia>
+            </tuberias>
+            <pozos>
+                <pozo>
+                    <tipoPozo>1</tipoPozo>
+                    <posicionX>2400</posicionX>
+                    <fondoPozo>1</fondoPozo>
+                </pozo>
 
-            <tuberia>
-                <color>2</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>7100</posicionX>
-            </tuberia>
+                <pozo>
+                    <tipoPozo>1</tipoPozo>
+                    <posicionX>4040</posicionX>
+                    <fondoPozo>1</fondoPozo>
+                </pozo>
 
+                <pozo>
+                    <tipoPozo>1</tipoPozo>
+                    <posicionX>4760</posicionX>
+                    <fondoPozo>1</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>1</tipoPozo>
-                <posicionX>2400</posicionX>
-                <fondoPozo>1</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>1</tipoPozo>
+                    <posicionX>6900</posicionX>
+                    <fondoPozo>1</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>1</tipoPozo>
-                <posicionX>4040</posicionX>
-                <fondoPozo>1</fondoPozo>
-            </pozo>
-
-            <pozo>
-                <tipoPozo>1</tipoPozo>
-                <posicionX>4760</posicionX>
-                <fondoPozo>1</fondoPozo>
-            </pozo>
-
-            <pozo>
-                <tipoPozo>1</tipoPozo>
-                <posicionX>6900</posicionX>
-                <fondoPozo>1</fondoPozo>
-            </pozo>
-
-            <pozo>
-                <tipoPozo>1</tipoPozo>
-                <posicionX>7280</posicionX>
-                <fondoPozo>1</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>1</tipoPozo>
-                <posicionX>7480</posicionX>
-                <fondoPozo>1</fondoPozo>
-            </pozo>
-
+                <pozo>
+                    <tipoPozo>1</tipoPozo>
+                    <posicionX>7280</posicionX>
+                    <fondoPozo>1</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>1</tipoPozo>
+                    <posicionX>7480</posicionX>
+                    <fondoPozo>1</fondoPozo>
+                </pozo>
+            </pozos>
             <plataformas>
 
                 <plataforma>
@@ -1124,44 +1126,45 @@
                     <cantidad>8</cantidad>
                 </enemigo>
             </enemigos>
+            <pozos>
+                <pozo>
+                    <tipoPozo>4</tipoPozo>
+                    <posicionX>1260</posicionX>
+                    <fondoPozo>2</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>4</tipoPozo>
-                <posicionX>1260</posicionX>
-                <fondoPozo>2</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>4</tipoPozo>
+                    <posicionX>3040</posicionX>
+                    <fondoPozo>2</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>4</tipoPozo>
-                <posicionX>3040</posicionX>
-                <fondoPozo>2</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>4</tipoPozo>
+                    <posicionX>3360</posicionX>
+                    <fondoPozo>2</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>4</tipoPozo>
-                <posicionX>3360</posicionX>
-                <fondoPozo>2</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>4</tipoPozo>
+                    <posicionX>5200</posicionX>
+                    <fondoPozo>2</fondoPozo>
+                </pozo>
+            </pozos>
 
-            <pozo>
-                <tipoPozo>4</tipoPozo>
-                <posicionX>5200</posicionX>
-                <fondoPozo>2</fondoPozo>
-            </pozo>
+            <tuberias>
+                <tuberia>
+                    <color>1</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>4300</posicionX>
+                </tuberia>
 
-
-
-            <tuberia>
-                <color>1</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>4300</posicionX>
-            </tuberia>
-
-            <tuberia>
-                <color>1</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>6200</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>1</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>6200</posicionX>
+                </tuberia>
+            </tuberias>
 
             <plataformas>
                 <plataforma>
@@ -1379,108 +1382,112 @@
                 </enemigo>
             </enemigos>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>400</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+            <pozos>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>400</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>1000</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>1200</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>1960</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>2560</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>4200</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>4400</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>1000</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>1200</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>1960</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>2560</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>4200</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>4400</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>6000</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>6000</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>6300</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>6300</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>6500</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>6500</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>6700</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>6700</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>6900</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>6900</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>7190</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
-            <pozo>
-                <tipoPozo>3</tipoPozo>
-                <posicionX>7390</posicionX>
-                <fondoPozo>3</fondoPozo>
-            </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>7190</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
+                <pozo>
+                    <tipoPozo>3</tipoPozo>
+                    <posicionX>7390</posicionX>
+                    <fondoPozo>3</fondoPozo>
+                </pozo>
 
-            <tuberia>
-                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>1480</posicionX>
-            </tuberia>
+            </pozos>
 
-            <tuberia>
-                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>2920</posicionX>
-            </tuberia>
+            <tuberias>
+                <tuberia>
+                    <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>1</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>1480</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>5300</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>2920</posicionX>
+                </tuberia>
 
-            <tuberia>
-                <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
-                <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
-                <posicionX>7100</posicionX>
-            </tuberia>
+                <tuberia>
+                    <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>5300</posicionX>
+                </tuberia>
 
+                <tuberia>
+                    <color>3</color> 				<!-- 0 - claro | 1 - oscuro -->
+                    <tipoTuberia>0</tipoTuberia> 	<!-- 0 - peque | 1 - grande -->
+                    <posicionX>7100</posicionX>
+                </tuberia>
+            </tuberias>
             <plataformas>
             
             	 <plataforma>

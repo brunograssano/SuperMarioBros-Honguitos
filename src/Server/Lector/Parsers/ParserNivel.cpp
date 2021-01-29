@@ -60,16 +60,11 @@ void ParserNivel::parsear(pugi::xml_node nivel, ArchivoLeido* archivoLeido){
     parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "enemigos", "enemigo",&parserEnemigo);
 
     ParserTuberia parserTuberias = ParserTuberia();
-    parsearUnNivel(nivel, archivoLeido, unNivel, "tuberia", &parserTuberias);
+    parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "tuberias", "tuberia",&parserTuberias);
 
     ParserPozo parserPozos = ParserPozo();
-    parsearUnNivel(nivel, archivoLeido, unNivel, "pozo", &parserPozos);
-}
+    parsearMultiplesNiveles(nivel, archivoLeido, unNivel, "pozos", "pozo",&parserPozos);
 
-void ParserNivel::parsearUnNivel(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const std::string& nivelAParsear, Parser *parser) {
-    for (pugi::xml_node tuberia: nivel.children(nivelAParsear.c_str())){
-        parser->parsear(tuberia, unNivel, archivoLeido);
-    }
 }
 
 void ParserNivel::parsearMultiplesNiveles(const pugi::xml_node &nivel, ArchivoLeido *archivoLeido, Nivel *unNivel, const std::string& nivelSuperior, std::string nivelInferior, Parser* parser) {

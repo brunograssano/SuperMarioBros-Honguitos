@@ -9,7 +9,7 @@ const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
 
 Nivel::Nivel(int mundo, std::string direccionFondo, int tiempo, int cantidadMonedas, int puntoBanderaFin, int altoPiso)
-      : piso(altoPiso), meta(ANCHO_FONDO* (float) puntoBanderaFin /100),contador(tiempo, SEGUNDOS){
+      : piso(altoPiso), meta(ANCHO_FONDO* (float) puntoBanderaFin /100),contador(tiempo + TIEMPO_ESPERA_GAME_LOOP, SEGUNDOS){
     this->mundo = mundo;
     this->direccionFondo = std::move(direccionFondo);
     this->cantidadMonedas = cantidadMonedas;

@@ -41,6 +41,7 @@ void AplicacionServidor::revisarSiMandarInfoNivel(int* cantidadNivelesRestantes)
     if((*cantidadNivelesRestantes)>juego->cantidadDeNiveles()){
         (*cantidadNivelesRestantes) = juego->cantidadDeNiveles();
         mandarInfoNivel();
+        sleep(TIEMPO_ESPERA_GAME_LOOP);
     }
 }
 

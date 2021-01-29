@@ -377,3 +377,7 @@ int SpriteMario::direccionMirada() {
     else
         return DERECHA;
 }
+
+bool SpriteMario::estaAgachado() {
+    return((estadoActual == AGACHADO_DER) || (estadoActual == AGACHADO_IZQ));
+}

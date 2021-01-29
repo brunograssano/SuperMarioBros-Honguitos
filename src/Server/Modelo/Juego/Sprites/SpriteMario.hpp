@@ -19,6 +19,7 @@ class SpriteMario : public Sprite{
         void actualizarSpriteMarioAgacharse();
         Posicion posicionManos();
         int direccionMirada();
+        bool estaAgachado();
 
 private:
 		int proximoEstado{};

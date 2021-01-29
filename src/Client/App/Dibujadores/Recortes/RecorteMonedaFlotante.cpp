@@ -9,10 +9,10 @@ RecorteMonedaFlotante::RecorteMonedaFlotante() {
     inicializarEstados(CANTIDAD_DE_RECORTES,PASO_PROXIMO_SPRITE,ALTO_IMAGEN_PIXEL,ANCHO_IMAGEN_PIXEL);
 }
 
-int RecorteMonedaFlotante::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecorteMonedaFlotante::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return LARGO_MONEDA;
 }
 
-int RecorteMonedaFlotante::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecorteMonedaFlotante::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return LARGO_MONEDA;
 }

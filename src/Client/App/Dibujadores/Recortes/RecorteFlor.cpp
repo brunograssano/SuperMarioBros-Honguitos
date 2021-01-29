@@ -6,13 +6,13 @@
 #define DESPLAZAMIENTO_FLOR 16
 
 RecorteFlor::RecorteFlor() {
-    inicializarEstados(CANTIDAD_FLORES,DESPLAZAMIENTO_FLOR,ALTO_FLOR_SPRITE,ANCHO_FLOR_SPRITE);
+    inicializarEstados(CANTIDAD_FLORES, DESPLAZAMIENTO_FLOR, ALTO_FLOR_SPRITE, ANCHO_FLOR_SPRITE);
 }
 
-int RecorteFlor::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecorteFlor::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return ANCHO_FLOR;
 }
 
-int RecorteFlor::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecorteFlor::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return ALTO_FLOR;
 }

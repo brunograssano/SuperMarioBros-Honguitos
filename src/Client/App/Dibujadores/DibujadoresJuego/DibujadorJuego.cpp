@@ -11,6 +11,7 @@
 #include "src/Client/App/Dibujadores/Recortes/RecorteFlor.hpp"
 #include "src/Client/App/Dibujadores/Recortes/RecorteMonedaFlotante.hpp"
 #include "src/Client/App/Dibujadores/Recortes/RecorteTuberia.hpp"
+#include "src/Client/App/Dibujadores/Recortes/RecorteFondoPozo.hpp"
 
 #define ESPACIADO_VIDA 25
 #define GRIS (-1)
@@ -28,23 +29,26 @@ DibujadorJuego::DibujadorJuego(CargadorTexturas* cargadorTexturas, SDL_Renderer*
 
     recortes[MARIO_RECORTE] = new RecorteMario();
 
-    recortes[POZO_RECORTE] = new RecortePozo();
-    clavesTexturas[POZO_RECORTE] = CLAVE_TEXTURA_POZO;
+    recortes[POZO] = new RecortePozo();
+    clavesTexturas[POZO] = CLAVE_TEXTURA_POZO;
 
-    recortes[TUBERIA_RECORTE] = new RecorteTuberia();
-    clavesTexturas[TUBERIA_RECORTE] = CLAVE_TEXTURA_TUBERIAS;
+    recortes[FONDO_POZO] = new RecorteFondoPozo();
+    clavesTexturas[FONDO_POZO] = CLAVE_TEXTURA_FONDO_POZO;
 
-    recortes[BLOQUE_RECORTE] = new RecorteBloque();
-    clavesTexturas[BLOQUE_RECORTE] = CLAVE_TEXTURA_BLOQUES;
+    recortes[TUBERIA] = new RecorteTuberia();
+    clavesTexturas[TUBERIA] = CLAVE_TEXTURA_TUBERIAS;
 
-    recortes[MONEDA_RECORTE] = new RecorteMoneda();
-    clavesTexturas[MONEDA_RECORTE] = CLAVE_TEXTURA_MONEDA;
+    recortes[BLOQUE] = new RecorteBloque();
+    clavesTexturas[BLOQUE] = CLAVE_TEXTURA_BLOQUES;
 
-    recortes[KOOPA_RECORTE] = new RecorteKoopa();
-    clavesTexturas[KOOPA_RECORTE] = CLAVE_TEXTURA_KOOPAS;
+    recortes[MONEDA] = new RecorteMoneda();
+    clavesTexturas[MONEDA] = CLAVE_TEXTURA_MONEDA;
 
-    recortes[GOOMBA_RECORTE] = new RecorteGoomba();
-    clavesTexturas[GOOMBA_RECORTE] = CLAVE_TEXTURA_GOOMBA;
+    recortes[KOOPA] = new RecorteKoopa();
+    clavesTexturas[KOOPA] = CLAVE_TEXTURA_KOOPAS;
+
+    recortes[GOOMBA] = new RecorteGoomba();
+    clavesTexturas[GOOMBA] = CLAVE_TEXTURA_GOOMBA;
 
     recortes[BOLA_DE_FUEGO] = new RecorteBolaDeFuego();
     clavesTexturas[BOLA_DE_FUEGO] = CLAVE_TEXTURA_BOLA_DE_FUEGO;
@@ -70,87 +74,34 @@ void DibujadorJuego::dibujar(){
 	SDL_RenderClear( renderizador );
 	SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTexturaFondo(), &rectanguloCamara, nullptr);
 
-	dibujar(BLOQUE_RECORTE,&DibujadorJuego::dibujadorSimple_helper);
-    dibujar(POZO_RECORTE,&DibujadorJuego::dibujadorFondoPozo_helper);
-    dibujar(TUBERIA_RECORTE,&DibujadorJuego::dibujadorSimple_helper);
-	dibujar(MONEDA_RECORTE,&DibujadorJuego::dibujadorSimple_helper);
-    dibujar(ENEMIGOS_RECORTE,&DibujadorJuego::dibujadorEnemigos_helper);
-    dibujar(EFECTOS_RECORTE,&DibujadorJuego::dibujadorEfectos_helper);
+	dibujar(BLOQUE);
+    dibujar(TUBERIA);
+    dibujar(MONEDA);
+    dibujar(FONDO_POZO);
+    dibujar(ENEMIGOS_RECORTE);
+    dibujar(EFECTOS_RECORTE);
     dibujarMarios();
-    dibujar(POZO_RECORTE,&DibujadorJuego::dibujadorSimple_helper);
-	dibujarTexto();
+    dibujarTexto();
+    dibujar(POZO);
 
 	SDL_RenderPresent( renderizador );
 }
 
-void DibujadorJuego::dibujar(int claveEntidad, FuncionParaDibujar funcion){
+void DibujadorJuego::dibujar(int claveEntidad){
     std::list<entidad_t> entidades = juegoCliente->obtenerEntidad(claveEntidad);
-    SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesTexturas[claveEntidad]);
     for (auto const& entidad : entidades) {
-        funcion(this, &claveEntidad, textura, (void *) &entidad);
+        dibujadorSimple(entidad);
     }
 }
 
-void DibujadorJuego::dibujadorSimple_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad) {
-    ((DibujadorJuego *) dibujador)->dibujadorSimple((int*)claveEntidad, (SDL_Texture *) textura, (entidad_t*)entidad);
-}
-
-void DibujadorJuego::dibujadorSimple(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad) {
-    const int alto = recortes[*claveEntidad]->obtenerAlturaParaDibujarImagen(entidad->tipo);
-    const int ancho = recortes[*claveEntidad]->obtenerAnchuraParaDibujarImagen(entidad->tipo);
-    SDL_Rect posicionEnPantalla = {entidad->x - rectanguloCamara.x,alto_pantalla - entidad->y - alto,ancho, alto};
-    SDL_Rect recorteImagen = recortes[*claveEntidad]->obtenerRecorte(entidad->recorteX, entidad->recorteY);
-    SDL_RenderCopy(renderizador, textura, &recorteImagen, &posicionEnPantalla);
-}
-
-void DibujadorJuego::dibujadorFondoPozo_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad) {
-    ((DibujadorJuego *) dibujador)->dibujadorFondoPozo((int*)claveEntidad, (SDL_Texture *) textura, (entidad_t*)entidad);
-}
-
-void DibujadorJuego::dibujadorFondoPozo(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad) {
-    textura = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_FONDO_POZO);
-    SDL_Rect posicionEnPantalla = {entidad->x - rectanguloCamara.x,alto_pantalla - (int)(alto_pantalla*0.12),
-                                   ANCHO_POZO, (int)(alto_pantalla*0.12)};
-    SDL_Rect recorteImagen = recortes[POZO_RECORTE]->obtenerRecorte(0,entidad->tipo);
-    recorteImagen.y += 1; // TODO acomodar o crear un nuevo recorte, agarra una parte de la imagen de arriba
-    SDL_RenderCopy(renderizador, textura, &recorteImagen, &posicionEnPantalla);
-}
-
-void DibujadorJuego::dibujadorEfectos_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad) {
-    ((DibujadorJuego *) dibujador)->dibujadorEfectos((int*)claveEntidad, (SDL_Texture *) textura, (entidad_t*)entidad);
-}
-
-void DibujadorJuego::dibujadorEfectos(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad) {
-    const int alto = recortes[entidad->tipo]->obtenerAlturaParaDibujarImagen(0);
-    const int ancho =recortes[entidad->tipo]->obtenerAnchuraParaDibujarImagen(0);
-    SDL_Rect rectanguloRecorte = recortes[entidad->tipo]->obtenerRecorte(entidad->recorteX);
-    SDL_Rect rectanguloEfecto = {entidad->x - rectanguloCamara.x,alto_pantalla - entidad->y - alto, ancho, alto};
-    textura = cargadorTexturas->obtenerTextura(clavesTexturas[entidad->tipo]);
-    SDL_RendererFlip flip = entidad->espejado?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE;
-    SDL_RenderCopyEx(renderizador, textura, &rectanguloRecorte, &rectanguloEfecto, 0, nullptr, flip);
-}
-
-
-void DibujadorJuego::dibujadorEnemigos_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad) {
-    ((DibujadorJuego *) dibujador)->dibujadorEnemigos((int*)claveEntidad, (SDL_Texture *) textura, (entidad_t*)entidad);
-}
-
-void DibujadorJuego::dibujadorEnemigos(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad) {
-    Recorte* recorte;
-    if(entidad->tipo==GOOMBA){
-        recorte = recortes[GOOMBA_RECORTE];
-        textura = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_GOOMBA);
-    }
-    else{
-        recorte = recortes[KOOPA_RECORTE];
-        textura = cargadorTexturas->obtenerTextura(CLAVE_TEXTURA_KOOPAS);
-    }
-    const int alto = recorte->obtenerAlturaParaDibujarImagen(entidad->tipo);
-    const int ancho = recorte->obtenerAnchuraParaDibujarImagen(entidad->tipo);
-    SDL_Rect posicionEnPantalla = {entidad->x - rectanguloCamara.x,alto_pantalla - entidad->y - alto,ancho, alto};
-    SDL_Rect recorteImagen = recorte->obtenerRecorte(entidad->recorteX, entidad->recorteY);
-    SDL_RenderCopyEx(renderizador,textura,&recorteImagen,&posicionEnPantalla,0,nullptr,
-                     entidad->espejado?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+void DibujadorJuego::dibujadorSimple(entidad_t entidad) {
+    SDL_Texture* textura = cargadorTexturas->obtenerTextura(clavesTexturas[entidad.tipo]);
+    const int alto = recortes[entidad.tipo]->obtenerAlturaParaDibujarImagen(entidad.recorteX, entidad.recorteY);
+    const int ancho = recortes[entidad.tipo]->obtenerAnchuraParaDibujarImagen(entidad.recorteX, entidad.recorteY);
+    SDL_Rect posicionEnPantalla = {entidad.x - rectanguloCamara.x,alto_pantalla - entidad.y - alto,ancho, alto};
+    SDL_Rect recorteImagen = recortes[entidad.tipo]->obtenerRecorte(entidad.recorteX, entidad.recorteY);
+    SDL_RendererFlip flip = entidad.espejado?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE;
+    SDL_RenderCopyEx(renderizador, textura, &recorteImagen, &posicionEnPantalla, 0, nullptr, flip);
 }
 
 void DibujadorJuego::dibujarMarios(){

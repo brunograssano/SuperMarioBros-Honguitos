@@ -22,6 +22,7 @@ entidad_t Bloque::serializar() {
     bloqueSerializado.y = posicion.obtenerPosY();
     bloqueSerializado.recorteX = spriteBloque->obtenerEstadoActual();
     bloqueSerializado.recorteY = tipoBloque;
+    bloqueSerializado.tipo = BLOQUE;
     return bloqueSerializado;
 }
 

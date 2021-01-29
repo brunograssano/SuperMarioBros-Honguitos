@@ -12,8 +12,6 @@
 #include "src/Client/App/Dibujadores/Recortes/Recorte.hpp"
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
 
-typedef void(*FuncionParaDibujar)(void* dibujador, void* claveEntidad, void* textura,void* entidad);
-
 class DibujadorJuego : public Dibujador{
 
 	public:
@@ -36,15 +34,8 @@ class DibujadorJuego : public Dibujador{
 		void dibujarTexto();
         static int obtenerEspaciado(int cantidadJugadores);
 
-        void dibujar(int claveEntidad,FuncionParaDibujar funcion);
-        static void dibujadorSimple_helper(void* dibujador, void* claveEntidad, void* textura,void* entidad);
-        void dibujadorSimple(int* claveEntidad, SDL_Texture *textura,entidad_t *entidad);
-        static void dibujadorEnemigos_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad);
-        void dibujadorEnemigos(int *claveEntidad, SDL_Texture *textura, entidad_t *entidad);
-        static void dibujadorEfectos_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad);
-        void dibujadorEfectos(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad);
-        static void dibujadorFondoPozo_helper(void *dibujador, void *claveEntidad, void *textura, void *entidad);
-        void dibujadorFondoPozo(int* claveEntidad, SDL_Texture *textura, entidad_t *entidad);
+        void dibujar(int claveEntidad);
+        void dibujadorSimple(entidad_t entidad);
 };
 
 #endif /* SRC_APP_DIBUJADORJUEGO_H_ */

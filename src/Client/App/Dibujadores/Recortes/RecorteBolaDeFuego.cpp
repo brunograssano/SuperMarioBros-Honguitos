@@ -8,10 +8,10 @@ RecorteBolaDeFuego::RecorteBolaDeFuego() {
     inicializarEstados(CANTIDAD_DE_RECORTES,PASO_PROXIMO_SPRITE,ALTO_IMAGEN_PIXEL,ANCHO_IMAGEN_PIXEL);
 }
 
-int RecorteBolaDeFuego::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecorteBolaDeFuego::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return ANCHO_BOLA;
 }
 
-int RecorteBolaDeFuego::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecorteBolaDeFuego::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return ALTO_BOLA;
 }

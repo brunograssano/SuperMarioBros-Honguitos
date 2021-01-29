@@ -37,6 +37,7 @@ class JuegoCliente{
     private:
         bool enRango(int posX, int w) const;
         static void cargarLista(std::list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope);
+        static void crearListaDeFondoPozo(std::list<entidad_t>* listaACargar, entidad_t pozos[MAX_POZOS], uint8_t topePozos);
         std::queue<info_ronda_t> rondas;
         std::map<int,jugador_t> jugadores;
         std::map<int,std::list<entidad_t>> entidades;

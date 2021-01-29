@@ -19,7 +19,7 @@ Koopa::~Koopa() {
 }
 
 entidad_t Koopa::serializar() {
-    return serializarEnemigo(TIPO_KOOPA);
+    return serializarEnemigo(KOOPA);
 }
 
 std::string Koopa::obtenerColisionID() {

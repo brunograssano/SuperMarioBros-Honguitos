@@ -7,8 +7,8 @@
 class RecorteBloque : public Recorte{
 	public:
 	    RecorteBloque();
-        int obtenerAnchuraParaDibujarImagen(int tipo) override;
-        int obtenerAlturaParaDibujarImagen(int tipo) override;
+        int obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) override;
+        int obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) override;
 };
 
 

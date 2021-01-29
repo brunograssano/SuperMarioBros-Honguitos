@@ -9,10 +9,10 @@ RecorteChispa::RecorteChispa() {
     inicializarEstados(CANTIDAD_DE_RECORTES, PASO_PROXIMO_SPRITE, ALTO_IMAGEN_PIXEL, ANCHO_IMAGEN_PIXEL);
 }
 
-int RecorteChispa::obtenerAlturaParaDibujarImagen(int tipo) {
+int RecorteChispa::obtenerAlturaParaDibujarImagen(int recorteX, int recorteY) {
     return ALTO_CHISPA;
 }
 
-int RecorteChispa::obtenerAnchuraParaDibujarImagen(int tipo) {
+int RecorteChispa::obtenerAnchuraParaDibujarImagen(int recorteX, int recorteY) {
     return ANCHO_CHISPA;
 }

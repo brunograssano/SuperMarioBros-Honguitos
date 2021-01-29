@@ -16,7 +16,7 @@ class Enemigo : public Colisionable{
 
 	public:
         ~Enemigo() override = default;
-        virtual entidad_t serializar() =0 ;
+        virtual entidad_t serializar() = 0;
         void morir(void* ptr = nullptr);
 		int obtenerPosicionX();
 		int obtenerPosicionY();

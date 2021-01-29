@@ -1,6 +1,5 @@
 #include "ParserVentana.hpp"
-#define VALOR_POR_DEFECTO_ANCHO 800
-#define VALOR_POR_DEFECTO_ALTO 600
+#include "src/Utils/Constantes.hpp"
 
 bool elAnchoEsInvalido(int ancho){
     return ancho<VALOR_POR_DEFECTO_ANCHO;

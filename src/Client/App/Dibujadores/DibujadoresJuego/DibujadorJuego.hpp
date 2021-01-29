@@ -32,7 +32,7 @@ class DibujadorJuego : public Dibujador{
 
 		void dibujarMarios();
 		void dibujarTexto();
-        static int obtenerEspaciado(int cantidadJugadores);
+        int obtenerEspaciado(int cantidadJugadores);
 
         void dibujar(int claveEntidad);
         void dibujadorSimple(entidad_t entidad);

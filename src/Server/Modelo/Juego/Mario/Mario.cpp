@@ -225,6 +225,9 @@ rectangulo_t Mario::obtenerRectangulo() {
     int x = this->obtenerPosicionX();
     int y = this->obtenerPosicionY();
     int h = ALTO_MARIO;
+    if(spriteMario->estaAgachado()){
+        h = ALTO_MARIO_AGACHADO;
+    }
     int w = ANCHO_MARIO;
     rectangulo_t rectangulo = {x,x+w,y,y+h, h, w};
     return rectangulo;

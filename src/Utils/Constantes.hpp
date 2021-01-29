@@ -34,7 +34,7 @@ const int PUNTOS_KOOPA = 1000;
 const int PUNTOS_GOOMBA = 500;
 const int PUNTOS_POR_MONEDA = 50;
 const int ANCHO_POZO = 200, ALTO_POZO = 65;
-const int ALTO_MARIO = 80, ANCHO_MARIO = 40;
+const int ALTO_MARIO = 80, ANCHO_MARIO = 40, ALTO_MARIO_AGACHADO = 55;
 const int ALTO_ENEMIGOS = 40, ANCHO_ENEMIGOS = 40;
 const int LARGO_BLOQUE = 40;
 const int LARGO_MONEDA = 40;

@@ -1,7 +1,7 @@
 #include "EscuchadorVerificacionCredenciales.hpp"
 #include "src/Utils/log/Log.hpp"
 
-EscuchadorVerificacionCredenciales::EscuchadorVerificacionCredenciales(int socket, Cliente* cliente){
+EscuchadorVerificacionCredenciales::EscuchadorVerificacionCredenciales(Socket* socket, Cliente* cliente){
 	this->socket = socket;
 	this->cliente = cliente;
 	structPointer = &this->verificacion;

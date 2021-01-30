@@ -1,6 +1,6 @@
 #include "EscuchadorEntradaTeclado.hpp"
 
-EscuchadorEntradaTeclado::EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor){
+EscuchadorEntradaTeclado::EscuchadorEntradaTeclado(Socket* socket, int idJugador, Servidor* servidor){
 	this->idJugador = idJugador;
 	this->socket = socket;
 	this->servidor = servidor;

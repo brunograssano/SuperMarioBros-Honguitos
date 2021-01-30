@@ -8,7 +8,7 @@
 #include "EnviadorSonido.hpp"
 #include "EnviadorNivel.hpp"
 
-EnviadorConexionCliente::EnviadorConexionCliente(int socket,ConexionCliente* cliente) {
+EnviadorConexionCliente::EnviadorConexionCliente(Socket* socket,ConexionCliente* cliente) {
     this->cliente = cliente;
     enviadores[VERIFICACION] = new EnviadorEstadoCredencial(socket);
     enviadores[RONDA] = new EnviadorRonda(socket);

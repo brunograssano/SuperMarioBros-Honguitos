@@ -3,7 +3,7 @@
 #include "EnviadorEntrada.hpp"
 #include "EnviadorCredenciales.hpp"
 
-EnviadorCliente::EnviadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar) {
+EnviadorCliente::EnviadorCliente(Socket* socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar) {
     enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
     enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
     this->terminoEnviar = terminoEnviar;

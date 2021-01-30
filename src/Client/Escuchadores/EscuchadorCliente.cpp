@@ -8,18 +8,16 @@
 #include "EscuchadorLog.hpp"
 #include "EscuchadorNivel.hpp"
 
-#include <sys/socket.h>
-
-EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar) {
-    escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, cliente);
-    escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, cliente);
-    escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
-    escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,cliente);
-    escuchadores[RONDA] = new EscuchadorRonda(socketCliente, cliente);
-    escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
-    escuchadores[NIVEL] = new EscuchadorNivel(socketCliente,cliente);
-    this->socketCliente = socketCliente;
-    this->terminoJuego = terminoJuego;
+EscuchadorCliente::EscuchadorCliente(Socket* socket, Cliente* cliente, bool* terminoJuego, bool* terminoEscuchar) {
+    escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socket, cliente);
+    escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socket, cliente);
+    escuchadores[MENSAJE_LOG] = new EscuchadorLog(socket);
+    escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socket, cliente);
+    escuchadores[RONDA] = new EscuchadorRonda(socket, cliente);
+    escuchadores[SONIDO] = new EscuchadorSonido(socket);
+    escuchadores[NIVEL] = new EscuchadorNivel(socket, cliente);
+    this->socketCliente = socket;
+    this->terminoJuego = terminoJuego; // todo remplazar esto por metodos
     this->terminoEscuchar = terminoEscuchar;
     this->cliente = cliente;
 }
@@ -37,7 +35,7 @@ void EscuchadorCliente::ejecutar() {
     bool hayError = false;
 
     while(!hayError && !(*terminoJuego)){
-        resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+        resultado = socketCliente->escuchar(&tipoMensaje, sizeof(char));//escuchar(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
         if(resultado<0){
             Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",std::to_string(errno));

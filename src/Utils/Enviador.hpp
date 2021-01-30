@@ -2,6 +2,7 @@
 #define SRC_UTILS_ENVIADOR_HPP_
 
 #include "Utils.hpp"
+#include "Socket.hpp"
 
 #include <string>
 #include <cstring>
@@ -14,12 +15,12 @@ class Enviador{
 		virtual void dejarInformacion(void* informacion) = 0;
 
 	protected:
-        void enviar(char caracter,const void* structPointer, unsigned int bytes);
+        void enviar(char caracter,void* structPointer, unsigned int bytes);
         static void revisarSiSeMandoCorrectamente(int resultado, const std::string& descripcion);
         static void casoError(const std::string& descripcion);
         static void casoSocketCerrado(const std::string& descripcion);
         static void casoExitoso(const std::string& descripcion);
-		int socket{};
+		Socket* socket{};
 };
 
 

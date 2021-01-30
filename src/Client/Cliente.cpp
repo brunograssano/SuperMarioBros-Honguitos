@@ -20,8 +20,8 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	cerroVentana = false;
 
     ReproductorMusica::getInstance();
-	escuchador = new EscuchadorCliente(socketCliente,this,&terminoJuego,&terminoEscuchar);
-    enviador = new EnviadorCliente(socketCliente,this,&terminoJuego,&terminoEnviar);
+	escuchador = new EscuchadorCliente(&socketCliente,this,&terminoJuego,&terminoEscuchar);
+    enviador = new EnviadorCliente(&socketCliente,this,&terminoJuego,&terminoEnviar);
 	ventanaInicio = nullptr;
 	gameLoop = new GameLoop();
 }
@@ -127,7 +127,7 @@ void Cliente::ejecutar(){
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
-		cerrarSocketCliente(socketCliente);
+        socketCliente.cerrar();
 		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(-1);
@@ -143,16 +143,16 @@ void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
     enviador->agregarMensajeAEnviar(tipoMensaje,mensaje);
 }
 
-void Cliente::cerradoVentanaInicio() const {
+void Cliente::cerradoVentanaInicio(){
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-	cerrarSocketCliente(socketCliente);
+    socketCliente.cerrar();
     while(!terminoEnviar || !terminoEscuchar){}
     delete Log::getInstance();
     exit(0);
 }
 
 Cliente::~Cliente(){
-	cerrarSocketCliente(socketCliente);
+    socketCliente.cerrar();
 	while(!terminoEnviar || !terminoEscuchar){}
     delete ReproductorMusica::getInstance();
     delete escuchador;

@@ -8,7 +8,7 @@ class Cliente;
 
 class EnviadorCliente  : public Thread{
     public:
-        EnviadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar);
+        EnviadorCliente(Socket* socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar);
         ~EnviadorCliente() override;
         void ejecutar()override;
         void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);

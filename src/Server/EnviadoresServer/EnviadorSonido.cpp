@@ -1,7 +1,7 @@
 #include "EnviadorSonido.hpp"
 pthread_mutex_t mutexSonido = PTHREAD_MUTEX_INITIALIZER;
 
-EnviadorSonido::EnviadorSonido(int socket) {
+EnviadorSonido::EnviadorSonido(Socket* socket) {
     this->socket = socket;
 }
 

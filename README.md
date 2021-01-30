@@ -1,3 +1,6 @@
+
+![](resources/Imagenes/Readme/Banner.png)
+
 # TP de Taller de programación 1 - Azcurra
 
 [![Build Status](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba.svg?token=kxawFvHvMKcCczSHri2q&branch=master)](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba)
@@ -14,7 +17,7 @@ Trabajo practico de la materia Taller de programación 1.
 
 Tablero de Trello - [link](https://trello.com/b/sdukQHiL/tp-taller)
 
-### Pre-requisitos
+## Pre-requisitos
 Listado de software/herramientas necesarias para el proyecto
 
 * C++
@@ -36,5 +39,13 @@ pruebas para poder evaluar el correcto funcionamiento del modelo.
 ## Ejecutando la aplicación
 Para ejecutar la aplicación...
 
+### Como jugar
+...
+
+## Detalles de implementación
+...
+
 ## Licencia
 Este repositorio esta bajo licencia MIT
+
+## Imágenes de la aplicación

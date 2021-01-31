@@ -22,6 +22,7 @@ class Socket {
         void setSockopt() const;
         void bind() const;
         void listen(int maximaCantidadDeClientesEnCola) const;
+        void convertirFormatoANetwok(const char *ip, const int puerto);
         void cerrarSocket();
 
     public:
@@ -62,7 +63,6 @@ class Socket {
         void shutdown(int canalACerrar = SHUT_RDWR) const;
         void cerrar();
         ~Socket();
-
 };
 
 

@@ -40,6 +40,12 @@ void Socket::listen(const int maximaCantidadDeClientesEnCola) const {
     }
 }
 
+void Socket::convertirFormatoANetwok(const char *ip, const int puerto) {
+    address.sin_port = ::htons(puerto);
+    if(::inet_pton(address.sin_family, ip,(void*) &address.sin_addr) <= 0){
+        throw std::runtime_error("Dirección inválida / Dirección no soportada: Abortamos.");
+    }
+}
 
 Socket::Socket() {
     socket = -1;
@@ -49,11 +55,8 @@ Socket::Socket(const char *ip, const int puerto) {
     obtenerSocket();
     memset(&address,0,sizeof(sockaddr_in));
     address.sin_family = AF_INET;
-    address.sin_port = htons(puerto);
 
-    if(inet_pton(address.sin_family, ip, &address.sin_addr)<=0){
-        throw std::runtime_error("Dirección inválida / Dirección no soportada: Abortamos.");
-    }
+    convertirFormatoANetwok(ip, puerto);
 
     if (connect(socket, (struct sockaddr *)&address, sizeof(address)) < 0){
         throw std::runtime_error("Falló la conexión al servidor. Abortamos.-------"+std::to_string(errno));
@@ -71,8 +74,7 @@ Socket::Socket(const char *ip, const int puerto, const int maximaCantidadDeClien
     address.sin_addr.s_addr = INADDR_ANY;
 
     /*Seteamos la ip y el puerto donde estara alojado el servidor*/
-    address.sin_port = htons(puerto);
-    inet_pton(AF_INET, ip, &address.sin_addr);
+    convertirFormatoANetwok(ip, puerto);
 
     /* Enlazamos el socket acpetador del servidor a la dirección puerto */
     bind();

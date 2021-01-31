@@ -26,6 +26,7 @@ class Juego{
         std::list<Nivel*> niveles;
 		podio_t podioAcumulado{};
         std::vector<podio_t> podios;
+        bool seGuardoUltimoPodio;
 
         int obtenerTiempoRestante();
         int obtenerMundoActual();
@@ -53,6 +54,8 @@ class Juego{
         info_partida_t obtenerInfoPartida(std::map<int,std::string> mapaIDNombre,int IDJugador);
         info_ronda_t obtenerInfoRonda();
         nivel_t serializarNivel();
+        podio_t obtenerUltimoPodio();
+        podio_t obtenerPodioAcumulado();
 
         int cantidadDeNiveles();
         void guardarPodio(Podio *podio);

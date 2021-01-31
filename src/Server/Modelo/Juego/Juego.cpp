@@ -9,6 +9,8 @@ Juego::Juego(std::list<Nivel *> nivelesLector, int cantJugadores, int alto_panta
         jugadores[i] = new Mario(i);
     }
 
+    seGuardoUltimoPodio = false;
+
     niveles = std::move(nivelesLector);
 
     for (auto const& nivel : niveles) {
@@ -80,7 +82,10 @@ void Juego::actualizarModelo(){
     }
 
     if(perdieron()){
-        //avanzarNivel(); enviar info ultimo podio
+        if(!seGuardoUltimoPodio) {
+            guardarPodio(niveles.front()->obtenerPodio());
+            seGuardoUltimoPodio = true;
+        }
     }
     camara.moverCamara(this->jugadores);
 }
@@ -189,6 +194,14 @@ info_ronda_t Juego::obtenerInfoRonda() {
     if(!niveles.empty())
         niveles.front()->completarInformacionRonda(&info_ronda, Camara::estaEnRangoHelper, &camara);
     return info_ronda;
+}
+
+podio_t Juego::obtenerUltimoPodio(){
+    return this->podios.back();
+}
+
+podio_t Juego::obtenerPodioAcumulado(){
+    return this->podioAcumulado;
 }
 
 nivel_t Juego::serializarNivel(){

@@ -167,3 +167,8 @@ void Cliente::recibirInformacionNivel(nivel_t nivel) {
     App* aplicacion = App::getInstance();
     aplicacion->agregarNivel(nivel);
 }
+
+void Cliente::recibirInformacionPodios(ultimos_podios_t ultimos_podios){
+    App* aplicacion = App::getInstance();
+    aplicacion->agregarPodios(ultimos_podios);
+}

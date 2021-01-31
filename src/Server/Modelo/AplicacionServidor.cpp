@@ -37,11 +37,24 @@ void AplicacionServidor::mandarInfoNivel() {
     servidor->mandarNivelAClientes(nivel);
 }
 
+void AplicacionServidor::mandarInfoPodio() {
+    ultimos_podios_t ultimos_podios;
+    ultimos_podios.podioUltimoNivel = juego->obtenerUltimoPodio();
+    ultimos_podios.podioAcumulado = juego->obtenerPodioAcumulado();
+    servidor->mandarPodiosAClientes(ultimos_podios);
+}
+
 void AplicacionServidor::revisarSiMandarInfoNivel(int* cantidadNivelesRestantes){
-    if((*cantidadNivelesRestantes)>juego->cantidadDeNiveles()){
+    if((*cantidadNivelesRestantes)>juego->cantidadDeNiveles() &&!terminoElJuego &&juego->hayConectados()){
         (*cantidadNivelesRestantes) = juego->cantidadDeNiveles();
         mandarInfoNivel();
         sleep(TIEMPO_ESPERA_GAME_LOOP);
+    }
+}
+
+void AplicacionServidor::revisarSiMandarUltimoPodio(){
+    if(juego->perdieron() || juego->ganaron()){
+        mandarInfoPodio();
     }
 }
 
@@ -72,6 +85,7 @@ void AplicacionServidor::ejecutar(){
 			terminoElJuego = juego->ganaron() || juego->perdieron();
 		}
 		revisarSiMandarInfoNivel(&cantidadNivelesRestantes);
+		revisarSiMandarUltimoPodio();
 		info_ronda_t ronda = obtenerInfoRonda();
 		servidor->guardarRondaParaEnvio(ronda);
         enviarSonidos();

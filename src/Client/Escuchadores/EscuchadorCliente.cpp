@@ -7,6 +7,7 @@
 #include "EscuchadorSonido.hpp"
 #include "EscuchadorLog.hpp"
 #include "EscuchadorNivel.hpp"
+#include "EscuchadorPodio.hpp"
 
 #include <sys/socket.h>
 
@@ -18,6 +19,7 @@ EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* te
     escuchadores[RONDA] = new EscuchadorRonda(socketCliente, cliente);
     escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
     escuchadores[NIVEL] = new EscuchadorNivel(socketCliente,cliente);
+    escuchadores[PODIO] = new EscuchadorPodio(socketCliente,cliente);
     this->socketCliente = socketCliente;
     this->terminoJuego = terminoJuego;
     this->terminoEscuchar = terminoEscuchar;

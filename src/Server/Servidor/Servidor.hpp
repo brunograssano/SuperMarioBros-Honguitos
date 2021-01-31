@@ -45,6 +45,7 @@ class Servidor : public Thread{
 		actualizacion_cantidad_jugadores_t crearActualizacionJugadores();
 
         void mandarNivelAClientes(nivel_t nivel);
+        void mandarPodiosAClientes(ultimos_podios_t ultimos_podios);
         void guardarRondaParaEnvio(info_ronda_t ronda);
         void enviarSonidosA(int id, const std::list<sonido_t>& sonidos);
         bool terminoElJuego() const;
@@ -76,6 +77,7 @@ class Servidor : public Thread{
         void eliminarConexionesPerdidas();
 
         bool terminoJuego;
+        bool seEnvioUltimoPodio;
         std::list<ConexionCliente*> clientes;
         std::list<ConexionCliente*> conexionesPerdidas;
         std::map<int,ConexionCliente*> clientesJugando;

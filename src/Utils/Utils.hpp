@@ -64,6 +64,12 @@ typedef struct podio {
     int ids[MAX_JUGADORES];
 }podio_t;
 
+#define PODIO 'O'
+typedef struct ultimos_podios{
+    podio_t podioUltimoNivel;
+    podio_t podioAcumulado;
+}ultimos_podios_t;
+
 typedef struct entidad {
     unsigned short x;
     unsigned short y;

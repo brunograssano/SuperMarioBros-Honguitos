@@ -37,6 +37,7 @@ class Cliente{
 		void ejecutar();
 		void empezarJuego(info_partida_t info_partida);
         void recibirInformacionNivel(nivel_t nivel);
+        void recibirInformacionPodios(ultimos_podios_t ultimos_podios);
 
 private:
         static void esperar(const bool *condicionAEsperar);

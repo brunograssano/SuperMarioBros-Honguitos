@@ -32,7 +32,9 @@ class AplicacionServidor : public Thread{
 
 	private:
         void revisarSiMandarInfoNivel(int *cantidadNivelesRestantes);
+        void revisarSiMandarUltimoPodio();
         void mandarInfoNivel();
+        void mandarInfoPodio();
         void enviarSonidos();
 
 		Servidor* servidor;

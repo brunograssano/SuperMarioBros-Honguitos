@@ -159,6 +159,14 @@ int JuegoCliente::obtenerMundoActual() const{
 	return numeroMundo;
 }
 
+void JuegoCliente::agregarPodios(ultimos_podios_t ultimos_podios){
+    pthread_mutex_lock(&mutexJuegoCliente);
+    podios.push_back(ultimos_podios.podioUltimoNivel);
+    nivelesJugados++;
+    podioPuntosTotales = ultimos_podios.podioAcumulado;
+    pthread_mutex_unlock(&mutexJuegoCliente);
+}
+
 void JuegoCliente::agregarNivel(nivel_t nivel) {
     pthread_mutex_lock(&mutexJuegoCliente);
     if(numeroMundo != NO_HAY_MUNDO_CARGADO){

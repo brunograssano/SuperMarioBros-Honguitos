@@ -115,6 +115,10 @@ void App::agregarNivel(nivel_t nivel) {
     juegoCliente.agregarNivel(nivel);
 }
 
+void App::agregarPodios(ultimos_podios_t ultimos_podios){
+    juegoCliente.agregarPodios(ultimos_podios);
+}
+
 void App::manejarEntrada(SDL_Keycode codigoEntrada) {
     if(codigoEntrada == SDLK_m){
         ReproductorMusica::getInstance()->cambiarMusica();

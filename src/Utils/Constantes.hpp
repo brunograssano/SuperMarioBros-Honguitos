@@ -103,6 +103,7 @@ const int EFECTOS_RECORTE = 13;
 #define CLAVE_TEXTURA_PEACH_SALTANDO "PeachSaltando"
 #define CLAVE_TEXTURA_TOAD_SALTANDO "ToadSaltando"
 #define CLAVE_TEXTURA_YOSHI_SALTANDO "YoshiSaltando"
+#define CLAVE_TEXTURA_MARIO_SALTANDO "MarioSaltando"
 #define CLAVE_TEXTURA_FONDO_POZO "FondoPozo"
 
 

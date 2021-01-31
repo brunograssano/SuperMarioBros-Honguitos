@@ -211,6 +211,7 @@ void Nivel::inicializarPosicionOcupadasPorTuberias(){
             for(int j = 0; j < posicionesQueOcupaUnaTuberia; j++){
                 posicionesOcupadas[std::make_tuple(posicionXOcupada+i, posicionYOcupada+j)] = true;
             }
+            posicionesOcupadasXEnemigos[posicionXOcupada + i] = true;
         }
     }
 }
@@ -348,6 +349,9 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
 void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
     piso.agregarPozo(posicionX, tipoPozo, fondo);
+    for(int i = 0; i<5; i++){
+        posicionesOcupadasXEnemigos[posicionX/TAMANIO_ENEMIGO + i] = true;
+    }
 }
 
 void Nivel::terminar(const std::map<int, Mario *>& jugadores) {

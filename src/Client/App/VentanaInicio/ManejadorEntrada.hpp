@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 #include <string>
-#include "BotonConTexto.hpp"
+#include "src/Client/App/Botones/BotonConTexto.hpp"
 
 class ManejadorEntrada{
     public:

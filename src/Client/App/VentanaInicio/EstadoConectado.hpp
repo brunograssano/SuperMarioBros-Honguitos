@@ -6,7 +6,7 @@
 #include <SDL_ttf.h>
 #include "EstadoVentana.hpp"
 #include "../ManejadorSDL.hpp"
-#include "BotonConTexto.hpp"
+#include "src/Client/App/Botones/BotonConTexto.hpp"
 
 class EstadoConectado: public EstadoVentana {
     public:

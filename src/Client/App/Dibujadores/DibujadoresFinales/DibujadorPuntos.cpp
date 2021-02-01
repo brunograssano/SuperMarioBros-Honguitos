@@ -98,7 +98,7 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
     std::stringstream puntosJugador;
 
     std::stringstream tituloPuntos;
-    tituloPuntos << "Puntos nivel " <<std::to_string(this->nivelAMostrarPuntos);
+    tituloPuntos << "Puntos nivel " <<std::to_string(juegoCliente->obtenerPodios().at(nivelAMostrarPuntos).nivel);
 
     SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                                      alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,

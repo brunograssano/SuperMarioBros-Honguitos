@@ -61,6 +61,7 @@ typedef struct jugador{
 typedef struct podio {
     unsigned short puntosNivel[MAX_JUGADORES];
     unsigned short cantidadJugadores;
+    unsigned short nivel;
     int ids[MAX_JUGADORES];
 }podio_t;
 

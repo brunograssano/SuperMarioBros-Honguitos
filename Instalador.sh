@@ -71,7 +71,7 @@ function instalarJuego() {
 
 function desinstalar() {
   echo "~~~~~~~ DESINSTALADOR ~~~~~~~"
-  echo "1/1"
+  echo "1/1 >> Desinstalando"
   sudo rm -rf build
   echo ""
   echo "Se desinstalo el juego."
@@ -104,9 +104,6 @@ while true; do
     ;;
   h)
     mostrarAyuda
-    ;;
-  m)
-    comoJugar
     ;;
   q)
     echo "Saliendo del instalador."

@@ -4,7 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
-#include "BotonConTexto.hpp"
+#include "src/Client/App/Botones/BotonConTexto.hpp"
 #include "src/Utils/Utils.hpp"
 #include "EstadoVentana.hpp"
 

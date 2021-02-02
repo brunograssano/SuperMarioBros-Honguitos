@@ -80,7 +80,7 @@ void Juego::actualizarModelo(){
     }
 
     if(perdieron()){
-        avanzarNivel();
+        //avanzarNivel(); enviar info ultimo podio
     }
     camara.moverCamara(this->jugadores);
 }

@@ -161,7 +161,7 @@ int JuegoCliente::obtenerMundoActual() const{
 
 void JuegoCliente::agregarNivel(nivel_t nivel) {
     pthread_mutex_lock(&mutexJuegoCliente);
-    if(numeroMundo != NO_HAY_MUNDO_CARGADO ){
+    if(numeroMundo != NO_HAY_MUNDO_CARGADO){
         this->hayQueMostrarPuntosDeNivel = true;
     }
     numeroMundo = nivel.mundo;

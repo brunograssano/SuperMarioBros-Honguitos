@@ -52,11 +52,12 @@ void Dibujadores::agregarEventoADibujadores(SDL_Event eventoClick){
 
 void Dibujadores::determinarEstado() {
     cargadorTexturas->revisarSiCambioNivel(direccionesNiveles[juegoCliente->obtenerMundoActual()]);
+
     if(juegoCliente->ganaronElJuego()){
         estadoActual = DIBUJADOR_GANARON;
-    }else if(juegoCliente->perdieronElJuego()){
+    }else if(juegoCliente->perdieronElJuego()) {
         estadoActual = DIBUJADOR_GAMEOVER;
-    }else if(juegoCliente->hayQueMostrarPuntosDeNivel){
+    }else if(juegoCliente->hayQueMostrarPuntosDeNivel) {
         estadoActual = DIBUJADOR_PUNTOS_NIVEL;
     }else if(estadoActual!=DIBUJADOR_ERROR_SERVER && estadoActual!=DIBUJADOR_INICIO){
         estadoActual = DIBUJADOR_JUEGO;

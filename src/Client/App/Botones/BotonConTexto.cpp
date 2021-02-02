@@ -1,6 +1,6 @@
 #include "BotonConTexto.hpp"
 #include "src/Utils/log/Log.hpp"
-#include "../ManejadorSDL.hpp"
+#include "src/Client/App/ManejadorSDL.hpp"
 #define ANCHO_MAXIMO_TEXTO 270
 
 SDL_Texture* BotonConTexto::cargoTextura(const std::string& texto){

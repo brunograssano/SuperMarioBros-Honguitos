@@ -52,25 +52,25 @@ function instalarDependencias() {
 
 function instalarJuego() {
   echo "~~~~~~~ INSTALACIÓN DEL JUEGO ~~~~~~~"
-  echo "1/6 >> Sacando carpeta anterior"
+  echo "1/6 >> Instalando el juego 0%"
   sudo rm -rf build
-  echo "2/6 >> Creando directorio para compilar"
+  echo "2/6 >> Instalando el juego 20%"
   mkdir build
-  echo "3/6 >> Moviendose"
+  echo "3/6 >> Instalando el juego 40%"
   cd build || (echo "Ocurrio un error durante la instalacion. Terminando"  && exit)
-  echo "4/6 >> Usando CMake"
+  echo "4/6 >> Instalando el juego 60%"
   cmake ..
-  echo "5/6 >> Copiando recursos"
-  cp -r "../resources" "resources"
-  echo "6/6 >> Compilando"
+  echo "5/6 >> Instalando el juego 80%"
   sudo make
+  echo "6/6 >> Instalando el juego 100%"
+  cp -r "../resources" "resources"
   echo ""
   echo "Se instalo el juego."
   echo ""
 }
 
 function desinstalar() {
-  echo "~~~~~~~ DESINSTALADOR ~~~~~~~"
+  echo "~~~~~~~ DESINSTALACIÓN DEL JUEGO ~~~~~~~"
   echo "1/1 >> Desinstalando"
   sudo rm -rf build
   echo ""

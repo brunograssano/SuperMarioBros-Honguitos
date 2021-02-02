@@ -3,18 +3,17 @@
 #include "EnviadorEntrada.hpp"
 #include "EnviadorCredenciales.hpp"
 
-EnviadorCliente::EnviadorCliente(Socket* socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar) {
+EnviadorCliente::EnviadorCliente(Socket* socketCliente,Cliente* cliente) {
     enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
     enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
-    this->terminoEnviar = terminoEnviar;
-    this->terminoJuego = terminoJuego;
+    this->terminoEnviar = false;
     this->cliente = cliente;
 }
 
 void EnviadorCliente::ejecutar() {
     char tipoMensaje;
     bool hayError = false;
-    while(!(*terminoJuego) && !hayError){
+    while(!cliente->terminoElJuego() && !hayError){
         if(!identificadoresMensajeAEnviar.empty()){
             tipoMensaje = identificadoresMensajeAEnviar.front();
             identificadoresMensajeAEnviar.pop();
@@ -25,7 +24,7 @@ void EnviadorCliente::ejecutar() {
             }
         }
     }
-    (*terminoEnviar) = true;
+    terminoEnviar = true;
     cliente->terminarProcesosDelCliente();
 }
 
@@ -39,4 +38,8 @@ EnviadorCliente::~EnviadorCliente() {
 void EnviadorCliente::agregarMensajeAEnviar(char tipoMensaje, void *mensaje) {
     enviadores[tipoMensaje]->dejarInformacion(mensaje);
     identificadoresMensajeAEnviar.push(tipoMensaje);
+}
+
+bool EnviadorCliente::terminoDeEnviar() {
+    return terminoEnviar;
 }

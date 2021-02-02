@@ -1,6 +1,5 @@
 #ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
 #define SRC_CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
-#include <thread>
 
 #include <string>
 
@@ -11,7 +10,7 @@ class EscuchadorLog : public Escuchador{
 
 	public:
 
-		explicit EscuchadorLog(int socket);
+		explicit EscuchadorLog(Socket* socket);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

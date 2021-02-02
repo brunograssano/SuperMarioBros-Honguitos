@@ -8,7 +8,7 @@
 class EscuchadorEntradaTeclado:public Escuchador{
 
 	public:
-		EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor);
+		EscuchadorEntradaTeclado(Socket* socket, int idJugador, Servidor* servidor);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

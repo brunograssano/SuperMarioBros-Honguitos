@@ -9,7 +9,7 @@ class Cliente;
 class EscuchadorInfoPartidaInicial : public Escuchador{
 
 	public:
-		EscuchadorInfoPartidaInicial(int socket,Cliente* cliente);
+		EscuchadorInfoPartidaInicial(Socket* socket,Cliente* cliente);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

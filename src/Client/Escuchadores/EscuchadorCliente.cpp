@@ -8,19 +8,16 @@
 #include "EscuchadorLog.hpp"
 #include "EscuchadorNivel.hpp"
 
-#include <sys/socket.h>
-
-EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar) {
-    escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, cliente);
-    escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, cliente);
-    escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
-    escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,cliente);
-    escuchadores[RONDA] = new EscuchadorRonda(socketCliente, cliente);
-    escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
-    escuchadores[NIVEL] = new EscuchadorNivel(socketCliente,cliente);
-    this->socketCliente = socketCliente;
-    this->terminoJuego = terminoJuego;
-    this->terminoEscuchar = terminoEscuchar;
+EscuchadorCliente::EscuchadorCliente(Socket* socket, Cliente* cliente) {
+    escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socket, cliente);
+    escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socket, cliente);
+    escuchadores[MENSAJE_LOG] = new EscuchadorLog(socket);
+    escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socket, cliente);
+    escuchadores[RONDA] = new EscuchadorRonda(socket, cliente);
+    escuchadores[SONIDO] = new EscuchadorSonido(socket);
+    escuchadores[NIVEL] = new EscuchadorNivel(socket, cliente);
+    this->socketCliente = socket;
+    this->terminoEscuchar = false;
     this->cliente = cliente;
 }
 
@@ -36,8 +33,8 @@ void EscuchadorCliente::ejecutar() {
     int resultado;
     bool hayError = false;
 
-    while(!hayError && !(*terminoJuego)){
-        resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+    while(!hayError && !cliente->terminoElJuego()){
+        resultado = socketCliente->escuchar(&tipoMensaje, sizeof(char));
 
         if(resultado<0){
             Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",std::to_string(errno));
@@ -54,6 +51,10 @@ void EscuchadorCliente::ejecutar() {
             }
         }
     }
-    (*terminoEscuchar) = true;
+    terminoEscuchar = true;
     cliente->terminarProcesosDelCliente();
+}
+
+bool EscuchadorCliente::terminoDeEscuchar() const {
+    return terminoEscuchar;
 }

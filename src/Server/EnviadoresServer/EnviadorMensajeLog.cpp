@@ -1,7 +1,7 @@
 #include "EnviadorMensajeLog.hpp"
 pthread_mutex_t mutexLog = PTHREAD_MUTEX_INITIALIZER;
 
-EnviadorMensajeLog::EnviadorMensajeLog(int socket){
+EnviadorMensajeLog::EnviadorMensajeLog(Socket* socket){
 	this->socket = socket;
 }
 

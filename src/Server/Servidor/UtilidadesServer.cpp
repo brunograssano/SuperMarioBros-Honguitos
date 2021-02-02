@@ -1,8 +1,4 @@
 #include <cstdlib>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
 #include "src/Utils/log/Log.hpp"
 #include "UtilidadesServer.hpp"
@@ -17,37 +13,14 @@ void salir(const std::string& mensajeLog){
 	exit(EXIT_FAILURE);
 }
 
-int iniciarSocketServidor(int puerto, char* ip){
-	int opt = 1;
-	struct sockaddr_in address{};
-	int socketServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if(socketServer == 0){
-		salir("No se pudo crear el socket para aceptar conexiones");
-	}
-
-	if(setsockopt(socketServer, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))){
-		salir("Ocurrio un error al hacer el setsockopt");
-	}
-	address.sin_family = AF_INET;
-	address.sin_addr.s_addr = INADDR_ANY;
-
-	/*Seteamos la ip y el puerto donde estara alojado el servidor*/
-	address.sin_port = htons(puerto);
-	inet_pton(AF_INET, ip, &address.sin_addr);
-
-	/* Enlazamos el socket acpetador del servidor a la dirección puerto */
-	if(bind(socketServer,(struct sockaddr*)&address,sizeof(address))<0){
-		salir("No se pudo bindear el socket al puerto.");
-	}
-
-	/* Hacemos que el socket sea para escuchar */
-	if(listen(socketServer, TAMANIO_COLA) < 0){
-		salir("No se pudo bindear el socket al puerto.");
-	}
-
-    std::cout<< "Se inicio el servidor"<<std::endl;
-
-	return socketServer;
+Socket iniciarSocketServidor(int puerto, char* ip){
+    Socket socket;
+    try{
+        socket = Socket(ip,puerto,TAMANIO_COLA);
+    }catch (std::exception& e) {
+        salir(e.what());
+    }
+	return socket;
 }
 
 void escribirMensajesDeArchivoLeidoEnLog(const std::list<std::string>& mensajesError){
@@ -64,19 +37,6 @@ void empezarHilo(Thread* hilo,const std::string& nombreHilo){
         salir("Ocurrio un error creando el hilo "+nombreHilo+", no se va a poder ejecutar el server correctamente. Terminando el servidor");
     }
 }
-
-void cerrarServidor(int socketServer){
-	int resultado = shutdown(socketServer,SHUT_RDWR);
-	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",std::to_string(errno));
-	}
-	resultado = close(socketServer);
-	if(resultado<0){
-		Log::getInstance()->huboUnErrorSDL("No se cerro correctamente el socket del servidor",std::to_string(errno));
-	}
-    std::cout<<"Se cerro el servidor"<<std::endl;
-}
-
 
 bool coincidenCredenciales(const usuario_t &posibleUsuario,const usuario_t &usuario){
     return posibleUsuario.nombre == usuario.nombre && posibleUsuario.contrasenia == usuario.contrasenia &&

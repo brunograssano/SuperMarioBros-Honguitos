@@ -216,7 +216,7 @@ void Nivel::inicializarPosicionOcupadasPorTuberias(){
     }
 }
 
-//rand() % (MAXIMO + 1 - MINIMO) + MINIMO
+
 
 void Nivel::inicializarPosicionMonedas(){
 

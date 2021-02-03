@@ -79,9 +79,6 @@ void Juego::actualizarModelo(){
         revisarSiGanaronElJuego();
     }
 
-    if(perdieron()){
-        //avanzarNivel(); enviar info ultimo podio
-    }
     camara.moverCamara(this->jugadores);
 }
 

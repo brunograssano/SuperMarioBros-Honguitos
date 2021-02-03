@@ -1,6 +1,6 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORSONIDO_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORSONIDO_HPP
-
+//rand() % (MAXIMO + 1 - MINIMO) + MINIMO
 #include <queue>
 #include "src/Utils/Enviador.hpp"
 

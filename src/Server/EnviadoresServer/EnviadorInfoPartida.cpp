@@ -1,7 +1,7 @@
 #include "EnviadorInfoPartida.hpp"
 #include <cstring>
 
-EnviadorInfoPartida::EnviadorInfoPartida(int socket){
+EnviadorInfoPartida::EnviadorInfoPartida(Socket* socket){
 	this->socket = socket;
 	memset(&info_comienzo_partida,0,sizeof(info_partida_t));
 }

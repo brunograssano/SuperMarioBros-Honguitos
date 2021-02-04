@@ -132,13 +132,6 @@ void DibujadorJuego::dibujarMarios(){
         SDL_Rect recorteMario = recortes[MARIO_RECORTE]->obtenerRecorte(mario.recorteImagen, mario.modificador);
         SDL_RenderCopy(renderizador, cargadorTexturas->obtenerTexturaMario(mario.idImagen), &recorteMario,&rectanguloMario);
     }
-
-    /*SDL_Rect cuadradoCoordenadas = {ancho_pantalla - 130, 110, 120, 35};
-    std::string coordenadas = "";
-    coordenadas.append(to_string(mario.posX));
-    coordenadas.append(",");
-    coordenadas.append(to_string(mario.posY));
-    renderizarTexto(cuadradoCoordenadas, coordenadas, colorDefault);*/
 }
 
 void DibujadorJuego::dibujarTexto(){

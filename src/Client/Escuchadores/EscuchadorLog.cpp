@@ -1,7 +1,7 @@
 #include "EscuchadorLog.hpp"
 
 
-EscuchadorLog::EscuchadorLog(int socket){
+EscuchadorLog::EscuchadorLog(Socket* socket){
 	this->socket = socket;
 	strcpy(conjuntoMensajeLog.mensajeParaElLog,"");
 	conjuntoMensajeLog.tipo = ' ';

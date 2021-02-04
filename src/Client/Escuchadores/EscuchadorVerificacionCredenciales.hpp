@@ -9,7 +9,7 @@ class Cliente;
 class EscuchadorVerificacionCredenciales : public Escuchador{
 
 	public:
-		EscuchadorVerificacionCredenciales(int socketCliente, Cliente* cliente);
+		EscuchadorVerificacionCredenciales(Socket* socketCliente, Cliente* cliente);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

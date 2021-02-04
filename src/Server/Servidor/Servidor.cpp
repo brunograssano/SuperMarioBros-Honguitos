@@ -1,14 +1,21 @@
 #include "Servidor.hpp"
 #include <string>
 #include <cstring>
+#include "src/Utils/Constantes.hpp"
+
+#include "UtilidadesServer.hpp"
 
 Servidor::Servidor(const ArchivoLeido& archivoLeido, const std::list<std::string>& mensajesErrorOtroArchivo, int puerto, char* ip)
                     : reconectador(this),
                       iniciadorModelo(archivoLeido.cantidadConexiones,&aplicacionServidor,&clientesJugando,&mapaIDNombre),
-                      aplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones, archivoLeido.anchoVentana, archivoLeido.altoVentana){
+                      aceptadorDeConexiones(this,&socketServer),
+                      aplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones, archivoLeido.anchoVentana, archivoLeido.altoVentana),
+                      manejadorIDs(){
     terminoJuego = false;
+
     seEnvioUltimoPodio = false;
 	manejadorIDs = ManejadorIdentificadores();
+
 	log = Log::getInstance(archivoLeido.tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido.mensajeError);
@@ -17,7 +24,6 @@ Servidor::Servidor(const ArchivoLeido& archivoLeido, const std::list<std::string
 	cantidadConexiones = archivoLeido.cantidadConexiones;
 
 	socketServer = iniciarSocketServidor(puerto,ip);
-    aceptadorDeConexiones = AceptadorDeConexiones(this,socketServer);
     log->mostrarMensajeDeInfo("Se creo el server en la IP: " + (std::string)ip + " y en el puerto: "+ std::to_string(puerto) + ". Se estan esperando conexiones");
 }
 
@@ -237,10 +243,10 @@ Servidor::~Servidor(){
 	clientes.clear();
 	clientesJugando.clear();
 	conexionesPerdidas.clear();
-
-	cerrarServidor(socketServer);
+    socketServer.cerrar();
     reconectador.terminarReconectarConexiones();
     reconectador.despertarHilo();
 	while(!aceptadorDeConexiones.terminoAceptar() || !reconectador.terminoHiloReconectar()){}
 	delete log;
+    std::cout<<"Se cerro el servidor"<<std::endl;
 }

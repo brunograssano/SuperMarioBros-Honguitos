@@ -38,8 +38,8 @@ void EscuchadorCliente::ejecutar() {
     int resultado;
     bool hayError = false;
 
-    while(!hayError && !(*terminoJuego)){
-        resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
+    while(!hayError && !cliente->terminoElJuego()){
+        resultado = socketCliente->escuchar(&tipoMensaje, sizeof(char));
 
         if(resultado<0){
             Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",std::to_string(errno));
@@ -56,6 +56,10 @@ void EscuchadorCliente::ejecutar() {
             }
         }
     }
-    (*terminoEscuchar) = true;
+    terminoEscuchar = true;
     cliente->terminarProcesosDelCliente();
+}
+
+bool EscuchadorCliente::terminoDeEscuchar() const {
+    return terminoEscuchar;
 }

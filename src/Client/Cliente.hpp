@@ -22,6 +22,7 @@ class EscuchadorCliente;
 class GameLoop;
 #include "GameLoop.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "src/Utils/Socket.hpp"
 
 class Cliente{
 
@@ -38,10 +39,12 @@ class Cliente{
 		void empezarJuego(info_partida_t info_partida);
         void recibirInformacionNivel(nivel_t nivel);
         void recibirInformacionPodios(ultimos_podios_t ultimos_podios);
+        bool terminoElJuego();
 
-private:
+
+    private:
         static void esperar(const bool *condicionAEsperar);
-		void cerradoVentanaInicio() const;
+		void cerradoVentanaInicio();
 		void esperarAQueEmpieceElJuego();
 		void intentarEntrarAlJuego();
 
@@ -58,10 +61,7 @@ private:
 		bool terminoJuego;
 		bool cerroVentana;
 
-		bool terminoEnviar;
-		bool terminoEscuchar;
-
-		int socketCliente;
+		Socket socketCliente;
 
         GameLoop* gameLoop;
 };

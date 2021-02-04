@@ -2,7 +2,7 @@
 #include "EscuchadorPodio.hpp"
 #include "src/Utils/log/Log.hpp"
 
-EscuchadorPodio::EscuchadorPodio(int socketCliente, Cliente *cliente) {
+EscuchadorPodio::EscuchadorPodio(Socket* socketCliente, Cliente *cliente) {
     this->socket = socketCliente;
     this->cliente = cliente;
     structPointer = &this->ultimos_podios;

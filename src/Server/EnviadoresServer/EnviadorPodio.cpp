@@ -1,6 +1,6 @@
 #include "EnviadorPodio.hpp"
 
-EnviadorPodio::EnviadorPodio(int socket) {
+EnviadorPodio::EnviadorPodio(Socket* socket) {
     this->socket = socket;
     memset(&ultimos_podios,0,sizeof(ultimos_podios_t));
 }

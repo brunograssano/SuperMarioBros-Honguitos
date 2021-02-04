@@ -9,7 +9,7 @@
 class EnviadorPodio: public Enviador{
 
 public:
-    explicit EnviadorPodio(int socket);
+    explicit EnviadorPodio(Socket* socket);
     void enviar()override;
     void dejarInformacion(void* informacionPodio)override;
 private:

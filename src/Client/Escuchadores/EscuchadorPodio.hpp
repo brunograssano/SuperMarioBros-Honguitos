@@ -10,7 +10,7 @@
 class EscuchadorPodio : public Escuchador{
 
 public:
-    EscuchadorPodio(int socketCliente, Cliente* cliente);
+    EscuchadorPodio(Socket* socketCliente, Cliente* cliente);
     void casoError(int resultado)override;
     void casoSocketCerrado()override;
     void casoExitoso()override;

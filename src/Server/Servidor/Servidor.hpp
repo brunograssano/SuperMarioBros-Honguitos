@@ -67,7 +67,6 @@ class Servidor : public Thread{
         void notificarClientesDeLaDesconexion(const ConexionCliente *conexionPerdida, std::string &nombre);
         void eliminarConexionesPerdidas();
 
-        bool terminoJuego;
         bool seEnvioUltimoPodio;
 
         std::list<ConexionCliente*> clientes;

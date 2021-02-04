@@ -9,20 +9,17 @@
 #include "EscuchadorNivel.hpp"
 #include "EscuchadorPodio.hpp"
 
-#include <sys/socket.h>
-
-EscuchadorCliente::EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar) {
-    escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, cliente);
-    escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, cliente);
-    escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
-    escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,cliente);
-    escuchadores[RONDA] = new EscuchadorRonda(socketCliente, cliente);
-    escuchadores[SONIDO] = new EscuchadorSonido(socketCliente);
-    escuchadores[NIVEL] = new EscuchadorNivel(socketCliente,cliente);
-    escuchadores[PODIO] = new EscuchadorPodio(socketCliente,cliente);
-    this->socketCliente = socketCliente;
-    this->terminoJuego = terminoJuego;
-    this->terminoEscuchar = terminoEscuchar;
+EscuchadorCliente::EscuchadorCliente(Socket* socket, Cliente* cliente) {
+    escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socket, cliente);
+    escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socket, cliente);
+    escuchadores[MENSAJE_LOG] = new EscuchadorLog(socket);
+    escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socket, cliente);
+    escuchadores[RONDA] = new EscuchadorRonda(socket, cliente);
+    escuchadores[SONIDO] = new EscuchadorSonido(socket);
+    escuchadores[NIVEL] = new EscuchadorNivel(socket, cliente);
+    escuchadores[PODIO] = new EscuchadorPodio(socket, cliente);
+    this->socketCliente = socket;
+    this->terminoEscuchar = false;
     this->cliente = cliente;
 }
 

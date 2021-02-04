@@ -14,7 +14,6 @@ Servidor::Servidor(const ArchivoLeido& archivoLeido, const std::list<std::string
     terminoJuego = false;
 
     seEnvioUltimoPodio = false;
-	manejadorIDs = ManejadorIdentificadores();
 
 	log = Log::getInstance(archivoLeido.tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);

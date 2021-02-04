@@ -7,7 +7,7 @@
 class EscuchadorCredenciales: public Escuchador{
 
 	public:
-		EscuchadorCredenciales(Socket* socket, ConexionCliente* cliente);
+		EscuchadorCredenciales(int socket, ConexionCliente* cliente);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

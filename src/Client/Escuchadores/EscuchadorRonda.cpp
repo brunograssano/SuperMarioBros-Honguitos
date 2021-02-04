@@ -2,7 +2,7 @@
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Constantes.hpp"
 
-EscuchadorRonda::EscuchadorRonda(Socket* socket, Cliente* cliente){
+EscuchadorRonda::EscuchadorRonda(int socket, Cliente* cliente){
 	this->socket = socket;
 	this->cliente = cliente;
 	structPointer = &this->info_ronda;

@@ -6,7 +6,7 @@
 class EnviadorNivel : public Enviador{
 
     public:
-        explicit EnviadorNivel(Socket* socket);
+        explicit EnviadorNivel(int socket);
         void enviar()override;
         void dejarInformacion(void* informacionNivel)override;
     private:

@@ -1,6 +1,6 @@
 #include "EnviadorNivel.hpp"
 
-EnviadorNivel::EnviadorNivel(Socket* socket) {
+EnviadorNivel::EnviadorNivel(int socket) {
     this->socket = socket;
     memset(&info_nivel,0,sizeof(nivel_t));
 }

@@ -87,7 +87,6 @@ void Juego::actualizarModelo(){
             seGuardoUltimoPodio = true;
         }
     }
-
     camara.moverCamara(this->jugadores);
 }
 

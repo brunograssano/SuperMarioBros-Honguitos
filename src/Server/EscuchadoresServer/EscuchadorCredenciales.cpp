@@ -1,7 +1,6 @@
 #include "EscuchadorCredenciales.hpp"
-#include "src/Utils/log/Log.hpp"
 
-EscuchadorCredenciales::EscuchadorCredenciales(Socket* socket, ConexionCliente* cliente){
+EscuchadorCredenciales::EscuchadorCredenciales(int socket, ConexionCliente* cliente){
 	this->socket = socket;
 	this->conexionCliente = cliente;
 	structPointer = &this->credencial;

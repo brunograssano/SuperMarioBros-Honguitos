@@ -1,7 +1,7 @@
 #include "EscuchadorInfoPartidaInicial.hpp"
 #include "src/Utils/log/Log.hpp"
 
-EscuchadorInfoPartidaInicial::EscuchadorInfoPartidaInicial(Socket* socket,Cliente* cliente){
+EscuchadorInfoPartidaInicial::EscuchadorInfoPartidaInicial(int socket,Cliente* cliente){
 	this->socket = socket;
 	this->cliente = cliente;
 	structPointer = &this->info_partida;

@@ -7,7 +7,7 @@
 class EscuchadorNivel : public Escuchador{
 
     public:
-        EscuchadorNivel(Socket* socketCliente, Cliente* cliente);
+        EscuchadorNivel(int socketCliente, Cliente* cliente);
         void casoError(int resultado)override;
         void casoSocketCerrado()override;
         void casoExitoso()override;

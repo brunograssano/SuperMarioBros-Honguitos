@@ -5,7 +5,7 @@
 
 class EnviadorInfoPartida:public Enviador{
 	public:
-		explicit EnviadorInfoPartida(Socket* socket);
+		explicit EnviadorInfoPartida(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 	private:

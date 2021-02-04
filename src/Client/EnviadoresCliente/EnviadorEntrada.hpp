@@ -7,7 +7,7 @@
 
 class EnviadorEntrada:public Enviador{
 	public:
-		explicit EnviadorEntrada(Socket* socket);
+		explicit EnviadorEntrada(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 

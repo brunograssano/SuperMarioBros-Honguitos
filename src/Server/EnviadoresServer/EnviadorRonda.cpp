@@ -1,7 +1,7 @@
 #include "EnviadorRonda.hpp"
 pthread_mutex_t mutexRonda = PTHREAD_MUTEX_INITIALIZER;
 
-EnviadorRonda::EnviadorRonda(Socket* socket){
+EnviadorRonda::EnviadorRonda(int socket){
 	this->socket = socket;
 }
 

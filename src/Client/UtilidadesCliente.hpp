@@ -2,8 +2,10 @@
 #define SRC_CLIENT_UTILIDADESCLIENTE_HPP_
 
 #include "src/Utils/Constantes.hpp"
-#include "src/Utils/Socket.hpp"
 
-Socket conectarAlServidor(char ip[LARGO_IP], int puerto);
+
+int conectarAlServidor(char ip[LARGO_IP], int puerto);
+
+void cerrarSocketCliente(int socketCliente);
 
 #endif /* SRC_CLIENT_UTILIDADESCLIENTE_HPP_ */

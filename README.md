@@ -6,10 +6,6 @@
 [![Build Status](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba.svg?token=kxawFvHvMKcCczSHri2q&branch=master)](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba)
 
 Trabajo practico de la materia Taller de programación 1.
-
-El presente trabajo consistió en el armado de un juego de plataformas, tomando como referencia el Super Mario Bros.
-  
-  ...*desarrollar*
   
 ## Grupo Honguitos
 * De Angelis Riva, Lukas
@@ -22,7 +18,6 @@ El presente trabajo consistió en el armado de un juego de plataformas, tomando 
 Tablero de Trello - [link](https://trello.com/b/sdukQHiL/tp-taller)
 
 ## Pre-requisitos
-
 Listado de software/herramientas necesarias para el proyecto
 
 * C++
@@ -30,72 +25,7 @@ Listado de software/herramientas necesarias para el proyecto
 * CMake
 * Sistema operativo basado en Linux
 
-En cuanto a requerimientos de hardware, se necesitan
-
-* Para ejecutar el cliente: ~50MB de RAM
-* Para ejecutar el servidor: ~2MB de RAM
-* Se necesitan ~25MB de espacio en disco
-* *verificar cpu*
-
-## Instalación
-
-Para la instalación del trabajo practico se puede utilizar el instalador provisto, o realizarlo a mano.
-
-* Mediante el instalador
-    1. Ejecutar el instalador desde la terminal parado en la carpeta del juego con ```bash Instalador.sh```
-    2. Si no tiene alguna de las dependencias para que el juego funcione correctamente, las puede instalar escribiendo ```a```, si no es necesario puede usar ```i``` directamente.
-    3. Salir con ```q```.
-
-* Para realizarla a mano, ejecutar la siguiente lista de comandos desde la carpeta del juego.
-    ```
-    mkdir build
-    cd build
-    cmake ..
-    sudo make
-    cp -r "../resources" "resources"
-    ```
-
-## Ejecutando la aplicación
-
-Para ejecutar la aplicación debe hacerlo desde línea de comando. 
-```
-./Mario [opciones]
-```
-**[opciones]**
-
-Se detallan a continuación las opciones.
-```
--s,--server            Iniciara la aplicacion en modo servidor
--i,--ip                Requiere a continuacion de la ip (para conectarse o iniciar un servidor)
--p,--puerto            Requiere a continuacion del puerto (para conectarse o iniciar un servidor)
--l,--log               Permite cambiar el nivel del log entre error, info, o debug. (Cada uno se puede escribir en los formatos error,Error,ERROR)
--c,--config            Solo disponible en modo servidor, requiere de una direccion a un archivo XML a continuacion suyo
--t,--test              Correra los tests realizados
--h,--help              Muestra esta informacion
-```
-
-Ejemplos
-
-```
-./Mario -s --config direccionConfiguracion -p puerto -i IP 
-./Mario -s -c resources/ArchivosXML/configuracionInicial.xml -p 5005 -i 127.0.0.1
-
-./Mario -l nivelLog --puerto puerto -i IP
-./Mario -l INFO -p 5005 -i 127.0.0.1
-```
-El primer ejemplo iniciara un servidor con las configuraciones indicadas. En el segundo caso se inicia un cliente que se conectara al servidor. (En el ejemplo se prueba con localhost, pero funciona sin problemas en una red local)
-
-## Como jugar
-
-El juego tiene los siguientes controles:
-* A,W,S,D o las correspondientes flechas para el movimiento.
-* Espacio para disparar bolas de fuego.
-* T para entrar en modo TEST (Los enemigos no te hacen daño y no se pierden vidas)
-* M para apagar la música.
-* N para apagar los sonidos del juego.
-
 ## Ejecutando las pruebas
-
 A lo largo del desarrollo del trabajo se han hecho algunas
 pruebas para poder evaluar el correcto funcionamiento del modelo.
  Estas se pueden ejecutar de las siguientes maneras.
@@ -106,14 +36,16 @@ pruebas para poder evaluar el correcto funcionamiento del modelo.
 * Siendo Mario el nombre del ejecutable que se tenga
 ```
 
+## Ejecutando la aplicación
+Para ejecutar la aplicación...
+
+### Como jugar
+...
 
 ## Detalles de implementación
 ...
 
 ## Licencia
 Este repositorio esta bajo licencia MIT
-
-## Videos
-
 
 ## Imágenes de la aplicación

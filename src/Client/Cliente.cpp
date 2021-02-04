@@ -15,11 +15,13 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	seRecibioVerificacion = false;
 	seRecibioInformacionInicio = false;
 	cargoLaAplicacion = false;
+	terminoEnviar = false;
+	terminoEscuchar = false;
 	cerroVentana = false;
 
     ReproductorMusica::getInstance();
-	escuchador = new EscuchadorCliente(&socketCliente,this);
-    enviador = new EnviadorCliente(&socketCliente,this);
+	escuchador = new EscuchadorCliente(socketCliente,this,&terminoJuego,&terminoEscuchar);
+    enviador = new EnviadorCliente(socketCliente,this,&terminoJuego,&terminoEnviar);
 	ventanaInicio = nullptr;
 	gameLoop = new GameLoop();
 }
@@ -125,8 +127,8 @@ void Cliente::ejecutar(){
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
-        socketCliente.cerrar();
-		while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
+		cerrarSocketCliente(socketCliente);
+		while(!terminoEnviar || !terminoEscuchar){}
 		delete Log::getInstance();
 		exit(-1);
 	}
@@ -136,25 +138,22 @@ void Cliente::ejecutar(){
 	terminoJuego = true;
 }
 
-bool Cliente::terminoElJuego() {
-    return terminoJuego;
-}
 
 void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
     enviador->agregarMensajeAEnviar(tipoMensaje,mensaje);
 }
 
-void Cliente::cerradoVentanaInicio(){
+void Cliente::cerradoVentanaInicio() const {
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-    socketCliente.cerrar();
-    while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
+	cerrarSocketCliente(socketCliente);
+    while(!terminoEnviar || !terminoEscuchar){}
     delete Log::getInstance();
     exit(0);
 }
 
 Cliente::~Cliente(){
-    socketCliente.cerrar();
-	while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
+	cerrarSocketCliente(socketCliente);
+	while(!terminoEnviar || !terminoEscuchar){}
     delete ReproductorMusica::getInstance();
     delete escuchador;
 	delete enviador;

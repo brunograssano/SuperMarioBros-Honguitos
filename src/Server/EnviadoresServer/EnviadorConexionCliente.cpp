@@ -9,7 +9,7 @@
 #include "EnviadorNivel.hpp"
 #include "EnviadorPodio.hpp"
 
-EnviadorConexionCliente::EnviadorConexionCliente(Socket* socket,ConexionCliente* cliente) {
+EnviadorConexionCliente::EnviadorConexionCliente(int socket,ConexionCliente* cliente) {
     this->cliente = cliente;
     enviadores[VERIFICACION] = new EnviadorEstadoCredencial(socket);
     enviadores[RONDA] = new EnviadorRonda(socket);

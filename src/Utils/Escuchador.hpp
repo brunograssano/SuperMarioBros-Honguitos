@@ -2,7 +2,6 @@
 #define SRC_UTILS_ESCUCHADOR_HPP_
 
 #include "Utils.hpp"
-#include "Socket.hpp"
 
 class Escuchador{
 
@@ -15,7 +14,7 @@ class Escuchador{
 		virtual void casoExitoso() = 0;
 
 	protected:
-        Socket* socket{};
+		int socket{};
 		void* structPointer{};
 		int bytes{};
 };

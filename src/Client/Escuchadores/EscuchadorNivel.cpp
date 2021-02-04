@@ -1,7 +1,7 @@
 #include "EscuchadorNivel.hpp"
 #include "src/Utils/log/Log.hpp"
 
-EscuchadorNivel::EscuchadorNivel(Socket* socketCliente, Cliente *cliente) {
+EscuchadorNivel::EscuchadorNivel(int socketCliente, Cliente *cliente) {
     this->socket = socketCliente;
     this->cliente = cliente;
     structPointer = &this->info_nivel;

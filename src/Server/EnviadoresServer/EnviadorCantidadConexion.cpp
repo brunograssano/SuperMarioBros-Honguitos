@@ -1,7 +1,7 @@
 
 #include "EnviadorCantidadConexion.hpp"
 
-EnviadorCantidadConexion::EnviadorCantidadConexion(Socket* socket){
+EnviadorCantidadConexion::EnviadorCantidadConexion(int socket){
 	this->socket = socket;
 	memset(&actualizacion,0,sizeof(actualizacion_cantidad_jugadores_t));
 }

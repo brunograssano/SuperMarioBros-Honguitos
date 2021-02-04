@@ -5,7 +5,7 @@
 
 class EscuchadorSonido : public Escuchador{
     public:
-        explicit EscuchadorSonido(Socket* socketCliente);
+        explicit EscuchadorSonido(int socketCliente);
         void casoError(int resultado)override;
         void casoSocketCerrado()override;
         void casoExitoso()override;

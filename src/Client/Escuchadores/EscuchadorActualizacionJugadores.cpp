@@ -1,7 +1,7 @@
 #include "EscuchadorActualizacionJugadores.hpp"
 #include "src/Utils/log/Log.hpp"
 
-EscuchadorActualizacionJugadores::EscuchadorActualizacionJugadores(Socket* socket, Cliente* cliente){
+EscuchadorActualizacionJugadores::EscuchadorActualizacionJugadores(int socket, Cliente* cliente){
 	this->socket = socket;
 	this->cliente = cliente;
 	structPointer = &this->actualizacion;

@@ -53,7 +53,9 @@ void BotonConTexto::cambiarTexto(const std::string& texto){
 }
 
 bool BotonConTexto::botonClickeado(SDL_Event evento) const{
+    //If a mouse button was pressed
     if( evento.type == SDL_MOUSEBUTTONDOWN ){
+        //If the left mouse button was pressed
         if( evento.button.button == SDL_BUTTON_LEFT )
         {
             int posicionXClick = evento.button.x;

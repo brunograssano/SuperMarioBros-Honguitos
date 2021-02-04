@@ -2,7 +2,7 @@
 
 #include "EnviadorCredenciales.hpp"
 
-EnviadorCredenciales::EnviadorCredenciales(Socket* socket){
+EnviadorCredenciales::EnviadorCredenciales(int socket){
 	this->socket = socket;
 	memset(&credenciales,0,sizeof(credencial_t));
 }

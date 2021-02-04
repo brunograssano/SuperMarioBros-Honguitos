@@ -5,7 +5,7 @@
 
 class EnviadorEstadoCredencial:public Enviador{
 	public:
-		explicit EnviadorEstadoCredencial(Socket* socket);
+		explicit EnviadorEstadoCredencial(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 

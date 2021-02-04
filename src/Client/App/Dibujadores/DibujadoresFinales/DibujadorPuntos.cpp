@@ -64,6 +64,7 @@ void DibujadorPuntos::dibujarPuntosTotales(JuegoCliente *juegoCliente) {
 
         podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
         puntosJugador.str("");
+        //int id;
         std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
@@ -111,6 +112,7 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
 
         podio_t podio = juegoCliente->obtenerPodios().at(nivelAMostrarPuntos);
         puntosJugador.str("");
+        //int id;
         std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
@@ -183,6 +185,7 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
 
         puntosJugador.str("");
+        //int id;
         std::string nombreJugador = parIdJugador.second.nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.mario.puntos;
 

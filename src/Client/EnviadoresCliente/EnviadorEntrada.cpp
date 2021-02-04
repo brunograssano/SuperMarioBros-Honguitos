@@ -1,7 +1,7 @@
 
 #include "EnviadorEntrada.hpp"
 
-EnviadorEntrada::EnviadorEntrada(Socket* socket){
+EnviadorEntrada::EnviadorEntrada(int socket){
 	this->socket = socket;
 }
 

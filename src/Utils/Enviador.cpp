@@ -1,4 +1,5 @@
 #include "Enviador.hpp"
+#include <sys/socket.h>
 #include "../Utils/log/Log.hpp"
 
 void Enviador::revisarSiSeMandoCorrectamente(int resultado, const std::string& descripcion) {
@@ -26,10 +27,10 @@ void Enviador::casoExitoso(const std::string& descripcion) {
     Log::getInstance()->mostrarAccion("Se recibio exitosamente informacion de: "+ descripcion);
 }
 
-void Enviador::enviar(char caracter,void *structPointer, unsigned int bytes) {
-    int resultadoEnvio = socket->enviar(&caracter, sizeof(caracter));
+void Enviador::enviar(char caracter,const void *structPointer, unsigned int bytes) {
+    int resultadoEnvio = send(socket, &caracter, sizeof(caracter), 0);
     this->revisarSiSeMandoCorrectamente(resultadoEnvio, &"el caracter de mensaje " [ caracter]);
 
-    resultadoEnvio = socket->enviar(structPointer, bytes);
+    resultadoEnvio = send(socket, structPointer, bytes, 0);
     this->revisarSiSeMandoCorrectamente(resultadoEnvio, &"la informacion del mensaje " [ caracter]);
 }

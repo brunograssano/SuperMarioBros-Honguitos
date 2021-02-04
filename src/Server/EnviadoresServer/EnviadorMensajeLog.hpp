@@ -9,7 +9,7 @@
 class EnviadorMensajeLog:public Enviador{
 
 	public:
-		explicit EnviadorMensajeLog(Socket* socket);
+		explicit EnviadorMensajeLog(int socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 

@@ -17,7 +17,7 @@ class ReconectadorDeConexiones : public Thread{
         void agregarUsuarioDesconectado(const std::string &nombre, const std::string &contrasenia, int idJugador);
         bool estaDesconectado(const std::string &nombre);
 
-    private:
+private:
         bool terminoHilo;
         bool terminarReconectar;
         void reconectadorFaseJuego(usuario_t usuario, int idJugador);

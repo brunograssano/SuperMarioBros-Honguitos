@@ -2,7 +2,7 @@
 #include "EscuchadorEntradaTeclado.hpp"
 #include "EscuchadorCredenciales.hpp"
 
-EscuchadorConexionCliente::EscuchadorConexionCliente(Socket* socket,ConexionCliente* cliente) {
+EscuchadorConexionCliente::EscuchadorConexionCliente(int socket,ConexionCliente* cliente) {
     escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,cliente);
     this->socket = socket;
     this->cliente = cliente;
@@ -21,7 +21,8 @@ void EscuchadorConexionCliente::ejecutar() {
     int resultado;
     bool hayError = false;
     while(!cliente->terminoElJuego() && !hayError){
-        resultado = socket->escuchar(&tipoMensaje, sizeof(char));
+
+        resultado = recv(socket, &tipoMensaje, sizeof(char), MSG_WAITALL);
 
         if(resultado<0){
             Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje en el cliente: " + cliente->obtenerIP(), std::to_string(errno));

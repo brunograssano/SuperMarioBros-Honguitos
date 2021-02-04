@@ -3,7 +3,7 @@
 #include "EscuchadorSonido.hpp"
 #include "src/Utils/Constantes.hpp"
 
-EscuchadorSonido::EscuchadorSonido(Socket* socketCliente) {
+EscuchadorSonido::EscuchadorSonido(int socketCliente) {
     this->socket = socketCliente;
     structPointer = &this->sonido;
     bytes = sizeof(sonido_t);

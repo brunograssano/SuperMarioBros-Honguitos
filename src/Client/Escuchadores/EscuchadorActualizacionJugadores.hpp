@@ -9,7 +9,7 @@ class Cliente;
 class EscuchadorActualizacionJugadores: public Escuchador{
 
 	public:
-		EscuchadorActualizacionJugadores(Socket* socketCliente, Cliente* cliente);
+		EscuchadorActualizacionJugadores(int socketCliente, Cliente* cliente);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;

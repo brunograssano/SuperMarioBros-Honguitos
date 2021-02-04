@@ -1,8 +1,13 @@
 #include "UtilidadesCliente.hpp"
 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <unistd.h>
 
 #include "src/Utils/log/Log.hpp"
 
@@ -12,12 +17,36 @@ void salirCliente(const std::string& mensajeLog){
 	exit(-1);
 }
 
-Socket conectarAlServidor(char ip[LARGO_IP], int puerto){
-    Socket socket;
-    try{
-        socket = Socket(ip,puerto);
-    }catch(std::exception& e){
-        salirCliente(e.what());
-    }
-    return socket;
+int conectarAlServidor(char ip[LARGO_IP], int puerto){
+	struct sockaddr_in serv_addr{};
+
+	int socketCliente = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (socketCliente < 0){
+		salirCliente("No se pudo crear el socket: Abortamos.");
+	}
+
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_port = htons(puerto);
+
+	// Convert IPv4 and IPv6 addresses from text to binary form
+	if(inet_pton(AF_INET, ip, &serv_addr.sin_addr)<=0){
+		salirCliente("Dirección inválida / Dirección no soportada: Abortamos.");
+	}
+
+	if (connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+		salirCliente("Falló la conexión al servidor. Abortamos.-------"+std::to_string(errno));
+	}
+
+	return socketCliente;
+}
+
+void cerrarSocketCliente(int socketCliente) {
+	int resultado = shutdown(socketCliente, SHUT_RDWR);
+	if (resultado < 0) {
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",std::to_string(errno));
+	}
+	resultado = close(socketCliente);
+	if (resultado < 0) {
+		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",std::to_string(errno));
+	}
 }

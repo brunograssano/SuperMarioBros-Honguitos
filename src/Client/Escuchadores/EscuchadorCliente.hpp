@@ -7,15 +7,15 @@
 
 class EscuchadorCliente : public Thread{
     public:
-        EscuchadorCliente(Socket* socket, Cliente* cliente);
+        EscuchadorCliente(int socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEscuchar);
         ~EscuchadorCliente() override;
         void ejecutar()override;
-        bool terminoDeEscuchar() const;
 
     private:
         Cliente* cliente{};
-        bool terminoEscuchar;
-        Socket* socketCliente;
+        bool* terminoEscuchar;
+        bool* terminoJuego;
+        int socketCliente;
         std::map<char,Escuchador*> escuchadores;
 };
 

@@ -2,7 +2,7 @@
 #include "EnviadorEstadoCredencial.hpp"
 
 
-EnviadorEstadoCredencial::EnviadorEstadoCredencial(int socket){
+EnviadorEstadoCredencial::EnviadorEstadoCredencial(Socket* socket){
 	this->socket = socket;
 	estadoCredencial = false;
 	memset(&estadoCredencial,0,sizeof(verificacion_t));

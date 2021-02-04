@@ -8,14 +8,14 @@
 
 class EscuchadorConexionCliente : public Thread{
     public:
-        EscuchadorConexionCliente(int socket,ConexionCliente* cliente);
+        EscuchadorConexionCliente(Socket* socket,ConexionCliente* cliente);
         ~EscuchadorConexionCliente() override;
         void ejecutar()override;
         void agregarEscuchadorEntrada(int IDjugador,Servidor* servidor);
     private:
         ConexionCliente* cliente;
         std::map<char,Escuchador*> escuchadores;
-        int socket;
+        Socket* socket;
         int idJugador;
 };
 

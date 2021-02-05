@@ -1,11 +1,12 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_OBJETOFUGAZ_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_OBJETOFUGAZ_HPP
 
-#include <src/Server/Modelo/Juego/Serializable.hpp>
+#include "src/Server/Modelo/Juego/Actualizable.hpp"
+#include "src/Server/Modelo/Juego/Serializable.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "src/Utils/Utils.hpp"
 
-class ObjetoFugaz : public Colisionable, protected Serializable{
+class ObjetoFugaz : public Colisionable, protected Serializable,Actualizable{
     public:
         virtual bool debeDesaparecer() = 0;
         virtual entidad_t serializar() = 0;

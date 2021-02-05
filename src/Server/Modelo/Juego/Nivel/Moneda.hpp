@@ -1,14 +1,15 @@
 #ifndef SRC_SERVER_MODELO_MONEDA_HPP_
 #define SRC_SERVER_MODELO_MONEDA_HPP_
 
-#include <src/Server/Modelo/Juego/Serializable.hpp>
+#include "src/Server/Modelo/Juego/Serializable.hpp"
+#include "src/Server/Modelo/Juego/Actualizable.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteMoneda.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "src/Utils/Constantes.hpp"
 #include "src/Utils/Utils.hpp"
 
-class Moneda : public Colisionable,Serializable{
+class Moneda : public Colisionable,Serializable,Actualizable{
 
     public:
         Moneda(int coordenadaX, int coordenadaY);

@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <src/Server/Modelo/Juego/Serializable.hpp>
 
 #include "ObjetosSorpresa/ObjetoSorpresa.hpp"
 #include "ObjetosSorpresa/SinSorpresa.hpp"
@@ -14,7 +15,7 @@
 
 #define SORPRESA 0
 
-class Bloque : public Colisionable{
+class Bloque : public Colisionable, Serializable{
     public:
 		~Bloque() override = default;
 		void actualizar();

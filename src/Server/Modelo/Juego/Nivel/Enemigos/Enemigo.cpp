@@ -41,14 +41,7 @@ void Enemigo::cambiarOrientacion() {
 }
 
 entidad_t Enemigo::serializarEnemigo(int tipo) {
-    entidad_t enemigoSerializado = {0,0,0,0,0,false};;
-    enemigoSerializado.x = this->obtenerPosicionX();
-    enemigoSerializado.y = this->obtenerPosicionY();
-    enemigoSerializado.recorteX = spriteEnemigo->obtenerEstadoActual();
-    enemigoSerializado.recorteY = tipoColor;
-    enemigoSerializado.tipo = tipo;
-    enemigoSerializado.espejado = spriteEnemigo->debeEspejarse();
-    return enemigoSerializado;
+    return Serializable::serializar(this->obtenerPosicionX(),this->obtenerPosicionY(),spriteEnemigo->obtenerEstadoActual(),tipoColor,tipo,spriteEnemigo->debeEspejarse());
 }
 
 bool Enemigo::sePuedeEliminar() {

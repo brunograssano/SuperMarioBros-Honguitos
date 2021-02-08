@@ -7,6 +7,7 @@
 #include "EnviadorCantidadConexion.hpp"
 #include "EnviadorSonido.hpp"
 #include "EnviadorNivel.hpp"
+#include "EnviadorPodio.hpp"
 
 EnviadorConexionCliente::EnviadorConexionCliente(Socket* socket,ConexionCliente* cliente) {
     this->cliente = cliente;
@@ -17,6 +18,7 @@ EnviadorConexionCliente::EnviadorConexionCliente(Socket* socket,ConexionCliente*
     enviadores[ACTUALIZACION_JUGADORES] = new EnviadorCantidadConexion(socket);
     enviadores[SONIDO] = new EnviadorSonido(socket);
     enviadores[NIVEL] = new EnviadorNivel(socket);
+    enviadores[PODIO] = new EnviadorPodio(socket);
 }
 
 void EnviadorConexionCliente::ejecutar() {

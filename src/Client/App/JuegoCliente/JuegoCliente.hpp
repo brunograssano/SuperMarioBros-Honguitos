@@ -31,6 +31,7 @@ class JuegoCliente{
         std::vector<podio_t> obtenerPodios();
         bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
         void agregarNivel(nivel_t nivel);
+        void agregarPodios(ultimos_podios_t ultimos_podios);
 
         std::list<entidad_t> obtenerEntidad(int claveEntidad);
 

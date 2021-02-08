@@ -38,6 +38,7 @@ class App{
 		void actualizar();
 		void agregarRonda(info_ronda_t info_ronda);
         void agregarNivel(nivel_t nivel);
+        void agregarPodios(ultimos_podios_t ultimos_podios);
 		void ocurrioUnErrorServidor();
 		void dibujar();
         void manejarEntrada(SDL_Keycode codigoEntrada);

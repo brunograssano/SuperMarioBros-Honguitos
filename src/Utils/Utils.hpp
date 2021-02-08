@@ -61,8 +61,15 @@ typedef struct jugador{
 typedef struct podio {
     unsigned short puntosNivel[MAX_JUGADORES];
     unsigned short cantidadJugadores;
+    unsigned short nivel;
     int ids[MAX_JUGADORES];
 }podio_t;
+
+#define PODIO 'O'
+typedef struct ultimos_podios{
+    podio_t podioUltimoNivel;
+    podio_t podioAcumulado;
+}ultimos_podios_t;
 
 typedef struct entidad {
     unsigned short x;

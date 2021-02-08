@@ -8,18 +8,17 @@ class Cliente;
 
 class EnviadorCliente  : public Thread{
     public:
-        EnviadorCliente(Socket* socketCliente,Cliente* cliente,bool* terminoJuego,bool* terminoEnviar);
+        EnviadorCliente(Socket* socketCliente,Cliente* cliente);
         ~EnviadorCliente() override;
         void ejecutar()override;
         void agregarMensajeAEnviar(char tipoMensaje, void *mensaje);
+        bool terminoDeEnviar();
 
     private:
         Cliente* cliente;
         std::queue<char> identificadoresMensajeAEnviar;
         std::map<char,Enviador*> enviadores;
-
-        bool* terminoJuego;
-        bool* terminoEnviar;
+        bool terminoEnviar;
 
 };
 

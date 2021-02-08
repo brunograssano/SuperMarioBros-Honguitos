@@ -12,6 +12,9 @@ Servidor::Servidor(const ArchivoLeido& archivoLeido, const std::list<std::string
                       aplicacionServidor(this, archivoLeido.niveles, archivoLeido.cantidadConexiones, archivoLeido.anchoVentana, archivoLeido.altoVentana),
                       manejadorIDs(){
     terminoJuego = false;
+
+    seEnvioUltimoPodio = false;
+
 	log = Log::getInstance(archivoLeido.tipoLog);
 	escribirMensajesDeArchivoLeidoEnLog(mensajesErrorOtroArchivo);
 	escribirMensajesDeArchivoLeidoEnLog(archivoLeido.mensajeError);
@@ -202,6 +205,15 @@ std::map<int, std::string> Servidor::obtenerMapaJugadores() {
 void Servidor::mandarNivelAClientes(nivel_t nivel) {
     for(auto parClaveCliente: clientesJugando){
         parClaveCliente.second->agregarMensajeAEnviar(NIVEL,&nivel);
+    }
+}
+
+void Servidor::mandarPodiosAClientes(ultimos_podios_t ultimos_podios) {
+    if(!seEnvioUltimoPodio) {
+        for (auto parClaveCliente: clientesJugando) {
+            parClaveCliente.second->agregarMensajeAEnviar(PODIO, &ultimos_podios);
+        }
+        seEnvioUltimoPodio = true;
     }
 }
 

@@ -15,13 +15,11 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	seRecibioVerificacion = false;
 	seRecibioInformacionInicio = false;
 	cargoLaAplicacion = false;
-	terminoEnviar = false;
-	terminoEscuchar = false;
 	cerroVentana = false;
 
     ReproductorMusica::getInstance();
-	escuchador = new EscuchadorCliente(&socketCliente,this,&terminoJuego,&terminoEscuchar);
-    enviador = new EnviadorCliente(&socketCliente,this,&terminoJuego,&terminoEnviar);
+	escuchador = new EscuchadorCliente(&socketCliente,this);
+    enviador = new EnviadorCliente(&socketCliente,this);
 	ventanaInicio = nullptr;
 	gameLoop = new GameLoop();
 }
@@ -128,7 +126,7 @@ void Cliente::ejecutar(){
 	if(!cargoLaAplicacion){
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
         socketCliente.cerrar();
-		while(!terminoEnviar || !terminoEscuchar){}
+		while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
 		delete Log::getInstance();
 		exit(-1);
 	}
@@ -138,6 +136,9 @@ void Cliente::ejecutar(){
 	terminoJuego = true;
 }
 
+bool Cliente::terminoElJuego() {
+    return terminoJuego;
+}
 
 void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
     enviador->agregarMensajeAEnviar(tipoMensaje,mensaje);
@@ -146,14 +147,14 @@ void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
 void Cliente::cerradoVentanaInicio(){
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
     socketCliente.cerrar();
-    while(!terminoEnviar || !terminoEscuchar){}
+    while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
     delete Log::getInstance();
     exit(0);
 }
 
 Cliente::~Cliente(){
     socketCliente.cerrar();
-	while(!terminoEnviar || !terminoEscuchar){}
+	while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
     delete ReproductorMusica::getInstance();
     delete escuchador;
 	delete enviador;
@@ -166,4 +167,9 @@ void Cliente::recibirInformacionNivel(nivel_t nivel) {
     esperar(&cargoLaAplicacion);
     App* aplicacion = App::getInstance();
     aplicacion->agregarNivel(nivel);
+}
+
+void Cliente::recibirInformacionPodios(ultimos_podios_t ultimos_podios){
+    App* aplicacion = App::getInstance();
+    aplicacion->agregarPodios(ultimos_podios);
 }

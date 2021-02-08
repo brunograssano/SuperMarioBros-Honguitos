@@ -64,7 +64,6 @@ void DibujadorPuntos::dibujarPuntosTotales(JuegoCliente *juegoCliente) {
 
         podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
         puntosJugador.str("");
-        //int id;
         std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
@@ -98,7 +97,7 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
     std::stringstream puntosJugador;
 
     std::stringstream tituloPuntos;
-    tituloPuntos << "Puntos nivel " <<std::to_string(this->nivelAMostrarPuntos);
+    tituloPuntos << "Puntos nivel " <<std::to_string(juegoCliente->obtenerPodios().at(nivelAMostrarPuntos).nivel);
 
     SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
                                      alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
@@ -112,7 +111,6 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
 
         podio_t podio = juegoCliente->obtenerPodios().at(nivelAMostrarPuntos);
         puntosJugador.str("");
-        //int id;
         std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << podio.puntosNivel[indiceJugador];
 
@@ -185,7 +183,6 @@ void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
     for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
 
         puntosJugador.str("");
-        //int id;
         std::string nombreJugador = parIdJugador.second.nombreJugador;
         puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.mario.puntos;
 

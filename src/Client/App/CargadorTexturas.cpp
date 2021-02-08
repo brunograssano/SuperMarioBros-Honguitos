@@ -47,6 +47,7 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     texturas[CLAVE_TEXTURA_PEACH_SALTANDO]  = intentarCarga("la imagen de Peach saltando","resources/Imagenes/PersonajesSaltando/PeachSaltando.png",renderizador);
     texturas[CLAVE_TEXTURA_TOAD_SALTANDO]  = intentarCarga("la imagen de Toad saltando","resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png",renderizador);
     texturas[CLAVE_TEXTURA_YOSHI_SALTANDO]  = intentarCarga("la imagen de Yoshi saltando","resources/Imagenes/PersonajesSaltando/YoshiSaltando.png",renderizador);
+    texturas[CLAVE_TEXTURA_MARIO_SALTANDO]  = intentarCarga("la imagen de Mario saltando","resources/Imagenes/PersonajesSaltando/MarioSaltando.png",renderizador);
 
     texturaDefecto = intentarCarga("la imagen por defecto","resources/Imagenes/ImagenError.png",renderizador);
 

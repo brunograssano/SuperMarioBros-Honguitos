@@ -9,6 +9,8 @@ Juego::Juego(std::list<Nivel *> nivelesLector, int cantJugadores, int alto_panta
         jugadores[i] = new Mario(i);
     }
 
+    seGuardoUltimoPodio = false;
+
     niveles = std::move(nivelesLector);
 
     for (auto const& nivel : niveles) {
@@ -80,8 +82,12 @@ void Juego::actualizarModelo(){
     }
 
     if(perdieron()){
-        avanzarNivel();
+        if(!seGuardoUltimoPodio) {
+            guardarPodio(niveles.front()->obtenerPodio());
+            seGuardoUltimoPodio = true;
+        }
     }
+
     camara.moverCamara(this->jugadores);
 }
 
@@ -191,6 +197,14 @@ info_ronda_t Juego::obtenerInfoRonda() {
     return info_ronda;
 }
 
+podio_t Juego::obtenerUltimoPodio(){
+    return this->podios.back();
+}
+
+podio_t Juego::obtenerPodioAcumulado(){
+    return this->podioAcumulado;
+}
+
 nivel_t Juego::serializarNivel(){
     nivel_t nivel;
     memset(&nivel,0,sizeof(nivel_t));
@@ -245,6 +259,7 @@ Juego::~Juego(){
 void Juego::guardarPodio(Podio *podio) {
     podio_t podioSerializado;
     podioSerializado.cantidadJugadores = 0;
+    podioSerializado.nivel = this->niveles.front()->obtenerMundo();
     for(int indiceJugador = 0; indiceJugador < podio->getPodioNivel().size(); indiceJugador++) {
         podioSerializado.puntosNivel[indiceJugador] = podio->getPodioNivel().at(indiceJugador).second;
         podioSerializado.ids[indiceJugador] = podio->getPodioNivel().at(indiceJugador).first->obtenerNumeroJugador();
@@ -253,6 +268,7 @@ void Juego::guardarPodio(Podio *podio) {
     this->podios.push_back(podioSerializado);
 
     podioAcumulado.cantidadJugadores = 0;
+    podioAcumulado.nivel = this->niveles.front()->obtenerMundo();
     for(int indiceJugador = 0; indiceJugador < podio->getPodioTotal().size(); indiceJugador++){
         this->podioAcumulado.puntosNivel[indiceJugador] = podio->getPodioTotal().at(indiceJugador).second;
         this->podioAcumulado.ids[indiceJugador] = podio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();

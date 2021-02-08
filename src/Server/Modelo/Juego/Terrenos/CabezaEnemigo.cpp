@@ -12,7 +12,7 @@ float CabezaEnemigo::aplicarCoeficienteDeRozamiento(float velocidadX){
 }
 
 float CabezaEnemigo::obtenerImpulsoHorizontal(float aceleracion){
-    return aceleracion;		//El impulso será equivalente a la aceleracion por ser tierra.
+    return aceleracion;		//El impulso será equivalente a la aceleracion por ser cabeza de enemigo.
 }
 
 float CabezaEnemigo::obtenerImpulsoVertical(float fuerza){

@@ -13,7 +13,7 @@
 #include "src/Client/App/JuegoCliente/JuegoCliente.hpp"
 #include "src/Client/App/Dibujadores/Recortes/Recorte.hpp"
 
-#include "src/Client/App/VentanaInicio/BotonConTexto.hpp"
+#include "src/Client/App/Botones/BotonConTexto.hpp"
 #include "DibujadorPuntos.hpp"
 #include "DibujadorCreditos.hpp"
 
@@ -38,6 +38,7 @@ class DibujadorGanadores : public Dibujador{
         Recorte* spritePeach;
         Recorte* spriteToad;
         Recorte* spriteYoshi;
+        Recorte* spriteMario;
         std::list<ParticulaGanadores> particulas;
 		DibujadorPuntos* dibujadorPuntos;
 		DibujadorCreditos* dibujadorCreditos;

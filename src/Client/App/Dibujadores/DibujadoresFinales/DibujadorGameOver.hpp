@@ -11,7 +11,7 @@
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
 #include "src/Client/App/Dibujadores/Recortes/RecorteCoffinMario.hpp"
 
-#include "src/Client/App/VentanaInicio/BotonConTexto.hpp"
+#include "src/Client/App/Botones/BotonConTexto.hpp"
 #include "DibujadorPuntos.hpp"
 #include "DibujadorCreditos.hpp"
 

@@ -53,7 +53,6 @@ class Nivel{
     private:
         void sacarEnemigosMuertos();
         void actualizarPosicionesEnemigos(rectangulo_t rectangulo);
-        void actualizar(std::list<Actualizable*> actualizables);
         void resolverColisiones(const std::map<int,Mario*>& jugadores, rectangulo_t rectanguloEscena);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);

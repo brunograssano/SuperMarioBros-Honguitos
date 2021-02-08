@@ -1,7 +1,9 @@
 #include "Filtro.hpp"
 
-std::list<Colisionable *> Filtro::filtrarEnemigosEnEscena(const std::list<Enemigo *>& enemigos, const rectangulo_t rectanguloEscena) {
+std::list<Colisionable *> Filtro::filtrarEnemigosEnEscena(const std::list<Enemigo *>& enemigos, rectangulo_t rectanguloEscena) {
     std::list<Colisionable*> listaRetorno;
+    rectanguloEscena.x2 += RANGO_EXTRA_ENEMIGOS;
+    rectanguloEscena.w += RANGO_EXTRA_ENEMIGOS;
     for(auto const& enemigo : enemigos){
         rectangulo_t rectanguloEnemigo = enemigo->obtenerRectangulo();
         if(colisionan(rectanguloEscena, rectanguloEnemigo)){

@@ -21,7 +21,7 @@ void Enemigo::actualizarPosicion(rectangulo_t rectangulo) {
         return;
     }
     int posX = posicionActual.obtenerPosX();
-    if(rectangulo.x1-ANCHO_ENEMIGOS*2<posX && posX<rectangulo.x2+ANCHO_ENEMIGOS*2){
+    if(rectangulo.x1-RANGO_EXTRA_ENEMIGOS<posX && posX<rectangulo.x2+RANGO_EXTRA_ENEMIGOS){
         movimientoEnemigo.mover(&posicionActual);
         spriteEnemigo->actualizarSprite();
     }

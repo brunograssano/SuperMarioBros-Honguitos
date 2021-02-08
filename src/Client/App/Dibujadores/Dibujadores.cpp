@@ -72,3 +72,10 @@ Dibujadores::~Dibujadores(){
     SDL_DestroyRenderer( renderizador );
     SDL_DestroyWindow( ventanaAplicacion );
 }
+
+void Dibujadores::alternarModoDiego() {
+    if(estadoActual == DIBUJADOR_JUEGO){
+        cargadorTexturas->alternarModoDiego(juegoCliente->obtenerIDPropio());
+
+    }
+}

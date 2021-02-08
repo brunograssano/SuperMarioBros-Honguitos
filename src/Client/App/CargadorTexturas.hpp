@@ -22,7 +22,9 @@ class CargadorTexturas{
 		void revisarSiCambioNivel(std::string nombreFondo);
 		~CargadorTexturas();
 
-    private:
+        void alternarModoDiego(int id);
+
+private:
         std::string direccionFondoActual;
         std::map<int,SDL_Texture*> texturasMario;
         std::map<std::string,SDL_Texture*> texturas;

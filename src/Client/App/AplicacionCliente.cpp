@@ -32,6 +32,7 @@ App::App(info_partida_t informacion, Cliente *cliente)
     comenzoElJuego = false;
     estaReproduciendoMusicaGanadores = false;
     presionoT = false;
+    estoyEnModoDiego = false;
 
     log->mostrarMensajeDeInfo("Inicio del juego");
     ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_INICIO);
@@ -126,6 +127,15 @@ void App::manejarEntrada(SDL_Keycode codigoEntrada) {
         ReproductorMusica::getInstance()->cambiarSonidos();
     }else if(codigoEntrada == SDLK_t){
         presionoT = true;
+    }else if(codigoEntrada == SDLK_z){
+        dibujador.alternarModoDiego();
+        if(!estoyEnModoDiego){
+            ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_MODO_DIEGO);
+            estoyEnModoDiego=true;
+        }else{
+            ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_NIVEL1);
+            estoyEnModoDiego=false;
+        }
     }else if(!comenzoElJuego && codigoEntrada == SDLK_RETURN){
         comenzoElJuego = true;
         dibujador.comenzoElJuego();

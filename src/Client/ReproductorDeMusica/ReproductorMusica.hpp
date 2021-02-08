@@ -22,8 +22,7 @@ class ReproductorMusica{
 		void cambiarSonidos();
 		~ReproductorMusica();
 
-
-    private:
+private:
         EstadoMusica* estadoMusica;
         EstadoSonidos* estadoSonidos;
         static ReproductorMusica* reproductor;

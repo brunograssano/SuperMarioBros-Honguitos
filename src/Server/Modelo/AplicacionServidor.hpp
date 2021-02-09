@@ -4,7 +4,6 @@
 #include <SDL2/SDL.h>
 
 #include <list>
-#include <queue>
 #include <map>
 
 #include "Juego/Juego.hpp"
@@ -15,6 +14,7 @@ class Servidor;
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Utils.hpp"
 #include "src/Utils/Thread.hpp"
+#include "src/Utils/ColaBloqueante.hpp"
 
 class AplicacionServidor : public Thread{
 	public:
@@ -42,7 +42,7 @@ class AplicacionServidor : public Thread{
 		Juego* juego;
         bool terminoElJuego;
 		bool comenzoElJuego;
-        std::queue<entrada_usuario_id_t> colaDeEntradasUsuario;
+        BlockingQueue<entrada_usuario_id_t> colaDeEntradasUsuario;
 };
 
 

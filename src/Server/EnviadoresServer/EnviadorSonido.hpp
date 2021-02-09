@@ -1,7 +1,7 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORSONIDO_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORSONIDO_HPP
-//rand() % (MAXIMO + 1 - MINIMO) + MINIMO
-#include <queue>
+
+#include "src/Utils/ColaBloqueante.hpp"
 #include "src/Utils/Enviador.hpp"
 
 class EnviadorSonido : public Enviador{
@@ -11,7 +11,7 @@ class EnviadorSonido : public Enviador{
         void dejarInformacion(void* informacion)override;
 
     private:
-        std::queue<sonido_t> colaSonidos;
+        BlockingQueue<sonido_t> colaSonidos;
 };
 
 

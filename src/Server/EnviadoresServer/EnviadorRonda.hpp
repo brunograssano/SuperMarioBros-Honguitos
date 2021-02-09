@@ -1,7 +1,7 @@
 #ifndef SRC_SERVER_ENVIADORESSERVER_ENVIADORRONDA_HPP_
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORRONDA_HPP_
 
-#include <queue>
+#include "../../Utils/ColaBloqueante.hpp"
 #include "../../Utils/Enviador.hpp"
 
 class EnviadorRonda:public Enviador{
@@ -11,7 +11,7 @@ class EnviadorRonda:public Enviador{
 		void dejarInformacion(void* informacion)override;
 
 	private:
-        std::queue<info_ronda_t> colaRondas;
+        BlockingQueue<info_ronda_t> colaRondas;
 
 };
 

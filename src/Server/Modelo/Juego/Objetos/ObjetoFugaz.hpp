@@ -6,7 +6,7 @@
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "src/Utils/Utils.hpp"
 
-class ObjetoFugaz : public Colisionable, protected Serializable,Actualizable{
+class ObjetoFugaz : public Colisionable, public Serializable,Actualizable{
     public:
         virtual bool debeDesaparecer() = 0;
         virtual entidad_t serializar() = 0;

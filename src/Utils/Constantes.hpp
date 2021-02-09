@@ -114,6 +114,7 @@ const int EFECTOS_RECORTE = 13;
 #define MUSICA_GAMEOVER "resources/Musica/CoffinDance8Bits.mp3"
 #define MUSICA_INICIO "resources/Musica/MusicaInicio.mp3"
 #define MUSICA_NIVEL1 "resources/Musica/TemaNivel1.mp3"
+#define MUSICA_MODO_DIEGO "resources/Musica/LiveisLife.mp3"
 
 //=======================================================//
 //====================== SONIDOS ========================//

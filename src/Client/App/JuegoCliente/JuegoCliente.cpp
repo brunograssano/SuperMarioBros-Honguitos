@@ -213,3 +213,4 @@ std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
     return entidades[claveEntidad];
 }
 
+

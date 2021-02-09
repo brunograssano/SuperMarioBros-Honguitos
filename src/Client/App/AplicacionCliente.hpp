@@ -27,7 +27,7 @@ class App{
         bool estaReproduciendoMusicaGanadores;
 		bool presionoT;
 		Cliente* cliente;
-
+        bool estoyEnModoDiego;
 	public:
         ~App();
 		App(App &other) = delete;
@@ -43,6 +43,8 @@ class App{
 		void dibujar();
         void manejarEntrada(SDL_Keycode codigoEntrada);
         void manejarClick(SDL_Event eventoClick);
+
+
 };
 
 #endif /* SRC_APP_APP_HPP_ */

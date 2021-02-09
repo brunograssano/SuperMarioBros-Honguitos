@@ -3,6 +3,7 @@
 
 
 #include <string>
+#include <src/Server/Modelo/Juego/Serializable.hpp>
 #include "src/Server/Modelo/Juego/Posiciones/PosicionMovil.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteEnemigo.hpp"
@@ -12,7 +13,7 @@ class Mario;
 #include "MovimientoEnemigo.hpp"
 #define VELOCIDAD_EXTRA_DEFAULT 0.0
 
-class Enemigo : public Colisionable{
+class Enemigo : public Colisionable,Serializable{
 
 	public:
         ~Enemigo() override = default;

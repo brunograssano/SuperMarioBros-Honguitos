@@ -40,12 +40,7 @@ BolaDeFuego::~BolaDeFuego() {
 }
 
 entidad_t BolaDeFuego::serializar() {
-    entidad_t bolaDeFuegoSerializada = {0,0,0,0,0, false};
-    bolaDeFuegoSerializada.x = posicion->obtenerPosX();
-    bolaDeFuegoSerializada.y = posicion->obtenerPosY();
-    bolaDeFuegoSerializada.recorteX = sprite->obtenerEstadoActual();
-    bolaDeFuegoSerializada.tipo = BOLA_DE_FUEGO;
-    return bolaDeFuegoSerializada;
+    return Serializable::serializar(posicion->obtenerPosX(), posicion->obtenerPosY(),sprite->obtenerEstadoActual(),0, BOLA_DE_FUEGO, false);
 }
 
 int BolaDeFuego::obtenerPosicionX() {

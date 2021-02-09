@@ -11,11 +11,6 @@ unsigned short Pozo::obtenerPosicionX() const {
     return posicionX;
 }
 
-entidad_t Pozo::serializar() const{
-    entidad_t pozoSerializado = {0,0,0,0,0,false};
-    pozoSerializado.x = posicionX;
-    pozoSerializado.recorteX = fondo;
-    pozoSerializado.recorteY = tipo; // Los tipos pinches, agua lava son de la misma imagen (recorte)
-    pozoSerializado.tipo = POZO;
-    return pozoSerializado;
+entidad_t Pozo::serializar(){
+    return Serializable::serializar(posicionX,0,fondo,tipo,POZO, false);
 }

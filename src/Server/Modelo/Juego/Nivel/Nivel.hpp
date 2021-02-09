@@ -20,6 +20,8 @@
 #include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "src/Utils/Contador.hpp"
+#include "Actualizador.hpp"
+#include "Serializador.hpp"
 
 const int ALTO_NIVEL = 600;
 
@@ -50,10 +52,7 @@ class Nivel{
 
     private:
         void sacarEnemigosMuertos();
-        void sacarMonedasAgarradas();
         void actualizarPosicionesEnemigos(rectangulo_t rectangulo);
-        void actualizarMonedas();
-        void actualizarObjetosFugaces();
         void resolverColisiones(const std::map<int,Mario*>& jugadores, rectangulo_t rectanguloEscena);
         bool esUnaPosicionXValidaEnemigo(int coordenadaX);
         bool esUnaPosicionValidaMoneda(int numeroPosicionX, int numeroPosicionY);
@@ -79,14 +78,13 @@ class Nivel{
         Meta meta;
         Contador contador;
         Podio podio;
+        Actualizador actualizador;
+        Serializador serializador;
 
         int mundo;
         std::string direccionFondo;
         int cantidadMonedas;
         float puntoBanderaFin;
-
-        void sacarObjetosFugaces();
-        void actualizarBloques();
 
         void imponerPosicionDeReaparicion(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena);
         void buscarBloqueParaCaer(rectangulo_t rectanguloEscena, PosicionFija* pos);

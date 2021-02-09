@@ -19,13 +19,7 @@ void Chispa::actualizar() {
     sprite->actualizarSprite();
 }
 entidad_t Chispa::serializar() {
-    entidad_t chispaSerializada = {0,0,0,0,0, false};
-    chispaSerializada.x = posicion->obtenerPosX();
-    chispaSerializada.y = posicion->obtenerPosY();
-    chispaSerializada.recorteX = sprite->obtenerEstadoActual();
-    chispaSerializada.tipo = CHISPA;
-    chispaSerializada.espejado = sprite->estaEspejado();
-    return chispaSerializada;
+    return Serializable::serializar(posicion->obtenerPosX(), posicion->obtenerPosY(),sprite->obtenerEstadoActual(),0, CHISPA, sprite->estaEspejado());
 }
 
 int Chispa::obtenerPosicionX() {

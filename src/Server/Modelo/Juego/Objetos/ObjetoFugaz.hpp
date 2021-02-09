@@ -4,7 +4,6 @@
 #include "src/Server/Modelo/Juego/Actualizable.hpp"
 #include "src/Server/Modelo/Juego/Serializable.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
-#include "src/Utils/Utils.hpp"
 
 class ObjetoFugaz : public Colisionable, public Serializable,Actualizable{
     public:

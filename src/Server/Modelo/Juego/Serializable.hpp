@@ -1,7 +1,6 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_SERIALIZABLE_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_SERIALIZABLE_HPP
 
-
 #include "../../../Utils/Utils.hpp"
 
 class Serializable {

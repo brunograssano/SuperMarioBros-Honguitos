@@ -1,5 +1,6 @@
 #include "Moneda.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
+#include "src/Utils/Constantes.hpp"
 
 
 Moneda::Moneda(int coordenadaX, int coordenadaY) {

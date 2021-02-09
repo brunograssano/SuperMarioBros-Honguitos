@@ -2,7 +2,6 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_POSICIONMOVIL_HPP
 
 #include "Posicion.hpp"
-#include "PosicionFija.hpp"
 
 class PosicionMovil : public Posicion{
 

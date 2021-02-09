@@ -1,5 +1,6 @@
 #include "Bloque.hpp"
 
+
 int Bloque::obtenerPosicionX() {
     return this->posicion.obtenerPosX();
 }

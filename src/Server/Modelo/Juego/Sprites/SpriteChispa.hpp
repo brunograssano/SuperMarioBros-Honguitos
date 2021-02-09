@@ -1,7 +1,6 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_SPRITECHISPA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_SPRITECHISPA_HPP
 #include "Sprite.hpp"
-#include "src/Utils/Constantes.hpp"
 
 class SpriteChispa : public Sprite{
 

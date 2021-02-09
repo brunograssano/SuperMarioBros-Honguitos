@@ -1,8 +1,5 @@
 #include "FlorDeFuego.hpp"
-
 #include "src/Server/Botonera/Botonera.hpp"
-#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
-
 #include "src/Utils/Constantes.hpp"
 
 const int CANTIDAD_COLORES = 4;

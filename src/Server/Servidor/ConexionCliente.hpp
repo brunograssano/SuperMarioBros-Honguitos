@@ -2,14 +2,9 @@
 #define SRC_SERVER_CONEXIONCLIENTE_HPP_
 
 class Servidor;
-
-#include <string>
-#include <map>
-
 #include "src/Utils/Socket.hpp"
 #include "src/Utils/Utils.hpp"
 #include "src/Utils/Thread.hpp"
-
 class EnviadorConexionCliente;
 class EscuchadorConexionCliente;
 

@@ -1,19 +1,11 @@
 #ifndef SRC_SERVER_APLICACIONSERVIDOR_APLICACIONSERVIDOR_HPP_
 #define SRC_SERVER_APLICACIONSERVIDOR_APLICACIONSERVIDOR_HPP_
 
-#include <SDL2/SDL.h>
-
-#include <list>
 #include <queue>
-#include <map>
-
 #include "Juego/Juego.hpp"
 #include "Juego/Nivel/Nivel.hpp"
-
 class Servidor;
-#include "src/Utils/Contador.hpp"
 #include "src/Utils/log/Log.hpp"
-#include "src/Utils/Utils.hpp"
 #include "src/Utils/Thread.hpp"
 
 class AplicacionServidor : public Thread{

@@ -1,8 +1,7 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_FILTRO_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_FILTRO_HPP
 
-#include <list>
-#include "src/Server/Modelo/Juego/Colisionable.hpp"
+
 #include "src/Server/Modelo/Juego/Nivel/Bloques/Tuberia.hpp"
 #include "src/Server/Modelo/Juego/Nivel/Bloques/Bloque.hpp"
 #include "src/Server/Modelo/Juego/Nivel/Enemigos/Enemigo.hpp"

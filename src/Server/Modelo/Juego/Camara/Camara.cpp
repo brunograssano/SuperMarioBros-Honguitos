@@ -1,5 +1,6 @@
 #include "Camara.hpp"
 #include "src/Utils/colisiones/Colisionador.hpp"
+#include "src/Utils/Constantes.hpp"
 
 const int ANCHO_SPRITE_PIXEL_MARIO = 16;
 

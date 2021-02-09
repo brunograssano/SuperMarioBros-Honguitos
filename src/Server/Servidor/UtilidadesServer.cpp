@@ -1,5 +1,4 @@
 #include <cstdlib>
-
 #include "src/Utils/log/Log.hpp"
 #include "UtilidadesServer.hpp"
 

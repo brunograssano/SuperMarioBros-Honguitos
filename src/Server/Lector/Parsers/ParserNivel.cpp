@@ -1,6 +1,8 @@
 #include "ParserNivel.hpp"
 #include "ParserTuberia.hpp"
 #include "ParserPozo.hpp"
+#include "ParserEnemigo.hpp"
+#include "ParserPlataforma.hpp"
 
 #define VALOR_POR_DEFECTO_MUNDO 1
 #define VALOR_POR_DEFECTO_TIEMPO 300

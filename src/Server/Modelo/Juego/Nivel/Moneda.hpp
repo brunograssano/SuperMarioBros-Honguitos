@@ -6,8 +6,6 @@
 #include "src/Server/Modelo/Juego/Sprites/SpriteMoneda.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
-#include "src/Utils/Constantes.hpp"
-#include "src/Utils/Utils.hpp"
 
 class Moneda : public Colisionable,Serializable,Actualizable{
 

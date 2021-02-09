@@ -1,29 +1,18 @@
 #ifndef SRC_SERVER_MODELO_NIVEL_HPP_
 #define SRC_SERVER_MODELO_NIVEL_HPP_
 
-#include <map>
-#include <string>
-#include <tuple>
 #include <cstdlib>
 #include <utility>
 
-#include "src/Server/Modelo/Juego/Nivel/Piso/Pozo.hpp"
 #include "Bloques/Tuberia.hpp"
 #include "Bloques/Bloque.hpp"
-#include "Bloques/ObjetosSorpresa/ObjetoSorpresa.hpp"
 #include "Enemigos/Enemigo.hpp"
 #include "Moneda.hpp"
 #include "Meta.hpp"
-#include "Piso/Piso.hpp"
 #include "Podio.hpp"
-
-#include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
-#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "src/Utils/Contador.hpp"
 #include "Actualizador.hpp"
 #include "Serializador.hpp"
-
-const int ALTO_NIVEL = 600;
 
 class Nivel{
 	public:

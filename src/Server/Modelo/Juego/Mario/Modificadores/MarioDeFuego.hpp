@@ -3,9 +3,6 @@
 
 #include "ModificadorMario.hpp"
 
-#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
-#include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
-
 class MarioDeFuego : public ModificadorMario{
     public:
         explicit MarioDeFuego(Mario* marioAsociado);

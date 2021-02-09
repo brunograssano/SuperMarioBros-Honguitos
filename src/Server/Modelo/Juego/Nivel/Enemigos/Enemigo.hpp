@@ -1,15 +1,12 @@
 #ifndef SRC_SERVER_MODELO_ENEMIGOS_ENEMIGO_HPP_
 #define SRC_SERVER_MODELO_ENEMIGOS_ENEMIGO_HPP_
 
-
-#include <string>
 #include <src/Server/Modelo/Juego/Serializable.hpp>
 #include "src/Server/Modelo/Juego/Posiciones/PosicionMovil.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteEnemigo.hpp"
 #include "src/Utils/Utils.hpp"
 class Mario;
-
 #include "MovimientoEnemigo.hpp"
 #define VELOCIDAD_EXTRA_DEFAULT 0.0
 

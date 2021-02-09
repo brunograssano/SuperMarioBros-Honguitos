@@ -3,7 +3,6 @@
 
 
 #include "ModificadorMario.hpp"
-#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 
 class SinModificador : public ModificadorMario{
 

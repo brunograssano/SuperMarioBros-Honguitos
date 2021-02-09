@@ -2,7 +2,6 @@
 #include "Servidor.hpp"
 #include "src/Server/EnviadoresServer/EnviadorConexionCliente.hpp"
 #include "src/Server/EscuchadoresServer/EscuchadorConexionCliente.hpp"
-#include "src/Utils/log/Log.hpp"
 
 ConexionCliente::ConexionCliente(Servidor *servidor, Socket socket, actualizacion_cantidad_jugadores_t informacionAMandar) {
 	this->servidor = servidor;

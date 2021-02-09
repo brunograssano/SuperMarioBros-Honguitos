@@ -1,9 +1,6 @@
 #include "MonedaSorpresa.hpp"
-
 #include "src/Server/Modelo/Juego/Terrenos/Tierra.hpp"
-
 #include "src/Utils/Constantes.hpp"
-#include "src/Utils/Utils.hpp"
 
 const int FUERZA = 30;
 

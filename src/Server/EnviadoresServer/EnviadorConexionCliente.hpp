@@ -4,7 +4,6 @@
 #include <map>
 #include <queue>
 #include "src/Utils/Enviador.hpp"
-#include "src/Utils/Thread.hpp"
 #include "src/Server/Servidor/ConexionCliente.hpp"
 
 class EnviadorConexionCliente : public Thread{

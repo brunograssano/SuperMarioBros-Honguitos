@@ -1,9 +1,9 @@
 #include "Nivel.hpp"
 #include "src/Utils/colisiones/Colisionador.hpp"
-#include <string>
 #include "Filtro.hpp"
-#include "Bloques/PiezaDeTuberia.hpp"
 
+
+const int ALTO_NIVEL = 600;
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;

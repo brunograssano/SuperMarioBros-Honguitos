@@ -2,7 +2,6 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PISO_HPP
 
 #include "Pozo.hpp"
-#include "Plataforma.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 

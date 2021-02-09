@@ -1,4 +1,3 @@
-
 #include "Actualizador.hpp"
 
 void Actualizador::actualizar(std::list<Moneda *> *actualizables) {

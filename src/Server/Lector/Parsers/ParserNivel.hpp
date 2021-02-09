@@ -1,11 +1,7 @@
 #ifndef SRC_LECTOR_PARSERNIVEL_HPP_
 #define SRC_LECTOR_PARSERNIVEL_HPP_
 
-#include <string>
-#include "../pugixml.hpp"
-#include "../ArchivoLeido.hpp"
-#include "ParserEnemigo.hpp"
-#include "ParserPlataforma.hpp"
+#include "Parser.hpp"
 
 class ParserNivel : public Parser{
 	public:

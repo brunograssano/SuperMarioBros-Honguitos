@@ -1,11 +1,8 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_PARSERTUBERIA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PARSERTUBERIA_HPP
 
-#include "../ArchivoLeido.hpp"
-#include "../pugixml.hpp"
-#include "Parser.hpp"
 
-#include "src/Server/Modelo/Juego/Nivel/Nivel.hpp"
+#include "Parser.hpp"
 
 class ParserTuberia : public Parser{
     public:

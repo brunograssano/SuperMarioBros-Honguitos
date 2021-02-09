@@ -3,7 +3,6 @@
 
 #include <map>
 #include "src/Server/Servidor/ConexionCliente.hpp"
-#include "src/Utils/Thread.hpp"
 #include "../../Utils/Escuchador.hpp"
 
 class EscuchadorConexionCliente : public Thread{

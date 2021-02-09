@@ -1,4 +1,5 @@
 #include "TuberiaTest.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Bloques/Tuberia.hpp"
 using namespace std;
 #define CYAN "\u001b[36m"
 #define AZUL_CLARO "\e[1;34m"

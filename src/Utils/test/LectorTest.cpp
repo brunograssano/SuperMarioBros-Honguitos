@@ -1,5 +1,7 @@
 #include "LectorTest.hpp"
 #include <iostream>
+#include "src/Server/Lector/Lector.hpp"
+
 using namespace std;
 #define CYAN "\u001b[36m"
 #define AZUL_CLARO "\e[1;34m"

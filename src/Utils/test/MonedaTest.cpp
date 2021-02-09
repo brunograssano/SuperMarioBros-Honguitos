@@ -4,6 +4,7 @@
 #define RESET "\x1b[0m"
 using namespace std;
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
+#include "src/Server/Modelo/Juego/Nivel/Moneda.hpp"
 
 void MonedaTest::ejecutar(Assert *testSuite) {
     cout << CYAN"========== Comenzando con las pruebas de moneda ==========" RESET << endl;

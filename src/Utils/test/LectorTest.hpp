@@ -4,8 +4,6 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
-
-#include "../../Server/Lector/Lector.hpp"
 #include "Assert.hpp"
 class LectorTest{
 

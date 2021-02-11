@@ -1,8 +1,8 @@
 #include "RecorteMarioSaltando.hpp"
 #define ESTADOS_MARIO 12
-#define DESPLAZAMIENTO_X 23
+#define DESPLAZAMIENTO_X 20
 #define ALTO 28
-#define ANCHO 16
+#define ANCHO 20
 
 RecorteMarioSaltando::RecorteMarioSaltando(){
     estadoActual = 0;

@@ -10,11 +10,8 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 	this->ancho_pantalla = ancho_pantalla;
 	this->alto_pantalla = alto_pantalla;
 	this->juegoCliente = juegoCliente;
-	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla, juegoCliente);
     this->dibujadorCreditos = new DibujadorCreditos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
-
-    this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
-    this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
 
     std::string listaParticulas[]={"resources/Imagenes/Particulas/confetiAzul.png","resources/Imagenes/Particulas/confetiAmarillo.png",
 							  "resources/Imagenes/Particulas/confetiRosa.png","resources/Imagenes/Particulas/confetiVerde.png"};
@@ -33,20 +30,9 @@ DibujadorGanadores::DibujadorGanadores(CargadorTexturas* cargadorTexturas, SDL_R
 }
 
 void DibujadorGanadores::dibujarTextoGanadores() {
-    botonIzquierdo->mostrarse();
-    botonDerecho->mostrarse();
-    int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
     dibujarTitulo(juegoCliente->obtenerJugadores()[juegoCliente->obtenerPodioPuntosAcumulados().ids[0]].nombreJugador);
-
-    if (botonIzquierdo->botonClickeado(this->eventoMouse)) {
-        dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
-        this->eventoMouse.type = 0;
-    } else if (botonDerecho->botonClickeado(this->eventoMouse)) {
-        dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
-        this->eventoMouse.type = 0;
-    }
-    dibujadorPuntos->dibujarPuntos(juegoCliente);
-    dibujadorCreditos->dibujarCreditos();
+    dibujadorPuntos->dibujar();
+    dibujadorCreditos->dibujar();
 }
 
 void DibujadorGanadores::dibujarTitulo(const std::string& nombreGanador){
@@ -114,10 +100,8 @@ DibujadorGanadores::~DibujadorGanadores(){
 	particulas.clear();
 	delete this->dibujadorPuntos;
 	delete this->dibujadorCreditos;
-	delete this->botonDerecho;
-	delete this->botonIzquierdo;
 }
 
 void DibujadorGanadores::agregarEventoDeClick(SDL_Event eventoClick) {
-    this->eventoMouse = eventoClick;
+    this->dibujadorPuntos->agregarEventoDeClick(eventoClick);
 }

@@ -8,9 +8,7 @@ DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Ren
 	this->renderizador = renderizador;
 	this->juegoCliente = juegoCliente;
 	this->spriteCoffinMario = RecorteCoffinMario();
-    this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
-    this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
-	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla);
+	this->dibujadorPuntos = new DibujadorPuntos(cargadorTexturas, renderizador, ancho_pantalla, alto_pantalla, juegoCliente);
     this->dibujadorCreditos = new DibujadorCreditos(cargadorTexturas,renderizador,ancho_pantalla,alto_pantalla);
 }
 
@@ -18,7 +16,7 @@ DibujadorGameOver::DibujadorGameOver(CargadorTexturas* cargadorTexturas, SDL_Ren
 void DibujadorGameOver::dibujar(){
 	SDL_RenderClear( renderizador );
     dibujarCoffinMario();
-    dibujadorCreditos-> dibujarCreditos();
+    dibujadorCreditos-> dibujar();
     dibujarPuntosObtenidosEnNiveles();
     dibujarTextoGameOver();
     SDL_RenderPresent(renderizador);
@@ -37,18 +35,7 @@ void DibujadorGameOver::dibujarCoffinMario() {
 }
 
 void DibujadorGameOver::dibujarPuntosObtenidosEnNiveles() {
-    botonIzquierdo->mostrarse();
-    botonDerecho->mostrarse();
-    int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
-
-    if (botonIzquierdo->botonClickeado(eventoMouse)) {
-        dibujadorPuntos->disminuirNivelAMostrarPuntos(ultimoNivel);
-        eventoMouse.type = 0;
-    } else if (botonDerecho->botonClickeado(eventoMouse)) {
-        dibujadorPuntos->aumentarNivelAMostrarPuntos(ultimoNivel);
-        eventoMouse.type = 0;
-    }
-    dibujadorPuntos->dibujarPuntosGameOver(juegoCliente);
+    dibujadorPuntos->dibujar();
 }
 
 void DibujadorGameOver::dibujarTextoGameOver() {
@@ -65,12 +52,10 @@ void DibujadorGameOver::dibujarTextoGameOver() {
 }
 
 void DibujadorGameOver::agregarEventoDeClick(SDL_Event eventoClick) {
-    this->eventoMouse = eventoClick;
+    this->dibujadorPuntos->agregarEventoDeClick(eventoClick);
 }
 
 DibujadorGameOver::~DibujadorGameOver(){
     delete this->dibujadorPuntos;
     delete this->dibujadorCreditos;
-    delete this->botonIzquierdo;
-    delete this->botonDerecho;
 }

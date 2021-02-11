@@ -84,11 +84,11 @@ void AplicacionServidor::ejecutar(){
 
 			terminoElJuego = juego->ganaron() || juego->perdieron();
 		}
-		revisarSiMandarInfoNivel(&cantidadNivelesRestantes);
+        enviarSonidos();
+        revisarSiMandarInfoNivel(&cantidadNivelesRestantes);
 		revisarSiMandarUltimoPodio();
 		info_ronda_t ronda = obtenerInfoRonda();
 		servidor->guardarRondaParaEnvio(ronda);
-        enviarSonidos();
 
 		usleep(contador.tiempoRestante());
 	}

@@ -16,6 +16,8 @@ public:
     void serializar(std::list<Tuberia*> tuberias,nivel_t *nivel);
     void serializar(std::list<Bloque*> plataformas,nivel_t *nivel);
     void serializar(std::list<entidad_t> pozos,nivel_t *nivel);
+private:
+    void informarSaturacion(int cantidad, int tope, std::string entidad);
 };
 
 

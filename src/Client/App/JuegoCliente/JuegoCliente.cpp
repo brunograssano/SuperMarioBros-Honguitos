@@ -111,6 +111,7 @@ void JuegoCliente::actualizar(){
     std::list<entidad_t> ladrillosASacar;
     std::list<entidad_t> ladrillosNuevos;
     bool agregado = false;
+    pthread_mutex_lock(&mutexJuegoCliente);
     for(auto ladrillo: ladrillos){
         if(enRango(ladrillo.x, LARGO_BLOQUE)){
             for(auto bloque : entidades[BLOQUE]) {
@@ -132,7 +133,7 @@ void JuegoCliente::actualizar(){
     for (auto ladrillo : ladrillosNuevos){
         ladrillos.push_front(ladrillo);
     }
-
+    pthread_mutex_unlock(&mutexJuegoCliente);
 }
 
 int JuegoCliente::obtenerIDPropio() const{

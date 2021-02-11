@@ -9,6 +9,7 @@ void Serializador::serializar(std::list<Bloque *> plataformas, info_ronda_t *ptr
         }
     }
     ptrInfoRonda->topeBloques = numeroBloque;
+    informarSaturacion(numeroBloque, MAX_SORPRESAS, "bloques");
 }
 
 void Serializador::serializar(std::list<Enemigo *> enemigos, info_ronda_t *ptrInfoRonda,bool (*deboAgregarlo)(void *, rectangulo_t), void *contexto) {
@@ -20,6 +21,7 @@ void Serializador::serializar(std::list<Enemigo *> enemigos, info_ronda_t *ptrIn
         }
     }
     ptrInfoRonda->topeEnemigos = numeroEnemigo;
+    informarSaturacion(numeroEnemigo, MAX_ENEMIGOS, "enemigos");
 }
 
 void Serializador::serializar(std::list<Moneda *> monedas, info_ronda_t *ptrInfoRonda,bool (*deboAgregarlo)(void *, rectangulo_t), void *contexto) {
@@ -31,6 +33,7 @@ void Serializador::serializar(std::list<Moneda *> monedas, info_ronda_t *ptrInfo
         }
     }
     ptrInfoRonda->topeMonedas = numeroMoneda;
+    informarSaturacion(numeroMoneda, MAX_MONEDAS, "monedas");
 }
 
 void Serializador::serializar(std::list<ObjetoFugaz *> objetosFugaces, info_ronda_t *ptrInfoRonda,bool (*deboAgregarlo)(void *, rectangulo_t), void *contexto) {
@@ -42,6 +45,7 @@ void Serializador::serializar(std::list<ObjetoFugaz *> objetosFugaces, info_rond
         }
     }
     ptrInfoRonda->topeEfectos = numeroEfecto;
+    informarSaturacion(numeroEfecto, MAX_EFECTOS, "efectos");
 }
 
 void Serializador::serializar(std::list<Tuberia *> tuberias, nivel_t *nivel) {
@@ -51,6 +55,8 @@ void Serializador::serializar(std::list<Tuberia *> tuberias, nivel_t *nivel) {
             nivel->topeTuberias++;
         }
     }
+    informarSaturacion(nivel->topeTuberias, MAX_TUBERIAS, "tuberias");
+
 }
 
 void Serializador::serializar(std::list<Bloque *> plataformas, nivel_t *nivel) {
@@ -61,6 +67,7 @@ void Serializador::serializar(std::list<Bloque *> plataformas, nivel_t *nivel) {
             nivel->topeBloques++;
         }
     }
+    informarSaturacion(nivel->topeBloques, MAX_LADRILLOS, "ladrillos");
 }
 
 void Serializador::serializar(std::list<entidad_t> pozos, nivel_t *nivel) {
@@ -69,5 +76,12 @@ void Serializador::serializar(std::list<entidad_t> pozos, nivel_t *nivel) {
             nivel->pozos[nivel->topePozos] = pozo;
             nivel->topePozos++;
         }
+    }
+    informarSaturacion(nivel->topePozos, MAX_POZOS, "pozos");
+}
+
+void Serializador::informarSaturacion(int cantidad, int tope, std::string entidad) {
+    if(cantidad >= tope){
+        Log::getInstance()->mostrarMensajeDeInfo("La lista de " + entidad + " se saturo. Se envian solo: " + std::to_string(tope));
     }
 }

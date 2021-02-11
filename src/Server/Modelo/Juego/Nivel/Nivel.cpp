@@ -248,7 +248,6 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
             superponeAObjeto = true;
         }
     }
-    // mismo chequeo para plataformas? <<< Debería
 
     if(!superponeAObjeto){
         tuberias.push_back(posibleTuberia);

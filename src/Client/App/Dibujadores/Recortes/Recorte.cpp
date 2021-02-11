@@ -44,7 +44,7 @@ SDL_Rect Recorte::obtenerRecorte(int recorteX, int recorteY) {
         std::advance(iterador, recorteX);
         estado = *iterador;
     }
-    estado.y = recorteY * estado.h;
+    estado.y = recorteY * (estado.h+1);
     return estado;
 }
 

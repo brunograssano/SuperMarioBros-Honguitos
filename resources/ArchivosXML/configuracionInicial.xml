@@ -861,7 +861,6 @@
                     <color>2</color>
                     <cantidad>15</cantidad>
                 </enemigo>
-
                 <enemigo>
                     <tipo>Koopa</tipo>
                     <color>2</color>
@@ -1123,6 +1122,11 @@
                 <enemigo>
                     <tipo>Koopa</tipo>
                     <color>1</color>
+                    <cantidad>4</cantidad>
+                </enemigo>
+                <enemigo>
+                    <tipo>Koopa</tipo>
+                    <color>4</color>
                     <cantidad>8</cantidad>
                 </enemigo>
             </enemigos>
@@ -1652,48 +1656,40 @@
                     <cantidadBloques>2</cantidadBloques>
                 </plataforma>
             </plataformas>
-        </nivel>	
-       
+        </nivel>
     </niveles>
 
 	<credenciales>
-
 		<usuario>
 			<username>lukas</username>
 			<password>12345</password>
 		</usuario>
-
 		<usuario>
 			<username>bruno</username>
 			<password>bru123</password>
 		</usuario>
-
 		<usuario>
 			<username>adrian</username>
 			<password>adrianstarly</password>
 		</usuario>
-
 		<usuario>
 			<username>joaquin</username>
 			<password>123joaco</password>
 		</usuario>
-
 		<usuario>
 			<username>prueba</username>
 			<password>prueba</password>
 		</usuario>
-
-    <usuario>
+        <usuario>
 			<username>prueba2</username>
 			<password>prueba2</password>
 		</usuario>
-
-    <usuario>
+        <usuario>
 			<username>prueba3</username>
 			<password>prueba3</password>
 		</usuario>
-
 	</credenciales>
+
 	<cantidadConexiones>1</cantidadConexiones>
 
 </configuracion>

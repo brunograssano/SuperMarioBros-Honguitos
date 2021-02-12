@@ -13,7 +13,7 @@ Ladrillo::Ladrillo(int coordenadaX, int coordenadaY, int tipo) {
 }
 
 
-void Ladrillo::romperse(void *ptr) {
+void Ladrillo::romperse(__attribute__((unused))void *ptr) {
     spriteBloque->usarse();
 }
 

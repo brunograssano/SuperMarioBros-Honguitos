@@ -28,7 +28,7 @@ void Enemigo::actualizarPosicion(rectangulo_t rectangulo) {
     pisoBloque = false;
 }
 
-void Enemigo::morir(void* ptr) {
+void Enemigo::morir(__attribute__((unused))void* ptr) {
     loMataron = true;
     spriteEnemigo->morir();
     movimientoEnemigo.morir();

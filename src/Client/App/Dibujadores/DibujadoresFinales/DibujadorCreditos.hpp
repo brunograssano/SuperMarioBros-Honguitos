@@ -10,7 +10,7 @@ class DibujadorCreditos : public Dibujador{
     public:
         DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
         void dibujar() override;
-        ~DibujadorCreditos()= default;;
+        ~DibujadorCreditos() override = default;
     private:
         int alto_pantalla;
         int ancho_pantalla;

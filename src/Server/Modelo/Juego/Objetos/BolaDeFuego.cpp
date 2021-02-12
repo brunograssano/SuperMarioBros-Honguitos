@@ -133,7 +133,7 @@ void BolaDeFuego::chocarPorAbajoCon(Colisionable *colisionable) {
 }
 
 
-void BolaDeFuego::explotar(void *pVoid) {
+void BolaDeFuego::explotar(__attribute__((unused))void *pVoid) {
     velocidadY = 0;
     velocidadX = 0;
     efecto_gravitacional = 0;
@@ -142,7 +142,7 @@ void BolaDeFuego::explotar(void *pVoid) {
     exploto = true;
 }
 
-void BolaDeFuego::rebotar(void *pVoid) {
+void BolaDeFuego::rebotar(__attribute__((unused)) void *pVoid) {
     if(rebotes < MAX_REBOTES){
         velocidadY /= -1.3;
         velocidadY = velocidadY>3?3:velocidadY;

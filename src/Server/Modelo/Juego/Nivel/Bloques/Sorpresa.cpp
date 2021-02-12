@@ -63,7 +63,7 @@ void Sorpresa::elevar(int y) {
     objetoSorpresa = obtenerObjetoSorpresa(posicion.obtenerPosX(), posicion.obtenerPosY() + LARGO_BLOQUE);
 }
 
-void Sorpresa::usarse(void* pVoid) {
+void Sorpresa::usarse(__attribute__((unused))void* pVoid) {
     spriteBloque->usarse();
     usado = true;
     if(!entregado){

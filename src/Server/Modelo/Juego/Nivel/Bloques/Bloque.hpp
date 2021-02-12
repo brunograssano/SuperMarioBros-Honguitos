@@ -14,12 +14,12 @@
 class Bloque : public Colisionable, Serializable,Actualizable{
     public:
 		~Bloque() override = default;
-		void actualizar();
+		void actualizar() override;
 		int obtenerPosicionX();
 		int obtenerPosicionY();
 
         virtual ObjetoSorpresa* colisionaronAbajo();
-        virtual entidad_t serializar();
+        entidad_t serializar() override;
         std::string obtenerColisionID() override = 0;
         rectangulo_t obtenerRectangulo() override;
         bool debeColisionar() override;

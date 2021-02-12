@@ -54,7 +54,7 @@ void FlorDeFuego::inicializarMapasDeColision() {
     mapaColisionesPorAbajo[COLISION_ID_MARIO] = parAgarrar;
 }
 
-void FlorDeFuego::agarrar(void *ptr) {
+void FlorDeFuego::agarrar(__attribute__((unused))void *ptr) {
     _debeDesaparecer = true;
 }
 

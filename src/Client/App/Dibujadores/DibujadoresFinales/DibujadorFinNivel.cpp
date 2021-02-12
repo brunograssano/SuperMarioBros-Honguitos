@@ -29,7 +29,7 @@ void DibujadorFinNivel::dibujar(){
 
     SDL_RenderPresent( renderizador );
     sleep(TIEMPO_ESPERA_GAME_LOOP);
-    juegoCliente->hayQueMostrarPuntosDeNivel = false;
+    juegoCliente->dejarDeMostrarPuntosNivel();
 }
 
 void DibujadorFinNivel::dibujarTextoFinNivel(){

@@ -2,6 +2,8 @@
 #include "src/Utils/Constantes.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteMario.hpp"
 #include "src/Server/Botonera/Botonera.hpp"
+#include "Modificadores/SinModificador.hpp"
+#include "src/Utils/log/Log.hpp"
 
 const int COORDENADA_X_DEFAULT = 20,COORDENADA_Y_DEFAULT = 300;
 const int MINIMO_COORDENADA_Y = 0;

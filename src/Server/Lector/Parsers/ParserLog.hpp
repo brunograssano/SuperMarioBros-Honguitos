@@ -1,12 +1,6 @@
 #ifndef SRC_LECTOR_PARSERLOG_HPP_
 #define SRC_LECTOR_PARSERLOG_HPP_
 
-#include <string>
-#include "../pugixml.hpp"
-#include "../ArchivoLeido.hpp"
-#include "../../../Utils/log/Error.hpp"
-#include "../../../Utils/log/Debug.hpp"
-#include "../../../Utils/log/Info.hpp"
 #include "Parser.hpp"
 
 class ParserLog : public Parser{

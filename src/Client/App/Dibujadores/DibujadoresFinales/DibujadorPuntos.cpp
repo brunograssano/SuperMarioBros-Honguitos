@@ -1,12 +1,16 @@
 
 #include "DibujadorPuntos.hpp"
 
-DibujadorPuntos::DibujadorPuntos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla) {
+DibujadorPuntos::DibujadorPuntos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, JuegoCliente* juegoCliente) {
     nivelAMostrarPuntos = 0;
     this->alto_pantalla = alto_pantalla;
     this->ancho_pantalla = ancho_pantalla;
     this->cargadorTexturas = cargadorTexturas;
     this->renderizador = renderizador;
+
+    this->botonIzquierdo = new BotonConTexto(ancho_pantalla/4 - 200/2 - 25 - 40 ,175,40,40, "<<", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+    this->botonDerecho = new BotonConTexto(ancho_pantalla/4 - 200/2- 25 + 250,175,40,40, ">>", renderizador, cargarFuente("resources/Fuentes/fuenteSuperMarioBros.ttf", 12));
+    this->juegoCliente = juegoCliente;
 
     colores[-1] = {150, 150 , 150, 255}; // Gris.
     colores[0] = {230, 30 , 044, 255}; // Rojo.
@@ -31,7 +35,19 @@ void DibujadorPuntos::disminuirNivelAMostrarPuntos(int ultimoNivel){
     }
 }
 
-void DibujadorPuntos::dibujarPuntos(JuegoCliente *juegoCliente) {
+void DibujadorPuntos::dibujar() {
+    botonIzquierdo->mostrarse();
+    botonDerecho->mostrarse();
+    int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
+
+    if (botonIzquierdo->botonClickeado(eventoMouse)) {
+        this->disminuirNivelAMostrarPuntos(ultimoNivel);
+        eventoMouse.type = 0;
+    } else if (botonDerecho->botonClickeado(eventoMouse)) {
+        this->aumentarNivelAMostrarPuntos(ultimoNivel);
+        eventoMouse.type = 0;
+    }
+
     if(nivelAMostrarPuntos == 0){
         dibujarPuntosTotales(juegoCliente);
     }else {
@@ -134,6 +150,11 @@ void DibujadorPuntos::dibujarPuntosDelNivel(JuegoCliente *juegoCliente) {
 
 }
 
+
+void DibujadorPuntos::agregarEventoDeClick(SDL_Event eventoClick) {
+    this->eventoMouse = eventoClick;
+}
+
 void DibujadorPuntos::renderizarTexto(SDL_Rect renderQuad, std::string textoAMostrar, SDL_Color color){
     SDL_Rect* clip = nullptr;
     double angle = 0.0;
@@ -147,7 +168,7 @@ void DibujadorPuntos::renderizarTexto(SDL_Rect renderQuad, std::string textoAMos
     SDL_RenderCopyEx( renderizador, texto, clip, &renderQuad, angle, center, flip );
     destructorDeTexturas(texto);
 
-};
+}
 
 void DibujadorPuntos::dibujarRectanguloPuntos(int ancho_puntosJugador,int alto_puntosJugador, int desfase_puntosJugador ){
     SDL_Rect rectanguloTransparente = {ancho_pantalla/4 - ancho_puntosJugador/2 - 25,
@@ -159,56 +180,8 @@ void DibujadorPuntos::dibujarRectanguloPuntos(int ancho_puntosJugador,int alto_p
     SDL_RenderFillRect(renderizador, &rectanguloTransparente);
 }
 
-void DibujadorPuntos::dibujarPuntosTotalesGameOver(JuegoCliente *juegoCliente) {
 
-    int ancho_puntosJugador = 200;
-    int alto_puntosJugador = 30;
-    int desfase_puntosJugador = 50;
-    SDL_Rect cuadradoPuntos;
-
-    std::stringstream puntosJugador;
-
-    dibujarRectanguloPuntos(ancho_puntosJugador,alto_puntosJugador,desfase_puntosJugador);
-
-    std::stringstream tituloPuntos;
-    tituloPuntos << "Puntos totales";
-
-    SDL_Rect cuadradoTituloPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
-                                     alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 150,
-                                     ancho_puntosJugador,
-                                     alto_puntosJugador};
-
-    renderizarTexto(cuadradoTituloPuntos, tituloPuntos.str(), colorDefault);
-    int indiceJugador = 0;
-    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()){
-
-        puntosJugador.str("");
-        std::string nombreJugador = parIdJugador.second.nombreJugador;
-        puntosJugador << "Puntos de "<< nombreJugador <<": " << parIdJugador.second.mario.puntos;
-
-        cuadradoPuntos = {ancho_pantalla/4 - ancho_puntosJugador/2,
-                          alto_pantalla/2 - alto_puntosJugador/2 + desfase_puntosJugador - 100,
-                          ancho_puntosJugador,
-                          alto_puntosJugador};
-
-        int idColor = parIdJugador.second.mario.idImagen;
-
-        if( parIdJugador.second.mario.recorteImagen == MARIO_GRIS){
-            idColor = MARIO_GRIS;
-        }
-
-        renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
-
-        desfase_puntosJugador +=40;
-        indiceJugador++;
-    }
-
-}
-
-void DibujadorPuntos::dibujarPuntosGameOver(JuegoCliente *juegoCliente) {
-    if(nivelAMostrarPuntos == 0){
-        dibujarPuntosTotalesGameOver(juegoCliente);
-    }else {
-        dibujarPuntosDelNivel(juegoCliente);
-    }
+DibujadorPuntos::~DibujadorPuntos(){
+    delete this->botonIzquierdo;
+    delete this->botonDerecho;
 }

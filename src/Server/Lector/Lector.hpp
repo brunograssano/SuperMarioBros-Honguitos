@@ -1,7 +1,6 @@
 #ifndef SRC_SERVER_LECTOR_LECTOR_HPP_
 #define SRC_SERVER_LECTOR_LECTOR_HPP_
 
-#include <string>
 #include "ArchivoLeido.hpp"
 
 class Lector{

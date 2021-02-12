@@ -2,12 +2,9 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_COLISIONABLE_HPP
 
 #include <map>
-#include <string>
 #include <typeinfo>
-#include <tuple>
-
 #include "src/Utils/colisiones/Colisionador.hpp"
-#include "src/Utils/Utils.hpp"
+
 
 class Colisionable{
 

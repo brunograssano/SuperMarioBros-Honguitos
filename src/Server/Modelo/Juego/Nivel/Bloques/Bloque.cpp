@@ -1,5 +1,6 @@
 #include "Bloque.hpp"
 
+
 int Bloque::obtenerPosicionX() {
     return this->posicion.obtenerPosX();
 }
@@ -17,13 +18,7 @@ int Bloque::normalizarCoordenadaIngresada(int coordenada) {
 }
 
 entidad_t Bloque::serializar() {
-    entidad_t bloqueSerializado = {0, 0, 0, 0,0,false};
-    bloqueSerializado.x = posicion.obtenerPosX();
-    bloqueSerializado.y = posicion.obtenerPosY();
-    bloqueSerializado.recorteX = spriteBloque->obtenerEstadoActual();
-    bloqueSerializado.recorteY = tipoBloque;
-    bloqueSerializado.tipo = BLOQUE;
-    return bloqueSerializado;
+    return Serializable::serializar(posicion.obtenerPosX(),posicion.obtenerPosY(),spriteBloque->obtenerEstadoActual(),tipoBloque,BLOQUE,false);
 }
 
 rectangulo_t Bloque::obtenerRectangulo() {

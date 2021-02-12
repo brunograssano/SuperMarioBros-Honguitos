@@ -1,5 +1,4 @@
 #include "Juego.hpp"
-#include <utility>
 
 Juego* Juego::instanciaJuego = nullptr;
 

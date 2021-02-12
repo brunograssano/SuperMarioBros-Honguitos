@@ -1,15 +1,7 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_META_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_META_HPP
 
-#include <list>
-#include <map>
-
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
-#include "src/Utils/Constantes.hpp"
-
-#define RESTA_PUNTOS 500
-#define MAX_PUNTOS RESTA_PUNTOS*MAX_CONEXIONES
-
 
 class Meta {
     public:

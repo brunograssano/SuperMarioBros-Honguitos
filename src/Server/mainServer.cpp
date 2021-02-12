@@ -1,9 +1,7 @@
 #include "mainServer.hpp"
-
 #include "Lector/Lector.hpp"
 #include "../Utils/Validaciones.hpp"
 #include "src/Server/Servidor/Servidor.hpp"
-#include <string>
 
 ArchivoLeido realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], std::list<std::string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;

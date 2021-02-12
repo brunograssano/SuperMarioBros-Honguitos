@@ -1,6 +1,9 @@
 #include <algorithm>
 #include "Meta.hpp"
 #include "src/Server/Botonera/Botonera.hpp"
+#include "src/Utils/Constantes.hpp"
+#define RESTA_PUNTOS 500
+#define MAX_PUNTOS RESTA_PUNTOS*MAX_CONEXIONES
 
 Meta::Meta(int puntoBandera) {
     this->puntoBandera = puntoBandera;

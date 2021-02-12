@@ -3,15 +3,12 @@
 
 #include <iostream>
 #include <string>
-
-#include "src/Server/Modelo/Juego/Nivel/Moneda.hpp"
 #include "Assert.hpp"
 
 class MonedaTest {
     public:
         static void ejecutar(Assert* testSuite );
         static void test01CuandoSeColisionaConMarioLaMonedaFueAgarrada(Assert* testSuite);
-
 };
 
 

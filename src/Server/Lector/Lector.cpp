@@ -1,9 +1,5 @@
 #include "Lector.hpp"
 
-#include <vector>
-#include <string>
-
-#include "ArchivoLeido.hpp"
 #include "Parsers/ParserLog.hpp"
 #include "Parsers/ParserNivel.hpp"
 #include "Parsers/ParserUsuario.hpp"

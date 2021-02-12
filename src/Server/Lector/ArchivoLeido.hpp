@@ -1,7 +1,6 @@
 #ifndef SRC_LECTOR_ARCHIVOLEIDO_H_
 #define SRC_LECTOR_ARCHIVOLEIDO_H_
 
-#include <string>
 #include <list>
 #include "src/Server/Modelo/Juego/Nivel/Nivel.hpp"
 #include "../../Utils/log/TipoLog.hpp"

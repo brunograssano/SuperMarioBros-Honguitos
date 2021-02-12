@@ -27,15 +27,16 @@ class JuegoCliente{
 		SDL_Rect obtenerCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
+		void dejarDeMostrarPuntosNivel();
+		bool hayQueMostrarPuntosNivel();
         podio_t obtenerPodioPuntosAcumulados();
         std::vector<podio_t> obtenerPodios();
-        bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
         void agregarNivel(nivel_t nivel);
         void agregarPodios(ultimos_podios_t ultimos_podios);
 
         std::list<entidad_t> obtenerEntidad(int claveEntidad);
 
-    private:
+private:
         bool enRango(int posX, int w) const;
         static void cargarLista(std::list<entidad_t>* listaACargar, entidad_t *vector, unsigned short tope);
         static void crearListaDeFondoPozo(std::list<entidad_t>* listaACargar, entidad_t pozos[MAX_POZOS], uint8_t topePozos);
@@ -54,6 +55,7 @@ class JuegoCliente{
 		bool ganaron;
 		bool perdieron;
         bool hayQueCargarPodioNivel;
+        bool hayQueMostrarPuntosDeNivel;
 		int nivelesJugados;
 };
 

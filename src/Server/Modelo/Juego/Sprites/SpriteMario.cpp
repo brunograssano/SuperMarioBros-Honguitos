@@ -1,4 +1,5 @@
 #include "SpriteMario.hpp"
+#include "src/Utils/Constantes.hpp"
 
 const int ANCHO_SPRITE_PIXEL = 16;
 const int ALTO_SPRITE_PIXEL = 32;

@@ -1,20 +1,17 @@
 #ifndef SRC_SERVER_MODELO_BLOQUES_BLOQUE_HPP_
 #define SRC_SERVER_MODELO_BLOQUES_BLOQUE_HPP_
 
-#include <list>
-#include <string>
-
+#include "src/Server/Modelo/Juego/Serializable.hpp"
+#include "src/Server/Modelo/Juego/Actualizable.hpp"
 #include "ObjetosSorpresa/ObjetoSorpresa.hpp"
 #include "ObjetosSorpresa/SinSorpresa.hpp"
-
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
 #include "src/Utils/Utils.hpp"
-#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteBloque.hpp"
 
 #define SORPRESA 0
 
-class Bloque : public Colisionable{
+class Bloque : public Colisionable, Serializable,Actualizable{
     public:
 		~Bloque() override = default;
 		void actualizar();

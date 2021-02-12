@@ -105,6 +105,7 @@ void JuegoCliente::actualizar(){
     std::list<entidad_t> ladrillosASacar;
     std::list<entidad_t> ladrillosNuevos;
     bool agregado = false;
+    pthread_mutex_lock(&mutexJuegoCliente);
     for(auto ladrillo: ladrillos){
         if(enRango(ladrillo.x, LARGO_BLOQUE)){
             for(auto bloque : entidades[BLOQUE]) {
@@ -126,7 +127,7 @@ void JuegoCliente::actualizar(){
     for (auto ladrillo : ladrillosNuevos){
         ladrillos.push_front(ladrillo);
     }
-
+    pthread_mutex_unlock(&mutexJuegoCliente);
 }
 
 int JuegoCliente::obtenerIDPropio() const{
@@ -194,6 +195,14 @@ podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
     return this->podioPuntosTotales;
 }
 
+void JuegoCliente::dejarDeMostrarPuntosNivel() {
+    this->hayQueMostrarPuntosDeNivel = false;
+}
+
+bool JuegoCliente::hayQueMostrarPuntosNivel() {
+    return this->hayQueMostrarPuntosDeNivel;
+}
+
 std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
     if(claveEntidad == TUBERIA || claveEntidad == POZO || claveEntidad == FONDO_POZO){
         std::list<entidad_t> entidadesAMostrar;
@@ -206,4 +215,5 @@ std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
     }
     return entidades[claveEntidad];
 }
+
 

@@ -1,4 +1,3 @@
-
 #include "SpriteMoneda.hpp"
 
 SpriteMoneda::SpriteMoneda(){

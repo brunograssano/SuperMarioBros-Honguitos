@@ -1,9 +1,6 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_INTENTADORINICIARMODELO_H
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_INTENTADORINICIARMODELO_H
 
-#include <map>
-#include <string>
-
 #include "src/Server/Modelo/AplicacionServidor.hpp"
 #include "src/Utils/Thread.hpp"
 #include "ConexionCliente.hpp"

@@ -1,9 +1,6 @@
 #ifndef SRC_LECTOR_PARSERVENTANA_HPP_
 #define SRC_LECTOR_PARSERVENTANA_HPP_
 
-#include <string>
-#include "../pugixml.hpp"
-#include "../ArchivoLeido.hpp"
 #include "Parser.hpp"
 
 class ParserVentana : public Parser{

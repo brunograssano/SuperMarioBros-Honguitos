@@ -5,17 +5,9 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <map>
-
 #include "src/Utils/Socket.hpp"
-#include "src/Utils/log/Log.hpp"
-#include "src/Utils/Utils.hpp"
 #include "src/Utils/Thread.hpp"
-
-#include "src/Server/Modelo/AplicacionServidor.hpp"
 #include "src/Server/Lector/ArchivoLeido.hpp"
-
-#include "ConexionCliente.hpp"
 #include "ManejadorIdentificadores.hpp"
 #include "AceptadorDeConexiones.hpp"
 #include "ReconectadorDeConexiones.hpp"

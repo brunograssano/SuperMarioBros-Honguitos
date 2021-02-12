@@ -3,10 +3,6 @@
 
 #include "ObjetoSorpresa.hpp"
 
-#include "src/Server/Modelo/Juego/Mario/Mario.hpp"
-#include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
-#include "src/Utils/Utils.hpp"
-
 class FlorDeFuego : public ObjetoSorpresa{
 
     public:

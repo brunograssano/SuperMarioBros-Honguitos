@@ -57,7 +57,7 @@ void Dibujadores::determinarEstado() {
         estadoActual = DIBUJADOR_GANARON;
     }else if(juegoCliente->perdieronElJuego()) {
         estadoActual = DIBUJADOR_GAMEOVER;
-    }else if(juegoCliente->hayQueMostrarPuntosDeNivel) {
+    }else if(juegoCliente->hayQueMostrarPuntosNivel()) {
         estadoActual = DIBUJADOR_PUNTOS_NIVEL;
     }else if(estadoActual!=DIBUJADOR_ERROR_SERVER && estadoActual!=DIBUJADOR_INICIO){
         estadoActual = DIBUJADOR_JUEGO;
@@ -71,4 +71,11 @@ Dibujadores::~Dibujadores(){
 	delete cargadorTexturas;
     SDL_DestroyRenderer( renderizador );
     SDL_DestroyWindow( ventanaAplicacion );
+}
+
+void Dibujadores::alternarModoDiego() {
+    if(estadoActual == DIBUJADOR_JUEGO){
+        cargadorTexturas->alternarModoDiego(juegoCliente->obtenerIDPropio());
+
+    }
 }

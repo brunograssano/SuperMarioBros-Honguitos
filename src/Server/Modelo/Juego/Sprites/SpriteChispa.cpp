@@ -1,4 +1,5 @@
 #include "SpriteChispa.hpp"
+#include "src/Utils/Constantes.hpp"
 
 const int CICLOS_PARA_CAMBIO = 5;
 #define ESTADO_INICIAL 0

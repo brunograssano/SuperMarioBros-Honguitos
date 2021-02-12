@@ -1,9 +1,9 @@
 #include "Nivel.hpp"
 #include "src/Utils/colisiones/Colisionador.hpp"
-#include <string>
 #include "Filtro.hpp"
-#include "Bloques/PiezaDeTuberia.hpp"
 
+
+const int ALTO_NIVEL = 600;
 const int TAMANIO_MONEDA = 40;
 const int TAMANIO_BLOQUE = 40;
 const int TAMANIO_ENEMIGO = 40;
@@ -26,38 +26,18 @@ void Nivel::actualizarPosicionesEnemigos(rectangulo_t rectangulo) {
 	}
 }
 
-void Nivel::actualizarMonedas(){
-	for(auto& moneda : monedas){
-		moneda->actualizar();
-	}
-}
 
-void Nivel::actualizarBloques() {
-    for(auto& bloque : plataformas){
-        bloque->actualizar();
-    }
-}
-
-void Nivel::actualizarObjetosFugaces() {
-    for(auto& objeto: objetosFugaces) {
-        objeto->actualizar();
-    }
-}
-
-
-void Nivel::actualizarModelo(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena){
+void Nivel:: actualizarModelo(const std::map<int, Mario*>& jugadores, rectangulo_t rectanguloEscena){
     actualizarPosicionesEnemigos(rectanguloEscena);
 
     imponerPosicionDeReaparicion(jugadores, rectanguloEscena);
     resolverColisiones(jugadores, rectanguloEscena);
 
-    actualizarObjetosFugaces();
-    actualizarMonedas();
-    actualizarBloques();
+    actualizador.actualizar(&objetosFugaces);
+    actualizador.actualizar(&monedas);
+    actualizador.actualizar(&plataformas);
 
     sacarEnemigosMuertos();
-    sacarObjetosFugaces();
-    sacarMonedasAgarradas();
 
     resolverGanadores(jugadores);
 }
@@ -110,32 +90,6 @@ void Nivel::sacarEnemigosMuertos(){
         delete enemigo;
     }
 }
-void Nivel::sacarMonedasAgarradas() {
-    std::list<Moneda*> monedasABorrar;
-    for(auto moneda : monedas){
-        if(moneda->fueAgarrada()){
-            monedasABorrar.push_back(moneda);
-        }
-    }
-    for(auto moneda : monedasABorrar ){
-        monedas.remove(moneda);
-        delete moneda;
-    }
-}
-
-void Nivel::sacarObjetosFugaces() {
-    std::list<ObjetoFugaz*> objetosABorrar;
-    for(auto const& objeto: objetosFugaces){
-        if(objeto->debeDesaparecer()){
-            objetosABorrar.push_back(objeto);
-        }
-    }
-    for(auto objeto : objetosABorrar){
-        objetosFugaces.remove(objeto);
-        delete objeto;
-    }
-}
-
 
 std::string Nivel::obtenerDireccionFondoActual(){
 	return direccionFondo;
@@ -294,7 +248,6 @@ void Nivel::agregarTuberia(int posicionXNuevaTuberia, int tipoTuberia, int color
             superponeAObjeto = true;
         }
     }
-    // mismo chequeo para plataformas? <<< Debería
 
     if(!superponeAObjeto){
         tuberias.push_back(posibleTuberia);
@@ -309,42 +262,10 @@ void Nivel::completarInformacionRonda(info_ronda_t *ptrInfoRonda, bool (* deboAg
 
     ptrInfoRonda->tiempoFaltante = contador.tiempoRestante();
 
-    int numeroBloque = 0;
-    for(auto const& bloque: plataformas){
-        entidad_t bloqueSerializado = bloque->serializar();
-        if(bloque->cambioElSprite() && deboAgregarlo(contexto, bloque->obtenerRectangulo()) && numeroBloque < MAX_SORPRESAS){
-            ptrInfoRonda->bloques[numeroBloque] = bloqueSerializado;
-            numeroBloque++;
-        }
-    }
-    ptrInfoRonda->topeBloques = numeroBloque;
-
-    int numeroEnemigo = 0;
-    for(auto const& enemigo: enemigos){
-        if(deboAgregarlo(contexto, enemigo->obtenerRectangulo()) && numeroEnemigo<MAX_ENEMIGOS){
-            ptrInfoRonda->enemigos[numeroEnemigo] = enemigo->serializar();
-            numeroEnemigo++;
-        }
-    }
-    ptrInfoRonda->topeEnemigos = numeroEnemigo;
-
-    int numeroMoneda = 0;
-    for(auto const& moneda: monedas){
-        if(deboAgregarlo(contexto, moneda->obtenerRectangulo()) && numeroMoneda<MAX_MONEDAS){
-            ptrInfoRonda->monedas[numeroMoneda] = moneda->serializar();
-            numeroMoneda++;
-        }
-    }
-
-    ptrInfoRonda->topeMonedas = numeroMoneda;
-    int numeroEfecto = 0;
-    for(auto const& objeto : objetosFugaces){
-        if(deboAgregarlo(contexto, objeto->obtenerRectangulo()) && numeroEfecto<MAX_EFECTOS){
-            ptrInfoRonda->efectos[numeroEfecto] = objeto->serializar();
-            numeroEfecto++;
-        }
-    }
-    ptrInfoRonda->topeEfectos = numeroEfecto;
+    serializador.serializar(plataformas,ptrInfoRonda,deboAgregarlo,contexto);
+    serializador.serializar(enemigos,ptrInfoRonda,deboAgregarlo,contexto);
+    serializador.serializar(monedas,ptrInfoRonda,deboAgregarlo,contexto);
+    serializador.serializar(objetosFugaces,ptrInfoRonda,deboAgregarlo,contexto);
 }
 
 void Nivel::agregarPozo(int posicionX, int tipoPozo, int fondo) {
@@ -368,29 +289,10 @@ bool Nivel::todosEnLaMeta(const std::map<int, Mario *>& jugadores) {
 
 void Nivel::completarInformacionNivel(nivel_t *nivel) {
     nivel->mundo = mundo;
-    for(auto const& tuberia: tuberias){
-        if(nivel->topeTuberias<MAX_TUBERIAS){
-            nivel->tuberias[nivel->topeTuberias] = tuberia->serializar();
-            nivel->topeTuberias++;
-        }
-    }
-
+    serializador.serializar(tuberias,nivel);
     std::list<entidad_t> pozos = piso.serializar();
-    for(auto const& pozo: pozos){
-        if(nivel->topePozos<MAX_POZOS){
-            nivel->pozos[nivel->topePozos] = pozo;
-            nivel->topePozos++;
-        }
-    }
-
-    for(auto const& bloque: plataformas){
-        entidad_t  bloquesSerializado = bloque->serializar();
-        if(nivel->topeBloques<MAX_LADRILLOS && bloquesSerializado.recorteY!=SORPRESA){
-            nivel->bloques[nivel->topeBloques] = bloquesSerializado;
-            nivel->topeBloques++;
-        }
-    }
-
+    serializador.serializar(pozos,nivel);
+    serializador.serializar(plataformas,nivel);
 }
 
 Nivel::~Nivel (){
@@ -518,4 +420,6 @@ void Nivel::buscarBloqueMasAlto(PosicionFija* posicion) {
 
     *posicion = PosicionFija(xACaer, yACaer);
 }
+
+
 

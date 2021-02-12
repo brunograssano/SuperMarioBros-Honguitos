@@ -25,7 +25,9 @@ class Dibujadores{
         void ocurrioErrorEnServidor();
         void determinarEstado();
 
-    private:
+    void alternarModoDiego();
+
+private:
         CargadorTexturas *cargadorTexturas;
         SDL_Renderer *renderizador;
         SDL_Window* ventanaAplicacion;

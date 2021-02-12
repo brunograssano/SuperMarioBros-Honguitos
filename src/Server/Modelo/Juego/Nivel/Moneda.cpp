@@ -1,5 +1,6 @@
 #include "Moneda.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
+#include "src/Utils/Constantes.hpp"
 
 
 Moneda::Moneda(int coordenadaX, int coordenadaY) {
@@ -14,12 +15,7 @@ void Moneda::actualizar() {
 }
 
 entidad_t Moneda::serializar() {
-    entidad_t monedaSerializada = {0,0,0,0,0,false};
-    monedaSerializada.x = posicion.obtenerPosX();
-    monedaSerializada.y = posicion.obtenerPosY();
-    monedaSerializada.recorteX = sprite.obtenerEstadoActual();
-    monedaSerializada.tipo = MONEDA;
-    return monedaSerializada;
+    return Serializable::serializar(posicion.obtenerPosX(),posicion.obtenerPosY(),sprite.obtenerEstadoActual(),0,MONEDA,false);
 }
 
 int Moneda::obtenerPosicionX() {

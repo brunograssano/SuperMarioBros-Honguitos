@@ -2,7 +2,6 @@
 #define SRC_SERVER_MODELO_MOVIMIENTO_MOVIMIENTOMARIO_HPP_
 
 #include <map>
-
 #include "src/Server/Modelo/Juego/Movimientos/MovimientoHorizontal.hpp"
 #include "src/Server/Modelo/Juego/Movimientos/MovimientoVertical.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/PosicionMovil.hpp"

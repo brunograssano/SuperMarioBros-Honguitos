@@ -1,5 +1,7 @@
 #include "ParserLog.hpp"
-
+#include "../../../Utils/log/Error.hpp"
+#include "../../../Utils/log/Debug.hpp"
+#include "../../../Utils/log/Info.hpp"
 
 void ParserLog::parsear(pugi::xml_node log, ArchivoLeido* archivoLeido){
     std::string level = log.child_value("level");

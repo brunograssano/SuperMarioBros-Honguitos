@@ -44,8 +44,8 @@ bool EscuchadorRonda::enemigosValidos(entidad_t enemigos[MAX_ENEMIGOS], int tope
 	for(int i = 0; i < tope; i++){
         entidad_t enemigo = enemigos[i];
 		if((enemigo.tipo != GOOMBA && enemigo.tipo != KOOPA) ||
-           ((enemigo.tipo == GOOMBA && (enemigo.recorteX > ESTADOS_GOOMBA || enemigo.recorteY > COLORES_GOOMBA_POSIBLES)) ||
-            (enemigo.tipo == KOOPA && (enemigo.recorteX > ESTADOS_KOOPA || enemigo.recorteY > COLORES_KOOPA_POSIBLES)))){
+           ((enemigo.tipo == GOOMBA && (enemigo.recorteX > ESTADOS_GOOMBA || enemigo.recorteY >= COLORES_GOOMBA_POSIBLES)) ||
+            (enemigo.tipo == KOOPA && (enemigo.recorteX > ESTADOS_KOOPA || enemigo.recorteY >= COLORES_KOOPA_POSIBLES)))){
 			return false;
 		}
 	}

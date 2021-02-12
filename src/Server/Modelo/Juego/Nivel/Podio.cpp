@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <vector>
 #include "Podio.hpp"
 using namespace std;
 

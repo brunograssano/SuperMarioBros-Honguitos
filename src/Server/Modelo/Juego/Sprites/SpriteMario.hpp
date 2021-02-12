@@ -4,8 +4,6 @@
 class Mario;
 #include "Sprite.hpp"
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
-#include "src/Utils/Constantes.hpp"
-
 
 class SpriteMario : public Sprite{
 

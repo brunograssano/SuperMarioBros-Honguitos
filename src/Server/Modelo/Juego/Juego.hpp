@@ -1,18 +1,11 @@
 #ifndef SRC_SERVER_MODELO_JUEGO_HPP_
 #define SRC_SERVER_MODELO_JUEGO_HPP_
 
-#include <list>
-#include <map>
-#include <iostream>
-#include <string>
-#include <utility>
 
 class Mario;
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 #include "src/Server/Modelo/Juego/Nivel/Nivel.hpp"
-#include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
 #include "Camara/Camara.hpp"
-#include "src/Utils/Contador.hpp"
 
 class Juego{
 

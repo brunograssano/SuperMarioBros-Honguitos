@@ -36,13 +36,7 @@ unsigned short Tuberia::obtenerPosicionX() const {
 }
 
 entidad_t Tuberia::serializar(){
-    entidad_t tuberiaSerializada = {0,0,0,0,0,false};
-    tuberiaSerializada.x = posicion.obtenerPosX();
-    tuberiaSerializada.y = posicion.obtenerPosY();
-    tuberiaSerializada.recorteX = tipo;
-    tuberiaSerializada.recorteY = color;
-    tuberiaSerializada.tipo = TUBERIA;
-    return tuberiaSerializada;
+    return Serializable::serializar(posicion.obtenerPosX(), posicion.obtenerPosY(), tipo, color, TUBERIA, false);
 }
 
 void Tuberia::elevar(int y) {

@@ -8,16 +8,21 @@
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Constantes.hpp"
 using namespace std;
+#define ID_MARIO_DIEGO 4
+#define CLAVE_TEXTURA_INGLATERRA "Inglaterra"
+#define CLAVE_TEXTURA_BRASIL "Brasil"
+#define CLAVE_TEXTURA_COPA "Copa"
+#define CLAVE_TEXTURA_PELOTA "Pelota"
 
 CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
 	Log* log = Log::getInstance();
 
 	string listaMarios[]={"resources/Imagenes/Personajes/MarioRojo.png","resources/Imagenes/Personajes/MarioVerde.png",
 						"resources/Imagenes/Personajes/MarioVioleta.png","resources/Imagenes/Personajes/MarioCeleste.png",
-						"resources/Imagenes/Personajes/MarioGrisPerdioConexion.png"};
+                          "resources/Imagenes/Personajes/MarioArgentina.png","resources/Imagenes/Personajes/MarioGrisPerdioConexion.png"};
 	int i = 0;
 	for(auto const& dirMario:listaMarios){
-		if(i==4){
+		if(i==5){
 			i=-1; // Asi el mario gris concuerda con el valor que nos mandan
 		}
 		SDL_Texture* texturaMario = intentarCarga("la imagen de mario", dirMario, renderizador);
@@ -43,6 +48,11 @@ CargadorTexturas::CargadorTexturas(SDL_Renderer* renderizador){
     texturas[CLAVE_TEXTURA_BLOQUES]  = intentarCarga("la imagen de los bloques","resources/Imagenes/Bloques/Bloques.png",renderizador);
     texturas[CLAVE_TEXTURA_GOOMBA]  = intentarCarga("la imagen de los Goomba","resources/Imagenes/Personajes/Goombas.png",renderizador);
     texturas[CLAVE_TEXTURA_KOOPAS]  = intentarCarga("la imagen de los Koopas","resources/Imagenes/Personajes/Koopas.png",renderizador);
+
+    texturas[CLAVE_TEXTURA_INGLATERRA]  = intentarCarga("la imagen de los ingleses","resources/Imagenes/Personajes/GoombasIngleses.png",renderizador);
+    texturas[CLAVE_TEXTURA_BRASIL]  = intentarCarga("la imagen de los brasileros","resources/Imagenes/Personajes/KoopasBrasil.png",renderizador);
+    texturas[CLAVE_TEXTURA_COPA]  = intentarCarga("la imagen de la copa","resources/Imagenes/Objetos/Copas.png",renderizador);
+    texturas[CLAVE_TEXTURA_PELOTA]  = intentarCarga("la imagen de la pelota","resources/Imagenes/Objetos/Pelotas.png",renderizador);
 
     texturas[CLAVE_TEXTURA_PEACH_SALTANDO]  = intentarCarga("la imagen de Peach saltando","resources/Imagenes/PersonajesSaltando/PeachSaltando.png",renderizador);
     texturas[CLAVE_TEXTURA_TOAD_SALTANDO]  = intentarCarga("la imagen de Toad saltando","resources/Imagenes/PersonajesSaltando/HonguitoSaltando.png",renderizador);
@@ -170,4 +180,26 @@ CargadorTexturas::~CargadorTexturas(){
     }
 
 	TTF_CloseFont( fuenteJuego );
+}
+
+void CargadorTexturas::alternarModoDiego(int id) {
+    SDL_Texture* aux = this->texturasMario[ID_MARIO_DIEGO];
+    texturasMario[ID_MARIO_DIEGO] = this->texturasMario[id];
+    texturasMario[id] = aux;
+
+    aux = this->texturas[CLAVE_TEXTURA_BRASIL];
+    texturas[CLAVE_TEXTURA_BRASIL] = this->texturas[CLAVE_TEXTURA_KOOPAS];
+    texturas[CLAVE_TEXTURA_KOOPAS] = aux;
+
+    aux = this->texturas[CLAVE_TEXTURA_INGLATERRA];
+    texturas[CLAVE_TEXTURA_INGLATERRA] = this->texturas[CLAVE_TEXTURA_GOOMBA];
+    texturas[CLAVE_TEXTURA_GOOMBA] = aux;
+
+    aux = this->texturas[CLAVE_TEXTURA_BOLA_DE_FUEGO];
+    texturas[CLAVE_TEXTURA_BOLA_DE_FUEGO] = this->texturas[CLAVE_TEXTURA_PELOTA];
+    texturas[CLAVE_TEXTURA_PELOTA] = aux;
+
+    aux = this->texturas[CLAVE_TEXTURA_FLOR];
+    texturas[CLAVE_TEXTURA_FLOR] = this->texturas[CLAVE_TEXTURA_COPA];
+    texturas[CLAVE_TEXTURA_COPA] = aux;
 }

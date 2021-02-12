@@ -1,8 +1,6 @@
 #ifndef SRC_SERVER_LECTOR_PARSERS_PARSERUSUARIO_HPP_
 #define SRC_SERVER_LECTOR_PARSERS_PARSERUSUARIO_HPP_
 
-#include "../ArchivoLeido.hpp"
-#include "../pugixml.hpp"
 #include "Parser.hpp"
 
 class ParserUsuario : public Parser{

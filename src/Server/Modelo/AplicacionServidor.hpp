@@ -1,12 +1,16 @@
 #ifndef SRC_SERVER_APLICACIONSERVIDOR_APLICACIONSERVIDOR_HPP_
 #define SRC_SERVER_APLICACIONSERVIDOR_APLICACIONSERVIDOR_HPP_
 
-#include <queue>
+
+#include <list>
+#include <map>
+
 #include "Juego/Juego.hpp"
 #include "Juego/Nivel/Nivel.hpp"
 class Servidor;
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Thread.hpp"
+#include "src/Utils/ColaBloqueante.hpp"
 
 class AplicacionServidor : public Thread{
 	public:
@@ -34,7 +38,7 @@ class AplicacionServidor : public Thread{
 		Juego* juego;
         bool terminoElJuego;
 		bool comenzoElJuego;
-        std::queue<entrada_usuario_id_t> colaDeEntradasUsuario;
+        BlockingQueue<entrada_usuario_id_t> colaDeEntradasUsuario;
 };
 
 

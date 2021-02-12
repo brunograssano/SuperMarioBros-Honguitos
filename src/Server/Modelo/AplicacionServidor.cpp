@@ -76,9 +76,7 @@ void AplicacionServidor::ejecutar(){
 			while(!colaDeEntradasUsuario.empty()){
 				entrada_usuario_id_t parIDEntrada = colaDeEntradasUsuario.front();
 				juego->actualizarJugador(parIDEntrada.id, parIDEntrada.entradas);
-                pthread_mutex_lock(&mutex);
 				colaDeEntradasUsuario.pop();
-                pthread_mutex_unlock(&mutex);
 			}
 			juego->actualizarModelo();
 
@@ -98,9 +96,7 @@ void AplicacionServidor::ejecutar(){
 }
 
 void AplicacionServidor::encolarEntradaUsuario(entrada_usuario_id_t entradaUsuario){
-    pthread_mutex_lock(&mutex);
     this->colaDeEntradasUsuario.push(entradaUsuario);
-    pthread_mutex_unlock(&mutex);
 }
 
 void AplicacionServidor::activarJugador(int idMarioConectandose){

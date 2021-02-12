@@ -2,7 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORCONEXIONCLIENTE_HPP
 
 #include <map>
-#include <queue>
+#include "src/Utils/ColaBloqueante.hpp"
 #include "src/Utils/Enviador.hpp"
 #include "src/Server/Servidor/ConexionCliente.hpp"
 
@@ -16,7 +16,7 @@ class EnviadorConexionCliente : public Thread{
 
     private:
         ConexionCliente* cliente;
-        std::queue<char> identificadoresMensajeAEnviar;
+        BlockingQueue<char> identificadoresMensajeAEnviar;
         std::map<char,Enviador*> enviadores;
 
 };

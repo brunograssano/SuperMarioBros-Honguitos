@@ -50,9 +50,7 @@ bool JuegoCliente::perdieronElJuego() const{
 }
 
 void JuegoCliente::agregarRonda(info_ronda_t ronda){
-	pthread_mutex_lock(&mutexJuegoCliente);
 	rondas.push(ronda);
-	pthread_mutex_unlock(&mutexJuegoCliente);
 }
 
 SDL_Rect JuegoCliente::obtenerCamara()const{
@@ -85,14 +83,10 @@ void JuegoCliente::actualizar(){
 
 	if(rondas.size() >= CANTIDAD_MAXIMA_DE_RONDAS_GUARDADAS){
 		ronda = rondas.back();
-		pthread_mutex_lock(&mutexJuegoCliente);
 		while(!rondas.empty()) rondas.pop();
-		pthread_mutex_unlock(&mutexJuegoCliente);
 	}else{
-		pthread_mutex_lock(&mutexJuegoCliente);
 		ronda = rondas.front();
 		rondas.pop();
-		pthread_mutex_unlock(&mutexJuegoCliente);
 	}
 	tiempoFaltante = ronda.tiempoFaltante;
     rectanguloCamara.x = ronda.posXCamara;

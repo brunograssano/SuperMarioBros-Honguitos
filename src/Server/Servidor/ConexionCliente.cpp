@@ -77,6 +77,7 @@ void ConexionCliente::terminarElJuego(){
 	terminoJuego = true;
     pthread_mutex_unlock(&mutex);
     despertarHilo();
+    enviador->despertarHilo();
 }
 
 void ConexionCliente::agregarIDJuego(int IDJugador){

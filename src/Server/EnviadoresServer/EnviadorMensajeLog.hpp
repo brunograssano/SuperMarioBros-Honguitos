@@ -1,10 +1,8 @@
 #ifndef SRC_SERVER_ENVIADORESSERVER_ENVIADORMENSAJELOG_HPP_
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORMENSAJELOG_HPP_
 
-#include <queue>
-
 #include "../../Utils/Enviador.hpp"
-
+#include "../../Utils/ColaBloqueante.hpp"
 
 class EnviadorMensajeLog:public Enviador{
 
@@ -14,7 +12,7 @@ class EnviadorMensajeLog:public Enviador{
 		void dejarInformacion(void* informacion)override;
 
 	private:
-        std::queue<mensaje_log_t> mensajesLog;
+        BlockingQueue<mensaje_log_t> mensajesLog;
 };
 
 

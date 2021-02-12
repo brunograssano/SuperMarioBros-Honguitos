@@ -25,11 +25,12 @@ void EnviadorConexionCliente::ejecutar() {
     char tipoMensaje;
     bool hayError = false;
     while(!cliente->terminoElJuego() && !hayError){
+        while(identificadoresMensajeAEnviar.empty() && !cliente->terminoElJuego() && !hayError){
+            dormirHilo();
+        }
         if(!identificadoresMensajeAEnviar.empty()){
-            pthread_mutex_lock(&mutex);
             tipoMensaje = identificadoresMensajeAEnviar.front();
             identificadoresMensajeAEnviar.pop();
-            pthread_mutex_unlock(&mutex);
             try{
                 enviadores[tipoMensaje]->enviar();
             }catch(const std::exception& e){
@@ -42,10 +43,12 @@ void EnviadorConexionCliente::ejecutar() {
 
 
 void EnviadorConexionCliente::agregarMensajeAEnviar(char caracter,void* mensaje) {
+    bool estabaVacia = identificadoresMensajeAEnviar.empty();
     enviadores[caracter]->dejarInformacion(mensaje);
-    pthread_mutex_lock(&mutex);
     identificadoresMensajeAEnviar.push(caracter);
-    pthread_mutex_unlock(&mutex);
+    if(estabaVacia || cliente->terminoElJuego()){
+        despertarHilo();
+    }
 }
 
 EnviadorConexionCliente::~EnviadorConexionCliente() {

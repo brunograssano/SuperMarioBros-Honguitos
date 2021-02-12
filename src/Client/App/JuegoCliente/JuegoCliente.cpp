@@ -201,6 +201,14 @@ podio_t JuegoCliente::obtenerPodioPuntosAcumulados() {
     return this->podioPuntosTotales;
 }
 
+void JuegoCliente::dejarDeMostrarPuntosNivel() {
+    this->hayQueMostrarPuntosDeNivel = false;
+}
+
+bool JuegoCliente::hayQueMostrarPuntosNivel() {
+    return this->hayQueMostrarPuntosDeNivel;
+}
+
 std::list<entidad_t> JuegoCliente::obtenerEntidad(int claveEntidad) {
     if(claveEntidad == TUBERIA || claveEntidad == POZO || claveEntidad == FONDO_POZO){
         std::list<entidad_t> entidadesAMostrar;

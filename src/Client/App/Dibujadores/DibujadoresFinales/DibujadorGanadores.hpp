@@ -13,7 +13,6 @@
 #include "src/Client/App/JuegoCliente/JuegoCliente.hpp"
 #include "src/Client/App/Dibujadores/Recortes/Recorte.hpp"
 
-#include "src/Client/App/Botones/BotonConTexto.hpp"
 #include "DibujadorPuntos.hpp"
 #include "DibujadorCreditos.hpp"
 
@@ -30,9 +29,6 @@ class DibujadorGanadores : public Dibujador{
 		void dibujarPersonajes();
 		void dibujarTitulo(const std::string& nombreGanador);
 
-		BotonConTexto* botonIzquierdo;
-		BotonConTexto* botonDerecho;
-		SDL_Event eventoMouse{};
         JuegoCliente* juegoCliente;
 
         Recorte* spritePeach;

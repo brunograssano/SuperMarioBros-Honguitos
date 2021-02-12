@@ -11,7 +11,6 @@
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
 #include "src/Client/App/Dibujadores/Recortes/RecorteCoffinMario.hpp"
 
-#include "src/Client/App/Botones/BotonConTexto.hpp"
 #include "DibujadorPuntos.hpp"
 #include "DibujadorCreditos.hpp"
 
@@ -25,9 +24,6 @@ class DibujadorGameOver : public Dibujador{
 
 	private:
         RecorteCoffinMario spriteCoffinMario;
-        BotonConTexto* botonIzquierdo;
-        BotonConTexto* botonDerecho;
-        SDL_Event eventoMouse{};
         DibujadorPuntos* dibujadorPuntos;
         DibujadorCreditos* dibujadorCreditos;
         JuegoCliente* juegoCliente;

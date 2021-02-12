@@ -10,7 +10,7 @@ DibujadorCreditos::DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Ren
     this->ciclosDibujado = 0;
 }
 
-void DibujadorCreditos::dibujarCreditos(){
+void DibujadorCreditos::dibujar(){
     dibujarRectanguloCreditos();
     dibujarTexto();
     this->ciclosDibujado++;

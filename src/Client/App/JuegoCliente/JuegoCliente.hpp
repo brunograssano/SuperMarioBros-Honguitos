@@ -27,9 +27,10 @@ class JuegoCliente{
 		SDL_Rect obtenerCamara() const;
 		bool ganaronElJuego() const;
 		bool perdieronElJuego() const;
+		void dejarDeMostrarPuntosNivel();
+		bool hayQueMostrarPuntosNivel();
         podio_t obtenerPodioPuntosAcumulados();
         std::vector<podio_t> obtenerPodios();
-        bool hayQueMostrarPuntosDeNivel; //TODO: esto no tiene que quedar asi, es para avisar cambio de nivel al dibujador    void agregarNivel(nivel_t nivel);
         void agregarNivel(nivel_t nivel);
         void agregarPodios(ultimos_podios_t ultimos_podios);
 
@@ -54,6 +55,7 @@ private:
 		bool ganaron;
 		bool perdieron;
         bool hayQueCargarPodioNivel;
+        bool hayQueMostrarPuntosDeNivel;
 		int nivelesJugados;
 };
 

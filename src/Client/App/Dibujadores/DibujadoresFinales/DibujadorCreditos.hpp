@@ -6,10 +6,11 @@
 #include "src/Client/App/JuegoCliente/JuegoCliente.hpp"
 #include "src/Client/App/Dibujadores/Dibujador.hpp"
 
-class DibujadorCreditos{
+class DibujadorCreditos : public Dibujador{
     public:
         DibujadorCreditos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla);
-        void dibujarCreditos();
+        void dibujar() override;
+        ~DibujadorCreditos()= default;;
     private:
         int alto_pantalla;
         int ancho_pantalla;

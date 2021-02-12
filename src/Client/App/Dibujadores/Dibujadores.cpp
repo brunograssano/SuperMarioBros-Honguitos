@@ -57,7 +57,7 @@ void Dibujadores::determinarEstado() {
         estadoActual = DIBUJADOR_GANARON;
     }else if(juegoCliente->perdieronElJuego()) {
         estadoActual = DIBUJADOR_GAMEOVER;
-    }else if(juegoCliente->hayQueMostrarPuntosDeNivel) {
+    }else if(juegoCliente->hayQueMostrarPuntosNivel()) {
         estadoActual = DIBUJADOR_PUNTOS_NIVEL;
     }else if(estadoActual!=DIBUJADOR_ERROR_SERVER && estadoActual!=DIBUJADOR_INICIO){
         estadoActual = DIBUJADOR_JUEGO;

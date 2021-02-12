@@ -20,10 +20,9 @@ void Camara::moverCamara(const std::map<int,Mario*>& jugadores) {
     int posicionDelJugadorMasALaIzquierda = ANCHO_FONDO;
 
     bool sePuedeMoverLaCamara = true;
-    Mario* jugador;
 
     for(auto const& parClaveJugador: jugadores){
-        jugador = parClaveJugador.second;
+        auto jugador = parClaveJugador.second;
 
         if(jugador->estaConectado() && jugador->obtenerPosicionX() <= rectanguloCamara.x1 && jugador->estaVivo()) {
             sePuedeMoverLaCamara = false;
@@ -54,14 +53,17 @@ void Camara::moverCamara(const std::map<int,Mario*>& jugadores) {
         rectanguloCamara.x2 = rectanguloCamara.x1 + rectanguloCamara.w;
 
         for(auto const& parClaveJugador: jugadores){
-            jugador = parClaveJugador.second;
+            auto jugador = parClaveJugador.second;
             if((!jugador->estaConectado()) && (jugador->obtenerPosicionX()<=rectanguloCamara.x1)){
                 jugador->serArrastrado(rectanguloCamara.x1-jugador->obtenerPosicionX());
             }
-
-            jugador->actualizarMaximoX(rectanguloCamara.x1);
-            jugador->actualizarMinimoX(rectanguloCamara.x1 + rectanguloCamara.w - ANCHO_SPRITE_PIXEL_MARIO*2);
         }
+    }
+
+    for(auto const& parClaveJugador : jugadores){
+        auto jugador = parClaveJugador.second;
+        jugador->actualizarMaximoX(rectanguloCamara.x1);
+        jugador->actualizarMinimoX(rectanguloCamara.x1 + rectanguloCamara.w - ANCHO_SPRITE_PIXEL_MARIO*2);
     }
 
     if( rectanguloCamara.x1 < 0 ){

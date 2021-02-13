@@ -2,13 +2,10 @@
 #define SRC_CLIENT_REPRODUCTORDEMUSICA_REPRODUCTORMUSICA_HPP_
 
 #include <string>
-#include "src/Utils/log/Log.hpp"
 #include "EstadoMusica.hpp"
 #include "EstadoSonidos.hpp"
 #include <map>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL_mixer.h>
 
 class ReproductorMusica{
 	public:

@@ -2,6 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ENVIADORNIVEL_HPP
 
 #include "../../Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorNivel : public Enviador{
 

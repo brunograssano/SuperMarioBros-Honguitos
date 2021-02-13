@@ -1,6 +1,11 @@
 #include <cstdlib>
+#include <iostream>
+#include <list>
+#include "src/Utils/Thread.hpp"
 #include "src/Utils/log/Log.hpp"
+#include "src/Utils/Socket.hpp"
 #include "UtilidadesServer.hpp"
+
 
 const int TAMANIO_COLA = 4;
 

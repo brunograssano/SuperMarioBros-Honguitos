@@ -3,6 +3,7 @@
 #include "src/Utils/Constantes.hpp"
 #include <string>
 #include <utility>
+#include "src/Utils/log/Log.hpp"
 
 ReproductorMusica* ReproductorMusica::reproductor = nullptr;
 

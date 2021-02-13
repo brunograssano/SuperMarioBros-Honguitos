@@ -2,7 +2,7 @@
 #define SRC_SERVER_SPRITES_SPRITESPERSONAJESSALTANDO_SPRITETOADSALTANDO_HPP_
 
 #include "../Recorte.hpp"
-
+#include <SDL2/SDL.h>
 class RecorteToadSaltando: public Recorte{
 
 	public:

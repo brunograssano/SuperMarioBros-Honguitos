@@ -2,6 +2,7 @@
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORINFOPARTIDA_HPP_
 
 #include "../../Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorInfoPartida:public Enviador{
 	public:

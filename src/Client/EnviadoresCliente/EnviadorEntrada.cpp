@@ -1,4 +1,4 @@
-
+#include "src/Utils/Utils.hpp"
 #include "EnviadorEntrada.hpp"
 
 EnviadorEntrada::EnviadorEntrada(Socket* socket){

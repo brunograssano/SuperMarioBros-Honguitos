@@ -3,6 +3,9 @@
 
 #include <cstdlib>
 #include <utility>
+#include <map>
+#include <list>
+#include <string>
 
 #include "Bloques/Tuberia.hpp"
 #include "Bloques/Bloque.hpp"

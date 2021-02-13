@@ -5,6 +5,7 @@
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 #include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
+#include "src/Utils/Utils.hpp"
 
 class ObjetoSorpresa : public ObjetoFugaz{
     public:

@@ -1,11 +1,10 @@
-
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_ESCUCHADORPODIO_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ESCUCHADORPODIO_HPP
 
-
-
 #include "../Cliente.hpp"
 #include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Socket.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EscuchadorPodio : public Escuchador{
 

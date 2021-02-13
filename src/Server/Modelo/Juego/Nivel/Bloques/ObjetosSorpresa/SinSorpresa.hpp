@@ -3,6 +3,7 @@
 
 #include "ObjetoSorpresa.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "src/Utils/Utils.hpp"
 
 class SinSorpresa : public ObjetoSorpresa{
     public:

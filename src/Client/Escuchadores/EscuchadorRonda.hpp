@@ -1,10 +1,11 @@
 #ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORRONDA_HPP_
 #define SRC_CLIENT_ESCUCHADORES_ESCUCHADORRONDA_HPP_
 
-
 class Cliente;
 #include "../Cliente.hpp"
 #include "../../Utils/Escuchador.hpp"
+#include "src/Utils/Socket.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EscuchadorRonda: public Escuchador{
 

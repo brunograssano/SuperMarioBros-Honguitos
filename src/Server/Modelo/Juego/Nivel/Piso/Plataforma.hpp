@@ -1,7 +1,10 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_PLATAFORMA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PLATAFORMA_HPP
 
+
+#include <string>
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Plataforma : public Colisionable{
 

@@ -2,7 +2,7 @@
 #define SRC_CLIENT_ESCUCHADORES_ESCUCHADORLOG_HPP_
 
 #include <string>
-
+#include "src/Utils/Utils.hpp"
 #include "src/Utils/log/Log.hpp"
 #include "src/Utils/Escuchador.hpp"
 

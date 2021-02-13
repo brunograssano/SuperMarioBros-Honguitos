@@ -1,5 +1,5 @@
 #include "EscuchadorLog.hpp"
-
+#include "src/Utils/Utils.hpp"
 
 EscuchadorLog::EscuchadorLog(Socket* socket){
 	this->socket = socket;

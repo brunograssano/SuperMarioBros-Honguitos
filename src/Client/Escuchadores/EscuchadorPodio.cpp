@@ -1,4 +1,3 @@
-
 #include "EscuchadorPodio.hpp"
 #include "src/Utils/log/Log.hpp"
 

@@ -2,7 +2,7 @@
 #define SRC_SERVER_SPRITES_SPRITESPERSONAJESSALTANDO_SPRITEYOSHISALTANDO_HPP_
 
 #include "../Recorte.hpp"
-
+#include <SDL2/SDL.h>
 class RecorteYoshiSaltando: public Recorte{
 
 	public:

@@ -1,6 +1,9 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_CAMARA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_CAMARA_HPP
 
+
+#include "src/Utils/Utils.hpp"
+#include <map>
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 
 class Camara {

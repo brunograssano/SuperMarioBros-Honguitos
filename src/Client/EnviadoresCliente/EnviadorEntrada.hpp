@@ -2,7 +2,6 @@
 #define SRC_CLIENT_ENVIADORESCLIENTE_ENVIADORENTRADA_HPP_
 
 #include <queue>
-
 #include "src/Utils/Enviador.hpp"
 
 class EnviadorEntrada:public Enviador{

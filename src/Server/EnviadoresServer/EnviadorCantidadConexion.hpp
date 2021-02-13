@@ -2,6 +2,7 @@
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORCANTIDADCONEXION_HPP_
 
 #include "../../Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorCantidadConexion :public Enviador {
 

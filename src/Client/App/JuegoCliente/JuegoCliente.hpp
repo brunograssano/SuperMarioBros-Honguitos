@@ -2,6 +2,7 @@
 #define SRC_CLIENT_APP_JUEGOCLIENTE_JUEGOCLIENTE_HPP_
 
 #include <map>
+#include <vector>
 #include <string>
 #include <list>
 #include <SDL2/SDL.h>

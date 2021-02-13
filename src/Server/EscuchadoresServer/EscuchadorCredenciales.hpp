@@ -1,8 +1,10 @@
 #ifndef SRC_SERVER_ESCUCHADORESSERVER_ESCUCHADORCREDENCIALES_HPP_
 #define SRC_SERVER_ESCUCHADORESSERVER_ESCUCHADORCREDENCIALES_HPP_
 
-#include "../../Utils/Escuchador.hpp"
+#include "src/Utils/Socket.hpp"
 #include "src/Server/Servidor/ConexionCliente.hpp"
+#include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EscuchadorCredenciales: public Escuchador{
 

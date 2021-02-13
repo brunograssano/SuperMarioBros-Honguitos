@@ -1,10 +1,11 @@
 #ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORACTUALIZACIONJUGADORES_HPP_
 #define SRC_CLIENT_ESCUCHADORES_ESCUCHADORACTUALIZACIONJUGADORES_HPP_
 
-class Cliente;
-#include "../Cliente.hpp"
-
+#include "src/Utils/Socket.hpp"
 #include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Utils.hpp"
+class Cliente;
+#include "src/Client/Cliente.hpp"
 
 class EscuchadorActualizacionJugadores: public Escuchador{
 

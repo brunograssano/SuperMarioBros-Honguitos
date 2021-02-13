@@ -3,6 +3,7 @@
 
 #include "../../Utils/Enviador.hpp"
 #include "../../Utils/ColaBloqueante.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorMensajeLog:public Enviador{
 

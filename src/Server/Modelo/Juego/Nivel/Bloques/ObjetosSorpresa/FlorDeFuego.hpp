@@ -1,7 +1,13 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_FLORDEFUEGO_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_FLORDEFUEGO_HPP
 
+
+#include "src/Server/Modelo/Juego/Colisionable.hpp"
+#include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
+#include "src/Server/Modelo/Juego/Mario/Mario.hpp"
+#include "src/Utils/Utils.hpp"
 #include "ObjetoSorpresa.hpp"
+
 
 class FlorDeFuego : public ObjetoSorpresa{
 

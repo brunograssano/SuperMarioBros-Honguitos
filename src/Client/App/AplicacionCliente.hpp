@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
-
 #include "Dibujadores/Dibujadores.hpp"
 #include "JuegoCliente/JuegoCliente.hpp"
 #include "CargadorTexturas.hpp"

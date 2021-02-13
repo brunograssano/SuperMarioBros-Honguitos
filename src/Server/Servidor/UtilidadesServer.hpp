@@ -2,9 +2,10 @@
 #define SRC_SERVER_UTILIDADESSERVER_HPP_
 
 #include <list>
+#include "src/Utils/Thread.hpp"
 #include "src/Utils/Socket.hpp"
 #include "src/Utils/Utils.hpp"
-#include "src/Utils/Thread.hpp"
+
 
 /* *
  * Crea un socket para el servidor, configurandolo con lo necesario para empezar a ejecutar.

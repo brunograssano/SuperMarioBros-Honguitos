@@ -7,7 +7,6 @@
 #include <string>
 #include <sstream>
 #include <map>
-
 #include "../JuegoCliente/JuegoCliente.hpp"
 #include "../CargadorTexturas.hpp"
 #include "Dibujador.hpp"

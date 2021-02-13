@@ -3,6 +3,7 @@
 
 #include "../../Utils/ColaBloqueante.hpp"
 #include "../../Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorRonda:public Enviador{
 	public:

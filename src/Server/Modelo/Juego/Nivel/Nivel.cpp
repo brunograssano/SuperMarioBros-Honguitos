@@ -1,3 +1,4 @@
+#include "src/Utils/log/Log.hpp"
 #include "Nivel.hpp"
 #include "src/Utils/colisiones/Colisionador.hpp"
 #include "Filtro.hpp"

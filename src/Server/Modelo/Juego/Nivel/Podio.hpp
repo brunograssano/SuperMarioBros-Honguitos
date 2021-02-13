@@ -2,6 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PODIO_HPP
 
 #include <vector>
+#include <map>
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 #include "src/Utils/Observador.hpp"
 

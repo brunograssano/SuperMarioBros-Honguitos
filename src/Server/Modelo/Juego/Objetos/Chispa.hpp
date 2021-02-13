@@ -1,9 +1,11 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_CHISPA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_CHISPA_HPP
 
-#include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
+
 #include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteChispa.hpp"
+#include "src/Utils/Utils.hpp"
+#include "ObjetoFugaz.hpp"
 
 class Chispa : public ObjetoFugaz{
     const int CICLOS_PARA_DESAPARECER = 20;

@@ -2,6 +2,7 @@
 #include "src/Utils/log/Log.hpp"
 #include "EscuchadorSonido.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "src/Utils/Utils.hpp"
 
 EscuchadorSonido::EscuchadorSonido(Socket* socketCliente) {
     this->socket = socketCliente;

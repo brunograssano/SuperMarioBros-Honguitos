@@ -2,6 +2,7 @@
 #define SRC_SERVER_MODELO_ENEMIGOS_KOOPA_HPP_
 
 #include "Enemigo.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Koopa : public Enemigo{
 	public:

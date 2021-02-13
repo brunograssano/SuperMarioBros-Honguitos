@@ -3,6 +3,7 @@
 
 #include "src/Utils/ColaBloqueante.hpp"
 #include "src/Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorSonido : public Enviador{
     public:

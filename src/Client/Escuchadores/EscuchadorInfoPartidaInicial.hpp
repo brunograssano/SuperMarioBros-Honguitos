@@ -1,10 +1,12 @@
 #ifndef SRC_CLIENT_ESCUCHADORES_ESCUCHADORINFOPARTIDAINICIAL_HPP_
 #define SRC_CLIENT_ESCUCHADORES_ESCUCHADORINFOPARTIDAINICIAL_HPP_
 
+#include <string>
+#include "src/Utils/Socket.hpp"
+#include "src/Utils/Escuchador.hpp"
 class Cliente;
 #include "../Cliente.hpp"
-
-#include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EscuchadorInfoPartidaInicial : public Escuchador{
 

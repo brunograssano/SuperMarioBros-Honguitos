@@ -1,4 +1,5 @@
 
+#include "src/Client/App/ManejadorSDL.hpp"
 #include "DibujadorPuntos.hpp"
 
 DibujadorPuntos::DibujadorPuntos(CargadorTexturas* cargadorTexturas, SDL_Renderer* renderizador, int ancho_pantalla, int alto_pantalla, JuegoCliente* juegoCliente) {

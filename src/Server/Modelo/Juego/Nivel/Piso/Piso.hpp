@@ -1,9 +1,11 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_PISO_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PISO_HPP
 
+#include <list>
 #include "Pozo.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Piso {
 

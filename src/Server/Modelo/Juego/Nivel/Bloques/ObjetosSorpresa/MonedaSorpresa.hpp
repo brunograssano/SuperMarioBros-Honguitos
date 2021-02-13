@@ -3,6 +3,10 @@
 
 
 #include "ObjetoSorpresa.hpp"
+#include "src/Server/Modelo/Juego/Colisionable.hpp"
+#include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
+#include "src/Server/Modelo/Juego/Mario/Mario.hpp"
+#include "src/Utils/Utils.hpp"
 #include "src/Server/Modelo/Juego/Sprites/SpriteMonedaFlotante.hpp"
 
 class MonedaSorpresa : public ObjetoSorpresa{

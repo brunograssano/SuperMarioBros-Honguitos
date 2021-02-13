@@ -1,13 +1,21 @@
 #ifndef SRC_SERVER_MODELO_MARIO_HPP_
 #define SRC_SERVER_MODELO_MARIO_HPP_
 
-#include "MovimientoMario.hpp"
-#include "ManejadorDeSonidoMario.hpp"
-#include "Modificadores/MarioDeFuego.hpp"
-class SpriteMario;
-#include "src/Utils/Observable.hpp"
+
+#include <string>
 #include "src/Utils/Utils.hpp"
-#include "src/Utils/log/Log.hpp"
+#include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
+#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
+#include "src/Server/Modelo/Juego/Posiciones/PosicionMovil.hpp"
+#include "src/Server/Modelo/Juego/Mario/Modificadores/ModificadorMario.hpp"
+#include "src/Utils/Observable.hpp"
+#include "src/Server//Modelo/Juego/Colisionable.hpp"
+#include "MovimientoMario.hpp"
+#include "VidaMario.hpp"
+#include "ManejadorDeSonidoMario.hpp"
+
+class SpriteMario;
+
 
 class Mario: public Colisionable, public Observable{
 

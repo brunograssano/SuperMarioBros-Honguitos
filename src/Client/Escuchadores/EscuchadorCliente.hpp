@@ -1,9 +1,11 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_ESCUCHADORCLIENTE_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ESCUCHADORCLIENTE_HPP
 
-#include "../Cliente.hpp"
-#include "src/Utils/Escuchador.hpp"
+#include <map>
 #include "src/Utils/Thread.hpp"
+#include "src/Utils/Socket.hpp"
+#include "src/Utils/Escuchador.hpp"
+#include "src/Client/Cliente.hpp"
 
 class EscuchadorCliente : public Thread{
     public:

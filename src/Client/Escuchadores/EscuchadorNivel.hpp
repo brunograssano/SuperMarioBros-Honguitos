@@ -3,6 +3,8 @@
 
 #include "../Cliente.hpp"
 #include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Socket.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EscuchadorNivel : public Escuchador{
 

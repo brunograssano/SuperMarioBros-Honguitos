@@ -1,5 +1,7 @@
+#include <stdexcept>
+#include "src/Utils/log/Log.hpp"
 #include "Enviador.hpp"
-#include "../Utils/log/Log.hpp"
+
 
 void Enviador::revisarSiSeMandoCorrectamente(int resultado, const std::string& descripcion) {
     if(resultado < 0){

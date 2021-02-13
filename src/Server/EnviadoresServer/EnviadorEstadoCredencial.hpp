@@ -2,6 +2,7 @@
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORESTADOCREDENCIAL_HPP_
 
 #include "../../Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorEstadoCredencial:public Enviador{
 	public:

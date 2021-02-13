@@ -1,10 +1,13 @@
 #ifndef SERVER_ESCUCHADORENTRADATECLADO_HPP_
 #define SERVER_ESCUCHADORENTRADATECLADO_HPP_
 
-#include "src/Server/Servidor/Servidor.hpp"
-#include "../../Utils/Escuchador.hpp"
 
-class EscuchadorEntradaTeclado:public Escuchador{
+#include "src/Utils/Socket.hpp"
+#include "src/Server/Servidor/Servidor.hpp"
+#include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Utils.hpp"
+
+class EscuchadorEntradaTeclado: public Escuchador{
 
 	public:
 		EscuchadorEntradaTeclado(Socket* socket, int idJugador, Servidor* servidor);

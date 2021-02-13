@@ -1,3 +1,4 @@
+#include "src/Utils/log/Log.hpp"
 #include "AplicacionCliente.hpp"
 #include "ManejadorSDL.hpp"
 #include "src/Client/ReproductorDeMusica/ReproductorMusica.hpp"

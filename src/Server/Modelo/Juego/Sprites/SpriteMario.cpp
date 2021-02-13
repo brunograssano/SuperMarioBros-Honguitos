@@ -1,3 +1,4 @@
+#include "src/Server/Modelo/Juego/Posiciones/PosicionFija.hpp"
 #include "SpriteMario.hpp"
 #include "src/Utils/Constantes.hpp"
 

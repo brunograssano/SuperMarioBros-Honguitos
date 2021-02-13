@@ -1,4 +1,5 @@
 
+#include "src/Client/App/ManejadorSDL.hpp"
 #include "Dibujador.hpp"
 
 void Dibujador::renderizarTexto(SDL_Rect renderQuad, std::string textoAMostrar, SDL_Color color) {

@@ -2,6 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_POZO_HPP
 
 #include "src/Server/Modelo/Juego/Serializable.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Pozo: public Serializable {
 

@@ -4,6 +4,7 @@
 #include "src/Server/Modelo/Juego/Serializable.hpp"
 #include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
 #include "PiezaDeTuberia.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Tuberia: public Serializable{
 

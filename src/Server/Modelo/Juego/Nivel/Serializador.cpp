@@ -1,3 +1,4 @@
+#include "src/Utils/log/Log.hpp"
 #include "Serializador.hpp"
 
 void Serializador::serializar(std::list<Bloque *> plataformas, info_ronda_t *ptrInfoRonda,bool (* deboAgregarlo)(void*, rectangulo_t), void* contexto) {

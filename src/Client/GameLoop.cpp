@@ -1,8 +1,7 @@
 #include "GameLoop.hpp"
-#include "ReproductorDeMusica/ReproductorMusica.hpp"
 #include "src/Utils/Contador.hpp"
 #include "App/AplicacionCliente.hpp"
-#include <SDL2/SDL.h>
+
 
 
 GameLoop::GameLoop(){

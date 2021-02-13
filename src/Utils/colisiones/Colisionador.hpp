@@ -3,8 +3,11 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_COLISIONADOR_HPP
 
 #include <list>
-class Colisionable;
+#include <string>
 #include "src/Utils/Utils.hpp"
+
+class Colisionable;
+
 
 #define SIN_CHOQUE 0
 #define PRIMERO_DERECHA_SEGUNDO_IZQUIERDA 1

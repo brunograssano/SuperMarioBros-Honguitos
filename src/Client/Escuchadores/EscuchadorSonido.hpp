@@ -2,6 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_ESCUCHADORSONIDO_HPP
 
 #include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EscuchadorSonido : public Escuchador{
     public:

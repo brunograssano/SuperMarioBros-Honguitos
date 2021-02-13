@@ -2,7 +2,7 @@
 #define SRC_SPRITES_SPRITEPEACH_HPP_
 
 #include "../Recorte.hpp"
-
+#include <SDL2/SDL.h>
 class RecortePeachSaltando: public Recorte{
 
 	public:

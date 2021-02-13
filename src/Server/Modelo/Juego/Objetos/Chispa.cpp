@@ -1,5 +1,7 @@
-#include "Chispa.hpp"
+
+#include <string>
 #include "src/Utils/Constantes.hpp"
+#include "Chispa.hpp"
 
 Chispa::Chispa(const Posicion& posicionInicial, int direccion) {
     int desfaseX = direccion==DERECHA?20:-60;

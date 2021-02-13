@@ -1,8 +1,11 @@
 #ifndef TP_TALLER_DE_PROGRAMACION_FIUBA_NADA_HPP
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_NADA_HPP
 
-#include "src/Server/Modelo/Juego/Objetos/ObjetoFugaz.hpp"
+
+#include <string>
+#include "src/Utils/Utils.hpp"
 #include "src/Utils/Constantes.hpp"
+#include "ObjetoFugaz.hpp"
 
 class Nada : public ObjetoFugaz{
     public:

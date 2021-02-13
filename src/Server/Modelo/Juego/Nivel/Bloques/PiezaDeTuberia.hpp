@@ -2,6 +2,7 @@
 #define TP_TALLER_DE_PROGRAMACION_FIUBA_PIEZADETUBERIA_HPP
 
 #include "src/Server/Modelo/Juego/Colisionable.hpp"
+#include "src/Utils/Utils.hpp"
 
 class PiezaDeTuberia : public Colisionable{
     public:

@@ -2,6 +2,7 @@
 #define SRC_MODELO_ENEMIGOS_GOOMBA_HP_
 
 #include "Enemigo.hpp"
+#include "src/Utils/Utils.hpp"
 
 class Goomba : public Enemigo{
 	public:

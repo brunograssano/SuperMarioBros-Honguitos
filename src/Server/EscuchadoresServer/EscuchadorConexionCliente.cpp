@@ -1,8 +1,10 @@
+#include "src/Utils/log/Log.hpp"
 #include "EscuchadorConexionCliente.hpp"
-#include "EscuchadorEntradaTeclado.hpp"
 #include "EscuchadorCredenciales.hpp"
+#include "src/Utils/Constantes.hpp"
+#include "EscuchadorEntradaTeclado.hpp"
 
-EscuchadorConexionCliente::EscuchadorConexionCliente(Socket* socket,ConexionCliente* cliente) {
+EscuchadorConexionCliente::EscuchadorConexionCliente(Socket* socket, ConexionCliente* cliente) {
     escuchadores[CREDENCIAL] = new EscuchadorCredenciales(socket,cliente);
     this->socket = socket;
     this->cliente = cliente;

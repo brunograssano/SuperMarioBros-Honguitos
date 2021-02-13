@@ -5,7 +5,7 @@
 
 
 #include "../Recorte.hpp"
-
+#include <SDL2/SDL.h>
 class RecorteMarioSaltando: public Recorte{
 
 public:

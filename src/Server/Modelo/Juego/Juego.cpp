@@ -1,3 +1,4 @@
+#include "src/Utils/log/Log.hpp"
 #include "Juego.hpp"
 
 Juego* Juego::instanciaJuego = nullptr;

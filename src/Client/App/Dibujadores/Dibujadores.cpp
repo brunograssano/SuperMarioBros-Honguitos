@@ -1,3 +1,4 @@
+#include "src/Client/App/ManejadorSDL.hpp"
 #include "Dibujadores.hpp"
 #include "DibujadoresFinales/DibujadorGameOver.hpp"
 #include "DibujadoresJuego/DibujadorInicio.hpp"

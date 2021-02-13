@@ -2,6 +2,8 @@
 #define SRC_APP_SPRITEMARIO_H_
 
 class Mario;
+
+#include "src/Server/Modelo/Juego/Posiciones/Posicion.hpp"
 #include "Sprite.hpp"
 #include "src/Server/Modelo/Juego/Mario/Mario.hpp"
 

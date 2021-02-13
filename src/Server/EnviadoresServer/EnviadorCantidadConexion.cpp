@@ -1,5 +1,6 @@
 
 #include "EnviadorCantidadConexion.hpp"
+#include "src/Utils/Utils.hpp"
 
 EnviadorCantidadConexion::EnviadorCantidadConexion(Socket* socket){
 	this->socket = socket;

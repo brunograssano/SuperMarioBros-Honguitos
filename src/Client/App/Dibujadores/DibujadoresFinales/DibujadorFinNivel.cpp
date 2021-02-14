@@ -75,7 +75,7 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
 
     for (int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++) {
         int idJugador = podio.ids[indiceJugador];
-        jugador_t  jugador = jugadores[idJugador];
+        jugador_t jugador = jugadores[idJugador];
 
         puntosJugador.str("");
         std::string nombreJugador = jugador.nombreJugador;
@@ -102,7 +102,6 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
         }
         renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
         textosDibujados++;
-        indiceJugador++;
     }
 
     renderizarTexto(cuadradoFinNivel, textoFinNivel.str(), colorDefault);

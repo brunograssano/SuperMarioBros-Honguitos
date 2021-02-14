@@ -12,6 +12,7 @@ EstadoMusica* Suena::cambiar() {
 }
 
 void Suena::reproducir(std::string nombreCancion) {
+    cancionAReproducir = nombreCancion;
     if ((cancionQueSeReproduce == cancionAReproducir) && (!cancionQueSeReproduce.empty())){
         ReproductorMusica::getInstance()->reanudarMusica();
     }else{

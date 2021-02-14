@@ -2,18 +2,16 @@
 #define SRC_CLIENT_ENVIADORESCLIENTE_ENVIADORENTRADA_HPP_
 
 #include <queue>
-
-#include "../../Utils/Enviador.hpp"
+#include "src/Utils/Enviador.hpp"
 
 class EnviadorEntrada:public Enviador{
 	public:
-		EnviadorEntrada(int socket);
-		~EnviadorEntrada(){};
+		explicit EnviadorEntrada(Socket* socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 
 	private:
-		queue<entrada_usuario_t> entradasUsuario;
+        std::queue<entrada_usuario_t> entradasUsuario;
 };
 
 

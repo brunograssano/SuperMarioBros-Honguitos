@@ -1,20 +1,18 @@
 #ifndef SRC_SERVER_ENVIADORESSERVER_ENVIADORRONDA_HPP_
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORRONDA_HPP_
 
-#include <queue>
-
+#include "../../Utils/ColaBloqueante.hpp"
 #include "../../Utils/Enviador.hpp"
-
+#include "src/Utils/Utils.hpp"
 
 class EnviadorRonda:public Enviador{
 	public:
-		EnviadorRonda(int socket);
-		~EnviadorRonda(){};
+		explicit EnviadorRonda(Socket* socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 
 	private:
-		queue<info_ronda_t> colaRondas;
+        BlockingQueue<info_ronda_t> colaRondas;
 
 };
 

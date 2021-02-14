@@ -1,6 +1,7 @@
 #include "EscuchadorVerificacionCredenciales.hpp"
+#include "src/Utils/log/Log.hpp"
 
-EscuchadorVerificacionCredenciales::EscuchadorVerificacionCredenciales(int socket, Cliente* cliente){
+EscuchadorVerificacionCredenciales::EscuchadorVerificacionCredenciales(Socket* socket, Cliente* cliente){
 	this->socket = socket;
 	this->cliente = cliente;
 	structPointer = &this->verificacion;
@@ -8,19 +9,15 @@ EscuchadorVerificacionCredenciales::EscuchadorVerificacionCredenciales(int socke
 }
 
 void EscuchadorVerificacionCredenciales::casoError(int resultado){
-	Log::getInstance()->huboUnErrorSDL("Hubo un error al escuchar informacion de la verificacion de las credenciales, se cierra el socket", to_string(errno));
-	throw runtime_error("ErrorAlVerificarCredenciales");
+	Log::getInstance()->huboUnErrorSDL("Hubo un error al escuchar informacion de la verificacion de las credenciales, se cierra el socket", std::to_string(errno));
+	throw std::runtime_error("ErrorAlVerificarCredenciales");
 }
 
 void EscuchadorVerificacionCredenciales::casoSocketCerrado(){
 	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion inicial de la partida, se cierra el socket");
-	throw runtime_error("ErrorAlVerificarCredenciales");
+	throw std::runtime_error("ErrorAlVerificarCredenciales");
 }
 
 void EscuchadorVerificacionCredenciales::casoExitoso(){
 	this->cliente->recibirVerificacionCredenciales(verificacion);
-}
-
-EscuchadorVerificacionCredenciales::~EscuchadorVerificacionCredenciales(){
-
 }

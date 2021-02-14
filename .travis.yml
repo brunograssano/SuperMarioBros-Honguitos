@@ -1,0 +1,37 @@
+dist: trusty
+sudo: require
+
+language: cpp
+
+before_install:
+  - sudo apt-get update
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+    - gcc-6
+    - g++-6
+    - libsdl2-dev
+    - libsdl2-image-dev
+    - libsdl2-ttf-dev
+    - libsdl2-mixer-dev
+    - cmake-data
+    - cmake
+    
+script:
+  # Link gcc-6 and g++-6 to their standard commands
+  - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+  - sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
+  # Export CC and CXX to tell cmake which compiler to use
+  - export CC=/usr/bin/gcc-6
+  - export CXX=/usr/bin/g++-6
+  
+  - gcc -v && g++ -v && cmake --version
+  
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+ 

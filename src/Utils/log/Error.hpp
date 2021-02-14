@@ -6,18 +6,18 @@
 class Error : public TipoLog{
 
 	public:
-		Error(){};
-		~Error(){};
+		Error()= default;
+		~Error() override= default;
 
 		// No hace los niveles de Debug y Info.
 
 		//DEBUG//
-		void mostrarPosicion(string registroPosicion,ofstream& archivo)override{};
-		void mostrarAccion(string registroAccion,ofstream& archivo)override{};
+		void mostrarPosicion(const std::string& registroPosicion,std::ofstream& archivo)override{};
+		void mostrarAccion(const std::string& registroAccion,std::ofstream& archivo)override{};
 
 		//INFO//
-		void mostrarMensajeDeInfo(string registroInfo,ofstream& archivo)override{};
-		void mostrarMensajeDeCarga(string registroInfo,ofstream& archivo)override{};
+		void mostrarMensajeDeInfo(const std::string& registroInfo,std::ofstream& archivo)override{};
+		void mostrarMensajeDeCarga(const std::string& registroInfo,std::ofstream& archivo)override{};
 
 };
 #endif /* SRC_UTILS_LOG_ERROR_HPP_ */

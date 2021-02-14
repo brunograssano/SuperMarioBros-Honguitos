@@ -1,26 +1,22 @@
 #ifndef SERVER_ESCUCHADORENTRADATECLADO_HPP_
 #define SERVER_ESCUCHADORENTRADATECLADO_HPP_
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
-#include "../Servidor.hpp"
-#include "../../Utils/Utils.hpp"
-#include "../../Utils/Escuchador.hpp"
+#include "src/Utils/Socket.hpp"
+#include "src/Server/Servidor/Servidor.hpp"
+#include "src/Utils/Escuchador.hpp"
+#include "src/Utils/Utils.hpp"
 
-class EscuchadorEntradaTeclado:public Escuchador{
+class EscuchadorEntradaTeclado: public Escuchador{
 
 	public:
-		EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor);
-		void escuchar();
+		EscuchadorEntradaTeclado(Socket* socket, int idJugador, Servidor* servidor);
 		void casoError(int resultado)override;
 		void casoSocketCerrado()override;
 		void casoExitoso()override;
 
 	private:
-		entrada_usuario_t entradaUsuario;
+		entrada_usuario_t entradaUsuario{};
 		int idJugador;
 		Servidor* servidor;
 

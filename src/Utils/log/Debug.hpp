@@ -1,4 +1,3 @@
-
 #ifndef SRC_LOG_DEBUG_PPH_
 #define SRC_LOG_DEBUG_PPH_
 
@@ -6,8 +5,8 @@
 
 class Debug : public TipoLog{
 	public:
-		Debug(){};
-		~Debug(){};
+		Debug()= default;
+		~Debug() override= default;
 
 	//Hace todas las opciones, no sobreescribe ninguna
 };

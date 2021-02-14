@@ -1,6 +1,6 @@
 #include "EscuchadorEntradaTeclado.hpp"
 
-EscuchadorEntradaTeclado::EscuchadorEntradaTeclado(int socket, int idJugador, Servidor* servidor){
+EscuchadorEntradaTeclado::EscuchadorEntradaTeclado(Socket* socket, int idJugador, Servidor* servidor){
 	this->idJugador = idJugador;
 	this->socket = socket;
 	this->servidor = servidor;
@@ -9,12 +9,14 @@ EscuchadorEntradaTeclado::EscuchadorEntradaTeclado(int socket, int idJugador, Se
 }
 
 void EscuchadorEntradaTeclado::casoError(int resultado){
-	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de entradas de usuario del jugador: "+ to_string(this->idJugador)+ ", se cierra el socket", to_string(errno));
-	throw runtime_error("ErrorAlRecibirEntradaTeclado");
+	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de entradas de usuario del jugador: "
+	+ std::to_string(this->idJugador)+ ", se cierra el socket", std::to_string(errno));
+	throw std::runtime_error("ErrorAlRecibirEntradaTeclado");
 }
 void EscuchadorEntradaTeclado::casoSocketCerrado(){
-	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de entrada de teclado del jugador: "+ to_string(this->idJugador)+ ". Se cierra el socket");
-	throw runtime_error("ErrorAlRecibirEntradaTeclado");
+	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de entrada de teclado del jugador: "
+	+ std::to_string(this->idJugador)+ ". Se cierra el socket");
+	throw std::runtime_error("ErrorAlRecibirEntradaTeclado");
 }
 void EscuchadorEntradaTeclado::casoExitoso(){
 	entrada_usuario_id_t entradaUsuarioId;
@@ -30,10 +32,7 @@ void EscuchadorEntradaTeclado::casoExitoso(){
 	}
 
 	if(esIdValido){
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_lock(&mutex);
 		servidor->encolarEntradaUsuario(entradaUsuarioId);
-		pthread_mutex_unlock(&mutex);
 	}else{
 		Log::getInstance()->mostrarMensajeDeInfo("El ID proveniente del cliente no es valido, se ignora la entrada del teclado");
 	}

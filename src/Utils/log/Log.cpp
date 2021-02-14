@@ -1,18 +1,29 @@
 #include "Log.hpp"
 
-#include <time.h>
-#include <stdio.h>
-#include <string.h>
-
+#include <ctime>
 #include "Debug.hpp"
 #include "Error.hpp"
 #include "Info.hpp"
 
 Log* Log::log=nullptr;
+pthread_mutex_t mutexEscrituraLog = PTHREAD_MUTEX_INITIALIZER;
+
+
+Log::Log(TipoLog *tipoLog) {
+    this->tipoLog = tipoLog;
+
+    std::string nombreArchivo = "Log - ";
+    time(&tiempo);
+    char* tiempoActual = ctime(&tiempo);
+    nombreArchivo = nombreArchivo +tiempoActual;
+    nombreArchivo = nombreArchivo + ".txt";
+    archivoLog.open("logs/"+nombreArchivo);
+}
+
 
 Log* Log::getInstance(TipoLog* tipo){
 	if(log==nullptr){
-		if(tipo == NULL){
+		if(tipo == nullptr){
 			tipo = new Info();
 		}
 		log = new Log(tipo);
@@ -32,64 +43,55 @@ Log::~Log(){
 }
 
 //DEBUG//
-void Log::mostrarPosicion(string nombreEntidad,int coordenadaX, int coordenadaY){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + to_string(coordenadaX) + "," + to_string(coordenadaY) + ")");
+void Log::mostrarPosicion(const std::string& nombreEntidad,int coordenadaX, int coordenadaY){
+	pthread_mutex_lock(&mutexEscrituraLog);
+    std::string mensaje = armarMensaje(" - Posicion de " + nombreEntidad ," en (x,y)=(" + std::to_string(coordenadaX) + "," + std::to_string(coordenadaY) + ")");
 	tipoLog->mostrarPosicion(mensaje, archivoLog);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-void Log::mostrarAccion(string accion){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	string mensaje = armarMensaje(" - " + accion,"");
+void Log::mostrarAccion(const std::string& accion){
+	pthread_mutex_lock(&mutexEscrituraLog);
+    std::string mensaje = armarMensaje(" - " + accion,"");
 	tipoLog->mostrarAccion(mensaje, archivoLog);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
 //INFO//
-void Log::mostrarMensajeDeInfo(string mensajeInfo){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	string mensaje = armarMensaje(" - " + mensajeInfo,"");
+void Log::mostrarMensajeDeInfo(const std::string& mensajeInfo){
+	pthread_mutex_lock(&mutexEscrituraLog);
+    std::string mensaje = armarMensaje(" - " + mensajeInfo,"");
 	tipoLog->mostrarMensajeDeInfo(mensaje, archivoLog);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-void Log::mostrarMensajeDeCarga(string idObjetoCargado,string rutaObjetoCargado){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	string mensaje = armarMensaje(" - Se cargo " + idObjetoCargado, " desde la ruta " + rutaObjetoCargado);
+void Log::mostrarMensajeDeCarga(const std::string& idObjetoCargado,const std::string& rutaObjetoCargado){
+	pthread_mutex_lock(&mutexEscrituraLog);
+    std::string mensaje = armarMensaje(" - Se cargo " + idObjetoCargado, " desde la ruta " + rutaObjetoCargado);
 	tipoLog->mostrarMensajeDeCarga(mensaje, archivoLog);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
 //ERRORES//
-void Log::huboUnErrorSDL(string descripcionError, string errorSDL){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	string mensaje= armarMensaje(" - " + descripcionError, " ---- " + errorSDL);
+void Log::huboUnErrorSDL(const std::string& descripcionError, const std::string& errorSDL){
+	pthread_mutex_lock(&mutexEscrituraLog);
+    std::string mensaje= armarMensaje(" - " + descripcionError, " ---- " + errorSDL);
 	tipoLog->huboUnError(mensaje, archivoLog);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-void Log::huboUnError(string descripcionError){
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_lock(&mutex);
-	string mensaje = armarMensaje(descripcionError,"");
+void Log::huboUnError(const std::string& descripcionError){
+	pthread_mutex_lock(&mutexEscrituraLog);
+    std::string mensaje = armarMensaje(descripcionError,"");
 	tipoLog->huboUnError(mensaje, archivoLog);
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutexEscrituraLog);
 }
 
-string Log::armarMensaje(string primeraParte, string segundaParte) {
-	string mensaje = "";
+std::string Log::armarMensaje(const std::string& primeraParte, const std::string& segundaParte) {
+    std::string mensaje = "";
 	time(&tiempo);
 	char *tiempoActual = ctime(&tiempo);
 	mensaje = mensaje + tiempoActual;
 	mensaje = mensaje + primeraParte + segundaParte;
 	return mensaje;
 }
-
-
-

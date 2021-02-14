@@ -1,28 +1,28 @@
-
+#include "src/Utils/Utils.hpp"
 #include "EnviadorEntrada.hpp"
 
-EnviadorEntrada::EnviadorEntrada(int socket){
+EnviadorEntrada::EnviadorEntrada(Socket* socket){
 	this->socket = socket;
 }
 
 void EnviadorEntrada::enviar(){
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	entrada_usuario_t entrada;
 	memset(&entrada,0,sizeof(entrada_usuario_t));
-
-	char tipo = ENTRADA;
-	int resultadoEnvio;
 	if(!entradasUsuario.empty()){
-		entrada = entradasUsuario.front();
+        pthread_mutex_lock(&mutex);
+	    entrada = entradasUsuario.front();
 		entradasUsuario.pop();
-		resultadoEnvio = send(socket,&tipo,sizeof(char),0);
-		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "el caracter de entrada de usuario");
-		resultadoEnvio = send(socket,&entrada,sizeof(entrada_usuario_t),0);
-		this->revisarSiSeMandoCorrectamente(resultadoEnvio, "la estructura de entrada de un usuario");
+        pthread_mutex_unlock(&mutex);
+        Enviador::enviar(ENTRADA,&entrada,sizeof(entrada_usuario_t));
 	}
 
 }
 void EnviadorEntrada::dejarInformacion(void* informacion){
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_lock(&mutex);
 	entradasUsuario.push(*((entrada_usuario_t*)informacion));
+    pthread_mutex_unlock(&mutex);
 }
 
 

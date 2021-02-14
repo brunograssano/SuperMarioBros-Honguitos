@@ -1,51 +1,38 @@
 #include "mainServer.hpp"
-
-using namespace std;
-
-#include <SDL2/SDL.h>
-
-#include "../Client/app/AplicacionCliente.hpp"
-#include "lector/Lector.hpp"
-
+#include "Lector/Lector.hpp"
 #include "../Utils/Validaciones.hpp"
-#include "../Server/Servidor.hpp"
+#include "src/Server/Servidor/Servidor.hpp"
 
-#include <getopt.h>
-
-ArchivoLeido* realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], list<string> &mensajesErrorOtroArchivo) {
+ArchivoLeido realizarConfiguracionesIniciales(char direccionLecturaComando[LARGO_ENTRADA], char nivelLogEntrada[LARGO_ENTRADA], std::list<std::string> &mensajesErrorOtroArchivo) {
 	TipoLog* nivelLog;
-	Lector* lector = new Lector();
-	string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
-	ArchivoLeido* archivoLeido;
+    std::string direccionLecturaDefault = "resources/ArchivosXML/configuracionDefault.xml";
+	ArchivoLeido archivoLeido;
 
 	if (strcmp(direccionLecturaComando, "") != 0) {
-		archivoLeido = lector->leerArchivo(direccionLecturaComando);
-		if (!archivoLeido->leidoCorrectamente) {
-			mensajesErrorOtroArchivo = archivoLeido->mensajeError;
-			if(!archivoLeido->usuariosValidos.empty()){
-				list<usuario_t> usuarios;
-				usuarios.swap(archivoLeido->usuariosValidos);
-				int cantidadConexiones = archivoLeido->cantidadConexiones;
-				delete archivoLeido;
-				archivoLeido = lector->leerArchivo(direccionLecturaDefault);
-				archivoLeido->usuariosValidos.swap(usuarios);
-				archivoLeido->cantidadConexiones = cantidadConexiones;
+		archivoLeido = Lector::leerArchivo(direccionLecturaComando);
+		if (!archivoLeido.leidoCorrectamente) {
+			mensajesErrorOtroArchivo = archivoLeido.mensajeError;
+			if(!archivoLeido.usuariosValidos.empty()){
+				std::list<usuario_t> usuarios;
+				usuarios.swap(archivoLeido.usuariosValidos);
+				int cantidadConexiones = archivoLeido.cantidadConexiones;
+				archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
+				archivoLeido.usuariosValidos.swap(usuarios);
+				archivoLeido.cantidadConexiones = cantidadConexiones;
 			}else{
-				delete archivoLeido;
-				archivoLeido = lector->leerArchivo(direccionLecturaDefault);
+				archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
 			}
 		}
 	} else {
-		archivoLeido = lector->leerArchivo(direccionLecturaDefault);
+		archivoLeido = Lector::leerArchivo(direccionLecturaDefault);
 	}
 
 	if (strcmp(nivelLogEntrada, "") != 0) {
 		nivelLog = determinarNivelLog(nivelLogEntrada);
-		if (nivelLog != NULL) {
-			archivoLeido->tipoLog = nivelLog;
+		if (nivelLog != nullptr) {
+			archivoLeido.tipoLog = nivelLog;
 		}
 	}
-	delete lector;
 
 	return archivoLeido;
 }
@@ -59,8 +46,8 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 	char puertoEntrada[LARGO_IP] = "";
 	int puerto;
 	char ip[LARGO_IP] = "";
-	ArchivoLeido* archivoLeido;
-	list<string> mensajesErrorOtroArchivo;
+	ArchivoLeido archivoLeido;
+    std::list<std::string> mensajesErrorOtroArchivo;
 
 	manejarEntrada(cantidadArgumentos,argumentos, direccionLecturaComando,nivelLogEntrada,ipEntrada, puertoEntrada);
 
@@ -68,11 +55,9 @@ int mainServer( int cantidadArgumentos, char* argumentos[] ){
 
 	archivoLeido = realizarConfiguracionesIniciales(direccionLecturaComando, nivelLogEntrada, mensajesErrorOtroArchivo);
 
-	Servidor* server = new Servidor(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
+	Servidor server(archivoLeido, mensajesErrorOtroArchivo, puerto, ip);
 
-	server->ejecutar();
-
-	delete server;
+	server.ejecutar();
 
 	return 0;
 }

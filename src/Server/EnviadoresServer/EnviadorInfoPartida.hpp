@@ -2,15 +2,15 @@
 #define SRC_SERVER_ENVIADORESSERVER_ENVIADORINFOPARTIDA_HPP_
 
 #include "../../Utils/Enviador.hpp"
+#include "src/Utils/Utils.hpp"
 
 class EnviadorInfoPartida:public Enviador{
 	public:
-		EnviadorInfoPartida(int socket);
-		~EnviadorInfoPartida(){};
+		explicit EnviadorInfoPartida(Socket* socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 	private:
-		info_partida_t info_comienzo_partida;
+		info_partida_t info_comienzo_partida{};
 };
 
 

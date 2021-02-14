@@ -1,5 +1,8 @@
 #include "GameLoop.hpp"
-#include "../Utils/Contador.hpp"
+#include "src/Utils/Contador.hpp"
+#include "App/AplicacionCliente.hpp"
+
+
 
 GameLoop::GameLoop(){
 	salir = false;
@@ -22,16 +25,21 @@ void GameLoop::gameLoop() {
 	App *aplicacion = App::getInstance();
 	SDL_Event event;
 	unsigned int microSegundosEspera = 11000;
-	Contador* contador = new Contador(microSegundosEspera, USEGUNDOS);
+	auto contador = Contador(microSegundosEspera, USEGUNDOS);
 	while (!salir) {
-		contador->iniciar();
+		contador.iniciar();
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				salir = true;
 			}
+			else if (event.type == SDL_KEYDOWN){
+			    aplicacion->manejarEntrada(event.key.keysym.sym);
+			}else if(event.type == SDL_MOUSEBUTTONDOWN){
+			    aplicacion->manejarClick(event);
+			}
 		}
 		SDL_PumpEvents();
-		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
+		const Uint8 *keyboard_state_array = SDL_GetKeyboardState(nullptr);
 		if (keyboard_state_array[SDL_SCANCODE_ESCAPE]) {
 			salir = true;
 		} else {
@@ -39,8 +47,10 @@ void GameLoop::gameLoop() {
 		}
 		aplicacion->actualizar();
 		aplicacion->dibujar();
-		usleep(contador->tiempoRestante());
+		usleep(contador.tiempoRestante());
 	}
-	delete contador;
-	delete aplicacion;
+}
+
+GameLoop::~GameLoop() {
+    delete App::getInstance();
 };

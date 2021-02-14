@@ -1,8 +1,7 @@
-#include "../Client/mainClient.hpp"
-#include "../Client/Cliente.hpp"
-
-#include "app/AplicacionCliente.hpp"
-#include "../Utils/Validaciones.hpp"
+#include "mainClient.hpp"
+#include "Cliente.hpp"
+#include "src/Utils/log/Log.hpp"
+#include "src/Utils/Validaciones.hpp"
 
 int mainClient(int argc, char* args[]){
 
@@ -20,11 +19,8 @@ int mainClient(int argc, char* args[]){
 	TipoLog* nivelLog = determinarNivelLog(nivelLogEntrada);
 	Log::getInstance(nivelLog);
 
-	Cliente* cliente = new Cliente(ip, puerto);
-	cliente->ejecutar();
-	delete cliente;
-	delete Log::getInstance();
-
+	Cliente cliente(ip, puerto);
+	cliente.ejecutar();
 
 	return 0;
 }

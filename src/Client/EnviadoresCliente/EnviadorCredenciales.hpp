@@ -1,12 +1,11 @@
 #ifndef SRC_CLIENT_ENVIADORESCLIENTE_ENVIADORCREDENCIALES_HPP_
 #define SRC_CLIENT_ENVIADORESCLIENTE_ENVIADORCREDENCIALES_HPP_
 
-#include "../../Utils/Enviador.hpp"
+#include "src/Utils/Enviador.hpp"
 
 class EnviadorCredenciales:public Enviador{
 	public:
-		EnviadorCredenciales(int socket);
-		~EnviadorCredenciales(){};
+		explicit EnviadorCredenciales(Socket* socket);
 		void enviar()override;
 		void dejarInformacion(void* informacion)override;
 

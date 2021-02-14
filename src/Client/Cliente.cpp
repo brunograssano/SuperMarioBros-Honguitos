@@ -1,36 +1,14 @@
+#include "src/Utils/log/Log.hpp"
+#include "src/Client/ReproductorDeMusica/ReproductorMusica.hpp"
 #include "Cliente.hpp"
+#include "App/ManejadorSDL.hpp"
+#include "App/AplicacionCliente.hpp"
+#include "UtilidadesCliente.hpp"
 
-#include "../Utils/log/Log.hpp"
-#include <thread>
-
-#include "app/ManejadorSDL.hpp"
-
-#include "EnviadoresCliente/EnviadorEntrada.hpp"
-#include "EnviadoresCliente/EnviadorCredenciales.hpp"
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 Cliente::Cliente(char ip[LARGO_IP], int puerto){
-	struct sockaddr_in serv_addr;
-	int resultado;
-
-	socketCliente = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (socketCliente < 0){
-		Log::getInstance()->huboUnError("No se pudo crear el socket: Abortamos.");
-		exit(-1);
-	}
-
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(puerto);
-
-	// Convert IPv4 and IPv6 addresses from text to binary form
-	if(inet_pton(AF_INET, ip, &serv_addr.sin_addr)<=0){
-		Log::getInstance()->huboUnError("Dirección inválida / Dirección no soportada: Abortamos.");
-		exit(-1);
-	}
-	resultado = connect(socketCliente, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
-	if (resultado < 0){
-		Log::getInstance()->huboUnErrorSDL("Falló la conexión al servidor. Abortamos.",to_string(errno));
-		exit(-1);
-	}
+	socketCliente = conectarAlServidor(ip, puerto);
 
 	terminoJuego = false;
 	empiezaElJuego = false;
@@ -38,79 +16,23 @@ Cliente::Cliente(char ip[LARGO_IP], int puerto){
 	seRecibioVerificacion = false;
 	seRecibioInformacionInicio = false;
 	cargoLaAplicacion = false;
-	terminoEnviar = false;
-	terminoEscuchar = false;
 	cerroVentana = false;
 
-	cantidadJugadoresActivos = 0;
-	escuchadores[VERIFICACION] = new EscuchadorVerificacionCredenciales(socketCliente, this);
-	escuchadores[ACTUALIZACION_JUGADORES] = new EscuchadorActualizacionJugadores(socketCliente, this);
-	escuchadores[MENSAJE_LOG] = new EscuchadorLog(socketCliente);
-	escuchadores[PARTIDA] = new EscuchadorInfoPartidaInicial(socketCliente,this);
-	escuchadores[RONDA] = new EscuchadorRonda(socketCliente, this);
-
-	enviadores[CREDENCIAL] = new EnviadorCredenciales(socketCliente);
-	enviadores[ENTRADA] = new EnviadorEntrada(socketCliente);
-
+    ReproductorMusica::getInstance();
+	escuchador = new EscuchadorCliente(&socketCliente,this);
+    enviador = new EnviadorCliente(&socketCliente,this);
 	ventanaInicio = nullptr;
 	gameLoop = new GameLoop();
 }
 
-void Cliente::escuchar(){
-	char tipoMensaje;
-	int resultado;
-	bool hayError = false;
-
-	while(!hayError && !terminoJuego){
-		resultado = recv(socketCliente, &tipoMensaje, sizeof(char), MSG_WAITALL);
-
-		if(resultado<0){
-			Log::getInstance()->huboUnErrorSDL("Ocurrio un error escuchando el caracter identificatorio del mensaje",to_string(errno));
-			hayError = true;
-		}else if(resultado == 0){
-			Log::getInstance()->mostrarMensajeDeInfo("Se desconecto el socket que escucha al server. ----- " +to_string(errno));
-			hayError = true;
-		}
-		else{
-			try{
-				escuchadores[tipoMensaje]->escuchar();
-			}catch(const std::exception& e){
-				hayError = true;
-			}
-		}
-	}
-	terminoEscuchar = true;
-	terminarProcesosDelCliente();
-}
-
 void Cliente::terminarProcesosDelCliente() {
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_lock(&mutex);
 	terminoJuego = true;
-	//cerroVentana = true;
 	gameLoop->seMurioElServer();
 	if(ventanaInicio!=nullptr){
 		ventanaInicio->seMurioElServer();
 	}
 	pthread_mutex_unlock(&mutex);
-}
-
-void Cliente::enviar(){
-	char tipoMensaje;
-	bool hayError = false;
-	while(!terminoJuego && !hayError){
-		if(!identificadoresMensajeAEnviar.empty()){
-			tipoMensaje = identificadoresMensajeAEnviar.front();
-			identificadoresMensajeAEnviar.pop();
-			try{
-				enviadores[tipoMensaje]->enviar();
-			}catch(const std::exception& e){
-				hayError = true;
-			}
-		}
-	}
-	terminoEnviar = true;
-	terminarProcesosDelCliente();
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){
@@ -125,35 +47,28 @@ void Cliente::recibirVerificacionCredenciales(verificacion_t verificacion){
 
 void Cliente::recibirInformacionActualizacion(actualizacion_cantidad_jugadores_t actualizacion){
 	if(!seRecibioInformacionInicio){
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 		iniciarSDL();
 		ventanaInicio = new VentanaInicio(actualizacion.cantidadJugadoresActivos, actualizacion.cantidadMaximaDeJugadores);
 		pthread_mutex_lock(&mutex);
-		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
-		ventanaInicio->actualizarJugadores(actualizacion);
+        ventanaInicio->actualizarJugadores(actualizacion);
 		this->seRecibioInformacionInicio = true;
 		pthread_mutex_unlock(&mutex);
 	}else if(!empiezaElJuego){
-		cantidadJugadoresActivos = actualizacion.cantidadJugadoresActivos;
-		ventanaInicio->actualizarJugadores(actualizacion);
+        ventanaInicio->actualizarJugadores(actualizacion);
 	}
 }
-void Cliente::recibirInformacionRonda(info_ronda_t info_ronda){
+void Cliente::recibirInformacionRonda(info_ronda_t info_ronda) const{
 	if(!cargoLaAplicacion){
 		return;
 	}
 	App* aplicacion = App::getInstance();
-	aplicacion->agregarRonda(info_ronda);
+	if(aplicacion!= nullptr)
+	    aplicacion->agregarRonda(info_ronda);
 }
 
-void Cliente::esperarRecibirInformacionInicio(){
-	while(!seRecibioInformacionInicio){
-	}
-}
-
-void Cliente::esperarRecibirVerificacion(){
-	while(!seRecibioVerificacion){
-	}
+void Cliente::esperar(const bool* condicionAEsperar){
+    while(!(*condicionAEsperar)){
+    }
 }
 
 void Cliente::esperarAQueEmpieceElJuego() {
@@ -170,8 +85,9 @@ void Cliente::intentarEntrarAlJuego() {
 	while (!pasoVerificacion && !cerroVentana) {
 		try {
 			ventanaInicio->obtenerEntrada();
-			enviarCredenciales(ventanaInicio->obtenerCredenciales());
-			esperarRecibirVerificacion();
+			credencial_t credenciales = ventanaInicio->obtenerCredenciales();
+            agregarMensajeAEnviar(CREDENCIAL,&credenciales);
+			esperar(&seRecibioVerificacion);
 			if (!pasoVerificacion) {
 				ventanaInicio->imprimirMensajeError();
 				seRecibioVerificacion = false;
@@ -183,30 +99,20 @@ void Cliente::intentarEntrarAlJuego() {
 }
 
 void Cliente::ejecutar(){
-	pthread_t hiloEscuchar;
-	int resultadoCreateEscuchar = pthread_create(&hiloEscuchar, NULL, Cliente::escuchar_helper, this);
-	if(resultadoCreateEscuchar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para escuchar la informacion del server.");
-		return;
-	}
+    try{
+        enviador->empezarHilo("Enviador");
+        escuchador->empezarHilo("Escuchador");
+    }catch(const std::exception& e){
+        terminoJuego = true;
+        return;
+    }
 
-	pthread_t hiloEnviar;
-	int resultadoCreateEnviar = pthread_create(&hiloEnviar, NULL, Cliente::enviar_helper, this);
-	if(resultadoCreateEnviar != 0){
-		Log::getInstance()->huboUnError("Ocurrió un error al crear el hilo para enviar la informacion del cliente al server.");
-		terminoJuego = true;
-		return;
-	}
-
-	esperarRecibirInformacionInicio();
+	esperar(&seRecibioInformacionInicio);
 	intentarEntrarAlJuego();
 	if(cerroVentana){
 		delete ventanaInicio;
-		ventanaInicio = nullptr;
 		cerradoVentanaInicio();
-		while(!terminoEnviar || !terminoEscuchar){}
-		delete Log::getInstance();
-		exit(0);
+		return;
 	}
 
 	esperarAQueEmpieceElJuego();
@@ -214,16 +120,14 @@ void Cliente::ejecutar(){
 	ventanaInicio = nullptr;
 	if(cerroVentana){
 		cerradoVentanaInicio();
-		while(!terminoEnviar || !terminoEscuchar){}
-		delete Log::getInstance();
-		exit(0);
+		return;
 	}
 
 	cargoLaAplicacion = gameLoop->inicializarAplicacion(infoPartida, this);
 	if(!cargoLaAplicacion){
 		Log::getInstance()->huboUnError("No se inicializo la aplicacion");
-		cerrarSocketCliente();
-		while(!terminoEnviar || !terminoEscuchar){}
+        socketCliente.cerrar();
+		while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
 		delete Log::getInstance();
 		exit(-1);
 	}
@@ -233,50 +137,40 @@ void Cliente::ejecutar(){
 	terminoJuego = true;
 }
 
-/////------------------ENVIADORES------------------/////
-
-void Cliente::agregarEntrada(entrada_usuario_t entradaUsuario){
-	enviadores[ENTRADA]->dejarInformacion(&entradaUsuario);
-	identificadoresMensajeAEnviar.push(ENTRADA);
+bool Cliente::terminoElJuego() {
+    return terminoJuego;
 }
 
-void Cliente::enviarCredenciales(credencial_t credenciales){
-	enviadores[CREDENCIAL]->dejarInformacion(&credenciales);
-	identificadoresMensajeAEnviar.push(CREDENCIAL);
+void Cliente::agregarMensajeAEnviar(char tipoMensaje,void* mensaje){
+    enviador->agregarMensajeAEnviar(tipoMensaje,mensaje);
 }
 
-/////------------------DESTRUCTOR------------------/////
-
-void Cliente::cerradoVentanaInicio() {
+void Cliente::cerradoVentanaInicio(){
 	Log::getInstance()->mostrarMensajeDeInfo("Se cerro la ventana de inicio");
-	cerrarSocketCliente();
-}
-
-void Cliente::cerrarSocketCliente() {
-	int resultado = shutdown(socketCliente, SHUT_RDWR);
-	if (resultado < 0) {
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el shutdown del socket",to_string(errno));
-	}
-	resultado = close(socketCliente);
-	if (resultado < 0) {
-		Log::getInstance()->huboUnErrorSDL("Ocurrio un error haciendo el close del socket",to_string(errno));
-	}
+    socketCliente.cerrar();
+    while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
+    delete Log::getInstance();
+    exit(0);
 }
 
 Cliente::~Cliente(){
-	terminarSDL();
-	cerrarSocketCliente();
-	while(!terminoEnviar || !terminoEscuchar){}
-
-	for(auto const& parClaveEscuchador:escuchadores){
-		delete parClaveEscuchador.second;
-	}
-	for(auto const& parClaveEnviador:enviadores){
-		delete parClaveEnviador.second;
-	}
-	escuchadores.clear();
-	enviadores.clear();
-
+    socketCliente.cerrar();
+	while(!enviador->terminoDeEnviar() || !escuchador->terminoDeEscuchar()){}
+    delete ReproductorMusica::getInstance();
+    delete escuchador;
+	delete enviador;
 	delete gameLoop;
+    terminarSDL();
+    delete Log::getInstance();
+}
 
+void Cliente::recibirInformacionNivel(nivel_t nivel) {
+    esperar(&cargoLaAplicacion);
+    App* aplicacion = App::getInstance();
+    aplicacion->agregarNivel(nivel);
+}
+
+void Cliente::recibirInformacionPodios(ultimos_podios_t ultimos_podios){
+    App* aplicacion = App::getInstance();
+    aplicacion->agregarPodios(ultimos_podios);
 }

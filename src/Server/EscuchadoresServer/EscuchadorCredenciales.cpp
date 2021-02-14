@@ -1,6 +1,7 @@
 #include "EscuchadorCredenciales.hpp"
+#include "src/Utils/log/Log.hpp"
 
-EscuchadorCredenciales::EscuchadorCredenciales(int socket, ConexionCliente* cliente){
+EscuchadorCredenciales::EscuchadorCredenciales(Socket* socket, ConexionCliente* cliente){
 	this->socket = socket;
 	this->conexionCliente = cliente;
 	structPointer = &this->credencial;
@@ -8,27 +9,23 @@ EscuchadorCredenciales::EscuchadorCredenciales(int socket, ConexionCliente* clie
 }
 
 void EscuchadorCredenciales::casoError(int resultado){
-	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de las credenciales del cliente: " + this->conexionCliente->obtenerIP() + ", se cierra el socket", to_string(errno));
-	throw runtime_error("ErrorAlRecibirCredenciales");
+	Log::getInstance()->huboUnErrorSDL("Hubo un error al recibir la informacion de las credenciales del cliente: " + this->conexionCliente->obtenerIP() + ", se cierra el socket", std::to_string(errno));
+	throw std::runtime_error("ErrorAlRecibirCredenciales");
 }
 
 void EscuchadorCredenciales::casoSocketCerrado(){
 	Log::getInstance()->mostrarMensajeDeInfo("No se recibio mas informacion de las credenciales del cliente: "+ this->conexionCliente->obtenerIP() +", se cierra el socket");
-	throw runtime_error("ErrorAlRecibirCredenciales");
+	throw std::runtime_error("ErrorAlRecibirCredenciales");
 }
 
 void EscuchadorCredenciales::casoExitoso(){
-	string nombre;
-	string contrasenia;
+    std::string nombre;
+    std::string contrasenia;
 
-	nombre = string(credencial.nombre);
-	contrasenia = string(credencial.contrasenia);
+	nombre = std::string(credencial.nombre);
+	contrasenia = std::string(credencial.contrasenia);
 
-	Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales:" + nombre + " | " +contrasenia +" del cliente: " + conexionCliente->obtenerIP());
+	Log::getInstance()->mostrarMensajeDeInfo("Se recibieron las credenciales: (" + nombre + ";" +contrasenia +") del cliente: " + conexionCliente->obtenerIP());
 
 	conexionCliente->recibirCredencial(nombre, contrasenia);
-}
-
-EscuchadorCredenciales::~EscuchadorCredenciales(){
-
 }

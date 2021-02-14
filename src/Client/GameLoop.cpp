@@ -12,14 +12,14 @@ GameLoop::GameLoop(){
 bool GameLoop::inicializarAplicacion(info_partida_t informacion,Cliente* cliente){
 	App* app = App::getInstance(informacion,cliente);
 	return(app != nullptr);
-};
+}
 
 void GameLoop::seMurioElServer(){
 	App* app = App::getInstance();
 	if(app!=nullptr){
 		app->ocurrioUnErrorServidor();
 	}
-};
+}
 
 void GameLoop::gameLoop() {
 	App *aplicacion = App::getInstance();
@@ -53,4 +53,4 @@ void GameLoop::gameLoop() {
 
 GameLoop::~GameLoop() {
     delete App::getInstance();
-};
+}

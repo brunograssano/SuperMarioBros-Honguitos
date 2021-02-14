@@ -129,13 +129,13 @@ void App::manejarEntrada(SDL_Keycode codigoEntrada) {
     }else if(codigoEntrada == SDLK_t){
         presionoT = true;
     }else if(codigoEntrada == SDLK_z){
-        if(!juegoCliente.ganaronElJuego() || !(juegoCliente.perdieronElJuego() && !terminoElJuego)){
+        if(!terminoElJuego && comenzoElJuego){
             dibujador.alternarModoDiego();
             if(!estoyEnModoDiego){
-                ReproductorMusica::getInstance()->ponerMusica(MUSICA_MODO_DIEGO);
+                ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_MODO_DIEGO);
                 estoyEnModoDiego=true;
             }else{
-                ReproductorMusica::getInstance()->ponerMusica(MUSICA_NIVEL1);
+                ReproductorMusica::getInstance()->ReproducirMusicaNivel(MUSICA_NIVEL1);
                 estoyEnModoDiego=false;
             }
         }

@@ -67,12 +67,18 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
     SDL_RenderFillRect(renderizador, &borde_puntos);
 
     int textosDibujados = 1;
-    int indiceJugador = 0;
-    for (auto const& parIdJugador : juegoCliente->obtenerJugadores()) {
 
-        podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
+
+    podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
+    std::map<int, jugador> jugadores = juegoCliente->obtenerJugadores();
+    int cantidadJugadores = jugadores.size();
+
+    for (int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++) {
+        int idJugador = podio.ids[indiceJugador];
+        jugador_t  jugador = jugadores[idJugador];
+
         puntosJugador.str("");
-        std::string nombreJugador = juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].nombreJugador;
+        std::string nombreJugador = jugador.nombreJugador;
         puntosJugador << "Puntos de " << nombreJugador << ": " << podio.puntosNivel[indiceJugador];
 
         cuadradoPuntos = {ancho_pantalla/6 + 50,
@@ -84,14 +90,14 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
                            20,
                            20 };
 
-        for(int i = 0; i<juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.vidas; i++){
+        for(int i = 0; i<jugador.mario.vidas; i++){
             SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Corazon"), nullptr, &cuadradoCorazon);
             cuadradoCorazon.x += 25;
         }
 
-        int idColor = podio.ids[indiceJugador];
+        int idColor = idJugador;
 
-        if (juegoCliente->obtenerJugadores()[podio.ids[indiceJugador]].mario.recorteImagen == MARIO_GRIS) {
+        if (jugador.mario.recorteImagen == MARIO_GRIS) {
             idColor = MARIO_GRIS;
         }
         renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);

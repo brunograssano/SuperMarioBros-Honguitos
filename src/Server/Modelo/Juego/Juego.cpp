@@ -260,7 +260,8 @@ void Juego::guardarPodio(Podio *podio) {
     podio_t podioSerializado;
     podioSerializado.cantidadJugadores = 0;
     podioSerializado.nivel = this->niveles.front()->obtenerMundo();
-    for(int indiceJugador = 0; indiceJugador < podio->getPodioNivel().size(); indiceJugador++) {
+    int cantidadJugadores = podio->getPodioNivel().size();
+    for(int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++) {
         podioSerializado.puntosNivel[indiceJugador] = podio->getPodioNivel().at(indiceJugador).second;
         podioSerializado.ids[indiceJugador] = podio->getPodioNivel().at(indiceJugador).first->obtenerNumeroJugador();
         podioSerializado.cantidadJugadores++;
@@ -269,7 +270,8 @@ void Juego::guardarPodio(Podio *podio) {
 
     podioAcumulado.cantidadJugadores = 0;
     podioAcumulado.nivel = this->niveles.front()->obtenerMundo();
-    for(int indiceJugador = 0; indiceJugador < podio->getPodioTotal().size(); indiceJugador++){
+
+    for(int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++){
         this->podioAcumulado.puntosNivel[indiceJugador] = podio->getPodioTotal().at(indiceJugador).second;
         this->podioAcumulado.ids[indiceJugador] = podio->getPodioTotal().at(indiceJugador).first->obtenerNumeroJugador();
         this->podioAcumulado.cantidadJugadores++;

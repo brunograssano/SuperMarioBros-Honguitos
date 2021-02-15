@@ -33,6 +33,7 @@ void Cliente::terminarProcesosDelCliente() {
 		ventanaInicio->seMurioElServer();
 	}
 	pthread_mutex_unlock(&mutex);
+	enviador->despertarHilo();
 }
 
 void Cliente::empezarJuego(info_partida_t info_partida){

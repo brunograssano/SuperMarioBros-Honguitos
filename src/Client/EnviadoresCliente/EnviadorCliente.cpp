@@ -14,6 +14,9 @@ void EnviadorCliente::ejecutar() {
     char tipoMensaje;
     bool hayError = false;
     while(!cliente->terminoElJuego() && !hayError){
+        while(identificadoresMensajeAEnviar.empty() && !cliente->terminoElJuego() && !hayError){
+            dormirHilo();
+        }
         if(!identificadoresMensajeAEnviar.empty()){
             tipoMensaje = identificadoresMensajeAEnviar.front();
             identificadoresMensajeAEnviar.pop();
@@ -36,8 +39,12 @@ EnviadorCliente::~EnviadorCliente() {
 }
 
 void EnviadorCliente::agregarMensajeAEnviar(char tipoMensaje, void *mensaje) {
+    bool estabaVacia = identificadoresMensajeAEnviar.empty();
     enviadores[tipoMensaje]->dejarInformacion(mensaje);
     identificadoresMensajeAEnviar.push(tipoMensaje);
+    if(estabaVacia || cliente->terminoElJuego()){
+        despertarHilo();
+    }
 }
 
 bool EnviadorCliente::terminoDeEnviar() {

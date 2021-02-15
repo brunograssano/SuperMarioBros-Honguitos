@@ -5,6 +5,7 @@ class Cliente;
 #include "../Cliente.hpp"
 #include "src/Utils/Enviador.hpp"
 #include "src/Utils/Thread.hpp"
+#include "src/Utils/ColaBloqueante.hpp"
 
 class EnviadorCliente  : public Thread{
     public:
@@ -16,7 +17,7 @@ class EnviadorCliente  : public Thread{
 
     private:
         Cliente* cliente;
-        std::queue<char> identificadoresMensajeAEnviar;
+        BlockingQueue<char> identificadoresMensajeAEnviar;
         std::map<char,Enviador*> enviadores;
         bool terminoEnviar;
 

@@ -117,20 +117,20 @@ Este repositorio esta bajo licencia MIT
 
 ### Fase 1
 
-[Pruebas Generales](https://youtu.be/2WTP9P2Rlxk)
+* [Pruebas Generales](https://youtu.be/2WTP9P2Rlxk)
 
-[Pruebas](https://youtu.be/LNObWOaGVbM)
+* [Pruebas](https://youtu.be/LNObWOaGVbM)
 
 ### Fase 2
 
-[Pruebas Generales](https://youtu.be/xjKjGTvPpN8)
+* [Pruebas Generales](https://youtu.be/xjKjGTvPpN8)
 
-[Pruebas](https://youtu.be/ek3vNrkeR5E)
+* [Pruebas](https://youtu.be/ek3vNrkeR5E)
 
 ### Fase 3
 
-[Pruebas Generales](https://youtu.be/2_D5a1RFYDs)
+* [Pruebas Generales](https://youtu.be/2_D5a1RFYDs)
 
-[Pruebas](https://youtu.be/lr8mGXFn7Go)
+* [Pruebas](https://youtu.be/lr8mGXFn7Go)
 
 ## Imágenes de la aplicación

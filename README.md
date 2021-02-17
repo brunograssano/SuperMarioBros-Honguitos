@@ -114,16 +114,23 @@ pruebas para poder evaluar el correcto funcionamiento del modelo.
 Este repositorio esta bajo licencia MIT
 
 ## Videos
-[Fase 1 Pruebas Generales](https://youtu.be/2WTP9P2Rlxk)
 
-[Fase 1 Pruebas](https://youtu.be/LNObWOaGVbM)
+### Fase 1
 
-[Fase 2 Pruebas Generales](https://youtu.be/xjKjGTvPpN8)
+[Pruebas Generales](https://youtu.be/2WTP9P2Rlxk)
 
-[Fase 2 Pruebas](https://youtu.be/ek3vNrkeR5E)
+[Pruebas](https://youtu.be/LNObWOaGVbM)
 
-[Fase 3 Pruebas Generales](https://youtu.be/2_D5a1RFYDs)
+### Fase 2
 
-[Fase 3 Pruebas](https://youtu.be/lr8mGXFn7Go)
+[Pruebas Generales](https://youtu.be/xjKjGTvPpN8)
+
+[Pruebas](https://youtu.be/ek3vNrkeR5E)
+
+### Fase 3
+
+[Pruebas Generales](https://youtu.be/2_D5a1RFYDs)
+
+[Pruebas](https://youtu.be/lr8mGXFn7Go)
 
 ## Imágenes de la aplicación

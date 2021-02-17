@@ -43,16 +43,12 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
     int alto_textoFinNivel = 60;
 
     SDL_Rect cuadradoFinNivel = {ancho_pantalla/2 -ancho_textoFinNivel/2,
-                            alto_pantalla/2 - alto_textoFinNivel/2 - 130,
+                            alto_pantalla/2 - alto_textoFinNivel/2 - 160,
                             ancho_textoFinNivel,
                             alto_textoFinNivel};
 
-    int ancho_puntosJugador = 200;
     int alto_puntosJugador = 30;
     int desfase_puntosJugador = 20;
-
-    SDL_Rect cuadradoPuntos;
-    SDL_Rect cuadradoCorazon;
 
     std::stringstream puntosJugador;
     int corrimiento = 100;
@@ -66,45 +62,108 @@ void DibujadorFinNivel::dibujarTextoFinNivel(){
     SDL_SetRenderDrawColor(renderizador, 51, 51, 51, 100);
     SDL_RenderFillRect(renderizador, &borde_puntos);
 
-    int textosDibujados = 1;
+    int cantidadJugadores = juegoCliente->obtenerJugadores().size();
 
-
-    podio_t podio = juegoCliente->obtenerPodioPuntosAcumulados();
-    std::map<int, jugador> jugadores = juegoCliente->obtenerJugadores();
-    int cantidadJugadores = jugadores.size();
-
-    for (int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++) {
-        int idJugador = podio.ids[indiceJugador];
-        jugador_t jugador = jugadores[idJugador];
-
-        puntosJugador.str("");
-        std::string nombreJugador = jugador.nombreJugador;
-        puntosJugador << "Puntos de " << nombreJugador << ": " << podio.puntosNivel[indiceJugador];
-
-        cuadradoPuntos = {ancho_pantalla/6 + 50,
-                          alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
-                          ancho_puntosJugador,
-                          alto_puntosJugador};
-        cuadradoCorazon = {5*ancho_pantalla/6 - 50 - 20*3,
-                           alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * textosDibujados - corrimiento,
-                           20,
-                           20 };
-
-        for(int i = 0; i<jugador.mario.vidas; i++){
-            SDL_RenderCopy( renderizador, cargadorTexturas->obtenerTextura("Corazon"), nullptr, &cuadradoCorazon);
-            cuadradoCorazon.x += 25;
-        }
-
-        int idColor = idJugador;
-
-        if (jugador.mario.recorteImagen == MARIO_GRIS) {
-            idColor = MARIO_GRIS;
-        }
-        renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
-        textosDibujados++;
+    for (int idJugador = 0; idJugador < cantidadJugadores; idJugador++) {
+        dibujarPuntos(idJugador);
     }
 
     renderizarTexto(cuadradoFinNivel, textoFinNivel.str(), colorDefault);
 }
 
+void DibujadorFinNivel::dibujarPuntos(int idJugador){
+    int ultimoNivel = juegoCliente->obtenerNivelesJugados()-1;
+    std::map<int, jugador> jugadores = juegoCliente->obtenerJugadores();
+    int cantidadJugadores = jugadores.size();
+    int offsetPuntos = 0;
 
+    int ancho_puntosJugador = 50;
+    int alto_puntosJugador = 30;
+    int desfase_puntosJugador = 20;
+    int corrimiento = 100;
+
+    for(int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++){
+        jugador_t jugador = jugadores[indiceJugador];
+        std::string nombreJugador = jugador.nombreJugador;
+        SDL_Rect cuadradoNombre = {ancho_pantalla/6 + 50,
+                                   alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * (indiceJugador+1) - corrimiento,
+                                   ancho_puntosJugador,
+                                   alto_puntosJugador};
+        int idColor = indiceJugador;
+
+        if (jugador.mario.recorteImagen == MARIO_GRIS) {
+            idColor = MARIO_GRIS;
+        }
+        renderizarTexto(cuadradoNombre, nombreJugador, colores[idColor]);
+
+    }
+
+    for(int indiceNivel = 1; indiceNivel <= ultimoNivel; indiceNivel++){
+        podio_t podio = juegoCliente->obtenerPodios().at(indiceNivel);
+        std::string nivel = "Nivel "+ std::to_string(podio.nivel);
+        SDL_Rect cuadradoNivel = {ancho_pantalla/6 + 150 + offsetPuntos,
+                                  alto_pantalla/2 + (alto_puntosJugador) - corrimiento - 50,
+                                  ancho_puntosJugador,
+                                  50};
+        renderizarTexto(cuadradoNivel, nivel, colores[MARIO_GRIS]);
+
+        for(int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++){
+            int id = podio.ids[indiceJugador];
+            if(id == idJugador){
+                SDL_Rect cuadradoPuntos = {ancho_pantalla/6 + 150 + offsetPuntos,
+                                           alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * (idJugador+1) - corrimiento,
+                                              ancho_puntosJugador,
+                                              alto_puntosJugador};
+
+                jugador_t jugador = jugadores[idJugador];
+
+                std::stringstream puntosJugador;
+                puntosJugador.str("");
+                puntosJugador << podio.puntosNivel[indiceJugador];
+
+                int idColor = idJugador;
+
+                if (jugador.mario.recorteImagen == MARIO_GRIS) {
+                    idColor = MARIO_GRIS;
+                }
+                renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
+                offsetPuntos += 70;
+            }
+        }
+    }
+
+    podio_t podioA = juegoCliente->obtenerPodioPuntosAcumulados();
+    std::string acum = "Total";
+    SDL_Rect cuadradoAcum = {ancho_pantalla/6 + 150 + 330,
+                              alto_pantalla/2 + (alto_puntosJugador) - corrimiento - 50,
+                              ancho_puntosJugador,
+                              50};
+    renderizarTexto(cuadradoAcum, acum, colores[MARIO_GRIS]);
+
+    offsetPuntos = 0;
+    for(int indiceJugador = 0; indiceJugador < cantidadJugadores; indiceJugador++){
+        int id = podioA.ids[indiceJugador];
+        if(id == idJugador){
+            SDL_Rect cuadradoPuntos = {ancho_pantalla/6 + 150 + 330,
+                                       alto_pantalla/2 + (alto_puntosJugador+desfase_puntosJugador) * (idJugador + 1) - corrimiento,
+                                       ancho_puntosJugador,
+                                       50};
+
+            jugador_t jugador = jugadores[idJugador];
+
+            std::stringstream puntosJugador;
+            puntosJugador.str("");
+            puntosJugador << podioA.puntosNivel[indiceJugador];
+
+
+            int idColor = idJugador;
+
+            if (jugador.mario.recorteImagen == MARIO_GRIS) {
+                idColor = MARIO_GRIS;
+            }
+            renderizarTexto(cuadradoPuntos, puntosJugador.str(), colores[idColor]);
+            offsetPuntos += 70;
+        }
+    }
+
+}

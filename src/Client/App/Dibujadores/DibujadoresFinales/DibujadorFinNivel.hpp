@@ -13,6 +13,7 @@ class DibujadorFinNivel : public Dibujador{
         ~DibujadorFinNivel() override= default;
     private:
         void dibujarTextoFinNivel();
+        void dibujarPuntos(int indiceJugador);
         JuegoCliente *juegoCliente;
         std::map<int, SDL_Color> colores;
         int ciclosDibujado;

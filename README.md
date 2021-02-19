@@ -8,9 +8,13 @@
 Trabajo practico de la materia Taller de programación 1.
 
 El presente trabajo consistió en el armado de un juego de plataformas, tomando como referencia el Super Mario Bros.
-  
-  ...*desarrollar*
-  
+El mismo se hizo de forma tal de que se pueda jugar a través de diferentes niveles de forma online, permitiendo desde 1 a 4 jugadores.
+
+El juego actualmente dispone de 4 niveles distintos para la configuración inicial, y otros 3 para la default. 
+En caso de querer crear nuevos niveles se puede realizar armando el correspondiente archivo XML con la configuración deseada.
+
+
+    
 ## Grupo Honguitos
 * De Angelis Riva, Lukas
 * Gomez, Joaquín
@@ -19,7 +23,7 @@ El presente trabajo consistió en el armado de un juego de plataformas, tomando 
 
 ## Manejo de recursos aparte
 
-Tablero de Trello - [link](https://trello.com/b/sdukQHiL/tp-taller)
+Tablero de [Trello](https://trello.com/b/sdukQHiL/tp-taller)
 
 ## Pre-requisitos
 
@@ -30,12 +34,12 @@ Listado de software/herramientas necesarias para el proyecto
 * CMake
 * Sistema operativo basado en Linux
 
-En cuanto a requerimientos de hardware, se necesitan
+En cuanto a requerimientos de hardware, se necesitan:
 
-* Para ejecutar el cliente: ~50MB de RAM
+* Para ejecutar el cliente: ~55MB de RAM
 * Para ejecutar el servidor: ~2MB de RAM
-* Se necesitan ~25MB de espacio en disco
-* *verificar cpu*
+* ~25MB de espacio en disco
+* En cuanto a CPU, la aplicación esta bastante optimizada.
 
 ## Instalación
 
@@ -93,6 +97,7 @@ El juego tiene los siguientes controles:
 * T para entrar en modo TEST (Los enemigos no te hacen daño y no se pierden vidas)
 * M para apagar la música.
 * N para apagar los sonidos del juego.
+* Z activa un easter egg.
 
 ## Ejecutando las pruebas
 
@@ -105,13 +110,6 @@ pruebas para poder evaluar el correcto funcionamiento del modelo.
 
 * Siendo Mario el nombre del ejecutable que se tenga
 ```
-
-
-## Detalles de implementación
-...
-
-## Licencia
-Este repositorio esta bajo licencia MIT
 
 ## Videos
 
@@ -134,3 +132,10 @@ Este repositorio esta bajo licencia MIT
 * [Pruebas](https://youtu.be/lr8mGXFn7Go)
 
 ## Imágenes de la aplicación
+
+### Ventana de inicio
+
+### Niveles
+
+## Licencia
+Este repositorio esta bajo licencia MIT

@@ -14,7 +14,7 @@
 - [Controles del juego](#como-jugar)
 - [Ejecutando las pruebas](#ejecutando-las-pruebas)
 - [Videos](#videos)
-- [Imagenes](#imgenes-de-la-aplicación)
+- [Imagenes](#imágenes-de-la-aplicación)
 - [Licencia](#licencia)
 
 ## Descripción

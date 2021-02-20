@@ -5,6 +5,20 @@
 
 [![Build Status](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba.svg?token=kxawFvHvMKcCczSHri2q&branch=master)](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba)
 
+## Índice
+- [Descripción](#descripción)
+- [Miembros del grupo](#grupo-honguitos)
+- [Pre-requisitos](#pre-requisitos)
+- [Instalación](#instalación)
+- [Ejecución](#ejecutando-la-aplicación)
+- [Controles del juego](#como-jugar)
+- [Ejecutando las pruebas](#ejecutando-las-pruebas)
+- [Videos](#videos)
+- [Imagenes](#imgenes-de-la-aplicación)
+- [Licencia](#licencia)
+
+## Descripción
+
 Trabajo practico de la materia Taller de programación 1.
 
 El presente trabajo consistió en el armado de un juego de plataformas, tomando como referencia el Super Mario Bros.

@@ -10,7 +10,7 @@ Trabajo practico de la materia Taller de programación 1.
 El presente trabajo consistió en el armado de un juego de plataformas, tomando como referencia el Super Mario Bros.
 El mismo se hizo de forma tal de que se pueda jugar a través de diferentes niveles de forma online, permitiendo desde 1 a 4 jugadores.
 
-El juego actualmente dispone de 4 niveles distintos para la configuración inicial, y otros 3 para la default. 
+El juego actualmente dispone de 5 niveles distintos para la configuración inicial, y otros 3 para la default. 
 En caso de querer crear nuevos niveles se puede realizar armando el correspondiente archivo XML con la configuración deseada.
 
 
@@ -134,8 +134,23 @@ pruebas para poder evaluar el correcto funcionamiento del modelo.
 ## Imágenes de la aplicación
 
 ### Ventana de inicio
+![](resources/Imagenes/Readme/ventanaInicio.png)
 
 ### Niveles
+#### Mundo 0 "Parkour"
+![](resources/Imagenes/Readme/nivel0.png)
+
+#### Mundo 1 "Outside"
+![](resources/Imagenes/Readme/nivel1.png)
+
+#### Mundo 2 "Castle"
+![](resources/Imagenes/Readme/nivel2.png)
+
+#### Mundo 3 "Dungeon"
+![](resources/Imagenes/Readme/nivel3.png)
+
+#### Mundo 4 "Inferno"
+![](resources/Imagenes/Readme/nivel4.png)
 
 ## Licencia
 Este repositorio esta bajo licencia MIT

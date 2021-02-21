@@ -3,7 +3,7 @@
 
 # TP de Taller de programación 1 - Azcurra
 
-[![Build Status](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba.svg?token=kxawFvHvMKcCczSHri2q&branch=master)](https://travis-ci.com/brunograssano/TP-taller-de-programacion-fiuba)
+[![Build Status](https://travis-ci.com/brunograssano/SuperMarioBros-Honguitos.svg?branch=master)](https://travis-ci.com/brunograssano/SuperMarioBros-Honguitos)
 
 ## Índice
 - [Descripción](#descripción)
